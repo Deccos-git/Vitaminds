@@ -1,0 +1,87 @@
+<html>
+
+<head>
+  <Title> Vitaminds rebuild </title>
+  <link rel="stylesheet" href="../../style/style.css">
+  <link rel="stylesheet" href="../../style/onderwerpen.css">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+</head>
+
+<body>
+   <!-- menu -->
+  <nav class="menu">
+      <ul class = "top-menu">
+          <li class="main-menu"><a href="../../pages/index.html"><img src="../../images/logo.png" alt="Vitaminds logo" width="100px" height="50px"></a></li>
+          <li class="main-menu"><a href="../../pages/openup.html">Open up</a></li>
+          <li class="main-menu"><a href="../../pages/inspiratie.html">Inspiratie</a></li>
+          <li class="main-menu"><a href="../../pages/evenementen.html">Evenementen</a></li>
+          <li class="main-menu"><a href="../../pages/coaches.html">Coaches</a></li>
+        <li class = "login-logout"><p id="aanmeldCH"><a href="../../pages/RegisterCH.html">Aanmelden als coach</a></p></li> 
+        <li class = "login-logout"><a>|</a></li>
+        <li onclick = "logOut()" class = "login-logout"><button><a>Log uit</a></button></li>
+        <li class = "login-logout"><button><a href="../../pages/inlog.html">Log in</a></button></li>
+        <li class = "login-logout"><a>|</a></li>
+        <li class = "login-logout"><p id="mijnAccount"></p></li>
+      </ul>
+    </nav>
+
+    <h1> Positiviteit </h1>
+    <main id="paginaDankbaarheid">
+        <section>
+            <div id="headerOU"></div>
+            <h2>Open up</h2>
+            <h4 id="OUDank">Naar <a href="../../Pages/openups/Dankbaarheid.html">OpenUp</a></h4>
+        </section>
+        <section>
+            <div id="headerInsp"></div>
+            <h2>Inspiratie</h2>
+            <p class="onderwerpenP" id="inspiratieDank"></p>
+        </section>
+        <section>
+            <div id="headerEve"></div>
+            <h2>Evenementen</h2>
+            <p class="onderwerpenP"id="evenementenDank"></p>
+        </section>
+        <section>
+            <div id="headerCH"></div>
+            <h2>Coaches</h2>
+            <p class="onderwerpenP" id="coachesDank"></p>
+        </section>
+        <section>
+            <div id="headerOW"></div>
+            <h2>Online workshops</h2>
+            <p class="onderwerpenP" id="OWDank"></p>
+        </section>
+      </main>
+
+<!-- footer -->
+<footer class="footer">
+    <div class="footer-left">
+      <h3 class="footer-h3"><strong> Vitaminds </strong></h3>
+        <p> Op avontuur in je eigen geest </P>
+    </div>
+    <div class="footer-center">
+      <h3 class="footer-h3">Over Vitaminds</h3>
+       <p><a href="../pages/overons.html">Ons verhaal</a></p>
+    </div>
+    <div class="footer-right">
+      <h3><strong> Contact </strong></h3>
+        <ul>
+          <li><a>Vitaminds</a></li>
+          <li><a>www.vitaminds.nu</a></li>
+          <li><a>info@vitaminds.nu</a></li>
+        </ul>
+    </div>
+  </footer>
+
+    <script type="text/javascript" src="../../javascript/firebase.js"></script>
+    <script type="text/javascript" src="../../javascript/auth.js"></script>
+    <script type="text/javascript" src="../../javascript/index.js"></script>
+    <script type="text/javascript" src="../../javascript/onderwerpen.js"></script>
+</body>
+</html>

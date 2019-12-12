@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DigiMind</title>
+    <link rel="stylesheet" href="../Style/style.css">
+    <link rel="stylesheet" href="../Style/DigiMind.css">
+    <link rel="stylesheet" href="../Style/Coachprofiel.css">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+</head>
+<body>
+       <!-- menu -->
+       <section class="menu">
+        <ul class = "top-menu">
+            <li class="main-menu"><a href="../index.html"><img src="../images/logo.png" alt="Vitaminds logo" width="100px" height="50px"></a></li>
+            <li class="main-menu"><a href="../openup.html">Open up</a></li>
+            <li class="main-menu"><a href="../inspiratie.html">Inspiratie</a></li>
+            <li class="main-menu"><a href="../evenementen.html">Evenementen</a></li>
+            <li class="main-menu"><a href="../coaches.html">Coaches</a></li></li>
+          <li onclick = "logOut()" class = "login-logout"><button><a>Log uit</a></button></li>
+          <li class = "login-logout"><button><a href="../inlog.html">Log in</a></button></li>
+          <li class = "login-logout"><a>|</a></li>
+          <li class = "login-logout"><p id="mijnAccount"></p></li>
+        </ul>
+      </section>
+        
+          <!-- welkom-->
+          <section id="welkomWrapper">
+            <div id="fotosectie">
+                <div id="profielfoto"></div>
+            </div> 
+          </section>
+          <section id="userinfo">
+            <div id="userID">
+              <div id="userIDsub">
+                <h1 class="welkom"></h1>
+                <div id="onlineoffline"></div>
+             </div>  
+              <h5 class="usertype"></h5>
+            </div>
+            <div id="niveau">
+                <h3>Inspiratiepunten</h3>
+                <h5 id="bijdragepunten"></h5>
+              </div>
+              
+          </section>
+
+<!-- Coach deel -->
+    <!-- submenu -->
+    <div id="menuWrapper">
+      <ul id="menuSub">
+        <div class="coach-menu">
+          <li onclick="contactCH()">Contact</li>
+        </div>
+        <div class="coach-menu">
+          <li onclick="overMijCH()"><a>Over mij</a></li>
+        </div>
+        <div class="coach-menu">
+          <li onclick="mijnCoachingCH()"><a>Mijn coaching</a></li>
+        </div>
+        <div class="coach-menu">
+          <li onclick="mijnBijdragenCH()"><a>Mijn bijdragen</a></li>
+        </div>
+        <div id="empty-menu"></div>
+<!-- Mens deel-->
+        <div class="mens-menu">
+          <li onclick="klikavontuur()"><a>Mijn doelen</a></li>
+        </div>
+        <div class="mens-menu">
+          <li onclick="klikkarakter()"><a>Mijn karakter</a></li>
+        </div>
+        <div class="mens-menu">
+            <li onclick="klikdagelijks()"><a>Mijn dagelijks leven</a></li>
+          </div>
+        <div id="empty-menu"></div>
+        <div class="favo-menu">
+          <li onclick="klikFavCoaches()"><a>Mijn Coaches</a></li>
+        </div>
+        <div class="favo-menu">
+          <li onclick="klikFavInspiratie()"><a>Mijn inspiratie</a></li>
+        </div>
+        <div class="favo-menu">
+          <li><a>Mijn evenementen</a></li>
+        </div>
+        <div id="empty-menu"></div>
+        <div class="tool-menu">
+          <li onclick="toolsCH()">Tools</li>
+        </div>
+      </ul>
+    </div>
+
+<!------- Mens wrapper -------->
+          <main id="profielWrapper">
+
+              <section id="coachTools">
+                  <a href="../nieuwepost.html"><h3>Maak een nieuwe blog of vlog</h3></a>
+                  <h3>Plaats een nieuw evenement</h3>
+                </section>
+
+              <section id="karakter">
+              <nav id="karakterMenu">
+               
+              </nav>
+              <div id="learnings"></div>
+            </section>
+
+            <section id="dagelijks">
+
+            </section>
+
+            <section id="mijnKarakterTochten">
+              <div id="ontO"></div>
+              <div id="nieuweKarakterTocht">
+                  <button onclick = "nieuweTocht()" class="button-karakter">Begin een nieuw doel</button>
+                    <div id="nieuweO"></div>
+              </div>
+            </section>
+
+            <section id="favoInspiratie">
+              <div id="favoInspiratieDiv"></div>
+            </section>
+
+            <section id="favoCoach">
+                <div id="favoCoachDiv"></div>
+              </section>
+              <section id="coach-contact">
+                <p>Plan een afspraak</p>
+                <p>Online contact</p>
+              </section>
+              <section id="over-mij">
+                <p>Een stukje geschiedenis</p>
+                <p>Mijn lievelingsdier</p>
+                <p>Mijn favoriete qoute</p>
+              </section>
+              <section id="mijn-coaching">
+                <div class="nav">
+                  <p>Locatie</p>
+                </div>
+                  <p>Doelgroep</p>
+                  <p>Coachstijli</p>
+                  <p>Aantal jaren ervaring</p>
+                  <p>Modules, thema's & doelen waarbij ik kan helpen</p>
+                  <p>Waarom ik coach ben geworden</p>
+                  <p>Werkwijze</p>
+                  <p>Opleiding & Certificaten</p>
+                  <p>Relevante ervaringen</p>
+              </section>
+              <section id="mijn-bijdragen">
+                <p>Mijn inspiratie</p>
+                <p>Mijn evenementen</p>
+                <p>Mijn online workshops</p>
+              </section>
+              <section id="tools">
+                <a href="../nieuwepost.html"><p>Schrijf een artikel</p></a>
+                <p>Plaats een video</p>
+                <p>Plaats een evenement</p>
+                <p>Maak een workshop</p>
+              </section>
+          </main>
+
+        <!-- footer -->
+        <footer class="footer">
+            <div class="footer-left">
+              <h3 class="footer-h3"><strong> Vitaminds </strong></h3>
+                <p> Op avontuur in je eigen geest </P>
+            </div>
+            <div class="footer-center">
+              <h3 class="footer-h3">Over Vitaminds</h3>
+               <p><a href="../overons.html">Ons verhaal</a></p>
+            </div>
+            <div class="footer-right">
+              <h3><strong> Contact </strong></h3>
+                <ul>
+                  <li><a>Vitaminds</a></li>
+                  <li><a>www.vitaminds.nu</a></li>
+                  <li><a>info@vitaminds.nu</a></li>
+                </ul>
+            </div>
+          </footer>
+          
+<script type="text/javascript" src="../javascript/firebase.js"></script>
+<script type="text/javascript" src="../javascript/auth.js"></script>
+<script type="text/javascript" src="../javascript/DigiMind.js"></script>
+</body>
+    
+</html>

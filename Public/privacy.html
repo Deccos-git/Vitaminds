@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <Title> Vitaminds</title>
+  <link rel="stylesheet" href="style/style.css">
+  <link rel="stylesheet" href="style/privacy.css">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+</head>
+
+<body>
+   <!-- menu -->
+  <nav class="menu">
+      <ul class = "top-menu">
+          <li class="main-menu"><a href="index.html"><img src="images/logo.png" alt="Vitaminds logo" width="100px" height="50px"></a></li>
+          <li class="main-menu"><a href="openup.html">Open up</a></li>
+          <li class="main-menu"><a href="inspiratie.html">Inspiratie</a></li>
+          <li class="main-menu"><a href="evenementen.html">Evenementen</a></li>
+          <li class="main-menu"><a href="coaches.html">Coaches</a></li>
+        <li class = "login-logout"><p id="aanmeldCH"><a href="RegisterCH.html">Aanmelden als coach</a></p></li> 
+        <li class = "login-logout"><a>|</a></li>
+        <li onclick = "logOut()" class = "login-logout"><button><a>Log uit</a></button></li>
+        <li class = "login-logout"><button><a href="inlog.html">Log in</a></button></li>
+        <li class = "login-logout"><a>|</a></li>
+        <li class = "login-logout"><p id="mijnAccount"></p></li>
+      </ul>
+    </nav>
+
+<h1>Privacy</h1>
+<div id="statement">
+    <p>Bij Vitaminds geloven we dat openheid een belangrijk aspect is van persoonlijke groei. 
+        Toch is de informatie die we hier met elkaar delen erg persoonlijk. We vinden het dan ook 
+        van groot belang dat deze informatie niet op jouw persoon is te herleiden. 
+        De belangrijkste manier waarop we dat voorkomen is door te werken met anonieme gebruikersnamen. 
+        We begrijpen dat je daarnaast graag wilt weten wat we van jouw verzamelen.</p>
+</div>
+<section id="privacySection">
+    <div class="privacyDiv">
+        <h2>Wat Vitaminds van je verzameld</h2>
+        <ul>
+            <li>Je anonieme gebruikersnaam</li>
+            <li>Je emailadres</li>
+            <li>Wat je invult tijdens je gebruik van de website</li>
+        </ul>
+    </div>
+
+    <div class="privacyDiv">
+        <h2>Wat Vitaminds niet van je verzelameld</h2>
+        <ul>
+            <li>Je echte naam</li>
+            <li>Je adres</li>
+            <li>Je wachtwoord voor inloggen op deze website</li>
+            <li>Je ip-adres</li>
+        </ul>
+    </div>
+</section>
+
+<div id="statement">
+        <p>We hopen dat je met een gerust hart gebruik kunt maken van de website en ervan kunt leren en groeien.
+            Mocht je nog vragen hebben over je privacy, stuur ons dan even een mailtje op info@vitaminds.nu.
+        </p>
+    </div>
+
+<!-- footer -->
+<footer class="footer">
+        <div class="footer-left">
+          <h3 class="footer-h3"><strong> Vitaminds </strong></h3>
+            <p> Op avontuur in je eigen geest </P>
+        </div>
+        <div class="footer-center">
+          <h3 class="footer-h3">Over Vitaminds</h3>
+           <p><a href="overons.html">Ons verhaal</a></p>
+        </div>
+        <div class="footer-right">
+          <h3><strong> Contact </strong></h3>
+            <ul>
+              <li><a>Vitaminds</a></li>
+              <li><a>www.vitaminds.nu</a></li>
+              <li><a>info@vitaminds.nu</a></li>
+            </ul>
+        </div>
+      </footer>
+    
+        <script type="text/javascript" src="javascript/firebase.js"></script>
+        <script type="text/javascript" src="javascript/auth.js"></script>
+        <script type="text/javascript" src="javascript/index.js"></script>
+    </body>
+    </html>
+    

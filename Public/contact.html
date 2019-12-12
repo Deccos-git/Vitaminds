@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>DigiMind</title>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/contact.css">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+</head>
+<body>
+
+<nav>
+    <ul class = "top-menu">
+        <li class="main-menu"><a href="index.html"><img src="images/logo.png" alt="Vitaminds logo" width="100px" height="50px"></a></li>
+    </ul>
+</nav> 
+   
+<main id="contactdiv">
+    <section id="sectie">
+            <div id="profielCH"></div>
+            <h3 id="naamCH">Coach</h3>
+            <input id="inputtextCH" type="text">
+            <button onclick="verzendenCH()">Verzenden</button>
+    </section>
+    <section id="sectieContact">
+        <div id="chat"></div>
+    </section>
+    <section id="sectie">
+            <div id="profielVM"></div>
+            <h3 id="naamVM">Vitaminder</h3> 
+            <input id="inputtextVM" type="text">
+            <button onclick="verzendenVM()">Verzenden</button>
+            <h4>Mijn karaktertocht</h4>
+            <select id="CTkaraktertocht">Mijn karaktertocht</select>
+    </section>
+</main>
+          
+<script type="text/javascript" src="javascript/firebase.js"></script>
+<script type="text/javascript" src="javascript/auth.js"></script>
+<script type="text/javascript" src="javascript/contact.js"></script>
+</body>
+    
+</html>
+
+
+ 

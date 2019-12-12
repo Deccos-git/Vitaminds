@@ -1,0 +1,830 @@
+body{
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 23px;
+}
+
+p{
+  font-size: 23px;
+  font-family: 'Nunito Sans', sans-serif !important;
+  color: #122b46;
+}
+
+h1{
+  color: #8e0000;;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 42px;
+  text-align: center;
+}
+
+h2{
+  font-family: 'Libre Baskerville', serif;
+  font-size: 30px;
+  text-align: center;
+  color: #0c6665;
+}
+
+a{
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+a:link{
+  text-decoration: none;
+}
+
+h3{
+  font-family: 'Nunito Sans', sans-serif;
+  color: #0c6665;
+  font-size: 30px;
+}
+
+h4{
+  font-family: 'Nunito Sans', sans-serif;
+  color: #122b46;
+  font-size: 23px;
+}
+
+h5{
+  font-family: 'Nunito Sans', sans-serif;
+  color: #122b46;
+  font-size: 18px;
+}
+
+.subtitel {
+  color: #122b46;
+  text-align: center;
+}
+
+select{
+  font-size: 20px;
+  background-color: #FFF;
+  color: #122b46;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-color: #FFF;
+}
+
+/* menu styling */
+
+.menu{
+  height: auto;
+}
+
+.top-menu .main-menu a:link{
+  color: #122b46;
+}
+
+.top-menu .main-menu a:active{
+  color: #122b46;
+}
+
+.top-menu .main-menu a:visited{
+  color: #122b46;
+}
+
+.top-menu {
+  color: #122b46;
+  list-style: none;
+  margin-top: 10px;
+  margin-left: 80px;
+  margin-right: 80px;
+  padding: 15px;
+  z-index: 10;
+  overflow: hidden;
+  height: auto;
+}
+
+ #ul-ul{
+  list-style: none;
+  margin: 0px;
+  margin-left: 0px;
+  padding: 0px;
+  z-index: 10;
+}
+
+.top-menu .main-menu{
+  float: left;
+  width: 120px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  text-align: center;
+  z-index: 10;
+  margin: 15px;
+}
+
+.top-menu .main-menu a {
+  text-decoration: none;
+  display: block;
+}
+
+.top-menu .main-menu a:hover {
+  color: #8e0000;
+}
+
+.top-menu .main-menu ul li {
+  display: none;
+}
+
+.top-menu .main-menu:hover ul li {
+  display: block;
+}
+
+.login-logout{
+  margin-top: 0px;
+  float: right;
+  list-style: none;
+  display: flex;
+  margin-left: 10px;
+  vertical-align: center;
+}
+
+.login-logout button {
+  background-color: #0c6665;
+  border: 1px #0c6665 solid;
+  border-radius: 8px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 18px;
+  color: #FFF;
+  cursor: pointer;
+}
+
+.login-logout button:hover {
+  border: 2px #FFF solid;
+}
+
+.login-logout button a:link {
+  text-decoration: none;
+  color: #FFF;
+}
+
+.login-logout button a:active {
+  color: #FFF;
+}
+
+.login-logout button a:visited {
+  color: #FFF;
+}
+
+.login-logout a{
+  font-size: 18px;
+}
+
+#mijnAccount{
+  margin: 0px 0px 0px 0px;
+}
+
+#mijnAccount a{
+  font-size: 25px;
+}
+
+#mijnAccount a:link{
+  text-decoration: none;
+  color: #0c6665;
+}
+
+#mijnAccount a:visited{
+  text-decoration: none;
+  color: #0c6665;
+}
+
+#aanmeldCH{
+  margin-top: 0px;
+}
+
+#aanmeldCH a{
+  text-decoration: none;
+  color: #0c6665;
+}
+
+#aanmeldCH a:active{
+  color: #0c6665;
+}
+
+#aanmeldCH a:visited{
+  color: #0c6665;
+}
+
+
+/* button algemeen */
+
+.button{
+  display: flex;
+  justify-content: center;
+}
+
+.button-algemeen {
+  background-color: #0c6665;
+  border: 1px #0c6665 solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 20px;
+  color: #FFF;
+  cursor: pointer;
+ }
+ 
+ .button-algemeen:hover {
+   background-color: #0c6665;
+   border: 2px #0c6665 solid;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 20px;
+  color: #fff;
+ }
+ 
+ .button-algemeen a:link{
+   text-decoration:none;
+   color: #FFF;
+ }
+ 
+ .button-algemeen a:active{
+   text-decoration:none;
+   color: #fff
+ }
+ 
+ .button-algemeen a:visited{
+   text-decoration:none;
+   color: #fff;
+ }
+
+ .button-header{
+  background-color: #0c6665;
+  border: 1px #0c6665 solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+  align-self: center;
+  margin: 60px 10px 100px 10px;
+ }
+
+ .button-header a:link{
+   text-decoration: none;
+   color: #ffffff;
+ }
+
+ .button-header a:visited{
+  text-decoration: none;
+  color: #FFF;
+}
+
+.button-karakter{
+  background-color: #0c6665;
+  border: 1px #0c6665 solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+  margin: 60px 10px 10px 10px;
+  width: 95%;
+  align-self: center;
+}
+
+.button-welkom{
+  background-color: #0c6665;
+  border: 1px #0c6665 solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+  margin: 10px 10px 10px 10px;
+  width: 100%;
+  align-self: center;
+}
+
+/* header*/
+
+.header-image{
+  background-image: url("../images/avontuur3.jpg");
+  height: 900px;
+  width: 100%;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;;
+  align-items: center;;
+}
+
+.header-image a:link{
+  text-decoration: none;;
+  color: #fff;
+}
+
+.header-image a:visited{
+  text-decoration: none;;
+  color: #fff;
+}
+
+.header-title{
+  color: #FFF;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 70px;
+  text-align: center;
+}
+
+.header {
+  width: 100%;
+  z-index: 1;
+}
+
+#background{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #FFFFff90;
+  margin-top: 80px;
+  border-radius: 15px;
+  padding: 15px;
+  text-align: center;
+}
+
+.header-image h1{  
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  margin-bottom: 0px;
+  color: #8e0000;
+}
+
+.header-image h2{
+  color: #122b46;
+}
+
+.subheader{
+  color: #FFF;
+  font-size: 25px;
+  text-align: center;
+  margin-top: 0px;
+}
+
+#vertelMeMeer a{
+  color: #0c6665;
+}
+
+/* DigiMind welkom */
+
+.welkom{
+  margin-bottom: 50px;
+}
+
+.subtitel{
+  margin: 60px 0px 60px 0px;
+}
+
+.DigiMind{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.DigiMind section{
+  height: 500px;
+  width: 400px;
+  border-radius: 15px;
+  margin: 20px;
+  align-items: center;
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+}
+
+.DigiMind div h3{
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  text-transform: uppercase;
+  margin-top: 40px;
+}
+
+.karakter{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.karakter p{
+  margin-bottom: 70px;
+}
+
+#karakterHead{
+  background-image: url("../images/welkomKarakter.jpg");
+  background-size: 400px 200px;
+  height: 200px;
+  width: 100%;
+  margin: 0px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.ervaring{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.ervaring p{
+  margin-bottom: 70px;
+}
+
+#ervaringHead{
+  background-image: url("../images/welkomOntwikkeling.jpg");
+  background-size: 400px 200px;
+  height: 200px;
+  width: 100%;
+  margin: 0px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.groei{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.groei p{
+  margin-bottom: 70px;
+}
+
+#groeiHead{
+  background-image: url("../images/welkomGroei.jpg");
+  background-size: 400px 200px;
+  height: 200px;
+  width: 100%;
+  margin: 0px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+#pers{
+  color: #122b46;
+  background-color: #fff;
+  margin: 0px 30px 0px 15 px;
+  width: 80%;
+}
+
+#ont{
+  color: #122b46;
+  background-color: #fff;
+  margin: 0px 30px 0px 15 px;
+  width: 80%;
+}
+
+#erv{
+  background-color: #fff;
+  margin: 0px 30px 0px 15 px;
+  width: 80%;
+  color: #122b46;
+}
+
+.welkom2{
+  background-image: url("../images/welkomTwee3.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 800px;
+}
+
+.welkom2 h1{
+  color: #122b46;
+  margin: 250px 0px 0px 0px;
+}
+
+.welkom2 h2{
+  color: #0c6665;
+  margin: 100px 200px 10px 200px;
+}
+
+#omgeving{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #122b46;
+  font-size: 30px;
+}
+
+#omgeving li{
+  list-style: none;
+}
+
+#omgeving li:before {
+  content: "\2022";
+  color: #0c6665;
+  font-weight: bold;
+  display: inline-block;
+  width: 30px;
+  margin-left: -10px;
+}
+
+
+/* main informatie styling */
+
+.container{
+  margin: 0px 0px 150px 0px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+}
+
+.subtitelTwee{
+  color: #122b46;
+  margin: 60px 0px 0px 0px;
+  padding: 80px 0px 0px 0px;
+}
+
+.infoMenu{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 0px 0px 40px 0px;
+}
+
+.infoMenu li{
+  display: block;
+  padding: 30px;
+  color: #0c6665;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.infoMenu a {
+  text-decoration: none;
+  color: #0c6665; 
+}
+
+.infoMenu a:hover {
+  color: #8e0000;
+}
+
+.menusub{
+  cursor: pointer;
+
+}
+
+.methode{
+  align-self: center;
+  font-size: 20px;
+  margin: 50px 0px 0px 0px;
+  font-weight: 600;
+}
+
+.samenvattingpics{
+  border-radius: 15px;
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+}
+
+#open-up {
+  margin-top: 10px;
+  margin-left: 15%;
+  margin-right: 15%;
+  height: auto;
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
+  text-align: center;
+}
+
+#open-upHead{
+  background-image: url("../images/openuppic.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 400px;
+  width: 100%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+#open-upTekst{
+  padding: 15px;
+}
+
+#inspiratie {
+  margin-top: 10px;
+  margin-left: 15%;
+  margin-right: 15%;
+  height: auto;
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
+  text-align: center;
+}
+
+#inspiratieHead{
+  background-image: url("../images/inspiratiepic.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 400px;
+  width: 100%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+#inspiratieTekst{
+  padding: 15px;
+}
+
+#activiteiten {
+  margin-top: 10px;
+  margin-left: 15%;
+  margin-right: 15%;
+  height: auto;
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
+  text-align: center;
+}
+
+#activiteitenHead{
+  background-image: url("../images/activiteitenpic.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 400px;
+  width: 100%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+#activiteitenTekst{
+  padding: 15px;
+}
+
+#coaching {
+  margin-top: 10px;
+  margin-left: 15%;
+  margin-right: 15%;
+  height: auto;
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
+  text-align: center;
+}
+
+#coachingHead{
+  background-image: url("../images/coachingpic.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 400px;
+  width: 100%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+#coachingTekst{
+  padding: 15px;
+}
+
+/* footer */
+
+footer {
+  padding-left: 80px;
+  display: flex;
+  justify-content: center;
+  background-color: #122b46;
+  color: #fff;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+  margin-top: auto;
+}
+
+footer p{
+  color: #FFF;
+}
+
+footer ul {
+  list-style: none;
+  margin: 0px;
+  margin-left: 0px;
+  margin-bottom: 20px;
+  padding: 0px;
+  z-index: 10;
+}
+
+footer div{
+  margin-left: 80px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+footer h3{
+  font-family: 'Libre Baskerville', serif;
+  text-decoration: none;
+  color: #FFF
+}
+
+.footer-h3{
+  font-family: 'Nunito Sans', sans-serif;
+}
+
+.footer-left{
+ width: 20%
+}
+
+.footer-center{
+  width: 20%
+ }
+
+.footer-right{
+  width: 20%
+ }
+
+/* page title */
+
+.page-title{
+  margin-top: 50px;
+}
+
+/* layout pages */
+
+.section-1{
+  display: flex;
+  margin-left: 80px;
+  margin-right: 80px;
+  align-items: center;
+}
+
+.section-2{
+  display: flex;
+  margin-left: 80px;
+  margin-right: 80px;
+  align-items: center;
+}
+.section-3{
+  display: flex;
+  margin-left: 80px;
+  margin-right: 80px;
+  align-items: center;
+}
+
+/* inlog page */
+
+.inlogVM{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin: 20px 0px 220px 0px;
+
+}
+#registerform{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.button-inlog{
+  align-items: baseline;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 18px;
+  background-color: #fff;
+  border: 1px #122b46 solid;
+  border-radius: 8px;
+  cursor: pointer; 
+}
+
+.button-inlog:hover {
+  border: 2px #8e0000 solid;
+}
+
+/* form input */
+
+input {
+  padding: 10px 10px 10px 10px;
+  font-size: 105%;
+  border-radius: 10px;
+  margin: 5px;
+  border: 1px solid #122b46;
+}
+
+input:focus, input:hover {
+  border: 1,5px solid #f5f5f5;
+}
+
+#check1{
+color: #122b46;
+font-size: 20px;
+margin: 0px 0px 30px 0px;
+}
+
+#check2{
+  color: #122b46;
+  font-size: 20px;
+  margin: 0px 0px 30px 0px;
+  }
+
+/* Menu Auth */
+
+#mijnAccount{
+  color: #8e0000;
+}

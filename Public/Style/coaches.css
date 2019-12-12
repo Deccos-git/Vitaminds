@@ -1,0 +1,57 @@
+#mainCoach{
+    display: flex;
+}
+
+.filterCoach{
+    border: 1px solid #8e969e;
+    margin: 30px;
+    padding: 20px;
+    height: auto;
+    width: auto;
+}
+
+#overview{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    width: 100%;
+}
+
+.nieuweD{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    margin: 30px 30px 20px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+    padding: 15px;
+    width: 300px;
+    text-align: center;
+}
+
+.coachnaam{ 
+    margin: 15px;
+}
+
+.coachCat{
+    margin-top: 5px;
+}
+
+.nieuweTitel{
+    font-weight: 800;
+    margin: 30px 30px 5px 30px;
+}
+
+.profielfotoCH{
+    background-image: url("../images/neusaap2.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    height: 200px;
+    width: 100%;
+    margin: 0px;
+}
+
+
+

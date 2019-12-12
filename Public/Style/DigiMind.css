@@ -1,0 +1,510 @@
+/* Welkom */
+
+#welkomWrapper{
+    display: flex;
+    background-image: url("../images/headerDigimind1.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 300px;
+    width: 100%;
+    margin: 0px 0px 0px 0px;
+}
+
+#profielfoto{
+    background-image: url("../images/neusaap.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 180px 50px 10px 60px;
+    height: 210px;
+    width: 210px;
+    padding: 0px;
+    position: relative;
+    border: 1px solid #FFF;
+    border-radius: 15px;
+}
+
+#userinfo{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 150px;
+    background-color: #122b46;
+    margin: 0px;
+    box-shadow: 0 7px 15px 0 #000000b4;
+}
+
+#onlineoffline{
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background-color: green;
+    border: 1px solid #8e969e;
+    margin: 50px 5px 0px 15px;
+}
+
+#userID{
+    margin-left: 350px;
+}
+
+#userID h1, h5{
+    color: #FFF;
+}
+
+#userIDsub{
+    display: flex;
+}
+
+#niveau{
+    align-self: center;
+    padding: 30px;
+    margin-top: 0px;
+    text-align: center;
+}
+
+#niveau h3, h5{
+    color: #FFF;
+    margin-top: 0px;
+}
+
+.usertype{
+    margin-top: 0px;
+}
+
+#uploadfoto{
+    z-index: 2;
+}
+
+#contact h4, p{
+    color: #0c6665;
+}
+
+#contact h4{
+    color: #122b46;
+}
+
+#contact{
+    align-self: center;
+    margin: 5px 10px 0px 30px;
+    background-color: #FFF;
+    border-radius: 15px;
+    padding: 10px;
+    text-align: center;
+}
+
+.welkom{
+    margin-bottom: 20px;
+  }
+  
+  .subtitel{
+    margin: 60px 0px 60px 0px;
+  }
+  
+  .DigiMind{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .DigiMind section{
+    height: 500px;
+    width: 400px;
+    border-radius: 15px;
+    margin: 20px;
+    align-items: center;
+    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  .DigiMind div h3{
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    text-transform: uppercase;
+    margin-top: 40px;
+  }
+
+/* Submenu */
+
+
+#menuWrapper{
+    display:flex;
+    justify-content: space-evenly;
+    margin: 100px 0px 0px 0px;
+}
+
+#menuWrapper ul{
+    padding: 0px;
+    margin: 0px;
+}
+
+#menuWrapper li{
+    float: left;
+    list-style: none;
+    margin: 0px;
+    padding: 0px 10px 0px 10px;
+    cursor: pointer;
+    font-size: 18px;
+    cursor: pointer;  
+    color: #fff;
+}
+
+#menuSub{
+    display: flex;
+}
+
+#empty-menu{
+    background-color: #fff !important;
+    border: none !important;
+    width: 15px;
+    height: auto;
+} 
+
+#menuSub div{
+    background-color: #122b4613;
+    border: 1px solid #122b46;
+    padding: 5px 0px 5px 0px;
+}
+
+#MKA{
+    display: none;
+}
+
+#profielmenu1 a{
+    color: #0c6665;
+}
+
+.coach-menu{
+    background-color: #0c6665 !important;
+    border: 1px solid #FFF !important;
+}
+
+.mens-menu{
+    background-color: #cf6e13 !important;
+    border: 1px solid #FFF !important;
+}
+
+.favo-menu{
+    background-color: #8e0000 !important;
+    border: 1px solid #FFF !important;
+}
+
+.tool-menu{
+    background-color: #122b46 !important;
+    border: 1px solid #FFF !important;
+}
+
+/* Profiel */
+
+#profielWrapper{
+    height: auto;
+    width: 100%;
+    min-height: 800px;
+    margin: 0px 0px 0px 0px;
+    border: 1px solid #8e969e;
+    display: flex;
+    padding: 0%;
+}
+
+        /* Karakter */
+
+        #karakter{
+            height: 100%;
+            width: 100%;
+            display: none;
+        }
+                
+        #karakterMenu{
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+        }
+
+        .nav{
+            text-align: center;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #122b46;
+            padding: 5px;
+            cursor: pointer;
+            background-color: #122b4613;
+            border-right: 1px solid #122b46;
+            height: auto;
+            width: 200px;
+        }
+
+        .nav p{
+            margin: 5px;
+            font-size: 18px;
+            color: #122b46;
+        }
+
+
+        .extraInfo{
+            color: #0c6665;
+            font-size: 20px;
+            margin: 0px 5px 0px 5px;
+            text-align: center;
+            border: 1px solid #0c6665;
+            border-radius: 50%;
+            height: 20px;
+            width: 20px;
+        }
+
+        #learningsKarakter{
+            margin: 15px;
+            border-right: 1px solid #122b46;
+            width: 100%;
+            text-align: center;
+        }
+
+        #learningKarakter h2{
+            color: #122b46;
+        }
+
+
+        #authKarakter{
+            display: flex;
+            width: 100%;
+        }
+
+        .badge{
+            border: 1px solid #122b46;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px;
+        }
+
+        .badge h3{
+            font-size: 22px;
+        }
+
+        .learn{
+            border-bottom: 1px solid #122b46;
+        }
+
+        .learn p{
+            font-size: 30px;
+        }
+
+        .dank-meta{
+            font-size: 14px;
+            color: #122b46;
+        }
+
+        .karakter-section{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Doelen */
+
+        #mijnKarakterTochten{
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            height: 100%;
+            padding: 30px;
+        }
+
+        #ontO{
+            display: flex;
+            flex-wrap: wrap; 
+            width: 100%;
+            height: auto;
+        }
+
+        .ontwikkelDiv{
+            border: 1px solid #8e969e;
+            box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+            width: 400px;
+            border-radius: 15px;
+            margin: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .ontwikkelDiv h1{
+            font-size: 30px;
+        }
+
+        #mijnKarakterTochten button, h3{
+            margin: 15px;
+        }
+
+        #nieuweKarakterTocht{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: auto;
+            height: auto;
+        }
+
+        .middelDiv{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #nieuweO{
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 400px;
+            height: auto;
+            border: 1px solid #122b46;
+            border-radius: 15px;
+            margin: 30px;
+        }
+
+        .meerDiv{
+            display: flex;
+            justify-content: space-evenly;
+            background-color: #cf6e13;
+            color: #FFF;
+        }
+
+        .tochtHeader{
+            background-image: url("../images/avontuur4.jpg");
+            background-repeat: no-repeat;
+            background-position: center;
+            height:200px;
+            width: 100%;
+        }
+
+        #methodeO{
+            height: auto;
+            width: 80%;
+            border: 1px solid #cf6e13;
+            border-radius: 15px;
+            margin: 15px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        #methodeO h3{
+            color: #cf6e13;
+            font-size: 20px;
+        }
+
+        .meerLeren{
+            cursor: pointer;
+            color: #FFF;
+            font-size: 16px;
+        }
+
+        .meerPraktijk{
+            cursor: pointer;
+            color: #FFF;
+            font-size: 16px;
+        }
+
+
+        .startpunt{
+            margin: 10px 0px 0px 0px;
+            color: #122b46;
+            font-size: 25px;
+        }
+
+        .beginO{
+            color: #0c6665;
+            margin: 5px 40px 15px 40px;
+        }
+
+        .methodeTitel{
+            color: #122b46;
+            font-size: 25px;
+        }
+
+        .methodeX{
+        background-color: #cf6e13;
+        border: 1px #cf6e13 solid;
+        border-radius: 10px;
+        font-family: 'Nunito Sans', sans-serif;
+        font-size: 20px;
+        color: #FFF;
+        padding: 15px;
+        }
+
+        #coachTools{
+            display: none;
+            flex-direction: column;
+            align-content: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .methodeExtraP{
+            margin: 5px;
+            color: #FFF;
+        }
+
+        .doel-learning-lijst{
+            text-align: left;
+        }
+
+        .doel-learning-lijst li{
+            color: #122b46;
+            font-size: 16px;
+        }
+
+        /* Favorieten */
+
+        #favoInspiratie{
+            display: none;
+        }
+        
+        #favoCoach{
+            display: none;
+        }
+        
+        #favoInspiratieDiv{
+            margin: 15px;
+            border: 1px solid #122b46;
+            border-radius: 15px;
+            padding: 15px;
+            height: auto;
+        }
+
+
+/* Coach deel */
+
+#coachWrapper{
+    height: auto;
+    min-height: 300px;
+    width: 100%;
+    margin: 0px 0px 0px 0px;
+    border: 1px solid #8e969e;
+    display: flex;
+    padding: 30px;
+}
+
+#coach-contact{
+    display: none;
+    flex-direction: column;
+}
+
+#over-mij{
+    display: none;
+    flex-direction: column;
+}
+
+#mijn-coaching{
+    display: none;
+    flex-direction: column;
+}
+
+#mijn-bijdragen{
+    display: none;
+    flex-direction: column;
+}
+
+#tools{
+    display: none;
+    flex-direction: column;
+}

@@ -1,0 +1,327 @@
+/* menu */
+
+#inspiratiemenu{
+    display: flex;
+    justify-content: center;
+    margin: 15px 30px 10px 30px; 
+    width: 200px;
+    align-self: center;
+}
+
+.button-menu{
+    width: 100px;
+    align-self: center;
+    background-color: #0c6665;
+    border: 1px #0c6665 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 20px;
+    color: #FFF;
+    cursor: pointer;
+}
+
+#bijschrijven{
+    border-bottom: #122b46 2px solid;
+    padding: 15px;
+}
+
+/* Overzicht pagina */
+
+#alle{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.mainTekst{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: auto;
+    margin: 30px 30px 20px 30px;
+    padding-bottom:20px;
+    align-items: center;
+    border-radius: 15px;;
+}
+
+.mainTekst h4{
+    color: #FFF;
+    font-size: 40px;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px #122b46;
+ 
+}
+
+.divTekst{
+    padding: 15px;
+    display: block;
+    flex-direction: column;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.divButton{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    padding: 20px 0px 20px 0px;
+}
+
+.headerTekst{
+    background-image: url("../images/windmolens.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 300px;
+    width: 100%;
+    margin: 0px;
+    border-radius: 3px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.auteurTekst{
+    font-size: 14px;
+    cursor: pointer;
+    color: #FFF;
+    text-shadow: 1px 1px #122b46;
+}
+
+#auteur{
+    cursor: pointer;
+}
+
+.stampTekst{
+    font-size: 14px;
+}
+
+.divTekst{
+    max-height: 300px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.divHeader{
+    margin: 0px 0px 15px 0px;
+}
+
+#inspiratieDK{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Individueel artikel pagina */
+
+#headerInsp{
+    background-image: url("../images/windmolens.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 500px;
+}
+
+.artikel{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    display: flex;
+    margin: 40px 200px 40px 200px;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 15px;
+}
+
+.artikel p{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 30px 30px 30px;
+}
+
+.artikel h6{
+    margin: 10px 10px 5px 30px;
+    color: #122b46;
+}
+
+#meta{
+    display: flex;
+    justify-content: space-between;
+}
+
+#datum{
+    text-align: end;
+}
+
+/* Call to action */
+
+.calltoaction{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    border-radius: 10px;
+    margin: 30px 200px 30px 200px;
+    padding: 10px;
+    background-color: #cf6e13;
+    height: auto;
+}
+
+.calltoaction input{
+    width: 100%;
+}
+
+#karakterTochtenAuth{
+    color: #0c6665;
+}
+
+#kiesTocht{
+    color: #8e0000;
+}
+
+#CTAAuth{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.bijschrijven p{
+    cursor: pointer;
+}
+
+.favAut p{
+    border-radius: 15px;
+    color: #fff;
+}
+
+/* nieuwe post */
+
+#nieuwepost{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 10px 100px 10px;
+}
+
+#postbody{
+    height: auto;
+    min-height: 700px;
+    width: 75%;
+    border: 1px solid #122b46;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 30px;
+}
+
+#nieuwposttitel{
+    width: 75%
+}
+
+#categorieSelectie{
+    margin: 0px 0px 30px 0px;
+    font-size: 100%;
+}
+
+#texteditor{
+    height: 100px;
+    width: 75%;
+    border: 1px solid #122b46;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #122b46;
+}
+
+#texteditor button{
+   border: 1px solid #fff;
+   padding: 5px;
+   margin: 10px 2px 10px 2px;
+   border-radius: 3px;
+   cursor: pointer;
+   color: #fff;
+   width: 28px;
+   height: 35px;
+   text-align: center;
+   background-color: #122b46;
+   font-size: 20px;
+}
+
+#texteditor img{
+    border: 1px solid #fff;
+    padding: 5px;
+    margin: 10px 2px 10px 2px;
+    border-radius: 3px;
+    cursor: pointer;
+    color: #fff;
+    width: 28px;
+    height: 35px;
+    text-align: center;
+    background-color: #122b46;
+    font-size: 20px;
+ }
+
+#texteditor button:hover{
+    background-color: #25384d
+ }
+
+ /*LearningsOutput*/
+
+ #learnH2{
+     color: #cf6e13;
+ }
+
+ #categorie{
+    color: #fff;
+ }
+
+ #learningsInsp{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    border-radius: 10px;
+    margin: 30px 200px 30px 200px;
+    padding: 10px;
+    background-color: #fff;
+ }
+
+ #learningsOutput{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    margin: 10%;
+ }
+
+ .learnDiv{
+     border: 1px solid #122b46;
+     padding: 15px;
+     margin: 15px;
+     border-radius: 15px;
+     text-align: center;
+ }
+
+ .sectionDiv{
+     display: flex;
+     flex-direction: column;
+     width: 40%;
+     height: auto;
+     margin: 10px;
+     border-bottom: 1px solid #122b46;
+ }
+
+ .sectionDiv h4{
+     color: #0c6665;
+     font-weight: bold;
+     font-size: 110%;
+ }
+
+ .sectionDiv p{
+     font-size: 16px;
+ }
+
+ .inspireerClass{
+     cursor: pointer;
+ }
+
+ .GBlink{
+     cursor: pointer;
+ }

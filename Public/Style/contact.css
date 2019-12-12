@@ -1,0 +1,77 @@
+#contactdiv{
+    display: flex;
+    justify-content: space-around;
+    padding: 30px;
+}
+
+#sectie{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   text-align: center;
+}
+
+#profielCH{
+    background-image: url("../images/coachingpic.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 10px 10px 10px 10px;
+    height: 210px;
+    width: 200px;
+    padding: 0px;
+    position: relative;
+    border: 1px solid #FFF;
+    border-radius: 15px;
+}
+
+#profielVM{
+    background-image: url("../images/neusaap.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 10px 10px 10px 10px;
+    height: 210px;
+    width: 200px;
+    padding: 0px;
+    position: relative;
+    border: 1px solid #FFF;
+    border-radius: 15px;
+
+}
+
+.opmerkingCH{
+    border: 1px solid #122b46;
+    background-color: #122b46;
+    color: white;
+    border-radius: 15px;
+    padding: 15px 50px 15px 15px;
+    border-bottom-left-radius: 0px;
+    align-self: left;
+    margin: 40px 50% 40px 40px;
+}
+
+#naamCH{
+    color: #122b46;
+}
+
+.opmerkingVM{
+    border: 1px solid #0c6665;
+    background-color: #0c6665;
+    color: #FFF;
+    border-radius: 15px;
+    width: auto;
+    padding: 15px;
+    border-bottom-right-radius: 0px;
+    align-self: right;
+    margin: 40px;
+    text-align: left;
+    margin: 40px 40px 40px 50%;
+}
+
+#sectieContact{
+    width: 80%;
+    height: auto;
+}
+
+#karakterTochtenAuth{
+    color: #0c6665;
+}

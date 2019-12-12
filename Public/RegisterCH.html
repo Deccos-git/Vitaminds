@@ -1,0 +1,88 @@
+<html>
+
+  <head>
+    <Title> Vitaminds rebuild </title>
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/register.css">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  </head>
+
+  <body>
+    <!-- menu -->
+    <section class="menu">
+        <ul class = "top-menu">
+            <li class="main-menu"><a href="index.html"><img src="images/logo.png" alt="Vitaminds logo" width="100px" height="50px"></a></li>
+            <li class="main-menu"><a href="openup.html">Open up</a></li>
+            <li class="main-menu"><a href="inspiratie.html">Inspiratie</a></li>
+            <li class="main-menu"><a href="evenementen.html">Evenementen</a></li>
+            <li class="main-menu"><a href="coaches.html">Coaches</a></li>
+          <li onclick = "logOut()" class = "login-logout"><button><a>Log uit</a></button></li>
+          <li class = "login-logout"><button><a href="inlog.html">Log in</a></button></li>
+          <li class = "login-logout"><a>|</a></li>
+          <li class = "login-logout"><p id="mijnAccount"></p></li>
+        </ul>
+      </section>
+
+<!-- Register -->
+<h1>Maak je Coachprofiel aan</h1>
+<div id="registerform">
+  <input id="registerEmailCH" type="email" placeholder="emailadres..">
+  <input id="registerWachtwoordCH" type="password" placeholder="wachtwoord..">
+  <input id="registerGebruikersnaamCH" type="text" placeholder="Voornaam Achternaam">
+  <p>Omschrijf je coachingsstijl in 1 zin</p>
+  <input id="coachStijl" type="text" placeholder="Je coachstijl">
+  <p>Omschrijf je levensvisie in max 4 zinnen</p>
+  <textarea id="omschrijving" type="text" placeholder="Omschrijf jezelf"></textarea>
+  <p>In welke stad/dorp bevindt je praktijkruimte zich?</p>
+  <input id="locatieCH" type="text" placeholder="Je stad/dorp">
+  <p>Selecteer de onderwerpen waarmee jij mensen kan helpen:</p>
+  <div>
+    <select id="DDThema" name = "dropdown">
+       <option value="Kernwaarden" >Kernwaarden</option>
+       <option value="Dankbaarheid" >Dankbaarheid</option>
+    </select>
+  </div>
+  <p>Selecteer je doelgroep(en):</p>
+  <div>
+    <select id="DDDoelgroep" name = "dropdown">
+       <option value="Kinderen">Kinderren</option>
+       <option value="Studenten">Studenten</option>
+       <option value="Volwassenen">Volwassenen</option>
+       <option value="Senioren">Senioren</option>
+    </select>
+  </div>
+  
+  <button onclick ="registerCH()" id="registerButton" >Maak je Coachprofiel aan</a></button>
+  <p id="alEenProfiel"> Al een Coachprofiel? <a href= inlog.html> Klik hier </a>
+  </div>
+
+<!-- footer -->
+<footer class="footer">
+    <div class="footer-left">
+      <h3 class="footer-h3"><strong> Vitaminds </strong></h3>
+        <p> Op avontuur in je eigen geest </P>
+    </div>
+    <div class="footer-center">
+      <h3 class="footer-h3">Over Vitaminds</h3>
+       <p><a href="overons.html">Ons verhaal</a></p>
+    </div>
+    <div class="footer-right">
+      <h3><strong> Contact </strong></h3>
+        <ul>
+          <li><a>Vitaminds</a></li>
+          <li><a>www.vitaminds.nu</a></li>
+          <li><a>info@vitaminds.nu</a></li>
+        </ul>
+    </div>
+  </footer>
+  
+    <script type="text/javascript" src="javascript/firebase.js"></script>
+    <script type="text/javascript" src="javascript/register.js"></script>
+    
+  </body>
+</html>
