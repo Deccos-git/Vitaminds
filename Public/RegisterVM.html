@@ -35,12 +35,11 @@
         <input id="registerGebruikersnaam" type="text" placeholder="Je anonieme gebruikersnaam.."><br>
         <input id="registerEmail" type="email" placeholder="emailadres..">
         <input id="registerWachtwoord" type="password" placeholder="wachtwoord..">
-        <button onclick ="register()" class="button-algemeen">Maak je DigiMind aan</a></button>
+        <form action="RegisterVM.html" method="post">
+        <button  class="button-algemeen">Maak je DigiMind aan</a></button>
+        </form>
         <p> Al een DigiMind? <a href= inlog.html> Log in</a>
      </div> 
-    
-  
-  
 
 
 <!-- footer -->
@@ -64,7 +63,8 @@
   </footer>
   
     <script type="text/javascript" src="javascript/firebase.js"></script>
-    <script type="text/javascript" src="javascript/register.js"></script>
+    <script type="text/javascript" src="javascript/auth.js"></script>
+    <script type="text/javascript" src="node.js"></script>
     
   </body>
 </html>

@@ -13,7 +13,7 @@ const html = createHTML({
     body: '<h1> Test </h1>'
   })
 
-app.post("../RegisterVM", (req, sent) => {
+app.post("../RegisterVM", (req, res) => {
   fs.writeFile(`../Vitaminders/${naam}.html`, html, function () { 
   })
 })
