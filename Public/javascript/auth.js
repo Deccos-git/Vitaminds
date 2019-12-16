@@ -11,6 +11,24 @@ auth.onAuthStateChanged(User =>{
 })
 })
 
+// naam van auth inladen
+auth.onAuthStateChanged(User =>{
+  const naam = document.querySelectorAll("[data-selector=gebruikersnaam]")
+  const useRef = db.collection("Vitaminders").doc(User.uid);
+useRef.get().then(function(doc) {
+  if (doc.exists) {
+    naam.forEach(node => {
+        node.textContent = " " + doc.data().Gebruikersnaam;
+    });
+  } else {
+      console.log("No such document!");
+  }
+}).catch(function(error) {
+  console.log("Error getting document:", error);
+})
+})
+
+
 //Inlog
 function inlogVM(){
   const inlogEmail = document.getElementById("emailVM").value;
@@ -39,6 +57,7 @@ function register(){
   const gebruikersnaam = document.getElementById('registerGebruikersnaam').value;
   
   firebase.auth().createUserWithEmailAndPassword(email, password).then(cred =>{
+    //mailto: "info@vitaminds.nu"
     db.collection('Vitaminders').doc(cred.user.uid).set({
       Gebruikersnaam: gebruikersnaam,
       Usertype: "Vitaminder",
