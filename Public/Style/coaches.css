@@ -10,6 +10,33 @@
     width: auto;
 }
 
+#filterLocatie{
+    font-size: 20px;
+    background-color: #FFF;
+    color: #122b46;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-color: #122b46;
+}
+
+#filterCoachCategorien{
+    font-size: 20px;
+    background-color: #FFF;
+    color: #122b46;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-color: #122b46;
+}
+
+#filterDoelgroep{
+    font-size: 20px;
+    background-color: #FFF;
+    color: #122b46;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-color: #122b46;
+}
+
 #overview{
     display: flex;
     flex-wrap: wrap;
