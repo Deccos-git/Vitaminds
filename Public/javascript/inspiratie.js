@@ -8,8 +8,6 @@ function filterMenu(){
     const catOpties = cat.options;
     const catSelect = catOpties[catOpties.selectedIndex].value;
 
-    console.log(catSelect)
-
     db.collection("Artikelen").where("Categorie", "==", catSelect).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 

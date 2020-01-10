@@ -33,10 +33,10 @@
 
       <div id="regUserIDsub">
         <h2> Maak je Vitaminds Digimind aan</h2>
-        <input id="registerGebruikersnaam" type="text" placeholder="Je anonieme gebruikersnaam.."><br>
+        <form action="/api/user" method="post" enctype="text/plain">
+        <input id="registerGebruikersnaam" type="text" name="gebruikersnamen" placeholder="Je anonieme gebruikersnaam.."><br>
         <input id="registerEmail" type="email" placeholder="emailadres..">
         <input id="registerWachtwoord" type="password" placeholder="wachtwoord..">
-        <form action="/api/user" method="post">
         <button  class="button-algemeen">Maak je DigiMind aan</a></button>
         </form>
         <p> Al een DigiMind? <a href= inlog.html> Log in</a>
