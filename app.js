@@ -18,10 +18,11 @@ app.use(bodyParser.json());
 app.use(express.static('Public'))
 
 app.post("/api/user", (res, req) => {
-  console.log(req.body)
+  console.log(req.query)
 // fs.writeFile("Public/Vitaminders/2.html", html, (err) => {
 //   console.log(err)
 //   })
 })
 
 app.listen(port)
+console.log("het werkt")
