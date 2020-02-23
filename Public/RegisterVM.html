@@ -33,37 +33,21 @@
 
       <div id="regUserIDsub">
         <h2> Maak je Vitaminds Digimind aan</h2>
-        <form action="/api/user" method="post" enctype="text/plain">
+        <form action="/user" method="post" enctype="application/x-www-form-urlencoded">
         <input id="registerGebruikersnaam" type="text" name="gebruikersnamen" placeholder="Je anonieme gebruikersnaam.."><br>
-        <input id="registerEmail" type="email" placeholder="emailadres..">
-        <input id="registerWachtwoord" type="password" placeholder="wachtwoord..">
-        <button  class="button-algemeen">Maak je DigiMind aan</a></button>
+        <input id="registerEmail" type="email" name="email" placeholder="emailadres..">
+        <input id="registerWachtwoord" type="password" name="password" placeholder="wachtwoord..">
+        <button  onclick="register()" class="button-algemeen">Maak je DigiMind aan</a></button>
         </form>
         <p> Al een DigiMind? <a href= inlog.html> Log in</a>
      </div> 
 
 
 <!-- footer -->
-<footer class="footer">
-    <div class="footer-left">
-      <h3 class="footer-h3"><strong> Vitaminds </strong></h3>
-        <p> Op avontuur in je eigen geest </P>
-    </div>
-    <div class="footer-center">
-      <h3 class="footer-h3">Over Vitaminds</h3>
-       <p><a href="overons.html">Ons verhaal</a></p>
-    </div>
-    <div class="footer-right">
-      <h3><strong> Contact </strong></h3>
-        <ul>
-          <li><a>Vitaminds</a></li>
-          <li><a>www.vitaminds.nu</a></li>
-          <li><a>info@vitaminds.nu</a></li>
-        </ul>
-    </div>
-  </footer>
+<footer class="footer"></footer>
   
     <script type="text/javascript" src="javascript/firebase.js"></script>
+    <script type="text/javascript" src="javascript/assets.js"></script>
     <script type="text/javascript" src="javascript/auth.js"></script>
     
   </body>

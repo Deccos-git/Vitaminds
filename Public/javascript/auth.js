@@ -2,6 +2,9 @@
 //Ingelogd in main menu
 auth.onAuthStateChanged(User =>{
   const userRef = db.collection("Vitaminders").doc(User.uid);
+
+  console.log(User.uid)
+
     userRef.get().then(function(doc) {
       if (doc.exists) {
         naam = doc.data().Gebruikersnaam;
@@ -28,7 +31,6 @@ useRef.get().then(function(doc) {
 })
 })
 
-
 //Inlog
 function inlogVM(){
   const inlogEmail = document.getElementById("emailVM").value;
@@ -36,37 +38,31 @@ function inlogVM(){
     auth.signInWithEmailAndPassword(inlogEmail, inlogPassword)
 }
   
-  
 //Log out
 function logOut(){
   firebase.auth().signOut().then(function() {
       window.location.href = "../index.html"
     }).catch(function(error) {
-      // An error happened.
+      console.log(error)
     })
   }
-
-  function init(){
-  }
-  window.addEventListener('DOMContentLoaded', init);
 
   //Register VM
-function register(){
-  const email = document.getElementById('registerEmail').value;
-  const password = document.getElementById('registerWachtwoord').value;
-  const gebruikersnaam = document.getElementById('registerGebruikersnaam').value;
+// function register(){
+//   const email = document.getElementById('registerEmail').value;
+//   const password = document.getElementById('registerWachtwoord').value;
+//   // const gebruikersnaam = document.getElementById('registerGebruikersnaam').value;
   
-  firebase.auth().createUserWithEmailAndPassword(email, password).then(cred =>{
-    //mailto: "info@vitaminds.nu"
-    db.collection('Vitaminders').doc(cred.user.uid).set({
-      Gebruikersnaam: gebruikersnaam,
-      Usertype: "Vitaminder",
-      Inspiratiepunten: 1,
-    }).then(()=>{
-      window.open("inlog.html", "_self");
-    })
-  })
-};
+//   firebase.auth().createUserWithEmailAndPassword(email, password)
+  
+//   // .then(cred =>{
+//   //   db.collection('Vitaminders').doc(cred.user.uid).set({
+//   //     Gebruikersnaam: gebruikersnaam,
+//   //     Usertype: "Vitaminder",
+//   //     Inspiratiepunten: 1,
+//   //   })
+//   // })
+// };
 
 //Register CH
 function registerCH(){
