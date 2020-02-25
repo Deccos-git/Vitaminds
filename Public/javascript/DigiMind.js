@@ -1,14 +1,15 @@
 
-// Submenu
+// Profiel inhoud
 const avontuur = document.getElementById("mijnKarakterTochten");
 const karakter = document.getElementById("karakter");
 const dagelijksLeven = document.getElementById("dagelijks");
 const coachtools = document.getElementById("coachTools");
 const favoInspiratie = document.getElementById("favoInspiratie");
 const favoCoach = document.getElementById("favoCoach")
+const doelen = document.getElementById("doelen")
+const nieuwArtikel = document.getElementById("artikel")
 
  //Coach menu
-
  const coachContact = document.getElementById("coach-contact");
  const overMij = document.getElementById("over-mij");
  const mijnCoaching = document.getElementById("mijn-coaching");
@@ -25,6 +26,7 @@ const favoCoach = document.getElementById("favoCoach")
         avontuur.style.display = "none";
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
+        nieuwArtikel.style.display = "none"
  }
 
  function overMijCH(){
@@ -37,6 +39,7 @@ const favoCoach = document.getElementById("favoCoach")
         avontuur.style.display = "none";
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
+        nieuwArtikel.style.display = "none"
  }
 
  function mijnCoachingCH(){
@@ -49,6 +52,7 @@ const favoCoach = document.getElementById("favoCoach")
         avontuur.style.display = "none";
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
+        nieuwArtikel.style.display = "none"
  }
 
  function mijnBijdragenCH(){
@@ -61,6 +65,7 @@ const favoCoach = document.getElementById("favoCoach")
         avontuur.style.display = "none";
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
+        nieuwArtikel.style.display = "none"
  }
 
  function toolsCH(){
@@ -73,6 +78,7 @@ const favoCoach = document.getElementById("favoCoach")
         avontuur.style.display = "none";
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
+        nieuwArtikel.style.display = "none"
  }
 
  // Vitaminders menu
@@ -88,6 +94,7 @@ function klikavontuur(){
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
          mijnTools.style.display = "none"
+         nieuwArtikel.style.display = "none"
 };
 
 function klikkarakter(){
@@ -101,6 +108,7 @@ function klikkarakter(){
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
          mijnTools.style.display = "none"
+         nieuwArtikel.style.display = "none"
 };
 
 function klikdagelijks(){
@@ -115,6 +123,7 @@ function klikdagelijks(){
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
          mijnTools.style.display = "none"
+         nieuwArtikel.style.display = "none"
 }
 
 function tools(){
@@ -128,6 +137,7 @@ function tools(){
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
          mijnTools.style.display = "none"
+         nieuwArtikel.style.display = "none"
 }
 
 function klikFavInspiratie(){
@@ -141,10 +151,28 @@ function klikFavInspiratie(){
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
          mijnTools.style.display = "none"
+         nieuwArtikel.style.display = "none"
 }
 
 function klikFavCoaches(){
         favoCoach.style.display = "flex";
+        avontuur.style.display = "none";
+        karakter.style.display = "none";
+        favoInspiratie.style.display = "none";
+        coachtools.style.display = "none";
+        coachContact.style.display = "none"
+         overMij.style.display = "none"
+         mijnCoaching.style.display = "none"
+         mijnBijdragen.style.display = "none"
+         mijnTools.style.display = "none"
+         nieuwArtikel.style.display = "none"
+}
+
+// Tools menu
+
+function artikel(){
+        nieuwArtikel.style.display = "block"
+        favoCoach.style.display = "none";
         avontuur.style.display = "none";
         karakter.style.display = "none";
         favoInspiratie.style.display = "none";
@@ -525,7 +553,7 @@ auth.onAuthStateChanged(User =>{
 
         // Hoofd-element selecteren
         const DOMlearnings = document.getElementById("learnings");
-        const DOMnav = document.getElementById("karakterMenu")
+        const DOMnav = document.getElementById("submenu-karakter")
 
         // Menu Karakter
         DOMmenu = document.getElementById("karakter");

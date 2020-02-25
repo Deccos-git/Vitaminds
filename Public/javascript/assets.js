@@ -7,6 +7,7 @@ DOMArray.forEach( dom => {
     const logo = document.createElement("img")
         logo.setAttribute("src", "../images/logo-footer.png")
         logo.setAttribute("alt", "logo-vitaminds")
+        logo.setAttribute("width", "200px")
     const subtitelDiv = document.createElement("div")
     const subtitel = document.createElement("p")
     const socialDiv = document.createElement("div")
@@ -44,19 +45,3 @@ DOMArray.forEach( dom => {
     linkCH.appendChild(actionCH)
 })
 
-/* <footer class="footer">
-    <div id="footer-logo">
-      <img src="./images/logo.png" alt="logo-vitaminds" width="200px">
-    </div>
-    <div>
-      <p>Op avontuur in je eigen karakter</p>
-    </div>
-    <div>
-     <img src="images/Logo-facebook.png" alt="facebook-Vitaminds" width="50px"> 
-     <img src="images/logo-youtube.png" alt="youtube-Vitaminds" width="50px">
-    </div>
-    <div>
-     <a href="RegisterVM.html"><h6>Begin je avontuur</h6></a> 
-     <a href="RegisterCH.html"><h6>Aanmelden als coach</h6></a> 
-    </div>
-  </footer> */

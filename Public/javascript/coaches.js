@@ -8,6 +8,10 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         
             //Waar de coachprofielen onder komen in de DOM
         const overview = document.getElementById("overview");
+        const loader = document.getElementById("loader")
+
+       
+            loader.style.display = "none"
 
             //De coach-eigenschappen
         const naam = doc.data().Gebruikersnaam;

@@ -32,22 +32,17 @@
 <!-- Register -->
 <h1>Maak je Coachprofiel aan</h1>
 <div id="registerform">
-  <input id="registerEmailCH" type="email" placeholder="emailadres..">
-  <input id="registerWachtwoordCH" type="password" placeholder="wachtwoord..">
-  <input id="registerGebruikersnaamCH" type="text" placeholder="Voornaam Achternaam">
+  <form action="/coach" method="post" enctype="application/x-www-form-urlencoded">
+  <input id="registerGebruikersnaamCH" type="text" name="username" placeholder="Voornaam Achternaam">
+  <input id="registerEmailCH" type="email" name="email" placeholder="emailadres..">
+  <input id="registerWachtwoordCH" type="password" naem="password" placeholder="wachtwoord..">
   <p>Omschrijf je coachingsstijl in 1 zin</p>
-  <input id="coachStijl" type="text" placeholder="Je coachstijl">
+  <input id="coachStijl" type="text" name="coachstijl" placeholder="Je coachstijl">
   <p>Omschrijf je levensvisie in max 4 zinnen</p>
-  <textarea id="omschrijving" type="text" placeholder="Omschrijf jezelf"></textarea>
+  <textarea id="omschrijving" type="text" name="levensvisie" placeholder="Omschrijf je levensvisie"></textarea>
   <p>In welke stad/dorp bevindt je praktijkruimte zich?</p>
-  <input id="locatieCH" type="text" placeholder="Je stad/dorp">
+  <input id="locatieCH" type="text" name="locatie" placeholder="Je stad/dorp">
   <p>Selecteer de onderwerpen waarmee jij mensen kan helpen:</p>
-  <div>
-    <select id="DDThema" name = "dropdown">
-       <option value="Kernwaarden" >Kernwaarden</option>
-       <option value="Dankbaarheid" >Dankbaarheid</option>
-    </select>
-  </div>
   <p>Selecteer je doelgroep(en):</p>
   <div>
     <select id="DDDoelgroep" name = "dropdown">
@@ -56,9 +51,10 @@
        <option value="Volwassenen">Volwassenen</option>
        <option value="Senioren">Senioren</option>
     </select>
-  </div>
+    <button onclick ="registerCH()" id="registerButton" >Maak je Coachprofiel aan</a></button>
+  </form>
+</div>
   
-  <button onclick ="registerCH()" id="registerButton" >Maak je Coachprofiel aan</a></button>
   <p id="alEenProfiel"> Al een Coachprofiel? <a href= inlog.html> Klik hier </a>
   </div>
 

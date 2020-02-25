@@ -1,13 +1,22 @@
 #mainCoach{
     display: flex;
+    flex-direction: column;
 }
 
 .filterCoach{
     border: 1px solid #8e969e;
     margin: 30px;
-    padding: 20px;
     height: auto;
     width: auto;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #8e969e;
+    text-align: center;
+}
+
+.filterCoach h4{
+    color: #FFF;
+    font-size: 18px;
 }
 
 #filterLocatie{
@@ -80,5 +89,12 @@
     margin: 0px;
 }
 
+#loader{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 

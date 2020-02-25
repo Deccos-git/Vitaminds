@@ -36,30 +36,36 @@
 <h1 >Coaches</h1>
 <section id="mainCoach">
   <div class="filterCoach">
-    <h3>Filter</h3>
-    <p>Stad of dorp</p>
-    <select id="filterLocatie" name = "dropdown">  
-      <option value="Undefined">Alle locaties</option>
-      <option value="Meppel">Meppel</option>
-      <option value="Amsterdam">Amsterdam</option>
-    </select>
-    <p>Thema's</p>
-    <select id="filterCoachCategorien" name = "dropdown">
-      <option value="Undefined">Alle thema's</option>
-      <option value="Kernwaarden">Kernwaarden</option>
-      <option value="Dankbaarheid">Dankbaarheid</option>
-    </select>
-    <p>Doelgroep</p>
-    <select id="filterDoelgroep" name = "dropdown">
-      <option value="Undefined">Alle doelgroepen</option>
-      <option value="Senioren">Senioren</option>
-      <option value="Volwassenen">Volwassenen</option>
-    </select>
     <div>
-       <button onclick="zoek()" class="button-algemeen">Zoek</button>
+      <h4>Stad of dorp</h4>
+      <select id="filterLocatie" name = "dropdown">  
+        <option value="Undefined">Alle locaties</option>
+        <option value="Meppel">Meppel</option>
+        <option value="Amsterdam">Amsterdam</option>
+      </select>
+    </div>
+    <div>
+      <h4>Thema's</h4>
+      <select id="filterCoachCategorien" name = "dropdown">
+        <option value="Undefined">Alle thema's</option>
+        <option value="Kernwaarden">Kernwaarden</option>
+        <option value="Dankbaarheid">Dankbaarheid</option>
+      </select>
+    </div>
+    <div>
+      <h4>Specialisatie</h4>
+      <select id="filterDoelgroep" name = "dropdown">
+        <option value="Undefined">Alle doelgroepen</option>
+        <option value="Senioren">Senioren</option>
+        <option value="Volwassenen">Volwassenen</option>
+      </select>
     </div>
   </div>
-  <container id="overview"></container> 
+  <container id="overview">
+    <div id="loader">
+      <img src="images/loader.gif" alt="loading" style="width:120px;height:120px;">
+    </div>
+  </container> 
 </section>
     
       <!-- footer -->

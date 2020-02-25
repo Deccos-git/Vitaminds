@@ -80,6 +80,9 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
 
         //Waar de artikelen kom te staan in de DOM
         const bodyh1 = document.getElementById("alle");
+        const loader = document.getElementById("loader")
+       
+        loader.style.display = "none"
         
         // De artikel eigenschappen
         const titelTekst = doc.data().Titel;
@@ -358,8 +361,6 @@ function favArtikel(){
         userRef.get().then(doc2 =>{
           const naam = doc2.data().Gebruikersnaam;
 
-          console.log(naam)
-      
       
       userRef.collection("Favorieten").doc().set({
         

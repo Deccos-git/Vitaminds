@@ -11,7 +11,15 @@
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     align-items: center;
-    background-color: rgba(255,255,255, 0.9);
+    background-color: rgba(255,255,255, 0.3);
+  }
+
+  #main-alfa{
+      width: 60%;
+      background-color: rgba(255,255,255, 0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
   }
   
   #header-alfa{
@@ -86,4 +94,18 @@
 
   h6{
     color: #122b46;
+  }
+
+  #alfa-bedankt{
+      display: none;
+      width: auto;
+      height: 100px;
+  }
+
+  #alfa-bedankt p{
+    color: #0c6665;
+  }
+
+  #alfa-button{
+      margin-top: 30px;
   }

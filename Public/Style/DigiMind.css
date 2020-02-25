@@ -127,7 +127,8 @@
 
 #menuWrapper{
     display:flex;
-    justify-content: space-evenly;
+    flex-direction: column;
+    
     margin: 100px 0px 0px 0px;
 }
 
@@ -142,13 +143,19 @@
     margin: 0px;
     padding: 0px 10px 0px 10px;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;  
-    color: #fff;
+    color: #122b46;
 }
 
 #menuSub{
     display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+.menu-icon{
+    margin-right: 5px;
 }
 
 #empty-menu{
@@ -158,9 +165,17 @@
     height: auto;
 } 
 
+.descriptie{
+    border: 2px solid #fff;
+}
+
+.descriptie p{
+    margin: 3px;
+}
+
 #menuSub div{
     background-color: #122b4613;
-    border: 1px solid #122b46;
+    border: 2px solid #fff;
     padding: 5px 0px 5px 0px;
 }
 
@@ -170,26 +185,6 @@
 
 #profielmenu1 a{
     color: #0c6665;
-}
-
-.coach-menu{
-    background-color: #0c6665 !important;
-    border: 1px solid #FFF !important;
-}
-
-.mens-menu{
-    background-color: #cf6e13 !important;
-    border: 1px solid #FFF !important;
-}
-
-.favo-menu{
-    background-color: #8e0000 !important;
-    border: 1px solid #FFF !important;
-}
-
-.tool-menu{
-    background-color: #122b46 !important;
-    border: 1px solid #FFF !important;
 }
 
 /* Profiel */
@@ -202,6 +197,12 @@
     border: 1px solid #8e969e;
     display: flex;
     padding: 0%;
+}
+
+.profiel-inhoud{
+    margin: 30px;
+    display: none;
+    width: 100%;
 }
 
         /* Karakter */
@@ -222,19 +223,19 @@
             text-align: center;
             display: flex;
             align-items: center;
-            border-bottom: 1px solid #122b46;
-            padding: 5px;
+            border: 2px solid #fff;
+            padding: 5px 5px 5px 10px;
             cursor: pointer;
             background-color: #122b4613;
-            border-right: 1px solid #122b46;
             height: auto;
             width: 200px;
         }
 
         .nav p{
-            margin: 5px;
-            font-size: 18px;
+            margin: 3px;
+            font-size: 16px;
             color: #122b46;
+            text-align: left;
         }
 
 
@@ -504,7 +505,5 @@
     flex-direction: column;
 }
 
-#tools{
-    display: none;
-    flex-direction: column;
-}
+/* Tools */
+
