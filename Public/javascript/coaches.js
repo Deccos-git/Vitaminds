@@ -31,11 +31,11 @@
 //             link.setAttribute("class", "button-algemeen")
         
 //             nieuweH3.addEventListener('click', (e) => {
-//                 window.open("Vitaminders/" + [naam] + ".html", "_self");
+//                 window.open("Vitaminders/" + [naam], "_self");
 //             })
 
 //             link.addEventListener('click', (e) => {
-//                 window.open("Vitaminders/" + [naam] + ".html", "_self");
+//                 window.open("Vitaminders/" + [naam], "_self");
 //             })   
 //             //De coach-eigenschappen in de nieuwe HTML-elementen zetten
 //         nieuweH3.innerHTML = naam;

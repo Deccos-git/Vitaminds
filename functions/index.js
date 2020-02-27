@@ -21,6 +21,15 @@ admin.initializeApp(firebaseConfig);
 
 const urlencodedParser = bodyParser.urlencoded({extended: true});
 
+//Digimind aanmaken op basis van URL
+
+app.get('/Vitaminders/:id',function(req,res)
+{
+    res.sendFile('digimind.html', { root: __dirname });
+});
+
+// Vitaminder profiel aanmaken
+
 app.post("/user", urlencodedParser, (req, res) => {
   const username = req.body.gebruikersnamen
   const email = req.body.email
@@ -42,6 +51,8 @@ app.post("/user", urlencodedParser, (req, res) => {
   res.send("Uw account is aangemaakt")
   })
 });
+
+// Coach profiel aanmaken
 
 app.post("/coach", urlencodedParser, (req, res) => {
   const username = req.body.username

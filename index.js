@@ -1,8 +1,17 @@
 const functions = require('firebase-functions');
 const express = require('express');
 const app = express();
+const port = process.env.port || 5500
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
+
+
+app.use(express.static('Public'))
+
+app.get('/Vitaminders/:id',function(req,res)
+{
+    res.sendFile('/Public/digimind.html', { root: __dirname });
+});
 
 var firebaseConfig = {
   apiKey: "AIzaSyB_y0DwGVL7PCB7xc5s2lSiaPCyzrGZOV4",
@@ -73,5 +82,8 @@ app.post("/coach", urlencodedParser, (req, res) => {
 })
 })
 
+
+
 exports.app = functions.https.onRequest(app);
 
+app.listen(port)

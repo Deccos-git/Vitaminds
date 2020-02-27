@@ -7,7 +7,7 @@ auth.onAuthStateChanged(User =>{
       if (doc.exists) {
         naam = doc.data().Gebruikersnaam;
   
-    document.getElementById("mijnAccount").innerHTML= `<a href = "Vitaminders/${naam}.html">${naam}</a>`
+    document.getElementById("mijnAccount").innerHTML= `<a href = "Vitaminders/${naam}">${naam}</a>`
       }
     })
   } else {
