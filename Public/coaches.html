@@ -36,30 +36,35 @@
 <h1 >Coaches</h1>
 <section id="mainCoach">
   <div class="filterCoach">
+    <section id="filters"> 
     <div>
       <h4>Stad of dorp</h4>
-      <select id="filterLocatie" name = "dropdown">  
-        <option value="Undefined">Alle locaties</option>
-        <option value="Meppel">Meppel</option>
-        <option value="Amsterdam">Amsterdam</option>
+      <select class="coach-filter" id="filterLocatie">  
+        <option>Alle locaties</option>
+        <option>Meppel</option>
+        <option>Amsterdam</option>
       </select>
     </div>
     <div>
       <h4>Thema's</h4>
-      <select id="filterCoachCategorien" name = "dropdown">
-        <option value="Undefined">Alle thema's</option>
-        <option value="Kernwaarden">Kernwaarden</option>
-        <option value="Dankbaarheid">Dankbaarheid</option>
+      <select class="coach-filter" id="filterCoachCategorien">
+        <option>Alle thema's</option>
+        <option>Kernwaarden</option>
+        <option>Dankbaarheid</option>
       </select>
     </div>
     <div>
       <h4>Specialisatie</h4>
-      <select id="filterDoelgroep" name = "dropdown">
-        <option value="Undefined">Alle doelgroepen</option>
-        <option value="Senioren">Senioren</option>
-        <option value="Volwassenen">Volwassenen</option>
+      <select class="coach-filter" id="filterDoelgroep">
+        <option>Alle doelgroepen</option>
+        <option>Senioren</option>
+        <option>Volwassenen</option>
       </select>
     </div>
+  </section>
+  <div id="filter-button">
+    <button class="button-menu" onclick="filter()">Filter</button>
+  </div>
   </div>
   <container id="overview">
     <div id="loader">

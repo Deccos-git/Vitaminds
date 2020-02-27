@@ -8,6 +8,8 @@ function filterMenu(){
     const catOpties = cat.options;
     const catSelect = catOpties[catOpties.selectedIndex].value;
 
+    console.log(catSelect)
+
     db.collection("Artikelen").where("Categorie", "==", catSelect).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
@@ -88,6 +90,7 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
         const titelTekst = doc.data().Titel;
         const bodyTekst = doc.data().Body;
         const auteurTekst = doc.data().Auteur;
+        const categorieTekst = doc.data().Categorie;
 
         // De nieuwe HTML-elementen en classes
         const mainDiv = document.createElement("div");
@@ -103,6 +106,8 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
         const nieuweAuteur = document.createElement("p");
             nieuweAuteur.setAttribute("class", "auteurTekst");
             nieuweAuteur.setAttribute("data-link", auteurTekst)
+        const categorie = document.createElement("p");
+            categorie.setAttribute("class", "categorieTekst")
         const linkDiv = document.createElement("div");
             linkDiv.setAttribute("class", "divTekst");
         const linkTekst = document.createElement("button");
@@ -118,17 +123,19 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
             })
 
         // De artikel eigenschappen in de nieuwe HTML elementen zetten
+        categorie.innerHTML = categorieTekst;
         nieuweTitel.innerHTML = titelTekst;
         nieuweBody.innerHTML = bodyTekst;
-        nieuweAuteur.innerHTML = "Geschreven" + " " + "door" + " " + auteurTekst 
-        linkTekst.innerHTML = "Lees meer"
+        nieuweAuteur.innerHTML = "Geschreven" + " " + "door" + " " + `<u> ${auteurTekst} </u>`;
+        linkTekst.innerHTML = "Lees meer";
 
         // De nieuwe HTML elementen vastzetten aan de DOM
        bodyh1.appendChild(mainDiv);
         mainDiv.appendChild(headerTekst);
-        headerTekst.appendChild(nieuweTitel);
-        headerTekst.appendChild(nieuweAuteur);
         mainDiv.appendChild(nieuweDivTekst);
+        nieuweDivTekst.appendChild(categorie);
+        nieuweDivTekst.appendChild(nieuweTitel);
+        nieuweDivTekst.appendChild(nieuweAuteur);
        nieuweDivTekst.appendChild(nieuweBody);
        mainDiv.appendChild(linkTekst);
 })

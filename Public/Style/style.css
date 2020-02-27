@@ -10,6 +10,7 @@ p{
   font-size: 23px;
   font-family: 'Nunito Sans', sans-serif !important;
   color: #122b46;
+  font-weight: 100;
 }
 
 h1{
@@ -58,7 +59,7 @@ h5{
 }
 
 select{
-  font-size: 20px;
+  font-size: 18px;
   background-color: #FFF;
   color: #122b46;
   padding: 10px;
@@ -225,7 +226,7 @@ link{
   border: 1px #0c6665 solid;
   border-radius: 10px;
   font-family: 'Nunito Sans', sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   color: #FFF;
   cursor: pointer;
  }

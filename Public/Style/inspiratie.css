@@ -15,7 +15,7 @@
     border: 1px #0c6665 solid;
     border-radius: 10px;
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 20px;
+    font-size: 16px;
     color: #FFF;
     cursor: pointer;
 }
@@ -39,27 +39,20 @@
     flex-direction: column;
     width: 400px;
     height: auto;
-    margin: 30px 30px 20px 30px;
+    margin: 30px 10px 20px 10px;
     padding-bottom:20px;
     align-items: center;
     border-radius: 15px;;
 }
 
-.mainTekst h4{
-    color: #FFF;
-    font-size: 40px;
-    margin-bottom: 5px;
-    text-shadow: 1px 1px #122b46;
- 
+.mainTekst:hover{
+    box-shadow: 0 8px 8px 0 rgba(0,0,0,.14), 0 9px 7px -8px rgba(0,0,0,.2), 0 7px 11px 0 rgba(0,0,0,.12);
 }
 
-.divTekst{
-    padding: 15px;
-    display: block;
-    flex-direction: column;
-    text-align: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.mainTekst h4{
+    color: #122b46;
+    font-size: 35px;
+    margin: 10px;
 }
 
 .divButton{
@@ -78,13 +71,26 @@
     border-radius: 3px;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .auteurTekst{
     font-size: 14px;
     cursor: pointer;
+    color: #122b46;
+}
+
+.categorieTekst{
+    font-size: 14px;
+    cursor: pointer;
     color: #FFF;
-    text-shadow: 1px 1px #122b46;
+    margin: 5px 5px 5px 5px;
+    background-color: #cf6e13;
+    border-radius: 5px;
+    padding: 5px;
+    z-index: 1;
 }
 
 #auteur{
@@ -95,10 +101,17 @@
     font-size: 14px;
 }
 
+.bodyTekst{
+    margin: 0px 10px 0px 10px;
+}
+
 .divTekst{
     max-height: 300px;
     overflow: hidden;
     margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .divHeader{

@@ -1,21 +1,23 @@
 
 //Ingelogd in main menu
 auth.onAuthStateChanged(User =>{
-  const userRef = db.collection("Vitaminders").doc(User.uid);
-
-  console.log(User.uid)
-
+  if(User){
+    const userRef = db.collection("Vitaminders").doc(User.uid);
     userRef.get().then(function(doc) {
       if (doc.exists) {
         naam = doc.data().Gebruikersnaam;
   
     document.getElementById("mijnAccount").innerHTML= `<a href = "Vitaminders/${naam}.html">${naam}</a>`
+      }
+    })
+  } else {
+    console.log("Offline")
   }
-})
 })
 
 // naam van auth inladen
 auth.onAuthStateChanged(User =>{
+  if(User){
   const naam = document.querySelectorAll("[data-selector=gebruikersnaam]")
   const useRef = db.collection("Vitaminders").doc(User.uid);
 useRef.get().then(function(doc) {
@@ -29,6 +31,9 @@ useRef.get().then(function(doc) {
 }).catch(function(error) {
   console.log("Error getting document:", error);
 })
+  } else {
+    console.log("Offline")
+  }
 })
 
 //Inlog
