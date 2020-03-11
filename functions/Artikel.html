@@ -14,21 +14,20 @@
 
 <body>
    <!-- menu -->
-  <section class="menu">
-      <ul class = "top-menu">
-          <li class="main-menu"><a href="../pages/index.html"><img src="../images/logo.png" alt="Vitaminds logo" width="100px" height="50px"></a></li>
-          <li class="main-menu"><a href="../pages/openup.html">Open up</a></li>
-          <li class="main-menu"><a href="../pages/inspiratie.html">Inspiratie</a></li>
-          <li class="main-menu"><a href="../pages/evenementen.html">Evenementen</a></li>
-          <li class="main-menu"><a href="../pages/coaches.html">Coaches</a></li>
-        <li class = "login-logout"><button><a href="../pages/RegisterCH.html">Aanmelden als coach</a></button></li> 
-        <li class = "login-logout"><a>|</a></li>
-        <li onclick = "logOut()" class = "login-logout"><button><a>Log uit</a></button></li>
-        <li class = "login-logout"><button><a href="../pages/inlog.html">Log in</a></button></li>
-        <li class = "login-logout"><a>|</a></li>
-        <li class = "login-logout"><p id="mijnAccount"></p></li>
-      </ul>
-    </section>
+ <!-- menu -->
+ <section class="menu">
+  <ul class = "top-menu">
+      <li class="main-menu"><a href="../index.html"><img src="../../images/logo.png" alt="Vitaminds logo" width="100px" height="50px"></a></li>
+      <li class="main-menu"><a href="../openup.html">Open up</a></li>
+      <li class="main-menu"><a href="../inspiratie.html">Inspiratie</a></li>
+      <li class="main-menu"><a href="../evenementen.html">Evenementen</a></li>
+      <li class="main-menu"><a href="../coaches.html">Coaches</a></li></li>
+    <li onclick = "logOut()" class = "login-logout"><button><a>Log uit</a></button></li>
+    <li class = "login-logout"><button><a href="../inlog.html">Log in</a></button></li>
+    <li class = "login-logout"><a>|</a></li>
+    <li class = "login-logout"><p id="mijnAccount"></p></li>
+  </ul>
+</section>
 
 
 <!-- Artikel -->
@@ -50,10 +49,15 @@
   <section id="CTAAuth">
     <div class="bijschrijven">
         <input id="inputDB" type="text" placeholder="Wat ik heb geleerd..">
+        <p>Koppelen aan levensvraag?</p>
+        <select name="" id="learning-levensvraag">
+          <option>Niet aan een levensvraag koppelen</option>
+        </select>
         <button onclick="submitKT()" class="button-algemeen">Deel</button>
-        <p id="deelOpenUp">Deel iets in Open Up</p>
-        <p id= "favArtikel" onclick = "favArtikel()" >Zet dit artikel in mijn favoriten</p>
-        <p id="favAuteur" onclick = "favAuteur()" >Zet deze coach in mijn favoriten</p>
+        <div id="artikel-favorieten">
+          <p id= "favArtikel" onclick = "favArtikel()" >Artikel in favorieten</p>
+          <p id="favAuteur" onclick = "favAuteur()" >Coach in favorieten</p>
+        </div>
     </div>
   </section>  
 </div>
@@ -67,11 +71,11 @@
 
 <!-- footer -->
 <footer class="footer"></footer>
+
+
       <script type="text/javascript" src="../javascript/firebase.js"></script>
-      <script type="text/javascript" src="javascript/assets.js"></script>
       <script type="text/javascript" src="../javascript/inspiratie.js"></script>
       <script type="text/javascript" src="../javascript/auth.js"></script>
-      <script type="text/javascript" src="../javascript/logout.js"></script>
     </body>
   </html>
   

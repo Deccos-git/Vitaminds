@@ -174,7 +174,8 @@
     border-radius: 10px;
     margin: 30px 200px 30px 200px;
     padding: 10px;
-    background-color: #cf6e13;
+    background-color: #FFF;
+    border: #cf6e13 solid 1px;
     height: auto;
 }
 
@@ -201,9 +202,17 @@
     cursor: pointer;
 }
 
-.favAut p{
-    border-radius: 15px;
-    color: #fff;
+#artikel-favorieten{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    border-top: 1px solid #cf6e13;
+    width: 100%;
+}
+
+#artikel-favorieten p{
+    font-size: 15px;
+    padding: 10px;
 }
 
 /* nieuwe post */
@@ -223,6 +232,7 @@
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     padding: 30px;
+    background-color: #FFF;
 }
 
 #nieuwposttitel{
@@ -244,6 +254,7 @@
     justify-content: center;
     align-items: center;
     background-color: #122b46;
+    padding: 30px;
 }
 
 #texteditor button{
@@ -285,7 +296,7 @@
  }
 
  #categorie{
-    color: #fff;
+    color: #cf6e13;
  }
 
  #learningsInsp{
@@ -325,6 +336,7 @@
      color: #0c6665;
      font-weight: bold;
      font-size: 110%;
+     margin: 0px;
  }
 
  .sectionDiv p{

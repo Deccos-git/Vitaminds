@@ -1,3 +1,4 @@
+
 // Filter overzichtspagina
 
 function filterMenu(){
@@ -140,7 +141,7 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
        mainDiv.appendChild(linkTekst);
 })
 }).catch(function(error) {
-    console.log("Kan de artikelen niet inladen: ", error);
+    console.log("Kan de artikelen niet inladen");
 });
 
   
@@ -239,20 +240,64 @@ auth.onAuthStateChanged(User =>{
         }   
         })
 
-// Learning verwerken in Karakter, Karaktertocht en onder artikel
+// Learning verwerken in Karakter, Levensvraag en onder artikel
 
-        //Verwerken in karakter
+        // Levensvragen inladen in select
+
+        const select = document.getElementById("learning-levensvraag")
+
+        auth.onAuthStateChanged(User =>{
+            if (User){
+                const docRef = db.collection("Vitaminders").doc(User.uid);
+                    docRef.get().then(function(doc){
+    
+                    const naam = doc.data().Gebruikersnaam;
+
+        db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                const vraag = doc.data().Levensvraag
+
+                const options = document.createElement("option")
+               
+                options.innerHTML = vraag
+
+                select.appendChild(options)
+
+                })
+            })
+        })
+    }
+})
+
+        //Learning werwerken in karakter en levensvraag
+
         function submitKT(){
-    auth.onAuthStateChanged(User =>{
-        if (User){
+
+        const learning = document.getElementById("inputDB").value;
+
+         auth.onAuthStateChanged(User =>{
+         if (User){
             const docRef = db.collection("Vitaminders").doc(User.uid);
                 docRef.get().then(function(doc){
 
                 const naamPost = doc.data().Gebruikersnaam;
 
-                const KarakterRef = db.collection("Vitaminders").doc(User.uid).collection("Karakter").doc()
+                 // Learning verwerken in levensvraag 
+                const levensvraagSelect = select.options
+                const levensvraagOption = levensvraagSelect[levensvraagSelect.selectedIndex].innerHTML;
+
+                const KarakterRef = db.collection("Vitaminders").doc(User.uid).collection("Levenslessen").doc()
+
+                db.collection("Vitaminders").doc(User.uid).collection("Levensvragen")
+                .where("Levensvraag", "==", levensvraagOption).get().then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                        const id = doc.id
+                        console.log(id)
+                
+
+                const levensvraagRef = db.collection("Vitaminders").doc(User.uid).collection("Levensvragen").doc(id)
                
-                    const learning = document.getElementById("inputDB").value;
+                   
                     db.collection("Artikelen").where("Titel", "==", titel).get().then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
 
@@ -267,18 +312,26 @@ auth.onAuthStateChanged(User =>{
                 Thema: thema,
                 Titel: titel,
                 Inspirerend: 1,
+            })
+
+            levensvraagRef.update({
+                Levenslessen: firebase.firestore.FieldValue.arrayUnion(learning)
+
             }).then(()=>{
                 location.reload();
+            }) 
+            })
+            })   
             })
             })
-        })
         })
         }
     })
 }
 
+
 // Learnings inladen onder artikel
-db.collectionGroup("Karakter").where("Titel", "==", titel).get()
+db.collectionGroup("Levenslessen").where("Titel", "==", titel).get()
     .then(function(querySnapshot) {
 
     querySnapshot.forEach(function(doc) {
@@ -332,22 +385,6 @@ db.collectionGroup("Karakter").where("Titel", "==", titel).get()
     learnTitel.appendChild(learnGB);
     learnGB.appendChild(learnTijd);
     sectionDiv.appendChild(inspireer)
-})
-})
-
-
-//Link naar Open Up in Auth
-db.collection("Artikelen").where('Titel', '==', titel ).get().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-
-       const categorie = doc.data().Categorie;
-
-const deelOpenUp = document.getElementById("deelOpenUp");
-
-deelOpenUp.addEventListener("click", () => {
-    window.open("../../Pages/openups/" + [categorie] +".html", "_self")
-
-        })
     })
 })
 

@@ -197,6 +197,7 @@
     border: 1px solid #8e969e;
     display: flex;
     padding: 0%;
+    background-color: whitesmoke;
 }
 
 .profiel-inhoud{
@@ -268,10 +269,11 @@
         }
 
         .badge{
-            border: 1px solid #122b46;
+            border: 1px solid rgb(190, 190, 190);
             border-radius: 15px;
             padding: 15px;
             margin: 15px;
+            background-color: #fff;
         }
 
         .badge h3{
@@ -352,7 +354,7 @@
         }
 
         #nieuweO{
-            display: none;
+            display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
@@ -466,10 +468,11 @@
         
         #favoInspiratieDiv{
             margin: 15px;
-            border: 1px solid #122b46;
+            border: 1px solid #122b4650;
             border-radius: 15px;
             padding: 15px;
             height: auto;
+            background-color: #FFF;
         }
 
 

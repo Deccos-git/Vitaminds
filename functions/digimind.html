@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-159826016-1');
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -143,10 +153,10 @@
               <p>Vitaminder</p>
             </div>
               <div class="mens-menu">
-                <li onclick="klikavontuur()"><img class="menu-icon" src="../Images/menu-doelen.png" alt="menu contact" width="20px"><a>Mijn doelen</a></li>
+                <li onclick="klikavontuur()"><img class="menu-icon" src="../Images/menu-doelen.png" alt="menu contact" width="20px"><a>Mijn levensvragen</a></li>
               </div>
               <div class="mens-menu">
-                <li onclick="klikkarakter()"><img class="menu-icon" src="../Images/menu-karakter.png" alt="menu contact" width="20px"><a>Mijn karakter</a></li>
+                <li onclick="klikkarakter()"><img class="menu-icon" src="../Images/menu-karakter.png" alt="menu contact" width="20px"><a>Mijn levenslessen</a></li>
               </div>
               <section id="submenu-karakter"></section>
               <div class="mens-menu">
@@ -241,14 +251,15 @@
                           <button onclick = "nieuwepostsubmit()" class="button-algemeen">Publiceer</button>
                       </div>
               </div>
-              <!-- Mijn doelen -->
+              <!-- Mijn levensvragen-->
               <div class="profiel-inhoud" id="doelen">
                 <section id="mijnKarakterTochten">
                   <div id="nieuweKarakterTocht">
-                      <button onclick = "nieuweTocht()" class="button-karakter">Begin een nieuw doel</button>
+                      <button onclick = "nieuweLevensvraag()" class="button-karakter">Stel een levensvraag</button>
+                      <p> <a href="../openup.html"> Levensvragen van andere Vitaminders bekijken?</p></a>
                         <div id="nieuweO"></div>
                   </div>
-                  <div id="ontO"></div>
+                  <div id="overzichtLevensvragen"></div>
                 </section>
               </div>
           </main>

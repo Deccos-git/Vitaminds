@@ -1,6 +1,6 @@
 
 // Profiel inhoud
-const avontuur = document.getElementById("mijnKarakterTochten");
+const avontuur = document.getElementById("doelen");
 const karakter = document.getElementById("karakter");
 const dagelijksLeven = document.getElementById("dagelijks");
 const coachtools = document.getElementById("coachTools");
@@ -211,274 +211,63 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
 
 // Karaktertochten inladen
 
-db.collectionGroup('Ontwikkeling').where('Gebruikersnaam', '==', naam )
+db.collectionGroup('Levensvragen').where('Gebruikersnaam', '==', naam )
     .get()
     .then(function(querySnapshot) {
     querySnapshot.forEach(function(doc2) {
 
-        const middel = doc2.data().Middel;
-        const goal = doc2.data().Doel;
-        const start = doc2.data().Begin;
+        const levensvraag = doc2.data().Levensvraag;
+        const levenslessen = doc2.data().Levenslessen;
 
-       
-       
-        //Waar de ontwikkelDiv onder komen in de DOM
-        const HTMLDiv = document.getElementById("ontO");
-    
-        // De nieuwe HTML-elementen en classes
-        const nieuweDiv = document.createElement("div");
-                nieuweDiv.setAttribute("class", "ontwikkelDiv");
-        const tochtHeader = document.createElement("div")
-                tochtHeader.setAttribute("class", "tochtHeader")
-        const tochtID = document.createElement("h2");
-                tochtID.setAttribute("class", "titelTocht")
-        const beginTitel = document.createElement("h3")
-                beginTitel.setAttribute("class", "startpunt")
-                beginTitel.setAttribute("data-goal", goal);
-        const begin = document.createElement("h4");
-                begin.setAttribute("class", "beginO");
-        const methodeTitel = document.createElement("h3");
-                methodeTitel.setAttribute("class", "methodeTitel")
-        const middelDiv = document.createElement("div")
-                middelDiv.setAttribute("class", "middelDiv")
-        const methodeXtra = document.createElement("div");
-                methodeXtra.setAttribute("class", "methodeX");
-        const methodeExtraP = document.createElement("p");
-                methodeExtraP.setAttribute("class", "methodeExtraP");   
-        const extraInput = document.createElement("div");
-                extraInput.setAttribute("class", "extraInput");
-        const doels = document.createElement("h4");
-                doels.setAttribute("class", "doelO");
-        const select = document.createElement("select");
-                select.setAttribute("class", "selectExtra");
-        const option = document.createElement("option");
-        const option1 = document.createElement("option");
-        const buttonDiv = document.createElement("div")
-        const button = document.createElement("button");
-                button.setAttribute("class", "buttonExtra")
+        console.log(levenslessen)
 
-        //De inhoud in de nieuwe HTML-elementen zetten
-        methodeTitel.innerHTML = " Mijn thema's"
-        tochtID.innerHTML = goal;
-        beginTitel.innerHTML = "Mijn startpunt"
-        begin.innerHTML = start;
-       
+        const DOM = document.getElementById("overzichtLevensvragen")
 
-        middel.forEach(mid => {
+        const div = document.createElement("div")
+        const h3 = document.createElement("h3")
+        const p = document.createElement("p")
 
-                // Div creeren met de middelen erin
-                const methode = document.createElement("div")
-                methode.setAttribute("id", "methodeO")
-                methode.setAttribute("data-methode", mid)
-                const methodeThema = document.createElement("h3")
-                const meerDiv = document.createElement("div");
-                        meerDiv.setAttribute("class", "meerDiv")
-                const meerLeren = document.createElement("p");
-                        meerLeren.setAttribute("class", "meerLeren")
-                
-                methodeThema.innerHTML = mid ;
-                meerLeren.innerHTML = "Meer leren";
-               
+        h3.innerHTML = levensvraag
 
-                middelDiv.appendChild(methode)
-                methode.appendChild(methodeThema)
-                methode.appendChild(meerDiv)
-                meerDiv.appendChild(meerLeren)
+        levenslessen.forEach(les => {
+                p.innerHTML = les
 
-                // Klikken op methode in Karaktertocht
-        meerLeren.addEventListener('click', () => {
-                window.open("../onderwerpen/" + [mid] + ".html", "_self");
-         })
+                DOM.appendChild(div)
+                div.appendChild(p)
         })
 
-        methodeExtraP.innerHTML = "Kies nog een thema"
-        option.innerHTML = "Dankbaarheid"
-        option1.innerHTML = "Positiviteit"
-        button.innerHTML = "Selecteer"
+        DOM.appendChild(div)
+        div.appendChild(h3)
 
-        //De HTML-elementen vastmaken aan de DOM
-        HTMLDiv.appendChild(nieuweDiv)
-        nieuweDiv.appendChild(tochtHeader)
-        nieuweDiv.appendChild(tochtID)
-        nieuweDiv.appendChild(methodeTitel)
-        nieuweDiv.appendChild(methodeXtra)
-        methodeXtra.appendChild(methodeExtraP)
-        methodeXtra.appendChild(extraInput)
-        extraInput.appendChild(select);
-        select.appendChild(option)
-        select.appendChild(option1)
-        extraInput.appendChild(buttonDiv)
-        buttonDiv.appendChild(button)
-        nieuweDiv.appendChild(middelDiv)
-        nieuweDiv.appendChild(beginTitel)
-        nieuweDiv.appendChild(begin)
-        })
-    }).then(()=>{
-        
-        // Learnings inschrijven in methodes
-        const nodeList = document.querySelectorAll("#methodeO");
-
-        nodeList.forEach(node => {
-
-        const thema = node.dataset.methode; 
-                
-        db.collectionGroup('Karakter').where('Gebruikersnaam', '==', naam ).where('Thema', '==', thema)
-            .get()
-            .then((querySnapshot) => {
-            querySnapshot.forEach((doc3) => {
-
-                const learning = doc3.data().Learning;
-                const KTp = document.createElement("li");
-                const KTul = document.createElement("ul")
-                const KTdiv = document.createElement("div")
-                        KTdiv.setAttribute("class", "doel-learning-lijst")
-        
-                KTp.innerHTML = learning;
-
-                node.appendChild(KTdiv)
-                KTdiv.appendChild(KTul)
-                KTul.appendChild(KTp) 
-                })
-                })
-        })
-
-}).then(()=>{
-                // Keuze uitlezen 
-                const button = document.querySelectorAll(".buttonExtra");
-                button.forEach(butt =>{
-
-                butt.addEventListener("click", ()=>{
-
-                const keuze = document.querySelectorAll(".selectExtra");
-
-                keuze.forEach(keus =>{
-
-                const keuzeOpties = keus.options;
-                const keuzeSelect = keuzeOpties[keuzeOpties.selectedIndex].value;
-
-                // Keuze wegschrijven naar database
-                auth.onAuthStateChanged(User =>{
-                        const userRef = db.collection("Vitaminders").doc(User.uid);
-                                  userRef.get().then(doc => {
-                                      naam = doc.data().Gebruikersnaam;
-
-                        const doel = document.querySelectorAll(".startpunt");
-                        doel.forEach(D =>{
-                                const goalo = D.dataset.goal;
-                        
-                        db.collectionGroup('Ontwikkeling').where('Gebruikersnaam', '==', naam ).where("Doel", "==", goalo).get().then(querySnapshot =>{
-                                querySnapshot.forEach(doc => {
-
-                                        db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
-                                                querySnapshot.forEach(doc2 => {
-                                        
-                                                        db.collection("Vitaminders").doc(doc2.id).collection("Ontwikkeling").doc(doc.id).update({
-                                                                Middel: firebase.firestore.FieldValue.arrayUnion(keuzeSelect)
-                                                        })
-                                        
-                                        })
-                                })
-                                })
-                        })
-                        })
-                        })
-                        })
-                        })
-                        })
-                        })
-});
+})
+})
 
  
           
-// Nieuwe karakter tocht openen na onclick
-function nieuweTocht(){
+// Nieuwe levensvraag openen na onclick
+function nieuweLevensvraag(){
 
-        const DOMdisplay = document.getElementById("nieuweO");
+        const DOM = document.getElementById("nieuweO");
 
-        DOMdisplay.style.display = "flex"
-
-
-        const DOMdoel = document.getElementById("nieuweO");
-       
-        const modulesH3 = document.createElement("h3");
-        const moduleSelect = document.createElement("select");
-                moduleSelect.setAttribute("name", "modules");
-                moduleSelect.setAttribute("id", "ontwikkelModule");
-
-        const doelH3 = document.createElement("h3");
-        const doelSelect = document.createElement("select");
-                doelSelect.setAttribute("name", "ontwikkelDoel");
-                doelSelect.setAttribute("id", "ontwikkelDoel");
-
-        const themaH3 = document.createElement("h3");
-        const themaSelect = document.createElement("select");
-                themaSelect.setAttribute("name", "ontwikkelThema");
-                themaSelect.setAttribute("id", "ontwikkelThema");
-        
-        const beginH3 = document.createElement("H3");
-        const beginInput = document.createElement("input");
-                beginInput.setAttribute("id", "beginInput");
-                beginInput.setAttribute("type", "text");
-                beginInput.setAttribute("placeholder", "Hoe gaat het nu?");
+        const vraagH3 = document.createElement("h3");
+        const vraagSelect = document.createElement("input");
+                vraagSelect.setAttribute("id", "ontwikkelDoel");
+                vraagSelect.setAttribute("type", "text");
+                vraagSelect.setAttribute("placeholder", "Wat is je levensvraag?");
         
         const button = document.createElement("button");
                 button.setAttribute("onclick", "startTocht()");
                 button.setAttribute("class", "button-algemeen");
 
+                vraagH3.innerHTML = "Wat is je levensvraag?"
+                button.innerHTML = "Ga"
 
-                modulesH3.innerHTML = "Kies een module"
-                
-                doelH3.innerHTML = "Kies een doel"
-        
-                themaH3.innerHTML = "Kies een thema"
-               
-                beginH3.innerHTML = "Hoe gaat het nu met je?"
-                button.innerHTML = "Begin"
-
-                db.collection("Themas").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
-                        querySnapshot.forEach(doc => {
-                                const modules = doc.data().Module;
-                                const doelen = doc.data().Doel;
-                                const thema = doc.data().Thema;
-                                
-                                const moduleOption = document.createElement("option");
-                                        moduleOption.setAttribute("value", modules);
-                                        moduleOption.setAttribute("id", "moduleOption");
-                                const doelOption = document.createElement("option");
-                                        doelOption.setAttribute("value", doelen);
-                                const themaOption = document.createElement("option");
-                                        themaOption.setAttribute("value", thema)
-                               
-                                moduleOption.innerHTML = modules;
-                                doelOption.innerHTML = doelen;
-                                themaOption.innerHTML = thema;
-
-                                DOMdoel.appendChild(modulesH3)
-                                modulesH3.appendChild(moduleSelect) 
-                                moduleSelect.appendChild(moduleOption)
-                                DOMdoel.appendChild(doelH3)
-                                doelH3.appendChild(doelSelect)
-                                doelSelect.appendChild(doelOption)
-                                DOMdoel.appendChild(themaH3)
-                                themaH3.appendChild(themaSelect)
-                                themaSelect.appendChild(themaOption)
-                                DOMdoel.appendChild(beginH3)
-                                beginH3.appendChild(beginInput)
-                                DOMdoel.appendChild(button)
-
-                                //Verwijder dubbelen uit options
-
-                                console.log(moduleOption)
-                                console.log(doelOption)
-                                console.log(themaOption)
-                })
-                })         
-
-       
-
+                DOM.appendChild(vraagH3)
+                vraagH3.appendChild(vraagSelect)
+                DOM.appendChild(button)     
 };
 
-//Input nieuwe Karaktertocht wegschrijven naar database
+//Input nieuwe levensvraag wegschrijven naar database
 function startTocht(){
 
         // Gebruikersnaam achterhalen
@@ -488,27 +277,14 @@ function startTocht(){
                     if (doc.exists) {
                       Gnaam = doc.data().Gebruikersnaam;
 
-        const inputDoel = document.getElementById("ontwikkelDoel")
-                 const doelOpties = inputDoel.options;
-                 const doelSelect = doelOpties[doelOpties.selectedIndex].value;
-
-        const inputThema = document.getElementById("ontwikkelThema")
-                 const themaOpties = inputThema.options;
-                 const themaSelect = themaOpties[themaOpties.selectedIndex].value;
-
-        const inputModule = document.getElementById("ontwikkelModule")
-                 const moduleOpties = inputModule.options;
-                 const moduleSelect = moduleOpties[moduleOpties.selectedIndex].value;   
-
-        const inputBegin = document.getElementById("beginInput").value;
-                
+        const inputDoel = document.getElementById("ontwikkelDoel").value 
               
-       db.collection('Vitaminders').doc(User.uid).collection("Ontwikkeling").doc().set({
-                Begin: inputBegin,
-                Middel: firebase.firestore.FieldValue.arrayUnion(themaSelect),
-                Doel: doelSelect,
-                Module: moduleSelect,
+       db.collection('Vitaminders').doc(User.uid).collection("Levensvragen").doc().set({
+                Levensvraag: inputDoel,
+                Levenslessen: {},
                 Gebruikersnaam: Gnaam,
+                Openbaar: "Ja",
+                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                 
         }).then(()=>{
                 location.reload();
@@ -518,10 +294,8 @@ function startTocht(){
         })
 }
 
-// Nieuwe karaktertocht aanmaken verbergen voor profielbezoekers
+// Knop "Nieuwe levenvraag" verbergen voor profielbezoekers
 auth.onAuthStateChanged(User =>{
-
-       
 
         const userRef = db.collection("Vitaminders").doc(User.uid);
           userRef.get().then(function(doc) {
@@ -532,8 +306,6 @@ auth.onAuthStateChanged(User =>{
               naam2 = naam1.replace('%20',' '),
               naam = naam2.replace('%20',' ')
 
-              console.log(GBnaam)
-              console.log(naam)
         if(GBnaam != naam){
                 const nieuweKT = document.querySelectorAll(".button-karakter");
 
@@ -541,56 +313,17 @@ auth.onAuthStateChanged(User =>{
 
                 KT.style.display = "none"
 
-        })
-        }
+                        })
+                }
         })
 })
 
 
 
 
-//Karakter
+//Levenslessen
 
-        // Hoofd-element selecteren
         const DOMlearnings = document.getElementById("learnings");
-        const DOMnav = document.getElementById("submenu-karakter")
-
-        // Menu Karakter
-        DOMmenu = document.getElementById("karakter");
-
-        db.collection("Themas").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-                        const thema = doc.data().Thema
-
-                       
-
-                        const navDiv = document.createElement("div");
-                                navDiv.setAttribute("class", "nav");
-                                navDiv.setAttribute("data-thema", thema)
-                        const plus = document.createElement("a");
-                                plus.setAttribute("href", `onderwerpen/${thema}.html`);
-                                plus.setAttribute("class", "extraInfo");
-                        const navP = document.createElement("p");
-                                navP.setAttribute("class", "karakter-nav-p")
-
-                        navP.innerHTML = thema;
-                        plus.innerHTML = "+";
-
-                        DOMnav.appendChild(navDiv);
-                        navDiv.appendChild(plus);
-                        navDiv.appendChild(navP);
-                        
-                })
-        }).then(()=>{
-
-               
-
-        const navMenu = document.querySelectorAll(".nav");
-
-        navMenu.forEach(nav => {
-                const thema1 = nav.dataset.thema
-
-                nav.addEventListener("click", ()=>{
 
                 // Naam uit URL halen
                 naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
@@ -598,7 +331,7 @@ auth.onAuthStateChanged(User =>{
                 naam2 = naam1.replace('%20',' '),
                 naam = naam2.replace('%20',' ')
 
-                        db.collectionGroup('Karakter').where('Gebruikersnaam', '==', naam ).where("Thema", "==", thema1)
+                        db.collectionGroup('Levenslessen').where('Gebruikersnaam', '==', naam )
                             .get()
                             .then(function(querySnapshot) {
 
@@ -610,11 +343,10 @@ auth.onAuthStateChanged(User =>{
                                 const time = doc1.data().Timestamp;
                                 const learn = doc1.data().Learning;
                                 const titelLearn = doc1.data().Titel;
-                                const thema2 = doc1.data().Thema;
+                                const thema = doc1.data().Thema;
                                
                                 const badge = document.createElement("div");
                                         badge.setAttribute("class", "badge")
-                                        badge.setAttribute("data-thema", thema2)
                                 const bron = document.createElement("p")
                                         bron.setAttribute("class", "dank-meta")
                                 const methode = document.createElement("p");
@@ -627,44 +359,23 @@ auth.onAuthStateChanged(User =>{
                                         timeP.setAttribute("class", "dank-meta")
                                 const learnDiv = document.createElement("div")
                                         learnDiv.setAttribute("class", "learn")
-                                const ele = document.createElement("p");
+                                const levensles = document.createElement("p");
+                                const themaP = document.createElement("p")
 
                         auteurP.innerHTML = "Geïnspireerd door: " + auteur;
                         titel.innerHTML = "In: " + titelLearn;
-                        ele.innerHTML = learn;
+                        levensles.innerHTML = learn;
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         timeP.innerHTML = "Op: " + time.toDate().toLocaleDateString("nl-NL", options);
+                        themaP.innerHTML = thema
 
                         DOMlearnings.appendChild(badge)
-                        badge.appendChild(ele)
+                        badge.appendChild(levensles)
                         badge.appendChild(auteurP)
                         badge.appendChild(timeP)
-                      
-                        })
-                
-                        }).then(()=>{
-
-                     
-                                // Remove badges van DOM
-                                const badges = document.querySelectorAll(".badge");
-                                const DOM = document.getElementById("learnings");
-
-                                badges.forEach(badg => {
-                            
-                                        const thema2 = badg.dataset.thema
-                                        
-                                        const alien = (thema2 != thema1)
-
-                                        console.log(badges)
-        
-                                        if(alien == true){
-                                                DOM.removeChild(badg)
-                                        }
-                                })
-                        })  
-                })
+                        badge.appendChild(themaP)
         })
-})
+})  
 
 
 
