@@ -4,6 +4,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid #122b46;
     margin: 30px;
+}
+
+.openup-div{
+    border: 1px solid #122b463a;
+    margin: 15px;
+    border-radius: 5px;
+    width: 100%;
+    height: auto;
+    padding: 15px;
+}
+
+.meta-div p{
+    font-size: 15px;
 }

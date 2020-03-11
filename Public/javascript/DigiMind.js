@@ -219,20 +219,21 @@ db.collectionGroup('Levensvragen').where('Gebruikersnaam', '==', naam )
         const levensvraag = doc2.data().Levensvraag;
         const levenslessen = doc2.data().Levenslessen;
 
-        console.log(levenslessen)
-
         const DOM = document.getElementById("overzichtLevensvragen")
 
         const div = document.createElement("div")
+                div.setAttribute("class", "levenslesDiv")
         const h3 = document.createElement("h3")
-        const p = document.createElement("p")
 
         h3.innerHTML = levensvraag
 
         levenslessen.forEach(les => {
+                
+                const p = document.createElement("p")
+                console.log(les)
                 p.innerHTML = les
-
                 DOM.appendChild(div)
+                
                 div.appendChild(p)
         })
 
@@ -281,7 +282,7 @@ function startTocht(){
               
        db.collection('Vitaminders').doc(User.uid).collection("Levensvragen").doc().set({
                 Levensvraag: inputDoel,
-                Levenslessen: {},
+                Levenslessen: [],
                 Gebruikersnaam: Gnaam,
                 Openbaar: "Ja",
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -341,7 +342,7 @@ auth.onAuthStateChanged(User =>{
                 
                                 const auteur = doc1.data().Auteur;
                                 const time = doc1.data().Timestamp;
-                                const learn = doc1.data().Learning;
+                                const learn = doc1.data().Levensles;
                                 const titelLearn = doc1.data().Titel;
                                 const thema = doc1.data().Thema;
                                

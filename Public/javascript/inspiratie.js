@@ -59,8 +59,6 @@ function filterMenu(){
              D.style.display = "none"
          })
 
-       
-
         // De nieuwe HTML elementen vastzetten aan de DOM
        DOM.appendChild(mainDiv);
         mainDiv.appendChild(headerTekst);
@@ -73,7 +71,6 @@ function filterMenu(){
 }).catch(function(error) {
     console.log("Kan de artikelen niet inladen: ", error);
         })
-
 }
 
 
@@ -237,8 +234,10 @@ auth.onAuthStateChanged(User =>{
         if (User){
             const CTAAuth = document.getElementById("CTAAuth");
             CTAAuth.style.display = "flex";
-        }   
-        })
+        }   else {
+            CTAAuth.style.display = "none";
+        }
+    })
 
 // Learning verwerken in Karakter, Levensvraag en onder artikel
 
@@ -275,6 +274,8 @@ auth.onAuthStateChanged(User =>{
 
         const learning = document.getElementById("inputDB").value;
 
+        console.log(learning)
+
          auth.onAuthStateChanged(User =>{
          if (User){
             const docRef = db.collection("Vitaminders").doc(User.uid);
@@ -306,7 +307,7 @@ auth.onAuthStateChanged(User =>{
 
             KarakterRef.set({
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                Learning: learning,
+                Levensles: learning,
                 Auteur: auteur,
                 Gebruikersnaam: naamPost,
                 Thema: thema,
@@ -336,7 +337,7 @@ db.collectionGroup("Levenslessen").where("Titel", "==", titel).get()
 
     querySnapshot.forEach(function(doc) {
 
-    const learn = doc.data().Learning;
+    const learn = doc.data().Levensles;
     const GB = doc.data().Gebruikersnaam;
 
     const DOM = document.getElementById("learningsOutput");
@@ -357,7 +358,6 @@ db.collectionGroup("Levenslessen").where("Titel", "==", titel).get()
          inspireer.addEventListener('click', () => {
             //Geinspireerd naar Vitaminders schrijven
             const naam = inspireer.dataset.naam;
-            console.log(naam)
             db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
                 querySnapshot.forEach(doc2 =>{
                     db.collection("Vitaminders").doc(doc2.id).update({
