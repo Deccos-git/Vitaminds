@@ -1,89 +1,178 @@
 // Openbare levensvragen inladen
 
-const levenslessenGlobal = [];
-const DOM = document.getElementById("verzamelOpenUps")
-
 db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
         const levensvraag = doc.data().Levensvraag
         const gebruikersnaam = doc.data().Gebruikersnaam
         const levenslessen = doc.data().Levenslessen
 
-        levenslessenGlobal.push(levenslessen)
-
-        const div = document.createElement("div")
-            div.setAttribute("class", "openup-div")
-            div.setAttribute("data-levensvraag", levenslessen)
-        const vraagDIV = document.createElement("div")
+        const DOM = document.getElementById("verzamelOpenUps") 
+                
         const vraag = document.createElement("h3")
-        const lessenDiv = document.createElement("div")
-        
-        const metaDiv = document.createElement("div")
-            metaDiv.setAttribute("class", "meta-div")
+            vraag.setAttribute("class", "openup-div")
         const naam = document.createElement("p")
-        
+            naam.setAttribute("class", "openup-meta")
+
         vraag.innerHTML = levensvraag
-        naam.innerHTML = gebruikersnaam
+        naam.innerHTML = "Gesteld door " + `<u>${gebruikersnaam}</u>`
 
-        DOM.appendChild(metaDiv)
-        metaDiv.appendChild(vraagDIV)
-        vraagDIV.appendChild(vraag)
-    
+        naam.addEventListener("click", () => {
+            window.open("../Vitaminders/" + [gebruikersnaam] + ".html", "_self");
+        })
+
+        DOM.appendChild(vraag)
+        vraag.appendChild(naam)
+
+        // Levenslessen metadata inladen die passen bij levensvragen
+
         levenslessen.forEach(les => {
-        
-            const lessen = document.createElement("h4")
-            lessen.innerHTML = les
-            DOM.appendChild(div)
-            div.appendChild(lessenDiv)
-            lessenDiv.appendChild(lessen)
 
-        })
-        DOM.appendChild(div)
-        div.appendChild(metaDiv)
-        metaDiv.appendChild(naam)  
-    })
-}).then(() => {
+        db.collectionGroup("Levenslessen").where("Levensles", "==", les).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                const inspirator = doc.data().Auteur
+                const titel = doc.data().Titel
 
-// Details van levenslessen invoegen
-levenslessenGlobal.forEach(levensles => {
-levensles.forEach(l => {
-
-db.collectionGroup("Levenslessen").where("Levensles", "==", l).get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-        const inspirator = doc.data().Auteur
-        const titel = doc.data().Titel
-
-        const divData = document.querySelectorAll("[data-levensvraag]")
-        const dataArray = Array.from(divData)
-
-        dataArray.forEach(div => {
-            const data = div.dataset.levensvraag
-
-            console.log("levensles =" + l)
-            console.log("data =" + data)
-
-            if(l == data){
+                const lessen = document.createElement("h4")
                 const titelP = document.createElement("p")
+                    titelP.setAttribute("class", "openup-meta")
                 const inspiratorP = document.createElement("p")
-                const metaDiv = document.createElement("div")
-                    metaDiv.setAttribute("class", "meta-div")
+                    inspiratorP.setAttribute("class", "openup-meta")
+                
+                lessen.innerHTML ='<img class="menu-icon" src="../Images/menu-karakter.png" alt="menu contact" width="20px">' + les
+                inspiratorP.innerHTML = "Geinspïreerd door " + `<u>${inspirator}</u>`
 
-                titelP.innerHTML = titel
-                inspiratorP.innerHTML = inspirator
+                inspiratorP.addEventListener("click", () => {
+                    window.open("../Vitaminders/" + [inspirator] + ".html", "_self");
+                })
 
-                DOM.appendChild(div)
-                div.appendChild(metaDiv)
-                metaDiv.appendChild(titelP) 
-                metaDiv.appendChild(inspiratorP)
-            }
+                titelP.innerHTML = "Geïnspireerd in " + `<u>${titel}</u>`
+
+                titelP.addEventListener("click", () => {
+                    window.open("../Artikelen/" + [titel] + ".html", "_self");
+                })
+                 
+                vraag.appendChild(lessen)
+                lessen.appendChild(inspiratorP)
+                lessen.appendChild(titelP)
+                })
+            })
         })
-        
-
-       
-        
     })
 })
-})
-})
-})
+
+// const levenslessenGlobal = [];
+// const lesGlobal = [];
+
+// const DOM = document.getElementById("verzamelOpenUps")
+
+// db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(querySnapshot => {
+//     querySnapshot.forEach(doc => {
+//         const levensvraag = doc.data().Levensvraag
+//         const gebruikersnaam = doc.data().Gebruikersnaam
+//         const levenslessen = doc.data().Levenslessen
+
+//         levenslessenGlobal.push(levenslessen)
+
+//         levenslessen.forEach(les => {
+//             lesGlobal.push(les)
+//         })
+
+//         const div = document.createElement("div")
+//             div.setAttribute("class", "openup-div")
+//         const vraagDIV = document.createElement("div")
+//             vraagDIV.setAttribute("class", "vraag-div")
+//             vraagDIV.setAttribute("data-levensles", lesGlobal)
+//         const vraag = document.createElement("h3")
+//         const lessenDiv = document.createElement("div")
+//             lessenDiv.setAttribute("class", "lessen-div")
+//             lessenDiv.setAttribute("data-levensles", lesGlobal)
+//         const metaDiv = document.createElement("div")
+//             metaDiv.setAttribute("class", "meta-div")
+//         const naamDiv = document.createElement("div")
+//         const naam = document.createElement("p")
+        
+//         vraag.innerHTML = levensvraag
+//         naam.innerHTML = gebruikersnaam
+
+//         DOM.appendChild(div)
+//         div.appendChild(vraagDIV)
+//         vraagDIV.appendChild(vraag)
+    
+//         levenslessen.forEach(les => {
+        
+//             const lessen = document.createElement("h4")
+//             lessen.innerHTML = les
+//             DOM.appendChild(div)
+//             div.appendChild(lessenDiv)
+//             lessenDiv.appendChild(lessen)
+
+//         })
+//         DOM.appendChild(div)
+//         div.appendChild(naamDiv)
+//         naamDiv.appendChild(naam)  
+//     })
+// }).then(() => {
+
+// // Details van levenslessen invoegen
+// levenslessenGlobal.forEach(levensles => {
+// levensles.forEach(l => {
+
+// db.collectionGroup("Levenslessen").where("Levensles", "==", l).get().then(querySnapshot => {
+//     querySnapshot.forEach(doc => {
+//         const inspirator = doc.data().Auteur
+//         const titel = doc.data().Titel
+
+//         const vraagDivData = document.querySelectorAll(".vraag-div")
+//         const vragenDivDataArray = Array.from(vraagDivData)
+
+//         vragenDivDataArray.forEach(vragenData => {
+//             console.log(vragenData)
+
+//             const dataH3 = vragenData.dataset.levensles
+//             const vragenSplit = dataH3.split(',')
+
+//             vragenSplit.forEach(vraag => {
+
+//                 if(l == vraag){
+
+                   
+               
+
+//         const lessenDivData = document.querySelectorAll(".lessen-div")
+//         const lessenDataArray = Array.from(lessenDivData)
+
+//         lessenDataArray.forEach(lessenData => {
+//             const data = lessenData.dataset.levensles
+//             const lessenSplit = data.split(',');
+
+//             lessenSplit.forEach(les => {
+
+//             if(l == les){
+//                 const titelP = document.createElement("p")
+//                 const inspiratorP = document.createElement("p")
+//                 const metaDiv = document.createElement("div")
+//                     metaDiv.setAttribute("class", "meta-div")
+
+//                 titelP.innerHTML = titel
+//                 inspiratorP.innerHTML = inspirator
+
+//                 DOM.appendChild(vragenData)
+//                 vragenData.appendChild(lessenData)
+//                 lessenData.appendChild(metaDiv)
+//                 metaDiv.appendChild(titelP) 
+//                 metaDiv.appendChild(inspiratorP)
+//             }
+//         })
+//     })
+
+// }
+// })
+// })
+        
+//     })
+
+// })
+// })
+// })
+// })
     

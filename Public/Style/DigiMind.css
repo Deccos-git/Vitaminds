@@ -206,7 +206,21 @@
     width: 100%;
 }
 
-        /* Karakter */
+        /* Levenslessen */
+
+        #learnings{
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .levensles-thema{
+            font-size: 15px;
+            color: #cf6e13;
+            cursor: pointer;
+            text-align: center;
+        }
+
 
         #karakter{
             height: 100%;
@@ -291,6 +305,7 @@
         .dank-meta{
             font-size: 14px;
             color: #122b46;
+            cursor: pointer;
         }
 
         .karakter-section{

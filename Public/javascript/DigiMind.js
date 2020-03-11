@@ -360,11 +360,12 @@ auth.onAuthStateChanged(User =>{
                                         timeP.setAttribute("class", "dank-meta")
                                 const learnDiv = document.createElement("div")
                                         learnDiv.setAttribute("class", "learn")
-                                const levensles = document.createElement("p");
+                                const levensles = document.createElement("h3");
                                 const themaP = document.createElement("p")
+                                        themaP.setAttribute("class", "levensles-thema")
 
-                        auteurP.innerHTML = "Geïnspireerd door: " + auteur;
-                        titel.innerHTML = "In: " + titelLearn;
+                        auteurP.innerHTML = "Geïnspireerd door: " + `<u>${auteur}</u>`;
+                        titel.innerHTML = "In: " + `<u>${titelLearn}</u>`;
                         levensles.innerHTML = learn;
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         timeP.innerHTML = "Op: " + time.toDate().toLocaleDateString("nl-NL", options);
@@ -373,6 +374,7 @@ auth.onAuthStateChanged(User =>{
                         DOMlearnings.appendChild(badge)
                         badge.appendChild(levensles)
                         badge.appendChild(auteurP)
+                        badge.appendChild(titel)
                         badge.appendChild(timeP)
                         badge.appendChild(themaP)
         })
