@@ -446,5 +446,40 @@ db.collectionGroup("Favorieten").where("Gebruikersnaam", "==", naam).where("Type
 //Coach deel
 
        
-
+//Nieuw artikel schrijven        
+function nieuwepostsubmit(){
+        auth.onAuthStateChanged(User =>{
+            if (User){
+                let artikelRef = db.collection("Artikelen").doc();
+                let docRef = db.collection("Vitaminders").doc(User.uid);
+                    docRef.get().then(function(doc){
+                        const coachNaam = doc.data().Gebruikersnaam;
+    
+                const cat = document.getElementById("categorieSelectie");
+                const catOpties = cat.options;
+                const catSelect = catOpties[catOpties.selectedIndex].value;
+                let nieuwePostTitelVar = document.getElementById("nieuwposttitel").value;
+                let nieuwePostBodyVar = document.getElementById("postbody").innerHTML;
+                
+                artikelRef.set({
+                    Titel: nieuwePostTitelVar,
+                    Body: nieuwePostBodyVar,
+                    Auteur: coachNaam,
+                    Categorien: firebase.firestore.FieldValue.arrayUnion(catSelect),
+                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                })
+                })
+            } 
+        })
+    }
+    
+    //Teksteditor bij nieuw artikel schrijven
+    const style = document.querySelectorAll("button");
+    
+    for(let st of style){
+        st.addEventListener("click", () =>{
+        let cmd = st.dataset['command'];
+        const test = document.execCommand(cmd, false, null)
+    })
+    }
 

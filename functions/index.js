@@ -27,6 +27,13 @@ app.get('/Artikelen/:id',function(req,res)
     res.sendFile('Artikel.html', { root: __dirname });
 });
 
+// Thema aanmaken op basis van URL
+
+app.get('/Thema/:id',function(req,res)
+{
+    res.sendFile('thema.html', { root: __dirname });
+});
+
 //Digimind aanmaken op basis van URL
 
 app.get('/Vitaminders/:id',function(req,res)

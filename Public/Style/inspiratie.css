@@ -103,6 +103,11 @@
 
 .bodyTekst{
     margin: 0px 10px 0px 10px;
+    font-size: 18px;
+    font-family: 'Nunito Sans', sans-serif;
+    margin: 0px 30px 30px 30px;
+    letter-spacing: 0.6px;
+    color: #25384d;
 }
 
 .divTekst{
@@ -150,6 +155,11 @@
     padding: 10px 30px 30px 30px;
 }
 
+#thema{
+    cursor: pointer;
+    color: #cf6e13;
+}
+
 .artikel h6{
     margin: 10px 10px 5px 30px;
     color: #122b46;
@@ -162,6 +172,13 @@
 
 #datum{
     text-align: end;
+}
+
+#bodytext{
+    font-size: 18px;
+    font-family: 'Nunito Sans', sans-serif;
+    margin: 0px 30px 30px 30px;
+    letter-spacing: 0.6px;
 }
 
 /* Call to action */
@@ -236,7 +253,8 @@
 }
 
 #nieuwposttitel{
-    width: 75%
+    width: 800px;
+    border: #122b462f;
 }
 
 #categorieSelectie{

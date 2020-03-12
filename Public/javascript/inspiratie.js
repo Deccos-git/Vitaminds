@@ -88,7 +88,9 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
         const titelTekst = doc.data().Titel;
         const bodyTekst = doc.data().Body;
         const auteurTekst = doc.data().Auteur;
-        const categorieTekst = doc.data().Categorie;
+        const categorieTekst = doc.data().Categorien;
+
+        categorieTekst.forEach(cat => {
 
         // De nieuwe HTML-elementen en classes
         const mainDiv = document.createElement("div");
@@ -99,7 +101,7 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
             nieuweTitel.setAttribute("class", "titelTekst");
         const nieuweDivTekst = document.createElement("div");
             nieuweDivTekst.setAttribute("class", "divTekst");
-        const nieuweBody = document.createElement("p");
+        const nieuweBody = document.createElement("div");
             nieuweBody.setAttribute("class", "bodyTekst");
         const nieuweAuteur = document.createElement("p");
             nieuweAuteur.setAttribute("class", "auteurTekst");
@@ -120,8 +122,12 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
                 window.open("../Vitaminders/" + [auteurTekst] + ".html", "_self");
             })
 
+            categorie.addEventListener('click', (e) => {
+                window.open("../Thema/" + cat + ".html", "_self");
+            })
+
         // De artikel eigenschappen in de nieuwe HTML elementen zetten
-        categorie.innerHTML = categorieTekst;
+        categorie.innerHTML = cat;
         nieuweTitel.innerHTML = titelTekst;
         nieuweBody.innerHTML = bodyTekst;
         nieuweAuteur.innerHTML = "Geschreven" + " " + "door" + " " + `<u> ${auteurTekst} </u>`;
@@ -136,98 +142,67 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
         nieuweDivTekst.appendChild(nieuweAuteur);
        nieuweDivTekst.appendChild(nieuweBody);
        mainDiv.appendChild(linkTekst);
+    })
 })
 }).catch(function(error) {
     console.log("Kan de artikelen niet inladen");
-});
+}).then(() => {
 
-  
-//Nieuw artikel schrijven        
-function nieuwepostsubmit(){
-    auth.onAuthStateChanged(User =>{
-        if (User){
-            let artikelRef = db.collection("Artikelen").doc();
-            let docRef = db.collection("Vitaminders").doc(User.uid);
-                docRef.get().then(function(doc){
-                    const coachNaam = doc.data().Gebruikersnaam;
+// Artikelen OVERZICHT formatten
+const bodyTekstOverzicht = document.getElementsByClassName("bodyTekst")
 
-            const cat = document.getElementById("categorieSelectie");
-            const catOpties = cat.options;
-            const catSelect = catOpties[catOpties.selectedIndex].value;
-            let nieuwePostTitelVar = document.getElementById("nieuwposttitel").value;
-            let nieuwePostBodyVar = document.getElementById("postbody").innerHTML;
-            
-            artikelRef.set({
-                Titel: nieuwePostTitelVar,
-                Body: nieuwePostBodyVar,
-                Auteur: coachNaam,
-                Categorie: catSelect,
-                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-            })
-            },{ merge: true })
-        } 
+const bodyTekstOverzichtArray = Array.from(bodyTekstOverzicht)
+
+bodyTekstOverzichtArray.forEach(tekst => {
+
+    console.log(tekst)
+
+
+
+const deleteNBSPbodyOverzicht = tekst.innerHTML
+
+    deleteNBSPbodyOverzicht.replace("&nbsp;", " ")
+
+
+const bodyTextPOverzicht = document.getElementsByClassName("bodyTekst")
+
+const bodyTextPOverzichtArray = Array.from(bodyTextPOverzicht)
+
+bodyTextPOverzichtArray.forEach(body => {
+
+const bodyP = body.getElementsByTagName( 'p' )
+
+const bodyPArrayOverzicht = Array.from(bodyP)
+
+bodyPArrayOverzicht.forEach(p => {
+
+    p.style.fontFamily = "Nunito Sans', sans-serif"
+    p.style.color = "#25384d"
+    p.style.fontSize = "18px"
+    p.style.padding = "0px"
+    p.style.letterSpacing = "0.6px"
+
+    const deleteNBSPOverzicht = p.innerHTML
+
+    deleteNBSPOverzicht.replace("&nbsp;", " ")
+
     })
-}
 
-//Teksteditor bij nieuw artikel schrijven
-const style = document.querySelectorAll("button");
+    const bodyStrongOverzicht = document.getElementsByClassName("bodyTekst")
 
-for(let st of style){
-    st.addEventListener("click", () =>{
-    let cmd = st.dataset['command'];
-    const test = document.execCommand(cmd, false, null)
+    bodyStrongOverzichtArray = Array.from(bodyStrongOverzicht)
+
+    bodyStrongOverzichtArray.forEach(strong => {
+
+    const strongEle = strong.querySelectorAll("strong")
+
+    strongEle.forEach(strong => {
+        strong.style.display = "contents"
+    })
 })
-}
-
-// Detailpagina inladen
-titelhtml = location.pathname.replace(/^.*[\\\/]/, '')
-titel1 = titelhtml.replace('.html', '')
-titel2 = titel1.replace('%20',' '),
-titel3 = titel2.replace('%20',' ')
-titel4 = titel3.replace('%20',' ')
-titel5 = titel4.replace('%20',' ')
-titel6 = titel4.replace('%20',' ')
-titel = titel6.replace('%20',' ')
-
-const auteur = document.getElementById('auteur');
-const thema = document.getElementById('thema');
-const datum = document.getElementById('datum');
-const titelArt = document.getElementById("titeltext");
-const body = document.getElementById("bodytext");
-const cat = document.getElementById("categorie");
-
-db.collection('Artikelen').where('Titel', '==', titel )
-    .get()
-    .then(function(querySnapshot) {
-
-    querySnapshot.forEach(function(doc) {
-        
-        auteur.innerHTML = "Geschreven door " + doc.data().Auteur
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        datum.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
-        titelArt.innerHTML = doc.data().Titel
-        body.innerHTML = doc.data().Body
-        thema.innerHTML = "Over " + doc.data().Categorie
-
-        auteur.addEventListener('click', (e) => {
-            window.open("../Vitaminders/" + [doc.data().Auteur] + ".html", "_self");
-        })
-
-        auth.onAuthStateChanged(User =>{
-                const userRef = db.collection("Vitaminders").doc(User.uid);
-                userRef.get().then(function(doc1) {
-                if (doc1.exists) {
-                naam = doc1.data().Gebruikersnaam;
-
-                cat.innerHTML ="Heeft " + doc.data().Auteur +" je geinspireerd "
-                 + "over " + " " + doc.data().Categorie + "," + " " + naam +"?";
-
-        }
-        })
-        })
-    })
-    })
-
+})
+})
+})
 
 // Call to action verbergen voor niet ingelogde users
 auth.onAuthStateChanged(User =>{
@@ -261,6 +236,144 @@ auth.onAuthStateChanged(User =>{
                 options.innerHTML = vraag
 
                 select.appendChild(options)
+
+                })
+            })
+        })
+    }
+})
+
+
+// Detailpagina inladen
+titelhtml = location.pathname.replace(/^.*[\\\/]/, '')
+titel1 = titelhtml.replace('.html', '')
+titel2 = titel1.replace('%20',' '),
+titel3 = titel2.replace('%20',' ')
+titel4 = titel3.replace('%20',' ')
+titel5 = titel4.replace('%20',' ')
+titel6 = titel4.replace('%20',' ')
+titel = titel6.replace('%20',' ')
+
+const auteur = document.getElementById('auteur');
+const thema = document.getElementById('thema');
+const datum = document.getElementById('datum');
+const titelArt = document.getElementById("titeltext");
+const body = document.getElementById("bodytext");
+const cata = document.getElementById("categorie");
+
+db.collection('Artikelen').where('Titel', '==', titel )
+    .get().then(querySnapshot =>  {
+    querySnapshot.forEach(doc => {
+
+    const categorie = doc.data().Categorien
+
+    categorie.forEach(cat =>{
+
+    
+        
+        auteur.innerHTML = "Geschreven door " + doc.data().Auteur
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        datum.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
+        titelArt.innerHTML = doc.data().Titel
+        body.innerHTML = doc.data().Body
+        thema.innerHTML = "Over " + cat
+
+        thema.addEventListener("click", () => {
+            window.open("../Thema/" + cat, "_self");
+        })
+
+        auteur.addEventListener('click', (e) => {
+            window.open("../Vitaminders/" + [doc.data().Auteur] + ".html", "_self");
+        })
+
+        auth.onAuthStateChanged(User =>{
+                const userRef = db.collection("Vitaminders").doc(User.uid);
+                userRef.get().then(function(doc1) {
+                if (doc1.exists) {
+                naam = doc1.data().Gebruikersnaam;
+
+                cata.innerHTML ="Heeft " + doc.data().Auteur +" je geinspireerd "
+                 + "over " + " " + cat + "," + " " + naam +"?";
+
+        }
+        })
+        })
+    })
+    })
+    }).then(() => {
+
+
+
+// Artikelen DETAILPAGINA formatten
+
+const bodyTekst = document.getElementById("bodytext")
+
+const deleteNBSPbody = bodyTekst.innerHTML
+
+console.log(deleteNBSPbody)
+
+    deleteNBSPbody.replace("&nbsp;", " ")
+
+
+const bodyTextP = document.getElementById("bodytext").getElementsByTagName( 'p' )
+
+const bodyPArray = Array.from(bodyTextP)
+
+bodyPArray.forEach(p => {
+
+    p.style.color = "#122b46"
+    p.style.fontSize = "18px"
+    p.style.fontFamily = "Nunito Sans', sans-serif"
+    p.style.padding = "0px"
+    p.style.letterSpacing = "0.6px"
+
+    const deleteNBSP = p.innerHTML
+
+    deleteNBSP.replace("&nbsp;", " ")
+
+    })
+
+    const bodyStrong = document.getElementById("bodytext").querySelectorAll("strong")
+
+    bodyStrong.forEach(strong => {
+        strong.style.display = "contents"
+    })
+
+})
+
+
+// Call to action verbergen voor niet ingelogde users
+auth.onAuthStateChanged(User =>{
+        if (User){
+            const CTAAuth = document.getElementById("CTAAuth");
+            CTAAuth.style.display = "flex";
+        }   else {
+            CTAAuth.style.display = "none";
+        }
+    })
+
+// Learning verwerken in Karakter, Levensvraag en onder artikel
+
+        // Levensvragen inladen in select
+
+        const selectLevensvraag = document.getElementById("learning-levensvraag")
+
+        auth.onAuthStateChanged(User =>{
+            if (User){
+                const docRef = db.collection("Vitaminders").doc(User.uid);
+                    docRef.get().then(function(doc){
+    
+                    const naam = doc.data().Gebruikersnaam;
+
+        db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                const vraag = doc.data().Levensvraag
+
+                const options = document.createElement("option")
+               
+                options.innerHTML = vraag
+
+                selectLevensvraag.appendChild(options)
 
                 })
             })
