@@ -155,20 +155,27 @@ const bodyTekstOverzichtArray = Array.from(bodyTekstOverzicht)
 
 bodyTekstOverzichtArray.forEach(tekst => {
 
-    console.log(tekst)
+     // img verwijderen
 
+    const tekstImg = tekst.querySelectorAll("img")
 
+    const tekstImgArray = Array.from(tekstImg)
 
+    tekstImgArray.forEach(img => {
+
+    if(tekstImgArray.length > 0){
+
+    img.style.display = "none"
+    }
+
+    // &nbsp; verwijderen
 const deleteNBSPbodyOverzicht = tekst.innerHTML
 
     deleteNBSPbodyOverzicht.replace("&nbsp;", " ")
 
+    // p's formateren
 
-const bodyTextPOverzicht = document.getElementsByClassName("bodyTekst")
-
-const bodyTextPOverzichtArray = Array.from(bodyTextPOverzicht)
-
-bodyTextPOverzichtArray.forEach(body => {
+bodyTekstOverzichtArray.forEach(body => {
 
 const bodyP = body.getElementsByTagName( 'p' )
 
@@ -176,17 +183,45 @@ const bodyPArrayOverzicht = Array.from(bodyP)
 
 bodyPArrayOverzicht.forEach(p => {
 
-    p.style.fontFamily = "Nunito Sans', sans-serif"
+    p.style.fontFamily = "Nunito Sans', sans-serif !important"
     p.style.color = "#25384d"
     p.style.fontSize = "18px"
     p.style.padding = "0px"
     p.style.letterSpacing = "0.6px"
-
-    const deleteNBSPOverzicht = p.innerHTML
-
-    deleteNBSPOverzicht.replace("&nbsp;", " ")
-
+    p.style.margin = "0px"
+    p.style.textAlign = "left"
+    p.style.fontWeight = "500"
+    p.style.maxWidth = "350px"
     })
+
+    // Spans formateren
+
+    // bodyTekstOverzichtArray.forEach(span => {
+
+    //     const bodySpan = span.querySelector("span")
+
+    //     // if(!bodySpan  == null || !bodySpan == undefined ){
+
+    //     const bodySpanArray = Array.from(bodySpan)
+        
+    //     bodySpanArray.forEach(s => {
+
+    //         console.log(s)
+
+    //         s.style.fontFamily = "Nunito Sans', sans-serif"
+    //         s.style.color = "#25384d"
+    //         s.style.fontSize = "18px"
+    //         s.style.padding = "0px"
+    //         s.style.letterSpacing = "0.6px"
+    //         s.style.margin = "0px"
+    //         s.style.textAlign = "left"
+    //         s.style.fontWeight = "500"
+    //         s.style.maxWidth = "350px"
+    //         })
+    //     // }
+    // })
+
+    // Strongs formateren (zodat ze geen line-break maken)
 
     const bodyStrongOverzicht = document.getElementsByClassName("bodyTekst")
 
@@ -199,6 +234,7 @@ bodyPArrayOverzicht.forEach(p => {
     strongEle.forEach(strong => {
         strong.style.display = "contents"
     })
+})
 })
 })
 })

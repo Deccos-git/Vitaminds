@@ -481,6 +481,47 @@
             font-size: 16px;
         }
 
+        /* Levensvragen inladen */
+
+#verzamelOpenUps{
+    display: flex;
+    flex-direction: column;
+    margin: 30px;
+    width: 80%;
+}
+
+.openup-div{
+    display: flex;
+    border: 1px solid #122b463a;
+    margin: 15px;
+    border-radius: 15px;
+    width: 100%;
+    height: auto;
+    padding: 15px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.openup-div:hover{
+    box-shadow: 0 8px 8px 0 rgba(0,0,0,.14), 0 9px 7px -8px rgba(0,0,0,.2), 0 7px 11px 0 rgba(0,0,0,.12);
+}
+
+.openup-meta{
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.vraag-div{
+    margin: 15px;
+}
+
+.bron-div{
+    margin-right: 15px;
+}
+
+.auth-div{
+    margin-top: 30px;
+}
+
         /* Favorieten */
 
         #favoInspiratie{

@@ -108,6 +108,9 @@
     margin: 0px 30px 30px 30px;
     letter-spacing: 0.6px;
     color: #25384d;
+    text-align: left;
+    width: 350px;
+    font-weight: 500;
 }
 
 .divTekst{
@@ -117,6 +120,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 350px;
 }
 
 .divHeader{
