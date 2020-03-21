@@ -42,7 +42,8 @@
     margin: 30px 10px 20px 10px;
     padding-bottom:20px;
     align-items: center;
-    border-radius: 15px;;
+    border-radius: 15px;
+    background-color: #FFF;
 }
 
 .mainTekst:hover{
@@ -234,6 +235,12 @@
 #artikel-favorieten p{
     font-size: 15px;
     padding: 10px;
+}
+
+.favAut p{
+    background-color: #0c6665;
+    color: #FFF;
+
 }
 
 /* nieuwe post */

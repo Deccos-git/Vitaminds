@@ -141,7 +141,7 @@ function tools(){
 }
 
 function klikFavInspiratie(){
-        favoInspiratie.style.display = "flex";
+        favoInspiratie.style.display = "block";
         avontuur.style.display = "none";
         karakter.style.display = "none";
         favoCoach.style.display = "none";
@@ -155,7 +155,7 @@ function klikFavInspiratie(){
 }
 
 function klikFavCoaches(){
-        favoCoach.style.display = "flex";
+        favoCoach.style.display = "block";
         avontuur.style.display = "none";
         karakter.style.display = "none";
         favoInspiratie.style.display = "none";
@@ -215,6 +215,7 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
         querySnapshot.forEach(doc => {
             const levensvraag = doc.data().Levensvraag
             const levenslessen = doc.data().Levenslessen
+            const omschrijving = doc.data().Omschrijving
     
             const DOM = document.getElementById("overzichtLevensvragen")
     
@@ -225,13 +226,20 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
             const vraagDiv = document.createElement("div") 
                 vraagDiv.setAttribute("class", "vraag-div")      
             const vraag = document.createElement("h3")
+            const omschrijvingDiv = document.createElement("div")
+                omschrijvingDiv.setAttribute("class", "omschrijving-div")
+            const omschrijvingP = document.createElement("p")
     
             vraag.innerHTML = levensvraag
+            omschrijvingP.innerHTML = omschrijving
+            
     
             DOM.appendChild(innerDiv)
             innerDiv.appendChild(authDiv)
             innerDiv.appendChild(vraagDiv)
             vraagDiv.appendChild(vraag)
+            vraagDiv.appendChild(omschrijvingDiv)
+            omschrijvingDiv.appendChild(omschrijvingP)
     
             // Levenslessen metadata inladen die passen bij levensvragen
     
@@ -284,16 +292,28 @@ function nieuweLevensvraag(){
                 vraagSelect.setAttribute("id", "ontwikkelDoel");
                 vraagSelect.setAttribute("type", "text");
                 vraagSelect.setAttribute("placeholder", "Wat is je levensvraag?");
+
+        const beschrijvingH3 =  document.createElement("h4");
+        const beschrijvingSelect = document.createElement("textarea");
+                beschrijvingSelect.setAttribute("id", "levensvraag-beschrijving");
+                beschrijvingSelect.setAttribute("cols", "63")
+                beschrijvingSelect.setAttribute("rows", "15")
+                beschrijvingSelect.setAttribute("type", "text");
+                beschrijvingSelect.setAttribute("placeholder", "Geef een korte omschrijving");
         
         const button = document.createElement("button");
                 button.setAttribute("onclick", "startTocht()");
                 button.setAttribute("class", "button-algemeen");
 
                 vraagH3.innerHTML = "Wat is je levensvraag?"
+                beschrijvingH3.innerHTML = "Geef een korte omschrijving"
+
                 button.innerHTML = "Ga"
 
                 DOM.appendChild(vraagH3)
                 vraagH3.appendChild(vraagSelect)
+                DOM.appendChild(beschrijvingH3)
+                beschrijvingH3.appendChild(beschrijvingSelect)
                 DOM.appendChild(button)     
 };
 
@@ -308,12 +328,14 @@ function startTocht(){
                       Gnaam = doc.data().Gebruikersnaam;
 
         const inputDoel = document.getElementById("ontwikkelDoel").value 
+        const omschrijving = document.getElementById("levensvraag-beschrijving").value
               
        db.collection('Vitaminders').doc(User.uid).collection("Levensvragen").doc().set({
                 Levensvraag: inputDoel,
                 Levenslessen: [],
                 Gebruikersnaam: Gnaam,
                 Openbaar: "Ja",
+                Omschrijving: omschrijving,
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                 
         }).then(()=>{
@@ -420,21 +442,28 @@ db.collectionGroup("Favorieten").where("Gebruikersnaam", "==", naam).where("Type
                 const titel = doc.data().Titel;
                 const auteur = doc.data().Auteur;
                 const datum = doc.data().Timestamp;
-                const thema = doc.data().Thema;
+                // const thema = doc.data().Thema;
 
-        const DOM = document.getElementById("favoInspiratieDiv");
+        const DOM = document.getElementById("favoInspiratie");
 
         const div = document.createElement("div");
+                div.setAttribute("class", "favoInspDiv")
         const titelH2 = document.createElement("h2");
         const metaAut = document.createElement("p");
         const metaDatum = document.createElement("p");
         const metaThema = document.createElement("p");
 
         titelH2.innerHTML = titel;
-        metaAut.innerHTML = auteur;
+                titelH2.addEventListener("click", () => {
+                        window.open("../Artikelen/" + titel + ".html", "_self")
+                })
+        metaAut.innerHTML = "Geschreven door " + `<u>${auteur}</u>`;
+                metaAut.addEventListener("click", () => {
+                        window.open("../Vitaminders/" + auteur + ".html", "_self")
+                })
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         metaDatum.innerHTML = "Op: " + datum.toDate().toLocaleDateString("nl-NL", options);
-        metaThema.innerHTML = thema;
+        // metaThema.innerHTML = thema;
 
         DOM.appendChild(div);
         div.appendChild(titelH2);
@@ -454,13 +483,17 @@ db.collectionGroup("Favorieten").where("Gebruikersnaam", "==", naam).where("Type
 
                         console.log(auteur)
         
-                const DOM = document.getElementById("favoCoachDiv");
+                const DOM = document.getElementById("favoCoach");
         
                 const div = document.createElement("div");
+                        div.setAttribute("class", "favoCoachDiv")
                 const titelH2 = document.createElement("h2");
                 const metaDatum = document.createElement("p");
         
                 titelH2.innerHTML = auteur;
+                titelH2.addEventListener("click", () => {
+                        window.open("../Vitaminders/" + auteur + ".html", "_self")
+                })
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 metaDatum.innerHTML = "Op: " + datum.toDate().toLocaleDateString("nl-NL", options);
         

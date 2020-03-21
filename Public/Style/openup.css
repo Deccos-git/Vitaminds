@@ -2,19 +2,23 @@
 
 #verzamelOpenUps{
     display: flex;
-    flex-direction: column;
-    margin: 30px;
-    width: 80%;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 100%;
+    background-color: #122b4613;
+    margin-top: 80px;
 }
 
 .openup-div{
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
     border: 1px solid #122b463a;
     margin: 15px;
     border-radius: 15px;
-    width: 100%;
+    width: 330px;
     height: auto;
-    padding: 15px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
 }
 
@@ -25,10 +29,18 @@
 .openup-meta{
     font-size: 15px;
     cursor: pointer;
+    margin: 10px;
+    color: #122b46;
+}
+
+.openup-meta ul{
+    list-style-type: disc;
 }
 
 .vraag-div{
-    margin: 15px;
+    margin: 15px 0px 15px 0px;
+    text-align: center;
+    border-bottom: 1px #122b46 dotted;
 }
 
 .bron-div{
@@ -37,5 +49,101 @@
 
 .auth-div{
     margin-top: 30px;
+    text-align: center;
+    border-bottom: 1px #122b46 dotted;
 }
 
+.header-div{
+    height: 200px;
+    width: 100%;
+    background-image: url("../images/avontuur1.jpg");
+    background-size: cover;
+    
+}
+
+.lees-meer-openup{
+    background-color: #0c6665;
+    border: 1px #0c6665 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #FFF;
+    cursor: pointer;
+    width: 100px;
+    margin-bottom: 15px;
+}
+
+/* Detailpagina */
+
+.openup-div-detail{
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #122b463a;
+    margin: 15px;
+    border-radius: 15px;
+    width: auto;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    margin: 40px 200px 40px 200px;
+    border-radius: 15px;
+    height: auto;
+    padding: 15px;
+    
+}
+
+.header-div-detail{
+    height: 200px;
+    background-image: url("../images/avontuur1.jpg");
+    background-size: cover;
+    
+}
+
+.openup-meta-detail{
+    font-size: 15px;
+    cursor: pointer;
+    margin: 10px;
+    color: #122b46;
+}
+
+.openup-meta-detail ul{
+    list-style-type: disc;
+}
+
+.vraag-div-detail{
+    margin: 15px 0px 15px 0px;
+    text-align: center;
+    border-bottom: 1px #122b46 dotted;
+}
+
+.bron-div-detail{
+    margin-right: 15px;
+}
+
+.auth-div-detail{
+    margin-top: 30px;
+    text-align: center;
+    border-bottom: 1px #122b46 dotted;
+}
+
+#reacties-overview{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    border-radius: 15px;
+    padding: 15px;
+    margin: 40px 200px 40px 200px;
+
+}
+
+#reactie-input{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    border-radius: 15px;
+    padding: 15px;
+    margin: 40px 200px 40px 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.reactie-div{
+    border-bottom: 1px dotted #122b46;
+}

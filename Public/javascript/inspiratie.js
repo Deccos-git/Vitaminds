@@ -305,8 +305,6 @@ db.collection('Artikelen').where('Titel', '==', titel )
 
     categorie.forEach(cat =>{
 
-    
-        
         auteur.innerHTML = "Geschreven door " + doc.data().Auteur
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         datum.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
@@ -331,12 +329,12 @@ db.collection('Artikelen').where('Titel', '==', titel )
                 cata.innerHTML ="Heeft " + doc.data().Auteur +" je geinspireerd "
                  + "over " + " " + cat + "," + " " + naam +"?";
 
-        }
+                    }
+                 })
+            })
         })
-        })
-    })
     })
-    }).then(() => {
+}).then(() => {
 
 
 
@@ -452,16 +450,15 @@ auth.onAuthStateChanged(User =>{
                         querySnapshot.forEach(function(doc) {
 
                             const auteur = doc.data().Auteur;
-                            const thema = doc.data().Categorie;
 
             KarakterRef.set({
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                 Levensles: learning,
                 Auteur: auteur,
                 Gebruikersnaam: naamPost,
-                Thema: thema,
                 Titel: titel,
                 Inspirerend: 1,
+                Type: "Inspiratie"
             })
 
             levensvraagRef.update({
@@ -547,26 +544,20 @@ function favArtikel(){
     querySnapshot.forEach(function(doc) {
         
         schrijver = doc.data().Auteur
-        thema = doc.data().Categorie
 
     auth.onAuthStateChanged(User =>{
-      const userRef = db.collection("Vitaminders").doc(User.uid)
-        userRef.get().then(doc2 =>{
-          const naam = doc2.data().Gebruikersnaam;
-
-      
-      userRef.collection("Favorieten").doc().set({
+        db.collection("Vitaminders").doc(User.uid).collection("Favorieten").doc().set({
         
             Type: "Inspiratie",
-            Titel: titel,
             Auteur: schrijver,
+            Titel: titel,
             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-            Thema: thema,
-            Gebruikersnaam: naam,
-
+            Gebruikersnaam: naam
         })
 
-        const DOM = document.getElementById("favArtikel");
+       const DOM = document.getElementById("favArtikel");
+
+       console.log(DOM)
 
        const alertDiv = document.createElement("p");
             alertDiv.setAttribute("class", "favAut");
@@ -577,10 +568,10 @@ function favArtikel(){
 
         DOM.appendChild(alertDiv);
         alertDiv.appendChild(alert);
+
             })  
         })
     })
-})
 }
 
 // Favorieten Auteur wegschrijven naar database
@@ -600,6 +591,7 @@ function favAuteur(){
             Type: "Coach",
             Auteur: schrijver,
             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+            Gebruikersnaam: naam
         })
 
        const DOM = document.getElementById("favAuteur");

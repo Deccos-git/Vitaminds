@@ -70,11 +70,34 @@ const filters = {
     Doelgroep: []
     }
 
-const filterValues = []
+let filterValues = []
 
 const alleCategorieG =[];
 const alleLocatieG = [];
 const alleDoelgroepG = [];
+
+ // Coaches uitlezen
+ db.collection("Vitaminders").where("Usertype", "==", "Coach")
+ .get()
+ .then(function(querySnapshot) {
+     querySnapshot.forEach(function(doc) {
+
+         const alleCategorie = doc.data().Categorien
+         alleCategorieG.push(alleCategorie);
+
+         const alleLocatie = doc.data().Locatie
+         alleLocatieG.push(alleLocatie);
+
+         const alleDoelgroep = doc.data().Doelgroep
+         alleDoelgroepG.push(alleDoelgroep)
+
+         const data = doc.data()
+         dataSet.push(data)
+ 
+     })
+ })    
+
+ // Filter knop
 
 const button = document.getElementById("filter-button")
 button.addEventListener("click", () => {
@@ -85,27 +108,6 @@ button.addEventListener("click", () => {
     coachDOMarray.forEach(C => {
         C.style.display = "flex"
     })
-
-    // Coaches uitlezen
-    db.collection("Vitaminders").where("Usertype", "==", "Coach")
-    .get()
-    .then(function(querySnapshot) {
-        querySnapshot.forEach(function(doc) {
-
-            const alleCategorie = doc.data().Categorien
-            alleCategorieG.push(alleCategorie);
-
-            const alleLocatie = doc.data().Locatie
-            alleLocatieG.push(alleLocatie);
-
-            const alleDoelgroep = doc.data().Doelgroep
-            alleDoelgroepG.push(alleDoelgroep)
-
-            const data = doc.data()
-            dataSet.push(data)
-    
-        })
-    })    
 
     //Filters uitlezen
     const cat = document.getElementById("filterCoachCategorien")
@@ -137,8 +139,9 @@ button.addEventListener("click", () => {
     filters.Doelgroep.push(DDselect)
 
     // Filteren
-    const filtersValues = Object.values(filters)
-    filtersValues.forEach(filter => {
+    
+    const filtersValue = Object.values(filters)
+    filtersValue.forEach(filter => {
         filter.forEach(filt => {
             if (typeof filt === 'object'){
             filt.forEach(fil => {
@@ -164,9 +167,6 @@ button.addEventListener("click", () => {
                     coachDOMarray.forEach(CD => {
                     
                     const coachData = CD.dataset.name
-                    console.log(username)
-                    console.log(coachData)
-                    
 
                     if(coachData == username){
                         console.log("iets?")
@@ -182,5 +182,4 @@ button.addEventListener("click", () => {
     })
 })
 }) 
-
 

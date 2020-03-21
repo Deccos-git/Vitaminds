@@ -64,6 +64,7 @@
 #niveau h3, h5{
     color: #FFF;
     margin-top: 0px;
+    font-size: 16px;
 }
 
 .usertype{
@@ -93,6 +94,7 @@
 
 .welkom{
     margin-bottom: 20px;
+    font-size: 24px;
   }
   
   .subtitel{
@@ -128,7 +130,6 @@
 #menuWrapper{
     display:flex;
     flex-direction: column;
-    
     margin: 100px 0px 0px 0px;
 }
 
@@ -499,6 +500,7 @@
     height: auto;
     padding: 15px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    background-color: #FFF;
 }
 
 .openup-div:hover{
@@ -531,8 +533,16 @@
         #favoCoach{
             display: none;
         }
+
+        .favoCoachDiv{
+            background-color: #FFF;
+            height: auto;
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px;
+        }
         
-        #favoInspiratieDiv{
+        .favoInspDiv{
             margin: 15px;
             border: 1px solid #122b4650;
             border-radius: 15px;
