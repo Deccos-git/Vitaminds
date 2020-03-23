@@ -11,10 +11,10 @@
 }
 
 #profielfoto{
-    background-image: url("../images/neusaap.jpg");
     background-repeat: no-repeat;
     background-position: center;
-    margin: 180px 50px 10px 60px;
+    background-size: cover;
+    margin: -180px 50px 10px 60px;
     height: 210px;
     width: 210px;
     padding: 0px;
@@ -23,9 +23,31 @@
     border-radius: 15px;
 }
 
+#profielfoto-aanpassen{
+    display: none;
+    cursor: pointer;
+    background-color: #122b4650;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+#profielfoto-aanpassen img{
+    margin: 5px 0px 0px 5px;
+}
+
+#foto-upload-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profiel-foto-div{
+    display: flex;
+    flex-direction: column;
+}
+
 #userinfo{
     display: flex;
-    justify-content: space-between;
     width: 100%;
     height: 150px;
     background-color: #122b46;
@@ -43,7 +65,7 @@
 }
 
 #userID{
-    margin-left: 350px;
+    margin-left: 15px;
 }
 
 #userID h1, h5{
@@ -190,6 +212,14 @@
 
 /* Profiel */
 
+#landing{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
 #profielWrapper{
     height: auto;
     width: 100%;
@@ -213,6 +243,7 @@
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
+            text-align: center;
         }
 
         .levensles-thema{
@@ -540,6 +571,7 @@
             padding: 15px;
             border-radius: 15px;
             margin: 15px;
+            border: 1px solid #122b4650;
         }
         
         .favoInspDiv{

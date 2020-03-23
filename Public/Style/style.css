@@ -43,7 +43,7 @@ h3{
 
 h4{
   font-family: 'Nunito Sans', sans-serif;
-  color: #cf6e13;
+  color: #49beb7;
   font-size: 23px;
 }
 
@@ -185,8 +185,24 @@ link{
   font-size: 18px;
 }
 
+#menu-auth-div{
+  display: flex;
+  align-items: center;
+}
+
 #mijnAccount{
   margin: 0px 0px 0px 0px;
+  height: 30px;
+  width: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#profile-name{
+  margin: 0px 0px 0px 5px;
 }
 
 #mijnAccount a{
@@ -209,17 +225,16 @@ link{
 
 #aanmeldCH a{
   text-decoration: none;
-  color: #0c6665;
+  color: #122b46;
 }
 
 #aanmeldCH a:active{
-  color: #0c6665;
+  color: #122b46;
 }
 
 #aanmeldCH a:visited{
-  color: #0c6665;
+  color: #122b46;
 }
-
 
 /* button algemeen */
 
@@ -379,7 +394,7 @@ link{
 }
 
 #vertelMeMeer a{
-  color: #0c6665;
+  color: #122b46;
 }
 
 /* DigiMind welkom */
@@ -401,7 +416,7 @@ link{
 .DigiMind section{
   height: 500px;
   width: 350px;
-  border-radius: 15px;
+  border-radius: 0px 0px 15px 15px;
   margin: 20px;
   align-items: center;
   box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
@@ -433,8 +448,6 @@ link{
   height: 200px;
   width: 100%;
   margin: 0px;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
 }
 
 .ervaring{
@@ -455,8 +468,6 @@ link{
   height: 200px;
   width: 100%;
   margin: 0px;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
 }
 
 .groei{
@@ -477,8 +488,6 @@ link{
   height: 200px;
   width: 100%;
   margin: 0px;
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
 }
 
 #pers{
@@ -575,7 +584,7 @@ link{
 
 .infoMenu a {
   text-decoration: none;
-  color: #0c6665; 
+  color: #122b46; 
 }
 
 .infoMenu a:hover {
@@ -788,11 +797,11 @@ footer h6{
 /* form input */
 
 input {
-  padding: 10px 10px 10px 10px;
-  font-size: 105%;
+  padding: 10px 10px 10px 50px;
   border-radius: 10px;
   margin: 5px;
   border: 1px solid #122b46;
+  color: #122b46;
 }
 
 input:focus, input:hover {

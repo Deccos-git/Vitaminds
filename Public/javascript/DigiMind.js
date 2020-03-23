@@ -1,5 +1,6 @@
 
 // Profiel inhoud
+const landing = document.getElementById("landing")
 const avontuur = document.getElementById("doelen");
 const karakter = document.getElementById("karakter");
 const dagelijksLeven = document.getElementById("dagelijks");
@@ -18,6 +19,7 @@ const nieuwArtikel = document.getElementById("artikel")
 
  function contactCH(){
          coachContact.style.display = "flex"
+        landing.style.display = "none"
          overMij.style.display = "none"
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
@@ -27,10 +29,12 @@ const nieuwArtikel = document.getElementById("artikel")
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
         nieuwArtikel.style.display = "none"
+     
  }
 
  function overMijCH(){
          overMij.style.display = "flex"
+         landing.style.display = "none"
          coachContact.style.display = "none"
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
@@ -44,6 +48,7 @@ const nieuwArtikel = document.getElementById("artikel")
 
  function mijnCoachingCH(){
          mijnCoaching.style.display = "flex"
+         landing.style.display = "none"
          coachContact.style.display = "none"
          overMij.style.display = "none"
          mijnBijdragen.style.display = "none"
@@ -57,6 +62,7 @@ const nieuwArtikel = document.getElementById("artikel")
 
  function mijnBijdragenCH(){
          mijnBijdragen.style.display = "flex"
+         landing.style.display = "none"
          coachContact.style.display = "none"
          overMij.style.display = "none"
          mijnCoaching.style.display = "none"
@@ -70,6 +76,7 @@ const nieuwArtikel = document.getElementById("artikel")
 
  function toolsCH(){
          mijnTools.style.display = "flex"
+         landing.style.display = "none"
          coachContact.style.display = "none"
          overMij.style.display = "none"
          mijnCoaching.style.display = "none"
@@ -85,6 +92,7 @@ const nieuwArtikel = document.getElementById("artikel")
 
 function klikavontuur(){
         avontuur.style.display = "flex";
+        landing.style.display = "none"
         karakter.style.display = "none";
         coachtools.style.display ="none";
         favoInspiratie.style.display = "none";
@@ -100,6 +108,7 @@ function klikavontuur(){
 function klikkarakter(){
         karakter.style.display = "flex";
         avontuur.style.display = "none";
+        landing.style.display = "none"
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
         coachtools.style.display ="none";
@@ -114,6 +123,7 @@ function klikkarakter(){
 function klikdagelijks(){
         dagelijksLeven.style.display = "flex"
         karakter.style.display = "none";
+        landing.style.display = "none"
         avontuur.style.display = "none";
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
@@ -129,6 +139,7 @@ function klikdagelijks(){
 function tools(){
         coachtools.style.display ="flex";
         avontuur.style.display = "none";
+        landing.style.display = "none"
         karakter.style.display = "none";  
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
@@ -143,6 +154,7 @@ function tools(){
 function klikFavInspiratie(){
         favoInspiratie.style.display = "block";
         avontuur.style.display = "none";
+        landing.style.display = "none"
         karakter.style.display = "none";
         favoCoach.style.display = "none";
         coachtools.style.display = "none";
@@ -157,6 +169,7 @@ function klikFavInspiratie(){
 function klikFavCoaches(){
         favoCoach.style.display = "block";
         avontuur.style.display = "none";
+        landing.style.display = "none"
         karakter.style.display = "none";
         favoInspiratie.style.display = "none";
         coachtools.style.display = "none";
@@ -173,6 +186,7 @@ function klikFavCoaches(){
 function artikel(){
         nieuwArtikel.style.display = "block"
         favoCoach.style.display = "none";
+        landing.style.display = "none"
         avontuur.style.display = "none";
         karakter.style.display = "none";
         favoInspiratie.style.display = "none";
@@ -184,13 +198,34 @@ function artikel(){
          mijnTools.style.display = "none"
 }
 
-// Informatie van Vitaminder/Coach inladen vanuit database in pagina
+  // Naam uit URL halen
+  naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
+  naam1 = naamhtml.replace('.html', '')
+  naam2 = naam1.replace('%20',' '),
+  naam = naam2.replace('%20',' ')
+  
 
-        // Naam uit URL halen
-naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
-naam1 = naamhtml.replace('.html', '')
-naam2 = naam1.replace('%20',' '),
-naam = naam2.replace('%20',' ')
+//Userroll
+db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
+    .get()
+    .then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+        const usertype = doc.data().Usertype
+
+        const coachMenu = document.getElementById("coach-menu")
+        const toolsMenu = document.getElementById("tools-menu")
+
+        console.log(usertype)
+
+        if(usertype == "Vitaminder"){
+                coachMenu.style.display = "none"
+                toolsMenu.style.display = "none"
+        }
+
+        })
+})
+
+// Informatie van Vitaminder/Coach inladen vanuit database in pagina
 
         //Gegevens van overeenkomende naan inladen
 db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
@@ -200,8 +235,12 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
         const username = document.getElementsByClassName('welkom')[0];
         const usertype = document.getElementsByClassName('usertype')[0];
         const bijdrage = document.getElementById("bijdragepunten");
+        const profielfoto = document.getElementById("profielfoto");
+        console.log(profielfoto)
 
-
+        
+        profielfoto.style.backgroundImage =`url('${doc.data().Profielfoto}')` 
+        console.log(doc.data().Profielfoto)
         username.innerHTML = doc.data().Gebruikersnaam;
         usertype.innerHTML = doc.data().Usertype;
         bijdrage.innerHTML = doc.data().Inspiratiepunten;
@@ -374,7 +413,6 @@ auth.onAuthStateChanged(User =>{
 
 
 //Levenslessen
-
         const DOMlearnings = document.getElementById("learnings");
 
                 // Naam uit URL halen
@@ -385,9 +423,7 @@ auth.onAuthStateChanged(User =>{
 
                         db.collectionGroup('Levenslessen').where('Gebruikersnaam', '==', naam )
                             .get()
-                            .then(function(querySnapshot) {
-
-                              
+                            .then(function(querySnapshot) {    
                 
                             querySnapshot.forEach(function(doc1) {
                 
@@ -529,6 +565,7 @@ function nieuwepostsubmit(){
                     Auteur: coachNaam,
                     Categorien: firebase.firestore.FieldValue.arrayUnion(catSelect),
                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                    Type: "Artikel"
                 })
                 })
             } 
@@ -545,3 +582,69 @@ function nieuwepostsubmit(){
     })
     }
 
+
+// Profiel aanpassen
+
+    // Profielfoto
+    function showChangeProfilePicture(){
+            const profielfotoAanpassenDiv = document.getElementById("profielfoto-aanpassen")
+            profielfotoAanpassenDiv.style.display = "block"
+    }
+
+    function changeProfilePicture(){
+            const uploadProfilePic = document.getElementById("foto-upload-div")
+            uploadProfilePic.style.display = "flex"
+    }
+
+    function uploadFile(){
+
+        auth.onAuthStateChanged(User =>{
+                if (User){
+                    db.collection("Vitaminders").doc(User.uid).get().then(doc =>{     
+                                    const id = doc.id
+    
+                        const docRef = db.collection("Vitaminders").doc(id);
+                           
+    const selectedFile = document.getElementById('foto-upload').files[0];
+
+    const storageRef = firebase.storage().ref("/Profielfotos/" + selectedFile.name);
+
+       const uploadTask = storageRef.put(selectedFile)
+       uploadTask.then(() => {
+        // Register three observers:
+        // 1. 'state_changed' observer, called any time the state changes
+        // 2. Error observer, called on failure
+        // 3. Completion observer, called on successful completion
+        uploadTask.on('state_changed', function(snapshot){
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        switch (snapshot.state) {
+          case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log('Upload is paused');
+            break;
+          case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log('Upload is running');
+            break;
+        }
+      }, function(error) {
+        // Handle unsuccessful uploads
+      }, function() {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          console.log('File available at', downloadURL);
+          docRef.update({
+                        Profielfoto: downloadURL
+                                                        }) 
+                                                })
+                                                // .then(()=>{
+                                                //         location.reload();
+                                                // })       
+                                        })
+                                })
+                        })
+                }
+        })    
+};

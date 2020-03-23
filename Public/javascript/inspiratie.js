@@ -125,6 +125,24 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
             categorie.addEventListener('click', (e) => {
                 window.open("../Thema/" + cat + ".html", "_self");
             })
+        
+        //Profielfoto achterhalen en inladen in DOM
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", auteurTekst).get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                const profilePic = doc.data().Profielfoto
+                const gebruikersnaam = doc.data().Gebruikersnaam
+
+                console.log(profilePic)
+
+                const profilePicture = document.createElement("div")
+                    profilePicture.setAttribute("class", "openup-profile-pic")
+
+                profilePicture.style.backgroundImage = `url('${profilePic}')`
+
+                profilePicture.addEventListener("click", () => {
+                    window.open("../Vitaminders/" + gebruikersnaam + ".html", "_self")
+                       })
 
         // De artikel eigenschappen in de nieuwe HTML elementen zetten
         categorie.innerHTML = cat;
@@ -139,9 +157,12 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
         mainDiv.appendChild(nieuweDivTekst);
         nieuweDivTekst.appendChild(categorie);
         nieuweDivTekst.appendChild(nieuweTitel);
+        nieuweDivTekst.appendChild(profilePicture);
         nieuweDivTekst.appendChild(nieuweAuteur);
        nieuweDivTekst.appendChild(nieuweBody);
        mainDiv.appendChild(linkTekst);
+            })                
+        })
     })
 })
 }).catch(function(error) {
@@ -344,10 +365,7 @@ const bodyTekst = document.getElementById("bodytext")
 
 const deleteNBSPbody = bodyTekst.innerHTML
 
-console.log(deleteNBSPbody)
-
     deleteNBSPbody.replace("&nbsp;", " ")
-
 
 const bodyTextP = document.getElementById("bodytext").getElementsByTagName( 'p' )
 
@@ -420,8 +438,6 @@ auth.onAuthStateChanged(User =>{
         function submitKT(){
 
         const learning = document.getElementById("inputDB").value;
-
-        console.log(learning)
 
          auth.onAuthStateChanged(User =>{
          if (User){

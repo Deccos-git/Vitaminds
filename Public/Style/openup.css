@@ -30,7 +30,7 @@
     font-size: 15px;
     cursor: pointer;
     margin: 10px;
-    color: #122b46;
+    color: #8e0000;
 }
 
 .openup-meta ul{
@@ -47,7 +47,22 @@
     margin-right: 15px;
 }
 
+.openup-profile-pic{
+    margin: -62px 0px 0px 0px;
+    height: 60px;
+    width: 60px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #FFF;
+}
+
 .auth-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 30px;
     text-align: center;
     border-bottom: 1px #122b46 dotted;
@@ -78,6 +93,8 @@
 .openup-div-detail{
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
     background-color: #fff;
     border: 1px solid #122b463a;
     margin: 15px;
@@ -87,12 +104,15 @@
     margin: 40px 200px 40px 200px;
     border-radius: 15px;
     height: auto;
-    padding: 15px;
-    
+}
+
+.openup-div-detail h5{
+    margin-bottom: 0px;
 }
 
 .header-div-detail{
-    height: 200px;
+    height: 400px;
+    width: 100%;
     background-image: url("../images/avontuur1.jpg");
     background-size: cover;
     
@@ -102,7 +122,7 @@
     font-size: 15px;
     cursor: pointer;
     margin: 10px;
-    color: #122b46;
+    color: #8e0000
 }
 
 .openup-meta-detail ul{
@@ -112,17 +132,36 @@
 .vraag-div-detail{
     margin: 15px 0px 15px 0px;
     text-align: center;
+    width: 90%;
     border-bottom: 1px #122b46 dotted;
+    background-color: #FFF;
+}
+
+.vraag-div-detail h3{
+    color: #122b46;
+}
+
+.vraag-div-detail h5{
+    color: #0c6665;
 }
 
 .bron-div-detail{
     margin-right: 15px;
+    padding: 0px 15px 0px 15px; 
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    text-align: left;
 }
 
 .auth-div-detail{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-top: 30px;
     text-align: center;
     border-bottom: 1px #122b46 dotted;
+    width: 90%;
 }
 
 #reacties-overview{
@@ -146,4 +185,27 @@
 
 .reactie-div{
     border-bottom: 1px dotted #122b46;
+}
+
+#button-reactie-openup{
+    background-color: #0c6665;
+    border: 1px #0c6665 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #FFF;
+    cursor: pointer;
+    width: 100px;
+    margin-bottom: 15px;
+}
+
+.social-div-openup{
+    display: flex;
+    justify-content: center;
+}
+
+.social-div-openup p{
+    margin: 0px 15px 0px 1px;
+    font-size: 14px;
+    cursor: pointer;
 }

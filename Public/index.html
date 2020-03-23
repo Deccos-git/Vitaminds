@@ -96,7 +96,12 @@
         <li onclick = "logOut()" class = "login-logout"><button><a>Log uit</a></button></li>
         <li class = "login-logout"><button><a href="inlog.html">Log in</a></button></li>
         <li class = "login-logout"><a>|</a></li>
-        <li class = "login-logout"><p id="mijnAccount"></p></li>
+        <li class = "login-logout">
+          <div id="menu-auth-div">
+            <div id="mijnAccount"></div>
+            <p id="profile-name"></p>
+          </div>
+        </li>
       </ul>
     </nav>
 
@@ -193,7 +198,7 @@
           <p> Onze coaches helpen jouw om je levensvragen te beantwoorden. Iedere coach is beschikbaar 
             voor een op een gesprekken mocht je dat willen.
           </p>
-          <button class="button-algemeen"><a href="coaches.html">Zoek een coach</a></button>
+          <button class="button-algemeen"><a href="coaches.html">Bekijk de coaches</a></button>
         </div>
       </section>
         <!-- <section id="activiteiten">
@@ -214,7 +219,6 @@
       <footer class="footer"></footer>
 
     <script type="text/javascript" src="javascript/firebase.js"></script>
-    <script type="text/javascript" src="javascript/assets.js"></script>
     <script type="text/javascript" src="javascript/auth.js"></script>
     <script type="text/javascript" src="javascript/index.js"></script>
     <script type="text/javascript" src="javascript/alfa.js"></script>

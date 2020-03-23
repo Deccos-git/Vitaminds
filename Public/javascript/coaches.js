@@ -16,6 +16,7 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         const naam = doc.data().Gebruikersnaam;
         const stijl = doc.data().Coachstijl
         const omschrijving = doc.data().Omschrijving
+        const profilePic = doc.data().Profielfoto
 
             // De nieuwe HTML-elementen en classes
         const nieuweDiv = document.createElement("div");
@@ -29,6 +30,10 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         const omschrijvingCH = document.createElement("h4");
         const link = document.createElement("button");
             link.setAttribute("class", "button-algemeen")
+        const profilePicture = document.createElement("div")
+            profilePicture.setAttribute("class", "openup-profile-pic")
+
+        profielFoto.style.backgroundImage = `url('${profilePic}')`
         
             nieuweH3.addEventListener('click', (e) => {
                 window.open("Vitaminders/" + [naam], "_self");

@@ -83,6 +83,18 @@
     color: #122b46;
 }
 
+.openup-profile-pic{
+    margin: -65px 0px 0px 0px;
+    height: 60px;
+    width: 60px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #FFF;
+}
+
 .categorieTekst{
     font-size: 14px;
     cursor: pointer;
@@ -115,7 +127,7 @@
 }
 
 .divTekst{
-    max-height: 300px;
+    max-height: 350px;
     overflow: hidden;
     margin-bottom: 30px;
     display: flex;

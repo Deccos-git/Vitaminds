@@ -1,7 +1,7 @@
-<html>
-
-  <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -11,20 +11,23 @@
   gtag('config', 'UA-159826016-1');
 </script>
 
-    <Title> Vitaminds - Inspiratie voor jouw levensvragen</title>
-    <link rel="stylesheet" href="Style/style.css">
-    <link rel="stylesheet" href="Style/inspiratie.css">
-    <link rel="shortcut icon" href="images/favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../Style/style.css">
+    <link rel="stylesheet" href="../Style/openup.css">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
-    <script>src="https://www.gstatic.com/firebasejs/6.5.0/firebase-analytics.js"</script>
-  </head>
-
-  <body>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Open Up-detailpagina</title>
+</head>
+<body>
     <!-- menu --> 
   <nav class="menu">
     <ul class = "top-menu">
@@ -47,29 +50,38 @@
       </li>
     </ul>
   </nav>
-
-<!-- Filter-->
-<h1 >Inspiratie</h1>
-<select id="inspiratiemenu">
-  <option>Dankbaarheid</option>
-  <option>Positiviteit</option>
-</select>
-<button class="button-menu" onclick="filterMenu()">Filter</button>
-
-<h1 id="alle">
-  <div id="loader">
-    <img src="images/loader.gif" alt="loading" style="width:120px;height:120px;">
-  </div>
-</h1>
-<h1 id="inspiratieDK"></h1>
-
-
+<!-- Detailpagina -->
+<section id="openup-overview"></section>
+<section id="reactie-input">
+    <div id="reactie-innerDiv"></div>
+    <button id="button-reactie-openup">Deel</button>
+</section>
+<section id="reacties-overview">
+    <h2>Wat onze coaches denken</h2>
+</section>
+    
 <!-- footer -->
-<footer class="footer"></footer>
-
-      <script type="text/javascript" src="javascript/firebase.js"></script>
-      <script type="text/javascript" src="javascript/auth.js"></script>
-      <script type="text/javascript" src="javascript/inspiratie.js"></script>
-    </body>
-  </html>
+<footer class="footer">
+    <div class="footer-left">
+      <h3 class="footer-h3"><strong> Vitaminds </strong></h3>
+        <p> Op avontuur in je eigen geest </P>
+    </div>
+    <div class="footer-center">
+      <h3 class="footer-h3">Over Vitaminds</h3>
+       <p><a href="overons.html">Ons verhaal</a></p>
+    </div>
+    <div class="footer-right">
+      <h3><strong> Contact </strong></h3>
+        <ul>
+          <li><a>Vitaminds</a></li>
+          <li><a>www.vitaminds.nu</a></li>
+          <li><a>info@vitaminds.nu</a></li>
+        </ul>
+    </div>
+  </footer>
   
+<script type="text/javascript" src="../javascript/firebase.js"></script>
+<script type="text/javascript" src="../javascript/auth.js"></script>
+<script type="text/javascript" src="../javascript/openup.js"></script>    
+</body>
+</html>
