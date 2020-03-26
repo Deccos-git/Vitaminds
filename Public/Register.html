@@ -1,7 +1,7 @@
-<html>
-
-  <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -11,10 +11,10 @@
   gtag('config', 'UA-159826016-1');
 </script>
 
-    <Title> Vitaminds rebuild </title>
-    <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/register.css">
-    <link rel="shortcut icon" href="images/favicon.ico">
+    <Title> Vitaminds register </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Style/style.css">
+    <link rel="stylesheet" href="Style/register.css">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
@@ -22,10 +22,10 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
     <script>src="https://www.gstatic.com/firebasejs/6.5.0/firebase-analytics.js"</script>
-  </head>
+</head>
+<body>
 
-  <body>
-   <!-- menu --> 
+     <!-- menu --> 
   <nav class="menu">
     <ul class = "top-menu">
         <li class="main-menu"><a href="index.html"><img src="images/logo.png" alt="Vitaminds logo" width="100px"></a></li>
@@ -33,6 +33,7 @@
         <li class="main-menu"><a href="inspiratie.html">Inspiratie</a></li>
         <!-- <li class="main-menu"><a href="evenementen.html">Evenementen</a></li> -->
         <li class="main-menu"><a href="coaches.html">Coaches</a></li>
+        <li class="main-menu"><a href="tickets.html">Tickets</a></li>
         <!-- <li class="main-menu"><a href="privacy.html">Privacy</a></li> -->
       <li class = "login-logout"><p id="aanmeldCH"><a href="RegisterCH.html">Aanmelden als coach</a></p></li> 
       <li class = "login-logout"><a>|</a></li>
@@ -48,41 +49,20 @@
     </ul>
   </nav>
 
-<!-- Register -->
-<h1>Maak je Coachprofiel aan</h1>
-<div id="registerform">
-  <form>
-  <input id="registerGebruikersnaamCH" type="text" name="username" placeholder="Voornaam Achternaam">
-  <input id="registerEmailCH" type="email" name="email" placeholder="emailadres..">
-  <input id="registerWachtwoordCH" type="password" naem="password" placeholder="wachtwoord..">
-  <p>Omschrijf je coachingsstijl in 1 zin</p>
-  <input id="coachStijl" type="text" name="coachstijl" placeholder="Je coachstijl">
-  <p>Omschrijf je levensvisie in max 4 zinnen</p>
-  <textarea id="omschrijving" type="text" name="levensvisie" placeholder="Omschrijf je levensvisie"></textarea>
-  <p>In welke stad/dorp bevindt je praktijkruimte zich?</p>
-  <input id="locatieCH" type="text" name="locatie" placeholder="Je stad/dorp">
-  <p>Selecteer de onderwerpen waarmee jij mensen kan helpen:</p>
-  <p>Selecteer je doelgroep(en):</p>
-  <div>
-    <select id="DDDoelgroep" name = "dropdown">
-       <option value="Kinderen">Kinderren</option>
-       <option value="Studenten">Studenten</option>
-       <option value="Volwassenen">Volwassenen</option>
-       <option value="Senioren">Senioren</option>
-    </select>
-    <button onclick ="registerCH()" id="registerButton" >Maak je Coachprofiel aan</a></button>
-  </form>
-</div>
-  
-  <p id="alEenProfiel"> Al een Coachprofiel? <a href= inlog.html> Klik hier </a>
-  </div>
+    <h1>Maak je Vitaminds Digimind aan</h1>
 
-<!-- footer -->
-<footer class="footer"></footer>
-  
+    <div id="register-div">
+        <h5>Je (anonieme) gebruikers</h5>
+        <input id="register-gebruikersnaam" type="text" placeholder="(Anonieme) gebruikersnaam">
+        <h5>Je emailadres</h5>
+        <input id="register-email" type="email" placeholder="Emailadres">
+        <h5>Je wachtwoord</h5>
+        <input id="register-wachtwoord" type="password" placeholder="Wachtwoord">
+        <button id="register-button">Aanmaken</button>
+    </div>
+
+
     <script type="text/javascript" src="javascript/firebase.js"></script>
-    <script type="text/javascript" src="javascript/assets.js"></script>
     <script type="text/javascript" src="javascript/auth.js"></script>
-    
-  </body>
+</body>
 </html>

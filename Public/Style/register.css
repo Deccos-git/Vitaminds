@@ -1,10 +1,22 @@
-#regUserIDsub{
+#register-div{
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    margin: 0px 100px 100px 100px;
+    border: 1px solid #122b46;
+    padding: 30px;
+    background-color: #eeeeee;
+    border-radius: 15px;
 }
 
-#registerButton{
+#register-div input{
     width: 200px;
+}
+
+#register-button{
+    margin-top: 15px;
+}
+
+#register-div h5{
+    margin-bottom: 10px;
 }

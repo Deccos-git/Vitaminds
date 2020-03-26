@@ -109,6 +109,10 @@ link{
   height: auto;
 }
 
+#menu-logo{
+  width: 150px;
+}
+
  #ul-ul{
   list-style: none;
   margin: 0px;
@@ -797,11 +801,12 @@ footer h6{
 /* form input */
 
 input {
-  padding: 10px 10px 10px 50px;
+  padding: 10px 10px 10px 10px;
   border-radius: 10px;
   margin: 5px;
   border: 1px solid #122b46;
   color: #122b46;
+  width: 200px;
 }
 
 input:focus, input:hover {

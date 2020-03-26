@@ -29,16 +29,17 @@
        <!-- menu --> 
   <nav class="menu">
     <ul class = "top-menu">
-        <li class="main-menu"><a href="index.html"><img src="images/logo.png" alt="Vitaminds logo" width="100px"></a></li>
-        <li class="main-menu"><a href="openup.html">Open up</a></li>
-        <li class="main-menu"><a href="inspiratie.html">Inspiratie</a></li>
+        <li class="main-menu"><a href="../index.html"><img src="../../images/logo.png" alt="Vitaminds logo" width="100px"></a></li>
+        <li class="main-menu"><a href="../openup.html">Open up</a></li>
+        <li class="main-menu"><a href="../inspiratie.html">Inspiratie</a></li>
         <!-- <li class="main-menu"><a href="evenementen.html">Evenementen</a></li> -->
-        <li class="main-menu"><a href="coaches.html">Coaches</a></li>
+        <li class="main-menu"><a href="../coaches.html">Coaches</a></li>
+        <li class="main-menu"><a href="../tickets.html">Tickets</a></li>
         <!-- <li class="main-menu"><a href="privacy.html">Privacy</a></li> -->
-      <li class = "login-logout"><p id="aanmeldCH"><a href="RegisterCH.html">Aanmelden als coach</a></p></li> 
+      <li class = "login-logout"><p id="aanmeldCH"><a href="../RegisterCH.html">Aanmelden als coach</a></p></li> 
       <li class = "login-logout"><a>|</a></li>
       <li onclick = "logOut()" class = "login-logout"><button><a>Log uit</a></button></li>
-      <li class = "login-logout"><button><a href="inlog.html">Log in</a></button></li>
+      <li class = "login-logout"><button><a href="../inlog.html">Log in</a></button></li>
       <li class = "login-logout"><a>|</a></li>
       <li class = "login-logout">
         <div id="menu-auth-div">
@@ -172,10 +173,10 @@
               <p>Vitaminder</p>
             </div>
               <div class="mens-menu">
-                <li onclick="klikavontuur()"><img class="menu-icon" src="../Images/menu-doelen.png" alt="menu contact" width="20px"><a>Mijn levensvragen</a></li>
+                <li onclick="klikavontuur()" id="menu-levensvragen"><img class="menu-icon" src="../Images/menu-doelen.png" alt="menu contact" width="20px"><a>Mijn levensvragen</a></li>
               </div>
               <div class="mens-menu">
-                <li onclick="klikkarakter()"><img class="menu-icon" src="../Images/menu-karakter.png" alt="menu contact" width="20px"><a>Mijn levenslessen</a></li>
+                <li onclick="klikkarakter()" id="menu-levenslessen"><img class="menu-icon" src="../Images/menu-karakter.png" alt="menu contact" width="20px"><a>Mijn levenslessen</a></li>
               </div>
               <section id="submenu-karakter"></section>
               <div class="mens-menu">
@@ -250,6 +251,7 @@
               <!-- profile landing page -->
               <div id="landing">
                 <h1>Welkom in je digimind</h1>
+                <section id="digimind-dasboard-outer-div"></section>
               </div>
               <!-- Schrijf een artikel -->
               <div class="profiel-inhoud" id="artikel">

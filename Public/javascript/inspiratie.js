@@ -9,8 +9,6 @@ function filterMenu(){
     const catOpties = cat.options;
     const catSelect = catOpties[catOpties.selectedIndex].value;
 
-    console.log(catSelect)
-
     db.collection("Artikelen").where("Categorie", "==", catSelect).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
@@ -72,6 +70,7 @@ function filterMenu(){
     console.log("Kan de artikelen niet inladen: ", error);
         })
 }
+
 
 
 // Alle artikel inladen in overzicht
@@ -148,17 +147,17 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
         categorie.innerHTML = cat;
         nieuweTitel.innerHTML = titelTekst;
         nieuweBody.innerHTML = bodyTekst;
-        nieuweAuteur.innerHTML = "Geschreven" + " " + "door" + " " + `<u> ${auteurTekst} </u>`;
+        nieuweAuteur.innerHTML = `<u> ${auteurTekst} </u>`;
         linkTekst.innerHTML = "Lees meer";
 
         // De nieuwe HTML elementen vastzetten aan de DOM
        bodyh1.appendChild(mainDiv);
         mainDiv.appendChild(headerTekst);
         mainDiv.appendChild(nieuweDivTekst);
-        nieuweDivTekst.appendChild(categorie);
-        nieuweDivTekst.appendChild(nieuweTitel);
         nieuweDivTekst.appendChild(profilePicture);
         nieuweDivTekst.appendChild(nieuweAuteur);
+        nieuweDivTekst.appendChild(categorie);
+        nieuweDivTekst.appendChild(nieuweTitel);
        nieuweDivTekst.appendChild(nieuweBody);
        mainDiv.appendChild(linkTekst);
             })                
@@ -322,9 +321,29 @@ db.collection('Artikelen').where('Titel', '==', titel )
     .get().then(querySnapshot =>  {
     querySnapshot.forEach(doc => {
 
+    const auteurMeta = doc.data().Auteur
     const categorie = doc.data().Categorien
 
     categorie.forEach(cat =>{
+    
+            // Page title and meta 
+        const DOM = document.head
+ 
+        let title = document.title
+
+        title = titel + "- Geschreven door " + auteurMeta
+
+        const metaDescription = document.createElement("meta")
+            metaDescription.setAttribute("name", "description")
+            metaDescription.setAttribute("content", title)
+        const metaKeyword = document.createElement("meta")
+            metaKeyword.setAttribute("name", "keywords")
+            metaKeyword.setAttribute("content", cat + ", Coaching ," + auteurMeta + ", levensvragen" )
+
+            DOM.appendChild(metaDescription)
+            DOM.appendChild(metaKeyword)
+
+        // Verder met detail pagina inladen
 
         auteur.innerHTML = "Geschreven door " + doc.data().Auteur
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -572,8 +591,6 @@ function favArtikel(){
         })
 
        const DOM = document.getElementById("favArtikel");
-
-       console.log(DOM)
 
        const alertDiv = document.createElement("p");
             alertDiv.setAttribute("class", "favAut");

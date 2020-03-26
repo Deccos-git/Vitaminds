@@ -199,13 +199,13 @@ function artikel(){
 }
 
   // Naam uit URL halen
-  naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
-  naam1 = naamhtml.replace('.html', '')
-  naam2 = naam1.replace('%20',' '),
-  naam = naam2.replace('%20',' ')
+const naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
+const naam1 = naamhtml.replace('.html', '')
+const naam2 = naam1.replace('%20',' ')
+const naam = naam2.replace('%20',' ')
   
 
-//Userroll
+//User-role
 db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
     .get()
     .then(function(querySnapshot) {
@@ -215,19 +215,119 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
         const coachMenu = document.getElementById("coach-menu")
         const toolsMenu = document.getElementById("tools-menu")
 
-        console.log(usertype)
-
         if(usertype == "Vitaminder"){
                 coachMenu.style.display = "none"
                 toolsMenu.style.display = "none"
-        }
-
+                }
         })
-})
+}) 
 
 // Informatie van Vitaminder/Coach inladen vanuit database in pagina
 
-        //Gegevens van overeenkomende naan inladen
+        // Dashboard inladen\\
+
+        // Levensvragen
+        function levensvragen (){
+
+       
+                DOMdashboard = document.getElementById("digimind-dasboard-outer-div")
+
+                const titelDiv = document.createElement("div")
+                        titelDiv.setAttribute("class", "dashboard-div")
+                const titelEmpty = document.createElement("p")
+                        titelEmpty.style.display = "none"
+                const titelP = document.createElement("p")
+                const button = document.createElement("button")
+                button.className = "dashboard-button"
+                const exampleDiv = document.createElement("ul")
+                        exampleDiv.setAttribute("id", "dasboard-example-list")
+
+                 button.innerHTML = `Stel hier een levensvraag`
+                 titelP.innerHTML = "Levensvragen"
+                 titelEmpty.innerHTML = `Nog geen levensvragen`
+
+                 DOMdashboard.appendChild(titelDiv)
+                titelDiv.appendChild(titelP)
+                titelDiv.appendChild(titelEmpty)
+               
+                const dbRef = db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
+                        querySnapshot.forEach(doc =>{
+                                const levensvragen = doc.data().Levensvraag
+                
+                const exampleP = document.createElement("li")   
+               
+                exampleP.innerHTML = levensvragen
+              
+               titelDiv.appendChild(exampleDiv)
+                exampleDiv.appendChild(exampleP)
+        })       
+}).catch(error => {
+        console.log(error)
+}).then(() => {
+        titelDiv.appendChild(button)
+
+        button.addEventListener("click", () => {
+         menuElement = document.getElementById("menu-levensvragen")
+         menuElement.click()
+        })
+})
+} levensvragen()
+
+function levenslessen(){
+
+
+        // Levenslessen
+        DOMdashboard = document.getElementById("digimind-dasboard-outer-div")
+
+        const titelDiv = document.createElement("div")
+                titelDiv.setAttribute("class", "dashboard-div")
+        const titelEmpty = document.createElement("p")
+                titelEmpty.style.display = "none"
+        const titelP = document.createElement("p")
+        const leren = document.createElement("p")
+        const button = document.createElement("button")
+                button.className = "dashboard-button"
+        const exampleDiv = document.createElement("ul")
+                exampleDiv.setAttribute("id", "dasboard-example-list")
+
+        leren.innerHTML = `Leer levenslessen in de <a href="../inspiratie.html">Vitaminds Inspiratie</a>`
+        button.innerHTML = "Bekijk hier je levenslessen"
+        titelP.innerHTML = "Levenslessen"
+        titelEmpty.innerHTML = `Nog geen levenslessen`
+
+        DOMdashboard.appendChild(titelDiv)
+        titelDiv.appendChild(titelP)
+        titelDiv.appendChild(titelEmpty)
+
+        const dbRef = db.collectionGroup("Levenslessen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
+                querySnapshot.forEach(doc =>{
+                        const levenslessen = doc.data().Levensles
+        
+        const exampleP = document.createElement("li")   
+
+        exampleP.innerHTML = levenslessen
+
+        titelDiv.appendChild(exampleDiv)
+        exampleDiv.appendChild(exampleP)
+        })       
+        }).catch(error => {
+        console.log(error)
+        }).then(() => {
+
+        titelDiv.appendChild(leren)
+        titelDiv.appendChild(button)
+
+        button.addEventListener("click", () => {
+        menuElement = document.getElementById("menu-levenslessen")
+        menuElement.click()
+        })
+        })
+} levenslessen()
+
+
+
+
+        //Gegevens van overeenkomende naan inladen in user-bar
 db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
     .get()
     .then(function(querySnapshot) {
@@ -236,11 +336,9 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
         const usertype = document.getElementsByClassName('usertype')[0];
         const bijdrage = document.getElementById("bijdragepunten");
         const profielfoto = document.getElementById("profielfoto");
-        console.log(profielfoto)
-
         
         profielfoto.style.backgroundImage =`url('${doc.data().Profielfoto}')` 
-        console.log(doc.data().Profielfoto)
+
         username.innerHTML = doc.data().Gebruikersnaam;
         usertype.innerHTML = doc.data().Usertype;
         bijdrage.innerHTML = doc.data().Inspiratiepunten;
@@ -516,8 +614,6 @@ db.collectionGroup("Favorieten").where("Gebruikersnaam", "==", naam).where("Type
                 querySnapshot.forEach(doc => {
                         const auteur = doc.data().Auteur;
                         const datum = doc.data().Timestamp;
-
-                        console.log(auteur)
         
                 const DOM = document.getElementById("favoCoach");
         

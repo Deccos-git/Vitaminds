@@ -84,7 +84,7 @@
 }
 
 .openup-profile-pic{
-    margin: -65px 0px 0px 0px;
+    margin: -30px 0px 0px 0px;
     height: 60px;
     width: 60px;
     background-repeat: no-repeat;
@@ -93,6 +93,7 @@
     border-radius: 50%;
     cursor: pointer;
     border: 2px solid #FFF;
+    z-index: 1;
 }
 
 .categorieTekst{
@@ -124,10 +125,10 @@
     text-align: left;
     width: 350px;
     font-weight: 500;
+    max-height: 300px;
 }
 
 .divTekst{
-    max-height: 350px;
     overflow: hidden;
     margin-bottom: 30px;
     display: flex;

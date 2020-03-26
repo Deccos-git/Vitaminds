@@ -1,7 +1,7 @@
-<html>
-
-  <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -11,9 +11,10 @@
   gtag('config', 'UA-159826016-1');
 </script>
 
-    <Title> Vitaminds rebuild </title>
-    <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/register.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="Style/style.css">
     <link rel="shortcut icon" href="images/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -22,10 +23,11 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
     <script>src="https://www.gstatic.com/firebasejs/6.5.0/firebase-analytics.js"</script>
-  </head>
+    <title>Coaching</title>
+</head>
+<body>
 
-  <body>
-   <!-- menu --> 
+    <!-- menu --> 
   <nav class="menu">
     <ul class = "top-menu">
         <li class="main-menu"><a href="index.html"><img src="images/logo.png" alt="Vitaminds logo" width="100px"></a></li>
@@ -33,8 +35,9 @@
         <li class="main-menu"><a href="inspiratie.html">Inspiratie</a></li>
         <!-- <li class="main-menu"><a href="evenementen.html">Evenementen</a></li> -->
         <li class="main-menu"><a href="coaches.html">Coaches</a></li>
+        <li class="main-menu"><a href="tickets.html">Tickets</a></li>
         <!-- <li class="main-menu"><a href="privacy.html">Privacy</a></li> -->
-      <li class = "login-logout"><p id="aanmeldCH"><a href="RegisterCH.html">Aanmelden als coach</a></p></li> 
+        <li class = "login-logout"><p id="aanmeldCH"><a href="coaching.html">Voor coaches</a></p></li> 
       <li class = "login-logout"><a>|</a></li>
       <li onclick = "logOut()" class = "login-logout"><button><a>Log uit</a></button></li>
       <li class = "login-logout"><button><a href="inlog.html">Log in</a></button></li>
@@ -47,25 +50,25 @@
       </li>
     </ul>
   </nav>
-  <!-- Register -->
 
-      <div id="regUserIDsub">
-        <h2> Maak je Vitaminds Digimind aan</h2>
-        <form>
-        <input id="registerGebruikersnaam" type="text" name="gebruikersnamen" placeholder="Je anonieme gebruikersnaam.."><br>
-        <input id="registerEmail" type="email" name="email" placeholder="emailadres..">
-        <input id="registerWachtwoord" type="password" name="password" placeholder="wachtwoord..">
-        <button  onclick="register()" class="button-algemeen">Maak je DigiMind aan</a></button>
-        </form>
-        <p> Al een DigiMind? <a href= inlog.html> Log in</a>
-     </div> 
-
-
-<!-- footer -->
-<footer class="footer"></footer>
   
-    <script type="text/javascript" src="javascript/firebase.js"></script>
-    <script type="text/javascript" src="javascript/auth.js"></script>
+  <h1>Voor coaches</h1>
+
+  <div id="register-div">
+    <h5>Je naam</h5>
+    <input id="register-gebruikersnaam" type="text" placeholder="Naam">
+    <h5>Je emailadres</h5>
+    <input id="register-email" type="email" placeholder="Emailadres">
+    <h5>Je wachtwoord</h5>
+    <input id="register-wachtwoord" type="password" placeholder="Wachtwoord">
+    <button id="register-button">Aanmaken</button>
+</div>
+
     
-  </body>
+      <!-- footer -->
+      <footer class="footer"></footer>
+      
+          <script type="text/javascript" src="javascript/firebase.js"></script>
+          <script type="text/javascript" src="javascript/auth.js"></script>
+</body>
 </html>

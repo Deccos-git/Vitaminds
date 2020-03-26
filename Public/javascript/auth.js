@@ -5,7 +5,7 @@ auth.onAuthStateChanged(User =>{
     const userRef = db.collection("Vitaminders").doc(User.uid);
     userRef.get().then(function(doc) {
       if (doc.exists) {
-        naam = doc.data().Gebruikersnaam;
+       const naam = doc.data().Gebruikersnaam;
         profilePic = doc.data().Profielfoto
   
     const menuAuth = document.getElementById("mijnAccount")
@@ -58,33 +58,40 @@ function logOut(){
   }
 
   // Register VM
-function register(){
-  const email = document.getElementById('registerEmail').value;
-  const password = document.getElementById('registerWachtwoord').value;
-  const gebruikersnaam = document.getElementById('registerGebruikersnaam').value;
+const button = document.getElementById("register-button")
+    button.addEventListener("click", () => {
+  
+  const email = document.getElementById('register-email').value;
+  const password = document.getElementById('register-wachtwoord').value;
+  const gebruikersnaam = document.getElementById('register-gebruikersnaam').value;
   
   firebase.auth().createUserWithEmailAndPassword(email, password)
-  
   .then(cred =>{
     db.collection('Vitaminders').doc(cred.user.uid).set({
       Gebruikersnaam: gebruikersnaam,
       Usertype: "Vitaminder",
       Inspiratiepunten: 1,
     })
+  }).then(() => {
+    window.open("../inlog.html")
   })
-};
+});
 
 //Register CH
-function registerCH(){
+
   const email = document.getElementById("registerEmailCH").value;
   const password = document.getElementById("registerWachtwoordCH").value;
   const naam = document.getElementById("registerGebruikersnaamCH").value;
   const thema = document.getElementById("DDThema")
+
   const opties = thema.options
   const keuze = opties[opties.selectedIndex].value;
+
   const doelgroep = document.getElementById("DDDoelgroep")
+
   const groep = doelgroep.options
   const selectie = groep[groep.selectedIndex].value;
+
   const locatie = document.getElementById("locatieCH").value;
   const stijl = document.getElementById("coachStijl").value;
   const omschrijf = document.getElementById("omschrijving").value;
@@ -103,4 +110,4 @@ function registerCH(){
       Omschrijving: omschrijf
     })
   })
-};
+
