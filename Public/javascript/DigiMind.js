@@ -242,7 +242,7 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
                 const exampleDiv = document.createElement("ul")
                         exampleDiv.setAttribute("id", "dasboard-example-list")
 
-                 button.innerHTML = `Stel hier een levensvraag`
+                 button.innerHTML = `Bekijk levensvragen`
                  titelP.innerHTML = "Levensvragen"
                  titelEmpty.innerHTML = `Nog geen levensvragen`
 
@@ -490,10 +490,10 @@ auth.onAuthStateChanged(User =>{
           userRef.get().then(function(doc) {
               GBnaam = doc.data().Gebruikersnaam;
 
-              naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
-              naam1 = naamhtml.replace('.html', '')
-              naam2 = naam1.replace('%20',' '),
-              naam = naam2.replace('%20',' ')
+             const naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
+             const naam1 = naamhtml.replace('.html', '')
+             const naam2 = naam1.replace('%20',' ')
+             const naam = naam2.replace('%20',' ')
 
         if(GBnaam != naam){
                 const nieuweKT = document.querySelectorAll(".button-karakter");
@@ -512,12 +512,12 @@ auth.onAuthStateChanged(User =>{
 
 //Levenslessen
         const DOMlearnings = document.getElementById("learnings");
-
+function levenslessen (){
                 // Naam uit URL halen
-                naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
-                naam1 = naamhtml.replace('.html', '')
-                naam2 = naam1.replace('%20',' '),
-                naam = naam2.replace('%20',' ')
+               const naamhtml1 = location.pathname.replace(/^.*[\\\/]/, '')
+               const naam1 = naamhtml1.replace('.html', '')
+               const naam2 = naam1.replace('%20',' ')
+               const naam = naam2.replace('%20',' ')
 
                         db.collectionGroup('Levenslessen').where('Gebruikersnaam', '==', naam )
                             .get()
@@ -564,6 +564,7 @@ auth.onAuthStateChanged(User =>{
                         badge.appendChild(themaP)
         })
 })  
+}; levenslessen();
 
 
 

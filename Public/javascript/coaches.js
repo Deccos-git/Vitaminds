@@ -17,6 +17,7 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         const stijl = doc.data().Coachstijl
         const omschrijving = doc.data().Omschrijving
         const profilePic = doc.data().Profielfoto
+        const locatie = doc.data().Locatie
 
             // De nieuwe HTML-elementen en classes
         const nieuweDiv = document.createElement("div");
@@ -27,7 +28,14 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         const nieuweH3 = document.createElement("h3");
             nieuweH3.setAttribute("class", "coachnaam");
         const stijlCH = document.createElement("p")
-        const omschrijvingCH = document.createElement("h4");
+        const locatieDiv = document.createElement("div")
+            locatieDiv.setAttribute("class", "locatie-div")
+        const pinImageDiv = document.createElement("div")
+            pinImageDiv.setAttribute("class", "pin-image-div")
+            pinImageDiv.setAttribute("style", "background-image: url(../images/locatie-pin.png)")
+        const locatieCH = document.createElement("p")
+        const omschrijvingCH = document.createElement("h5");
+            omschrijvingCH.setAttribute("class", "omschrijving-coach")
         const link = document.createElement("button");
             link.setAttribute("class", "button-algemeen")
         const profilePicture = document.createElement("div")
@@ -44,7 +52,8 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
             })   
             //De coach-eigenschappen in de nieuwe HTML-elementen zetten
         nieuweH3.innerHTML = naam;
-        stijlCH.innerHTML = stijl;   
+        stijlCH.innerHTML = stijl;  
+        locatieCH.innerHTML = locatie 
         omschrijvingCH.innerHTML ='"' + omschrijving + '"'
         link.innerHTML = "Bekijk mijn profiel"
 
@@ -53,6 +62,9 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         nieuweDiv.appendChild(profielFoto)
         nieuweDiv.appendChild(nieuweH3)
         nieuweDiv.appendChild(stijlCH)
+        nieuweDiv.appendChild(locatieDiv)
+        locatieDiv.appendChild(pinImageDiv)
+        locatieDiv.appendChild(locatieCH)
         nieuweDiv.appendChild(omschrijvingCH)
         nieuweDiv.appendChild(link)
     

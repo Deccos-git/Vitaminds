@@ -20,7 +20,7 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
             naam.setAttribute("class", "openup-meta")
         const omschrijvingDiv = document.createElement("div")
             omschrijvingDiv.setAttribute("class", "omschrijving-div")
-        const omschrijvingP = document.createElement("p")
+        const omschrijvingP = document.createElement("h5")
 
         const leesMeer = document.createElement("button")
             leesMeer.setAttribute("data-vraag", levensvraag)
@@ -98,6 +98,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titelQuestionmark)
         const levensvraag = doc.data().Levensvraag
         const gebruikersnaam = doc.data().Gebruikersnaam
         const levenslessen = doc.data().Levenslessen
+        const omschrijving = doc.data().Omschrijving
 
         const DOM = document.getElementById("openup-overview") 
 
@@ -115,10 +116,13 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titelQuestionmark)
         const naam = document.createElement("p")
             naam.setAttribute("class", "openup-meta-detail")
         const lessenH2 = document.createElement("h5")  
+        const omschrijvingP = document.createElement("h5")
+            omschrijvingP.setAttribute("class", "omschrijving-levensvraag")
 
         vraag.innerHTML = "Levensvraag"
         vraag.innerHTML = levensvraag
         naam.innerHTML = gebruikersnaam
+        omschrijvingP.innerHTML = omschrijving
 
         naam.addEventListener("click", () => {
             window.open("../Vitaminders/" + [gebruikersnaam] + ".html", "_self");
@@ -148,6 +152,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titelQuestionmark)
         authDiv.appendChild(naam)
         innerDiv.appendChild(vraagDiv)
         vraagDiv.appendChild(vraag)
+        vraagDiv.appendChild(omschrijvingP)
         innerDiv.appendChild(lessenH2)
 
         // Levenslessen metadata inladen die passen bij levensvragen
@@ -177,7 +182,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titelQuestionmark)
                     window.open("../Vitaminders/" + [inspirator] + ".html", "_self");
                 })
 
-                titelP.innerHTML = "Geïnspireerd in " + type + '" "' + `<u>${titel}</u>`
+                titelP.innerHTML = "Geïnspireerd in " + type + `<u>${titel}</u>`
 
                 titelP.addEventListener("click", () => {
                     window.open("../Artikelen/" + [titel] + ".html", "_self");

@@ -278,6 +278,10 @@
 
         /* Levenslessen */
 
+        #levenslessen-header{
+            width: 100%;
+        }
+
         #learnings{
             display: flex;
             justify-content: center;
@@ -580,6 +584,8 @@
 
 .vraag-div{
     margin: 15px;
+    width: 100%;
+    text-align: center;
 }
 
 .bron-div{
@@ -601,6 +607,7 @@
         }
 
         .favoCoachDiv{
+            cursor: pointer;
             background-color: #FFF;
             height: auto;
             padding: 15px;
@@ -610,6 +617,7 @@
         }
         
         .favoInspDiv{
+            cursor: pointer;
             margin: 15px;
             border: 1px solid #122b4650;
             border-radius: 15px;
