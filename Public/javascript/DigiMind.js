@@ -1,34 +1,38 @@
 
-// Profiel inhoud
+// Dashboard
 const landing = document.getElementById("landing")
+
+// Vitaminders menu
 const avontuur = document.getElementById("doelen");
 const karakter = document.getElementById("karakter");
 const dagelijksLeven = document.getElementById("dagelijks");
-const coachtools = document.getElementById("coachTools");
+
+// Favorieten
 const favoInspiratie = document.getElementById("favoInspiratie");
 const favoCoach = document.getElementById("favoCoach")
-const doelen = document.getElementById("doelen")
+
+// Tools
 const nieuwArtikel = document.getElementById("artikel")
+const video = document.getElementById("video")
+const podcast = document.getElementById("podcast")
 
  //Coach menu
  const coachContact = document.getElementById("coach-contact");
- const overMij = document.getElementById("over-mij");
- const mijnCoaching = document.getElementById("mijn-coaching");
- const mijnBijdragen = document.getElementById("mijn-bijdragen");
- const mijnTools = document.getElementById("tools");
+ const mijnCoaching = document.getElementById("mijn-coaching-div");
+ const mijnBijdragen = document.getElementById("mijn-bijdragen-div");
 
  function contactCH(){
          coachContact.style.display = "flex"
         landing.style.display = "none"
-         overMij.style.display = "none"
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
-         mijnTools.style.display = "none"
          karakter.style.display = "none";
         avontuur.style.display = "none";
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
         nieuwArtikel.style.display = "none"
+        video.style.display = "none"
+        podcast.style.display = "none"
      
  }
 
@@ -38,54 +42,41 @@ const nieuwArtikel = document.getElementById("artikel")
          coachContact.style.display = "none"
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
-         mijnTools.style.display = "none"
          karakter.style.display = "none";
         avontuur.style.display = "none";
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
         nieuwArtikel.style.display = "none"
+        video.style.display = "none"
+        podcast.style.display = "none"
  }
 
  function mijnCoachingCH(){
          mijnCoaching.style.display = "flex"
          landing.style.display = "none"
          coachContact.style.display = "none"
-         overMij.style.display = "none"
          mijnBijdragen.style.display = "none"
-         mijnTools.style.display = "none"
          karakter.style.display = "none";
         avontuur.style.display = "none";
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
         nieuwArtikel.style.display = "none"
+        video.style.display = "none"
+        podcast.style.display = "none"
  }
 
  function mijnBijdragenCH(){
          mijnBijdragen.style.display = "flex"
          landing.style.display = "none"
          coachContact.style.display = "none"
-         overMij.style.display = "none"
          mijnCoaching.style.display = "none"
-         mijnTools.style.display = "none"
          karakter.style.display = "none";
         avontuur.style.display = "none";
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
         nieuwArtikel.style.display = "none"
- }
-
- function toolsCH(){
-         mijnTools.style.display = "flex"
-         landing.style.display = "none"
-         coachContact.style.display = "none"
-         overMij.style.display = "none"
-         mijnCoaching.style.display = "none"
-         mijnBijdragen.style.display = "none"
-         karakter.style.display = "none";
-        avontuur.style.display = "none";
-        favoInspiratie.style.display = "none";
-        favoCoach.style.display = "none";
-        nieuwArtikel.style.display = "none"
+        video.style.display = "none"
+        podcast.style.display = "none"
  }
 
  // Vitaminders menu
@@ -94,15 +85,14 @@ function klikavontuur(){
         avontuur.style.display = "flex";
         landing.style.display = "none"
         karakter.style.display = "none";
-        coachtools.style.display ="none";
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
         coachContact.style.display = "none"
-         overMij.style.display = "none"
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
-         mijnTools.style.display = "none"
          nieuwArtikel.style.display = "none"
+         video.style.display = "none"
+        podcast.style.display = "none"
 };
 
 function klikkarakter(){
@@ -111,13 +101,12 @@ function klikkarakter(){
         landing.style.display = "none"
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
-        coachtools.style.display ="none";
         coachContact.style.display = "none"
-         overMij.style.display = "none"
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
-         mijnTools.style.display = "none"
          nieuwArtikel.style.display = "none"
+         video.style.display = "none"
+        podcast.style.display = "none"
 };
 
 function klikdagelijks(){
@@ -127,75 +116,56 @@ function klikdagelijks(){
         avontuur.style.display = "none";
         favoInspiratie.style.display = "none";
         favoCoach.style.display = "none";
-        coachtools.style.display ="none";
         coachContact.style.display = "none"
-         overMij.style.display = "none"
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
-         mijnTools.style.display = "none"
          nieuwArtikel.style.display = "none"
-}
-
-function tools(){
-        coachtools.style.display ="flex";
-        avontuur.style.display = "none";
-        landing.style.display = "none"
-        karakter.style.display = "none";  
-        favoInspiratie.style.display = "none";
-        favoCoach.style.display = "none";
-        coachContact.style.display = "none"
-         overMij.style.display = "none"
-         mijnCoaching.style.display = "none"
-         mijnBijdragen.style.display = "none"
-         mijnTools.style.display = "none"
-         nieuwArtikel.style.display = "none"
+         video.style.display = "none"
+        podcast.style.display = "none"
 }
 
 function klikFavInspiratie(){
-        favoInspiratie.style.display = "block";
+        favoInspiratie.style.display = "flex";
         avontuur.style.display = "none";
         landing.style.display = "none"
         karakter.style.display = "none";
         favoCoach.style.display = "none";
-        coachtools.style.display = "none";
         coachContact.style.display = "none"
-         overMij.style.display = "none"
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
-         mijnTools.style.display = "none"
          nieuwArtikel.style.display = "none"
+         video.style.display = "none"
+        podcast.style.display = "none"
 }
 
 function klikFavCoaches(){
-        favoCoach.style.display = "block";
+        favoCoach.style.display = "flex";
         avontuur.style.display = "none";
         landing.style.display = "none"
         karakter.style.display = "none";
         favoInspiratie.style.display = "none";
-        coachtools.style.display = "none";
         coachContact.style.display = "none"
-         overMij.style.display = "none"
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
-         mijnTools.style.display = "none"
          nieuwArtikel.style.display = "none"
+         video.style.display = "none"
+        podcast.style.display = "none"
 }
 
 // Tools menu
 
 function artikel(){
-        nieuwArtikel.style.display = "block"
+        nieuwArtikel.style.display = "flex"
         favoCoach.style.display = "none";
         landing.style.display = "none"
         avontuur.style.display = "none";
         karakter.style.display = "none";
         favoInspiratie.style.display = "none";
-        coachtools.style.display = "none";
         coachContact.style.display = "none"
-         overMij.style.display = "none"
          mijnCoaching.style.display = "none"
          mijnBijdragen.style.display = "none"
-         mijnTools.style.display = "none"
+         video.style.display = "none"
+        podcast.style.display = "none"
 }
 
   // Naam uit URL halen
@@ -215,23 +185,225 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
         const coachMenu = document.getElementById("coach-menu")
         const toolsMenu = document.getElementById("tools-menu")
 
-        if(usertype == "Vitaminder"){
+        if(usertype != "Coach"){
                 coachMenu.style.display = "none"
                 toolsMenu.style.display = "none"
                 }
         })
 }) 
 
+// Admin
+auth.onAuthStateChanged(User =>{
+        if (User){
+            let docRef = db.collection("Vitaminders").doc(User.uid);
+                docRef.get().then(function(doc){
+                    const admin = doc.data().Admin;
+
+                    const adminIcon = document.getElementById("profile-admin")
+                    const writeArticle = document.getElementById("write-article")
+
+                    if(admin == "Yes"){
+                        adminIcon.style.display = "flex"
+                        writeArticle.style.display = "block"
+                    }
+
+                    adminIcon.addEventListener("click", () => {
+                            window.open("../admin.html", "_self")
+                    })
+                })
+        }
+})
+
+// To edit profile page
+const editProfile = document.getElementById("edit-profile")
+if (editProfile != null){
+    editProfile.addEventListener("click", () => {
+            window.open("../profielAanpassen.html", "_self")
+    })
+}
+// Hide edit profile for non-auth
+auth.onAuthStateChanged(User =>{
+    if (User){
+        let docRef = db.collection("Vitaminders").doc(User.uid);
+            docRef.get().then(function(doc){
+                const coachNaam = doc.data().Gebruikersnaam;
+
+                if(naam != coachNaam){
+                    editProfile.style.display = "none"
+                }
+            })
+    }
+});
+
+// Gamefication-notifications
+
+auth.onAuthStateChanged(User =>{
+        if (User){
+            let docRef = db.collection("Vitaminders").doc(User.uid);
+                docRef.get().then(function(doc){
+                    const naam = doc.data().Gebruikersnaam;
+
+db.collectionGroup("Inspiration").where("User", "==", naam).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+          const docLengt = [doc]          
+                objectLength = Object.keys(docLengt).length
+                length.push(objectLength)
+                                })
+                        }).then(() => {
+                
+                                const DOM =  document.getElementById("total-inspiration")
+
+                                if(DOM == null){
+                                        console.log("Error")
+                                } else{
+                                const innerDiv = document.createElement("div")
+                                        innerDiv.setAttribute("id", "inner-div-gamefication")
+                                const totalPoints = document.createElement("p")
+                                const titel = document.createElement("h3")
+                                
+                                titel.innerHTML = "Totaal aantal inspiratiepunten"
+                                totalPoints.innerHTML = length.length
+                
+                                DOM.appendChild(innerDiv)
+                                innerDiv.appendChild(titel)
+                                innerDiv.appendChild(totalPoints)
+
+                                }
+                                const DOMprofile = document.getElementById("bijdragepunten");
+                                DOMprofile.innerHTML = length.length
+                                
+                        })
+
+                        
+                })
+        }
+});
+
+// Reaction-notifications
+
+const notificationIcon = document.getElementById("profile-notifications")
+        if(notificationIcon == null){
+                console.log("Error")
+        } else {
+        notificationIcon.addEventListener("click", () => {
+                window.open("../notifications.html", "_self")
+        })
+}
+
+auth.onAuthStateChanged(User =>{
+        if (User){
+            let docRef = db.collection("Vitaminders").doc(User.uid);
+                docRef.get().then(function(doc){
+                    const auth = doc.data().Gebruikersnaam;
+db.collectionGroup("Reacties").where("Vraagsteller", "==", auth).orderBy("Timestamp", "desc").get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+                const DOM = document.getElementById("notifications")
+
+                const coach = doc.data().Gebruikersnaam
+                const levensvraag = doc.data().Levensvraag
+                const reactie = doc.data().Reactie
+
+                const notificationsTitleDiv = document.createElement("div")
+                  notificationsTitleDiv.setAttribute("class", "notification-div-profile")
+                const h3 = document.createElement("h3")
+                const notificationsTitleH4 = document.createElement("h4")
+                const reactieP = document.createElement("p")
+                const dateP = document.createElement("h5")
+
+                notificationsTitleH4.innerHTML = `<a href="../Vitaminders/${coach}.html"><u>${coach}</u></a> heeft gereageerd op <a href="../Open/${levensvraag}.html"><u>${levensvraag}</u></a>`
+                reactieP.innerHTML = `"${reactie}"`
+                reactieP.addEventListener("click", () => {
+                        window.open("../Open/" + levensvraag + ".html" + "#reacties-overview", "_self")
+                })
+                h3.innerHTML = 'Je hebt een nieuwe reactie ontvangen op je levensvraag'
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
+
+                DOM.appendChild(notificationsTitleDiv)
+                notificationsTitleDiv.appendChild(h3)
+                notificationsTitleDiv.appendChild(notificationsTitleH4)
+                notificationsTitleDiv.appendChild(reactieP)
+                notificationsTitleDiv.appendChild(dateP)
+      
+                })
+          }).catch((err) => {
+            console.log("Error:" + err)
+          })
+        })
+     }
+})
+
+
+// Inspiration-notifications
+
+auth.onAuthStateChanged(User =>{
+        if (User){
+            let docRef = db.collection("Vitaminders").doc(User.uid);
+                docRef.get().then(function(doc){
+                    const auth = doc.data().Gebruikersnaam;
+db.collectionGroup("Inspiration").where("User", "==", auth).orderBy("Timestamp", "desc").get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+                const giver = doc.data().Giver
+                const type = doc.data().Type
+                const action = doc.data().Action
+                const source = doc.data().Source 
+                const lifequestion = doc.data().Lifequestion
+
+                const DOM = document.getElementById("inspiration-notifications")
+
+                const outerDiv = document.createElement("div")
+                        outerDiv.setAttribute("class", "gamefication-outer-div")
+                const dateP = document.createElement("h4")
+                const string = document.createElement("h3")
+                const innerDiv = document.createElement("div")
+                        innerDiv.setAttribute("class", "gamefication-inner-div")
+                const ul = document.createElement("ul")
+                const liGiver = document.createElement("li")
+                const liType = document.createElement("li")
+                const liSource = document.createElement("li")
+                const link = document.createElement("h4")
+
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
+                string.innerHTML = `Je hebt 1 nieuw inspiratiepunt ontvangen!`
+                liGiver.innerHTML = `van <u>${giver}</u>`
+                liGiver.addEventListener("click", () => {
+                        window.open("../Vitaminders/" + giver + ".html", "_self");
+                })
+                liType.innerHTML = `op je ${type} ${action}`
+                link.innerHTML = `<u>${lifequestion}</u>`
+                liSource.innerHTML = `in ${source}: ${link.innerHTML}`
+                liSource.addEventListener("click", () => {
+                        window.open("../Open/" + lifequestion + ".html" + "#reacties-overview", "_self")
+                })
+
+                DOM.appendChild(outerDiv)
+                outerDiv.appendChild(string)
+                outerDiv.appendChild(innerDiv)
+                innerDiv.appendChild(ul)
+                ul.appendChild(liGiver)
+                ul.appendChild(liType)
+                ul.appendChild(liSource)
+                outerDiv.appendChild(dateP)
+
+        })
+        })
+        })
+        }
+        })
+
 // Informatie van Vitaminder/Coach inladen vanuit database in pagina
 
         // Dashboard inladen\\
-
-        // Levensvragen
+                // Levensvragen dashboard
         function levensvragen (){
 
-       
                 DOMdashboard = document.getElementById("digimind-dasboard-outer-div")
-
+                if(DOMdashboard == null){
+                        console.log("Error")
+                } else {
                 const titelDiv = document.createElement("div")
                         titelDiv.setAttribute("class", "dashboard-div")
                 const titelEmpty = document.createElement("p")
@@ -250,7 +422,7 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
                 titelDiv.appendChild(titelP)
                 titelDiv.appendChild(titelEmpty)
                
-                const dbRef = db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
+                db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
                         querySnapshot.forEach(doc =>{
                                 const levensvragen = doc.data().Levensvraag
                 
@@ -260,23 +432,24 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
               
                titelDiv.appendChild(exampleDiv)
                 exampleDiv.appendChild(exampleP)
-        })       
-}).catch(error => {
-        console.log(error)
-}).then(() => {
-        titelDiv.appendChild(button)
+                                         })       
+                                }).catch(error => {
+                                        console.log(error)
+                        }).then(() => {
+                                        titelDiv.appendChild(button)
 
-        button.addEventListener("click", () => {
-         menuElement = document.getElementById("menu-levensvragen")
-         menuElement.click()
+                                        button.addEventListener("click", () => {
+                                        menuElement = document.getElementById("menu-levensvragen")
+                                        menuElement.click()
+                })
         })
-})
+}
 } levensvragen()
 
 function levenslessen(){
 
 
-        // Levenslessen
+        // Levenslessen dashboard
         DOMdashboard = document.getElementById("digimind-dasboard-outer-div")
 
         const titelDiv = document.createElement("div")
@@ -324,9 +497,6 @@ function levenslessen(){
         })
 } levenslessen()
 
-
-
-
         //Gegevens van overeenkomende naan inladen in user-bar
 db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
     .get()
@@ -334,17 +504,171 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
     querySnapshot.forEach(function(doc) {
         const username = document.getElementsByClassName('welkom')[0];
         const usertype = document.getElementsByClassName('usertype')[0];
-        const bijdrage = document.getElementById("bijdragepunten");
         const profielfoto = document.getElementById("profielfoto");
         
         profielfoto.style.backgroundImage =`url('${doc.data().Profielfoto}')` 
 
         username.innerHTML = doc.data().Gebruikersnaam;
         usertype.innerHTML = doc.data().Usertype;
-        bijdrage.innerHTML = doc.data().Inspiratiepunten;
     })
     })
 
+// Loading coach info
+db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+                // Contact info
+                const usertype = doc.data().Usertype
+                const phoneNumber = doc.data().PhoneNumber
+                const website = doc.data().Website
+
+                // About coaching
+                const adress = doc.data().adress
+                const city = doc.data().City
+                const targetGroup = doc.data().Targetgroup
+
+                const costs = doc.data().Costs
+                const style = doc.data().Coachingstyle
+                const approach = doc.data().Approach
+                const why = doc.data().Why
+
+                const years = doc.data().YearsExperience
+                const experience = doc.data().Experience
+                const education = doc.data().Ecudation
+
+                if(usertype == "Coach"){
+
+                // Contact info
+                const DOM = document.getElementById("contact-inner-div")
+                const onlineDiv = document.createElement("div")
+                        onlineDiv.setAttribute("class", "item-div")
+                const onlineDOM = document.createElement("p")
+                const onlineData = document.createElement("h6")
+                const phoneDiv = document.createElement("div")
+                        phoneDiv.setAttribute("class", "item-div")
+                const phoneDOM = document.createElement("p")
+                const phoneData = document.createElement("h6")
+                const websiteDiv = document.createElement("div")
+                        websiteDiv.setAttribute("class", "item-div")
+                const websiteDOM = document.createElement("p")
+                const websiteData = document.createElement("h6")
+
+                // About info
+                const DOMshort = document.getElementById("short-inner-div")
+                const cityDiv = document.createElement("div")
+                        cityDiv.setAttribute("class", "item-div")
+                const cityDOM = document.createElement("p")
+                const cityData = document.createElement("h6")
+                const targetDiv = document.createElement("div")
+                        targetDiv.setAttribute("class", "item-div")
+                const targetDOM = document.createElement("p")
+                const targetData = document.createElement("h6")
+                const costsDiv = document.createElement("div")
+                        costsDiv.setAttribute("class", "item-div")
+                const costsDOM = document.createElement("p")
+                const costsData = document.createElement("h6")
+
+                const DOMcoach = document.getElementById("coach-inner-div")
+                const styleDiv = document.createElement("div")
+                        styleDiv.setAttribute("class", "item-div")
+                const styleDOM = document.createElement("p")
+                const styleData = document.createElement("h6")
+                const approachDiv = document.createElement("div")
+                        approachDiv.setAttribute("class", "item-div")
+                const approachDOM = document.createElement("p")
+                const approachData = document.createElement("h6")
+                const whyDiv = document.createElement("div")
+                        whyDiv.setAttribute("class", "item-div")
+                const whyDOM = document.createElement("p")
+                const whyData = document.createElement("h6")
+
+                const DOMExperience = document.getElementById("experience-inner-div")
+                const yearsDiv = document.createElement("div")
+                        yearsDiv.setAttribute("class", "item-div")
+                const yearsDOM = document.createElement("p")
+                const yearsData = document.createElement("h6")
+                const experienceDiv = document.createElement("div")
+                        experienceDiv.setAttribute("class", "item-div")
+                const experienceDOM = document.createElement("p")
+                const experienceData = document.createElement("h6")
+                const educationDiv = document.createElement("div")
+                        educationDiv.setAttribute("class", "item-div")
+                const educationDOM = document.createElement("p")
+                const educationData = document.createElement("h6")
+
+
+                // Contact
+                onlineDOM.innerHTML = "Online"
+                onlineData.innerHTML = "Begin chat"
+
+                function dataUndefined(a,b,c,d,e,f){
+                        e.innerHTML = f
+                if(a == undefined){
+                        b.style.display = "none"
+                        console.log(a + " is undefined")
+                } else {
+                        c.innerHTML = d
+                }
+        } 
+        dataUndefined(phoneNumber, phoneDiv, phoneData, phoneNumber, phoneDOM, "Bel")
+        dataUndefined(website, websiteDiv, websiteData, `<a href="${website}">${website}</a>`, websiteDOM, "Website"  )
+
+                // About info
+        dataUndefined(city, cityDiv, cityData, city, cityDOM, `<img src="../images/locatie-pin.png" alt="locatie pin" width="25px">`)
+        dataUndefined(targetGroup, targetDiv, targetData, targetGroup, targetDOM, "Doelgroep")
+        dataUndefined(costs, costsDiv, costsData, costs, costsDOM, "Tarief")
+        dataUndefined(style, styleDiv, styleData, style, styleDOM, "Coachingsstijl")
+        dataUndefined(approach, approachDiv, approachData, approach, approachDOM, "Methodiek")
+        dataUndefined(why, whyDiv, whyData, why, whyDOM, "Motivatie")
+        dataUndefined(years, yearsDiv, yearsData, years, yearsDOM, "Aantal jaren ervaring")
+        dataUndefined(experience, experienceDiv, experienceData, experience, experienceDOM, "Ervaringen")
+        dataUndefined(education, educationDiv, educationData, education, educationDOM, "Opleidingen & certificaten")
+
+                //Contact
+                DOM.appendChild(onlineDiv)
+                onlineDiv.appendChild(onlineDOM)
+                onlineDiv.appendChild(onlineData)
+                DOM.appendChild(phoneDiv)
+                phoneDiv.appendChild(phoneDOM)
+                phoneDiv.appendChild(phoneData)
+                DOM.appendChild(websiteDiv)
+                websiteDiv.appendChild(websiteDOM)
+                websiteDiv.appendChild(websiteData)
+
+                // About info
+                DOMshort.appendChild(cityDiv)
+                cityDiv.appendChild(cityDOM)
+                cityDiv.appendChild(cityData)
+                DOMshort.appendChild(targetDiv)
+                targetDiv.appendChild(targetDOM)
+                targetDiv.appendChild(targetData)
+                DOMshort.appendChild(costsDiv)
+                costsDiv.appendChild(costsDOM)
+                costsDiv.appendChild(costsData)
+
+                DOMcoach.appendChild(styleDiv)
+                styleDiv.appendChild(styleDOM)
+                styleDiv.appendChild(styleData)
+                DOMcoach.appendChild(approachDiv)
+                approachDiv.appendChild(approachDOM)
+                approachDiv.appendChild(approachData)
+                DOMcoach.appendChild(whyDiv)
+                whyDiv.appendChild(whyDOM)
+                whyDiv.appendChild(whyData)
+
+                DOMExperience.appendChild(yearsDiv)
+                yearsDiv.appendChild(yearsDOM)
+                yearsDiv.appendChild(yearsData)
+                DOMExperience.appendChild(experienceDiv)
+                experienceDiv.appendChild(experienceDOM)
+                experienceDiv.appendChild(experienceData)
+                DOMExperience.appendChild(educationDiv)
+                educationDiv.appendChild(educationDOM)
+                educationDiv.appendChild(educationData)
+
+                }
+        })
+})
 
 // Levensvragen inladen
 
@@ -362,13 +686,20 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
                 authDiv.setAttribute("class", "auth-div")
             const vraagDiv = document.createElement("div") 
                 vraagDiv.setAttribute("class", "vraag-div")      
-            const vraag = document.createElement("h3")
+            const vraag = document.createElement("h2")
             const omschrijvingDiv = document.createElement("div")
                 omschrijvingDiv.setAttribute("class", "omschrijving-div")
             const omschrijvingP = document.createElement("p")
+            const button = document.createElement("button")
+                button.setAttribute("id", "lifequestions-button")
     
             vraag.innerHTML = levensvraag
             omschrijvingP.innerHTML = omschrijving
+            button.innerHTML = "Bekijk levensvraag in open-up"
+
+            button.addEventListener("click", () => {
+                window.open("../Open/" + levensvraag + ".html", "_self")
+            })
             
     
             DOM.appendChild(innerDiv)
@@ -376,6 +707,7 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
             innerDiv.appendChild(vraagDiv)
             vraagDiv.appendChild(vraag)
             vraagDiv.appendChild(omschrijvingDiv)
+            vraagDiv.appendChild(button)
             omschrijvingDiv.appendChild(omschrijvingP)
     
             // Levenslessen metadata inladen die passen bij levensvragen
@@ -550,7 +882,17 @@ function levenslessen (){
                                         themaP.setAttribute("class", "levensles-thema")
 
                         auteurP.innerHTML = "Geïnspireerd door: " + `<u>${auteur}</u>`;
+
+                                auteurP.addEventListener("click", () => {
+                                        window.open("../Vitaminders/" + auteur + ".html", "_self");
+                                })
+
                         titel.innerHTML = "In: " + `<u>${titelLearn}</u>`;
+
+                                titel.addEventListener("click", () => {
+                                        window.open("../Artikelen/" + titelLearn + ".html", "_self");
+                                })
+
                         levensles.innerHTML = learn;
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         timeP.innerHTML = "Op: " + time.toDate().toLocaleDateString("nl-NL", options);
@@ -680,68 +1022,3 @@ function nieuwepostsubmit(){
     }
 
 
-// Profiel aanpassen
-
-    // Profielfoto
-    function showChangeProfilePicture(){
-            const profielfotoAanpassenDiv = document.getElementById("profielfoto-aanpassen")
-            profielfotoAanpassenDiv.style.display = "block"
-    }
-
-    function changeProfilePicture(){
-            const uploadProfilePic = document.getElementById("foto-upload-div")
-            uploadProfilePic.style.display = "flex"
-    }
-
-    function uploadFile(){
-
-        auth.onAuthStateChanged(User =>{
-                if (User){
-                    db.collection("Vitaminders").doc(User.uid).get().then(doc =>{     
-                                    const id = doc.id
-    
-                        const docRef = db.collection("Vitaminders").doc(id);
-                           
-    const selectedFile = document.getElementById('foto-upload').files[0];
-
-    const storageRef = firebase.storage().ref("/Profielfotos/" + selectedFile.name);
-
-       const uploadTask = storageRef.put(selectedFile)
-       uploadTask.then(() => {
-        // Register three observers:
-        // 1. 'state_changed' observer, called any time the state changes
-        // 2. Error observer, called on failure
-        // 3. Completion observer, called on successful completion
-        uploadTask.on('state_changed', function(snapshot){
-        // Observe state change events such as progress, pause, and resume
-        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-        switch (snapshot.state) {
-          case firebase.storage.TaskState.PAUSED: // or 'paused'
-            console.log('Upload is paused');
-            break;
-          case firebase.storage.TaskState.RUNNING: // or 'running'
-            console.log('Upload is running');
-            break;
-        }
-      }, function(error) {
-        // Handle unsuccessful uploads
-      }, function() {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-          console.log('File available at', downloadURL);
-          docRef.update({
-                        Profielfoto: downloadURL
-                                                        }) 
-                                                })
-                                                // .then(()=>{
-                                                //         location.reload();
-                                                // })       
-                                        })
-                                })
-                        })
-                }
-        })    
-};

@@ -8,11 +8,9 @@ auth.onAuthStateChanged(User =>{
       if (doc.exists) {
         Gnaam = doc.data().Gebruikersnaam;
 
-        console.log(Gnaam)
-
         const welkom = document.createElement("h3")
 
-        welkom.innerHTML = `Welkom, ${Gnaam}`
+        welkom.innerHTML = `Houdoe, ${Gnaam}`
 
         welkomAuth.appendChild(welkom)
   
@@ -47,9 +45,9 @@ auth.onAuthStateChanged(User =>{
 
       const reactDiv = document.createElement("div")
         reactDiv.className = "react-div"
-      const naamP = document.createElement("p")
-      const opmerkingP = document.createElement("h4")
-      const verwerktP = document.createElement("p")
+      const naamP = document.createElement("h5")
+      const opmerkingP = document.createElement("p")
+      const verwerktP = document.createElement("h5")
 
       naamP.innerHTML = "Door: " + naam
       opmerkingP.innerHTML = opmerking
@@ -67,9 +65,12 @@ auth.onAuthStateChanged(User =>{
 const home = document.getElementById("home");
 const modal = document.getElementById("alfa-modal")
 
+if (home != null){
 home.addEventListener( "click", () => {
     modal.style.display = "none"
 })
+
+};
 
 function buttonBack(){
 

@@ -29,39 +29,35 @@
 </head>
 <body>
    <!-- menu --> 
-  <nav class="menu">
-    <ul class = "top-menu">
-        <li class="main-menu"><a href="../index.html"><img id="menu-logo" src="../../images/logo.png" alt="Vitaminds logo"></a></li>
-        <li class="main-menu"><a href="../openup.html">Open up</a></li>
-        <li class="main-menu"><a href="../inspiratie.html">Inspiratie</a></li>
+   <nav class="menu">
+    <div class = "top-menu">
+        <div class="main-menu"><a href="../index.html"><img id="logo-menu" src="../images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+        <div class="main-menu"><a href="../openup.html">Open up</a></div>
+        <div class="main-menu"><a href="../inspiratie.html">Inspiratie</a></div>
         <!-- <li class="main-menu"><a href="evenementen.html">Evenementen</a></li> -->
-        <li class="main-menu"><a href="../coaches.html">Coaches</a></li>
-        <li class="main-menu"><a href="../tickets.html">Tickets</a></li>
+        <div class="main-menu"><a href="../coaches.html">Coaches</a></div>
+        <div class="main-menu"><a href="../tickets.html">Tickets</a></div>
         <!-- <li class="main-menu"><a href="privacy.html">Privacy</a></li> -->
-      <li class = "login-logout"><p id="aanmeldCH"><a href="../RegisterCH.html">Aanmelden als coach</a></p></li> 
-      <li class = "login-logout"><a>|</a></li>
-      <li onclick = "logOut()" class = "login-logout"><button><a>Log uit</a></button></li>
-      <li class = "login-logout"><button><a href="../inlog.html">Log in</a></button></li>
-      <li class = "login-logout"><a>|</a></li>
-      <li class = "login-logout">
-        <div id="menu-auth-div">
-          <div id="mijnAccount"></div>
-          <p id="profile-name"></p>
+        <div class="auth-menu">
+          <div class = "login-logout"><p id="aanmeldCH"><a href="../voor-coach.html">Voor coaches</a></p></div> 
+          <div class = "login-logout"><a>|</a></div>
+          <div id="profile-picture"></div>
+          <div id="button-login" class = "login-logout"><button><a href="../inlog.html">Log in</a></button></div>
         </div>
-      </li>
-    </ul>
   </nav>
 
 
 <!-- Detailpagina -->
-<section id="openup-overview"></section>
-<section id="reactie-input">
-    <div id="reactie-innerDiv"></div>
-    <button id="button-reactie-openup">Deel</button>
-</section>
-<section id="reacties-overview">
-    <h2>Wat onze coaches denken</h2>
-</section>
+<div id="open-up-detail-outer-div">
+  <section id="openup-overview"></section>
+  <section id="reactie-input">
+      <div id="reactie-innerDiv"></div>
+      <button id="button-reactie-openup">Deel</button>
+  </section>
+  <section id="reacties-overview">
+      <h2>Wat onze coaches denken</h2>
+  </section>
+</div>
     
 <!-- footer -->
 <footer class="footer">

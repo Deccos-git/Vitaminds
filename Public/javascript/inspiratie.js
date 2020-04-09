@@ -452,7 +452,7 @@ auth.onAuthStateChanged(User =>{
     }
 })
 
-        //Learning werwerken in karakter en levensvraag
+        //Learning werwerken in levenslessen en levensvraag
 
         function submitKT(){
 
@@ -475,12 +475,9 @@ auth.onAuthStateChanged(User =>{
                 .where("Levensvraag", "==", levensvraagOption).get().then(querySnapshot => {
                     querySnapshot.forEach(doc => {
                         const id = doc.id
-                        console.log(id)
-                
 
                 const levensvraagRef = db.collection("Vitaminders").doc(User.uid).collection("Levensvragen").doc(id)
-               
-                   
+                 
                     db.collection("Artikelen").where("Titel", "==", titel).get().then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
 
@@ -557,7 +554,7 @@ db.collectionGroup("Levenslessen").where("Titel", "==", titel).get()
 
 
     learnGB.addEventListener('click', (e) => {
-        window.open("../Vitaminders/" + [GB] + ".html", "_self");
+        window.open("../Vitaminders/" + GB + ".html", "_self");
     })
 
 

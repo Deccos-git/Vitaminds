@@ -51,6 +51,9 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
                      window.open("../Vitaminders/" + gebruikersnaam + ".html", "_self")
                         })
 
+        if(DOM == null){
+            console.log("Error")
+        } else {
         DOM.appendChild(innerDiv)
         innerDiv.appendChild(headDiv)
         innerDiv.appendChild(authDiv)
@@ -61,7 +64,7 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
         innerDiv.appendChild(omschrijvingDiv)
         omschrijvingDiv.appendChild(omschrijvingP)
         innerDiv.appendChild(leesMeer)
-
+                }   
             })
         })
         .then(() => {
@@ -71,7 +74,7 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
             const vraagArray = Array.from(vraagData)
             vraagArray.forEach(vraag => {
                 const data = vraag.dataset.vraag
-    
+
                vraag.addEventListener("click", () => {
                    window.open("../Open/" + [data] + ".html", "_self")
                })
@@ -89,7 +92,11 @@ titel3 = titel2.replace('%20',' ')
 titel4 = titel3.replace('%20',' ')
 titel5 = titel4.replace('%20',' ')
 titel6 = titel4.replace('%20',' ')
-titel = titel6.replace('%20',' ')
+titel7 = titel6.replace('%20',' ')
+titel8 = titel7.replace('%20',' ')
+titel9 = titel8.replace('%20',' ')
+titel = titel9.replace('%20',' ')
+
 
 const titelQuestionmark = titel + "?"
 
@@ -175,14 +182,14 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titelQuestionmark)
                 const inspiratorP = document.createElement("li")
                     inspiratorP.setAttribute("class", "openup-meta-detail")
                 
-                lessen.innerHTML ='<img class="menu-icon" src="../Images/menu-karakter.png" alt="menu contact" width="20px"> ' + les
+                lessen.innerHTML ='<img class="menu-icon" src="../images/menu-karakter.png" alt="menu contact" width="20px"> ' + les
                 inspiratorP.innerHTML = "Geinspïreerd door coach " + `<u>${inspirator}</u>`
 
                 inspiratorP.addEventListener("click", () => {
                     window.open("../Vitaminders/" + [inspirator] + ".html", "_self");
                 })
 
-                titelP.innerHTML = "Geïnspireerd in " + type + `<u>${titel}</u>`
+                titelP.innerHTML = "Geïnspireerd in " + type + " " + `<u>${titel}</u>`
 
                 titelP.addEventListener("click", () => {
                     window.open("../Artikelen/" + [titel] + ".html", "_self");
@@ -256,7 +263,7 @@ inspiratieOption.innerHTML = inspiratieTitel
 if(DOMinput != null){
 
 DOMinput.appendChild(inputH3)
-inputH3.appendChild(inputTextarea)
+DOMinput.appendChild(inputTextarea)
 DOMinput.appendChild(inspiratieDiv)
 inspiratieDiv.appendChild(inspiratiep)
 inspiratieDiv.appendChild(inspiratieSelect)
@@ -299,7 +306,32 @@ const inspiratieSelect = inspiratieDiv.options
                         const vraagstellerArray = Array.from(vraagsteller)
                         vraagstellerArray.forEach(steller => {
                             const vrager = steller.dataset.vraagsteller
-                     
+
+            // Email versturen
+            db.collection("Vitaminders").where("Gebruikersnaam", "==", vrager).get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                    const email = doc.data().Email
+
+            
+            db.collection("Mail").doc().set({
+                    to: [email],
+            message: {
+            subject: `${vrager}, je hebt een nieuwe reactie op je levensvraag ${levensvraag} op Vitaminds! `,
+            html: `Hallo ${vrager}, </br> </br>
+                    Je hebt een reactie van coach ${Gnaam} ontvangen op je levensvraag ${levensvraag}</br>
+                    Bekijk je levensvraag <a href="https://vitaminds.nu/Open/${levensvraag}.html"><u>hier.</u></a></br>
+                    Vriendelijke groet, </br></br>
+                    Het Vitaminds Team </br></br>
+                    <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+            }
+                        
+            }).catch((err) => {
+                    consoleo.log(err)
+            })
+        }) 
+
+    })
+})
           
    db.collection('Vitaminders').doc(User.uid).collection("Reacties").doc().set({
             Gebruikersnaam: Gnaam,
@@ -308,17 +340,19 @@ const inspiratieSelect = inspiratieDiv.options
             Levensvraag: levensvraag,
             Vraagsteller: vrager,
             InspiratieTitel: inspiratieOption,
-            Inspiratiepunten: 1
+            Inspiratiepunten: 1,
+            New: "Yes",
+            Domain: "Levensvraag"
                             }).then(()=>{
                             location.reload();
                         })
 
                     })
-                })
             }
+                
+            })
         })    
     })
-}) 
 } else {
     console.log("Error")
 };
@@ -342,6 +376,8 @@ const docRef = db.collectionGroup("Reacties").where("Levensvraag", "==", titelQu
         const coach = doc.data().Gebruikersnaam
         const inspiratieTitel = doc.data().InspiratieTitel
         const inspiratiepunten = doc.data().Inspiratiepunten
+        const vraagsteller = doc.data().Vraagsteller
+        const levensvraag = doc.data().Levensvraag
 
         const reactieDiv = document.createElement("div")
             reactieDiv.setAttribute("class", "reactie-div")
@@ -410,10 +446,16 @@ const docRef = db.collectionGroup("Reacties").where("Levensvraag", "==", titelQu
 
             db.collection("Vitaminders").where("Gebruikersnaam", "==", coachData).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
-                    db.collection("Vitaminders").doc(doc.id).update({
+                    db.collection("Vitaminders").doc(doc.id).collection("Inspiration").doc().set({
 
-                        Inspiratiepunten: firebase.firestore.FieldValue.increment(1)
-
+                        New: "Yes",
+                        User: coachData,
+                        Source: `openup van ${vraagsteller}`,
+                        Lifequestion: levensvraag,
+                        Giver: naam,
+                        Action: reactieData,
+                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                        Type: "reactie"
                     })
                     db.collectionGroup("Reacties").where("Reactie", "==", reactieData).get().then(querySnapshot => {
                         querySnapshot.forEach(doc2 => {

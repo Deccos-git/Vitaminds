@@ -23,6 +23,13 @@
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
   <script>src="https://www.gstatic.com/firebasejs/6.5.0/firebase-analytics.js"</script>
+  <!-- EmailJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.3.2/dist/email.min.js"></script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init("user_Iw72D3GtRTn0KlqxereC3");
+   })();
+</script>
 </head>
 
 <body>
@@ -84,22 +91,24 @@
 </section>
 
    <!-- menu --> 
-  <nav class="menu">
-      <div class = "top-menu">
-          <div class="main-menu"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
-          <div class="main-menu"><a href="openup.html">Open up</a></div>
-          <div class="main-menu"><a href="inspiratie.html">Inspiratie</a></div>
-          <!-- <li class="main-menu"><a href="evenementen.html">Evenementen</a></li> -->
-          <div class="main-menu"><a href="coaches.html">Coaches</a></div>
-          <div class="main-menu"><a href="tickets.html">Tickets</a></div>
-          <!-- <li class="main-menu"><a href="privacy.html">Privacy</a></li> -->
-          <div class="auth-menu">
-            <div class = "login-logout"><p id="aanmeldCH"><a href="voor-coach.html">Voor coaches</a></p></div> 
-            <div class = "login-logout"><a>|</a></div>
-            <div id="profile-picture"></div>
-            <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
-          </div>
-    </nav>
+  <nav id="menu">
+    <div id="navigation-menu">
+      <div class="main-menu"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+      <div class="main-menu"><a href="openup.html">Open up</a></div>
+      <div class="main-menu"><a href="inspiratie.html">Inspiratie</a></div>
+      <!-- <li class="main-menu"><a href="evenementen.html">Evenementen</a></li> -->
+      <div class="main-menu"><a href="coaches.html">Coaches</a></div>
+      <div class="main-menu" id="tickets"><a href="tickets.html">Tickets</a></div>
+      <!-- <li class="main-menu"><a href="privacy.html">Privacy</a></li> -->
+    </div>
+    <div id="auth-menu">
+      <div id="profile-picture">
+      </div>
+      <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
+      <div class = "login-logout"><a>|</a></div>
+      <div class = "login-logout"><p id="aanmeldCH"><a href="voor-coach.html">Voor coaches</a></p></div> 
+    </div>
+  </nav>
 
 <!-- header -->
   <section class="header-image">
@@ -140,8 +149,9 @@
     <h1 class="subtitel"> Houd alles bij in je Vitaminds DigiMind</h1>
     <h2>Jouw persoonlijke online omgeving voor</h2>
     <ul id="omgeving">
-      <li>Je levenslessen</li>
+      <li>Je levensvragen</li>
       <li>Je karakter</li>
+      <li>Je levenslessen</li>
       <li>Je persoonlijke groei</li>
     </ul>
     <div class="button">

@@ -14,10 +14,10 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
 
             //De coach-eigenschappen
         const naam = doc.data().Gebruikersnaam;
-        const stijl = doc.data().Coachstijl
-        const omschrijving = doc.data().Omschrijving
+        const stijl = doc.data().Coachingstyle
+        const omschrijving = doc.data().Why
         const profilePic = doc.data().Profielfoto
-        const locatie = doc.data().Locatie
+        const locatie = doc.data().City
 
             // De nieuwe HTML-elementen en classes
         const nieuweDiv = document.createElement("div");

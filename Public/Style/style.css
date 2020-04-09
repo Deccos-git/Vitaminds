@@ -27,6 +27,12 @@ h2{
   color: #0c6665;
 }
 
+h3{
+  font-family: 'Nunito Sans', sans-serif;
+  color: #122b46;
+  font-size: 25px;
+}
+
 a{
   font-family: 'Nunito Sans', sans-serif;
 }
@@ -35,11 +41,7 @@ a:link{
   text-decoration: none;
 }
 
-h3{
-  font-family: 'Nunito Sans', sans-serif;
-  color: #0c6665;
-  font-size: 30px;
-}
+
 
 h4{
   font-family: 'Nunito Sans', sans-serif;
@@ -51,6 +53,7 @@ h5{
   font-family: 'Nunito Sans', sans-serif;
   color: #122b46;
   font-size: 18px;
+  letter-spacing: 0.6px;
 }
 
 .subtitel {
@@ -81,8 +84,27 @@ link{
 
 /* menu styling */
 
-.menu{
+#menu{
   height: auto;
+  display: flex;
+}
+
+#navigation-menu{
+  width: 75%;
+  margin: 10px 15px 15px 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#auth-menu{
+  width: 25%;
+  margin: 10px 15px 15px 15px;
+  border-left: 1px solid #122b46;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .main-menu{
@@ -96,19 +118,15 @@ link{
   z-index: 10;
 }
 
-.auth-menu{
-  margin: 10px 15px 15px 15px;
-}
-
-.top-menu .main-menu a:link{
+.main-menu a:link{
   color: #122b46;
 }
 
-.top-menu .main-menu a:active{
+.main-menu a:active{
   color: #122b46;
 }
 
-.top-menu .main-menu a:visited{
+.main-menu a:visited{
   color: #122b46;
 }
 
@@ -125,20 +143,20 @@ link{
   z-index: 10;
 }
 
-.top-menu .main-menu a {
+.main-menu a {
   text-decoration: none;
   display: block;
 }
 
-.top-menu .main-menu a:hover {
+.main-menu a:hover {
   color: #8e0000;
 }
 
-.top-menu .main-menu ul li {
+.main-menu ul li {
   display: none;
 }
 
-.top-menu .main-menu:hover ul li {
+.main-menu:hover ul li {
   display: block;
 }
 
@@ -184,21 +202,23 @@ link{
 
 #menu-auth-div{
   display: none;
+  margin: 0px -80px 0px -70px;
   flex-direction: column;
   align-items: left;
   z-index: 1;
-  width: 170px;
+  width: 220px;
   background-color: #fff;
   border: 1px solid #858585;
   border-radius: 5px;
   box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
 }
 
-#menu-auth-div p,h5{
-  margin: 5px;
+#menu-auth-div p, h5{
+  margin: 10px;
+  color: #122b46;
 }
 
-#aanmeldCH{
+.menu-auth-name{
   margin-top: 0px;
 }
 
@@ -216,25 +236,34 @@ link{
 }
 
 #profile-picture{
-  margin: 0px;
+  margin: 0px 0px 0px 20px;
   width: 30px;
   height: 30px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  align-self: flex-end;
+  align-self: center;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 
 #profile-name{
-  font-size: 14px;
   align-self: center;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+#profile-name a{
+  font-size: 14px;
+  color: #122b46;
+  justify-self: center;
 }
 
 #profile-photo{
-  margin: 15px;
+  margin: 15px 15px 5px 15px;
   width: 50px;
   height: 50px;
   background-repeat: no-repeat;
@@ -242,11 +271,57 @@ link{
   background-size: cover;
   border-radius: 50%;
   align-self: center;
+  border: 1px solid #122b4621;
 }
-
 
 #button-logout{
   cursor: pointer;
+}
+
+#tickets{
+  background-color: #ad6d6d;
+}
+
+#tickets a{
+  color: #FFF;
+}
+
+#tickets:hover{
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+}
+
+#menu-notifications{
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #8e0000;
+  margin: -3px 0px 0px 20px;
+}
+
+#notification-count-menu{
+  margin: -1px 0px 0px 3px;
+  font-size: 11px;
+  color: #FFF;
+}
+
+.notification-div-menu{
+  padding: 10px;
+  background-color: #ececec;
+  margin-top: 15px;
+}
+
+.notification-div-menu h3{
+  margin: 0px;
+  font-size: 18px;
+  color: #8e0000;
+}
+
+.notification-div-menu p{
+  margin-left: 0px;
+  padding-left: 10px;
+  font-size: 12px;
+  color: #122b46;
+  border-left: 1px solid #8e0000;
 }
 
 /* button algemeen */
@@ -309,19 +384,6 @@ link{
  .button-header a:visited{
   text-decoration: none;
   color: #FFF;
-}
-
-.button-karakter{
-  background-color: #0c6665;
-  border: 1px #0c6665 solid;
-  border-radius: 10px;
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 30px;
-  color: #fff;
-  cursor: pointer;
-  margin: 60px 10px 10px 10px;
-  width: 95%;
-  align-self: center;
 }
 
 .button-welkom{

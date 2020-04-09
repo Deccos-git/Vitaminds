@@ -1,0 +1,67 @@
+
+.coach-information{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.coach-information-text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px;
+}
+
+.checked-sellingpoint{
+    display: flex;
+    align-items: center;
+}
+
+.checked-sellingpoint img{
+    margin: 15px;
+}
+
+#coach-subscriptions{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: rgb(245, 245, 245);
+    padding: 50px;
+}
+
+.subscription-colom{
+    margin: 5px;
+    padding: 10px;
+    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 15px;
+    max-width: 30%;
+}
+
+.subscription-colom h3{
+    border-bottom: 1px dotted #122b46;
+}
+
+.subscription-colom h4{
+    align-self: center;
+    font-size: 18px;
+}
+
+.subscription-colom h5{
+    margin-left: 60px;
+}
+
+.subscription-colom button{
+    background-color: #fff;
+    border: 1px #0c6665 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #0c6665;
+    cursor: pointer;
+
+}
+
+.button-div{
+    margin: 30px 30px 30px 60px;
+}
+

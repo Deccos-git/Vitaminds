@@ -51,7 +51,7 @@
     width: 100%;
     height: 150px;
     background-color: #122b46;
-    margin: 0px;
+    margin: 0px 0px 70px 0px;
     box-shadow: 0 7px 15px 0 #000000b4;
 }
 
@@ -76,14 +76,15 @@
     display: flex;
 }
 
-#niveau{
+#inspiratiepunten-outer-div{
     margin-left: auto;
     padding: 30px;
     margin-top: 0px;
     text-align: center;
+    justify-self: right;
 }
 
-#niveau h3, h5{
+#inspiratiepunten-outer-div h3, h5{
     color: #FFF;
     margin-top: 0px;
     font-size: 16px;
@@ -152,7 +153,7 @@
 #menuWrapper{
     display:flex;
     flex-direction: column;
-    margin: 100px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
 }
 
 #menuWrapper ul{
@@ -214,6 +215,205 @@
     color: #0c6665;
 }
 
+/* Info-bar */
+
+#info-bar{
+    display: flex;
+    justify-content: flex-end;
+}
+
+#profile-admin{
+    display: none;
+    justify-content: flex-end;
+    margin: 5px 15px 0px 15px;
+}
+
+#profile-admin p{ 
+    font-size: 14px;
+    color: #122b46;
+    cursor: pointer;
+}
+
+#admin-profile-icon{
+    margin: 16px 5px 0px 0px;
+    cursor: pointer;
+}
+
+/* Notifications */
+
+#profile-notifications{
+    display: flex;
+    justify-content: flex-end;
+    margin: 5px 15px 0px 15px;
+}
+
+#profile-notifications p{
+    font-size: 14px;
+    color: #122b46;
+    cursor: pointer;
+}
+
+#notifications-profile-icon{
+    margin: 16px 5px 0px 0px;
+    cursor: pointer;
+}
+
+.notification-div-profile{
+    background-color: #fff;
+    border-bottom: 1px solid #122b46;
+}
+
+.notification-div-profile h4{
+    color: #122b46;
+    font-size: 20px;
+}
+
+.notification-div-profile h5{
+    color: #122b46;
+    font-size: 14px;
+}
+
+.notification-div-profile p{
+    cursor: pointer;
+}
+
+#social-notifications-outer-div{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#rewards-outer-div{
+    margin: 15px;
+    border: 1px solid #122b46;
+}
+
+#notifications{
+    margin: 15px;
+    width: 45%;
+    border: 1px solid #122b46;
+    padding: 15px;
+}
+
+#inspiration-notifications{
+    margin: 15px;
+    width: 45%;
+    border: 1px solid #122b46;
+    padding: 15px;
+}
+
+.gamefication-outer-div{
+    border-bottom: 1px solid #122b46;
+}
+
+.gamefication-inner-div li{
+    font-size: 18px;
+}
+
+#notifications h4{
+    font-size: 14px;
+    color: #122b46;
+    margin-left: 25px;
+}
+
+.title-notification{
+    background-color: rgb(233, 233, 233);
+}
+
+#inner-div-gamefication{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Edit profile */
+
+#edit-profile{
+    display: flex;
+    justify-content: flex-end;
+    margin: 5px 15px 0px 15px;
+}
+
+#edit-profile-auth{
+    margin: 100px 15px 100px 15px;
+    font-size: 20px;
+    color: #0c6665;
+}
+
+#edit-profile p{
+    font-size: 14px;
+    color: #122b46;
+    cursor: pointer;
+}
+
+#edit-profile-icon{
+    margin: 16px 5px 0px 0px;
+    cursor: pointer;
+}
+
+#edit-profile-section{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: rgb(245, 245, 245);
+}
+
+.edit-profile-div{
+    width: 100%;
+    display: flex;
+    border-bottom: 1px dotted #122b46;
+    align-items: center;
+}
+
+.edit-profile-div div{
+    margin-left: 0px;
+    justify-self: center;
+    font-style: italic;
+    width: 40%;
+}
+
+.edit-profile-div p{
+    margin-left: 30px;
+    justify-self: flex-start;
+    font-style: italic;
+    width: 25%;
+}
+
+.edit-profile-div input{
+    margin-left: auto;
+    margin-right: 30px;
+    font-style: italic;
+    width: 20%;
+}
+
+.edit-profile-inner-div{
+    width: 100%;
+}
+
+.current-empty{
+    color: #8e969e;
+}
+
+.current{
+    width: 100%;
+    display: flex;
+    justify-content: center ;
+}
+
+#save-profile-div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #0c6665;
+}
+
+#save-profile{
+    font-size: 18px;
+    margin: 15px;
+    background-color: #fff;
+    color: #122b46;
+    border-radius: 5px;
+}
+
 /* Profiel */
 
 #digimind-dasboard-outer-div{
@@ -255,14 +455,22 @@
 }
 
 .dashboard-button{
+    background-color: #FFF;
+    border: 1px #0c6665 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #0c6665;
     cursor: pointer;
+    width: 75%;
+    align-self: center;
     margin: 15px;
 }
 
 #profielWrapper{
     height: auto;
     width: 100%;
-    min-height: 800px;
+    height: auto;
     margin: 0px 0px 0px 0px;
     border: 1px solid #8e969e;
     display: flex;
@@ -276,287 +484,347 @@
     width: 100%;
 }
 
-        /* Levenslessen */
+/* About info */
 
-        #levenslessen-header{
-            width: 100%;
-        }
+#contact-inner-div{
+    background-color: #FFF;
+    padding: 15px;
+    width: 300px;
+    margin: 30px;
+}
 
-        #learnings{
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            text-align: center;
-        }
+#short-inner-div{
+    background-color: #FFF;
+    padding: 15px;
+    width: 250px;
+    margin: 30px;
+}
 
-        .levensles-thema{
-            font-size: 15px;
-            color: #cf6e13;
-            cursor: pointer;
-            text-align: center;
-        }
+#coach-inner-div{
+    background-color: #FFF;
+    padding: 15px;
+    width: 550px;
+    margin: 30px;
+}
 
+#experience-inner-div{
+    background-color: #FFF;
+    padding: 15px;
+    width: 550px;
+    margin: 30px;
+}
 
-        #karakter{
-            height: 100%;
-            width: 100%;
-            display: none;
-        }
-                
-        #karakterMenu{
-            display: flex;
-            flex-direction: column;
-            align-items: left;
-        }
+#row-1-div{
+    display: flex;
+    flex-wrap: wrap;
+}
 
-        .nav{
-            text-align: center;
-            display: flex;
-            align-items: center;
-            border: 2px solid #fff;
-            padding: 5px 5px 5px 10px;
-            cursor: pointer;
-            background-color: #122b4613;
-            height: auto;
-            width: 200px;
-        }
-
-        .nav p{
-            margin: 3px;
-            font-size: 16px;
-            color: #122b46;
-            text-align: left;
-        }
+#row-2-div{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 341px;
+}
 
 
-        .extraInfo{
-            color: #0c6665;
-            font-size: 20px;
-            margin: 0px 5px 0px 5px;
-            text-align: center;
-            border: 1px solid #0c6665;
-            border-radius: 50%;
-            height: 20px;
-            width: 20px;
-        }
 
-        #learningsKarakter{
-            margin: 15px;
-            border-right: 1px solid #122b46;
-            width: 100%;
-            text-align: center;
-        }
+.item-div{
+    display: flex;
+    align-items: center;
+}
 
-        #learningKarakter h2{
-            color: #122b46;
-        }
+.item-div p{
+    justify-self: flex-start;
+    margin-left: 15px;
+    margin-right: 50px;
+}
 
+.item-div h6{
+    margin-left: auto;
+    margin-right: 15px;
+}
 
-        #authKarakter{
-            display: flex;
-            width: 100%;
-        }
+/* Levenslessen */
 
-        .badge{
-            border: 1px solid rgb(190, 190, 190);
-            border-radius: 15px;
-            padding: 15px;
-            margin: 15px;
-            background-color: #fff;
-        }
+#levenslessen-header{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 
-        .badge h3{
-            font-size: 22px;
-        }
+#learnings{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
+}
 
-        .learn{
-            border-bottom: 1px solid #122b46;
-        }
-
-        .learn p{
-            font-size: 30px;
-        }
-
-        .dank-meta{
-            font-size: 14px;
-            color: #122b46;
-            cursor: pointer;
-        }
-
-        .karakter-section{
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        /* Doelen */
-
-        #mijnKarakterTochten{
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-            width: 100%;
-            height: 100%;
-            padding: 30px;
-        }
-
-        #ontO{
-            display: flex;
-            flex-wrap: wrap; 
-            width: 100%;
-            height: auto;
-        }
-
-        .ontwikkelDiv{
-            border: 1px solid #8e969e;
-            box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
-            width: 400px;
-            border-radius: 15px;
-            margin: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .ontwikkelDiv h1{
-            font-size: 30px;
-        }
-
-        #mijnKarakterTochten button, h3{
-            margin: 15px;
-        }
-
-        #nieuweKarakterTocht{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: auto;
-            height: auto;
-        }
-
-        .middelDiv{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #nieuweO{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 400px;
-            height: auto;
-            border: 1px solid #122b46;
-            border-radius: 15px;
-            margin: 30px;
-            background-color: #FFF;
-        }
-
-        .levenslesDiv{
-            border: 1px solid #122b46;
-            margin: 15px;
-            display: flex;
-            background-color: #FFF;
-            border-radius: 5px;
-        }
-
-        .meerDiv{
-            display: flex;
-            justify-content: space-evenly;
-            background-color: #cf6e13;
-            color: #FFF;
-        }
-
-        .tochtHeader{
-            background-image: url("../images/avontuur4.jpg");
-            background-repeat: no-repeat;
-            background-position: center;
-            height:200px;
-            width: 100%;
-        }
-
-        #methodeO{
-            height: auto;
-            width: 80%;
-            border: 1px solid #cf6e13;
-            border-radius: 15px;
-            margin: 15px;
-            padding: 15px;
-            text-align: center;
-        }
-
-        #methodeO h3{
-            color: #cf6e13;
-            font-size: 20px;
-        }
-
-        .meerLeren{
-            cursor: pointer;
-            color: #FFF;
-            font-size: 16px;
-        }
-
-        .meerPraktijk{
-            cursor: pointer;
-            color: #FFF;
-            font-size: 16px;
-        }
+.levensles-thema{
+    font-size: 15px;
+    color: #cf6e13;
+    cursor: pointer;
+    text-align: center;
+}
 
 
-        .startpunt{
-            margin: 10px 0px 0px 0px;
-            color: #122b46;
-            font-size: 25px;
-        }
+#karakter{
+    height: 100%;
+    width: 100%;
+    display: none;
+}
+        
+#karakterMenu{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
 
-        .beginO{
-            color: #0c6665;
-            margin: 5px 40px 15px 40px;
-        }
+.nav{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    border: 2px solid #fff;
+    padding: 5px 5px 5px 10px;
+    cursor: pointer;
+    background-color: #122b4613;
+    height: auto;
+    width: 200px;
+}
 
-        .methodeTitel{
-            color: #122b46;
-            font-size: 25px;
-        }
+.nav p{
+    margin: 3px;
+    font-size: 16px;
+    color: #122b46;
+    text-align: left;
+}
 
-        .methodeX{
-        background-color: #cf6e13;
-        border: 1px #cf6e13 solid;
-        border-radius: 10px;
-        font-family: 'Nunito Sans', sans-serif;
-        font-size: 20px;
-        color: #FFF;
-        padding: 15px;
-        }
 
-        #coachTools{
-            display: none;
-            flex-direction: column;
-            align-content: center;
-            text-align: center;
-            width: 100%;
-        }
+.extraInfo{
+    color: #0c6665;
+    font-size: 20px;
+    margin: 0px 5px 0px 5px;
+    text-align: center;
+    border: 1px solid #0c6665;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+}
 
-        .methodeExtraP{
-            margin: 5px;
-            color: #FFF;
-        }
+#learningsKarakter{
+    margin: 15px;
+    border-right: 1px solid #122b46;
+    width: 100%;
+    text-align: center;
+}
 
-        .doel-learning-lijst{
-            text-align: left;
-        }
+#learningKarakter h2{
+    color: #122b46;
+}
 
-        .doel-learning-lijst li{
-            color: #122b46;
-            font-size: 16px;
-        }
 
-        /* Levensvragen inladen */
+#authKarakter{
+    display: flex;
+    width: 100%;
+}
+
+.badge{
+    border: 1px solid rgb(190, 190, 190);
+    border-radius: 15px;
+    padding: 15px;
+    margin: 15px;
+    background-color: #fff;
+}
+
+.badge h3{
+    font-size: 22px;
+}
+
+.learn{
+    border-bottom: 1px solid #122b46;
+}
+
+.learn p{
+    font-size: 30px;
+}
+
+.dank-meta{
+    font-size: 14px;
+    color: #122b46;
+    cursor: pointer;
+}
+
+.karakter-section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* Levensvragen */
+
+#mijnKarakterTochten{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    padding: 30px;
+}
+
+#ontO{
+    display: flex;
+    flex-wrap: wrap; 
+    width: 100%;
+    height: auto;
+}
+
+.ontwikkelDiv{
+    border: 1px solid #8e969e;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    width: 400px;
+    border-radius: 15px;
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    text-align: center;
+}
+
+.ontwikkelDiv h1{
+    font-size: 30px;
+}
+
+#mijnKarakterTochten button, h3{
+    margin: 15px;
+}
+
+#nieuweKarakterTocht{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    height: auto;
+}
+
+.middelDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#nieuweO{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 400px;
+    height: auto;
+    border-radius: 15px;
+    margin: 30px;
+    background-color: #FFF;
+}
+
+.levenslesDiv{
+    border: 1px solid #122b46;
+    margin: 15px;
+    display: flex;
+    background-color: #FFF;
+    border-radius: 5px;
+}
+
+.meerDiv{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #cf6e13;
+    color: #FFF;
+}
+
+.tochtHeader{
+    background-image: url("../images/avontuur4.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    height:200px;
+    width: 100%;
+}
+
+#methodeO{
+    height: auto;
+    width: 80%;
+    border: 1px solid #cf6e13;
+    border-radius: 15px;
+    margin: 15px;
+    padding: 15px;
+    text-align: center;
+}
+
+#methodeO h3{
+    color: #cf6e13;
+    font-size: 20px;
+}
+
+.meerLeren{
+    cursor: pointer;
+    color: #FFF;
+    font-size: 16px;
+}
+
+.meerPraktijk{
+    cursor: pointer;
+    color: #FFF;
+    font-size: 16px;
+}
+
+
+.startpunt{
+    margin: 10px 0px 0px 0px;
+    color: #122b46;
+    font-size: 25px;
+}
+
+.beginO{
+    color: #0c6665;
+    margin: 5px 40px 15px 40px;
+}
+
+.methodeTitel{
+    color: #122b46;
+    font-size: 25px;
+}
+
+.methodeX{
+background-color: #cf6e13;
+border: 1px #cf6e13 solid;
+border-radius: 10px;
+font-family: 'Nunito Sans', sans-serif;
+font-size: 20px;
+color: #FFF;
+padding: 15px;
+}
+
+#coachTools{
+    display: none;
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+    width: 100%;
+}
+
+.methodeExtraP{
+    margin: 5px;
+    color: #FFF;
+}
+
+.doel-learning-lijst{
+    text-align: left;
+}
+
+.doel-learning-lijst li{
+    color: #122b46;
+    font-size: 16px;
+}
+
+/* Levensvragen inladen */
 
 #verzamelOpenUps{
     display: flex;
@@ -577,6 +845,19 @@
     background-color: #FFF;
 }
 
+.button-karakter{
+    background-color: #FFF;
+    border: 1px #0c6665 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #0c6665;
+    cursor: pointer;
+    margin: 60px 10px 10px 10px;
+    width: 20%;
+    align-self: center;
+  }
+
 .openup-meta{
     font-size: 15px;
     cursor: pointer;
@@ -596,35 +877,59 @@
     margin-top: 30px;
 }
 
-        /* Favorieten */
+#active-outerdiv{
+    display: flex;
+    justify-content: space-evenly;
+}
 
-        #favoInspiratie{
-            display: none;
-        }
-        
-        #favoCoach{
-            display: none;
-        }
+.active-innerdiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        .favoCoachDiv{
-            cursor: pointer;
-            background-color: #FFF;
-            height: auto;
-            padding: 15px;
-            border-radius: 15px;
-            margin: 15px;
-            border: 1px solid #122b4650;
-        }
-        
-        .favoInspDiv{
-            cursor: pointer;
-            margin: 15px;
-            border: 1px solid #122b4650;
-            border-radius: 15px;
-            padding: 15px;
-            height: auto;
-            background-color: #FFF;
-        }
+#lifequestions-button{
+    background-color: #FFF;
+    border: 1px #0c6665 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #0c6665;
+    cursor: pointer;
+    margin: 60px 10px 10px 10px;
+    width: 30%;
+    align-self: center;
+}
+
+/* Favorieten */
+
+#favoInspiratie{
+    display: none;
+}
+
+#favoCoach{
+    display: none;
+}
+
+.favoCoachDiv{
+    cursor: pointer;
+    background-color: #FFF;
+    height: auto;
+    padding: 15px;
+    border-radius: 15px;
+    margin: 15px;
+    border: 1px solid #122b4650;
+}
+
+.favoInspDiv{
+    cursor: pointer;
+    margin: 15px;
+    border: 1px solid #122b4650;
+    border-radius: 15px;
+    padding: 15px;
+    height: auto;
+    background-color: #FFF;
+}
 
 
 /* Coach deel */
@@ -642,6 +947,15 @@
 #coach-contact{
     display: none;
     flex-direction: column;
+    width: 100%;
+    align-items: center;
+    }
+
+#artikel{
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
 }
 
 #over-mij{
@@ -649,15 +963,23 @@
     flex-direction: column;
 }
 
-#mijn-coaching{
+#mijn-coaching-div{
     display: none;
     flex-direction: column;
+    width: 100%;
 }
 
-#mijn-bijdragen{
+#mijn-bijdragen-div{
     display: none;
     flex-direction: column;
 }
 
 /* Tools */
 
+#write-article{
+    display: none;
+}
+
+#postbody{
+    font-size: 30px;
+}

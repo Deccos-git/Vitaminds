@@ -1,4 +1,4 @@
-const body = document.getElementsByTagName("body")[0];
+
 
 //Ingelogd in main menu
 auth.onAuthStateChanged(User =>{
@@ -10,15 +10,22 @@ auth.onAuthStateChanged(User =>{
         profilePic = doc.data().Profielfoto
   
     const profilePicture = document.getElementById("profile-picture")
+
+    if(profilePic == undefined){
+      profilePicture.innerHTML = `<h6 class="menu-auth-name" >${naam}</h6>`
+    } else {
         profilePicture.style.backgroundImage = `url('${profilePic}')`
         profilePicture.setAttribute("class", "login-logout")
-      
+    }
+
     const authDiv = document.createElement("div")
         authDiv.setAttribute("id", "menu-auth-div")
     const authName = document.createElement("h5")
         authName.setAttribute("id", "profile-name")
       const authProfile = document.createElement("h5")
         authProfile.setAttribute("id", "auth-profile")
+    const notifications = document.createElement("div")
+      notifications.setAttribute("id", "menu-notifications")
     const authPhoto = document.createElement("div")
         authPhoto.style.backgroundImage = `url('${profilePic}')`
         authPhoto.setAttribute("id", "profile-photo")
@@ -46,11 +53,110 @@ auth.onAuthStateChanged(User =>{
     authName.innerHTML = `<a href = "../Vitaminders/${naam}">${naam}</a>`
     authProfile.innerHTML = `<a href = "../Vitaminders/${naam}">Mijn Digimind</a>`
 
-    profilePicture.appendChild(authDiv)
-    authDiv.appendChild(authPhoto)
-    authDiv.appendChild(authName)
-    authDiv.appendChild(authProfile)
-    authDiv.appendChild(logout)
+      // Notificaties in menu
+      const length = []
+
+      const notificationsDiv = document.createElement("div")
+      notificationsDiv.setAttribute("class", "notification-div-menu")
+      const notificationsTitle = document.createElement("h3")
+
+      notificationsTitle.innerHTML = "Notificaties"
+      
+      profilePicture.appendChild(notifications)
+                profilePicture.appendChild(authDiv)
+                authDiv.appendChild(authPhoto)
+                authDiv.appendChild(authName)
+                authDiv.appendChild(authProfile)
+                authProfile.appendChild(notificationsDiv)
+
+                // Reacties
+      db.collectionGroup("Reacties").where("Vraagsteller", "==", naam).where("New", "==", "Yes").get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+          const docLengt = [doc]          
+                objectLength = Object.keys(docLengt).length
+                length.push(objectLength)
+
+                notifications.innerHTML = `<p id='notification-count-menu'>${length.length}</p>`
+
+                const coach = doc.data().Gebruikersnaam
+                const levensvraag = doc.data().Levensvraag
+                const domain = doc.data().Domain
+
+                const notificationsPDiv = document.createElement("div")
+                const notificationsP = document.createElement("p")
+
+                notificationsP.innerHTML = `<b>${coach}</b> heeft gereageerd op je ${domain} <b>${levensvraag}</b>`
+
+                notificationsDiv.addEventListener("click", () => { 
+                  db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
+                    querySnapshot.forEach(doc2 => { 
+                      console.log(doc2)
+                  db.collection("Vitaminders").doc(doc2.id).collection("Reacties").doc(doc.id).update({
+                    New: "No"
+                  }).then(() => {
+                      window.open("../notifications.html", "_self")
+                  })
+                })
+              })
+            })
+
+                notificationsDiv.appendChild(notificationsTitle)
+                notificationsTitle.appendChild(notificationsPDiv)
+                notificationsPDiv.appendChild(notificationsP)
+                authDiv.appendChild(logout)
+                
+                })
+          }).catch((err) => {
+            console.log(err)
+          })
+
+          // Inspirationpoints
+          db.collectionGroup("Inspiration").where("User", "==", naam).where("New", "==", "Yes").get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+    
+              const docLengt = [doc]          
+                    objectLength = Object.keys(docLengt).length
+                    length.push(objectLength)
+    
+                    notifications.innerHTML = `<p id='notification-count-menu'>${length.length}</p>`
+    
+                    const giver = doc.data().Giver
+    
+                    const notificationsPDiv = document.createElement("div")
+                    const notificationsP = document.createElement("p")
+    
+                    notificationsP.innerHTML = `Je hebt 1 nieuw inspiratiepunt ontvangen van ${giver} `
+    
+                    notificationsDiv.addEventListener("click", () => { 
+                      db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
+                        querySnapshot.forEach(doc2 => { 
+                          console.log(doc2)
+                      db.collection("Vitaminders").doc(doc2.id).collection("Inspiration").doc(doc.id).update({
+                        New: "No"
+                      }).then(() => {
+                          window.open("../notifications.html", "_self")
+                      })
+                    })
+                  })
+                    })
+    
+                    notificationsDiv.appendChild(notificationsTitle)
+                    notificationsTitle.appendChild(notificationsPDiv)
+                    notificationsPDiv.appendChild(notificationsP)
+                    authDiv.appendChild(logout)
+                    
+                    })
+              }).catch((err) => {
+                console.log(err)
+              })
+
+      profilePicture.appendChild(authDiv)
+      profilePicture.appendChild(notifications)
+      authDiv.appendChild(authPhoto)
+      authDiv.appendChild(authName)
+      authDiv.appendChild(authProfile)
+      authDiv.appendChild(logout)
 
       }
     })
@@ -107,6 +213,7 @@ if(button != null){
       Gebruikersnaam: gebruikersnaam,
       Usertype: "Vitaminder",
       Inspiratiepunten: 1,
+      Email: email
     })
   }).then(() => {
     window.open("../inlog.html")
@@ -125,9 +232,6 @@ function registerCoach(){
   const email = document.getElementById("register-email").value;
   const password = document.getElementById("register-wachtwoord").value;
   const naam = document.getElementById("register-gebruikersnaam").value;
-  const locatie = document.getElementById("plaats-praktijk").value;
-  const stijl = document.getElementById("coach-methodiek").value;
-  const omschrijf = document.getElementById("coach-omschrijving").value;
 
   firebase.auth().createUserWithEmailAndPassword(email, password)
   
@@ -136,9 +240,7 @@ function registerCoach(){
       Gebruikersnaam: naam,
       Usertype: "Coach",
       Inspiratiepunten: 1,
-      Locatie: locatie,
-      Coachstijl: stijl,
-      Omschrijving: omschrijf
+      Email: email
     })
   }).then(() => {
     window.open("../inlog.html")
