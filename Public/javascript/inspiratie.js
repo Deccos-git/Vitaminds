@@ -557,7 +557,6 @@ db.collectionGroup("Levenslessen").where("Titel", "==", titel).get()
         window.open("../Vitaminders/" + GB + ".html", "_self");
     })
 
-
     DOM.appendChild(sectionDiv);
     sectionDiv.appendChild(learnTitel);
     learnTitel.appendChild(learnGB);

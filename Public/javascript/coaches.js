@@ -23,6 +23,8 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         const nieuweDiv = document.createElement("div");
             nieuweDiv.setAttribute("class", "nieuweD")
             nieuweDiv.setAttribute("data-name", naam)
+        const backgroundDiv = document.createElement("div")
+            backgroundDiv.setAttribute("class", "background-div")
         const profielFoto = document.createElement("div")
             profielFoto.setAttribute("class", "profielfotoCH")
         const nieuweH3 = document.createElement("h3");
@@ -37,7 +39,7 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         const omschrijvingCH = document.createElement("h5");
             omschrijvingCH.setAttribute("class", "omschrijving-coach")
         const link = document.createElement("button");
-            link.setAttribute("class", "button-algemeen")
+            link.setAttribute("class", "button-coaches-overview")
         const profilePicture = document.createElement("div")
             profilePicture.setAttribute("class", "openup-profile-pic")
 
@@ -55,10 +57,11 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         stijlCH.innerHTML = stijl;  
         locatieCH.innerHTML = locatie 
         omschrijvingCH.innerHTML ='"' + omschrijving + '"'
-        link.innerHTML = "Bekijk mijn profiel"
+        link.innerHTML = "Bekijk profiel"
 
             //De HTML-elementen vastmaken aan de DOM
         overview.appendChild(nieuweDiv)
+        nieuweDiv.appendChild(backgroundDiv)
         nieuweDiv.appendChild(profielFoto)
         nieuweDiv.appendChild(nieuweH3)
         nieuweDiv.appendChild(stijlCH)

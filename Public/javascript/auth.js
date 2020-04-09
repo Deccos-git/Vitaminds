@@ -77,6 +77,10 @@ auth.onAuthStateChanged(User =>{
                 objectLength = Object.keys(docLengt).length
                 length.push(objectLength)
 
+                if(length.length == 0){
+                  notifications.style.display = "none"
+                }
+
                 notifications.innerHTML = `<p id='notification-count-menu'>${length.length}</p>`
 
                 const coach = doc.data().Gebruikersnaam

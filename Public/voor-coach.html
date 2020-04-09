@@ -29,23 +29,29 @@
 </head>
 <body>
 
+  <!-- Feedback -->
+  <div id="feedback">
+    <a href="tickets.html"> <p>Feedback</p></a>
+  </div>
+  
     <!-- menu --> 
-  <nav class="menu">
-    <div class = "top-menu">
+    <nav id="menu">
+      <div id="navigation-menu">
         <div class="main-menu"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
         <div class="main-menu"><a href="openup.html">Open up</a></div>
         <div class="main-menu"><a href="inspiratie.html">Inspiratie</a></div>
         <!-- <li class="main-menu"><a href="evenementen.html">Evenementen</a></li> -->
         <div class="main-menu"><a href="coaches.html">Coaches</a></div>
-        <div class="main-menu"><a href="tickets.html">Tickets</a></div>
         <!-- <li class="main-menu"><a href="privacy.html">Privacy</a></li> -->
-        <div class="auth-menu">
-          <div class = "login-logout"><p id="aanmeldCH"><a href="voor-coach.html">Voor coaches</a></p></div> 
-          <div class = "login-logout"><a>|</a></div>
-          <div id="profile-picture"></div>
-          <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
+      </div>
+      <div id="auth-menu">
+        <div id="profile-picture">
         </div>
-  </nav>
+        <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
+        <div class = "login-logout"><a>|</a></div>
+        <div class = "login-logout"><p id="aanmeldCH"><a href="voor-coach.html">Voor coaches</a></p></div> 
+      </div>
+    </nav>
 
   
   <h1>Voor coaches</h1>
@@ -195,7 +201,18 @@
 
     
       <!-- footer -->
-      <footer class="footer"></footer>
+      <footer class="footer">
+        <div>
+         <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+        </div>
+        <div>
+          <h3 id="slogan-footer">Op avontuur in je eigen karakter</h3>
+        </div>
+        <div>
+         <a href="https://www.facebook.com/VitamindsNederland/"><img src="images/Logo-facebook.png" alt="" width="40px"></a>
+         <a href="https://www.youtube.com/channel/UC44W6GvZnKZqBw7hdH5OU0A"><img src="images/Logo-youtube.png" alt="" width="40px"></a>
+        </div>
+      </footer>
       
           <script type="text/javascript" src="javascript/firebase.js"></script>
           <script type="text/javascript" src="javascript/auth.js"></script>

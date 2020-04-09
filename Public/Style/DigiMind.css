@@ -418,9 +418,8 @@
 
 #digimind-dasboard-outer-div{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
-    justify-content: space-evenly;
 }
 
 #landing{
@@ -435,7 +434,7 @@
     background-color: #FFF;
     border: 1px solid #8e969e;
     border-radius: 15px;
-    width: 300px;
+    width: 500px;
     height: auto;
     margin: 30px;
     padding: 15px;
@@ -899,6 +898,11 @@ padding: 15px;
     margin: 60px 10px 10px 10px;
     width: 30%;
     align-self: center;
+}
+
+/* Dagelijks leven */
+#dagelijks{
+    display: none;
 }
 
 /* Favorieten */

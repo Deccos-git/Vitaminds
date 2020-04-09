@@ -5,6 +5,11 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
         const gebruikersnaam = doc.data().Gebruikersnaam
         const omschrijving = doc.data().Omschrijving
 
+        //Stop loader
+        const loader = document.getElementById("loader")
+        loader.style.display = "none"
+
+
         const DOM = document.getElementById("verzamelOpenUps") 
 
         const innerDiv = document.createElement("div")
@@ -234,8 +239,8 @@ auth.onAuthStateChanged(User =>{
             
             const naam = doc.data().Gebruikersnaam;
 
-const DOMinput = document.getElementById("reactie-innerDiv")
-
+const DOMinput = document.createElement("div")
+            DOMinput.setAttribute("id", "reactie-innerDiv")
 const inputH3 = document.createElement("h3")
 const inputTextarea = document.createElement("textarea")
         inputTextarea.setAttribute("id", "input-textarea")
@@ -247,10 +252,13 @@ const inspiratieDiv = document.createElement("div")
 const inspiratiep = document.createElement("p")
 const inspiratieSelect = document.createElement("select")
         inspiratieSelect.setAttribute("id", "inspiratie-select")
+const buttonReact = document.createElement("button")
+        buttonReact.setAttribute("id", "button-reactie-openup")
 
 
 inputH3.innerHTML = "Geef je professionele mening, " + naam
 inspiratiep.innerHTML = "---- voeg eventueel passende inspiratie toe ----"
+buttonReact.innerHTML = "Deel"
 
 db.collection("Artikelen").where("Auteur", "==", naam).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
@@ -262,25 +270,25 @@ inspiratieOption.innerHTML = inspiratieTitel
 
 if(DOMinput != null){
 
+DOMnone.appendChild(DOMinput)
 DOMinput.appendChild(inputH3)
 DOMinput.appendChild(inputTextarea)
 DOMinput.appendChild(inspiratieDiv)
 inspiratieDiv.appendChild(inspiratiep)
 inspiratieDiv.appendChild(inspiratieSelect)
 inspiratieSelect.appendChild(inspiratieOption)
+DOMinput.appendChild(buttonReact)
                     } else {
                         console.log("Error")
                     }
                 })
-            })
-        })
-    }
-});
-
-
+            }).then(() => {
 
 // Coach reactie wegschrijven naar database
 const buttonReactie = document.getElementById("button-reactie-openup")
+
+console.log(buttonReactie)
+
 
     if(buttonReactie != null){
     buttonReactie.addEventListener("click", () => {
@@ -317,12 +325,13 @@ const inspiratieSelect = inspiratieDiv.options
                     to: [email],
             message: {
             subject: `${vrager}, je hebt een nieuwe reactie op je levensvraag ${levensvraag} op Vitaminds! `,
-            html: `Hallo ${vrager}, </br> </br>
-                    Je hebt een reactie van coach ${Gnaam} ontvangen op je levensvraag ${levensvraag}</br>
-                    Bekijk je levensvraag <a href="https://vitaminds.nu/Open/${levensvraag}.html"><u>hier.</u></a></br>
+            html: `Hallo ${vrager}, </br></br>
+                    Je hebt een reactie ontvangen van coach ${Gnaam} op je levensvraag "${levensvraag}"</br>
+                    Bekijk je levensvraag <a href="https://vitaminds.nu/Open/${levensvraag}.html"><u>hier.</u></a></br></br>
                     Vriendelijke groet, </br></br>
                     Het Vitaminds Team </br></br>
                     <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+            Coach: Gnaam,
             }
                         
             }).catch((err) => {
@@ -331,7 +340,7 @@ const inspiratieSelect = inspiratieDiv.options
         }) 
 
     })
-})
+
           
    db.collection('Vitaminders').doc(User.uid).collection("Reacties").doc().set({
             Gebruikersnaam: Gnaam,
@@ -346,6 +355,7 @@ const inspiratieSelect = inspiratieDiv.options
                             }).then(()=>{
                             location.reload();
                         })
+                    })
 
                     })
             }
@@ -355,7 +365,11 @@ const inspiratieSelect = inspiratieDiv.options
     })
 } else {
     console.log("Error")
-};
+}
+})
+})
+}
+});
 
 // Coach reacties overview
 const DOMreacties = document.getElementById("reacties-overview")
@@ -383,6 +397,7 @@ const docRef = db.collectionGroup("Reacties").where("Levensvraag", "==", titelQu
             reactieDiv.setAttribute("class", "reactie-div")
             reactieDiv.setAttribute("data-reactie", reactie)
             reactieDiv.setAttribute("data-coach", coach)
+        const reactieTitle = document.createElement("h2")
         const reactieP = document.createElement("h4")
             reactieP.setAttribute("class", "openup-reactie-p")
         const inspiratie = document.createElement("li")
@@ -416,6 +431,7 @@ const docRef = db.collectionGroup("Reacties").where("Levensvraag", "==", titelQu
             window.open("../Vitaminders/" + coach + ".html", "_self");
         });
 
+        reactieTitle.innerHTML = "Wat onze coaches denken"
         reactieP.innerHTML = reactie
         inspiratie.innerHTML = "Meer inspiratie: " + `<u>${inspiratieTitel}</U>` 
 
@@ -541,6 +557,7 @@ const docRef = db.collectionGroup("Reacties").where("Levensvraag", "==", titelQu
                 })
 
         DOMreacties.appendChild(reactieDiv)
+        reactieDiv.appendChild(reactieTitle)
         reactieDiv.appendChild(reactieP)
         reactieP.appendChild(coachP)
         reactieP.appendChild(timestampP)

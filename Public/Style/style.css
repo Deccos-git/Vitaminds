@@ -87,6 +87,7 @@ link{
 #menu{
   height: auto;
   display: flex;
+  z-index: 1;
 }
 
 #navigation-menu{
@@ -100,7 +101,7 @@ link{
 
 #auth-menu{
   width: 25%;
-  margin: 10px 15px 15px 15px;
+  margin: 10px 105px 15px 15px;
   border-left: 1px solid #122b46;
   display: flex;
   justify-content: flex-end;
@@ -783,31 +784,62 @@ link{
   padding: 15px;
 }
 
-/* footer */
+/* Feedback */
 
-footer {
-  display: flex;
-  justify-content: center;
-  background-color: #122b46;
-  color: #fff;
-  margin-top: auto;
+#feedback{
+  align-self: flex-end;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #49beb7;
+  border-radius: 0px 0px 0px 5px;
+  padding: 5px;
+  margin: 0px;
+  margin-top: -80px;
 }
 
-footer p{
+#feedback p{
+  font-size: 14px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  margin: 0px;
   color: #FFF;
 }
 
-footer div{
+/* footer */
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #122b46;
+  color: #fff;
+  margin-top: auto;
+  justify-self: flex-end;
+}
+
+.footer p{
+  color: #FFF;
+}
+
+.footer div{
   margin: 0px 40px 0px 40px;
   margin-top: 0px;
   margin-bottom: 0px;
+  display: flex;
+  align-items: center;
 }
 
-footer img{
-  margin-top: 20px;
+.footer img{
+  margin-left: 20px;
+  cursor: pointer;
 }
 
-footer h6{
+.footer h6{
+  color: #FFF;
+}
+
+#slogan-footer{
   color: #FFF;
 }
 
@@ -901,3 +933,5 @@ margin: 0px 0px 30px 0px;
 #mijnAccount{
   color: #8e0000;
 }
+
+
