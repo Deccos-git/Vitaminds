@@ -8,7 +8,7 @@ auth.onAuthStateChanged(User =>{
       if (doc.exists) {
         Gnaam = doc.data().Gebruikersnaam;
 
-        const welkom = document.createElement("h3")
+        const welkom = document.createElement("h2")
 
         welkom.innerHTML = `Houdoe, ${Gnaam}`
 
@@ -52,6 +52,12 @@ auth.onAuthStateChanged(User =>{
       naamP.innerHTML = "Door: " + naam
       opmerkingP.innerHTML = opmerking
       verwerktP.innerHTML = "Opgelost: " + verwerkt
+
+      if(verwerkt == "Nee"){
+        opmerkingP.style.color = "#8e0000"
+      } else {
+        opmerkingP.style.color = "#0c6665"
+      }
 
       DOMreact.appendChild(reactDiv)
       reactDiv.appendChild(opmerkingP)

@@ -88,6 +88,7 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
         const bodyTekst = doc.data().Body;
         const auteurTekst = doc.data().Auteur;
         const categorieTekst = doc.data().Categorien;
+        const ID = doc.data().ID
 
         categorieTekst.forEach(cat => {
 
@@ -114,7 +115,7 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
             nieuweAuteur.setAttribute("data-link", titelTekst)
 
             linkTekst.addEventListener('click', (e) => {
-                window.open("../Artikelen/" + [titelTekst] + ".html", "_self");
+                window.open("../Artikelen/" + titelTekst + ".html", "_self");
             })
 
             nieuweAuteur.addEventListener('click', (e) => {
@@ -323,6 +324,7 @@ db.collection('Artikelen').where('Titel', '==', titel )
 
     const auteurMeta = doc.data().Auteur
     const categorie = doc.data().Categorien
+    const ID = doc.data().ID
 
     categorie.forEach(cat =>{
     

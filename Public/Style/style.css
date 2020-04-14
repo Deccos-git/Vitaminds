@@ -1,3 +1,7 @@
+html {
+	scroll-behavior: smooth;
+}
+
 body{
   display: flex;
   flex-direction: column;
@@ -97,6 +101,7 @@ link{
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
+  z-index: 1;
 }
 
 #auth-menu{
@@ -201,8 +206,23 @@ link{
   font-size: 18px;
 }
 
+#modal-div{
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  position: fixed; /* Stay in place */
+  z-index: 4; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  align-items: center;
+  background-color: #fff;
+}
+
 #menu-auth-div{
-  display: none;
+  display: flex;
+  visibility: hidden;
   margin: 0px -80px 0px -70px;
   flex-direction: column;
   align-items: left;
@@ -211,7 +231,7 @@ link{
   background-color: #fff;
   border: 1px solid #858585;
   border-radius: 5px;
-  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);   
 }
 
 #menu-auth-div p, h5{
@@ -323,6 +343,15 @@ link{
   font-size: 12px;
   color: #122b46;
   border-left: 1px solid #8e0000;
+}
+
+#close-div{
+  height: 14px;
+  width: 15px;
+  align-self: flex-end;
+  border: 0.5px solid #122b46;
+  border-radius: 50%;
+  margin: -5px;
 }
 
 /* button algemeen */
@@ -442,9 +471,7 @@ link{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #FFFFff90;
   margin-top: 80px;
-  border-radius: 15px;
   padding: 15px;
   text-align: center;
 }

@@ -274,11 +274,8 @@ auth.onAuthStateChanged(User =>{
                         objectLength = Object.keys(docLengt).length
                         length.push(objectLength)
 
-                        console.log(objectLength)
                                         })
                                 }).then(() => {
-
-                                        console.log(length)
                         
                                         const DOM =  document.getElementById("total-inspiration")
 
@@ -429,7 +426,7 @@ auth.onAuthStateChanged(User =>{
                         titelDiv.setAttribute("class", "dashboard-div")
                 const titelEmpty = document.createElement("p")
                         titelEmpty.style.display = "none"
-                const titelP = document.createElement("p")
+                const titelP = document.createElement("h2")
                 const button = document.createElement("button")
                 button.className = "dashboard-button"
                 const exampleDiv = document.createElement("ul")
@@ -475,9 +472,9 @@ function levenslessen(){
 
         const titelDiv = document.createElement("div")
                 titelDiv.setAttribute("class", "dashboard-div")
-        const titelEmpty = document.createElement("p")
+        const titelEmpty = document.createElement("h2")
                 titelEmpty.style.display = "none"
-        const titelP = document.createElement("p")
+        const titelP = document.createElement("h2")
         const button = document.createElement("button")
                 button.className = "dashboard-button"
         const exampleDiv = document.createElement("ul")
@@ -688,6 +685,51 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
         })
 })
 
+// My contributions
+
+const DOMcontributions = document.getElementById("my-contributions-outer-div")
+
+const innerDivInspiration = document.createElement("div")
+        innerDivInspiration.setAttribute("class", "inspiration-inner-div")
+
+const innerDivReactions = document.createElement("div")
+        innerDivReactions.setAttribute("class", "reactions-inner-div")
+
+db.collection("Artikelen").where("Auteur", "==", naam).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+                const titel = doc.data().Titel
+
+                const titelH3 = document.createElement("h3")
+                const titelP = document.createElement("p")
+
+                titelH3.innerHTML = "Inspiratie"
+                titelP.innerHTML = `<img src="../images/Article-icon.png" width="30px"><a href="../Artikelen/${titel}.html"><u>${titel}</u></a>`
+
+
+                DOMcontributions.appendChild(innerDivInspiration)
+                innerDivInspiration.appendChild(titelH3)
+                innerDivInspiration.appendChild(titelP)
+        })
+})
+
+db.collectionGroup("Reacties").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+                const reactie = doc.data().Reactie
+                const levensvraag = doc.data().Levensvraag
+
+                const titelH3 = document.createElement("h3")
+                const titelP = document.createElement("p")
+
+                titelH3.innerHTML = "Reacties op levenvragen"
+                titelP.innerHTML = `<img src="../images/Article-icon.png" width="30px"><a href="../Open/${levensvraag}.html"><u>${reactie}</u></a>`
+
+
+                DOMcontributions.appendChild(innerDivReactions)
+                innerDivReactions.appendChild(titelH3)
+                innerDivReactions.appendChild(titelP)
+        })
+})
+
 // Levensvragen inladen
 
 db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
@@ -866,18 +908,13 @@ auth.onAuthStateChanged(User =>{
                         db.collectionGroup('Levenslessen').where('Gebruikersnaam', '==', naam )
                             .get()
                             .then(function(querySnapshot) {   
-                                console.log(querySnapshot) 
-                
+
                             querySnapshot.forEach(function(doc1) {
 
-                                console.log(doc1)
-                
                                 const auteur = doc1.data().Auteur;
                                 const time = doc1.data().Timestamp;
                                 const learn = doc1.data().Levensles;
                                 const titelLearn = doc1.data().Titel;
-
-                                console.log(learn)
                                
                                 const badge = document.createElement("div");
                                         badge.setAttribute("class", "badge")

@@ -218,6 +218,8 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titelQuestionmark)
 
 const DOMnone = document.getElementById("reactie-input")
 
+if(DOMnone != null){
+
 auth.onAuthStateChanged(User =>{
     if (User){
         const docRef = db.collection("Vitaminders").doc(User.uid);
@@ -370,6 +372,9 @@ const inspiratieSelect = inspiratieDiv.options
 })
 }
 });
+} else {
+    console.log("Error")
+}
 
 // Coach reacties overview
 const DOMreacties = document.getElementById("reacties-overview")

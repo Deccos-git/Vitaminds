@@ -1,3 +1,8 @@
+// Random ID
+const id = Math.random()
+const idAlpha = id.toString(36)
+const idClean = idAlpha.replace("0.", "")
+console.log(idClean)
 
 
 //Ingelogd in main menu
@@ -29,29 +34,28 @@ auth.onAuthStateChanged(User =>{
     const authPhoto = document.createElement("div")
         authPhoto.style.backgroundImage = `url('${profilePic}')`
         authPhoto.setAttribute("id", "profile-photo")
+    const closeDiv = document.createElement("div")
+        closeDiv.setAttribute("id", "close-div")
         
+        
+
         authPhoto.addEventListener("click", () => {
             window.open("../Vitaminders/" + [naam] + ".html", "_self");
         })
+
     
     const logout = document.createElement("h5")
       logout.setAttribute("id", "button-logout")
       logout.setAttribute("onclick", "logOut()")
 
       profilePicture.addEventListener("click", () => {
-        authDiv.style.display = "flex"
+        authDiv.style.visibility = "visible"
       })
-
-    // if(authDiv.style.display == "flex" == true){
-    //   console.log("joh")
-    // } else {
-    //   console.log("moi")
-    // }
       
-  
     logout.innerHTML = "Log uit"
     authName.innerHTML = `<a href = "../Vitaminders/${naam}">${naam}</a>`
     authProfile.innerHTML = `<a href = "../Vitaminders/${naam}">Mijn Digimind</a>`
+    closeDiv.style.backgroundImage = "url(../images/close-icon.png)";
 
       // Notificaties in menu
       const length = []
@@ -64,6 +68,7 @@ auth.onAuthStateChanged(User =>{
       
       profilePicture.appendChild(notifications)
                 profilePicture.appendChild(authDiv)
+                authDiv.appendChild(closeDiv)
                 authDiv.appendChild(authPhoto)
                 authDiv.appendChild(authName)
                 authDiv.appendChild(authProfile)
@@ -163,6 +168,14 @@ auth.onAuthStateChanged(User =>{
       authDiv.appendChild(logout)
 
       }
+    }).then(() => {
+     const closeDiv =document.getElementById("close-div")
+     const authDiv = document.getElementById("menu-auth-div")
+     console.log(authDiv)
+      closeDiv.addEventListener("click", () => {
+        authDiv.style.visibility = "hidden",
+        console.log("jep")
+      })
     })
   } else {
     console.log("Offline")

@@ -73,7 +73,7 @@
     width: 100%;
     background-image: url("../images/avontuur1.jpg");
     background-size: cover;
-    
+    margin-bottom: -30px;
 }
 
 .lees-meer-openup{
@@ -154,8 +154,9 @@
     margin: 15px 0px 15px 0px;
     text-align: center;
     width: 90%;
-    border-bottom: 1px #122b46 dotted;
     background-color: #FFF;
+    padding: 30px;
+    box-shadow: 0 2px 0px 0 rgba(0,0,0,.14);
 }
 
 .vraag-div-detail h3{
@@ -181,7 +182,6 @@
     align-items: center;
     margin-top: 30px;
     text-align: center;
-    border-bottom: 1px #122b46 dotted;
     width: 90%;
 }
 
