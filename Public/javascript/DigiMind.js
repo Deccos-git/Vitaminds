@@ -208,7 +208,10 @@ auth.onAuthStateChanged(User =>{
 
                     const adminIcon = document.getElementById("profile-admin")
                     const writeArticle = document.getElementById("write-article")
-
+                //     if (adminIcon || writeArticle == null){
+                //         console.log("Error")
+                //     } else {
+                  
                     if(admin == "Yes"){
                         adminIcon.style.display = "flex"
                         writeArticle.style.display = "block"
@@ -216,18 +219,13 @@ auth.onAuthStateChanged(User =>{
 
                     adminIcon.addEventListener("click", () => {
                             window.open("../admin.html", "_self")
-                    })
+                        
+                                })
+                        // }
                 })
         }
 })
 
-// To edit profile page
-const editProfile = document.getElementById("edit-profile")
-if (editProfile != null){
-    editProfile.addEventListener("click", () => {
-            window.open("../profielAanpassen.html", "_self")
-    })
-}
 // Hide profile-elements for non-auth
 auth.onAuthStateChanged(User =>{
     if (User){
@@ -238,16 +236,51 @@ auth.onAuthStateChanged(User =>{
                 const toolsMenu = document.getElementById("tools-menu")
                 const activeDiv = document.getElementById("active-div")
                 const notifications = document.getElementById("profile-notifications")
-
+             
                 if(naam != coachNaam){
                     editProfile.style.display = "none"
                     activeDiv.style.display = "none"
                     toolsMenu.style.display = "none"
                     notifications.style.display = "none"
-                }
+                        }
             })
     }
 });
+
+// Profile visits
+auth.onAuthStateChanged(User =>{
+        if (User){
+            let docRef = db.collection("Vitaminders").doc(User.uid);
+                docRef.get().then(function(doc){
+                        const views = doc.data().Pageviews
+        
+        const DOMvisits = document.getElementById("pageviews")
+        if(DOMvisits == null){
+                console.log("Error")
+        } else {
+        const viewsP = document.createElement("p")
+
+        viewsP.innerHTML = `Je profiel is in totaal ${views} keer bekeken`
+
+        DOMvisits.appendChild(viewsP)
+                        }
+                })
+        }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        console.log("geladen")
+                        db.collection("Vitaminders").doc(doc.id).update({
+                                Pageviews: firebase.firestore.FieldValue.increment(1)
+                        })
+
+                })
+        })
+});
+
 
 // // Hide profile-elements for visiter
 auth.onAuthStateChanged(User =>{
@@ -263,20 +296,52 @@ auth.onAuthStateChanged(User =>{
         }
 });
 
+// Total inspirationpoints in Digimind
+
+const inspirationPointsArray = [];
+
+db.collectionGroup("Inspiration").where("User", "==", naam).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+                const docLengt = [doc]          
+                objectLength = Object.keys(docLengt).length
+
+                inspirationPointsArray.push(objectLength)
+
+                
+        })
+        }).then(() => {
+                const DOMprofile = document.getElementById("bijdragepunten");
+                if(DOMprofile == null){
+                        console.log("Error")
+                } else {
+                DOMprofile.innerHTML = inspirationPointsArray.length
+                }
+});
+
 // Notifcations-page
 
         // Gamefication-notifications
-        const length = [];
-        db.collectionGroup("Inspiration").where("User", "==", naam).get().then(querySnapshot => {
+        const lengthArray = [];
+
+        auth.onAuthStateChanged(User =>{
+                if(User){
+                  const userRef = db.collection("Vitaminders").doc(User.uid);
+                  userRef.get().then(function(doc) {
+                    if (doc.exists) {
+                     const auth = doc.data().Gebruikersnaam;
+
+        db.collectionGroup("Inspiration").where("User", "==", auth).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
 
                 const docLengt = [doc]          
                         objectLength = Object.keys(docLengt).length
-                        length.push(objectLength)
+                        lengthArray.push(objectLength)
 
                                         })
                                 }).then(() => {
-                        
+                                        
+                                        // Total points in Notifications
                                         const DOM =  document.getElementById("total-inspiration")
 
                                         if(DOM == null){
@@ -288,17 +353,19 @@ auth.onAuthStateChanged(User =>{
                                         const titel = document.createElement("h3")
                                         
                                         titel.innerHTML = "Totaal aantal inspiratiepunten"
-                                        totalPoints.innerHTML = length.length
+
+                                        totalPoints.innerHTML = lengthArray.length
                         
                                         DOM.appendChild(innerDiv)
                                         innerDiv.appendChild(titel)
                                         innerDiv.appendChild(totalPoints)
-
                                         }
-                                        const DOMprofile = document.getElementById("bijdragepunten");
-                                        DOMprofile.innerHTML = length.length
-                                        
-});  
+                                }) 
+                         }
+                })
+        }
+});
+
 
         // Reaction-notifications
 
@@ -316,7 +383,7 @@ auth.onAuthStateChanged(User =>{
                 let docRef = db.collection("Vitaminders").doc(User.uid);
                         docRef.get().then(function(doc){
                         const auth = doc.data().Gebruikersnaam;
-        db.collectionGroup("Reacties").where("Vraagsteller", "==", auth).orderBy("Timestamp", "desc").get().then(querySnapshot => {
+        db.collectionGroup("Reactions").where("Vraagsteller", "==", auth).orderBy("Timestamp", "desc").get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
 
                         const DOM = document.getElementById("notifications")
@@ -371,7 +438,9 @@ auth.onAuthStateChanged(User =>{
                         const lifequestion = doc.data().Lifequestion
 
                         const DOM = document.getElementById("inspiration-notifications")
-
+                        if(DOM == null){
+                                console.log("Error")
+                        } else {
                         const outerDiv = document.createElement("div")
                                 outerDiv.setAttribute("class", "gamefication-outer-div")
                         const dateP = document.createElement("h4")
@@ -406,8 +475,9 @@ auth.onAuthStateChanged(User =>{
                         ul.appendChild(liType)
                         ul.appendChild(liSource)
                         outerDiv.appendChild(dateP)
-
+                                        }
                                 })
+                        
                         })
                 })
         });
@@ -442,7 +512,10 @@ auth.onAuthStateChanged(User =>{
                
                 db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
                         querySnapshot.forEach(doc =>{
-                                const levensvragen = doc.data().Levensvraag
+                                const ID = doc.data().ID
+
+                                const levensvraagID = doc.data().Levensvraag
+                                const levensvragen = levensvraagID.replace(ID, "")
                 
                 const exampleP = document.createElement("li")   
                
@@ -484,6 +557,10 @@ function levenslessen(){
         titelP.innerHTML = "Levenslessen"
         titelEmpty.innerHTML = `Nog geen levenslessen`
 
+        if(DOMdashboard == null){
+                console.log("Error")
+        } else {
+
         DOMdashboard.appendChild(titelDiv)
         titelDiv.appendChild(titelP)
         titelDiv.appendChild(titelEmpty)
@@ -508,8 +585,9 @@ function levenslessen(){
         button.addEventListener("click", () => {
         menuElement = document.getElementById("menu-levenslessen")
         menuElement.click()
-        })
-        })
+                        })
+                })
+        }
 } levenslessen()
 
         //Gegevens van overeenkomende naan inladen in user-bar
@@ -712,7 +790,7 @@ db.collection("Artikelen").where("Auteur", "==", naam).get().then(querySnapshot 
         })
 })
 
-db.collectionGroup("Reacties").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+db.collectionGroup("Reactions").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
                 const reactie = doc.data().Reactie
                 const levensvraag = doc.data().Levensvraag
@@ -734,9 +812,13 @@ db.collectionGroup("Reacties").where("Gebruikersnaam", "==", naam).get().then(qu
 
 db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
-            const levensvraag = doc.data().Levensvraag
             const levenslessen = doc.data().Levenslessen
             const omschrijving = doc.data().Omschrijving
+            const ID = doc.data().ID
+
+            const levensvraagID = doc.data().Levensvraag
+            const levensvraag = levensvraagID.replace(ID, "")
+            
     
             const DOM = document.getElementById("overzichtLevensvragen")
     
@@ -747,18 +829,32 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
             const vraagDiv = document.createElement("div") 
                 vraagDiv.setAttribute("class", "vraag-div")      
             const vraag = document.createElement("h2")
+                vraag.setAttribute("class", "vraag-h2")
+                vraag.setAttribute("id", "vraag-id")
+                vraag.setAttribute("data-levensvraag", levensvraagID)
+            const editDiv = document.createElement("div")
+                editDiv.setAttribute("class", "edit-div")
+                editDiv.setAttribute("data-levensvraag", levensvraagID)
+            const edit = document.createElement("div")
+                edit.setAttribute("class", "edit-levensvraag")
+                edit.setAttribute("onclick", "edit()")
             const omschrijvingDiv = document.createElement("div")
                 omschrijvingDiv.setAttribute("class", "omschrijving-div")
             const omschrijvingP = document.createElement("p")
             const button = document.createElement("button")
                 button.setAttribute("id", "lifequestions-button")
+
+            vraag.addEventListener("mouseover", () => {
+                    edit.style.display = "block"
+            })
     
             vraag.innerHTML = levensvraag
             omschrijvingP.innerHTML = omschrijving
             button.innerHTML = "Bekijk levensvraag in open-up"
+            edit.innerHTML = '<img class="edit-icon" src="../Images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
 
             button.addEventListener("click", () => {
-                window.open("../Open/" + levensvraag + ".html", "_self")
+                window.open("../Open/" + ID + levensvraag + ".html", "_self")
             })
             
     
@@ -766,6 +862,8 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
             innerDiv.appendChild(authDiv)
             innerDiv.appendChild(vraagDiv)
             vraagDiv.appendChild(vraag)
+            vraagDiv.appendChild(editDiv)
+            editDiv.appendChild(edit)
             vraagDiv.appendChild(omschrijvingDiv)
             vraagDiv.appendChild(button)
             omschrijvingDiv.appendChild(omschrijvingP)
@@ -860,7 +958,8 @@ function startTocht(){
         const omschrijving = document.getElementById("levensvraag-beschrijving").value
               
        db.collection('Vitaminders').doc(User.uid).collection("Levensvragen").doc().set({
-                Levensvraag: inputDoel,
+                ID: idClean,
+                Levensvraag: idClean + inputDoel,
                 Levenslessen: [],
                 Gebruikersnaam: Gnaam,
                 Openbaar: "Ja",
@@ -938,11 +1037,19 @@ auth.onAuthStateChanged(User =>{
                                         window.open("../Vitaminders/" + auteur + ".html", "_self");
                                 })
 
-                        titel.innerHTML = "In: " + `<u>${titelLearn}</u>`;
+                        db.collectionGroup("Levensvragen").where("Titel", "==", titelLearn).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc => {
+                                        const ID = doc.data().ID
+
+                                        const titelLearnClean = titelLearn.replace(ID, "")
+
+                        titel.innerHTML = "In: " + `<u>${titelLearnClean}</u>`;
 
                                 titel.addEventListener("click", () => {
-                                        window.open("../Artikelen/" + titelLearn + ".html", "_self");
+                                        window.open("../Artikelen/" + titelLearnClean + ".html", "_self");
+                                        })
                                 })
+                        })
 
                         levensles.innerHTML = learn;
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -1030,8 +1137,7 @@ db.collectionGroup("Favorieten").where("Gebruikersnaam", "==", naam).where("Type
 
 
 //Coach deel
-
-       
+     
 //Nieuw artikel schrijven        
 function nieuwepostsubmit(){
         auth.onAuthStateChanged(User =>{
@@ -1048,7 +1154,8 @@ function nieuwepostsubmit(){
                 let nieuwePostBodyVar = document.getElementById("postbody").innerHTML;
                 
                 artikelRef.set({
-                    Titel: nieuwePostTitelVar,
+                    ID: idClean,
+                    Titel: idClean + nieuwePostTitelVar,
                     Body: nieuwePostBodyVar,
                     Auteur: coachNaam,
                     Categorien: firebase.firestore.FieldValue.arrayUnion(catSelect),

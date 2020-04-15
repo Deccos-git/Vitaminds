@@ -384,6 +384,17 @@
      font-size: 16px;
  }
 
+ .social-div-inspiration{
+     display: flex;
+     justify-content: space-evenly;
+     border-top: 0.5px dotted #122b46;
+ }
+
+ .social-div-inspiration p{
+     margin: 5px;
+     font-size: 14px;
+ }
+
  .inspireerClass{
      cursor: pointer;
  }
@@ -398,4 +409,15 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.bedankt-div{
+    background-color: #8e0000;
+    padding: 5px;
+    display: none;
+}
+
+.bedankt-div p{
+    margin: 0px;
+    color: #FFF;
 }

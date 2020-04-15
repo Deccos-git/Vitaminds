@@ -4,7 +4,6 @@ const idAlpha = id.toString(36)
 const idClean = idAlpha.replace("0.", "")
 console.log(idClean)
 
-
 //Ingelogd in main menu
 auth.onAuthStateChanged(User =>{
   if(User){
@@ -35,15 +34,12 @@ auth.onAuthStateChanged(User =>{
         authPhoto.style.backgroundImage = `url('${profilePic}')`
         authPhoto.setAttribute("id", "profile-photo")
     const closeDiv = document.createElement("div")
-        closeDiv.setAttribute("id", "close-div")
-        
-        
+        closeDiv.setAttribute("id", "close-div") 
 
         authPhoto.addEventListener("click", () => {
             window.open("../Vitaminders/" + [naam] + ".html", "_self");
         })
-
-    
+ 
     const logout = document.createElement("h5")
       logout.setAttribute("id", "button-logout")
       logout.setAttribute("onclick", "logOut()")
@@ -65,8 +61,14 @@ auth.onAuthStateChanged(User =>{
       const notificationsTitle = document.createElement("h3")
 
       notificationsTitle.innerHTML = "Notificaties"
+
+      const authDOM = document.getElementById("auth-DOM")
+      if(authDOM == null){
+        console.log("Error")
+      } else {
+
       
-      profilePicture.appendChild(notifications)
+      authDOM.appendChild(notifications)
                 profilePicture.appendChild(authDiv)
                 authDiv.appendChild(closeDiv)
                 authDiv.appendChild(authPhoto)
@@ -138,9 +140,9 @@ auth.onAuthStateChanged(User =>{
                     notificationsP.innerHTML = `Je hebt 1 nieuw inspiratiepunt ontvangen van ${giver} `
     
                     notificationsDiv.addEventListener("click", () => { 
+                      
                       db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
                         querySnapshot.forEach(doc2 => { 
-                          console.log(doc2)
                       db.collection("Vitaminders").doc(doc2.id).collection("Inspiration").doc(doc.id).update({
                         New: "No"
                       }).then(() => {
@@ -168,10 +170,11 @@ auth.onAuthStateChanged(User =>{
       authDiv.appendChild(logout)
 
       }
+    }
     }).then(() => {
      const closeDiv =document.getElementById("close-div")
      const authDiv = document.getElementById("menu-auth-div")
-     console.log(authDiv)
+
       closeDiv.addEventListener("click", () => {
         authDiv.style.visibility = "hidden",
         console.log("jep")

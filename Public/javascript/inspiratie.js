@@ -84,11 +84,12 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
         loader.style.display = "none"
         
         // De artikel eigenschappen
-        const titelTekst = doc.data().Titel;
         const bodyTekst = doc.data().Body;
         const auteurTekst = doc.data().Auteur;
         const categorieTekst = doc.data().Categorien;
         const ID = doc.data().ID
+        const pageTitle = doc.data().Titel
+        const titelTekst  = pageTitle.replace(ID, "")
 
         categorieTekst.forEach(cat => {
 
@@ -115,7 +116,7 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
             nieuweAuteur.setAttribute("data-link", titelTekst)
 
             linkTekst.addEventListener('click', (e) => {
-                window.open("../Artikelen/" + titelTekst + ".html", "_self");
+                window.open("../Artikelen/" + ID + titelTekst + ".html", "_self");
             })
 
             nieuweAuteur.addEventListener('click', (e) => {
@@ -286,7 +287,10 @@ auth.onAuthStateChanged(User =>{
 
         db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
-                const vraag = doc.data().Levensvraag
+                const ID = doc.data().ID
+
+                const levensvraagID = doc.data().Levensvraag
+                const vraag = levensvraagID.replace(ID, "")
 
                 const options = document.createElement("option")
                
@@ -350,7 +354,11 @@ db.collection('Artikelen').where('Titel', '==', titel )
         auteur.innerHTML = "Geschreven door " + doc.data().Auteur
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         datum.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
-        titelArt.innerHTML = doc.data().Titel
+
+        const pageTitle = doc.data().Titel
+        const pageTitleClean = pageTitle.replace(ID, "")
+
+        titelArt.innerHTML = pageTitleClean
         body.innerHTML = doc.data().Body
         thema.innerHTML = "Over " + cat
 
@@ -512,13 +520,14 @@ auth.onAuthStateChanged(User =>{
 
 
 // Learnings inladen onder artikel
-db.collectionGroup("Levenslessen").where("Titel", "==", titel).get()
+db.collectionGroup("Levenslessen").where("Titel", "==", titel).orderBy("Inspirerend", "desc").get()
     .then(function(querySnapshot) {
 
     querySnapshot.forEach(function(doc) {
 
     const learn = doc.data().Levensles;
     const GB = doc.data().Gebruikersnaam;
+    const inspirationPoints = doc.data().Inspirerend
 
     const DOM = document.getElementById("learningsOutput");
     const learnH2 = document.getElementById("learnH2");
@@ -530,30 +539,80 @@ db.collectionGroup("Levenslessen").where("Titel", "==", titel).get()
     const learnGB = document.createElement("p");
         learnGB.setAttribute("class", "GBlink")
     const learnTijd = document.createElement("p");
+    const socialDiv = document.createElement("div")
+        socialDiv.setAttribute("class", "social-div-inspiration")
     const inspireer = document.createElement("p");
         inspireer.setAttribute("class", "inspireerClass");
         inspireer.setAttribute("data-naam", GB);
+    const pointsDiv = document.createElement("div")
+    const pointsP = document.createElement("p")
+    const levenslesDiv = document.createElement("div")
+    const levenslesP = document.createElement("p")
+    const bedanktDiv = document.createElement("div")
+        bedanktDiv.setAttribute("class", "bedankt-div")
+    const bedanktP = document.createElement("p")
+    
 
          //Geinspireerd naar auteur learning schrijven
          inspireer.addEventListener('click', () => {
+
             //Geinspireerd naar Vitaminders schrijven
             const naam = inspireer.dataset.naam;
+
+            auth.onAuthStateChanged(User =>{
+                if (User){
+                    const docRef = db.collection("Vitaminders").doc(User.uid);
+                        docRef.get().then(function(doc){
+        
+                        const auth = doc.data().Gebruikersnaam;
+
             db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
                 querySnapshot.forEach(doc2 =>{
-                    db.collection("Vitaminders").doc(doc2.id).update({
-                        Inspiratiepunten: firebase.firestore.FieldValue.increment(1)
+                    db.collection("Vitaminders").doc(doc2.id).collection("Inspiration").doc().set({
+
+                        New: "Yes",
+                        User: naam,
+                        Source: `Inspiratie: ${titel}`,
+                        Lifelesson: learn,
+                        Giver: auth,
+                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                        Type: "levensles"
+                            })
+                        })
                     })
                 })
+            }
+        }) 
+
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
+            querySnapshot.forEach(doc2 =>{
+                db.collection("Vitaminders").doc(doc2.id).collection("Levenslessen").doc(doc.id).update({
+                    Inspirerend: firebase.firestore.FieldValue.increment(1)
+                })
+        bedanktDiv.style.display = "block" 
+        
+                })
+        })
+    })
+
+        db.collection('Artikelen').where('Titel', '==', titel )
+            .get().then(querySnapshot =>  {
+            querySnapshot.forEach(doc => {
+        
+            const ID = doc.data().ID
+
+    learnH2.innerHTML = "Wat andere mensen hebben geleerd van " + titel.replace(ID, "");
             })
         })
 
-    learnH2.innerHTML = "Wat andere mensen hebben geleerd van " + titel;
     learnTitel.innerHTML ='"' + learn + '"';
     learnGB.innerHTML = "Door " + GB;
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     learnTijd.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
     inspireer.innerHTML = "Inspirerend!"
-
+    pointsP.innerHTML = inspirationPoints 
+    levenslesP.innerHTML = "Opslaan als levensles"
+    bedanktP.innerHTML = "Bedankt! (Ook namens " + GB + ")"
 
     learnGB.addEventListener('click', (e) => {
         window.open("../Vitaminders/" + GB + ".html", "_self");
@@ -563,9 +622,17 @@ db.collectionGroup("Levenslessen").where("Titel", "==", titel).get()
     sectionDiv.appendChild(learnTitel);
     learnTitel.appendChild(learnGB);
     learnGB.appendChild(learnTijd);
-    sectionDiv.appendChild(inspireer)
-    })
+    sectionDiv.appendChild(socialDiv)
+    socialDiv.appendChild(pointsDiv)
+    pointsDiv.appendChild(pointsP)
+    socialDiv.appendChild(inspireer)
+    inspireer.appendChild(bedanktDiv)
+    bedanktDiv.appendChild(bedanktP)
+    socialDiv.appendChild(levenslesDiv)
+    levenslesDiv.appendChild(levenslesP)
+   
 })
+});
 
 // Favorieten Artikel wegschrijven naar database
 function favArtikel(){
