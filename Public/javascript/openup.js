@@ -103,7 +103,7 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
 
  
 //Detail pagina inladen
-titelhtml = location.pathname.replace(/^.*[\\\/]/, '')
+titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
 titel1 = titelhtml.replace('.html', '')
 titel2 = titel1.replace('%20',' '),
 titel3 = titel2.replace('%20',' ')
@@ -115,10 +115,7 @@ titel8 = titel7.replace('%20',' ')
 titel9 = titel8.replace('%20',' ')
 titel = titel9.replace('%20',' ')
 
-
-const titelQuestionmark = titel + "?"
-
-db.collectionGroup('Levensvragen').where("Levensvraag", "==", titelQuestionmark).get().then(querySnapshot => {
+db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
         
         const gebruikersnaam = doc.data().Gebruikersnaam
@@ -439,7 +436,7 @@ auth.onAuthStateChanged(User =>{
         .then(doc => {
                 const naam = doc.data().Gebruikersnaam
 
-const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titelQuestionmark).orderBy("Inspiratiepunten", "desc")
+const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel).orderBy("Inspiratiepunten", "desc")
     docRef.get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 

@@ -462,6 +462,10 @@
     display: none;
 }
 
+.edit-div{
+    align-self: flex-start;
+}
+
 .save-div p{
     font-size: 14px;
     margin: 0px;
@@ -727,6 +731,8 @@
     padding: 15px;
     margin: 15px;
     background-color: #fff;
+    display: flex;
+    flex-direction: column;
 }
 
 .badge h3{

@@ -823,29 +823,32 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
             const DOM = document.getElementById("overzichtLevensvragen")
     
             const innerDiv = document.createElement("div")
-                innerDiv.setAttribute("class", "openup-div") 
+                innerDiv.setAttribute("class", "openup-div")
             const authDiv = document.createElement("div")
                 authDiv.setAttribute("class", "auth-div")
             const vraagDiv = document.createElement("div") 
-                vraagDiv.setAttribute("class", "vraag-div")      
+                vraagDiv.setAttribute("class", "vraag-div")     
             const vraag = document.createElement("h2")
                 vraag.setAttribute("class", "vraag-h2")
                 vraag.setAttribute("id", "vraag-id")
-                vraag.setAttribute("data-levensvraag", levensvraagID)
             const editDiv = document.createElement("div")
                 editDiv.setAttribute("class", "edit-div")
-                editDiv.setAttribute("data-levensvraag", levensvraagID)
             const edit = document.createElement("div")
                 edit.setAttribute("class", "edit-levensvraag")
-                edit.setAttribute("onclick", "edit()")
+                edit.setAttribute("onclick", "edit(this)")
+                edit.setAttribute("data-levensvraag", levensvraagID)
             const omschrijvingDiv = document.createElement("div")
                 omschrijvingDiv.setAttribute("class", "omschrijving-div")
             const omschrijvingP = document.createElement("p")
             const button = document.createElement("button")
                 button.setAttribute("id", "lifequestions-button")
 
-            vraag.addEventListener("mouseover", () => {
+            innerDiv.addEventListener("mouseover", () => {
                     edit.style.display = "block"
+            })
+
+            innerDiv.addEventListener("mouseout", () => {
+                edit.style.display = "none"
             })
     
             vraag.innerHTML = levensvraag
@@ -859,11 +862,11 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
             
     
             DOM.appendChild(innerDiv)
+            innerDiv.appendChild(edit)
             innerDiv.appendChild(authDiv)
             innerDiv.appendChild(vraagDiv)
             vraagDiv.appendChild(vraag)
             vraagDiv.appendChild(editDiv)
-            editDiv.appendChild(edit)
             vraagDiv.appendChild(omschrijvingDiv)
             vraagDiv.appendChild(button)
             omschrijvingDiv.appendChild(omschrijvingP)
@@ -1030,6 +1033,22 @@ auth.onAuthStateChanged(User =>{
                                 const learnDiv = document.createElement("div")
                                         learnDiv.setAttribute("class", "learn")
                                 const levensles = document.createElement("h3");
+                                const editDiv = document.createElement("div")
+                                editDiv.setAttribute("class", "edit-div")
+                            const edit = document.createElement("div")
+                                edit.setAttribute("class", "edit-levensvraag")
+                                edit.setAttribute("onclick", "editLessons(this)")
+                                edit.setAttribute("data-levensles", learn)
+
+                                edit.innerHTML = '<img class="edit-icon" src="../Images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
+
+                                badge.addEventListener("mouseover", () => {
+                                        edit.style.display = "block"
+                                })
+                    
+                                badge.addEventListener("mouseout", () => {
+                                    edit.style.display = "none"
+                                })
 
                         auteurP.innerHTML = "Geïnspireerd door: " + `<u>${auteur}</u>`;
 
@@ -1056,6 +1075,8 @@ auth.onAuthStateChanged(User =>{
                         timeP.innerHTML = "Op: " + time.toDate().toLocaleDateString("nl-NL", options);
 
                         DOMlearnings.appendChild(badge)
+                        badge.appendChild(editDiv)
+                        editDiv.appendChild(edit)
                         badge.appendChild(levensles)
                         badge.appendChild(auteurP)
                         badge.appendChild(titel)

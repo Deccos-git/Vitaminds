@@ -67,25 +67,23 @@ const storageRef = firebase.storage().ref("/Profielfotos/" + selectedFile.name);
 
 // Levensvragen aanpassen
 
-function edit(){
-        const editDiv = document.getElementsByClassName("edit-levensvraag")
-        const omschrijvingDiv = document.getElementsByClassName("omschrijving-div")
+function edit(elem){
 
-        const editArray = Array.from(editDiv) 
-        const omschrijvingArray = Array.from(omschrijvingDiv)
+        const vraag = elem.nextSibling.nextSibling.firstElementChild
+        const omschrijving = elem.nextSibling.nextSibling.firstElementChild.nextSibling.nextSibling.firstElementChild
+        const removeDiv = elem.nextSibling.nextSibling.firstElementChild.nextSibling.nextSibling.nextSibling
 
-        
+        const dataEdit = elem.dataset.levensvraag
 
-        // Levensvraag editable
-        editArray.forEach(array => {
-        
-        const dataEdit = array.parentElement.dataset.levensvraag
+        vraag.setAttribute("contenteditable", "true")
+        vraag.style.color = "#d4d4d4"
+        vraag.style.borderBottom = "1px dotted #d4d4d4"
 
-        const h2 = array.parentElement.previousSibling
+        omschrijving.setAttribute("contenteditable", "true")
+        omschrijving.style.color = "#d4d4d4"
+        omschrijving.style.borderBottom = "1px dotted #d4d4d4"
 
-        h2.setAttribute("contenteditable", "true")
-        h2.style.color = "#d4d4d4"
-        h2.style.borderBottom = "1px dotted #d4d4d4"
+        removeDiv.style.display ="none"
 
         const saveDiv = document.createElement("div")
         saveDiv.setAttribute("class", "save-div")
@@ -93,8 +91,7 @@ function edit(){
 
         saveDiv.appendChild(saveP)
 
-        array.parentElement.appendChild(saveDiv)
-
+        elem.nextSibling.nextSibling.appendChild(saveDiv)
 
         saveP.innerHTML = "Opslaan"
 
@@ -109,9 +106,10 @@ function edit(){
                 querySnapshot.forEach(doc1 => {
 
                         const ID = doc1.data().ID
-                        
+
                         db.collection("Vitaminders").doc(doc.id).collection("Levensvragen").doc(doc1.id).update({
-                                Levensvraag: ID + h2.innerHTML
+                                Levensvraag: ID + vraag.innerHTML,
+                                Omschrijving: omschrijving.innerHTML
                         }).then(() => {
                                 location.reload();
                         })
@@ -121,6 +119,49 @@ function edit(){
                         }
                 })
         })
+}
+
+// Levenslessen aanpassen
+
+function editLessons(elem){
+        const les = elem.parentElement.nextSibling
+
+        const dataEdit = elem.dataset.levensles
+
+        les.setAttribute("contenteditable", "true")
+        les.style.color = "#d4d4d4"
+        les.style.borderBottom = "1px dotted #d4d4d4"
+
+        const saveLes = document.createElement("div")
+        saveLes.setAttribute("class", "save-div")
+        const saveLesP = document.createElement("p")
+
+        saveLes.appendChild(saveLesP)
+
+        elem.parentElement.parentElement.appendChild(saveLes)
+
+        saveLesP.innerHTML = "Opslaan"
+
+        saveLesP.addEventListener("click", () => {    
+
+        auth.onAuthStateChanged(User =>{
+                        if (User){
+                        let docRef = db.collection("Vitaminders").doc(User.uid);
+                                docRef.get().then(function(doc){
+
+        db.collectionGroup("Levenslessen").where("Levensles", "==", dataEdit).get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                        db.collection("Vitaminders").doc(doc.id).collection("Levenslessen").doc(doc1.id).update({
+                                Levensles: les.innerHTML
+                        }).then(() => {
+                                location.reload();
+                        })
+                                                })
+                                        })
+                                })
+                        }
+                })
         })
 }
 
