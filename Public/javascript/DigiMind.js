@@ -645,6 +645,12 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                         websiteDiv.setAttribute("class", "item-div")
                 const websiteDOM = document.createElement("p")
                 const websiteData = document.createElement("h6")
+                const editDiv = document.createElement("div")
+                editDiv.setAttribute("class", "edit-div")
+            const edit = document.createElement("div")
+                edit.setAttribute("class", "edit-levensvraag")
+                edit.setAttribute("onclick", "edit(this)")
+                edit.setAttribute("data-website", website)
 
                 // About info
                 const DOMshort = document.getElementById("short-inner-div")

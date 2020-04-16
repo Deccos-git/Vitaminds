@@ -2,7 +2,6 @@
 const id = Math.random()
 const idAlpha = id.toString(36)
 const idClean = idAlpha.replace("0.", "")
-console.log(idClean)
 
 //Ingelogd in main menu
 auth.onAuthStateChanged(User =>{

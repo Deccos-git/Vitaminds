@@ -77,6 +77,16 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
 }).then(() => {
     
 
+    function Car(make, model, year) {
+        this.make = make;
+        this.model = model;
+        this.year = year;
+      }
+      
+      const car1 = new Car('Eagle', 'Talon TSi', 1993);
+      
+      console.log(car1.make);
+      // expected output: "Eagle"
 
 
 
@@ -85,14 +95,12 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
 const dataSet = [];
 
 const filters = {
-    CoachCategorien: [],
     Locatie: [],
     Doelgroep: []
     }
 
 let filterValues = []
 
-const alleCategorieG =[];
 const alleLocatieG = [];
 const alleDoelgroepG = [];
 
@@ -102,13 +110,10 @@ const alleDoelgroepG = [];
  .then(function(querySnapshot) {
      querySnapshot.forEach(function(doc) {
 
-         const alleCategorie = doc.data().Categorien
-         alleCategorieG.push(alleCategorie);
-
-         const alleLocatie = doc.data().Locatie
+         const alleLocatie = doc.data().City
          alleLocatieG.push(alleLocatie);
 
-         const alleDoelgroep = doc.data().Doelgroep
+         const alleDoelgroep = doc.data().Targetgroup
          alleDoelgroepG.push(alleDoelgroep)
 
          const data = doc.data()
@@ -130,23 +135,16 @@ button.addEventListener("click", () => {
     })
 
     //Filters uitlezen
-    const cat = document.getElementById("filterCoachCategorien")
-                    const catOpties = cat.options;
-                    let catSelect = catOpties[catOpties.selectedIndex].value;
-
     const inputDoelgroep = document.getElementById("filterDoelgroep")
                     const inputOptiesDD = inputDoelgroep.options;
                     let DDselect = inputOptiesDD[inputOptiesDD.selectedIndex].value;  
+
 
     const inputLocatie = document.getElementById("filterLocatie")
                     const inputOptiesLC = inputLocatie.options;
                     let LCselect = inputOptiesLC[inputOptiesLC.selectedIndex].value;
 
         // Alle opties uit filter vervangen voor alle opties uit database
-    if (catSelect == "Alle thema's"){
-        catSelect = alleCategorieG
-    }
-
     if (DDselect == "Alle doelgroepen"){
         DDselect = alleDoelgroepG
     }
@@ -154,12 +152,10 @@ button.addEventListener("click", () => {
     if(LCselect == "Alle locaties")
         LCselect = alleLocatieG
 
-    filters.CoachCategorien.push(catSelect)
     filters.Locatie.push(LCselect)
     filters.Doelgroep.push(DDselect)
 
     // Filteren
-    
     const filtersValue = Object.values(filters)
     filtersValue.forEach(filter => {
         filter.forEach(filt => {
@@ -174,8 +170,10 @@ button.addEventListener("click", () => {
         })
     })
 
+    console.log(filterValues)
+
     dataSet.forEach(data =>{
-        if(!filterValues.includes(data.Locatie, data.Doelgroep)){
+        if(!filterValues.includes(data.Targetgroup, data.City)){
 
             const filterCoach = data.Gebruikersnaam
 
