@@ -90,6 +90,15 @@
     font-size: 16px;
 }
 
+#trophies-digimind{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#trophies-digimind img{
+    height: 40px;
+}
+
 .usertype{
     margin-top: 0px;
 }
@@ -344,6 +353,15 @@
     color: #122b46;
 }
 
+#trophies{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#trophies img{
+    height: 131px;
+}
+
 /* Edit profile */
 
 #edit-profile{
@@ -463,13 +481,47 @@
 }
 
 .edit-div{
-    align-self: flex-start;
+    display: flex;
+    width: 100%;
+}
+
+.save-div{
+    margin-top: 30px;
 }
 
 .save-div p{
     font-size: 14px;
     margin: 0px;
     cursor: pointer;
+}
+
+.delete-div{
+    margin: 30px 0px 0px 0px;
+}
+
+.delete-div p{
+    font-size: 14px;
+    color: rgb(241, 102, 102);
+    cursor: pointer;
+}
+
+.public-div{
+    margin-top: 30px;
+    border: 1px solid #8e969e;
+}
+
+.public-div p{
+    font-size: 16px;
+    color: #122b46;
+}
+
+.public-div input{
+    width: 5px
+}
+
+.public-div label{
+    color: #122b46;
+    font-size: 14px;
 }
 
 /* Profiel */
@@ -1005,6 +1057,10 @@ padding: 15px;
 /* Dagelijks leven */
 #dagelijks{
     display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
 }
 
 /* Favorieten */

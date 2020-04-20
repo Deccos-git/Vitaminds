@@ -32,8 +32,8 @@
     <a href="../tickets.html"> <p>Feedback</p></a>
   </div>
 
-        <!-- menu --> 
-  <nav id="menu">
+       <!-- menu --> 
+   <nav id="menu">
     <div id="navigation-menu">
       <div class="main-menu"><a href="../index.html"><img id="logo-menu" src="../images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
       <div class="main-menu"><a href="../openup.html">Open up</a></div>
@@ -43,6 +43,7 @@
       <!-- <li class="main-menu"><a href="privacy.html">Privacy</a></li> -->
     </div>
     <div id="auth-menu">
+      <div id="auth-DOM"></div>
       <div id="profile-picture">
       </div>
       <div id="button-login" class = "login-logout"><button><a href="../inlog.html">Log in</a></button></div>
@@ -50,6 +51,7 @@
       <div class = "login-logout"><p id="aanmeldCH"><a href="../voor-coach.html">Voor coaches</a></p></div> 
     </div>
   </nav>
+  
   
           <!-- welkom-->
           <section id="welkomWrapper">
@@ -77,6 +79,15 @@
             <a href="../notifications.html#gamefication"><div id="inspiratiepunten-outer-div">
                 <h3>Inspiratiepunten</h3>
                 <h5 id="bijdragepunten"></h5>
+                <div id="trophies-digimind">
+                  <img id="trophy-1" src="../images/Trophies/1-gray.png" alt="Trophy-1">
+                  <img id="trophy-5" src="../images/Trophies/5-gray.png" alt="Trophy-5">
+                  <img id="trophy-10" src="../images/Trophies/10-gray.png" alt="Trophy-10">
+                  <img id="trophy-20" src="../images/Trophies/20-gray.png" alt="Trophy-20">
+                  <img id="trophy-40" src="../images/Trophies/40-gray.png" alt="Trophy-40">
+                  <img id="trophy-80" src="../images/Trophies/80-gray.png" alt="Trophy-80">
+                  <img id="trophy-160" src="../images/Trophies/160-gray.png" alt="Trophy-160">
+                </div>
               </div> 
             </a>
           </section>
@@ -106,15 +117,15 @@
                 <p>Coach</p>
               </div>
               <div class="coach-menu">
-                <li onclick="contactCH()"> <img class="menu-icon" src="../images/menu-contact.png" alt="menu contact" width="20px"> Contact</li>
+                <li onclick="contactCH(this)"> <img class="menu-icon" src="../images/menu-contact.png" alt="menu contact" width="20px"> Contact</li>
               </div>
               <div class="coach-menu">
-                <li onclick="mijnCoachingCH()"><img class="menu-icon" src="../images/menu-coaching.png" alt="menu contact" width="20px"><a>Mijn coaching</a></li>
+                <li onclick="mijnCoachingCH(this)"><img class="menu-icon" src="../images/menu-coaching.png" alt="menu contact" width="20px"><a>Mijn coaching</a></li>
               </div>
               <section id="mijn-coaching">
               </section>
               <div class="coach-menu">
-                <li onclick="mijnBijdragenCH()"><img class="menu-icon" src="../images/menu-bijdragen.png" alt="menu contact" width="20px"><a>Mijn bijdragen</a></li>
+                <li onclick="mijnBijdragenCH(this)"><img class="menu-icon" src="../images/menu-bijdragen.png" alt="menu contact" width="20px"><a>Mijn bijdragen</a></li>
               </div>
               <section id="mijn-bijdragen">
               </section>
@@ -126,14 +137,14 @@
               <p>Vitaminder</p>
             </div>
               <div class="mens-menu">
-                <li onclick="klikavontuur()" id="menu-levensvragen"><img class="menu-icon" src="../images/menu-doelen.png" alt="menu contact" width="20px"><a>Mijn levensvragen</a></li>
+                <li onclick="klikavontuur(this)" id="menu-levensvragen"><img class="menu-icon" src="../images/menu-doelen.png" alt="menu contact" width="20px"><a>Mijn levensvragen</a></li>
               </div>
               <div class="mens-menu">
-                <li onclick="klikkarakter()" id="menu-levenslessen"><img class="menu-icon" src="../images/menu-karakter.png" alt="menu contact" width="20px"><a>Mijn levenslessen</a></li>
+                <li onclick="klikkarakter(this)" id="menu-levenslessen"><img class="menu-icon" src="../images/menu-karakter.png" alt="menu contact" width="20px"><a>Mijn levenslessen</a></li>
               </div>
               <section id="submenu-karakter"></section>
               <div class="mens-menu">
-                  <li onclick="klikdagelijks()"><img class="menu-icon" src="../images/menu-dagelijks-leven.png" alt="menu contact" width="20px"><a>Mijn dagelijks leven</a></li>
+                  <li onclick="klikdagelijks(this)"><img class="menu-icon" src="../images/menu-dagelijks-leven.png" alt="menu contact" width="20px"><a>Mijn dagelijks leven</a></li>
                 </div>
               <div id="empty-menu"></div>
 
@@ -142,10 +153,10 @@
                 <p>Favorieten</p>
               </div>
               <div class="favo-menu">
-                <li onclick="klikFavCoaches()"><img class="menu-icon" src="../images/menu-mijncoaches.png" alt="menu contact" width="20px"><a>Mijn Coaches</a></li>
+                <li onclick="klikFavCoaches(this)"><img class="menu-icon" src="../images/menu-mijncoaches.png" alt="menu contact" width="20px"><a>Mijn Coaches</a></li>
               </div>
               <div class="favo-menu">
-                <li onclick="klikFavInspiratie()"><img class="menu-icon" src="../images/menu-inspiratie.png" alt="menu contact" width="20px"><a>Mijn inspiratie</a></li>
+                <li onclick="klikFavInspiratie(this)"><img class="menu-icon" src="../images/menu-inspiratie.png" alt="menu contact" width="20px"><a>Mijn inspiratie</a></li>
               </div>
               <div class="favo-menu">
                 <li><img class="menu-icon" src="../images/menu-evenementen.png" alt="menu contact" width="20px"><a>Mijn evenementen</a></li>
@@ -157,7 +168,7 @@
               <div class="descriptie">
                 <p>Tools</p>
               </div>
-              <div  onclick="artikel()"class="favo-menu">
+              <div  onclick="artikel(this)"class="favo-menu">
                 <li><img class="menu-icon" src="../images/menu-artikel.png" alt="menu contact" width="20px"><a>Schrijf een artikel </a></li>
               </div>
               <div class="favo-menu">
@@ -323,6 +334,7 @@
                         <!-- Dagelijks leven -->
                   <section id="dagelijks">
                     <h1>Mijn dagelijks leven</h1>
+                    <h2>Under construction</h2>
                   </section>
                     </main>
                   </div>    

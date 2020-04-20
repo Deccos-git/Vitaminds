@@ -90,8 +90,6 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
                 const data = vraag.dataset.vraag
                 const ID2 = vraag.dataset.id
 
-                console.log(ID2)
-
                vraag.addEventListener("click", () => {
                    window.open("../Open/" +ID2 + data + ".html", "_self")
                     })
@@ -557,6 +555,7 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
             })
             
             bedankt.style.display = "block"
+
         });
 
         // Toevoegen aan levensles verwerken in database

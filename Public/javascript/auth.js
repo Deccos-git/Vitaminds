@@ -33,7 +33,17 @@ auth.onAuthStateChanged(User =>{
         authPhoto.style.backgroundImage = `url('${profilePic}')`
         authPhoto.setAttribute("id", "profile-photo")
     const closeDiv = document.createElement("div")
-        closeDiv.setAttribute("id", "close-div") 
+        closeDiv.setAttribute("id", "close-div")
+        closeDiv.setAttribute("onclick", "close(this)") 
+
+        // Open & close
+        closeDiv.addEventListener("click", () => {
+          authDiv.style.display= "none"
+        })
+
+        profilePicture.addEventListener("click", () => {
+          authDiv.style.display= "flex"
+        })
 
         authPhoto.addEventListener("click", () => {
             window.open("../Vitaminders/" + [naam] + ".html", "_self");
@@ -42,10 +52,6 @@ auth.onAuthStateChanged(User =>{
     const logout = document.createElement("h5")
       logout.setAttribute("id", "button-logout")
       logout.setAttribute("onclick", "logOut()")
-
-      profilePicture.addEventListener("click", () => {
-        authDiv.style.visibility = "visible"
-      })
       
     logout.innerHTML = "Log uit"
     authName.innerHTML = `<a href = "../Vitaminders/${naam}">${naam}</a>`
@@ -66,17 +72,8 @@ auth.onAuthStateChanged(User =>{
         console.log("Error")
       } else {
 
-      
-      authDOM.appendChild(notifications)
-                profilePicture.appendChild(authDiv)
-                authDiv.appendChild(closeDiv)
-                authDiv.appendChild(authPhoto)
-                authDiv.appendChild(authName)
-                authDiv.appendChild(authProfile)
-                authProfile.appendChild(notificationsDiv)
-
                 // Reacties
-      db.collectionGroup("Reacties").where("Vraagsteller", "==", naam).where("New", "==", "Yes").get().then(querySnapshot => {
+      db.collectionGroup("Reactions").where("Vraagsteller", "==", naam).where("New", "==", "Yes").get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
           const docLengt = [doc]          
@@ -154,35 +151,36 @@ auth.onAuthStateChanged(User =>{
                     notificationsDiv.appendChild(notificationsTitle)
                     notificationsTitle.appendChild(notificationsPDiv)
                     notificationsPDiv.appendChild(notificationsP)
-                    authDiv.appendChild(logout)
                     
                     })
               }).catch((err) => {
                 console.log(err)
               })
 
-      profilePicture.appendChild(authDiv)
-      profilePicture.appendChild(notifications)
-      authDiv.appendChild(authPhoto)
-      authDiv.appendChild(authName)
-      authDiv.appendChild(authProfile)
-      authDiv.appendChild(logout)
+              profilePicture.appendChild(notifications)
+              authDOM.appendChild(authDiv)
+             authDiv.appendChild(closeDiv)
+             authDiv.appendChild(authPhoto)
+             authDiv.appendChild(authName)
+             authDiv.appendChild(authProfile)
+             authProfile.appendChild(notificationsDiv)
+             authDiv.appendChild(logout)
 
       }
     }
-    }).then(() => {
-     const closeDiv =document.getElementById("close-div")
-     const authDiv = document.getElementById("menu-auth-div")
-
-      closeDiv.addEventListener("click", () => {
-        authDiv.style.visibility = "hidden",
-        console.log("jep")
-      })
     })
   } else {
     console.log("Offline")
   }
 })
+
+// Close authmenu
+
+function close(elem){
+  elem.parentElement.style.display = "none"
+
+  console.log("closed")
+}
 
 
 //Inlog
@@ -251,6 +249,9 @@ function registerCoach(){
   const email = document.getElementById("register-email").value;
   const password = document.getElementById("register-wachtwoord").value;
   const naam = document.getElementById("register-gebruikersnaam").value;
+  const method = document.getElementById("register-method").value;
+  const city = document.getElementById("register-city").value;
+  const why = document.getElementById("register-why").value;
 
   firebase.auth().createUserWithEmailAndPassword(email, password)
   
@@ -259,7 +260,11 @@ function registerCoach(){
       Gebruikersnaam: naam,
       Usertype: "Coach",
       Inspiratiepunten: 1,
-      Email: email
+      Email: email,
+      Coachingstyle: method,
+      City: city,
+      Why: why
+
     })
   }).then(() => {
     window.open("../inlog.html")

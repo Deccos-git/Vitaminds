@@ -21,7 +21,11 @@ const podcast = document.getElementById("podcast")
  const mijnCoaching = document.getElementById("mijn-coaching-div");
  const mijnBijdragen = document.getElementById("mijn-bijdragen-div");
 
- function contactCH(){
+ function contactCH(elem){
+
+        // elem.style.backgroundColor = "#49beb7"
+        // elem.style.color = "#fff"
+
          coachContact.style.display = "flex"
         landing.style.display = "none"
          mijnCoaching.style.display = "none"
@@ -238,13 +242,53 @@ auth.onAuthStateChanged(User =>{
                 const notifications = document.getElementById("profile-notifications")
              
                 if(naam != coachNaam){
-                    editProfile.style.display = "none"
                     activeDiv.style.display = "none"
                     toolsMenu.style.display = "none"
                     notifications.style.display = "none"
                         }
             })
     }
+});
+
+// Total inspirationpoints in Digimind
+
+const inspirationPointsArray = [];
+
+db.collectionGroup("Inspiration").where("User", "==", naam).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+                const docLengt = [doc]          
+                objectLength = Object.keys(docLengt).length
+
+                inspirationPointsArray.push(objectLength)
+
+                
+                
+        })
+        }).then(() => {
+                const DOMprofile = document.getElementById("bijdragepunten");
+                if(DOMprofile == null){
+                        console.log("Error")
+                } else {
+                DOMprofile.innerHTML = inspirationPointsArray.length
+
+                 // Trophies 
+                 const trophies = document.getElementById("trophies-digimind").getElementsByTagName("img")
+
+                 function trophiesRewarded(a,b){
+                 if(inspirationPointsArray.length >= b){
+                         trophies[a].src = `../images/Trophies/${b}.png`
+                         }  
+                 }
+
+                 trophiesRewarded(0,1)
+                 trophiesRewarded(1,5)
+                 trophiesRewarded(2,10)
+                 trophiesRewarded(3,20)
+                 trophiesRewarded(4,40)
+                 trophiesRewarded(5,80)
+                 trophiesRewarded(6,160)
+                }
 });
 
 // Profile visits
@@ -296,29 +340,6 @@ auth.onAuthStateChanged(User =>{
         }
 });
 
-// Total inspirationpoints in Digimind
-
-const inspirationPointsArray = [];
-
-db.collectionGroup("Inspiration").where("User", "==", naam).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-                const docLengt = [doc]          
-                objectLength = Object.keys(docLengt).length
-
-                inspirationPointsArray.push(objectLength)
-
-                
-        })
-        }).then(() => {
-                const DOMprofile = document.getElementById("bijdragepunten");
-                if(DOMprofile == null){
-                        console.log("Error")
-                } else {
-                DOMprofile.innerHTML = inspirationPointsArray.length
-                }
-});
-
 // Notifcations-page
 
         // Gamefication-notifications
@@ -330,6 +351,7 @@ db.collectionGroup("Inspiration").where("User", "==", naam).get().then(querySnap
                   userRef.get().then(function(doc) {
                     if (doc.exists) {
                      const auth = doc.data().Gebruikersnaam;
+                     const email = doc.data().Email
 
         db.collectionGroup("Inspiration").where("User", "==", auth).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
@@ -359,6 +381,25 @@ db.collectionGroup("Inspiration").where("User", "==", naam).get().then(querySnap
                                         DOM.appendChild(innerDiv)
                                         innerDiv.appendChild(titel)
                                         innerDiv.appendChild(totalPoints)
+
+                                          
+                                        // Trophies 
+                                        const trophies = document.getElementById("trophies").getElementsByTagName("img")
+
+                                        function trophiesRewarded(a,b){
+                                        if(lengthArray.length >= b){
+                                                trophies[a].src = `images/Trophies/${b}.png`
+                                                }  
+                                        }
+
+                                        trophiesRewarded(0,1)
+                                        trophiesRewarded(1,5)
+                                        trophiesRewarded(2,10)
+                                        trophiesRewarded(3,20)
+                                        trophiesRewarded(4,40)
+                                        trophiesRewarded(5,80)
+                                        trophiesRewarded(6,160)
+                                       
                                         }
                                 }) 
                          }
@@ -645,12 +686,12 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                         websiteDiv.setAttribute("class", "item-div")
                 const websiteDOM = document.createElement("p")
                 const websiteData = document.createElement("h6")
-                const editDiv = document.createElement("div")
-                editDiv.setAttribute("class", "edit-div")
-            const edit = document.createElement("div")
-                edit.setAttribute("class", "edit-levensvraag")
-                edit.setAttribute("onclick", "edit(this)")
-                edit.setAttribute("data-website", website)
+                //Edit coach info
+                const editDivContact = document.createElement("div")
+                        editDivContact.setAttribute("class", "edit-div")
+                const editContact = document.createElement("div")
+                        editContact.setAttribute("class", "edit-levensvraag")
+                        editContact.setAttribute("onclick", "editContact(this)")
 
                 // About info
                 const DOMshort = document.getElementById("short-inner-div")
@@ -666,6 +707,12 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                         costsDiv.setAttribute("class", "item-div")
                 const costsDOM = document.createElement("p")
                 const costsData = document.createElement("h6")
+                //Edit coach info
+                const editDivShort = document.createElement("div")
+                        editDivShort.setAttribute("class", "edit-div")
+                const editShort = document.createElement("div")
+                        editShort.setAttribute("class", "edit-levensvraag")
+                        editShort.setAttribute("onclick", "editShort(this)")
 
                 const DOMcoach = document.getElementById("coach-inner-div")
                 const styleDiv = document.createElement("div")
@@ -680,6 +727,12 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                         whyDiv.setAttribute("class", "item-div")
                 const whyDOM = document.createElement("p")
                 const whyData = document.createElement("h6")
+                //Edit coach info
+                const editDivCoach = document.createElement("div")
+                        editDivCoach.setAttribute("class", "edit-div")
+                const editCoach = document.createElement("div")
+                        editCoach.setAttribute("class", "edit-levensvraag")
+                        editCoach.setAttribute("onclick", "editCoach(this)")
 
                 const DOMExperience = document.getElementById("experience-inner-div")
                 const yearsDiv = document.createElement("div")
@@ -694,7 +747,29 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                         educationDiv.setAttribute("class", "item-div")
                 const educationDOM = document.createElement("p")
                 const educationData = document.createElement("h6")
+                //Edit coach info
+                const editDivExperience = document.createElement("div")
+                        editDivExperience.setAttribute("class", "edit-div")
+                const editExperience = document.createElement("div")
+                        editExperience.setAttribute("class", "edit-levensvraag")
+                        editExperience.setAttribute("onclick", "editExperience(this)")
 
+                function mouse(a,b){
+                        a.addEventListener("mouseover", () => {
+                                b.style.display = "block"
+                        })
+        
+                        a.addEventListener("mouseout", () => {
+                        b.style.display = "none"
+                        })
+
+                        b.innerHTML = '<img class="edit-icon" src="../Images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
+                }
+
+                mouse(DOM, editContact)
+                mouse(DOMshort, editShort)
+                mouse(DOMcoach, editCoach)
+                mouse(DOMExperience, editExperience)
 
                 // Contact
                 onlineDOM.innerHTML = "Online"
@@ -710,7 +785,7 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 }
         } 
         dataUndefined(phoneNumber, phoneDiv, phoneData, phoneNumber, phoneDOM, "Bel")
-        dataUndefined(website, websiteDiv, websiteData, `<a href="${website}">${website}</a>`, websiteDOM, "Website"  )
+        dataUndefined(website, websiteDiv, websiteData, `<a href="https://${website}">${website}</a>`, websiteDOM, "Website"  )
 
                 // About info
         dataUndefined(city, cityDiv, cityData, city, cityDOM, `<img src="../images/locatie-pin.png" alt="locatie pin" width="25px">`)
@@ -724,6 +799,8 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
         dataUndefined(education, educationDiv, educationData, education, educationDOM, "Opleidingen & certificaten")
 
                 //Contact
+                DOM.appendChild(editDivContact)
+                editDivContact.appendChild(editContact)
                 DOM.appendChild(onlineDiv)
                 onlineDiv.appendChild(onlineDOM)
                 onlineDiv.appendChild(onlineData)
@@ -735,6 +812,8 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 websiteDiv.appendChild(websiteData)
 
                 // About info
+                DOMshort.appendChild(editDivShort)
+                editDivShort.appendChild(editShort)
                 DOMshort.appendChild(cityDiv)
                 cityDiv.appendChild(cityDOM)
                 cityDiv.appendChild(cityData)
@@ -745,6 +824,8 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 costsDiv.appendChild(costsDOM)
                 costsDiv.appendChild(costsData)
 
+                DOMcoach.appendChild(editDivCoach)
+                editDivCoach.appendChild(editCoach)
                 DOMcoach.appendChild(styleDiv)
                 styleDiv.appendChild(styleDOM)
                 styleDiv.appendChild(styleData)
@@ -755,6 +836,8 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 whyDiv.appendChild(whyDOM)
                 whyDiv.appendChild(whyData)
 
+                DOMExperience.appendChild(editDivExperience)
+                editDivExperience.appendChild(editExperience)
                 DOMExperience.appendChild(yearsDiv)
                 yearsDiv.appendChild(yearsDOM)
                 yearsDiv.appendChild(yearsData)
@@ -785,12 +868,24 @@ db.collection("Artikelen").where("Auteur", "==", naam).get().then(querySnapshot 
 
                 const titelH3 = document.createElement("h3")
                 const titelP = document.createElement("p")
+                const edit = document.createElement("div")
+                edit.setAttribute("class", "edit-levensvraag")
+                edit.setAttribute("onclick", "editArticle(this)")
 
                 titelH3.innerHTML = "Inspiratie"
                 titelP.innerHTML = `<img src="../images/Article-icon.png" width="30px"><a href="../Artikelen/${titel}.html"><u>${titel}</u></a>`
+                edit.innerHTML = '<img class="edit-icon" src="../Images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
 
+                innerDivInspiration.addEventListener("mouseover", () => {
+                        edit.style.display = "block"
+                })
+    
+                innerDivInspiration.addEventListener("mouseout", () => {
+                    edit.style.display = "none"
+                })
 
                 DOMcontributions.appendChild(innerDivInspiration)
+                innerDivInspiration.appendChild(edit)
                 innerDivInspiration.appendChild(titelH3)
                 innerDivInspiration.appendChild(titelP)
         })
@@ -800,15 +895,35 @@ db.collectionGroup("Reactions").where("Gebruikersnaam", "==", naam).get().then(q
         querySnapshot.forEach(doc => {
                 const reactie = doc.data().Reactie
                 const levensvraag = doc.data().Levensvraag
+                const gebruikersnaam = doc.data().Gebruikersnaam
+                const vraagsteller = doc.data().Vraagsteller
 
                 const titelH3 = document.createElement("h3")
                 const titelP = document.createElement("p")
+                const edit = document.createElement("div")
+                edit.setAttribute("class", "edit-levensvraag")
+                edit.setAttribute("onclick", "editReactions(this)")
+                edit.setAttribute("data-gebruikersnaam", gebruikersnaam)
+                edit.setAttribute("data-vraagsteller", vraagsteller)
 
                 titelH3.innerHTML = "Reacties op levenvragen"
-                titelP.innerHTML = `<img src="../images/Article-icon.png" width="30px"><a href="../Open/${levensvraag}.html"><u>${reactie}</u></a>`
+                titelP.innerHTML = reactie
+                edit.innerHTML = '<img class="edit-icon" src="../Images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
 
+                titelP.addEventListener("click", ()=> {
+                        window.open("../Open/" + levensvraag + ".html", "_self");
+                })
+
+                innerDivReactions.addEventListener("mouseover", () => {
+                        edit.style.display = "block"
+                })
+    
+                innerDivReactions.addEventListener("mouseout", () => {
+                    edit.style.display = "none"
+                })
 
                 DOMcontributions.appendChild(innerDivReactions)
+                innerDivReactions.appendChild(edit)
                 innerDivReactions.appendChild(titelH3)
                 innerDivReactions.appendChild(titelP)
         })
@@ -971,7 +1086,7 @@ function startTocht(){
                 Levensvraag: idClean + inputDoel,
                 Levenslessen: [],
                 Gebruikersnaam: Gnaam,
-                Openbaar: "Ja",
+                Openbaar: "Nee",
                 Omschrijving: omschrijving,
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                 

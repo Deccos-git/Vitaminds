@@ -77,19 +77,6 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
 }).then(() => {
     
 
-    function Car(make, model, year) {
-        this.make = make;
-        this.model = model;
-        this.year = year;
-      }
-      
-      const car1 = new Car('Eagle', 'Talon TSi', 1993);
-      
-      console.log(car1.make);
-      // expected output: "Eagle"
-
-
-
 //Filter
 
 const dataSet = [];
@@ -99,7 +86,7 @@ const filters = {
     Doelgroep: []
     }
 
-let filterValues = []
+ filterValues = []
 
 const alleLocatieG = [];
 const alleDoelgroepG = [];
@@ -126,6 +113,8 @@ const alleDoelgroepG = [];
 
 const button = document.getElementById("filter-button")
 button.addEventListener("click", () => {
+
+     filterValues.length = 0
 
     const coachDOM = document.getElementsByClassName("nieuweD")
     const coachDOMarray = Array.from(coachDOM)
