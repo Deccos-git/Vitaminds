@@ -747,6 +747,7 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                         educationDiv.setAttribute("class", "item-div")
                 const educationDOM = document.createElement("p")
                 const educationData = document.createElement("h6")
+        
                 //Edit coach info
                 const editDivExperience = document.createElement("div")
                         editDivExperience.setAttribute("class", "edit-div")

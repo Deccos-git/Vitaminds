@@ -58,10 +58,38 @@
     font-size: 18px;
     color: #0c6665;
     cursor: pointer;
-
 }
 
 .button-div{
     margin: 30px 30px 30px 60px;
 }
 
+#minimale-eisen{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px 100px 100px 100px;
+    padding: 15px;
+    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 15px;
+}
+
+.check-code input{
+    width: 5px !important;
+}
+
+.check-code label{
+    font-size: 16px;
+}
+
+#coach-register-button{
+    margin-top: 10px;
+}
+
+#gedragscode{
+    display: none;
+    background-color: whitesmoke;
+    font-size: 16px;
+    padding: 10px;
+
+}

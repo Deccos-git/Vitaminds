@@ -230,7 +230,8 @@ if(button != null){
       Gebruikersnaam: gebruikersnaam,
       Usertype: "Vitaminder",
       Inspiratiepunten: 1,
-      Email: email
+      Email: email, 
+      ID: cred.user.uid
     })
   }).then(() => {
     window.open("../inlog.html")
@@ -272,6 +273,17 @@ function registerCoach(){
 })
 }
 }; registerCoach();
+
+// Gedragscode lezen
+
+function gedragscode(){
+  const code = document.getElementById("gedragscode")
+if(code.style.display = "none"){
+  code.style.display = "block"
+} else {
+  code.style.display = "none"
+}
+}
 
 
 // Inlog/uitlog verbergen

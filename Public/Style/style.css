@@ -364,6 +364,16 @@ link{
   justify-content: center;
 }
 
+.button-standard{
+  background-color: #fff;
+  border: 1px #0c6665 solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 16px;
+  color: #0c6665;
+  cursor: pointer;
+}
+
 .button-algemeen {
   background-color: #0c6665;
   border: 1px #0c6665 solid;
