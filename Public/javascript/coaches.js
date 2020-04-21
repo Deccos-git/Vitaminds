@@ -18,6 +18,9 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         const omschrijving = doc.data().Why
         const profilePic = doc.data().Profielfoto
         const locatie = doc.data().City
+        const ID = doc.data().ID
+
+        const naamClean = naam.replace(ID, "")
 
             // De nieuwe HTML-elementen en classes
         const nieuweDiv = document.createElement("div");
@@ -53,7 +56,7 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
                 window.open("Vitaminders/" + [naam], "_self");
             })   
             //De coach-eigenschappen in de nieuwe HTML-elementen zetten
-        nieuweH3.innerHTML = naam;
+        nieuweH3.innerHTML = naamClean;
         stijlCH.innerHTML = stijl;  
         locatieCH.innerHTML = locatie 
         omschrijvingCH.innerHTML ='"' + omschrijving + '"'

@@ -9,7 +9,9 @@ auth.onAuthStateChanged(User =>{
     const userRef = db.collection("Vitaminders").doc(User.uid);
     userRef.get().then(function(doc) {
       if (doc.exists) {
-       const naam = doc.data().Gebruikersnaam;
+       const naamID = doc.data().Gebruikersnaam;
+       const ID = doc.data().ID
+       const naam = naamID.replace(ID, "")
         profilePic = doc.data().Profielfoto
   
     const profilePicture = document.getElementById("profile-picture")
@@ -46,7 +48,7 @@ auth.onAuthStateChanged(User =>{
         })
 
         authPhoto.addEventListener("click", () => {
-            window.open("../Vitaminders/" + [naam] + ".html", "_self");
+            window.open("../Vitaminders/" + [naamID] + ".html", "_self");
         })
  
     const logout = document.createElement("h5")
@@ -54,8 +56,8 @@ auth.onAuthStateChanged(User =>{
       logout.setAttribute("onclick", "logOut()")
       
     logout.innerHTML = "Log uit"
-    authName.innerHTML = `<a href = "../Vitaminders/${naam}">${naam}</a>`
-    authProfile.innerHTML = `<a href = "../Vitaminders/${naam}">Mijn Digimind</a>`
+    authName.innerHTML = `<a href = "../Vitaminders/${naamID}">${naam}</a>`
+    authProfile.innerHTML = `<a href = "../Vitaminders/${naamID}">Mijn Digimind</a>`
     closeDiv.style.backgroundImage = "url(../images/close-icon.png)";
 
       // Notificaties in menu
@@ -178,8 +180,6 @@ auth.onAuthStateChanged(User =>{
 
 function close(elem){
   elem.parentElement.style.display = "none"
-
-  console.log("closed")
 }
 
 
@@ -197,7 +197,7 @@ function inlogVM(){
             if (doc.exists) {
               naam = doc.data().Gebruikersnaam;
 
-              window.open("../Vitaminders/" + [naam] + ".html", "_self");
+              window.open("../Vitaminders/" + naam + ".html", "_self");
           }
         })
       }
@@ -227,7 +227,7 @@ if(button != null){
   firebase.auth().createUserWithEmailAndPassword(email, password)
   .then(cred =>{
     db.collection('Vitaminders').doc(cred.user.uid).set({
-      Gebruikersnaam: gebruikersnaam,
+      Gebruikersnaam: cred.user.uid + gebruikersnaam,
       Usertype: "Vitaminder",
       Inspiratiepunten: 1,
       Email: email, 
@@ -258,13 +258,14 @@ function registerCoach(){
   
   .then(cred =>{
     db.collection("Vitaminders").doc(cred.user.uid).set({
-      Gebruikersnaam: naam,
+      Gebruikersnaam: cred.user.uid + naam,
       Usertype: "Coach",
       Inspiratiepunten: 1,
       Email: email,
       Coachingstyle: method,
       City: city,
-      Why: why
+      Why: why,
+      ID: cred.user.uid
 
     })
   }).then(() => {

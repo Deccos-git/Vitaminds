@@ -686,6 +686,11 @@
     width: 300px;
 }
 
+.meta-contributions{
+    font-size: 14px;
+    color: #122b46;
+    cursor: pointer;
+}
 /* Levenslessen */
 
 #levenslessen-header{

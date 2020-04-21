@@ -1,77 +1,4 @@
 
-// Filter overzichtspagina
-
-function filterMenu(){
-
-    const DOM = document.getElementById("inspiratieDK");
-
-    const cat = document.getElementById("inspiratiemenu");
-    const catOpties = cat.options;
-    const catSelect = catOpties[catOpties.selectedIndex].value;
-
-    db.collection("Artikelen").where("Categorie", "==", catSelect).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-             // De artikel eigenschappen
-        const titelTekst = doc.data().Titel;
-        const bodyTekst = doc.data().Body;
-        const auteurTekst = doc.data().Auteur;
-
-        // De nieuwe HTML-elementen en classes
-        const mainDiv = document.createElement("div");
-            mainDiv.setAttribute("class", "mainTekst")
-        const headerTekst = document.createElement("div");
-            headerTekst.setAttribute("class", "headerTekst")
-        const nieuweTitel = document.createElement("h4");
-            nieuweTitel.setAttribute("class", "titelTekst");
-        const nieuweDivTekst = document.createElement("div");
-            nieuweDivTekst.setAttribute("class", "divTekst");
-        const nieuweBody = document.createElement("p");
-            nieuweBody.setAttribute("class", "bodyTekst");
-        const nieuweAuteur = document.createElement("p");
-            nieuweAuteur.setAttribute("class", "auteurTekst");
-            nieuweAuteur.setAttribute("data-link", auteurTekst)
-        const linkDiv = document.createElement("div");
-            linkDiv.setAttribute("class", "divTekst");
-        const linkTekst = document.createElement("button");
-            linkTekst.setAttribute("class", "button-algemeen");
-            nieuweAuteur.setAttribute("data-link", titelTekst)
-
-            linkTekst.addEventListener('click', (e) => {
-                window.open("../Artikelen/" + [titelTekst] + ".html", "_self");
-            })
-
-            nieuweAuteur.addEventListener('click', (e) => {
-                window.open("../Vitaminders/" + [auteurTekst] + ".html", "_self");
-            })
-
-        // De artikel eigenschappen in de nieuwe HTML elementen zetten
-        nieuweTitel.innerHTML = titelTekst;
-        nieuweBody.innerHTML = bodyTekst;
-        nieuweAuteur.innerHTML = "Geschreven" + " " + "door" + " " + auteurTekst 
-        linkTekst.innerHTML = "Lees meer"
-
-         //Oude div verwijderen
-         const oudeDiv = document.querySelectorAll(".mainTekst")
-         oudeDiv.forEach(D =>{
-             D.style.display = "none"
-         })
-
-        // De nieuwe HTML elementen vastzetten aan de DOM
-       DOM.appendChild(mainDiv);
-        mainDiv.appendChild(headerTekst);
-        mainDiv.appendChild(nieuweAuteur);
-        mainDiv.appendChild(nieuweTitel);
-        mainDiv.appendChild(nieuweDivTekst);
-       nieuweDivTekst.appendChild(nieuweBody);
-       mainDiv.appendChild(linkTekst);
-})
-}).catch(function(error) {
-    console.log("Kan de artikelen niet inladen: ", error);
-        })
-}
-
-
 
 // Alle artikel inladen in overzicht
 db.collection("Artikelen").get().then(function(querySnapshot) {
@@ -88,8 +15,16 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
         const auteurTekst = doc.data().Auteur;
         const categorieTekst = doc.data().Categorien;
         const ID = doc.data().ID
+
+        console.log(ID)
         const pageTitle = doc.data().Titel
         const titelTekst  = pageTitle.replace(ID, "")
+
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", auteurTekst).get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc1) {
+
+                const IDauteur = doc1.data().ID
+                const auteur = auteurTekst.replace(IDauteur, "")
 
         categorieTekst.forEach(cat => {
 
@@ -120,7 +55,7 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
             })
 
             nieuweAuteur.addEventListener('click', (e) => {
-                window.open("../Vitaminders/" + [auteurTekst] + ".html", "_self");
+                window.open("../Vitaminders/" + auteurTekst + ".html", "_self");
             })
 
             categorie.addEventListener('click', (e) => {
@@ -133,8 +68,6 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
             querySnapshot.forEach(doc => {
                 const profilePic = doc.data().Profielfoto
                 const gebruikersnaam = doc.data().Gebruikersnaam
-
-                console.log(profilePic)
 
                 const profilePicture = document.createElement("div")
                     profilePicture.setAttribute("class", "openup-profile-pic")
@@ -149,7 +82,7 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
         categorie.innerHTML = cat;
         nieuweTitel.innerHTML = titelTekst;
         nieuweBody.innerHTML = bodyTekst;
-        nieuweAuteur.innerHTML = `<u> ${auteurTekst} </u>`;
+        nieuweAuteur.innerHTML = `<u> ${auteur} </u>`;
         linkTekst.innerHTML = "Lees meer";
 
         // De nieuwe HTML elementen vastzetten aan de DOM
@@ -162,11 +95,13 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
         nieuweDivTekst.appendChild(nieuweTitel);
        nieuweDivTekst.appendChild(nieuweBody);
        mainDiv.appendChild(linkTekst);
-            })                
+                            })                
+                        })
+                    })
+                })
+            })
         })
-    })
-})
-}).catch(function(error) {
+    }).catch(function(error) {
     console.log("Kan de artikelen niet inladen");
 }).then(() => {
 
@@ -313,7 +248,13 @@ titel3 = titel2.replace('%20',' ')
 titel4 = titel3.replace('%20',' ')
 titel5 = titel4.replace('%20',' ')
 titel6 = titel4.replace('%20',' ')
-titel = titel6.replace('%20',' ')
+titel7 = titel6.replace('%20',' ')
+titel8 = titel7.replace('%20',' ')
+titel9 = titel8.replace('%20',' ')
+titel10 = titel9.replace('%20',' ')
+titel = titel10.replace('%20',' ')
+
+console.log(titel)
 
 const auteur = document.getElementById('auteur');
 const thema = document.getElementById('thema');
@@ -330,6 +271,12 @@ db.collection('Artikelen').where('Titel', '==', titel )
     const categorie = doc.data().Categorien
     const ID = doc.data().ID
 
+    db.collection("Vitaminders").where("Gebruikersnaam", "==", auteurMeta).get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc1) {
+
+            const IDauthor = doc1.data().ID
+            const auteurClean = auteurMeta.replace(IDauthor, "")
+
     categorie.forEach(cat =>{
     
             // Page title and meta 
@@ -337,7 +284,7 @@ db.collection('Artikelen').where('Titel', '==', titel )
  
         let title = document.title
 
-        title = titel + "- Geschreven door " + auteurMeta
+        title = titel + "- Geschreven door " + auteurClean
 
         const metaDescription = document.createElement("meta")
             metaDescription.setAttribute("name", "description")
@@ -351,7 +298,7 @@ db.collection('Artikelen').where('Titel', '==', titel )
 
         // Verder met detail pagina inladen
 
-        auteur.innerHTML = "Geschreven door " + doc.data().Auteur
+        auteur.innerHTML = "Geschreven door " + auteurClean
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         datum.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
 
@@ -374,13 +321,18 @@ db.collection('Artikelen').where('Titel', '==', titel )
                 const userRef = db.collection("Vitaminders").doc(User.uid);
                 userRef.get().then(function(doc1) {
                 if (doc1.exists) {
-                naam = doc1.data().Gebruikersnaam;
+                const nameID = doc1.data().Gebruikersnaam;
+                const IDname = doc1.data().ID
 
-                cata.innerHTML ="Heeft " + doc.data().Auteur +" je geinspireerd "
-                 + "over " + " " + cat + "," + " " + naam +"?";
+                const name = nameID.replace(IDname, "")
 
-                    }
-                 })
+                cata.innerHTML ="Heeft " + auteurClean +" je geinspireerd "
+                 + "over " + " " + cat + "," + " " + name +"?";
+
+                            }
+                        })
+                    })
+                })
             })
         })
     })

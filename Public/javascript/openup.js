@@ -8,7 +8,13 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
         const levensvraagID = doc.data().Levensvraag
         const levensvraag = levensvraagID.replace(ID, "")
 
+        //Cleaning up ID
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", gebruikersnaam).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                userID = doc.data().ID
 
+               const gebruikersnaamClean = gebruikersnaam.replace(userID, "")
+          
         //Stop loader
         const loader = document.getElementById("loader")
         if(loader == null){
@@ -42,7 +48,7 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
 
         vraag.innerHTML = "Levensvraag"
         vraag.innerHTML = levensvraag
-        naam.innerHTML = gebruikersnaam
+        naam.innerHTML = gebruikersnaamClean
         omschrijvingP.innerHTML = omschrijving
         leesMeer.innerHTML = "Bekijk"
 
@@ -97,6 +103,8 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
             })
         }
     })
+    })
+    })
 });
 
  
@@ -124,6 +132,13 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
         const levensvraagID = doc.data().Levensvraag
         const levensvraag = levensvraagID.replace(ID, "")
 
+        //Cleaning up ID
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", gebruikersnaam).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                userID = doc.data().ID
+
+               const gebruikersnaamClean = gebruikersnaam.replace(userID, "")
+
         const DOM = document.getElementById("openup-overview") 
 
         const innerDiv = document.createElement("div")
@@ -145,7 +160,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
 
         vraag.innerHTML = "Levensvraag"
         vraag.innerHTML = levensvraag
-        naam.innerHTML = gebruikersnaam
+        naam.innerHTML = gebruikersnaamClean
         omschrijvingP.innerHTML = omschrijving
 
         naam.addEventListener("click", () => {
@@ -185,7 +200,8 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
 
         db.collectionGroup("Levenslessen").where("Levensles", "==", les).get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
-                const inspirator = doc.data().Auteur
+                const inspiratorID = doc.data().Auteur
+                const inspirator = inspiratorID.replace(userID, "")
                 const titel = doc.data().Titel
                 const type = doc.data().Type
 
@@ -207,9 +223,9 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                 })
 
                 db.collection('Artikelen').where("Titel", "==", titel).get().then(querySnapshot => {
-                    querySnapshot.forEach(doc => {
+                    querySnapshot.forEach(doc1 => {
 
-                        const ID = doc.data().ID
+                        const ID = doc1.data().ID
                         const titelClean = titel.replace(ID, "")
                 
                 titelP.innerHTML = "Geïnspireerd in " + type + " " + `<u>${titelClean}</u>`
@@ -239,7 +255,8 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                 bronDiv.appendChild(lessen)
                 lessen.appendChild(inspiratorP)
                 lessen.appendChild(titelP)
-
+                                })
+                            })
                         })
                     })
                 })
@@ -274,6 +291,9 @@ auth.onAuthStateChanged(User =>{
             docRef.get().then(function(doc){
             
             const naam = doc.data().Gebruikersnaam;
+            const coachID = doc.data().ID
+
+            const naamClean = naam.replace(coachID, "")
 
 const DOMinput = document.createElement("div")
             DOMinput.setAttribute("id", "reactie-innerDiv")
@@ -292,7 +312,7 @@ const buttonReact = document.createElement("button")
         buttonReact.setAttribute("id", "button-reactie-openup")
 
 
-inputH3.innerHTML = "Geef je professionele mening, " + naam
+inputH3.innerHTML = "Geef je professionele mening, " + naamClean
 inspiratiep.innerHTML = "---- voeg eventueel passende inspiratie toe ----"
 buttonReact.innerHTML = "Deel"
 
@@ -339,9 +359,12 @@ const inspiratieSelect = inspiratieDiv.options
             const userRef = db.collection("Vitaminders").doc(User.uid);
               userRef.get().then(function(doc) {
                 if (doc.exists) {
-                  Gnaam = doc.data().Gebruikersnaam;
+                  const Gnaam = doc.data().Gebruikersnaam;
+                  const authID = doc.data().ID
+                  const GnaamClean = Gnaam.replace(authID, "")
 
     const inputReactie = document.getElementById("input-textarea").value 
+
     const levensvraag = document.getElementsByClassName("vraag-div-detail")
                     const levensvraagArray = Array.from(levensvraag)
                     levensvraagArray.forEach(vraag => {
@@ -352,7 +375,7 @@ const inspiratieSelect = inspiratieDiv.options
                         vraagstellerArray.forEach(steller => {
                             const vrager = steller.dataset.vraagsteller
 
-            db.collectionGroup("Levensvragen").where("Levensvraag", "==", titelQuestionmark).get().then(querySnapshot => {
+            db.collectionGroup("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     const ID = doc.data().ID
 
@@ -360,16 +383,20 @@ const inspiratieSelect = inspiratieDiv.options
             db.collection("Vitaminders").where("Gebruikersnaam", "==", vrager).get().then(querySnapshot => {
                 querySnapshot.forEach(doc2 => {
                     const email = doc2.data().Email
+                    const userID = doc2.data().ID
+                    const vragerClean = vrager.replace(userID, "")
+
+                    console.log(doc2.id)
 
             const levensvraagMail = levensvraag.replace(ID, "")
             
             db.collection("Mail").doc().set({
                     to: [email],
             message: {
-            subject: `${vrager}, je hebt een nieuwe reactie op je levensvraag ${levensvraagMail} op Vitaminds! `,
-            html: `Hallo ${vrager}, </br></br>
-                    Je hebt een reactie ontvangen van coach ${Gnaam} op je levensvraag "${levensvraagMail}"</br>
-                    Bekijk je levensvraag <a href="https://vitaminds.nu/Open/${levensvraag}.html"><u>hier.</u></a></br></br>
+            subject: `${vragerClean}, je hebt een nieuwe reactie op je levensvraag ${levensvraagMail} op Vitaminds! `,
+            html: `Hallo ${vragerClean}, </br></br>
+                    Je hebt een reactie ontvangen van coach ${GnaamClean} op je levensvraag "${levensvraagMail}"</br>
+                    Bekijk de reactie <a href="https://vitaminds.nu/Open/${levensvraag}.html"><u>hier.</u></a></br></br>
                     Vriendelijke groet, </br></br>
                     Het Vitaminds Team </br></br>
                     <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
@@ -380,19 +407,20 @@ const inspiratieSelect = inspiratieDiv.options
                     console.log(err)
             })
 
-            db.collection("Artikelen").where("Titel", "==", inspiratieOption).get().then(querySnapshot => {
+            db.collection("Artikelen").where("TitelNoID", "==", inspiratieOption).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
-                    const ID = doc.data().ID
+                    const IDArtikel = doc.data().ID
 
-            
+            console.log(doc2.id)
+            console.log(IDArtikel)
           
-   db.collection('Vitaminders').doc(doc2.id).collection("Reactions").doc().set({
+   db.collection("Vitaminders").doc(doc2.id).collection("Reactions").doc().set({
             Gebruikersnaam: Gnaam,
             Reactie: inputReactie,
             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
             Levensvraag: ID + levensvraag,
             Vraagsteller: vrager,
-            InspiratieTitel: ID + inspiratieOption,
+            InspiratieTitel: IDArtikel + inspiratieOption,
             Inspiratiepunten: 1,
             New: "Yes",
             Domain: "Levensvraag"
@@ -433,6 +461,8 @@ auth.onAuthStateChanged(User =>{
        userRef.get()
         .then(doc => {
                 const naam = doc.data().Gebruikersnaam
+                const naamID = doc.data().ID
+                const naamClean = naam.replace(naamID, "")
 
 const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel).orderBy("Inspiratiepunten", "desc")
     docRef.get().then(querySnapshot => {

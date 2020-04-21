@@ -185,7 +185,18 @@ function artikel(){
 const naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
 const naam1 = naamhtml.replace('.html', '')
 const naam2 = naam1.replace('%20',' ')
-const naam = naam2.replace('%20',' ')
+const naam3 = naam2.replace('%20',' ')
+const naam4 = naam3.replace('%20',' ')
+const naam5 = naam4.replace('%20',' ')
+const naam6 = naam5.replace('%20',' ')
+const naam7 = naam6.replace('%20',' ')
+const naam8 = naam7.replace('%20',' ')
+const naam9 = naam8.replace('%20',' ')
+const naam10 = naam9.replace('%20',' ')
+const naam11 = naam10.replace('%20',' ')
+const naam = naam11.replace('%20',' ')
+
+console.log(naam)
   
 
 //User-role
@@ -606,7 +617,7 @@ function levenslessen(){
         titelDiv.appendChild(titelP)
         titelDiv.appendChild(titelEmpty)
 
-        const dbRef = db.collectionGroup("Levenslessen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
+       db.collectionGroup("Levenslessen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
                 querySnapshot.forEach(doc =>{
                         const levenslessen = doc.data().Levensles
         
@@ -636,13 +647,18 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
     .get()
     .then(function(querySnapshot) {
     querySnapshot.forEach(function(doc) {
+
+        const userID = doc.data().Gebruikersnaam
+        const IDuser = doc.data().ID
+        const user = userID.replace(IDuser, "")
+
         const username = document.getElementsByClassName('welkom')[0];
         const usertype = document.getElementsByClassName('usertype')[0];
         const profielfoto = document.getElementById("profielfoto");
         
         profielfoto.style.backgroundImage =`url('${doc.data().Profielfoto}')` 
 
-        username.innerHTML = doc.data().Gebruikersnaam;
+        username.innerHTML = user
         usertype.innerHTML = doc.data().Usertype;
     })
     })
@@ -866,6 +882,9 @@ const innerDivReactions = document.createElement("div")
 db.collection("Artikelen").where("Auteur", "==", naam).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
                 const titel = doc.data().Titel
+                const artikelID = doc.data().ID
+
+                const titelClean = titel.replace(artikelID, "")
 
                 const titelH3 = document.createElement("h3")
                 const titelP = document.createElement("p")
@@ -874,7 +893,7 @@ db.collection("Artikelen").where("Auteur", "==", naam).get().then(querySnapshot 
                 edit.setAttribute("onclick", "editArticle(this)")
 
                 titelH3.innerHTML = "Inspiratie"
-                titelP.innerHTML = `<img src="../images/Article-icon.png" width="30px"><a href="../Artikelen/${titel}.html"><u>${titel}</u></a>`
+                titelP.innerHTML = `<a href="../Artikelen/${titel}.html"><u>${titelClean}</u></a>`
                 edit.innerHTML = '<img class="edit-icon" src="../Images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
 
                 innerDivInspiration.addEventListener("mouseover", () => {
@@ -899,8 +918,17 @@ db.collectionGroup("Reactions").where("Gebruikersnaam", "==", naam).get().then(q
                 const gebruikersnaam = doc.data().Gebruikersnaam
                 const vraagsteller = doc.data().Vraagsteller
 
+                db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraag).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
+
+                                const levensvraagID = doc1.data().ID
+                                const levensvraagClean = levensvraag.replace(levensvraagID, "")
+
                 const titelH3 = document.createElement("h3")
                 const titelP = document.createElement("p")
+                const sourceUl = document.createElement("ul")
+                const sourceP = document.createElement("li")
+                        sourceP.setAttribute("class", "meta-contributions")
                 const edit = document.createElement("div")
                 edit.setAttribute("class", "edit-levensvraag")
                 edit.setAttribute("onclick", "editReactions(this)")
@@ -909,6 +937,12 @@ db.collectionGroup("Reactions").where("Gebruikersnaam", "==", naam).get().then(q
 
                 titelH3.innerHTML = "Reacties op levenvragen"
                 titelP.innerHTML = reactie
+                sourceP.innerHTML = `In de levensvraag <u>${levensvraagClean}</u>`
+
+                sourceP.addEventListener("click", () => {
+                        window.open("../Open/" +levensvraag+ ".html", "_self")
+                })
+
                 edit.innerHTML = '<img class="edit-icon" src="../Images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
 
                 titelP.addEventListener("click", ()=> {
@@ -927,6 +961,11 @@ db.collectionGroup("Reactions").where("Gebruikersnaam", "==", naam).get().then(q
                 innerDivReactions.appendChild(edit)
                 innerDivReactions.appendChild(titelH3)
                 innerDivReactions.appendChild(titelP)
+                innerDivReactions.appendChild(sourceUl)
+                sourceUl.appendChild(sourceP)
+
+                        })
+                })
         })
 })
 
@@ -1000,7 +1039,13 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
             db.collectionGroup("Levenslessen").where("Levensles", "==", les).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     const inspirator = doc.data().Auteur
-                    const titel = doc.data().Titel
+                    const source = doc.data().Titel
+
+                    db.collection("Vitaminders").where("Gebruikersnaam", "==", inspirator).get()
+                        .then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
+                                const ID = doc1.data().ID
+                                const inspiratorClean = inspirator.replace(ID, "")
     
                     const bronDiv = document.createElement("div")
                         bronDiv.setAttribute("class", "bron-div")   
@@ -1011,23 +1056,33 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
                         inspiratorP.setAttribute("class", "openup-meta")
                     
                     lessen.innerHTML ='<img class="menu-icon" src="../Images/menu-karakter.png" alt="menu contact" width="20px"> ' + les
-                    inspiratorP.innerHTML = "Geinspïreerd door " + `<u>${inspirator}</u>`
+                    inspiratorP.innerHTML = "Geinspïreerd door " + `<u>${inspiratorClean}</u>`
     
                     inspiratorP.addEventListener("click", () => {
                         window.open("../Vitaminders/" + [inspirator] + ".html", "_self");
                     })
+
+                        db.collection("Artikelen").where("Titel", "==", source).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc2 => {
+
+                                        const IDsource = doc2.data().ID
+                                        const titelClean = source.replace(IDsource, "")
     
-                    titelP.innerHTML = "Geïnspireerd in " + `<u>${titel}</u>`
+                    titelP.innerHTML = "Geïnspireerd in " + `<u>${titelClean}</u>`
     
                     titelP.addEventListener("click", () => {
-                        window.open("../Artikelen/" + [titel] + ".html", "_self");
+                        window.open("../Artikelen/" + source + ".html", "_self");
                     })
                      
                     innerDiv.appendChild(bronDiv)
                     bronDiv.appendChild(lessen)
                     lessen.appendChild(inspiratorP)
                     lessen.appendChild(titelP)
-                    })
+                                                        })
+                                                })
+                                        })
+                                })
+                        })
                 })
             })
         })
@@ -1139,6 +1194,12 @@ auth.onAuthStateChanged(User =>{
                                 const time = doc1.data().Timestamp;
                                 const learn = doc1.data().Levensles;
                                 const titelLearn = doc1.data().Titel;
+
+                                db.collection("Vitaminders").where("Gebruikersnaam", "==", auteur).get()
+                                        .then(querySnapshot => {
+                                        querySnapshot.forEach(doc1 => {
+                                const ID = doc1.data().ID
+                                const auteurClean = auteur.replace(ID, "")
                                
                                 const badge = document.createElement("div");
                                         badge.setAttribute("class", "badge")
@@ -1172,13 +1233,13 @@ auth.onAuthStateChanged(User =>{
                                     edit.style.display = "none"
                                 })
 
-                        auteurP.innerHTML = "Geïnspireerd door: " + `<u>${auteur}</u>`;
+                        auteurP.innerHTML = "Geïnspireerd door: " + `<u>${auteurClean}</u>`;
 
                                 auteurP.addEventListener("click", () => {
                                         window.open("../Vitaminders/" + auteur + ".html", "_self");
                                 })
 
-                        db.collectionGroup("Levensvragen").where("Titel", "==", titelLearn).get().then(querySnapshot => {
+                        db.collection("Artikelen").where("Titel", "==", titelLearn).get().then(querySnapshot => {
                                 querySnapshot.forEach(doc => {
                                         const ID = doc.data().ID
 
@@ -1187,7 +1248,7 @@ auth.onAuthStateChanged(User =>{
                         titel.innerHTML = "In: " + `<u>${titelLearnClean}</u>`;
 
                                 titel.addEventListener("click", () => {
-                                        window.open("../Artikelen/" + titelLearnClean + ".html", "_self");
+                                        window.open("../Artikelen/" + titelLearn + ".html", "_self");
                                         })
                                 })
                         })
@@ -1203,6 +1264,8 @@ auth.onAuthStateChanged(User =>{
                         badge.appendChild(auteurP)
                         badge.appendChild(titel)
                         badge.appendChild(timeP)
+                        })
+                })
         })
 })  
 
