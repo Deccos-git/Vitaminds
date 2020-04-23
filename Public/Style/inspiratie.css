@@ -412,9 +412,10 @@
 }
 
 .bedankt-div{
-    background-color: #8e0000;
+    background-color: #0c6665;
     padding: 5px;
     display: none;
+    border-radius: 5px;
 }
 
 .bedankt-div p{

@@ -207,37 +207,6 @@ auth.onAuthStateChanged(User =>{
         }
     })
 
-// Learning verwerken in Karakter, Levensvraag en onder artikel
-
-        // Levensvragen inladen in select
-
-        const select = document.getElementById("learning-levensvraag")
-
-        auth.onAuthStateChanged(User =>{
-            if (User){
-                const docRef = db.collection("Vitaminders").doc(User.uid);
-                    docRef.get().then(function(doc){
-    
-                    const naam = doc.data().Gebruikersnaam;
-
-        db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-                const ID = doc.data().ID
-
-                const levensvraagID = doc.data().Levensvraag
-                const vraag = levensvraagID.replace(ID, "")
-
-                const options = document.createElement("option")
-               
-                options.innerHTML = vraag
-
-                select.appendChild(options)
-
-                })
-            })
-        })
-    }
-})
 
 
 // Detailpagina inladen
@@ -400,11 +369,11 @@ auth.onAuthStateChanged(User =>{
 
         db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
-                const vraag = doc.data().Levensvraag
+                const q = doc.data().LevensvraagClean
 
                 const options = document.createElement("option")
                
-                options.innerHTML = vraag
+                options.innerHTML = q
 
                 selectLevensvraag.appendChild(options)
 
@@ -428,15 +397,20 @@ auth.onAuthStateChanged(User =>{
                 const naamPost = doc.data().Gebruikersnaam;
 
                  // Learning verwerken in levensvraag 
-                const levensvraagSelect = select.options
+                const levensvraagSelect = selectLevensvraag.options
                 const levensvraagOption = levensvraagSelect[levensvraagSelect.selectedIndex].innerHTML;
 
                 const KarakterRef = db.collection("Vitaminders").doc(User.uid).collection("Levenslessen").doc()
 
+                db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", levensvraagOption).get().then(querySnapshot => {
+                    querySnapshot.forEach(doc1 => {
+                        const levensvraag = doc1.data().Levensvraag
+
                 db.collection("Vitaminders").doc(User.uid).collection("Levensvragen")
-                .where("Levensvraag", "==", levensvraagOption).get().then(querySnapshot => {
-                    querySnapshot.forEach(doc => {
-                        const id = doc.id
+                .where("Levensvraag", "==", levensvraag).get().then(querySnapshot => {
+                    querySnapshot.forEach(doc2 => {
+                        const id = doc2.id
+
 
                 const levensvraagRef = db.collection("Vitaminders").doc(User.uid).collection("Levensvragen").doc(id)
                  
@@ -462,7 +436,10 @@ auth.onAuthStateChanged(User =>{
                 location.reload();
             }) 
             })
-            })   
+            }) 
+                    
+                })
+            })  
             })
             })
         })
@@ -524,7 +501,7 @@ db.collectionGroup("Levenslessen").where("Titel", "==", titel).orderBy("Inspirer
 
                         New: "Yes",
                         User: naam,
-                        Source: `Inspiratie: ${titel}`,
+                        Source: titel,
                         Lifelesson: learn,
                         Giver: auth,
                         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -557,8 +534,18 @@ db.collectionGroup("Levenslessen").where("Titel", "==", titel).orderBy("Inspirer
             })
         })
 
+        
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", GB).get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+
+                const GBID = doc1.data().ID
+                const GBClean = GB.replace(GBID, "")
+
+                learnGB.innerHTML = `Door <u>${GBClean}</u>`;
+            })
+        })
+
     learnTitel.innerHTML ='"' + learn + '"';
-    learnGB.innerHTML = "Door " + GB;
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     learnTijd.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
     inspireer.innerHTML = "Inspirerend!"
@@ -573,7 +560,7 @@ db.collectionGroup("Levenslessen").where("Titel", "==", titel).orderBy("Inspirer
     DOM.appendChild(sectionDiv);
     sectionDiv.appendChild(learnTitel);
     learnTitel.appendChild(learnGB);
-    learnGB.appendChild(learnTijd);
+    learnTitel.appendChild(learnTijd);
     sectionDiv.appendChild(socialDiv)
     socialDiv.appendChild(pointsDiv)
     pointsDiv.appendChild(pointsP)

@@ -75,7 +75,7 @@ auth.onAuthStateChanged(User =>{
       } else {
 
                 // Reacties
-      db.collectionGroup("Reactions").where("Vraagsteller", "==", naam).where("New", "==", "Yes").get().then(querySnapshot => {
+      db.collectionGroup("Reactions").where("Vraagsteller", "==", naamID).where("New", "==", "Yes").get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
           const docLengt = [doc]          
@@ -95,13 +95,29 @@ auth.onAuthStateChanged(User =>{
                 const notificationsPDiv = document.createElement("div")
                 const notificationsP = document.createElement("p")
 
-                notificationsP.innerHTML = `<b>${coach}</b> heeft gereageerd op je ${domain} <b>${levensvraag}</b>`
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", coach)
+                .get().then(querySnapshot => {
+                  querySnapshot.forEach(doc1 => {
+
+                  const coachID = doc1.data().ID
+                  const coachClean = coach.replace(coachID, "")
+
+                  db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraag).get().then(querySnapshot => {
+                    querySnapshot.forEach(doc2 => {
+                      
+                      const vraagID = doc2.data().ID
+                      const levensvraagClean = levensvraag.replace(vraagID, "")
+
+                notificationsP.innerHTML = `<b>${coachClean}</b> heeft <i>gereageerd</i> op je ${domain} <b>${levensvraagClean}</b>`
+                      })
+                    })
+                  })
+                })
 
                 notificationsDiv.addEventListener("click", () => { 
-                  db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
+                  db.collection("Vitaminders").where("Gebruikersnaam", "==", naamID).get().then(querySnapshot =>{
                     querySnapshot.forEach(doc2 => { 
-                      console.log(doc2)
-                  db.collection("Vitaminders").doc(doc2.id).collection("Reacties").doc(doc.id).update({
+                  db.collection("Vitaminders").doc(doc2.id).collection("Reactions").doc(doc.id).update({
                     New: "No"
                   }).then(() => {
                       window.open("../notifications.html", "_self")
@@ -121,7 +137,7 @@ auth.onAuthStateChanged(User =>{
           })
 
           // Inspirationpoints
-          db.collectionGroup("Inspiration").where("User", "==", naam).where("New", "==", "Yes").get().then(querySnapshot => {
+          db.collectionGroup("Inspiration").where("User", "==", naamID).where("New", "==", "Yes").get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
     
               const docLengt = [doc]          
@@ -134,12 +150,21 @@ auth.onAuthStateChanged(User =>{
     
                     const notificationsPDiv = document.createElement("div")
                     const notificationsP = document.createElement("p")
-    
-                    notificationsP.innerHTML = `Je hebt 1 nieuw inspiratiepunt ontvangen van ${giver} `
+
+                    db.collection("Vitaminders").where("Gebruikersnaam", "==", giver)
+                    .get().then(querySnapshot => {
+                      querySnapshot.forEach(doc3 => {
+
+                    const giverID = doc3.data().ID
+                    const giverClean = giver.replace(giverID, "")
+      
+                    notificationsP.innerHTML = `Je hebt 1 nieuw <i>inspiratiepunt</i> ontvangen van ${giverClean} `
+                      })
+                    })
     
                     notificationsDiv.addEventListener("click", () => { 
                       
-                      db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
+                      db.collection("Vitaminders").where("Gebruikersnaam", "==", naamID).get().then(querySnapshot =>{
                         querySnapshot.forEach(doc2 => { 
                       db.collection("Vitaminders").doc(doc2.id).collection("Inspiration").doc(doc.id).update({
                         New: "No"
@@ -228,6 +253,7 @@ if(button != null){
   .then(cred =>{
     db.collection('Vitaminders').doc(cred.user.uid).set({
       Gebruikersnaam: cred.user.uid + gebruikersnaam,
+      GebruikersnaamClean: gebruikersnaam,
       Usertype: "Vitaminder",
       Inspiratiepunten: 1,
       Email: email, 
@@ -259,6 +285,7 @@ function registerCoach(){
   .then(cred =>{
     db.collection("Vitaminders").doc(cred.user.uid).set({
       Gebruikersnaam: cred.user.uid + naam,
+      GebruikersnaamClean: naam,
       Usertype: "Coach",
       Inspiratiepunten: 1,
       Email: email,

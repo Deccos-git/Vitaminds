@@ -378,6 +378,7 @@ const inspiratieSelect = inspiratieDiv.options
             db.collectionGroup("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     const ID = doc.data().ID
+                    const vraag = doc.data().Levensvraag
 
             // Email versturen
             db.collection("Vitaminders").where("Gebruikersnaam", "==", vrager).get().then(querySnapshot => {
@@ -385,8 +386,6 @@ const inspiratieSelect = inspiratieDiv.options
                     const email = doc2.data().Email
                     const userID = doc2.data().ID
                     const vragerClean = vrager.replace(userID, "")
-
-                    console.log(doc2.id)
 
             const levensvraagMail = levensvraag.replace(ID, "")
             
@@ -396,7 +395,7 @@ const inspiratieSelect = inspiratieDiv.options
             subject: `${vragerClean}, je hebt een nieuwe reactie op je levensvraag ${levensvraagMail} op Vitaminds! `,
             html: `Hallo ${vragerClean}, </br></br>
                     Je hebt een reactie ontvangen van coach ${GnaamClean} op je levensvraag "${levensvraagMail}"</br>
-                    Bekijk de reactie <a href="https://vitaminds.nu/Open/${levensvraag}.html"><u>hier.</u></a></br></br>
+                    Bekijk de reactie <a href="https://vitaminds.nu/Open/${vraag}.html"><u>hier.</u></a></br></br>
                     Vriendelijke groet, </br></br>
                     Het Vitaminds Team </br></br>
                     <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
@@ -462,7 +461,7 @@ auth.onAuthStateChanged(User =>{
         .then(doc => {
                 const naam = doc.data().Gebruikersnaam
                 const naamID = doc.data().ID
-                const naamClean = naam.replace(naamID, "")
+                const naamClean = naam.replace(naamID, " ")
 
 const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel).orderBy("Inspiratiepunten", "desc")
     docRef.get().then(querySnapshot => {
@@ -531,7 +530,13 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
             })
         });
 
-        coachP.innerHTML = "Geschreven door coach " + `<u>${coach}</u>`
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+
+                const coachID = doc1.data().ID
+                const coachClean = coach.replace(coachID, "")
+
+        coachP.innerHTML = "Geschreven door coach " + `<u>${coachClean}</u>`
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         timestampP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
         inspirerend.innerHTML = "Inspirerend!"
@@ -544,6 +549,9 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
 
         opgeslagen.addEventListener("click", () => {
             window.open("../Vitaminders/" + naam + ".html", "_self");
+                })
+
+            })
         })
 
         // Inspiratiepunt wegschrijven naar reactie en coach
@@ -671,6 +679,7 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
         toevoegenLevenslesDiv.appendChild(toevoegenLevenslesSelect)
         toevoegenLevenslesDiv.appendChild(toevoegenLevenslesButton)
         toevoegenLevenslesDiv.appendChild(opgeslagen)
+                       
                      })
                 })
             })

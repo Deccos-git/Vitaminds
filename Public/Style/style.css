@@ -222,7 +222,7 @@ link{
 
 #menu-auth-div{
   display: none;
-  margin: 2px 0px -110px 0px;
+  margin: 2px 0px -640px 0px;
   flex-direction: column;
   z-index: 2;
   width: 220px;
@@ -330,6 +330,7 @@ link{
 .notification-div-menu{
   padding: 10px;
   margin-top: 15px;
+  cursor: pointer;
 }
 
 .notification-div-menu h3{

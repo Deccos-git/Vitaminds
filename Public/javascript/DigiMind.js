@@ -435,6 +435,7 @@ auth.onAuthStateChanged(User =>{
                 let docRef = db.collection("Vitaminders").doc(User.uid);
                         docRef.get().then(function(doc){
                         const auth = doc.data().Gebruikersnaam;
+
         db.collectionGroup("Reactions").where("Vraagsteller", "==", auth).orderBy("Timestamp", "desc").get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
 
@@ -451,7 +452,17 @@ auth.onAuthStateChanged(User =>{
                         const reactieP = document.createElement("p")
                         const dateP = document.createElement("h5")
 
-                        notificationsTitleH4.innerHTML = `<a href="../Vitaminders/${coach}.html"><u>${coach}</u></a> heeft gereageerd op <a href="../Open/${levensvraag}.html"><u>${levensvraag}</u></a>`
+                        db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc1 => {
+
+                                        const coachClean = doc1.data().GebruikersnaamClean
+
+                        db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraag).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc2 => {
+
+                                        const levensvraagClean = doc2.data().LevensvraagClean
+
+                        notificationsTitleH4.innerHTML = `<a href="../Vitaminders/${coach}.html"><u>${coachClean}</u></a> heeft gereageerd op <a href="../Open/${levensvraag}.html"><u>${levensvraagClean}</u></a>`
                         reactieP.innerHTML = `"${reactie}"`
                         reactieP.addEventListener("click", () => {
                                 window.open("../Open/" + levensvraag + ".html" + "#reacties-overview", "_self")
@@ -459,7 +470,10 @@ auth.onAuthStateChanged(User =>{
                         h3.innerHTML = 'Je hebt een nieuwe reactie ontvangen op je levensvraag'
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
-
+                                                })
+                                        })
+                                })
+                        })
                         DOM.appendChild(notificationsTitleDiv)
                         notificationsTitleDiv.appendChild(h3)
                         notificationsTitleDiv.appendChild(notificationsTitleH4)
@@ -481,13 +495,14 @@ auth.onAuthStateChanged(User =>{
                 let docRef = db.collection("Vitaminders").doc(User.uid);
                         docRef.get().then(function(doc){
                         const auth = doc.data().Gebruikersnaam;
+                        const ID = doc.data().ID
+                        const authClean = auth.replace(ID, "")
         db.collectionGroup("Inspiration").where("User", "==", auth).orderBy("Timestamp", "desc").get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                         const giver = doc.data().Giver
                         const type = doc.data().Type
-                        const action = doc.data().Action
                         const source = doc.data().Source 
-                        const lifequestion = doc.data().Lifequestion
+                        const lifelesson = doc.data().Lifelesson
 
                         const DOM = document.getElementById("inspiration-notifications")
                         if(DOM == null){
@@ -505,19 +520,30 @@ auth.onAuthStateChanged(User =>{
                         const liSource = document.createElement("li")
                         const link = document.createElement("h4")
 
+                        db.collection("Vitaminders"). where('Gebruikersnaam', "==", giver).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc1 => {
+
+                                        const giverClean = doc1.data().GebruikersnaamClean
+
+                        db.collection("Artikelen").where("Titel", "==", source).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc2 => {
+
+                                        const titelClean = doc2.data().TitelClean
+
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
                         string.innerHTML = `Je hebt 1 nieuw inspiratiepunt ontvangen!`
-                        liGiver.innerHTML = `van <u>${giver}</u>`
+                        liGiver.innerHTML = `Van <u>${giverClean}</u>`
                         liGiver.addEventListener("click", () => {
                                 window.open("../Vitaminders/" + giver + ".html", "_self");
                         })
-                        liType.innerHTML = `op je ${type} ${action}`
-                        link.innerHTML = `<u>${lifequestion}</u>`
-                        liSource.innerHTML = `in ${source}: ${link.innerHTML}`
-                        liSource.addEventListener("click", () => {
-                                window.open("../Open/" + lifequestion + ".html" + "#reacties-overview", "_self")
+                        liType.innerHTML = `Op je ${type} ${lifelesson}`
+                        link.innerHTML = `<u>${lifelesson}</u>`
+                        liSource.innerHTML = `Bron: ${titelClean}`
+                                })
                         })
+                    })
+                })
 
                         DOM.appendChild(outerDiv)
                         outerDiv.appendChild(string)
@@ -1106,7 +1132,8 @@ function nieuweLevensvraag(){
                 beschrijvingSelect.setAttribute("cols", "63")
                 beschrijvingSelect.setAttribute("rows", "15")
                 beschrijvingSelect.setAttribute("type", "text");
-                beschrijvingSelect.setAttribute("placeholder", "Geef een korte omschrijving");
+                const placeholder = "Omschrijf je levensvraag. Hoe voel je je op dit moment en hoe zou je je willen voelen?"
+                beschrijvingSelect.setAttribute("placeholder", placeholder);
         
         const button = document.createElement("button");
                 button.setAttribute("onclick", "startTocht()");
@@ -1140,6 +1167,7 @@ function startTocht(){
        db.collection('Vitaminders').doc(User.uid).collection("Levensvragen").doc().set({
                 ID: idClean,
                 Levensvraag: idClean + inputDoel,
+                LevensvraagClean: inputDoel,
                 Levenslessen: [],
                 Gebruikersnaam: Gnaam,
                 Openbaar: "Nee",
