@@ -1157,7 +1157,42 @@ padding: 15px;
     color: #fff;
     display: none;
 }
+.category-input{
+    display: flex;
+    flex-direction: column;
+    width: 15px;
+}
+
+.category-div{
+    display: flex;
+}
+
+.category-input label{
+    font-size: 14px;
+}
 
 #postbody{
     font-size: 30px;
+}
+
+#categorieSelectie{
+    margin: 0px 0px 0px 0px;
+}
+
+#categorieSelectie label{
+    font-size: 14px;
+}
+
+#add-category-outer-div p{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0px;
+}
+
+#button-div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
 }

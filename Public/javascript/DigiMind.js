@@ -341,7 +341,6 @@ document.addEventListener("DOMContentLoaded", () => {
         db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
 
-                        console.log("geladen")
                         db.collection("Vitaminders").doc(doc.id).update({
                                 Pageviews: firebase.firestore.FieldValue.increment(1)
                         })
@@ -1394,7 +1393,62 @@ db.collectionGroup("Favorieten").where("Gebruikersnaam", "==", naam).where("Type
 
 //Coach deel
      
-//Nieuw artikel schrijven        
+//Nieuw artikel schrijven  
+
+        // Themas inladen
+const catergory = document.getElementById("categorieSelectie")
+
+db.collection("Themas").get().then(querySnapshot => {
+        querySnapshot.forEach(doc1 => {
+
+                        const themas = doc1.data().Themas
+
+                        themas.forEach(thema => {
+                                const divCat = document.createElement("div")
+                                        divCat.setAttribute("class", "category-div")
+                                const input = document.createElement("input")
+                                        input.type = "checkbox"
+                                        input.setAttribute("class", "category-input")
+                                        input.setAttribute("id", thema)  
+                                        input.name = thema
+                                        input.value = thema
+                                        input.innerHTML = thema
+                                const label = document.createElement("label")
+                                        label.setAttribute("for", thema) 
+                                        label.innerHTML = thema
+
+                                catergory.appendChild(divCat)
+                                divCat.appendChild(input)
+                                divCat.appendChild(label)
+                        })
+                })
+        })
+
+// Add category
+
+function addCategory(){
+
+        const addCat = document.getElementById("add-category").value
+        
+        
+        db.collection("Themas").doc("CtXRWx6w0hTGrAyfnTd9").update({
+                Themas: firebase.firestore.FieldValue.arrayUnion(addCat)
+        }).then(()=> {
+                nieuwepostsubmit()
+
+        }).then(() => {
+                const titel = document.getElementById("nieuwposttitel").value;
+                const body = tinymce.get('tiny-mce').getContent()
+
+                localStorage.setItem('Titel', titel);
+                localStorage.setItem('Body', body);
+                localStorage.setItem('Category', addCat)
+        }).then(() => {
+                location.reload()
+        })
+};
+
+        // Artikel opslaan
 function nieuwepostsubmit(){
         auth.onAuthStateChanged(User =>{
             if (User){
@@ -1404,50 +1458,55 @@ function nieuwepostsubmit(){
                     docRef.get().then(function(doc){
                         const coachNaam = doc.data().Gebruikersnaam;
     
-                // const cat = document.getElementById("categorieSelectie");
-                // const catOpties = cat.options;
-                // const catSelect = catOpties[catOpties.selectedIndex].value;
+                const cat = document.getElementsByClassName("category-input")
+                catArray = Array.from(cat)
+
+                catArray.forEach(c => {
+                        const checked = c.checked
+
+                        console.log(checked.value)
+
+                        
+                })
                 let nieuwePostTitelVar = document.getElementById("nieuwposttitel").value;
 
                 let nieuwePostBodyVar = tinyMCE.get('tiny-mce').getContent()
 
-                const hiddenID = document.getElementById("hidden-ID").innerHTML
+                        const hiddenID = document.getElementById("hidden-ID").innerHTML
 
-                console.log(hiddenID)
-
-                db.collection("Artikelen").where("ID", "==", hiddenID).get().then(querySnapshot => {
-                        querySnapshot.forEach(doc1 => {
-                                if(doc1){
-
-                  db.collection("Artikelen").doc(doc1.id).update({
-                    ID: hiddenID,
-                    Titel: hiddenID + nieuwePostTitelVar,
-                    TitelClean: nieuwePostTitelVar,
-                    Body: nieuwePostBodyVar,
-                    Auteur: coachNaam,
-                //     Categorien: firebase.firestore.FieldValue.arrayUnion(catSelect),
-                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                    Type: "Artikel"
-                })
-
-                console.log("Geupdate")  
-
-                                } else {
-                artikelRef.set({
-                    ID: idClean,
-                    Titel: idClean + nieuwePostTitelVar,
-                    TitelClean: nieuwePostTitelVar,
-                    Body: nieuwePostBodyVar,
-                    Auteur: coachNaam,
-                //     Categorien: firebase.firestore.FieldValue.arrayUnion(catSelect),
-                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                    Type: "Artikel"
-                })
-
-                console.log("Opgeslagen")
-
-                                        }
+                        console.log(hiddenID)
+                        if (hiddenID == ""){
+                                console.log(nieuwePostBodyVar)
+                                artikelRef.set({
+                                    ID: idClean,
+                                    Titel: idClean + nieuwePostTitelVar,
+                                    TitelClean: nieuwePostTitelVar,
+                                    Body: nieuwePostBodyVar,
+                                    Auteur: coachNaam,
+                                //     Categorien: firebase.firestore.FieldValue.arrayUnion(catSelect),
+                                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                    Type: "Artikel"
                                 })
+                                console.log("Opgeslagen")
+                        } 
+
+                        db.collection("Artikelen").where("ID", "==", hiddenID).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc2 => {
+        
+                          db.collection("Artikelen").doc(doc2.id).update({
+                            ID: hiddenID,
+                            Titel: hiddenID + nieuwePostTitelVar,
+                            TitelClean: nieuwePostTitelVar,
+                            Body: nieuwePostBodyVar,
+                            Auteur: coachNaam,
+                        //     Categorien: firebase.firestore.FieldValue.arrayUnion(catSelect),
+                            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                            Type: "Artikel"
+                        })
+        
+                        console.log("Geupdate")  
+                     })
+                    
                         }).then(() => {
                                 const saved = document.getElementById("article-saved")
                                 saved.innerHTML = "Je artikel is opgeslagen."
@@ -1455,11 +1514,40 @@ function nieuwepostsubmit(){
                                         //         window.open("../Artikelen/" + titelClean + ".html", "_self");
                                         // })
                                 saved.style.display = "block"
+                        }).then(() => {
+                        localStorage.clear()
+                                })
                         })
-                })
-            } 
+                }
         })
-    }
+    };
+
+    document.addEventListener('readystatechange', event => { 
+    
+        // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
+        if (event.target.readyState === "complete") {
+
+           // Get article out of local storage
+           if (localStorage.getItem("Titel") == null){
+                console.log("Nothing in storage")
+        } else {
+        const titelStorage = localStorage.getItem('Titel');
+        const bodyStorage = localStorage.getItem('Body');
+        const checkedCategory = localStorage.getItem("Category")
+
+        console.log(checkedCategory)
+
+        const cate = document.getElementById(checkedCategory)
+        // cate.checked = true
+
+        console.log(cate)
+
+        document.getElementById("nieuwposttitel").value = titelStorage
+        tinymce.get("tiny-mce").setContent(bodyStorage);
+                }
+        }
+    });
+ 
     
     //Teksteditor bij nieuw artikel schrijven
 //     const style = document.querySelectorAll("button");

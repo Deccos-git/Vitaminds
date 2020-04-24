@@ -355,7 +355,6 @@ function editArticle(elem){
                        titelReplace.value = titelClean
                        const hideID = document.getElementById("hidden-ID")
                        hideID.innerHTML = hiddenID
-                       console.log(hideID)
 
 
                 })

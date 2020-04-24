@@ -303,11 +303,15 @@
                     </div>
                     <div id="postbody" contenteditable="true"></div>-->
                     <p>Selecteer een categorie</p>
-                    <select id="categorieSelectie">
-                        <option value="Dankbaarheid">Dankbaarheid</option>
-                        <option value="Positiviteit">Positiviteit</option>
-                    </select> 
-                    <button onclick = "nieuwepostsubmit()" class="button-algemeen">Publiceer</button>
+                    <div id="categorieSelectie"></div> 
+                    <div id="add-category-outer-div">
+                      <p>Voeg een categorie toe</p>
+                      <input id="add-category" type="text" placeholder="Jouw categorie">
+                      <div id="button-div">
+                        <button onclick="addCategory()">Voeg toe</button>
+                      </div>
+                    </div>
+                    <button onclick = "nieuwepostsubmit()" class="button-algemeen">Opslaan</button>
                     <div>
                       <p id="article-saved"></p>
                     </div>
