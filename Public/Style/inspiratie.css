@@ -165,13 +165,13 @@
     justify-content: center;
     flex-direction: column;
     border-radius: 15px;
+    width: 720px;
 }
 
 .artikel p{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 10px 30px 30px 30px;
 }
 
 #thema{
@@ -285,7 +285,11 @@
 
 #nieuwposttitel{
     width: 800px;
-    border: #122b462f;
+    border: 1px solid #ccc;
+    width: 700px;
+    border-radius: 0px;
+    margin-bottom: 30px;
+    font-size: 30px;
 }
 
 #categorieSelectie{

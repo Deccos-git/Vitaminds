@@ -291,7 +291,9 @@ function editLessons(elem){
          })
 }
 
-// Edit reactions
+// My contributions
+
+        // Edit reactions
 
 function editReactions(elem){
 
@@ -335,6 +337,35 @@ function editReactions(elem){
                         })
                 })
 }
+
+        // Edit articles
+
+function editArticle(elem){
+        const titel = elem.parentElement.dataset.titel
+
+        db.collection("Artikelen").where("Titel", "==", titel).get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        const body = doc.data().Body
+                        const titelClean = doc.data().TitelClean
+                        const hiddenID = doc.data().ID
+
+                       tinymce.get("tiny-mce").setContent(body);
+                       const titelReplace = document.getElementById("nieuwposttitel")
+                       titelReplace.value = titelClean
+                       const hideID = document.getElementById("hidden-ID")
+                       hideID.innerHTML = hiddenID
+                       console.log(hideID)
+
+
+                })
+        }).then(() => {
+                const nieuwArtikel = document.getElementById("artikel")
+                nieuwArtikel.click()
+        })      
+}; 
+
+
 
 // Coach info aanpassen
         //Coach contact

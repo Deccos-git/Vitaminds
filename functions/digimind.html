@@ -24,6 +24,21 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+    <!-- Tiny MCE -->
+    <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        width: 720,
+        height: 800,
+        selector: '#tiny-mce',
+        toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image',
+        plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists',
+        toolbar_mode: 'floating',
+        plugin_preview_width: 720,
+        forced_root_block : false,
+      });
+    </script>
+    <!-- End Tiny MCE -->
 </head>
 <body>
 
@@ -110,6 +125,9 @@
           <main id="profielWrapper">
 
             <ul id="menuSub">
+              <div class="coach-menu">
+                <li onclick="dashboard(this)"><img class="menu-icon" src="../images/menu-dashboard.png" alt="menu contact" width="20px">Dashboard</li>
+              </div>
 
               <!-- Coach deel -->
             <section id="coach-menu">
@@ -269,10 +287,13 @@
              
               <div id="write-article">
                 <h2>Schrijf een artikel</h2>
-                <div id="nieuwepost">
-                    <h3>Jouw titel</h3>
-                    <input id="nieuwposttitel" type="text" placeholder="Jouw inspirerende titel...">
-                    <h3>Jouw tekst</h3>
+               
+               <div id="nieuwepost">
+                     <input id="nieuwposttitel" type="text" placeholder="Jouw inspirerende titel...">
+                      <div id="hidden-ID"></div>
+                     <div id="tiny-mce"></div>
+
+                    <!-- <h3>Jouw tekst</h3>
                     <div id="texteditor">
                         <button data-command="bold"><b>B</b></button>
                         <button data-command="italic"><i>I</i></button>
@@ -280,15 +301,18 @@
                         <button data-command="strikethrough"><s>S</s></button>
                         <img data-command="insertUnorderedList" src="../images/Unorderedlist.jpg">
                     </div>
-                    <div id="postbody" contenteditable="true"></div>
+                    <div id="postbody" contenteditable="true"></div>-->
                     <p>Selecteer een categorie</p>
                     <select id="categorieSelectie">
                         <option value="Dankbaarheid">Dankbaarheid</option>
                         <option value="Positiviteit">Positiviteit</option>
-                    </select>
+                    </select> 
                     <button onclick = "nieuwepostsubmit()" class="button-algemeen">Publiceer</button>
-                </div>
-              </div>
+                    <div>
+                      <p id="article-saved"></p>
+                    </div>
+                </div> 
+              </div> 
               </div>
 
               <!-- Plaats een video -->

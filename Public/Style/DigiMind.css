@@ -1147,6 +1147,17 @@ padding: 15px;
     display: none;
 }
 
+#hidden-ID{
+    visibility: hidden;
+}
+
+#article-saved{
+    background-color: #0c6665;
+    padding: 15px;
+    color: #fff;
+    display: none;
+}
+
 #postbody{
     font-size: 30px;
 }

@@ -21,10 +21,27 @@ const podcast = document.getElementById("podcast")
  const mijnCoaching = document.getElementById("mijn-coaching-div");
  const mijnBijdragen = document.getElementById("mijn-bijdragen-div");
 
- function contactCH(elem){
+function dashboard(dashboard){
 
-        // elem.style.backgroundColor = "#49beb7"
-        // elem.style.color = "#fff"
+        // dashboard.style.backgroundColor = "#49beb7"
+        // dashboard.style.color = "#fff"
+
+        landing.style.display = "flex"
+         coachContact.style.display = "none"
+         mijnCoaching.style.display = "none"
+         mijnBijdragen.style.display = "none"
+         karakter.style.display = "none";
+        avontuur.style.display = "none";
+        favoInspiratie.style.display = "none";
+        favoCoach.style.display = "none";
+        nieuwArtikel.style.display = "none"
+        video.style.display = "none"
+        podcast.style.display = "none"
+        dagelijksLeven.style.display = "none"
+     
+ }
+
+ function contactCH(contact){
 
          coachContact.style.display = "flex"
         landing.style.display = "none"
@@ -89,7 +106,7 @@ const podcast = document.getElementById("podcast")
 
  // Vitaminders menu
 
-function klikavontuur(){
+function klikavontuur(levensvragen){
         avontuur.style.display = "flex";
         landing.style.display = "none"
         karakter.style.display = "none";
@@ -104,7 +121,7 @@ function klikavontuur(){
         dagelijksLeven.style.display = "none"
 };
 
-function klikkarakter(){
+function klikkarakter(levenslessen){
         karakter.style.display = "flex";
         avontuur.style.display = "none";
         landing.style.display = "none"
@@ -119,7 +136,7 @@ function klikkarakter(){
         dagelijksLeven.style.display = "none"
 };
 
-function klikdagelijks(){
+function klikdagelijks(dagelijks){
         dagelijksLeven.style.display = "flex"
         karakter.style.display = "none";
         landing.style.display = "none"
@@ -134,7 +151,7 @@ function klikdagelijks(){
         podcast.style.display = "none"
 }
 
-function klikFavInspiratie(){
+function klikFavInspiratie(favorietenInspiratie){
         favoInspiratie.style.display = "flex";
         avontuur.style.display = "none";
         landing.style.display = "none"
@@ -149,7 +166,7 @@ function klikFavInspiratie(){
         dagelijksLeven.style.display = "none"
 }
 
-function klikFavCoaches(){
+function klikFavCoaches(favorietenCoaches){
         favoCoach.style.display = "flex";
         avontuur.style.display = "none";
         landing.style.display = "none"
@@ -166,7 +183,7 @@ function klikFavCoaches(){
 
 // Tools menu
 
-function artikel(){
+function artikel(artikel){
         nieuwArtikel.style.display = "flex"
         favoCoach.style.display = "none";
         landing.style.display = "none"
@@ -195,9 +212,6 @@ const naam9 = naam8.replace('%20',' ')
 const naam10 = naam9.replace('%20',' ')
 const naam11 = naam10.replace('%20',' ')
 const naam = naam11.replace('%20',' ')
-
-console.log(naam)
-  
 
 //User-role
 db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
@@ -905,21 +919,29 @@ const innerDivInspiration = document.createElement("div")
 const innerDivReactions = document.createElement("div")
         innerDivReactions.setAttribute("class", "reactions-inner-div")
 
+        const titelH3 = document.createElement("h3")
+       
+        titelH3.innerHTML = "Inspiratie"
+
+        DOMcontributions.appendChild(innerDivInspiration)
+        innerDivInspiration.appendChild(titelH3)
+
 db.collection("Artikelen").where("Auteur", "==", naam).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
                 const titel = doc.data().Titel
                 const artikelID = doc.data().ID
-
                 const titelClean = titel.replace(artikelID, "")
-
-                const titelH3 = document.createElement("h3")
+                
                 const titelP = document.createElement("p")
+                        titelP.setAttribute("data-titel", titel)
+                
+
+               
+                titelP.innerHTML = `<a href="../Artikelen/${titel}.html"><u>${titelClean}</u></a>`
                 const edit = document.createElement("div")
                 edit.setAttribute("class", "edit-levensvraag")
                 edit.setAttribute("onclick", "editArticle(this)")
 
-                titelH3.innerHTML = "Inspiratie"
-                titelP.innerHTML = `<a href="../Artikelen/${titel}.html"><u>${titelClean}</u></a>`
                 edit.innerHTML = '<img class="edit-icon" src="../Images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
 
                 innerDivInspiration.addEventListener("mouseover", () => {
@@ -930,10 +952,10 @@ db.collection("Artikelen").where("Auteur", "==", naam).get().then(querySnapshot 
                     edit.style.display = "none"
                 })
 
-                DOMcontributions.appendChild(innerDivInspiration)
-                innerDivInspiration.appendChild(edit)
-                innerDivInspiration.appendChild(titelH3)
+
+               
                 innerDivInspiration.appendChild(titelP)
+                titelP.appendChild(edit)
         })
 })
 
@@ -1376,39 +1398,77 @@ db.collectionGroup("Favorieten").where("Gebruikersnaam", "==", naam).where("Type
 function nieuwepostsubmit(){
         auth.onAuthStateChanged(User =>{
             if (User){
+
                 let artikelRef = db.collection("Artikelen").doc();
                 let docRef = db.collection("Vitaminders").doc(User.uid);
                     docRef.get().then(function(doc){
                         const coachNaam = doc.data().Gebruikersnaam;
     
-                const cat = document.getElementById("categorieSelectie");
-                const catOpties = cat.options;
-                const catSelect = catOpties[catOpties.selectedIndex].value;
+                // const cat = document.getElementById("categorieSelectie");
+                // const catOpties = cat.options;
+                // const catSelect = catOpties[catOpties.selectedIndex].value;
                 let nieuwePostTitelVar = document.getElementById("nieuwposttitel").value;
-                let nieuwePostBodyVar = document.getElementById("postbody").innerHTML;
-                
-                artikelRef.set({
-                    ID: idClean,
-                    Titel: idClean + nieuwePostTitelVar,
+
+                let nieuwePostBodyVar = tinyMCE.get('tiny-mce').getContent()
+
+                const hiddenID = document.getElementById("hidden-ID").innerHTML
+
+                console.log(hiddenID)
+
+                db.collection("Artikelen").where("ID", "==", hiddenID).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
+                                if(doc1){
+
+                  db.collection("Artikelen").doc(doc1.id).update({
+                    ID: hiddenID,
+                    Titel: hiddenID + nieuwePostTitelVar,
+                    TitelClean: nieuwePostTitelVar,
                     Body: nieuwePostBodyVar,
                     Auteur: coachNaam,
-                    Categorien: firebase.firestore.FieldValue.arrayUnion(catSelect),
+                //     Categorien: firebase.firestore.FieldValue.arrayUnion(catSelect),
                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                     Type: "Artikel"
                 })
+
+                console.log("Geupdate")  
+
+                                } else {
+                artikelRef.set({
+                    ID: idClean,
+                    Titel: idClean + nieuwePostTitelVar,
+                    TitelClean: nieuwePostTitelVar,
+                    Body: nieuwePostBodyVar,
+                    Auteur: coachNaam,
+                //     Categorien: firebase.firestore.FieldValue.arrayUnion(catSelect),
+                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                    Type: "Artikel"
+                })
+
+                console.log("Opgeslagen")
+
+                                        }
+                                })
+                        }).then(() => {
+                                const saved = document.getElementById("article-saved")
+                                saved.innerHTML = "Je artikel is opgeslagen."
+                                        // saved.addEventListener("click", () => {
+                                        //         window.open("../Artikelen/" + titelClean + ".html", "_self");
+                                        // })
+                                saved.style.display = "block"
+                        })
                 })
             } 
         })
     }
     
     //Teksteditor bij nieuw artikel schrijven
-    const style = document.querySelectorAll("button");
+//     const style = document.querySelectorAll("button");
     
-    for(let st of style){
-        st.addEventListener("click", () =>{
-        let cmd = st.dataset['command'];
-        const test = document.execCommand(cmd, false, null)
-    })
-    }
+//     for(let st of style){
+//         st.addEventListener("click", () =>{
+//         let cmd = st.dataset['command'];
+//         const test = document.execCommand(cmd, false, null)
+//     })
+//     }
 
 

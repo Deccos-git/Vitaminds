@@ -409,9 +409,6 @@ const inspiratieSelect = inspiratieDiv.options
             db.collection("Artikelen").where("TitelNoID", "==", inspiratieOption).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     const IDArtikel = doc.data().ID
-
-            console.log(doc2.id)
-            console.log(IDArtikel)
           
    db.collection("Vitaminders").doc(doc2.id).collection("Reactions").doc().set({
             Gebruikersnaam: Gnaam,

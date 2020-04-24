@@ -13,7 +13,7 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
         // De artikel eigenschappen
         const bodyTekst = doc.data().Body;
         const auteurTekst = doc.data().Auteur;
-        const categorieTekst = doc.data().Categorien;
+        // const categorieTekst = doc.data().Categorien;
         const ID = doc.data().ID
 
         console.log(ID)
@@ -26,7 +26,7 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
                 const IDauteur = doc1.data().ID
                 const auteur = auteurTekst.replace(IDauteur, "")
 
-        categorieTekst.forEach(cat => {
+        // categorieTekst.forEach(cat => {
 
         // De nieuwe HTML-elementen en classes
         const mainDiv = document.createElement("div");
@@ -79,7 +79,7 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
                        })
 
         // De artikel eigenschappen in de nieuwe HTML elementen zetten
-        categorie.innerHTML = cat;
+        // categorie.innerHTML = cat;
         nieuweTitel.innerHTML = titelTekst;
         nieuweBody.innerHTML = bodyTekst;
         nieuweAuteur.innerHTML = `<u> ${auteur} </u>`;
@@ -100,7 +100,7 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
                     })
                 })
             })
-        })
+        // })
     }).catch(function(error) {
     console.log("Kan de artikelen niet inladen");
 }).then(() => {
@@ -210,7 +210,7 @@ auth.onAuthStateChanged(User =>{
 
 
 // Detailpagina inladen
-titelhtml = location.pathname.replace(/^.*[\\\/]/, '')
+titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
 titel1 = titelhtml.replace('.html', '')
 titel2 = titel1.replace('%20',' '),
 titel3 = titel2.replace('%20',' ')
@@ -222,8 +222,6 @@ titel8 = titel7.replace('%20',' ')
 titel9 = titel8.replace('%20',' ')
 titel10 = titel9.replace('%20',' ')
 titel = titel10.replace('%20',' ')
-
-console.log(titel)
 
 const auteur = document.getElementById('auteur');
 const thema = document.getElementById('thema');
@@ -237,7 +235,7 @@ db.collection('Artikelen').where('Titel', '==', titel )
     querySnapshot.forEach(doc => {
 
     const auteurMeta = doc.data().Auteur
-    const categorie = doc.data().Categorien
+    // const categorie = doc.data().Categorien
     const ID = doc.data().ID
 
     db.collection("Vitaminders").where("Gebruikersnaam", "==", auteurMeta).get().then(function(querySnapshot) {
@@ -246,7 +244,7 @@ db.collection('Artikelen').where('Titel', '==', titel )
             const IDauthor = doc1.data().ID
             const auteurClean = auteurMeta.replace(IDauthor, "")
 
-    categorie.forEach(cat =>{
+    // categorie.forEach(cat =>{
     
             // Page title and meta 
         const DOM = document.head
@@ -260,7 +258,7 @@ db.collection('Artikelen').where('Titel', '==', titel )
             metaDescription.setAttribute("content", title)
         const metaKeyword = document.createElement("meta")
             metaKeyword.setAttribute("name", "keywords")
-            metaKeyword.setAttribute("content", cat + ", Coaching ," + auteurMeta + ", levensvragen" )
+            // metaKeyword.setAttribute("content", cat + ", Coaching ," + auteurMeta + ", levensvragen" )
 
             DOM.appendChild(metaDescription)
             DOM.appendChild(metaKeyword)
@@ -276,7 +274,9 @@ db.collection('Artikelen').where('Titel', '==', titel )
 
         titelArt.innerHTML = pageTitleClean
         body.innerHTML = doc.data().Body
-        thema.innerHTML = "Over " + cat
+
+console.log(doc.data().Body)
+        // thema.innerHTML = "Over " + cat
 
         thema.addEventListener("click", () => {
             window.open("../Thema/" + cat, "_self");
@@ -304,7 +304,7 @@ db.collection('Artikelen').where('Titel', '==', titel )
                 })
             })
         })
-    })
+//     })
 }).then(() => {
 
 
