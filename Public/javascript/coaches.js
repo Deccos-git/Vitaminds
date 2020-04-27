@@ -82,14 +82,15 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
 
 //Filter
 
+    // Alle data uit de database
 const dataSet = [];
 
-const filters = {
+let filters = {
     Locatie: [],
     Doelgroep: []
     }
 
- filterValues = []
+let filterValues = []
 
 const alleLocatieG = [];
 const alleDoelgroepG = [];
@@ -113,11 +114,14 @@ const alleDoelgroepG = [];
  })    
 
  // Filter knop
-
 const button = document.getElementById("filter-button")
 button.addEventListener("click", () => {
 
-     filterValues.length = 0
+        filterValues = []
+        filters = {
+            Locatie: [],
+            Doelgroep: []
+        }
 
     const coachDOM = document.getElementsByClassName("nieuweD")
     const coachDOMarray = Array.from(coachDOM)
@@ -148,13 +152,13 @@ button.addEventListener("click", () => {
     filters.Doelgroep.push(DDselect)
 
     // Filteren
-    const filtersValue = Object.values(filters)
-    filtersValue.forEach(filter => {
+    const filtersObject = Object.values(filters)
+    filtersObject.forEach(filter => {
         filter.forEach(filt => {
             if (typeof filt === 'object'){
             filt.forEach(fil => {
                 const fi = String(fil)
-                    filterValues.push(fi)
+                filterValues.push(fi)
                 })
             } else {
                 filterValues.push(filt)
@@ -162,9 +166,8 @@ button.addEventListener("click", () => {
         })
     })
 
-    console.log(filterValues)
-
     dataSet.forEach(data =>{
+
         if(!filterValues.includes(data.Targetgroup, data.City)){
 
             const filterCoach = data.Gebruikersnaam

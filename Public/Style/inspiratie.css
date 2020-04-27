@@ -129,6 +129,19 @@
     max-height: 300px;
 }
 
+.bodyTekst span{
+    margin: 0px 10px 0px 10px !important;
+    font-size: 18px !important;
+    font-family: 'Nunito Sans', sans-serif !important;
+    margin: 0px 30px 30px 30px !important;
+    letter-spacing: 0.6px !important;
+    color: #25384d !important;
+    text-align: left !important;
+    width: 350px;
+    font-weight: 500 !important;
+    max-height: 300px;
+}
+
 .divTekst{
     overflow: hidden;
     margin-bottom: 30px;
@@ -196,8 +209,26 @@
 #bodytext{
     font-size: 18px;
     font-family: 'Nunito Sans', sans-serif;
-    margin: 0px 30px 30px 30px;
+    margin: 0px 30px 00px 30px;
     letter-spacing: 0.6px;
+}
+
+#bodytext span{
+    font-size: 18px !important;
+    font-family: 'Nunito Sans', sans-serif !important;
+    margin: 0px 30px 0px 30px !important;
+    letter-spacing: 0.6px !important;
+    color: #122b46 !important;
+    font-weight: 100 !important;
+}
+
+#bodytext p{
+    font-size: 18px !important;
+    font-family: 'Nunito Sans', sans-serif !important;
+    margin: 0px 30px 0px 30px !important;
+    letter-spacing: 0.6px !important;
+    color: #122b46 !important;
+    font-weight: 100 !important;
 }
 
 /* Call to action */

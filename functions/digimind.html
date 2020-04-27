@@ -36,6 +36,10 @@
         toolbar_mode: 'floating',
         plugin_preview_width: 720,
         forced_root_block : false,
+        paste_preprocess: function(plugin, args) {
+          console.log(args.content);
+          args.content += ' preprocess';
+        }
       });
     </script>
     <!-- End Tiny MCE -->
@@ -186,7 +190,7 @@
               <div class="descriptie">
                 <p>Tools</p>
               </div>
-              <div  onclick="artikel(this)"class="favo-menu">
+              <div onclick="artikel(this)"class="favo-menu">
                 <li><img class="menu-icon" src="../images/menu-artikel.png" alt="menu contact" width="20px"><a>Schrijf een artikel </a></li>
               </div>
               <div class="favo-menu">

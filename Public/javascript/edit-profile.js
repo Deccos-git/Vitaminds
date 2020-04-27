@@ -359,8 +359,7 @@ function editArticle(elem){
 
                 })
         }).then(() => {
-                const nieuwArtikel = document.getElementById("artikel")
-                nieuwArtikel.click()
+                artikel()
         })      
 }; 
 

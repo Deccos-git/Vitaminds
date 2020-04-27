@@ -1,4 +1,141 @@
+//Filter
 
+    // Alle data uit de database
+    const dataSet = [];
+
+    let filters = {
+        Categorie: []
+        }
+    
+    let filterValues = []
+    
+    const alleCategorienG = [];
+
+    console.log(alleCategorienG)
+    
+     // Categorien van artikelen uitlezen
+     db.collection("Artikelen")
+     .get()
+     .then(function(querySnapshot) {
+         querySnapshot.forEach(function(doc) {
+
+            const categorien = doc.data().Categorien
+
+            categorien.forEach(cat => {
+
+             alleCategorienG.push(cat);
+
+             const data = cat
+             dataSet.push(data)
+
+            })
+         })
+     })    
+
+      //Filters inladen uit database
+
+      db.collection("Themas").get().then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc1) {
+
+            const themas = doc1.data().Themas
+
+            const DOM = document.getElementById("inspiratiemenu")
+
+            const optionAlle = document.createElement("option")
+            optionAlle.innerHTML = "Alle themas"
+            DOM.appendChild(optionAlle)
+
+            themas.forEach(thema => {
+
+                const option = document.createElement("option")
+    
+                option.innerHTML = thema
+    
+                DOM.appendChild(option)
+    
+                })
+    
+        })
+    })
+    
+     // Filter knop
+    function filterMenu(){
+        
+            // Filters legen bij nieuwe zoekopdracht
+            filterValues = []
+            filters = {
+                Categorie: []
+            }
+    
+            // Alle artikelen weer laten zien
+        const artikelDOM = document.getElementsByClassName("mainTekst")
+        const artikelDOMarray = Array.from(artikelDOM)
+    
+        artikelDOMarray.forEach(art => {
+            art.style.display = "flex"
+        })
+    
+
+        
+        //Filters uitlezen
+        const inputCategorien = document.getElementById("inspiratiemenu")
+                        const inputOpties = inputCategorien.options;
+                        let select = inputOpties[inputOpties.selectedIndex].value;  
+    
+    
+            // Alle opties uit filter vervangen voor alle opties uit database
+        if (DDselect == "Alle themas"){
+            DDselect = alleCategorienG
+        }
+    
+        filters.Categorie.push(select)
+    
+        // Filteren
+        const filtersObject = Object.values(filters)
+        filtersObject.forEach(filter => {
+            filter.forEach(filt => {
+                if (typeof filt === 'object'){
+                filt.forEach(fil => {
+                    const fi = String(fil)
+                    filterValues.push(fi)
+                    })
+                } else {
+                    filterValues.push(filt)
+                }
+            })
+        })
+    
+        dataSet.forEach(data =>{
+
+            console.log(data)
+    
+            if(!filterValues.includes(data.Categorie)){
+    
+                const filterCoach = data.Gebruikersnaam
+    
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", filterCoach)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                        const username = doc.data().Gebruikersnaam
+    
+                        coachDOMarray.forEach(CD => {
+                        
+                        const coachData = CD.dataset.name
+    
+                        if(coachData == username){
+                            console.log("iets?")
+                                CD.style.display = "none"
+    
+                            } else {
+                                console.log("niets")
+                            }
+                        })
+                    })
+                })
+            }  
+        })
+    }
+    
 
 // Alle artikel inladen in overzicht
 db.collection("Artikelen").get().then(function(querySnapshot) {
@@ -13,10 +150,9 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
         // De artikel eigenschappen
         const bodyTekst = doc.data().Body;
         const auteurTekst = doc.data().Auteur;
-        // const categorieTekst = doc.data().Categorien;
+        const categorieTekst = doc.data().Categorien;
         const ID = doc.data().ID
 
-        console.log(ID)
         const pageTitle = doc.data().Titel
         const titelTekst  = pageTitle.replace(ID, "")
 
@@ -26,8 +162,7 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
                 const IDauteur = doc1.data().ID
                 const auteur = auteurTekst.replace(IDauteur, "")
 
-        // categorieTekst.forEach(cat => {
-
+       
         // De nieuwe HTML-elementen en classes
         const mainDiv = document.createElement("div");
             mainDiv.setAttribute("class", "mainTekst")
@@ -57,10 +192,6 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
             nieuweAuteur.addEventListener('click', (e) => {
                 window.open("../Vitaminders/" + auteurTekst + ".html", "_self");
             })
-
-            categorie.addEventListener('click', (e) => {
-                window.open("../Thema/" + cat + ".html", "_self");
-            })
         
         //Profielfoto achterhalen en inladen in DOM
         db.collection("Vitaminders").where("Gebruikersnaam", "==", auteurTekst).get()
@@ -78,29 +209,38 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
                     window.open("../Vitaminders/" + gebruikersnaam + ".html", "_self")
                        })
 
+                       
         // De artikel eigenschappen in de nieuwe HTML elementen zetten
-        // categorie.innerHTML = cat;
+      
         nieuweTitel.innerHTML = titelTekst;
         nieuweBody.innerHTML = bodyTekst;
         nieuweAuteur.innerHTML = `<u> ${auteur} </u>`;
         linkTekst.innerHTML = "Lees meer";
 
+        categorieTekst.forEach(cat => {
+
+            categorie.addEventListener('click', (e) => {
+                window.open("../Thema/" + cat + ".html", "_self");
+            })
+
+            categorie.innerHTML = cat;
+            nieuweDivTekst.appendChild(profilePicture);
+            nieuweDivTekst.appendChild(nieuweAuteur);
+            nieuweDivTekst.appendChild(categorie);
+    })
+
         // De nieuwe HTML elementen vastzetten aan de DOM
        bodyh1.appendChild(mainDiv);
         mainDiv.appendChild(headerTekst);
         mainDiv.appendChild(nieuweDivTekst);
-        nieuweDivTekst.appendChild(profilePicture);
-        nieuweDivTekst.appendChild(nieuweAuteur);
-        nieuweDivTekst.appendChild(categorie);
         nieuweDivTekst.appendChild(nieuweTitel);
        nieuweDivTekst.appendChild(nieuweBody);
        mainDiv.appendChild(linkTekst);
                             })                
                         })
-                    })
                 })
             })
-        // })
+        })
     }).catch(function(error) {
     console.log("Kan de artikelen niet inladen");
 }).then(() => {
@@ -235,7 +375,7 @@ db.collection('Artikelen').where('Titel', '==', titel )
     querySnapshot.forEach(doc => {
 
     const auteurMeta = doc.data().Auteur
-    // const categorie = doc.data().Categorien
+    const categorie = doc.data().Categorien
     const ID = doc.data().ID
 
     db.collection("Vitaminders").where("Gebruikersnaam", "==", auteurMeta).get().then(function(querySnapshot) {
@@ -244,7 +384,9 @@ db.collection('Artikelen').where('Titel', '==', titel )
             const IDauthor = doc1.data().ID
             const auteurClean = auteurMeta.replace(IDauthor, "")
 
-    // categorie.forEach(cat =>{
+    categorie.forEach(cat =>{
+
+        console.log(cat)
     
             // Page title and meta 
         const DOM = document.head
@@ -258,7 +400,7 @@ db.collection('Artikelen').where('Titel', '==', titel )
             metaDescription.setAttribute("content", title)
         const metaKeyword = document.createElement("meta")
             metaKeyword.setAttribute("name", "keywords")
-            // metaKeyword.setAttribute("content", cat + ", Coaching ," + auteurMeta + ", levensvragen" )
+            metaKeyword.setAttribute("content", cat + ", Coaching ," + auteurMeta + ", levensvragen" )
 
             DOM.appendChild(metaDescription)
             DOM.appendChild(metaKeyword)
@@ -275,8 +417,9 @@ db.collection('Artikelen').where('Titel', '==', titel )
         titelArt.innerHTML = pageTitleClean
         body.innerHTML = doc.data().Body
 
-console.log(doc.data().Body)
-        // thema.innerHTML = "Over " + cat
+console.log(cat)
+
+        thema.innerHTML = "Over " + cat
 
         thema.addEventListener("click", () => {
             window.open("../Thema/" + cat, "_self");
@@ -304,7 +447,7 @@ console.log(doc.data().Body)
                 })
             })
         })
-//     })
+    })
 }).then(() => {
 
 

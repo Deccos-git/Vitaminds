@@ -1462,12 +1462,11 @@ function nieuwepostsubmit(){
                 catArray = Array.from(cat)
 
                 catArray.forEach(c => {
-                        const checked = c.checked
+                        const check = c.checked
 
-                        console.log(checked.value)
-
-                        
-                })
+                        if (check == true){
+                               const categories = c.value
+                 
                 let nieuwePostTitelVar = document.getElementById("nieuwposttitel").value;
 
                 let nieuwePostBodyVar = tinyMCE.get('tiny-mce').getContent()
@@ -1475,15 +1474,16 @@ function nieuwepostsubmit(){
                         const hiddenID = document.getElementById("hidden-ID").innerHTML
 
                         console.log(hiddenID)
+
                         if (hiddenID == ""){
-                                console.log(nieuwePostBodyVar)
+
                                 artikelRef.set({
                                     ID: idClean,
                                     Titel: idClean + nieuwePostTitelVar,
                                     TitelClean: nieuwePostTitelVar,
                                     Body: nieuwePostBodyVar,
                                     Auteur: coachNaam,
-                                //     Categorien: firebase.firestore.FieldValue.arrayUnion(catSelect),
+                                    Categorien: firebase.firestore.FieldValue.arrayUnion(categories),
                                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                                     Type: "Artikel"
                                 })
@@ -1499,7 +1499,7 @@ function nieuwepostsubmit(){
                             TitelClean: nieuwePostTitelVar,
                             Body: nieuwePostBodyVar,
                             Auteur: coachNaam,
-                        //     Categorien: firebase.firestore.FieldValue.arrayUnion(catSelect),
+                            Categorien: firebase.firestore.FieldValue.arrayUnion(categories),
                             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                             Type: "Artikel"
                         })
@@ -1516,6 +1516,8 @@ function nieuwepostsubmit(){
                                 saved.style.display = "block"
                         }).then(() => {
                         localStorage.clear()
+                                                 })
+                                        }  
                                 })
                         })
                 }
@@ -1535,12 +1537,8 @@ function nieuwepostsubmit(){
         const bodyStorage = localStorage.getItem('Body');
         const checkedCategory = localStorage.getItem("Category")
 
-        console.log(checkedCategory)
-
         const cate = document.getElementById(checkedCategory)
         // cate.checked = true
-
-        console.log(cate)
 
         document.getElementById("nieuwposttitel").value = titelStorage
         tinymce.get("tiny-mce").setContent(bodyStorage);
