@@ -69,9 +69,9 @@ const storageRef = firebase.storage().ref("/Profielfotos/" + selectedFile.name);
 
 function edit(elem){
 
-        const vraag = elem.nextSibling.nextSibling.firstElementChild
-        const omschrijving = elem.nextSibling.nextSibling.firstElementChild.nextSibling.nextSibling.firstElementChild
-        const removeDiv = elem.nextSibling.nextSibling.firstElementChild.nextSibling.nextSibling.nextSibling
+        const vraag = elem.parentElement.parentElement.firstElementChild
+        const omschrijving = elem.parentElement.nextSibling.firstElementChild
+        const removeDiv = elem.parentElement.nextSibling.nextSibling
 
         const dataEdit = elem.dataset.levensvraag
 
@@ -107,7 +107,7 @@ function edit(elem){
          publicLabelYes.innerHTML = "Openbaar"
          publicLabelNo.innerHTML = "Prive"
  
-         elem.nextSibling.nextSibling.appendChild(publicDiv)
+         elem.parentElement.nextSibling.appendChild(publicDiv)
          publicDiv.appendChild(publicP)
          publicDiv.appendChild(publicForm)
          publicForm.appendChild(publicInputYes)
@@ -121,7 +121,7 @@ function edit(elem){
 
         saveP.innerHTML = "Opslaan"
 
-        elem.nextSibling.nextSibling.appendChild(saveDiv)
+        elem.parentElement.nextSibling.appendChild(saveDiv)
         saveDiv.appendChild(saveP)
 
         saveP.addEventListener("click", () => {  
@@ -151,16 +151,14 @@ function edit(elem){
                         }).then(() => {
                                 location.reload();
                         })
+                                                                })
+                                                        })
                                                 })
-                                        })
+                                        }
                                 })
                         }
                 })
-
-        
-                                }
-                        })
-                })
+        })
 
         // Delete
         const deleteDiv = document.createElement("div")
@@ -169,7 +167,7 @@ function edit(elem){
 
         deleteP.innerHTML = "Delete"
 
-        elem.nextSibling.nextSibling.appendChild(deleteDiv)
+        elem.parentElement.nextSibling.appendChild(deleteDiv)
         deleteDiv.appendChild(deleteP)
 
         deleteP.addEventListener("click", () => {    
@@ -297,11 +295,10 @@ function editLessons(elem){
 
 function editReactions(elem){
 
-        const reaction = elem.nextSibling.nextSibling
+        const reaction = elem.parentElement.nextSibling
 
         const dataNaam = elem.dataset.gebruikersnaam
         const dataVrager = elem.dataset.vraagsteller
-        console.log(dataVrager)
 
         reaction.setAttribute("contenteditable", "true")
         reaction.style.color = "#d4d4d4"
@@ -313,7 +310,7 @@ function editReactions(elem){
 
         saveLes.appendChild(saveLesP)
 
-        elem.parentElement.appendChild(saveLes)
+        elem.parentElement.parentElement.appendChild(saveLes)
 
         saveLesP.innerHTML = "Opslaan"
 
@@ -341,7 +338,9 @@ function editReactions(elem){
         // Edit articles
 
 function editArticle(elem){
-        const titel = elem.parentElement.dataset.titel
+        const titel = elem.parentElement.previousElementSibling.parentElement.dataset.titel
+
+        console.log(titel)
 
         db.collection("Artikelen").where("Titel", "==", titel).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {

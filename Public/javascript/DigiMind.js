@@ -228,6 +228,45 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
         })
 }) 
 
+
+// Hide profile-elements for visiter
+auth.onAuthStateChanged(User =>{
+        if (User){
+
+                console.log("Auth ingelogd")
+        } else {
+                const nieuweKarakterTocht = document.getElementById("nieuweKarakterTocht")
+                const toolsMenu = document.getElementById("tools-menu")
+                const notifications = document.getElementById("profile-notifications")
+                const activeDiv = document.getElementsByClassName("active-div")
+                const editDiv = document.getElementsByClassName("edit-div")
+             
+                    const activeDivArray = Array.from(activeDiv)
+                    activeDivArray.forEach(active => {
+                        active.style.display = "none"
+                    })
+ 
+                    nieuweKarakterTocht.style.display = "none"
+                    toolsMenu.style.display = "none"
+                    notifications.style.display = "none"
+
+                    console.log(editDiv)
+
+                   setTimeout(() => {
+                        editDiv[0].style.display = "none"
+                        editDiv[1].style.display = "none"
+                        editDiv[2].style.display = "none"
+                        editDiv[3].style.display = "none"
+                        editDiv[4].style.display = "none"
+                        editDiv[5].style.display = "none"
+                        editDiv[6].style.display = "none"
+                        editDiv[7].style.display = "none"
+                        editDiv[8].style.display = "none"
+                        editDiv[9].style.display = "none"
+                   }, 2000);             
+        }
+});
+
 // Admin
 auth.onAuthStateChanged(User =>{
         if (User){
@@ -262,16 +301,40 @@ auth.onAuthStateChanged(User =>{
             docRef.get().then(function(doc){
                 const coachNaam = doc.data().Gebruikersnaam;
 
+                const nieuweKarakterTocht = document.getElementById("nieuweKarakterTocht")
                 const toolsMenu = document.getElementById("tools-menu")
-                const activeDiv = document.getElementById("active-div")
                 const notifications = document.getElementById("profile-notifications")
-             
+                const activeDiv = document.getElementsByClassName("active-div")
+                const editDiv = document.getElementsByClassName("edit-div")
+        
                 if(naam != coachNaam){
-                    activeDiv.style.display = "none"
-                    toolsMenu.style.display = "none"
-                    notifications.style.display = "none"
-                        }
-            })
+                       
+                     
+                const activeDivArray = Array.from(activeDiv)
+                activeDivArray.forEach(active => {
+                active.style.display = "none"
+                })
+
+                nieuweKarakterTocht.style.display = "none"
+                toolsMenu.style.display = "none"
+                notifications.style.display = "none"
+
+                console.log(editDiv)
+
+                setTimeout(() => {
+                editDiv[0].style.display = "none"
+                editDiv[1].style.display = "none"
+                editDiv[2].style.display = "none"
+                editDiv[3].style.display = "none"
+                editDiv[4].style.display = "none"
+                editDiv[5].style.display = "none"
+                editDiv[6].style.display = "none"
+                editDiv[7].style.display = "none"
+                editDiv[8].style.display = "none"
+                editDiv[9].style.display = "none"
+                }, 2000);    
+                }      
+        })
     }
 });
 
@@ -285,10 +348,7 @@ db.collectionGroup("Inspiration").where("User", "==", naam).get().then(querySnap
                 const docLengt = [doc]          
                 objectLength = Object.keys(docLengt).length
 
-                inspirationPointsArray.push(objectLength)
-
-                
-                
+                inspirationPointsArray.push(objectLength)                 
         })
         }).then(() => {
                 const DOMprofile = document.getElementById("bijdragepunten");
@@ -296,23 +356,6 @@ db.collectionGroup("Inspiration").where("User", "==", naam).get().then(querySnap
                         console.log("Error")
                 } else {
                 DOMprofile.innerHTML = inspirationPointsArray.length
-
-                 // Trophies 
-                 const trophies = document.getElementById("trophies-digimind").getElementsByTagName("img")
-
-                 function trophiesRewarded(a,b){
-                 if(inspirationPointsArray.length >= b){
-                         trophies[a].src = `../images/Trophies/${b}.png`
-                         }  
-                 }
-
-                 trophiesRewarded(0,1)
-                 trophiesRewarded(1,5)
-                 trophiesRewarded(2,10)
-                 trophiesRewarded(3,20)
-                 trophiesRewarded(4,40)
-                 trophiesRewarded(5,80)
-                 trophiesRewarded(6,160)
                 }
 });
 
@@ -349,20 +392,6 @@ document.addEventListener("DOMContentLoaded", () => {
         })
 });
 
-
-// // Hide profile-elements for visiter
-auth.onAuthStateChanged(User =>{
-        if (!User){
-                    const toolsMenu = document.getElementById("tools-menu")
-                    const activeDiv = document.getElementById("active-div")
-                    const notifications = document.getElementById("profile-notifications")
-    
-                        editProfile.style.display = "none"
-                        activeDiv.style.display = "none"
-                        toolsMenu.style.display = "none"
-                        notifications.style.display = "none"
-        }
-});
 
 // Notifcations-page
 
@@ -608,9 +637,12 @@ auth.onAuthStateChanged(User =>{
                                 const levensvraagID = doc.data().Levensvraag
                                 const levensvragen = levensvraagID.replace(ID, "")
                 
-                const exampleP = document.createElement("li")   
+                const exampleP = document.createElement("li")
+                const dateP = document.createElement("p")
                
                 exampleP.innerHTML = levensvragen
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
               
                titelDiv.appendChild(exampleDiv)
                 exampleDiv.appendChild(exampleP)
@@ -819,7 +851,7 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                         b.style.display = "none"
                         })
 
-                        b.innerHTML = '<img class="edit-icon" src="../Images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
+                        b.innerHTML = '<img class="edit-icon" src="../images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
                 }
 
                 mouse(DOM, editContact)
@@ -937,11 +969,13 @@ db.collection("Artikelen").where("Auteur", "==", naam).get().then(querySnapshot 
 
                
                 titelP.innerHTML = `<a href="../Artikelen/${titel}.html"><u>${titelClean}</u></a>`
+                const editDiv = document.createElement("div")
+                        editDiv.setAttribute("class", "edit-div")
                 const edit = document.createElement("div")
                 edit.setAttribute("class", "edit-levensvraag")
                 edit.setAttribute("onclick", "editArticle(this)")
 
-                edit.innerHTML = '<img class="edit-icon" src="../Images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
+                edit.innerHTML = '<img class="edit-icon" src="../images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
 
                 innerDivInspiration.addEventListener("mouseover", () => {
                         edit.style.display = "block"
@@ -954,7 +988,8 @@ db.collection("Artikelen").where("Auteur", "==", naam).get().then(querySnapshot 
 
                
                 innerDivInspiration.appendChild(titelP)
-                titelP.appendChild(edit)
+                titelP.appendChild(editDiv)
+                editDiv.appendChild(edit)
         })
 })
 
@@ -976,6 +1011,8 @@ db.collectionGroup("Reactions").where("Gebruikersnaam", "==", naam).get().then(q
                 const sourceUl = document.createElement("ul")
                 const sourceP = document.createElement("li")
                         sourceP.setAttribute("class", "meta-contributions")
+                const editDiv = document.createElement("div")
+                editDiv.setAttribute("class", "edit-div")
                 const edit = document.createElement("div")
                 edit.setAttribute("class", "edit-levensvraag")
                 edit.setAttribute("onclick", "editReactions(this)")
@@ -990,7 +1027,7 @@ db.collectionGroup("Reactions").where("Gebruikersnaam", "==", naam).get().then(q
                         window.open("../Open/" +levensvraag+ ".html", "_self")
                 })
 
-                edit.innerHTML = '<img class="edit-icon" src="../Images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
+                edit.innerHTML = '<img class="edit-icon" src="../images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
 
                 titelP.addEventListener("click", ()=> {
                         window.open("../Open/" + levensvraag + ".html", "_self");
@@ -1005,7 +1042,8 @@ db.collectionGroup("Reactions").where("Gebruikersnaam", "==", naam).get().then(q
                 })
 
                 DOMcontributions.appendChild(innerDivReactions)
-                innerDivReactions.appendChild(edit)
+                innerDivReactions.appendChild(editDiv)
+                editDiv.appendChild(edit)
                 innerDivReactions.appendChild(titelH3)
                 innerDivReactions.appendChild(titelP)
                 innerDivReactions.appendChild(sourceUl)
@@ -1062,7 +1100,7 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
             vraag.innerHTML = levensvraag
             omschrijvingP.innerHTML = omschrijving
             button.innerHTML = "Bekijk levensvraag in open-up"
-            edit.innerHTML = '<img class="edit-icon" src="../Images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
+            edit.innerHTML = '<img class="edit-icon" src="../images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
 
             button.addEventListener("click", () => {
                 window.open("../Open/" + ID + levensvraag + ".html", "_self")
@@ -1070,7 +1108,8 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
             
     
             DOM.appendChild(innerDiv)
-            innerDiv.appendChild(edit)
+            innerDiv.appendChild(editDiv)
+            editDiv.appendChild(edit)
             innerDiv.appendChild(authDiv)
             innerDiv.appendChild(vraagDiv)
             vraagDiv.appendChild(vraag)
@@ -1102,7 +1141,7 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
                     const inspiratorP = document.createElement("p")
                         inspiratorP.setAttribute("class", "openup-meta")
                     
-                    lessen.innerHTML ='<img class="menu-icon" src="../Images/menu-karakter.png" alt="menu contact" width="20px"> ' + les
+                    lessen.innerHTML ='<img class="menu-icon" src="../images/menu-karakter.png" alt="menu contact" width="20px"> ' + les
                     inspiratorP.innerHTML = "Geinspïreerd door " + `<u>${inspiratorClean}</u>`
     
                     inspiratorP.addEventListener("click", () => {
@@ -1163,10 +1202,10 @@ function nieuweLevensvraag(){
                 vraagH3.innerHTML = "Wat is je levensvraag?"
                 beschrijvingH3.innerHTML = "Geef een korte omschrijving"
 
-                button.innerHTML = "Ga"
+                button.innerHTML = "Opslaan"
 
                 DOM.appendChild(vraagH3)
-                vraagH3.appendChild(vraagSelect)
+                DOM.appendChild(vraagSelect)
                 DOM.appendChild(beschrijvingH3)
                 beschrijvingH3.appendChild(beschrijvingSelect)
                 DOM.appendChild(button)     
@@ -1272,7 +1311,7 @@ auth.onAuthStateChanged(User =>{
                                 edit.setAttribute("onclick", "editLessons(this)")
                                 edit.setAttribute("data-levensles", learn)
 
-                                edit.innerHTML = '<img class="edit-icon" src="../Images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
+                                edit.innerHTML = '<img class="edit-icon" src="../images/aanpassen-donkerblauw.png" alt="edit icon" width="20px"> ' 
 
                                 badge.addEventListener("mouseover", () => {
                                         edit.style.display = "block"

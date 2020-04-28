@@ -6,11 +6,13 @@ auth.onAuthStateChanged(User =>{
   const userRef = db.collection("Vitaminders").doc(User.uid);
     userRef.get().then(function(doc) {
       if (doc.exists) {
-        Gnaam = doc.data().Gebruikersnaam;
+        const Gnaam = doc.data().Gebruikersnaam;
+        const id = doc.data().ID
+        const naamClean = Gnaam.replace(id, "")
 
         const welkom = document.createElement("h2")
 
-        welkom.innerHTML = `Houdoe, ${Gnaam}`
+        welkom.innerHTML = `Houdoe, ${naamClean}`
 
         welkomAuth.appendChild(welkom)
   

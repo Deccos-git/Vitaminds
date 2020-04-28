@@ -117,10 +117,9 @@
 }
 
 .bodyTekst{
-    margin: 0px 10px 0px 10px;
+    margin: 0px 0px 0px 00px;
     font-size: 18px;
     font-family: 'Nunito Sans', sans-serif;
-    margin: 0px 30px 30px 30px;
     letter-spacing: 0.6px;
     color: #25384d;
     text-align: left;
@@ -130,10 +129,9 @@
 }
 
 .bodyTekst span{
-    margin: 0px 10px 0px 10px !important;
+    margin: 0px 0px 0px 0px !important;
     font-size: 18px !important;
     font-family: 'Nunito Sans', sans-serif !important;
-    margin: 0px 30px 30px 30px !important;
     letter-spacing: 0.6px !important;
     color: #25384d !important;
     text-align: left !important;
@@ -168,17 +166,25 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    height: 500px;
+    height: 600px;
+    width: 100%;
+}
+
+#artikel-outer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .artikel{
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
     display: flex;
-    margin: 40px 200px 40px 200px;
+    margin: -150px 0px 40px 0px;
     justify-content: center;
     flex-direction: column;
-    border-radius: 15px;
+    border-radius: 0px;
     width: 720px;
+    background-color: #fff;
 }
 
 .artikel p{
@@ -209,14 +215,22 @@
 #bodytext{
     font-size: 18px;
     font-family: 'Nunito Sans', sans-serif;
-    margin: 0px 30px 00px 30px;
+    margin: 0px 30px 0px 30px;
     letter-spacing: 0.6px;
+}
+
+#bodytext img{
+    width: auto !important;
+    height: auto !important;
+    max-width: 100%;
+    max-height: 100%;
+    display: block; /* remove extra space below image */
 }
 
 #bodytext span{
     font-size: 18px !important;
     font-family: 'Nunito Sans', sans-serif !important;
-    margin: 0px 30px 0px 30px !important;
+    margin: 0px 0px 0px 0px !important;
     letter-spacing: 0.6px !important;
     color: #122b46 !important;
     font-weight: 100 !important;
@@ -225,7 +239,7 @@
 #bodytext p{
     font-size: 18px !important;
     font-family: 'Nunito Sans', sans-serif !important;
-    margin: 0px 30px 0px 30px !important;
+    margin: 0px 00px 0px 0px !important;
     letter-spacing: 0.6px !important;
     color: #122b46 !important;
     font-weight: 100 !important;
@@ -451,4 +465,42 @@
 .bedankt-div p{
     margin: 0px;
     color: #FFF;
+}
+
+@media only screen and (max-width: 938px){
+
+    #inspiratiemenu{
+        border: 1px solid #122b46;
+    }
+
+    .bodyTekst{
+        padding-left: 15px;
+    }
+
+    .artikel{
+        margin: 0px 0px 40px 0px;
+        width: 100%;
+    }
+
+    .calltoaction{
+        margin: 30px 0px 30px 0px;
+    }
+
+    #categorie{
+        font-size: 20px;
+    }
+
+    .calltoaction input {
+        width: 90%;
+    }
+
+    #learning-levensvraag{
+        border: 1px solid #122b46;
+        width: 80%;
+        font-size: 14px;
+    }
+
+    #learningsInsp{
+        margin: 30px 0px 30px 0px;
+    }
 }

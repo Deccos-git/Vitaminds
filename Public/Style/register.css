@@ -33,3 +33,39 @@
     align-items: center;
     margin: 30px;
 }
+
+#register-button {
+    margin-top: 15px;
+    background-color: #fff;
+    border: 1px #0c6665 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+    color: #0c6665;
+    cursor: pointer;
+}
+
+#register-notice{
+    display: none;
+}
+
+@media only screen and (max-width: 938px){
+
+.vitaminders-information{
+    flex-wrap: wrap;
+    }
+
+    #sub-titel{
+        margin: 0px 10px 50px 10px;
+    }
+
+    .coach-information-text{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #register-div {
+        margin: 100px 0px 100px 0px;
+    }
+}

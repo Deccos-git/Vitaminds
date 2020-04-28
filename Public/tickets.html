@@ -31,8 +31,21 @@
     <a href="tickets.html"> <p>Feedback</p></a>
   </div>
   
-       <!-- menu --> 
-  <nav id="menu">
+       <!-- Mobile-menu -->
+<nav id="mobile-menu"> 
+  <!-- <div class="main-menu"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div> -->
+  <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+  <div id="mobile-menu-outer-div">
+    <div id="mobile-menu-inner-div">
+      <div class="main-menu"><a href="openup.html">Open up</a></div>
+      <div class="main-menu"><a href="inspiratie.html">Inspiratie</a></div>
+      <div class="main-menu"><a href="coaches.html">Coaches</a></div>
+      <div class = "login-logout"><p><a href="voor-coach.html">Voor coaches</a></p></div> 
+    </div>
+</nav>
+
+   <!-- menu --> 
+   <nav id="menu">
     <div id="navigation-menu">
       <div class="main-menu"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
       <div class="main-menu"><a href="openup.html">Open up</a></div>
@@ -46,7 +59,7 @@
       <div id="profile-picture">
       </div>
       <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
-      <div class = "login-logout"><a>|</a></div>
+      <div id="slash" class = "login-logout"><a>|</a></div>
       <div class = "login-logout"><p id="aanmeldCH"><a href="voor-coach.html">Voor coaches</a></p></div> 
     </div>
   </nav>
@@ -56,7 +69,7 @@
   <div id="welkom-div">
     <h3 id="welkom-auth"></h3>
     <p>Is er iets dat je opvalt, dat je graag anders had gezien, dat je mist, dat niet werkt, etc?</p>
-    <textarea name="" id="textarea" cols="100" rows="20"></textarea>
+    <textarea name="" id="textarea" cols="100" rows="20" placeholder="Jouw tip of truc"></textarea>
       <button id="button">Opslaan</button>
       <section id="tips-trucs-div">
           <p>Tips/trucs van andere Vitaminders</p>

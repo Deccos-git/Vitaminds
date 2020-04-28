@@ -303,7 +303,7 @@ const inputTextarea = document.createElement("textarea")
         inputTextarea.setAttribute("cols", "85")
         inputTextarea.setAttribute("rows", "15")
         inputTextarea.setAttribute("type", "text");
-        inputTextarea.setAttribute("placeholder", "Schrijf hier je professionele mening");
+        inputTextarea.setAttribute("placeholder", "Schrijf hier je professionele visie");
 const inspiratieDiv = document.createElement("div")
 const inspiratiep = document.createElement("p")
 const inspiratieSelect = document.createElement("select")
@@ -312,7 +312,7 @@ const buttonReact = document.createElement("button")
         buttonReact.setAttribute("id", "button-reactie-openup")
 
 
-inputH3.innerHTML = "Geef je professionele mening, " + naamClean
+inputH3.innerHTML = "Geef je professionele visie, " + naamClean
 inspiratiep.innerHTML = "---- voeg eventueel passende inspiratie toe ----"
 buttonReact.innerHTML = "Deel"
 

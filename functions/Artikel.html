@@ -20,8 +20,21 @@
     <a href="../tickets.html"> <p>Feedback</p></a>
   </div>
 
-  <!-- menu --> 
-  <nav id="menu">
+  <!-- Mobile-menu -->
+<nav id="mobile-menu"> 
+  <!-- <div class="main-menu"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div> -->
+  <img id="mobile-hamburger-menu" src="../images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+  <div id="mobile-menu-outer-div">
+    <div id="mobile-menu-inner-div">
+      <div class="main-menu"><a href="../openup.html">Open up</a></div>
+      <div class="main-menu"><a href="../inspiratie.html">Inspiratie</a></div>
+      <div class="main-menu"><a href="../coaches.html">Coaches</a></div>
+      <div class = "login-logout"><p><a href="../voor-coach.html">Voor coaches</a></p></div> 
+    </div>
+</nav>
+
+   <!-- menu --> 
+   <nav id="menu">
     <div id="navigation-menu">
       <div class="main-menu"><a href="../index.html"><img id="logo-menu" src="../images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
       <div class="main-menu"><a href="../openup.html">Open up</a></div>
@@ -35,23 +48,25 @@
       <div id="profile-picture">
       </div>
       <div id="button-login" class = "login-logout"><button><a href="../inlog.html">Log in</a></button></div>
-      <div class = "login-logout"><a>|</a></div>
+      <div id="slash" class = "login-logout"><a>|</a></div>
       <div class = "login-logout"><p id="aanmeldCH"><a href="../voor-coach.html">Voor coaches</a></p></div> 
     </div>
   </nav>
   
 
 <!-- Artikel -->
-<section class="artikel">
-    <div id="headerInsp"></div>
-    <div id="meta">
-      <h6 id="auteur"></h6>
-      <h6 id="thema">Over</h6>
-      <h6 id="datum">Geschreven op</h6>
-    </div>
-    <h2 id="titeltext"></h2>
-    <div id="bodytext" ></div>
-</section>
+<div id="artikel-outer-div">
+  <div id="headerInsp"></div>
+  <section class="artikel">
+      <div id="meta">
+        <h6 id="auteur"></h6>
+        <h6 id="thema">Over</h6>
+        <h6 id="datum">Geschreven op</h6>
+      </div>
+      <h2 id="titeltext"></h2>
+      <div id="bodytext" ></div>
+  </section>
+</div>
 
 <!-- Call to action -->
 
@@ -63,7 +78,9 @@
         <p>Koppelen aan levensvraag</p>
         <select id="learning-levensvraag">
         </select>
-        <button onclick="submitKT()" class="button-algemeen">Deel</button>
+        <div>
+          <button onclick="submitKT()" class="button-algemeen">Deel</button>
+        </div>
         <div id="artikel-favorieten">
           <div class="favorite-inner-dive">
             <img src="../images/Favorite-inspiration.png" alt="" width="25px" height="25px">

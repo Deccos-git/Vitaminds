@@ -253,3 +253,34 @@
 .omschrijving-levensvraag{
     margin-bottom: 15px;
 }
+
+@media only screen and (max-width: 938px){
+
+    #openup-overview{
+        width: 100%;
+    }
+
+    .vraag-div-detail{
+        width: auto;
+    }
+
+    textarea#input-textarea{
+        width: 100%;
+        border: 1px solid #122b46;
+    }
+
+    #inspiratie-select{
+        border: 1px solid #122b46;
+        border-radius: 15px;
+    }
+
+    .openup-div-detail{
+        border-radius: 0px;
+        box-shadow: 0;
+    }
+
+    .bron-div-detail h4{
+        font-size: 18px;
+    }
+
+}

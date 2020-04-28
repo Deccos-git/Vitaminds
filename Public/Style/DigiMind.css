@@ -14,13 +14,13 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    margin: -180px 50px 10px 60px;
+    margin: -150px 50px 10px 60px;
     height: 210px;
     width: 210px;
     padding: 0px;
     position: relative;
     border: 1px solid #FFF;
-    border-radius: 15px;
+    border-radius: 50%;
 }
 
 #profielfoto-aanpassen{
@@ -53,15 +53,6 @@
     background-color: #122b46;
     margin: 0px 0px 70px 0px;
     box-shadow: 0 7px 15px 0 #000000b4;
-}
-
-#onlineoffline{
-    height: 12px;
-    width: 12px;
-    border-radius: 50%;
-    background-color: green;
-    border: 1px solid #8e969e;
-    margin: 50px 5px 0px 15px;
 }
 
 #userID{
@@ -486,7 +477,7 @@
 }
 
 .save-div{
-    margin-top: 30px;
+    margin-top: 100px;
 }
 
 .save-div p{
@@ -951,13 +942,13 @@
 }
 
 .methodeX{
-background-color: #cf6e13;
-border: 1px #cf6e13 solid;
-border-radius: 10px;
-font-family: 'Nunito Sans', sans-serif;
-font-size: 20px;
-color: #FFF;
-padding: 15px;
+    background-color: #cf6e13;
+    border: 1px #cf6e13 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 20px;
+    color: #FFF;
+    padding: 15px;
 }
 
 #coachTools{
@@ -1195,4 +1186,129 @@ padding: 15px;
     display: flex;
     justify-content: center;
     margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 938px){
+    #userinfo {
+        flex-direction: column;
+        height: auto;
+        align-items: center;
+        text-align: center;
+    }
+
+    .dashboard-div{
+        width: auto;
+    }
+
+    #menuSub li{
+        min-width: 70px;
+        max-width: 70px;
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .descriptie{
+        min-width: 70px;
+        max-width: 70px;
+    }
+
+    .descriptie p{
+        font-size: 14px;
+    }
+
+    .coach-menu{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .profiel-inhoud{
+        margin: 0px;
+    }
+
+    #nieuweO{
+        width: auto;
+    }
+
+    .button-karakter{
+        width: auto;
+    }
+
+    #lifequestions-button{
+        width: auto;
+    }
+
+    #levensvraag-beschrijving{
+        width: 80%;
+        border: 1px solid #122b46;
+    }
+
+    .openup-div {
+        width: auto;
+        height: auto;
+    }
+
+    #contact-inner-div{
+        width: auto;
+        margin: 5px;
+    }
+
+    .item-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .item-div p, h6{
+        margin: 10px;
+        justify-self: center;
+        margin-left: 0px !important;
+    }
+
+    #row-2-div {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 0px;
+    }
+
+    #short-inner-div {
+        width: auto;
+        margin: 15px;
+    }
+
+    #coach-inner-div {
+        width: auto;
+        margin: 15px;
+    }
+
+    #experience-inner-div {
+        width: auto;
+        margin: 15px;
+    }
+
+    #menuSub {
+        width: 70px;
+    }
+
+    .inspiration-inner-div {
+        width: auto;
+    }
+
+    .reactions-inner-div {
+        width: auto;
+    }
+
+    #mijnKarakterTochten {
+        padding: 0px;
+    }
+
+    .active-innerdiv p{
+        font-size: 18px;
+    }
+
+    #artikel{
+        text-align: center;
+    }
 }

@@ -260,7 +260,31 @@ if(button != null){
       ID: cred.user.uid
     })
   }).then(() => {
-    window.open("../inlog.html")
+    db.collection("Mail").doc().set({
+      to: [email],
+message: {
+subject: `Verifier je account op Vitaminds! `,
+html: `Hallo ${gebruikersnaam}, </br></br>
+      Wat geweldig dat je een account hebt aangemaakt op Vitaminds! Het beging van een geweldig avontuur in je eigen karakter!<br><br>
+
+      Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
+      
+      Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.
+
+      Vriendelijke groet, </br></br>
+      Het Vitaminds Team </br></br>
+      <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+Gebruikersnaam: gebruikersnaam,
+Emailadres: email,
+Type: "Vitaminders"
+}
+          
+}).then(() => {
+  firebase.auth().signOut().then(function() {
+    const notice = document.getElementById("register-notice")
+    notice.style.display = "block"
+  })
+})
   })
 })
 };
@@ -319,6 +343,8 @@ const login = document.getElementById("button-login")
 const logout = document.getElementById("button-logout")
 
 auth.onAuthStateChanged(User =>{
+  console.log(User)
+  console.log(login)
   if(User){
     login.style.display = "none"
   } else {

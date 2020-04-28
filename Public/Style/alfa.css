@@ -141,3 +141,25 @@
   .react-div{
       border-bottom: 1px dotted #122b46;
   }
+
+  @media only screen and (max-width: 938px){
+
+  #welkom-div p{
+    padding: 10px;
+  }
+
+  #textarea{
+      width: 80%;
+  }
+
+  #button{
+    background-color: #fff;
+    border: 1px #0c6665 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+    color: #0c6665;
+    cursor: pointer;
+  }
+
+}

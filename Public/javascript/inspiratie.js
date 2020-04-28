@@ -25,7 +25,7 @@
 
              alleCategorienG.push(cat);
 
-             const data = cat
+             const data = doc.data()
              dataSet.push(data)
 
             })
@@ -73,9 +73,6 @@
     
         artikelDOMarray.forEach(art => {
             art.style.display = "flex"
-        })
-    
-
         
         //Filters uitlezen
         const inputCategorien = document.getElementById("inspiratiemenu")
@@ -84,47 +81,60 @@
     
     
             // Alle opties uit filter vervangen voor alle opties uit database
-        if (DDselect == "Alle themas"){
-            DDselect = alleCategorienG
+        if (select == "Alle themas"){
+            select = alleCategorienG
         }
     
         filters.Categorie.push(select)
     
         // Filteren
         const filtersObject = Object.values(filters)
+
+        console.log(filtersObject)
         filtersObject.forEach(filter => {
+            console.log(filter)
             filter.forEach(filt => {
-                if (typeof filt === 'object'){
-                filt.forEach(fil => {
-                    const fi = String(fil)
-                    filterValues.push(fi)
-                    })
-                } else {
+                console.log(filt)
+                // if (typeof filt === 'object'){
+                // filt.forEach(fil => {
+                //     const fi = String(fil)
+                //     filterValues.push(fi)
+                //     console.log(fi)
+                //     })
+                // } else {
                     filterValues.push(filt)
-                }
+                // }
             })
         })
     
         dataSet.forEach(data =>{
 
             console.log(data)
+            console.log(data.Categorien)
+            console.log(filterValues)
+
+            if(!filterValues.includes(data.Categorien)){
     
-            if(!filterValues.includes(data.Categorie)){
+                const filterTitel = data.Titel
+
+
+
+        
     
-                const filterCoach = data.Gebruikersnaam
-    
-                db.collection("Vitaminders").where("Gebruikersnaam", "==", filterCoach)
+                db.collection("Artikelen").where("Titel", "==", filterTitel)
                 .get().then(querySnapshot => {
                     querySnapshot.forEach(doc => {
-                        const username = doc.data().Gebruikersnaam
+                        const titel = doc.data().Titel
+
+                        console.log(titel)
     
-                        coachDOMarray.forEach(CD => {
+                        artikelDOMarray.forEach(artikel => {
                         
-                        const coachData = CD.dataset.name
+                        const coachData = artikel.dataset.titel
     
-                        if(coachData == username){
+                        if(coachData == titel){
                             console.log("iets?")
-                                CD.style.display = "none"
+                                art.style.display = "none"
     
                             } else {
                                 console.log("niets")
@@ -132,9 +142,10 @@
                         })
                     })
                 })
-            }  
+            }
         })
-    }
+    })
+};
     
 
 // Alle artikel inladen in overzicht
@@ -166,6 +177,7 @@ db.collection("Artikelen").get().then(function(querySnapshot) {
         // De nieuwe HTML-elementen en classes
         const mainDiv = document.createElement("div");
             mainDiv.setAttribute("class", "mainTekst")
+            mainDiv.setAttribute("data-titel", pageTitle)
         const headerTekst = document.createElement("div");
             headerTekst.setAttribute("class", "headerTekst")
         const nieuweTitel = document.createElement("h4");
@@ -385,8 +397,6 @@ db.collection('Artikelen').where('Titel', '==', titel )
             const auteurClean = auteurMeta.replace(IDauthor, "")
 
     categorie.forEach(cat =>{
-
-        console.log(cat)
     
             // Page title and meta 
         const DOM = document.head
@@ -416,8 +426,6 @@ db.collection('Artikelen').where('Titel', '==', titel )
 
         titelArt.innerHTML = pageTitleClean
         body.innerHTML = doc.data().Body
-
-console.log(cat)
 
         thema.innerHTML = "Over " + cat
 
