@@ -35,7 +35,7 @@
 }
 
 #register-button {
-    margin-top: 15px;
+    margin: 15px 15px 30px 15px;
     background-color: #fff;
     border: 1px #0c6665 solid;
     border-radius: 10px;
@@ -47,6 +47,11 @@
 
 #register-notice{
     display: none;
+}
+
+#link-coach-account p{
+    font-size: 13px;
+    margin: 5px;
 }
 
 @media only screen and (max-width: 938px){

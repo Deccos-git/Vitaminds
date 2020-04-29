@@ -38,4 +38,19 @@ function coaching(){
         // act.style.display = "none";
 }
 
+// Cookies notice
 
+const cookieDiv = document.getElementById("cookie-notice")
+
+function cookiesOK(){
+      localStorage.setItem("Cookies", "OK")
+        cookieDiv.style.display = "none"
+}
+
+const cookies = localStorage.getItem("Cookies")
+
+if(cookies == "OK"){
+        cookieDiv.style.display = "none"
+}
+
+localStorage.clear()

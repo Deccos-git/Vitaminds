@@ -355,6 +355,11 @@
 
 /* Edit profile */
 
+#notice-website-format{
+    font-size: 14px;
+    color: #cf6e13;
+}
+
 #edit-profile{
     display: flex;
     justify-content: flex-end;
@@ -501,6 +506,23 @@
     border: 1px solid #8e969e;
 }
 
+.public-div-lifequestion{
+    margin-top: 0px;
+}
+
+.public-div-lifequestion p{
+    font-size: 16px;
+    color: #122b46;
+}
+.public-div-lifequestion input{
+    width: 5px
+}
+
+.public-div-lifequestion label{
+    color: #122b46;
+    font-size: 14px;
+}
+
 .public-div p{
     font-size: 16px;
     color: #122b46;
@@ -632,6 +654,7 @@
 .item-div{
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .item-div p{
@@ -1197,7 +1220,8 @@
     }
 
     .dashboard-div{
-        width: auto;
+        width: 80%;
+        margin: 10px;
     }
 
     #menuSub li{
@@ -1251,7 +1275,7 @@
     }
 
     #contact-inner-div{
-        width: auto;
+        width: 80%;
         margin: 5px;
     }
 
@@ -1274,17 +1298,17 @@
     }
 
     #short-inner-div {
-        width: auto;
+        width: 100%;
         margin: 15px;
     }
 
     #coach-inner-div {
-        width: auto;
+        width: 100%;
         margin: 15px;
     }
 
     #experience-inner-div {
-        width: auto;
+        width: 100%;
         margin: 15px;
     }
 
@@ -1306,6 +1330,7 @@
 
     .active-innerdiv p{
         font-size: 18px;
+        margin: 10px;
     }
 
     #artikel{
@@ -1335,4 +1360,14 @@
     #inspiratiepunten-outer-div {
         margin-left: 0px;
     }
+
+    .public-div input {
+        width: 15px;
+    }
+
+    .public-div-lifequestion input {
+        width: 15px;
+    }
+
+
 }

@@ -86,6 +86,47 @@ link{
   height: 100%;
 }
 
+/* Cookies */
+
+#cookie-notice{
+  display: flex;
+  flex-direction: column;
+  background-color: #49beb7;
+  align-items: center;
+  text-align: center;
+}
+
+#cookie-notice p{
+  font-size: 16px;
+  margin-top: 5px;
+  color: #fff;
+}
+
+#button-cookies{
+  background-color: #fff;
+  border: 1px #49beb7 solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 16px;
+  color: #49beb7;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+/* Privacy statement */
+
+#statement{
+  margin: 0px 60px 0px 60px;
+}
+
+#privacySection{
+  margin: 0px 60px 0px 60px;
+}
+
+#privacySection li{
+  color: #122b46;
+}
+
 /* menu styling */
 
 #menu{
@@ -299,6 +340,8 @@ link{
 
 #button-logout{
   cursor: pointer;
+  color: #122b46;
+  border-top: 1px dotted #122b46;
 }
 
 #tickets{
@@ -842,6 +885,7 @@ link{
   padding: 5px;
   margin: 0px;
   margin-top: -80px;
+  width: 13px;
 }
 
 #feedback p{
@@ -956,6 +1000,7 @@ input {
   border: 1px solid #122b46;
   color: #122b46;
   width: 200px;
+  font-size: 14px;
 }
 
 input:focus, input:hover {
@@ -974,6 +1019,11 @@ margin: 0px 0px 30px 0px;
   margin: 0px 0px 30px 0px;
   }
 
+  textarea {
+    font-size: 14px;
+    padding: 10px;
+  }
+
 /* Menu Auth */
 
 #mijnAccount{
@@ -984,6 +1034,18 @@ margin: 0px 0px 30px 0px;
 /* Mobile */
 
 @media only screen and (max-width: 938px){
+
+  .main-menu {
+    font-size: 16px;
+  }
+
+  h2 {
+    font-size: 20px;
+}
+
+  .login-logout a {
+    font-size: 14px;
+  }
 
   .header-image{
     background-image: url("../images/avontuur3.jpg");
@@ -997,6 +1059,10 @@ margin: 0px 0px 30px 0px;
     flex-direction: column;
     align-items: center;
   }
+
+  .header-image h1 {
+    font-size: 50;
+}
 
   #logo-menu{
     z-index: -1;
@@ -1095,5 +1161,9 @@ margin: 0px 0px 30px 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  #omgeving {
+    align-items: left;
   }
 } 

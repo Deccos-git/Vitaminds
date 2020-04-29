@@ -766,10 +766,6 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
 
                 // Contact info
                 const DOM = document.getElementById("contact-inner-div")
-                const onlineDiv = document.createElement("div")
-                        onlineDiv.setAttribute("class", "item-div")
-                const onlineDOM = document.createElement("p")
-                const onlineData = document.createElement("h6")
                 const phoneDiv = document.createElement("div")
                         phoneDiv.setAttribute("class", "item-div")
                 const phoneDOM = document.createElement("p")
@@ -865,9 +861,6 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 mouse(DOMExperience, editExperience)
 
                 // Contact
-                onlineDOM.innerHTML = "Online"
-                onlineData.innerHTML = "Begin chat"
-
                 function dataUndefined(a,b,c,d,e,f){
                         e.innerHTML = f
                 if(a == undefined){
@@ -878,7 +871,7 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 }
         } 
         dataUndefined(phoneNumber, phoneDiv, phoneData, phoneNumber, phoneDOM, "Bel")
-        dataUndefined(website, websiteDiv, websiteData, `<a href="https://${website}">${website}</a>`, websiteDOM, "Website"  )
+        dataUndefined(website, websiteDiv, websiteData, `<a href="http://${website}" target="_blank">${website}</a>`, websiteDOM, "Website"  )
 
                 // About info
         dataUndefined(city, cityDiv, cityData, city, cityDOM, `<img src="../images/locatie-pin.png" alt="locatie pin" width="25px">`)
@@ -894,9 +887,6 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 //Contact
                 DOM.appendChild(editDivContact)
                 editDivContact.appendChild(editContact)
-                DOM.appendChild(onlineDiv)
-                onlineDiv.appendChild(onlineDOM)
-                onlineDiv.appendChild(onlineData)
                 DOM.appendChild(phoneDiv)
                 phoneDiv.appendChild(phoneDOM)
                 phoneDiv.appendChild(phoneData)
@@ -1203,7 +1193,7 @@ function nieuweLevensvraag(){
                 //Public Yes/No
          const publicDiv = document.createElement("div")
          const publicP = document.createElement("p")
-         publicDiv.setAttribute("class", "public-div")
+         publicDiv.setAttribute("class", "public-div-lifequestion")
          const publicForm = document.createElement("form")
                 publicForm.setAttribute("id", "public-lifequestion")
          const publicInputYes = document.createElement("input")

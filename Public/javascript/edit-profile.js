@@ -364,13 +364,19 @@ function editArticle(elem){
         //Coach contact
 
 function editContact(elem){
-        const bel = elem.parentElement.nextSibling.nextSibling.firstElementChild.nextSibling
-                const belDiv =  elem.parentElement.nextSibling.nextSibling
-        const website = elem.parentElement.nextSibling.nextSibling.nextSibling.firstElementChild.nextSibling
-                const websiteDiv = elem.parentElement.nextSibling.nextSibling.nextSibling
-                const websiteLink = elem.parentElement.nextSibling.nextSibling.nextSibling.firstElementChild.nextSibling.firstElementChild
+        const bel = elem.parentElement.nextSibling.firstElementChild.nextSibling
+        const belDiv =  elem.parentElement.nextSibling
+        const websiteDiv = elem.parentElement.nextSibling.nextSibling
+        const website = websiteDiv.firstElementChild.nextSibling
+        const websiteLink = website.firstElementChild
 
-                console.log(elem.parentElement.parentElement)
+        // Format for website notice
+        const noticeP = document.createElement("p")
+                noticeP.setAttribute("id", "notice-website-format")
+
+        noticeP.innerHTML = "Schrijf je website als <b>www.website.nl</b>. Laat het stukje <b>http://</b> eventueel weg"
+
+        websiteDiv.appendChild(noticeP)
 
         if(belDiv.style.display == "none" ){
         belDiv.style.display = "flex"
@@ -384,11 +390,12 @@ function editContact(elem){
         if(websiteDiv.style.display == "none"){
         websiteDiv.style.display = "flex"
         website.innerHTML = "Website"
-        website.style.color = "#d4d4d4"
-        website.style.borderBottom = "1px dotted #d4d4d4"
+        // website.setAttribute("contenteditable", "true")
+        // website.style.color = "#d4d4d4"
+        // website.style.borderBottom = "1px dotted #d4d4d4"
         }
 
-        website.setAttribute("contenteditable", "true")
+        websiteLink.setAttribute("contenteditable", "true")
         if(websiteLink == null){
                 console.log("Error")
         } else {
@@ -406,16 +413,21 @@ function editContact(elem){
 
         saveLesP.innerHTML = "Opslaan"
 
-        saveLesP.addEventListener("click", () => {    
+        console.log(website.firstElementChild.innerHTML)
 
-        auth.onAuthStateChanged(User =>{
+        saveLesP.addEventListener("click", () => {   
+
+                console.log(website.firstElementChild.innerHTML)
+                console.log(website.firstElementChild)
+
+                auth.onAuthStateChanged(User =>{
                         if (User){
                         let docRef = db.collection("Vitaminders").doc(User.uid);
                                 docRef.get().then(function(doc){
 
                         db.collection("Vitaminders").doc(doc.id).update({
                                 PhoneNumber: bel.innerHTML,
-                                Website: website.innerHTML
+                                Website: website.firstElementChild.innerHTML
                         }).then(() => {
                                 location.reload();
                         })

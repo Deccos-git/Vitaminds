@@ -208,6 +208,17 @@
 
 .reactie-div{
     border-bottom: 1px dotted #122b46;
+    margin-bottom: 30px;
+}
+
+.reactie-div h2{
+    color: #122b46;
+}
+
+.reactie-div h4{
+    font-size: 18px;
+    color: #0c6665;
+    padding-bottom: 30px;
 }
 
 .openup-reactie-p{

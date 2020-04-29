@@ -291,7 +291,7 @@ const inputTextarea = document.createElement("textarea")
         inputTextarea.setAttribute("cols", "85")
         inputTextarea.setAttribute("rows", "15")
         inputTextarea.setAttribute("type", "text");
-        inputTextarea.setAttribute("placeholder", "Schrijf hier je professionele visie");
+        inputTextarea.setAttribute("placeholder", "Schrijf hier je professionele visie m.b.t. deze levensvraag");
 const inspiratieDiv = document.createElement("div")
 const inspiratiep = document.createElement("p")
 const inspiratieSelect = document.createElement("select")
@@ -300,7 +300,7 @@ const buttonReact = document.createElement("button")
         buttonReact.setAttribute("id", "button-reactie-openup")
 
 
-inputH3.innerHTML = "Geef je professionele visie, " + naamClean
+inputH3.innerHTML = "Geef je professionele visie deze levensvraag, " + naamClean
 inspiratiep.innerHTML = "---- voeg eventueel passende inspiratie toe ----"
 buttonReact.innerHTML = "Deel"
 
@@ -394,7 +394,7 @@ const inspiratieSelect = inspiratieDiv.options
                     console.log(err)
             })
 
-            db.collection("Artikelen").where("TitelNoID", "==", inspiratieOption).get().then(querySnapshot => {
+            db.collection("Artikelen").where("TitelClean", "==", inspiratieOption).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     const IDArtikel = doc.data().ID
           
