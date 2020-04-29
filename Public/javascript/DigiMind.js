@@ -567,13 +567,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
                                         const giverClean = doc1.data().GebruikersnaamClean
 
+                                        console.log(source)
+
                         db.collection("Artikelen").where("Titel", "==", source).get().then(querySnapshot => {
                                 querySnapshot.forEach(doc2 => {
 
                                         const titelClean = doc2.data().TitelClean
 
+                                        console.log(titelClean)
+
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
+
                         string.innerHTML = `Je hebt 1 nieuw inspiratiepunt ontvangen!`
                         liGiver.innerHTML = `Van <u>${giverClean}</u>`
                         liGiver.addEventListener("click", () => {
@@ -1194,6 +1199,33 @@ function nieuweLevensvraag(){
                 beschrijvingSelect.setAttribute("type", "text");
                 const placeholder = "Omschrijf je levensvraag. Hoe voel je je op dit moment en hoe zou je je willen voelen?"
                 beschrijvingSelect.setAttribute("placeholder", placeholder);
+
+                //Public Yes/No
+         const publicDiv = document.createElement("div")
+         const publicP = document.createElement("p")
+         publicDiv.setAttribute("class", "public-div")
+         const publicForm = document.createElement("form")
+                publicForm.setAttribute("id", "public-lifequestion")
+         const publicInputYes = document.createElement("input")
+                 publicInputYes.setAttribute("type", "radio")
+                 publicInputYes.setAttribute("id", "Ja")
+                 publicInputYes.setAttribute("name", "Public")
+         const publicLabelYes = document.createElement("label")
+                 publicLabelYes.setAttribute("for", "Ja")
+         const publicInputNo = document.createElement("input")
+                 publicInputNo.setAttribute("type", "radio")
+                 publicInputNo.setAttribute("id", "Nee")
+                 publicInputNo.setAttribute("name", "Public")
+         const publicLabelNo = document.createElement("label")
+                 publicLabelNo.setAttribute("for", "Nee")
+ 
+         publicP.innerHTML = "Levensvraag openbaar of prive?"
+         publicLabelYes.innerHTML = "Openbaar"
+         publicLabelNo.innerHTML = "Prive"
+
+          // Pre-check public/private
+          publicInputYes.checked = true
+
         
         const button = document.createElement("button");
                 button.setAttribute("onclick", "startTocht()");
@@ -1208,6 +1240,13 @@ function nieuweLevensvraag(){
                 DOM.appendChild(vraagSelect)
                 DOM.appendChild(beschrijvingH3)
                 beschrijvingH3.appendChild(beschrijvingSelect)
+                DOM.appendChild(publicDiv)
+                publicDiv.appendChild(publicP)
+                publicDiv.appendChild(publicForm)
+                publicForm.appendChild(publicInputYes)
+                publicForm.appendChild(publicLabelYes)
+                publicForm.appendChild(publicInputNo)
+                publicForm.appendChild(publicLabelNo)
                 DOM.appendChild(button)     
 };
 
@@ -1223,6 +1262,14 @@ function startTocht(){
 
         const inputDoel = document.getElementById("ontwikkelDoel").value 
         const omschrijving = document.getElementById("levensvraag-beschrijving").value
+
+        const form = document.getElementById("public-lifequestion")
+
+        const InputArray = Array.from(form.getElementsByTagName("input"))
+        
+        InputArray.forEach(arr => {
+
+                if (arr.checked == true){            
               
        db.collection('Vitaminders').doc(User.uid).collection("Levensvragen").doc().set({
                 ID: idClean,
@@ -1230,17 +1277,19 @@ function startTocht(){
                 LevensvraagClean: inputDoel,
                 Levenslessen: [],
                 Gebruikersnaam: Gnaam,
-                Openbaar: "Nee",
+                Openbaar: arr.id,
                 Omschrijving: omschrijving,
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                 
         }).then(()=>{
                 location.reload();
+                                                })
+                                        }
+                                })
+                        }
+                })    
         })
-        }
-        })    
-        })
-}
+};
 
 // Knop "Nieuwe levenvraag" verbergen voor profielbezoekers
 auth.onAuthStateChanged(User =>{

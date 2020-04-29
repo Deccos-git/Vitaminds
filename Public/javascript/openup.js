@@ -154,7 +154,6 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
         const vraag = document.createElement("h3")
         const naam = document.createElement("p")
             naam.setAttribute("class", "openup-meta-detail")
-        const lessenH2 = document.createElement("h5")  
         const omschrijvingP = document.createElement("h5")
             omschrijvingP.setAttribute("class", "omschrijving-levensvraag")
 
@@ -165,9 +164,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
 
         naam.addEventListener("click", () => {
             window.open("../Vitaminders/" + [gebruikersnaam] + ".html", "_self");
-        })
-
-        lessenH2.innerHTML = "Levenslessen"    
+        })  
 
         //Profielfoto achterhalen en inladen in DOM
         db.collection("Vitaminders").where("Gebruikersnaam", "==", gebruikersnaam).get()
@@ -192,7 +189,6 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
         innerDiv.appendChild(vraagDiv)
         vraagDiv.appendChild(vraag)
         vraagDiv.appendChild(omschrijvingP)
-        innerDiv.appendChild(lessenH2)
 
         // Levenslessen metadata inladen die passen bij levensvragen
 
@@ -209,6 +205,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                     outerBronDiv.setAttribute("class", "outer-bron-div")
                 const bronDiv = document.createElement("div")
                     bronDiv.setAttribute("class", "bron-div-detail") 
+                const lessenH2 = document.createElement("h5")  
                 const lessen = document.createElement("h4")
                 const titelP = document.createElement("li")
                     titelP.setAttribute("class", "openup-meta-detail")
@@ -217,9 +214,10 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                 
                 lessen.innerHTML ='<img class="menu-icon" src="../images/menu-karakter.png" alt="menu contact" width="20px"> ' + les
                 inspiratorP.innerHTML = "Geinspïreerd door coach " + `<u>${inspirator}</u>`
+                lessenH2.innerHTML = "Levenslessen"  
 
                 inspiratorP.addEventListener("click", () => {
-                    window.open("../Vitaminders/" + [inspirator] + ".html", "_self");
+                    window.open("../Vitaminders/" + [inspiratorID] + ".html", "_self");
                 })
 
                 db.collection('Artikelen').where("Titel", "==", titel).get().then(querySnapshot => {
@@ -227,31 +225,21 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
 
                         const ID = doc1.data().ID
                         const titelClean = titel.replace(ID, "")
+
+                        console.log(type)
+                        console.log(titel)
                 
-                titelP.innerHTML = "Geïnspireerd in " + type + " " + `<u>${titelClean}</u>`
+                titelP.innerHTML = `Geïnspireerd in ${type} <u>${titelClean}</u>`
 
                 titelP.addEventListener("click", () => {
-                    window.open("../Artikelen/" + titelClean + ".html", "_self");
-                        })
-                    })
-                })
-
-                db.collectionGroup('Levensvragen').where("Titel", "==", titel).get().then(querySnapshot => {
-                    querySnapshot.forEach(doc => {
-
-                        const ID = doc.data().ID
-                        const titelClean = titel.replace(ID, "")
-                
-                titelP.innerHTML = "Geïnspireerd in " + type + " " + `<u>${titelClean}</u>`
-
-                titelP.addEventListener("click", () => {
-                    window.open("../Artikelen/" + titelClean + ".html", "_self");
+                    window.open("../Artikelen/" + titel + ".html", "_self");
                         })
                     })
                 })
                  
                 innerDiv.appendChild(outerBronDiv)
                 outerBronDiv.appendChild(bronDiv)
+                bronDiv.appendChild(lessenH2)
                 bronDiv.appendChild(lessen)
                 lessen.appendChild(inspiratorP)
                 lessen.appendChild(titelP)
@@ -611,10 +599,7 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
                     querySnapshot.forEach(doc => {
                         const levensvraag = doc.data().Levensvraag
 
-                        console.log(levensvraag)
-
                         const toevoegenLevenslesOption = document.createElement("option")
-                        
 
                         toevoegenLevenslesOption.innerHTML = levensvraag
 

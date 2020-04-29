@@ -274,8 +274,6 @@ function editLessons(elem){
  
          db.collectionGroup("Levenslessen").where("Levensles", "==", dataEdit).get().then(querySnapshot => {
                  querySnapshot.forEach(doc1 => {
-
-                        console.log("delete")
  
                          db.collection("Vitaminders").doc(doc.id).collection("Levenslessen").doc(doc1.id).delete()
                          .then(() => {
@@ -339,8 +337,6 @@ function editReactions(elem){
 
 function editArticle(elem){
         const titel = elem.parentElement.previousElementSibling.parentElement.dataset.titel
-
-        console.log(titel)
 
         db.collection("Artikelen").where("Titel", "==", titel).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {

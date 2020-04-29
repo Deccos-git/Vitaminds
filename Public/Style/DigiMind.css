@@ -1311,4 +1311,28 @@
     #artikel{
         text-align: center;
     }
+
+    #trophies {
+        flex-wrap: wrap;
+    }
+
+    #inner-div-gamefication {
+        text-align: center;
+    }
+
+    #notifications {
+        width: 100%;
+    }
+
+    #inspiration-notifications {
+        width: 100%;
+    }
+
+    #pageviews {
+        margin: 15px;
+    }
+
+    #inspiratiepunten-outer-div {
+        margin-left: 0px;
+    }
 }

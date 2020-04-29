@@ -3,6 +3,20 @@ const id = Math.random()
 const idAlpha = id.toString(36)
 const idClean = idAlpha.replace("0.", "")
 
+// Mobile menu
+
+const hamburgerMenu = document.getElementById("mobile-hamburger-menu")
+const mobileMenu = document.getElementById("mobile-menu-outer-div")
+
+hamburgerMenu.addEventListener("click", () => {
+       
+        if (mobileMenu.style.display == "flex") 
+        mobileMenu.style.display = "none"
+        else {
+        mobileMenu.style.display = "flex"    
+        }
+})
+
 //Ingelogd in main menu
 auth.onAuthStateChanged(User =>{
   if(User){
