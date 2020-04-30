@@ -168,9 +168,15 @@ button.addEventListener("click", () => {
 
     dataSet.forEach(data =>{
 
-        if(!filterValues.includes(data.Targetgroup, data.City)){
+        console.log("Doelgroep:", data.Targetgroup)
+        console.log("Stad:", data.City)
+        console.log(filterValues)
+
+        if(!filterValues.includes(data.City) || !filterValues.includes(data.Targetgroup)){
 
             const filterCoach = data.Gebruikersnaam
+
+            console.log(filterCoach)
 
             db.collection("Vitaminders").where("Gebruikersnaam", "==", filterCoach)
             .get().then(querySnapshot => {

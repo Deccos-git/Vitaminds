@@ -283,6 +283,8 @@
     #inspiratie-select{
         border: 1px solid #122b46;
         border-radius: 15px;
+        width: 100%;
+    font-size: 16px;
     }
 
     .openup-div-detail{
@@ -292,6 +294,13 @@
 
     .bron-div-detail h4{
         font-size: 18px;
+    }
+
+    #reacties-overview {
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+        border-radius: 0px;
+        margin: 30px;
+        width: 100%;
     }
 
 }
