@@ -175,6 +175,10 @@
     text-align: left;
 }
 
+.bron-div-detail h4{
+    font-size: 18px;
+}
+
 .auth-div-detail{
     display: flex;
     flex-direction: column;
@@ -237,13 +241,13 @@
     margin-bottom: 15px;
 }
 
-.social-div-openup{
+#social-div-openup{
     display: flex;
     justify-content: space-evenly;
     border-top: 1px dotted #122b46;
 }
 
-.social-div-openup p{
+#social-div-openup p{
     margin: 0px 15px 0px 1px;
     font-size: 14px;
     cursor: pointer;
@@ -252,9 +256,8 @@
 #toevoegen-levensles-div{
     padding: 5px;
     margin: 5px;
-    border: 1px solid rgb(235, 235, 235);
-    border-radius: 15px;
     background-color: rgb(235, 235, 235);
+    border-radius: 2px;
 }
 
 #toevoegen-levensles-div p{

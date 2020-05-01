@@ -260,10 +260,19 @@ if(button != null){
     button.addEventListener("click", () => {
   
   const email = document.getElementById('register-email').value;
-  const password = document.getElementById('register-wachtwoord').value;
+  const passwordVM = document.getElementById('register-wachtwoord').value;
+  const passwordInput = document.getElementById('register-wachtwoord')
+  const repeatPasswordVM = document.getElementById("register-wachtwoord-repeat").value
+  const repeatPasswordVMInput = document.getElementById("register-wachtwoord-repeat")
   const gebruikersnaam = document.getElementById('register-gebruikersnaam').value;
+
+  if (passwordVM != repeatPasswordVM){
+    passwordInput.style.borderColor = "red"
+    repeatPasswordVMInput.style.borderColor = "red"
+    alert("De wachtwoorden zijn niet gelijk")
+  } else {
   
-  firebase.auth().createUserWithEmailAndPassword(email, password)
+  firebase.auth().createUserWithEmailAndPassword(email, passwordVM)
   .then(cred =>{
     db.collection('Vitaminders').doc(cred.user.uid).set({
       Gebruikersnaam: cred.user.uid + gebruikersnaam,
@@ -273,7 +282,10 @@ if(button != null){
       Email: email, 
       ID: cred.user.uid
     })
-  }).then(() => {
+  }).catch((err) => {
+    alert(err)
+  })
+  .then(() => {
     db.collection("Mail").doc().set({
       to: [email],
 message: {
@@ -294,13 +306,12 @@ Type: "Vitaminders"
 }
           
 }).then(() => {
-  firebase.auth().signOut().then(function() {
-    const notice = document.getElementById("register-notice")
-    notice.style.display = "block"
+            const notice = document.getElementById("register-notice")
+            notice.style.display = "block"
+        })
+      })
+    }
   })
-})
-  })
-})
 };
 
 //Register CH
@@ -313,10 +324,19 @@ function registerCoach(){
 
   const email = document.getElementById("register-email").value;
   const password = document.getElementById("register-wachtwoord").value;
+  const passwordInput = document.getElementById("register-wachtwoord")
+  const repeatPassword = document.getElementById("register-wachtwoord-repeat").value
+  const repeatPasswordInput = document.getElementById("register-wachtwoord-repeat")
   const naam = document.getElementById("register-gebruikersnaam").value;
   const method = document.getElementById("register-method").value;
   const city = document.getElementById("register-city").value;
   const why = document.getElementById("register-why").value;
+
+  if (password != repeatPassword){
+    passwordInput.style.borderColor = "red"
+    repeatPasswordInput.style.borderColor = "red"
+    alert("De wachtwoorden zijn niet gelijk")
+  } else {
 
   firebase.auth().createUserWithEmailAndPassword(email, password)
   
@@ -334,10 +354,36 @@ function registerCoach(){
 
     })
   }).then(() => {
-    window.open("../inlog.html")
-  })
-})
+    db.collection("Mail").doc().set({
+      to: [email],
+message: {
+subject: `Verifier je account op Vitaminds! `,
+html: `Hallo ${naam}, </br></br>
+      Wat geweldig dat je een coach-account hebt aangemaakt op Vitaminds! Je bent in ieder geval van harte welkom in onze community. 
+      Daarnaast hopen we van harte dat is een mooie stap is in de online vindbaarheid van je praktijk.<br><br>
+
+      Vergeet niet om je coachgegevens goed in- en aan te vullen in je Digimind (je persoonlijke ontwikkelomgeving en tevens coachprofiel op Vitaminds).
+
+      Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
+      
+      Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.
+
+      Vriendelijke groet, </br></br>
+      Het Vitaminds Team </br></br>
+      <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+Gebruikersnaam: naam,
+Emailadres: email,
+Type: "Coach"
 }
+          
+}).then(() => {
+              const notice = document.getElementById("register-notice-CH")
+              notice.style.display = "block"
+          })
+        })
+      }
+    })
+  }
 }; registerCoach();
 
 // Gedragscode lezen
@@ -357,8 +403,6 @@ const login = document.getElementById("button-login")
 const logout = document.getElementById("button-logout")
 
 auth.onAuthStateChanged(User =>{
-  console.log(User)
-  console.log(login)
   if(User){
     login.style.display = "none"
   } else {

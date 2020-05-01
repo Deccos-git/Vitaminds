@@ -90,11 +90,13 @@
           </section>
           <section id="userinfo">
             <div id="profiel-foto-div">
-            <div id="profielfoto" onmousemove="showChangeProfilePicture()">
-              <div id="profielfoto-aanpassen" onclick="changeProfilePicture()">
-                <img src="../../images/Aanpassen.png" alt="profiel foto aanpassen" width="30px" height="30px">
+                <div id="profielfoto" onmousemove="showChangeProfilePicture()">
+                  <div id="profile-picture-outer-div">
+                    <div id="profielfoto-aanpassen" onclick="changeProfilePicture()">
+                      <img src="../../images/Aanpassen.png" alt="profiel foto aanpassen" width="30px" height="30px">
+                    </div>
+                  </div>
               </div>
-            </div>
             <div id="foto-upload-div">
               <input id="foto-upload" type="file">
               <button id="upload-file" onclick="uploadFile()">Upload</button>

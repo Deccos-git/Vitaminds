@@ -151,6 +151,25 @@ function klikdagelijks(dagelijks){
         podcast.style.display = "none"
 }
 
+// Tools menu
+
+function artikel(artikel){
+        nieuwArtikel.style.display = "flex"
+        favoCoach.style.display = "none";
+        landing.style.display = "none"
+        avontuur.style.display = "none";
+        karakter.style.display = "none";
+        favoInspiratie.style.display = "none";
+        coachContact.style.display = "none"
+         mijnCoaching.style.display = "none"
+         mijnBijdragen.style.display = "none"
+         video.style.display = "none"
+        podcast.style.display = "none"
+        dagelijksLeven.style.display = "none"
+}
+
+// Favorieten menu
+
 function klikFavInspiratie(favorietenInspiratie){
         favoInspiratie.style.display = "flex";
         avontuur.style.display = "none";
@@ -181,22 +200,6 @@ function klikFavCoaches(favorietenCoaches){
         dagelijksLeven.style.display = "none"
 }
 
-// Tools menu
-
-function artikel(artikel){
-        nieuwArtikel.style.display = "flex"
-        favoCoach.style.display = "none";
-        landing.style.display = "none"
-        avontuur.style.display = "none";
-        karakter.style.display = "none";
-        favoInspiratie.style.display = "none";
-        coachContact.style.display = "none"
-         mijnCoaching.style.display = "none"
-         mijnBijdragen.style.display = "none"
-         video.style.display = "none"
-        podcast.style.display = "none"
-        dagelijksLeven.style.display = "none"
-}
 
   // Naam uit URL halen
 const naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
@@ -240,11 +243,14 @@ auth.onAuthStateChanged(User =>{
                 const notifications = document.getElementById("profile-notifications")
                 const activeDiv = document.getElementsByClassName("active-div")
                 const editDiv = document.getElementsByClassName("edit-div")
+                const changePhoto = document.getElementById("profile-picture-outer-div")
              
                     const activeDivArray = Array.from(activeDiv)
                     activeDivArray.forEach(active => {
                         active.style.display = "none"
                     })
+
+                    changePhoto.style.display = "none"
  
                     nieuweKarakterTocht.style.display = "none"
                     toolsMenu.style.display = "none"
@@ -306,10 +312,12 @@ auth.onAuthStateChanged(User =>{
                 const notifications = document.getElementById("profile-notifications")
                 const activeDiv = document.getElementsByClassName("active-div")
                 const editDiv = document.getElementsByClassName("edit-div")
+                const changePhoto = document.getElementById("profile-picture-outer-div")
         
                 if(naam != coachNaam){
                        
-                     
+                changePhoto.style.display = "none"
+
                 const activeDivArray = Array.from(activeDiv)
                 activeDivArray.forEach(active => {
                 active.style.display = "none"
@@ -318,8 +326,6 @@ auth.onAuthStateChanged(User =>{
                 nieuweKarakterTocht.style.display = "none"
                 toolsMenu.style.display = "none"
                 notifications.style.display = "none"
-
-                console.log(editDiv)
 
                 setTimeout(() => {
                 editDiv[0].style.display = "none"
@@ -651,6 +657,9 @@ document.addEventListener("DOMContentLoaded", () => {
               
                titelDiv.appendChild(exampleDiv)
                 exampleDiv.appendChild(exampleP)
+
+
+
                                          })       
                                 }).catch(error => {
                                         console.log(error)
@@ -766,6 +775,8 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
 
                 // Contact info
                 const DOM = document.getElementById("contact-inner-div")
+
+                const titleH2 = document.createElement("h2")
                 const phoneDiv = document.createElement("div")
                         phoneDiv.setAttribute("class", "item-div")
                 const phoneDOM = document.createElement("p")
@@ -861,6 +872,9 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 mouse(DOMExperience, editExperience)
 
                 // Contact
+
+                titleH2.innerHTML = "Contact"
+
                 function dataUndefined(a,b,c,d,e,f){
                         e.innerHTML = f
                 if(a == undefined){
@@ -887,6 +901,7 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 //Contact
                 DOM.appendChild(editDivContact)
                 editDivContact.appendChild(editContact)
+                DOM.appendChild(titleH2)
                 DOM.appendChild(phoneDiv)
                 phoneDiv.appendChild(phoneDOM)
                 phoneDiv.appendChild(phoneData)
@@ -1222,7 +1237,7 @@ function nieuweLevensvraag(){
                 button.setAttribute("class", "button-algemeen");
 
                 vraagH3.innerHTML = "Wat is je levensvraag?"
-                beschrijvingH3.innerHTML = "Geef een korte omschrijving"
+                beschrijvingH3.innerHTML = "Geef een korte omschrijving van je levensvraag"
 
                 button.innerHTML = "Opslaan"
 
@@ -1410,6 +1425,14 @@ db.collectionGroup("Favorieten").where("Gebruikersnaam", "==", naam).where("Type
                 const datum = doc.data().Timestamp;
                 // const thema = doc.data().Thema;
 
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", auteur).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
+
+                                const naamClean = doc.data().GebruikersnaamClean
+
+                        })
+                })
+
         const DOM = document.getElementById("favoInspiratie");
 
         const div = document.createElement("div");
@@ -1485,10 +1508,10 @@ db.collection("Themas").get().then(querySnapshot => {
                                 const divCat = document.createElement("div")
                                         divCat.setAttribute("class", "category-div")
                                 const input = document.createElement("input")
-                                        input.type = "checkbox"
+                                        input.type = "radio"
                                         input.setAttribute("class", "category-input")
                                         input.setAttribute("id", thema)  
-                                        input.name = thema
+                                        input.name = "Categorie"
                                         input.value = thema
                                         input.innerHTML = thema
                                 const label = document.createElement("label")
@@ -1550,8 +1573,6 @@ function nieuwepostsubmit(){
                 let nieuwePostBodyVar = tinyMCE.get('tiny-mce').getContent()
 
                         const hiddenID = document.getElementById("hidden-ID").innerHTML
-
-                        console.log(hiddenID)
 
                         if (hiddenID == ""){
 

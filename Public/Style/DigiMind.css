@@ -147,6 +147,10 @@
     margin-top: 40px;
   }
 
+  #foto-upload{
+      color: #FFF;
+  }
+
 /* Submenu */
 
 
@@ -190,18 +194,20 @@
 } 
 
 .descriptie{
-    border: 2px solid #fff;
+    border-bottom: 2px solid #fff;
     min-width: 170px;
     max-width: 170px;
+    background-color:  #fff;
 }
 
 .descriptie p{
     margin: 3px;
+    color: #122b46;
 }
 
 #menuSub li{
     background-color: #122b4613;
-    border: 2px solid #fff;
+    border-bottom: 2px solid #fff;
     padding: 5px 0px 5px 0px;
     min-width: 170px;
     max-width: 170px;
@@ -555,8 +561,7 @@
 
 .dashboard-div{
     background-color: #FFF;
-    border: 1px solid #8e969e;
-    border-radius: 15px;
+    border-radius: 2px;
     width: 500px;
     height: auto;
     margin: 30px;
@@ -564,7 +569,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
+
 
 #dasboard-example-list{
     display: flex;
@@ -583,10 +590,10 @@
     border: 1px #0c6665 solid;
     border-radius: 10px;
     font-family: 'Nunito Sans', sans-serif;
-    font-size: 18px;
+    font-size: 12px;
     color: #0c6665;
     cursor: pointer;
-    width: 75%;
+    width: auto;
     align-self: center;
     margin: 15px;
 }
@@ -615,20 +622,26 @@
     padding: 15px;
     width: 300px;
     margin: 30px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 #short-inner-div{
     background-color: #FFF;
     padding: 15px;
-    width: 250px;
+    width: auto;
     margin: 30px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 #coach-inner-div{
     background-color: #FFF;
     padding: 15px;
-    width: 550px;
+    width: auto;
     margin: 30px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 #experience-inner-div{
@@ -636,6 +649,8 @@
     padding: 15px;
     width: 550px;
     margin: 30px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 #row-1-div{
@@ -646,10 +661,8 @@
 #row-2-div{
     display: flex;
     flex-wrap: wrap;
-    margin-left: 341px;
+    margin: 0px
 }
-
-
 
 .item-div{
     display: flex;
@@ -660,12 +673,14 @@
 .item-div p{
     justify-self: flex-start;
     margin-left: 15px;
-    margin-right: 50px;
+    margin-right: 40px;
+    max-width: 50%;
 }
 
 .item-div h6{
     margin-left: auto;
     margin-right: 15px;
+    max-width: 50%;
 }
 
 /* Mijn bijdragen */
@@ -687,17 +702,19 @@
 .inspiration-inner-div{
     padding: 15px;
     background-color: #FFF;
-    border-radius: 5px;
     margin: 30px;
     width: 300px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 .reactions-inner-div{
     padding: 15px;
     background-color: #FFF;
-    border-radius: 5px;
     margin: 30px;
     width: 300px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 .meta-contributions{
@@ -797,13 +814,13 @@
 }
 
 .badge{
-    border: 1px solid rgb(190, 190, 190);
-    border-radius: 15px;
     padding: 15px;
     margin: 15px;
     background-color: #fff;
     display: flex;
     flex-direction: column;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 .badge h3{
@@ -890,11 +907,12 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    width: 400px;
+    width: auto;
     height: auto;
-    border-radius: 15px;
     margin: 30px;
     background-color: #FFF;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 .levenslesDiv{
@@ -1008,26 +1026,26 @@
 .openup-div{
     display: flex;
     flex-wrap: wrap;
-    border: 1px solid #122b463a;
     margin: 15px;
-    border-radius: 15px;
     width: 100%;
     height: auto;
     padding: 15px;
     background-color: #FFF;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 .button-karakter{
     background-color: #FFF;
-    border: 1px #0c6665 solid;
-    border-radius: 10px;
     font-family: 'Nunito Sans', sans-serif;
     font-size: 18px;
     color: #0c6665;
     cursor: pointer;
     margin: 60px 10px 10px 10px;
-    width: 20%;
+    width: auto;
     align-self: center;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
   }
 
 .openup-meta{
@@ -1086,10 +1104,16 @@
 
 #favoInspiratie{
     display: none;
+    flex-direction: column;
+    justify-items: center;
+    text-align: center;
 }
 
 #favoCoach{
     display: none;
+    flex-direction: column;
+    justify-items: center;
+    text-align: center;
 }
 
 .favoCoachDiv{
@@ -1111,7 +1135,6 @@
     height: auto;
     background-color: #FFF;
 }
-
 
 /* Coach deel */
 

@@ -8,27 +8,16 @@
         }
     
     let filterValues = []
-    
-    const alleCategorienG = [];
 
-    console.log(alleCategorienG)
-    
+
      // Categorien van artikelen uitlezen
      db.collection("Artikelen")
      .get()
      .then(function(querySnapshot) {
          querySnapshot.forEach(function(doc) {
 
-            const categorien = doc.data().Categorien
-
-            categorien.forEach(cat => {
-
-             alleCategorienG.push(cat);
-
-             const data = doc.data()
-             dataSet.push(data)
-
-            })
+            const data = doc.data()
+            dataSet.push(data)
          })
      })    
 
@@ -73,6 +62,8 @@
     
         artikelDOMarray.forEach(art => {
             art.style.display = "flex"
+
+        })
         
         //Filters uitlezen
         const inputCategorien = document.getElementById("inspiratiemenu")
@@ -82,69 +73,63 @@
     
             // Alle opties uit filter vervangen voor alle opties uit database
         if (select == "Alle themas"){
-            select = alleCategorienG
-        }
+            artikelDOMarray.forEach(art => {
+                art.style.display = "flex"
+            }) 
+        } else {
+      
     
         filters.Categorie.push(select)
     
         // Filteren
         const filtersObject = Object.values(filters)
-
-        console.log(filtersObject)
         filtersObject.forEach(filter => {
-            console.log(filter)
             filter.forEach(filt => {
-                console.log(filt)
-                // if (typeof filt === 'object'){
-                // filt.forEach(fil => {
-                //     const fi = String(fil)
-                //     filterValues.push(fi)
-                //     console.log(fi)
-                //     })
-                // } else {
                     filterValues.push(filt)
-                // }
             })
-        })
+        });
     
         dataSet.forEach(data =>{
 
             console.log(data)
-            console.log(data.Categorien)
-            console.log(filterValues)
 
-            if(!filterValues.includes(data.Categorien)){
+            data.Categorien.forEach(DC => {
+
+                console.log(DC)
+                console.log(filterValues)
+
+            if(!filterValues.includes(DC)){
     
                 const filterTitel = data.Titel
+                console.log(data.Categorien)
 
-
-
-        
+                console.log("FilterTitel:", filterTitel)
     
                 db.collection("Artikelen").where("Titel", "==", filterTitel)
                 .get().then(querySnapshot => {
                     querySnapshot.forEach(doc => {
                         const titel = doc.data().Titel
 
-                        console.log(titel)
+                        console.log("Gefilterde titel:", titel)
     
                         artikelDOMarray.forEach(artikel => {
                         
                         const coachData = artikel.dataset.titel
     
                         if(coachData == titel){
-                            console.log("iets?")
-                                art.style.display = "none"
+                            console.log(`${titel} voldoet niet aan de voorwaarden`)
+                                artikel.style.display = "none"
     
                             } else {
-                                console.log("niets")
+                                console.log("Alle artikelen voldoen aan de filter-voorwaarden")
                             }
                         })
                     })
                 })
             }
         })
-    })
+        })
+    }
 };
     
 
@@ -549,11 +534,28 @@ auth.onAuthStateChanged(User =>{
 
                  // Learning verwerken in levensvraag 
                 const levensvraagSelect = selectLevensvraag.options
-                const levensvraagOption = levensvraagSelect[levensvraagSelect.selectedIndex].innerHTML;
+                const levensvraagOption = levensvraagSelect[levensvraagSelect.selectedIndex];
+
+                console.log(levensvraagOption)
+
+                if(levensvraagOption == undefined){
+                    const noticeP = document.createElement("p")
+                    const input = document.getElementById("learning-levensvraag")
+                    const notice = document.getElementById("levenvraag-notice")
+
+                    noticeP.innerHTML = `Om een levensles op te slaan moet je eerst een levensvraag aanmaken.Ga naar je <a href='../Vitaminders/${naamPost}'><u>Digimind</u></a> om een levenvraag aan te maken.`
+
+                    notice.appendChild(noticeP)
+
+                    input.style.borderColor = "red"
+                    notice.style.display = "block"
+                }
+
+                const levensvraagOptionInnerHTML = levensvraagOption.innerHTML
 
                 const KarakterRef = db.collection("Vitaminders").doc(User.uid).collection("Levenslessen").doc()
 
-                db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", levensvraagOption).get().then(querySnapshot => {
+                db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", levensvraagOptionInnerHTML).get().then(querySnapshot => {
                     querySnapshot.forEach(doc1 => {
                         const levensvraag = doc1.data().Levensvraag
 
@@ -562,7 +564,7 @@ auth.onAuthStateChanged(User =>{
                     querySnapshot.forEach(doc2 => {
                         const id = doc2.id
 
-
+                        console.log(titel)
                 const levensvraagRef = db.collection("Vitaminders").doc(User.uid).collection("Levensvragen").doc(id)
                  
                     db.collection("Artikelen").where("Titel", "==", titel).get().then(function(querySnapshot) {
@@ -570,22 +572,22 @@ auth.onAuthStateChanged(User =>{
 
                             const auteur = doc.data().Auteur;
 
-            KarakterRef.set({
-                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                Levensles: learning,
-                Auteur: auteur,
-                Gebruikersnaam: naamPost,
-                Titel: titel,
-                Inspirerend: 1,
-                Type: "Inspiratie"
-            })
+            // KarakterRef.set({
+            //     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+            //     Levensles: learning,
+            //     Auteur: auteur,
+            //     Gebruikersnaam: naamPost,
+            //     Titel: titel,
+            //     Inspirerend: 1,
+            //     Type: "Inspiratie"
+            // })
 
-            levensvraagRef.update({
-                Levenslessen: firebase.firestore.FieldValue.arrayUnion(learning)
+            // levensvraagRef.update({
+            //     Levenslessen: firebase.firestore.FieldValue.arrayUnion(learning)
 
-            }).then(()=>{
-                location.reload();
-            }) 
+            // }).then(()=>{
+            //     location.reload();
+            // }) 
             })
             }) 
                     

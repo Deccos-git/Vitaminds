@@ -364,9 +364,9 @@ function editArticle(elem){
         //Coach contact
 
 function editContact(elem){
-        const bel = elem.parentElement.nextSibling.firstElementChild.nextSibling
-        const belDiv =  elem.parentElement.nextSibling
-        const websiteDiv = elem.parentElement.nextSibling.nextSibling
+        const bel = elem.parentElement.nextSibling.nextSibling.firstElementChild.nextSibling
+        const belDiv =  elem.parentElement.nextSibling.nextSibling
+        const websiteDiv = elem.parentElement.nextSibling.nextSibling.nextSibling
         const website = websiteDiv.firstElementChild.nextSibling
         const websiteLink = website.firstElementChild
 
@@ -390,9 +390,6 @@ function editContact(elem){
         if(websiteDiv.style.display == "none"){
         websiteDiv.style.display = "flex"
         website.innerHTML = "Website"
-        // website.setAttribute("contenteditable", "true")
-        // website.style.color = "#d4d4d4"
-        // website.style.borderBottom = "1px dotted #d4d4d4"
         }
 
         websiteLink.setAttribute("contenteditable", "true")
@@ -413,12 +410,7 @@ function editContact(elem){
 
         saveLesP.innerHTML = "Opslaan"
 
-        console.log(website.firstElementChild.innerHTML)
-
         saveLesP.addEventListener("click", () => {   
-
-                console.log(website.firstElementChild.innerHTML)
-                console.log(website.firstElementChild)
 
                 auth.onAuthStateChanged(User =>{
                         if (User){

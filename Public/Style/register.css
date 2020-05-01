@@ -9,6 +9,10 @@
     border-radius: 15px;
 }
 
+#sub-titel{
+    margin: 0px 50px 0px 50px;
+}
+
 #register-div input{
     width: 200px;
 }
@@ -25,6 +29,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0px 50px 0px 50px;
 }
 
 .vitaminders-information-text{
@@ -47,6 +52,28 @@
 
 #register-notice{
     display: none;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 15px;
+    border-color: #0c6665;
+    margin-top: 15px;
+}
+
+#register-notice p{
+    color: #0c6665;
+}
+
+#register-notice-CH{
+    display: none;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 15px;
+    border-color: #0c6665;
+    margin-top: 15px;
+}
+
+#register-notice-CH p{
+    color: #0c6665;
 }
 
 #link-coach-account p{

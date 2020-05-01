@@ -23,7 +23,6 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
 
         loader.style.display = "none"
 
-
         const DOM = document.getElementById("verzamelOpenUps") 
 
         const innerDiv = document.createElement("div")
@@ -225,9 +224,6 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
 
                         const ID = doc1.data().ID
                         const titelClean = titel.replace(ID, "")
-
-                        console.log(type)
-                        console.log(titel)
                 
                 titelP.innerHTML = `Geïnspireerd in ${type} <u>${titelClean}</u>`
 
@@ -438,15 +434,38 @@ const inspiratieSelect = inspiratieDiv.options
 // Coach reacties overview
 const DOMreacties = document.getElementById("reacties-overview")
 
+const reactieDiv = document.createElement("div")
+const reactieTitle = document.createElement("h2")
+const reactieP = document.createElement("h4")
+    reactieP.setAttribute("class", "openup-reactie-p")
+const inspiratieLi = document.createElement("li")
+    inspiratieLi.setAttribute("class", "openup-meta-detail")
+const coachP = document.createElement("li")
+    coachP.setAttribute("class", "openup-meta-detail")
+const timestampP = document.createElement("li")
+    timestampP.setAttribute("class", "openup-meta-detail")
+const socialDiv = document.createElement("div")
+    socialDiv.setAttribute("id", "social-div-openup")
+const inspirerend = document.createElement("p")
+    inspirerend.setAttribute("class", "inspirerend-openup")
+const toevoegenLevensles = document.createElement("p")
+    toevoegenLevensles.setAttribute("class", "toevoegen-levensles")
+const inspiratiepuntenP = document.createElement("p")
+const bedankt = document.createElement("p")
+    bedankt.style.display = "none"
+    bedankt.style.color = "#8e0000"
+const toevoegenLevenslesDiv = document.createElement("div")
+    toevoegenLevenslesDiv.setAttribute("id", "toevoegen-levensles-div")
+    toevoegenLevenslesDiv.style.display = "none"
+const toevoegenLevenslesP = document.createElement("p")
+const toevoegenLevenslesSelect = document.createElement("select")
+const toevoegenLevenslesButton = document.createElement("button")
+const opgeslagen = document.createElement("p")
+    opgeslagen.style.display = "none"
+    opgeslagen.style.color = "#8e0000"
+const geenOption = document.createElement("option")
 
-auth.onAuthStateChanged(User =>{
-    if (User){
-       userRef = db.collection("Vitaminders").doc(User.uid)
-       userRef.get()
-        .then(doc => {
-                const naam = doc.data().Gebruikersnaam
-                const naamID = doc.data().ID
-                const naamClean = naam.replace(naamID, " ")
+
 
 const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel).orderBy("Inspiratiepunten", "desc")
     docRef.get().then(querySnapshot => {
@@ -459,41 +478,11 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
         const vraagsteller = doc.data().Vraagsteller
         const levensvraag = doc.data().Levensvraag
 
-        const reactieDiv = document.createElement("div")
             reactieDiv.setAttribute("class", "reactie-div")
             reactieDiv.setAttribute("data-reactie", reactie)
             reactieDiv.setAttribute("data-coach", coach)
             reactieDiv.setAttribute("data-vrager", vraagsteller)
-        const reactieTitle = document.createElement("h2")
-        const reactieP = document.createElement("h4")
-            reactieP.setAttribute("class", "openup-reactie-p")
-        const inspiratie = document.createElement("li")
-            inspiratie.setAttribute("class", "openup-meta-detail")
-        const coachP = document.createElement("li")
-            coachP.setAttribute("class", "openup-meta-detail")
-        const timestampP = document.createElement("li")
-            timestampP.setAttribute("class", "openup-meta-detail")
-        const socialDiv = document.createElement("div")
-            socialDiv.setAttribute("class", "social-div-openup")
-        const inspirerend = document.createElement("p")
-            inspirerend.setAttribute("class", "inspirerend-openup")
-        const toevoegenLevensles = document.createElement("p")
-            toevoegenLevensles.setAttribute("class", "toevoegen-levensles")
-        const inspiratiepuntenP = document.createElement("p")
-        const bedankt = document.createElement("p")
-            bedankt.style.display = "none"
-            bedankt.style.color = "#8e0000"
-        const toevoegenLevenslesDiv = document.createElement("div")
-            toevoegenLevenslesDiv.setAttribute("id", "toevoegen-levensles-div")
-            toevoegenLevenslesDiv.style.display = "none"
-        const toevoegenLevenslesP = document.createElement("p")
-        const toevoegenLevenslesSelect = document.createElement("select")
-        const toevoegenLevenslesButton = document.createElement("button")
-        const opgeslagen = document.createElement("p")
-            opgeslagen.style.display = "none"
-            opgeslagen.style.color = "#8e0000"
-        const geenOption = document.createElement("option")
-
+       
         coachP.addEventListener('click', (e) => {
             window.open("../Vitaminders/" + coach + ".html", "_self");
         });
@@ -507,9 +496,9 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
 
                 const inspiratieTitelClean = inspiratieTitel.replace(ID, "") 
          
-        inspiratie.innerHTML = "Meer inspiratie: " + `<u>${inspiratieTitelClean}</U>` 
+        inspiratieLi.innerHTML = "Meer inspiratie: " + `<u>${inspiratieTitelClean}</U>` 
 
-        inspiratie.addEventListener("click", () => {
+        inspiratieLi.addEventListener("click", () => {
             window.open("../Artikelen/" + [inspiratieTitelClean] + ".html", "_self");
                 })
             })
@@ -532,12 +521,20 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
         geenOption.innerHTML = "Niet aan levensvraag toevoegen"
         opgeslagen.innerHTML = `Opgeslagen in je <u>Digimind</u>`
 
+        auth.onAuthStateChanged(User =>{
+            userRef = db.collection("Vitaminders").doc(User.uid)
+            userRef.get()
+             .then(doc => {
+                     const naam = doc.data().Gebruikersnaam
+                     const naamID = doc.data().ID
+                     const naamClean = naam.replace(naamID, " ")
+
         opgeslagen.addEventListener("click", () => {
             window.open("../Vitaminders/" + naam + ".html", "_self");
                 })
 
             })
-        })
+        
 
         // Inspiratiepunt wegschrijven naar reactie en coach
         inspirerend.addEventListener("click", () => {
@@ -598,10 +595,13 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
                 .then(querySnapshot => {
                     querySnapshot.forEach(doc => {
                         const levensvraag = doc.data().Levensvraag
+                        const ID = doc.data().ID
+
+                        const levensvraagClean = levensvraag.replace(ID, "")
 
                         const toevoegenLevenslesOption = document.createElement("option")
 
-                        toevoegenLevenslesOption.innerHTML = levensvraag
+                        toevoegenLevenslesOption.innerHTML = levensvraagClean
 
                         toevoegenLevenslesSelect.appendChild(geenOption)
                         toevoegenLevenslesSelect.appendChild(toevoegenLevenslesOption)
@@ -624,12 +624,14 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
             Type: "Openup"
                     })
 
+                })
+
             const uitlezenOption = toevoegenLevenslesSelect.options
             const uitlezenSelect = uitlezenOption[uitlezenOption.selectedIndex].innerHTML;
 
             if(uitlezenSelect != "Niet aan levensvraag toevoegen"){
             
-            levensvraagRef = db.collectionGroup("Levensvragen").where("Levensvraag", "==", uitlezenSelect)
+            levensvraagRef = db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", uitlezenSelect)
             levensvraagRef.get()
             .then(querySnapshot => {
                 querySnapshot.forEach(doc => {
@@ -645,26 +647,24 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
             opgeslagen.style.display = "block"
                 })
 
-        DOMreacties.appendChild(reactieDiv)
-        reactieDiv.appendChild(reactieTitle)
-        reactieDiv.appendChild(reactieP)
-        reactieP.appendChild(coachP)
-        reactieP.appendChild(timestampP)
-        reactieP.appendChild(inspiratie)
-        reactieDiv.appendChild(socialDiv)
-        socialDiv.appendChild(inspiratiepuntenP)
-        socialDiv.appendChild(inspirerend)
-        inspirerend.appendChild(bedankt)
-        socialDiv.appendChild(toevoegenLevensles)
-        toevoegenLevensles.appendChild(toevoegenLevenslesDiv)
-        toevoegenLevenslesDiv.appendChild(toevoegenLevenslesP)
-        toevoegenLevenslesDiv.appendChild(toevoegenLevenslesSelect)
-        toevoegenLevenslesDiv.appendChild(toevoegenLevenslesButton)
-        toevoegenLevenslesDiv.appendChild(opgeslagen)
+                DOMreacties.appendChild(reactieDiv)
+                reactieDiv.appendChild(reactieTitle)
+                reactieDiv.appendChild(reactieP)
+                reactieP.appendChild(coachP)
+                reactieP.appendChild(timestampP)
+                reactieP.appendChild(inspiratieLi)
+                reactieDiv.appendChild(socialDiv)
+                socialDiv.appendChild(inspiratiepuntenP)
+                socialDiv.appendChild(inspirerend)
+                inspirerend.appendChild(bedankt)
+                socialDiv.appendChild(toevoegenLevensles)
+                toevoegenLevensles.appendChild(toevoegenLevenslesDiv)
+                toevoegenLevenslesDiv.appendChild(toevoegenLevenslesP)
+                toevoegenLevenslesDiv.appendChild(toevoegenLevenslesSelect)
+                toevoegenLevenslesDiv.appendChild(toevoegenLevenslesButton)
+                toevoegenLevenslesDiv.appendChild(opgeslagen)
                        
                      })
                 })
             })
-    }
 });
-
