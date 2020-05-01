@@ -211,7 +211,6 @@
 }
 
 .reactie-div{
-    border-bottom: 1px dotted #122b46;
     margin-bottom: 30px;
 }
 
@@ -222,11 +221,11 @@
 .reactie-div h4{
     font-size: 18px;
     color: #0c6665;
-    padding-bottom: 30px;
+    padding-top: 30px;
 }
 
 .openup-reactie-p{
-    margin: 30px;
+    margin: 30px 30px 20px 30px;
 }
 
 #button-reactie-openup{
@@ -244,7 +243,7 @@
 #social-div-openup{
     display: flex;
     justify-content: space-evenly;
-    border-top: 1px dotted #122b46;
+    background-color: rgb(241, 241, 241);
 }
 
 #social-div-openup p{

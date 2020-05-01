@@ -269,15 +269,6 @@ auth.onAuthStateChanged(User =>{
 });
 
 // Coach reactie input
-auth.onAuthStateChanged(User =>{
-    if (User){
-        const docRef = db.collection("Vitaminders").doc(User.uid);
-            docRef.get().then(function(doc){
-            
-            const naam = doc.data().Gebruikersnaam;
-            const coachID = doc.data().ID
-
-            const naamClean = naam.replace(coachID, "")
 
 const DOMinput = document.createElement("div")
             DOMinput.setAttribute("id", "reactie-innerDiv")
@@ -294,7 +285,18 @@ const inspiratieSelect = document.createElement("select")
         inspiratieSelect.setAttribute("id", "inspiratie-select")
 const buttonReact = document.createElement("button")
         buttonReact.setAttribute("id", "button-reactie-openup")
+const inspiratieNone = document.createElement("option")
 
+
+        auth.onAuthStateChanged(User =>{
+            if (User){
+                const docRef = db.collection("Vitaminders").doc(User.uid);
+                    docRef.get().then(function(doc){
+                    
+                    const naam = doc.data().Gebruikersnaam;
+                    const coachID = doc.data().ID
+        
+                    const naamClean = naam.replace(coachID, "")
 
 inputH3.innerHTML = "Geef je professionele visie deze levensvraag, " + naamClean
 inspiratiep.innerHTML = "---- voeg eventueel passende inspiratie toe ----"
@@ -307,9 +309,9 @@ db.collection("Artikelen").where("Auteur", "==", naam).get().then(querySnapshot 
         const inspiratieTitelID = doc.data().Titel
         const inspiratieTitel = inspiratieTitelID.replace(ID, "")
 
-
 const inspiratieOption = document.createElement("option")
 
+inspiratieNone.innerHTML = "Geen inspiratie bijvoegen"
 inspiratieOption.innerHTML = inspiratieTitel
 
 if(DOMinput != null){
@@ -320,6 +322,7 @@ DOMinput.appendChild(inputTextarea)
 DOMinput.appendChild(inspiratieDiv)
 inspiratieDiv.appendChild(inspiratiep)
 inspiratieDiv.appendChild(inspiratieSelect)
+inspiratieSelect.appendChild(inspiratieNone)
 inspiratieSelect.appendChild(inspiratieOption)
 DOMinput.appendChild(buttonReact)
                     } else {
@@ -373,42 +376,58 @@ const inspiratieSelect = inspiratieDiv.options
 
             const levensvraagMail = levensvraag.replace(ID, "")
             
-            db.collection("Mail").doc().set({
-                    to: [email],
-            message: {
-            subject: `${vragerClean}, je hebt een nieuwe reactie op je levensvraag ${levensvraagMail} op Vitaminds! `,
-            html: `Hallo ${vragerClean}, </br></br>
-                    Je hebt een reactie ontvangen van coach ${GnaamClean} op je levensvraag "${levensvraagMail}"</br>
-                    Bekijk de reactie <a href="https://vitaminds.nu/Open/${vraag}.html"><u>hier.</u></a></br></br>
-                    Vriendelijke groet, </br></br>
-                    Het Vitaminds Team </br></br>
-                    <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-            Coach: Gnaam,
-            }
+//             db.collection("Mail").doc().set({
+//                     to: [email],
+//             message: {
+//             subject: `${vragerClean}, je hebt een nieuwe reactie op je levensvraag ${levensvraagMail} op Vitaminds! `,
+//             html: `Hallo ${vragerClean}, </br></br>
+//                     Je hebt een reactie ontvangen van coach ${GnaamClean} op je levensvraag "${levensvraagMail}"</br>
+//                     Bekijk de reactie <a href="https://vitaminds.nu/Open/${vraag}.html"><u>hier.</u></a></br></br>
+//                     Vriendelijke groet, </br></br>
+//                     Het Vitaminds Team </br></br>
+//                     <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+//             Coach: Gnaam,
+//             }
                         
-            }).catch((err) => {
-                    console.log(err)
-            })
+//             }).catch((err) => {
+//                     console.log(err)
+//             })
+            if(inspiratieOption == "Geen inspiratie bijvoegen"){
+                db.collection("Vitaminders").doc(doc2.id).collection("Reactions").doc().set({
+                                Gebruikersnaam: Gnaam,
+                                Reactie: inputReactie,
+                                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                Levensvraag: ID + levensvraag,
+                                Vraagsteller: vrager,
+                                InspiratieTitel: "Geen inspiratie bijgevoegd",
+                                Inspiratiepunten: 1,
+                                New: "Yes",
+                                Domain: "Levensvraag"
+                                                }).then(()=>{
+                                                location.reload();
+                                            })
+            } else {
 
             db.collection("Artikelen").where("TitelClean", "==", inspiratieOption).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     const IDArtikel = doc.data().ID
           
-   db.collection("Vitaminders").doc(doc2.id).collection("Reactions").doc().set({
-            Gebruikersnaam: Gnaam,
-            Reactie: inputReactie,
-            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-            Levensvraag: ID + levensvraag,
-            Vraagsteller: vrager,
-            InspiratieTitel: IDArtikel + inspiratieOption,
-            Inspiratiepunten: 1,
-            New: "Yes",
-            Domain: "Levensvraag"
-                            }).then(()=>{
-                            location.reload();
-                        })
-                    })
-                })
+                    db.collection("Vitaminders").doc(doc2.id).collection("Reactions").doc().set({
+                                Gebruikersnaam: Gnaam,
+                                Reactie: inputReactie,
+                                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                Levensvraag: ID + levensvraag,
+                                Vraagsteller: vrager,
+                                InspiratieTitel: IDArtikel + inspiratieOption,
+                                Inspiratiepunten: 1,
+                                New: "Yes",
+                                Domain: "Levensvraag"
+                                                }).then(()=>{
+                                                location.reload();
+                                                    })
+                                                })
+                                            })
+                                        }
                                     })
                                 })
                             }) 
@@ -418,7 +437,7 @@ const inspiratieSelect = inspiratieDiv.options
                 }
                 
             })
-        })    
+        })   
     })
 } else {
     console.log("Error")
@@ -434,37 +453,12 @@ const inspiratieSelect = inspiratieDiv.options
 // Coach reacties overview
 const DOMreacties = document.getElementById("reacties-overview")
 
-const reactieDiv = document.createElement("div")
 const reactieTitle = document.createElement("h2")
-const reactieP = document.createElement("h4")
-    reactieP.setAttribute("class", "openup-reactie-p")
-const inspiratieLi = document.createElement("li")
-    inspiratieLi.setAttribute("class", "openup-meta-detail")
-const coachP = document.createElement("li")
-    coachP.setAttribute("class", "openup-meta-detail")
-const timestampP = document.createElement("li")
-    timestampP.setAttribute("class", "openup-meta-detail")
-const socialDiv = document.createElement("div")
-    socialDiv.setAttribute("id", "social-div-openup")
-const inspirerend = document.createElement("p")
-    inspirerend.setAttribute("class", "inspirerend-openup")
-const toevoegenLevensles = document.createElement("p")
-    toevoegenLevensles.setAttribute("class", "toevoegen-levensles")
-const inspiratiepuntenP = document.createElement("p")
-const bedankt = document.createElement("p")
-    bedankt.style.display = "none"
-    bedankt.style.color = "#8e0000"
-const toevoegenLevenslesDiv = document.createElement("div")
-    toevoegenLevenslesDiv.setAttribute("id", "toevoegen-levensles-div")
-    toevoegenLevenslesDiv.style.display = "none"
-const toevoegenLevenslesP = document.createElement("p")
-const toevoegenLevenslesSelect = document.createElement("select")
-const toevoegenLevenslesButton = document.createElement("button")
-const opgeslagen = document.createElement("p")
-    opgeslagen.style.display = "none"
-    opgeslagen.style.color = "#8e0000"
 const geenOption = document.createElement("option")
 
+reactieTitle.innerHTML = "Wat onze coaches denken"
+
+DOMreacties.appendChild(reactieTitle)
 
 
 const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel).orderBy("Inspiratiepunten", "desc")
@@ -474,21 +468,62 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
         const reactie = doc.data().Reactie
         const coach = doc.data().Gebruikersnaam
         const inspiratieTitel = doc.data().InspiratieTitel
+
         const inspiratiepunten = doc.data().Inspiratiepunten
         const vraagsteller = doc.data().Vraagsteller
         const levensvraag = doc.data().Levensvraag
 
+        const reactieDiv = document.createElement("div")
             reactieDiv.setAttribute("class", "reactie-div")
             reactieDiv.setAttribute("data-reactie", reactie)
             reactieDiv.setAttribute("data-coach", coach)
             reactieDiv.setAttribute("data-vrager", vraagsteller)
+            reactieDiv.setAttribute("data-levensvraag", levensvraag)
+        const reactieP = document.createElement("h4")
+            reactieP.setAttribute("class", "openup-reactie-p")
+        const inspiratieLi = document.createElement("li")
+            inspiratieLi.setAttribute("class", "openup-meta-detail")
+        const coachP = document.createElement("li")
+            coachP.setAttribute("class", "openup-meta-detail")
+        const timestampP = document.createElement("li")
+            timestampP.setAttribute("class", "openup-meta-detail")
+        const socialDiv = document.createElement("div")
+            socialDiv.setAttribute("id", "social-div-openup")
+        const inspirerend = document.createElement("p")
+            inspirerend.setAttribute("class", "inspirerend-openup")
+            inspirerend.setAttribute("onclick", "inspirerend(this)")
+        const toevoegenLevensles = document.createElement("p")
+            toevoegenLevensles.setAttribute("class", "toevoegen-levensles")
+            toevoegenLevensles.setAttribute("onclick", "toevoegenLevensles(this)")
+        const inspiratiepuntenP = document.createElement("p")
+        const bedankt = document.createElement("p")
+            bedankt.setAttribute("id", "bedankt-open-up-inspirerend")
+            bedankt.style.display = "none"
+            bedankt.style.color = "#8e0000"
+        const toevoegenLevenslesDiv = document.createElement("div")
+            toevoegenLevenslesDiv.setAttribute("id", "toevoegen-levensles-div")
+            toevoegenLevenslesDiv.style.display = "none"
+        const toevoegenLevenslesP = document.createElement("p")
+        const toevoegenLevenslesSelect = document.createElement("select")
+        const toevoegenLevenslesButton = document.createElement("button")
+            toevoegenLevenslesButton.setAttribute("onclick", "toevoegenLevenslesButton(this)")
+            toevoegenLevenslesButton.setAttribute("data-reactie", reactie)
+            toevoegenLevenslesButton.setAttribute("data-coach", coach)
+            toevoegenLevenslesButton.setAttribute("data-vrager", vraagsteller)
+            toevoegenLevenslesButton.setAttribute("data-levensvraag", levensvraag)
+        const opgeslagen = document.createElement("p")
+            opgeslagen.style.display = "none"
+            opgeslagen.style.color = "#8e0000"
        
         coachP.addEventListener('click', (e) => {
             window.open("../Vitaminders/" + coach + ".html", "_self");
         });
 
-        reactieTitle.innerHTML = "Wat onze coaches denken"
         reactieP.innerHTML = reactie
+
+        if(inspiratieTitel == "Geen inspiratie bijgevoegd"){
+            inspiratieLi.style.display = "none"
+        } else {
 
         db.collection("Artikelen").where("Titel", "==", inspiratieTitel).get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
@@ -500,9 +535,10 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
 
         inspiratieLi.addEventListener("click", () => {
             window.open("../Artikelen/" + [inspiratieTitelClean] + ".html", "_self");
+                    })
                 })
             })
-        });
+        };
 
         db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
@@ -516,6 +552,7 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
         inspirerend.innerHTML = "Inspirerend!"
         inspiratiepuntenP.innerHTML = inspiratiepunten
         bedankt.innerHTML = "Bedankt! (Ook namens " + coach + ")"
+        toevoegenLevensles.innerHTML = "Opslaan als levensles"
         toevoegenLevenslesP.innerHTML = "Levensles toevoegen aan levensvraag?"
         toevoegenLevenslesButton.innerHTML = "Opslaan"
         geenOption.innerHTML = "Niet aan levensvraag toevoegen"
@@ -534,14 +571,46 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
                 })
 
             })
-        
+    
+                })
+                
+                DOMreacties.appendChild(reactieDiv)
+                reactieDiv.appendChild(reactieP)
+                reactieDiv.appendChild(coachP)
+                reactieDiv.appendChild(timestampP)
+                reactieDiv.appendChild(inspiratieLi)
+                reactieDiv.appendChild(socialDiv)
+                socialDiv.appendChild(inspiratiepuntenP)
+                socialDiv.appendChild(inspirerend)
+                inspirerend.appendChild(bedankt)
+                socialDiv.appendChild(toevoegenLevensles)
+                toevoegenLevensles.appendChild(toevoegenLevenslesDiv)
+                toevoegenLevenslesDiv.appendChild(toevoegenLevenslesP)
+                toevoegenLevenslesDiv.appendChild(toevoegenLevenslesSelect)
+                toevoegenLevenslesDiv.appendChild(toevoegenLevenslesButton)
+                toevoegenLevenslesDiv.appendChild(opgeslagen)
+            })
+        })
+    })
+});
 
-        // Inspiratiepunt wegschrijven naar reactie en coach
-        inspirerend.addEventListener("click", () => {
-            const div = inspirerend.parentElement.parentElement
-           const reactieData = div.dataset.reactie
-           const coachData = div.dataset.coach
-           const vragerData = div.dataset.vrager
+
+   // Inspiratiepunt wegschrijven naar reactie en coach
+
+   function inspirerend(elem){
+       
+            const elemDiv = elem.previousSibling.parentElement.previousSibling.previousSibling.previousSibling.previousSibling.parentElement
+           const reactieData = elemDiv.dataset.reactie
+           const coachData = elemDiv.dataset.coach
+           const vragerData = elemDiv.dataset.vrager
+           const levensvraag = elemDiv.dataset.levensvraag
+
+           auth.onAuthStateChanged(User =>{
+            userRef = db.collection("Vitaminders").doc(User.uid)
+            userRef.get()
+             .then(doc => {
+                     const naam = doc.data().Gebruikersnaam
+
                 // Naar Coach
             db.collection("Vitaminders").where("Gebruikersnaam", "==", coachData).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
@@ -549,7 +618,7 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
 
                         New: "Yes",
                         User: coachData,
-                        Source: `openup van ${vraagsteller}`,
+                        Source: vragerData,
                         Lifequestion: levensvraag,
                         Giver: naam,
                         Action: reactieData,
@@ -560,7 +629,7 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
                     db.collectionGroup("Reactions").where("Reactie", "==", reactieData).get().then(querySnapshot => {
                         querySnapshot.forEach(doc3 => {
 
-                    db.collection("Vitaminders").where("Gebruikersnaam", "==", vragerData).get().then(querySnapshot => {
+                    db.collection("Vitaminders").where("Gebruikersnaam", "==", coachData).get().then(querySnapshot => {
                             querySnapshot.forEach(doc4 => {
                             db.collection("Vitaminders").doc(doc4.id).collection("Reactions").doc(doc3.id).update({
         
@@ -573,17 +642,19 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
                     })
                 })
             })
-            
+            const bedankt = elem.firstElementChild
             bedankt.style.display = "block"
+        })
+    })
+};
 
-        });
+
 
         // Toevoegen aan levensles verwerken in database
-        toevoegenLevensles.innerHTML = "Opslaan als levensles"
 
-        toevoegenLevensles.addEventListener("click", () => {
+        function toevoegenLevensles(elem){
 
-            toevoegenLevenslesDiv.style.display = "block"
+           elem.firstElementChild.style.display = "block"
 
             const inspiratieSelect = document.createElement("select")
         inspiratieSelect.setAttribute("id", "inspiratie-select")
@@ -601,18 +672,29 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
 
                         const toevoegenLevenslesOption = document.createElement("option")
 
+                        const toevoegenLevenslesSelect = elem.firstElementChild.firstElementChild.nextSibling
+                        
                         toevoegenLevenslesOption.innerHTML = levensvraagClean
 
                         toevoegenLevenslesSelect.appendChild(geenOption)
                         toevoegenLevenslesSelect.appendChild(toevoegenLevenslesOption)
-                    })
                 })
-            }
-        })
-    });
+            })
+        }
+    })
+};
 
     
-        toevoegenLevenslesButton.addEventListener("click", () => {
+        function toevoegenLevenslesButton(elem){
+
+            const reactie = elem.dataset.reactie
+            const coach = elem.dataset.coach
+
+            auth.onAuthStateChanged(User =>{
+                userRef = db.collection("Vitaminders").doc(User.uid)
+                userRef.get()
+                 .then(doc => {
+                         const naam = doc.data().Gebruikersnaam
 
             db.collection("Vitaminders").doc(User.uid).collection("Levenslessen").doc().set({
             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -624,12 +706,9 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
             Type: "Openup"
                     })
 
-                })
-
-            const uitlezenOption = toevoegenLevenslesSelect.options
+            const uitlezenOption = elem.previousSibling.options
             const uitlezenSelect = uitlezenOption[uitlezenOption.selectedIndex].innerHTML;
 
-            if(uitlezenSelect != "Niet aan levensvraag toevoegen"){
             
             levensvraagRef = db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", uitlezenSelect)
             levensvraagRef.get()
@@ -642,29 +721,8 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
                     
                 })
             })
-        }
 
-            opgeslagen.style.display = "block"
-                })
-
-                DOMreacties.appendChild(reactieDiv)
-                reactieDiv.appendChild(reactieTitle)
-                reactieDiv.appendChild(reactieP)
-                reactieP.appendChild(coachP)
-                reactieP.appendChild(timestampP)
-                reactieP.appendChild(inspiratieLi)
-                reactieDiv.appendChild(socialDiv)
-                socialDiv.appendChild(inspiratiepuntenP)
-                socialDiv.appendChild(inspirerend)
-                inspirerend.appendChild(bedankt)
-                socialDiv.appendChild(toevoegenLevensles)
-                toevoegenLevensles.appendChild(toevoegenLevenslesDiv)
-                toevoegenLevenslesDiv.appendChild(toevoegenLevenslesP)
-                toevoegenLevenslesDiv.appendChild(toevoegenLevenslesSelect)
-                toevoegenLevenslesDiv.appendChild(toevoegenLevenslesButton)
-                toevoegenLevenslesDiv.appendChild(opgeslagen)
-                       
-                     })
-                })
+            elem.nextSibling.style.display = "block"
+                 })
             })
-});
+        }
