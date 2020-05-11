@@ -25,6 +25,7 @@ auth.onAuthStateChanged(User =>{
     
   db.collection("Tickets").doc().set({
     Gebruikersnaam: Gnaam,
+    GebruikersnaamClean, naamClean,
     Opmerking: opmerking,
     Verwerkt: "Nee"
         }).then(() => {
@@ -41,9 +42,10 @@ auth.onAuthStateChanged(User =>{
   db.collection("Tickets").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
-      const naam = doc.data().Gebruikersnaam
+      const naam = doc.data().GebruikersnaamClean
       const opmerking = doc.data().Opmerking
       const verwerkt = doc.data().Verwerkt
+
 
       const reactDiv = document.createElement("div")
         reactDiv.className = "react-div"

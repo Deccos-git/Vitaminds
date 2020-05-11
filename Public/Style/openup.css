@@ -44,6 +44,10 @@
     border-bottom: 1px #122b46 dotted;
 }
 
+.vraag-div h3{
+    padding: 0px 15px 0px 15px;
+}
+
 .bron-div{
     margin-right: 15px;
 }
@@ -226,6 +230,20 @@
 
 .openup-reactie-p{
     margin: 30px 30px 20px 30px;
+}
+
+.openup-coach-reaction-photo{
+    height: 30px;
+    width: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.reaction-coach-div{
+    display: flex;
 }
 
 #button-reactie-openup{

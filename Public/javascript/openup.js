@@ -191,6 +191,9 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
 
         // Levenslessen metadata inladen die passen bij levensvragen
 
+        const lessenH2 = document.createElement("h5") 
+        innerDiv.appendChild(lessenH2)
+
         levenslessen.forEach(les => {
 
         db.collectionGroup("Levenslessen").where("Levensles", "==", les).get().then(querySnapshot => {
@@ -203,8 +206,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                 const outerBronDiv = document.createElement("div")
                     outerBronDiv.setAttribute("class", "outer-bron-div")
                 const bronDiv = document.createElement("div")
-                    bronDiv.setAttribute("class", "bron-div-detail") 
-                const lessenH2 = document.createElement("h5")  
+                    bronDiv.setAttribute("class", "bron-div-detail")  
                 const lessen = document.createElement("h4")
                 const titelP = document.createElement("li")
                     titelP.setAttribute("class", "openup-meta-detail")
@@ -212,7 +214,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                     inspiratorP.setAttribute("class", "openup-meta-detail")
                 
                 lessen.innerHTML ='<img class="menu-icon" src="../images/menu-karakter.png" alt="menu contact" width="20px"> ' + les
-                inspiratorP.innerHTML = "Geinspïreerd door coach " + `<u>${inspirator}</u>`
+                inspiratorP.innerHTML = "Geinspïreerd door coach: " + `<u>${inspirator}</u>`
                 lessenH2.innerHTML = "Levenslessen"  
 
                 inspiratorP.addEventListener("click", () => {
@@ -225,17 +227,17 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                         const ID = doc1.data().ID
                         const titelClean = titel.replace(ID, "")
                 
-                titelP.innerHTML = `Geïnspireerd in ${type} <u>${titelClean}</u>`
+                titelP.innerHTML = `Geïnspireerd in ${type}: <u>${titelClean}</u>`
 
                 titelP.addEventListener("click", () => {
                     window.open("../Artikelen/" + titel + ".html", "_self");
                         })
                     })
                 })
-                 
+                
+              
                 innerDiv.appendChild(outerBronDiv)
                 outerBronDiv.appendChild(bronDiv)
-                bronDiv.appendChild(lessenH2)
                 bronDiv.appendChild(lessen)
                 lessen.appendChild(inspiratorP)
                 lessen.appendChild(titelP)
@@ -376,22 +378,22 @@ const inspiratieSelect = inspiratieDiv.options
 
             const levensvraagMail = levensvraag.replace(ID, "")
             
-//             db.collection("Mail").doc().set({
-//                     to: [email],
-//             message: {
-//             subject: `${vragerClean}, je hebt een nieuwe reactie op je levensvraag ${levensvraagMail} op Vitaminds! `,
-//             html: `Hallo ${vragerClean}, </br></br>
-//                     Je hebt een reactie ontvangen van coach ${GnaamClean} op je levensvraag "${levensvraagMail}"</br>
-//                     Bekijk de reactie <a href="https://vitaminds.nu/Open/${vraag}.html"><u>hier.</u></a></br></br>
-//                     Vriendelijke groet, </br></br>
-//                     Het Vitaminds Team </br></br>
-//                     <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-//             Coach: Gnaam,
-//             }
+            db.collection("Mail").doc().set({
+                    to: [email],
+            message: {
+            subject: `${vragerClean}, je hebt een nieuwe reactie op je levensvraag ${levensvraagMail} op Vitaminds.`,
+            html: `Hallo ${vragerClean}, </br></br>
+                    Je hebt een reactie ontvangen van coach ${GnaamClean} op je levensvraag "${levensvraagMail}"</br>
+                    Bekijk de reactie <a href="https://vitaminds.nu/Open/${vraag}.html"><u>hier.</u></a></br></br>
+                    Vriendelijke groet, </br></br>
+                    Het Vitaminds Team </br></br>
+                    <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+            Coach: Gnaam,
+            }
                         
-//             }).catch((err) => {
-//                     console.log(err)
-//             })
+            }).catch((err) => {
+                    console.log(err)
+            })
             if(inspiratieOption == "Geen inspiratie bijvoegen"){
                 db.collection("Vitaminders").doc(doc2.id).collection("Reactions").doc().set({
                                 Gebruikersnaam: Gnaam,
@@ -458,14 +460,14 @@ const geenOption = document.createElement("option")
 
 reactieTitle.innerHTML = "Wat onze coaches denken"
 
-DOMreacties.appendChild(reactieTitle)
-
 
 const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel).orderBy("Inspiratiepunten", "desc")
     docRef.get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
         const reactie = doc.data().Reactie
+
+
         const coach = doc.data().Gebruikersnaam
         const inspiratieTitel = doc.data().InspiratieTitel
 
@@ -483,6 +485,8 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
             reactieP.setAttribute("class", "openup-reactie-p")
         const inspiratieLi = document.createElement("li")
             inspiratieLi.setAttribute("class", "openup-meta-detail")
+        const coachDiv = document.createElement("div")
+            coachDiv.setAttribute("class", "reaction-coach-div")
         const coachP = document.createElement("li")
             coachP.setAttribute("class", "openup-meta-detail")
         const timestampP = document.createElement("li")
@@ -545,8 +549,19 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
 
                 const coachID = doc1.data().ID
                 const coachClean = coach.replace(coachID, "")
+                const profielfoto = doc1.data().Profielfoto
+                const naam = doc1.data().Gebruikersnaam
 
-        coachP.innerHTML = "Geschreven door coach " + `<u>${coachClean}</u>`
+        
+        const photoDiv = document.createElement("div")
+                photoDiv.setAttribute("class", "openup-coach-reaction-photo")
+                photoDiv.style.backgroundImage = `url(${profielfoto})`
+        
+                photoDiv.addEventListener("click", () => {
+                    window.open("../Vitaminders/" + naam + ".html", "_self");
+                                })
+
+        coachP.innerHTML = "Geschreven door coach: " + `<u>${coachClean}</u>`
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         timestampP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
         inspirerend.innerHTML = "Inspirerend!"
@@ -568,15 +583,16 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
 
         opgeslagen.addEventListener("click", () => {
             window.open("../Vitaminders/" + naam + ".html", "_self");
-                })
-
-            })
-    
+                        })
+                    })
                 })
                 
+                DOMreacties.appendChild(reactieTitle)
                 DOMreacties.appendChild(reactieDiv)
                 reactieDiv.appendChild(reactieP)
-                reactieDiv.appendChild(coachP)
+                reactieDiv.appendChild(coachDiv)
+                coachDiv.appendChild(coachP)
+                coachDiv.appendChild(photoDiv)
                 reactieDiv.appendChild(timestampP)
                 reactieDiv.appendChild(inspiratieLi)
                 reactieDiv.appendChild(socialDiv)
@@ -592,7 +608,8 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
             })
         })
     })
-});
+})
+
 
 
    // Inspiratiepunt wegschrijven naar reactie en coach
@@ -617,13 +634,12 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
                     db.collection("Vitaminders").doc(doc.id).collection("Inspiration").doc().set({
 
                         New: "Yes",
-                        User: coachData,
-                        Source: vragerData,
-                        Lifequestion: levensvraag,
+                        Reciever: coachData,
+                        Inspiration: reactieData,
+                        Source: levensvraag,
                         Giver: naam,
-                        Action: reactieData,
                         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                        Type: "reactie"
+                        Type: "Openup"
                     })
                     // Naar reactie
                     db.collectionGroup("Reactions").where("Reactie", "==", reactieData).get().then(querySnapshot => {
@@ -723,6 +739,6 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
             })
 
             elem.nextSibling.style.display = "block"
-                 })
             })
-        }
+    })
+};

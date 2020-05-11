@@ -412,7 +412,7 @@ db.collection('Artikelen').where('Titel', '==', titel )
         titelArt.innerHTML = pageTitleClean
         body.innerHTML = doc.data().Body
 
-        thema.innerHTML = "Over " + cat
+        thema.innerHTML = cat
 
         thema.addEventListener("click", () => {
             window.open("../Thema/" + cat, "_self");
@@ -441,44 +441,7 @@ db.collection('Artikelen').where('Titel', '==', titel )
             })
         })
     })
-}).then(() => {
-
-
-
-// Artikelen DETAILPAGINA formatten
-
-const bodyTekst = document.getElementById("bodytext")
-
-const deleteNBSPbody = bodyTekst.innerHTML
-
-    deleteNBSPbody.replace("&nbsp;", " ")
-
-const bodyTextP = document.getElementById("bodytext").getElementsByTagName( 'p' )
-
-const bodyPArray = Array.from(bodyTextP)
-
-bodyPArray.forEach(p => {
-
-    p.style.color = "#122b46"
-    p.style.fontSize = "18px"
-    p.style.fontFamily = "Nunito Sans', sans-serif"
-    p.style.padding = "0px"
-    p.style.letterSpacing = "0.6px"
-
-    const deleteNBSP = p.innerHTML
-
-    deleteNBSP.replace("&nbsp;", " ")
-
-    })
-
-    const bodyStrong = document.getElementById("bodytext").querySelectorAll("strong")
-
-    bodyStrong.forEach(strong => {
-        strong.style.display = "contents"
-    })
-
 })
-
 
 // Call to action verbergen voor niet ingelogde users
 auth.onAuthStateChanged(User =>{
@@ -536,8 +499,6 @@ auth.onAuthStateChanged(User =>{
                 const levensvraagSelect = selectLevensvraag.options
                 const levensvraagOption = levensvraagSelect[levensvraagSelect.selectedIndex];
 
-                console.log(levensvraagOption)
-
                 if(levensvraagOption == undefined){
                     const noticeP = document.createElement("p")
                     const input = document.getElementById("learning-levensvraag")
@@ -564,30 +525,55 @@ auth.onAuthStateChanged(User =>{
                     querySnapshot.forEach(doc2 => {
                         const id = doc2.id
 
-                        console.log(titel)
                 const levensvraagRef = db.collection("Vitaminders").doc(User.uid).collection("Levensvragen").doc(id)
                  
                     db.collection("Artikelen").where("Titel", "==", titel).get().then(function(querySnapshot) {
                         querySnapshot.forEach(function(doc) {
 
                             const auteur = doc.data().Auteur;
+                            const titelClean = doc.data().TitelClean
 
-            // KarakterRef.set({
-            //     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-            //     Levensles: learning,
-            //     Auteur: auteur,
-            //     Gebruikersnaam: naamPost,
-            //     Titel: titel,
-            //     Inspirerend: 1,
-            //     Type: "Inspiratie"
-            // })
+            KarakterRef.set({
+                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                Levensles: learning,
+                Auteur: auteur,
+                Gebruikersnaam: naamPost,
+                Titel: titel,
+                Inspirerend: 1,
+                Type: "Inspiratie"
+            })
 
-            // levensvraagRef.update({
-            //     Levenslessen: firebase.firestore.FieldValue.arrayUnion(learning)
+            db.collection("Vitaminders").where("Gebruikersnaam", "==", auteur).get().then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc3) {
 
-            // }).then(()=>{
-            //     location.reload();
-            // }) 
+                    const email = doc3.data().Email
+                    const naamClean = doc3.data().GebruikersnaamClean
+
+            db.collection("Mail").doc().set({
+                to: [email],
+            message: {
+            subject: `${naamClean}, iemand heeft een levemsles gehaald uit je inspiratie ${titelClean} op Vitaminds! `,
+            html: `Hallo ${naamClean}, </br></br>
+                    Iemand heeft een levensles gehaald uit je inspiratie ${titelClean}</br>
+                    Bekijk de levensles <a href="https://vitaminds.nu/Artikelen/${titel}.html"><u>hier.</u></a></br></br>
+                    Vriendelijke groet, </br></br>
+                    Het Vitaminds Team </br></br>
+                    <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+            }
+                        
+            }).catch((err) => {
+                    console.log(err)
+                    })
+
+                })
+            })
+
+            levensvraagRef.update({
+                Levenslessen: firebase.firestore.FieldValue.arrayUnion(learning)
+
+            }).then(()=>{
+                location.reload();
+            }) 
             })
             }) 
                     
@@ -628,8 +614,8 @@ db.collectionGroup("Levenslessen").where("Titel", "==", titel).orderBy("Inspirer
         inspireer.setAttribute("data-naam", GB);
     const pointsDiv = document.createElement("div")
     const pointsP = document.createElement("p")
-    const levenslesDiv = document.createElement("div")
-    const levenslesP = document.createElement("p")
+    // const levenslesDiv = document.createElement("div")
+    // const levenslesP = document.createElement("p")
     const bedanktDiv = document.createElement("div")
         bedanktDiv.setAttribute("class", "bedankt-div")
     const bedanktP = document.createElement("p")
@@ -653,12 +639,12 @@ db.collectionGroup("Levenslessen").where("Titel", "==", titel).orderBy("Inspirer
                     db.collection("Vitaminders").doc(doc2.id).collection("Inspiration").doc().set({
 
                         New: "Yes",
-                        User: naam,
+                        Reciever: naam,
                         Source: titel,
-                        Lifelesson: learn,
+                        Inspiration: learn,
                         Giver: auth,
                         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                        Type: "levensles"
+                        Type: "Inspiratie"
                             })
                         })
                     })
@@ -698,12 +684,12 @@ db.collectionGroup("Levenslessen").where("Titel", "==", titel).orderBy("Inspirer
             })
         })
 
-    learnTitel.innerHTML ='"' + learn + '"';
+    learnTitel.innerHTML = learn;
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     learnTijd.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
     inspireer.innerHTML = "Inspirerend!"
     pointsP.innerHTML = inspirationPoints 
-    levenslesP.innerHTML = "Opslaan als levensles"
+    // levenslesP.innerHTML = "Opslaan als levensles"
     bedanktP.innerHTML = "Bedankt! (Ook namens " + GB + ")"
 
     learnGB.addEventListener('click', (e) => {
@@ -720,8 +706,8 @@ db.collectionGroup("Levenslessen").where("Titel", "==", titel).orderBy("Inspirer
     socialDiv.appendChild(inspireer)
     inspireer.appendChild(bedanktDiv)
     bedanktDiv.appendChild(bedanktP)
-    socialDiv.appendChild(levenslesDiv)
-    levenslesDiv.appendChild(levenslesP)
+    // socialDiv.appendChild(levenslesDiv)
+    // levenslesDiv.appendChild(levenslesP)
    
 })
 });

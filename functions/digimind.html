@@ -122,7 +122,7 @@
         <p>Admin</p>
       </div>
     <!-- Notifications  -->
-      <div id="profile-notifications">
+      <div onclick="notificationsPage()" id="profile-notifications">
         <img id="notifications-profile-icon" src="../../images/Notifications-icon.png" alt="notificaties-icoon" width="15px" height="15px">
         <p>Notificaties</p>
       </div>
@@ -134,7 +134,7 @@
 
             <ul id="menuSub">
               <div class="coach-menu">
-                <li onclick="dashboard(this)"><img class="menu-icon" src="../images/menu-dashboard.png" alt="menu contact" width="20px">Dashboard</li>
+                <li id="dashboard-tab" onclick="dashboard(this)"><img class="menu-icon" src="../images/menu-dashboard.png" alt="menu contact" width="20px">Dashboard</li>
               </div>
 
               <!-- Coach deel -->
@@ -143,17 +143,17 @@
                 <p>Coach</p>
               </div>
               <div class="coach-menu">
-                <li onclick="contactCH(this)"> <img class="menu-icon" src="../images/menu-contact.png" alt="menu contact" width="20px"> Contact</li>
+                <li id="contact-tab" onclick="contactCH(this)"> <img class="menu-icon" src="../images/menu-contact.png" alt="menu contact" width="20px"> Contact</li>
               </div>
               <div class="coach-menu">
-                <li onclick="mijnCoachingCH(this)"><img class="menu-icon" src="../images/menu-coaching.png" alt="menu contact" width="20px"><a>Mijn coaching</a></li>
+                <li id="mijn-coaching-tab" onclick="mijnCoachingCH(this)"><img class="menu-icon" src="../images/menu-coaching.png" alt="menu contact" width="20px"><a>Mijn coaching</a></li>
               </div>
               <section id="mijn-coaching">
               </section>
               <div class="coach-menu">
-                <li onclick="mijnBijdragenCH(this)"><img class="menu-icon" src="../images/menu-bijdragen.png" alt="menu contact" width="20px"><a>Mijn bijdragen</a></li>
+                <li id="mijn-bijdragen-tab" onclick="mijnBijdragenCH(this)"><img class="menu-icon" src="../images/menu-bijdragen.png" alt="menu contact" width="20px"><a>Mijn bijdragen</a></li>
               </div>
-              <section id="mijn-bijdragen">
+              <section>
               </section>
               <div id="empty-menu"></div>
             </section>
@@ -163,14 +163,14 @@
               <p>Vitaminder</p>
             </div>
               <div class="mens-menu">
-                <li onclick="klikavontuur(this)" id="menu-levensvragen"><img class="menu-icon" src="../images/menu-doelen.png" alt="menu contact" width="20px"><a>Mijn levensvragen</a></li>
+                <li id="levenvragen-tab" onclick="klikavontuur(this)"><img class="menu-icon" src="../images/menu-doelen.png" alt="menu contact" width="20px"><a>Levensvragen</a></li>
               </div>
               <div class="mens-menu">
-                <li onclick="klikkarakter(this)" id="menu-levenslessen"><img class="menu-icon" src="../images/menu-karakter.png" alt="menu contact" width="20px"><a>Mijn levenslessen</a></li>
+                <li id="levenlessen-tab" onclick="klikkarakter(this)"><img class="menu-icon" src="../images/menu-karakter.png" alt="menu contact" width="20px"><a>Levenslessen</a></li>
               </div>
               <section id="submenu-karakter"></section>
               <div class="mens-menu">
-                  <li onclick="klikdagelijks(this)"><img class="menu-icon" src="../images/menu-dagelijks-leven.png" alt="menu contact" width="20px"><a>Mijn dagelijks leven</a></li>
+                  <li id="dagelijks-leven-tab" onclick="klikdagelijks(this)"><img class="menu-icon" src="../images/menu-dagelijks-leven.png" alt="menu contact" width="20px"><a>Tools</a></li>
                 </div>
               <div id="empty-menu"></div>
 
@@ -179,81 +179,49 @@
                 <p>Favorieten</p>
               </div>
               <div class="favo-menu">
-                <li onclick="klikFavCoaches(this)"><img class="menu-icon" src="../images/menu-mijncoaches.png" alt="menu contact" width="20px"><a>Mijn Coaches</a></li>
+                <li id="fav-coaches-tab" onclick="klikFavCoaches(this)"><img class="menu-icon" src="../images/menu-mijncoaches.png" alt="menu contact" width="20px"><a>Coaches</a></li>
               </div>
               <div class="favo-menu">
-                <li onclick="klikFavInspiratie(this)"><img class="menu-icon" src="../images/menu-inspiratie.png" alt="menu contact" width="20px"><a>Mijn inspiratie</a></li>
+                <li id="fav-inspiratie-tab" onclick="klikFavInspiratie(this)"><img class="menu-icon" src="../images/menu-inspiratie.png" alt="menu contact" width="20px"><a>Inspiratie</a></li>
               </div>
               <div id="empty-menu"></div>
 
-              <!-- Tools -->
+              <!-- Marketing -->
             <section id="tools-menu">
               <div class="descriptie">
-                <p>Tools</p>
+                <p>Marketing</p>
               </div>
               <div onclick="artikel(this)"class="favo-menu">
-                <li><img class="menu-icon" src="../images/menu-artikel.png" alt="menu contact" width="20px"><a>Schrijf een artikel, vlog of podcast </a></li>
+                <li id="artikel-tool-tab"><img class="menu-icon" src="../images/menu-artikel.png" alt="menu contact" width="20px"><a>Schrijf een artikel, vlog of podcast </a></li>
               </div>
             </section>
             </ul>
-          
-  <!-- Secundaire-submenu's -->
-              <section id="coachTools">
-                  <a href="nieuwepost.html"><h3>Maak een nieuwe blog of vlog</h3></a>
-                  <h3>Plaats een nieuw evenement</h3>
-              </section>
 
-              <section id="karakter">
-              <nav id="karakterMenu">
-               
-              </nav>
-              <div id="lifelessons-div">
-                <div id="learnings">
-                  <div id="levenslessen-header">
-                    <h1>Mijn levenslessen</h1>
-                  </div>
-                </div>
-                <div class="active-div">
-                  <h2>Aan de slag met je levenslessen</h2>
-                  <div id="active-outerdiv">
-                    <a href="../inspiratie.html"><div class="active-innerdiv">
-                      <img src="../images/menu-inspiratie.png" alt="" height="50px" width="50px">
-                      <p>Laat je inspireren</p>
-                    </div>
-                  </a>
-                  </div>
-                </div>
-              </div>
-            </section>
+       
 
             
     <!-- Profiel-inhoud -->  
             <!-- Favorieten -->
             <section id="favoInspiratie">
-              <h1>Favoriete inspiratie</h1>
             </section>
 
             <section id="favoCoach">
-              <h1>Favoriete coaches</h1>
               </section>
 
               <!-- profile landing page -->
               <div id="landing">
-                <h1>Digimind dashboard</h1>
                 <section id="digimind-dasboard-outer-div"></section>
               </div>
 
               <!-- Coach deel -->
                   <!-- Contact -->
               <div id="coach-contact">
-                <h1>Contact</h1>
                 <div id="contact-inner-div">
                 </div>
               </div>
 
               <!-- Mijn coaching -->
               <div id="mijn-coaching-div">
-                <h1>Mijn coaching</h1>
                 <div id="row-1-div">
                   <div id="short-inner-div"> 
                     <h2>Praktische info</h2>
@@ -271,13 +239,11 @@
 
                <!-- Mijn bijdragen -->
                <div id="mijn-bijdragen-div">
-                <h1>Mijn bijdragen</h1>
                 <div id="my-contributions-outer-div"></div>
               </div>
 
               <!-- Schrijf een artikel -->
                <div class="profiel-inhoud" id="artikel">
-              <h1>Schrijf een artikel, vlog of vlog</h1>
               <p>Dit deel is nog in de maak</p>
               <p>Stuur voorlopig je artikel, vlog of podcast naar info@vitaminds.nu</p>
              
@@ -331,7 +297,6 @@
                   <!-- Mijn levensvragen-->
                   <div class="profiel-inhoud" id="doelen">
                     <section id="mijnKarakterTochten">
-                      <h1>Mijn levensvragen</h1>
                       <div id="nieuweKarakterTocht">
                           <button onclick = "nieuweLevensvraag()" class="button-karakter">Stel een levensvraag</button>
                             <div id="nieuweO"></div>
@@ -355,13 +320,29 @@
                       </section>
                      </div>
 
-                        <!-- Dagelijks leven -->
+                     <!-- Levenslessen -->
+                     <section id="karakter">
+                      <div id="lifelessons-div">
+                        <div id="learnings">
+                          <div id="levenslessen-header">
+                          </div>
+                        </div>
+                        <div class="active-div">
+                          <h2>Aan de slag met je levenslessen</h2>
+                          <div id="active-outerdiv">
+                            <a href="../inspiratie.html"><div class="active-innerdiv">
+                              <img src="../images/menu-inspiratie.png" alt="" height="50px" width="50px">
+                              <p>Laat je inspireren</p>
+                            </div>
+                          </a>
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+
+                        <!-- Tools -->
                   <section id="dagelijks">
-                    <h1>Mijn dagelijks leven</h1>
-                    <h2>Dagelijks dankbaar</h2>
-                    <p>Komt later</p>
-                    <h2>Cijfer dagboek</h2>
-                    <p>Komt later</p>
+                    <div id="tools-inner-div"></div>
                   </section>
                     </main>
                   </div>    

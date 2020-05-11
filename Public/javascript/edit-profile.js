@@ -1,6 +1,10 @@
 
 // Profiel aanpassen
 
+function notificationsPage(){
+        window.open("../notifications.html", "_self")
+}
+
     // Profielfoto
     function showChangeProfilePicture(){
         const profielfotoAanpassenDiv = document.getElementById("profielfoto-aanpassen")
@@ -146,9 +150,20 @@ function edit(elem){
 
                         db.collection("Vitaminders").doc(doc.id).collection("Levensvragen").doc(doc1.id).update({
                                 Levensvraag: ID + vraag.innerHTML,
+                                LevensvraagClean: vraag.innerHTML,
                                 Omschrijving: omschrijving.innerHTML,
                                 Openbaar: arr.id
-                        }).then(() => {
+                        })
+                        
+                        db.collectionGroup("Reactions").where("Levensvraag", "==", dataEdit).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc2 => {
+
+                                        db.collection("Vitaminders").doc(doc.id).collection("Reactions").doc(doc2.id).update({
+                                                Levensvraag: ID + vraag.innerHTML
+                                        })
+                                })
+                        })
+                        .then(() => {
                                 location.reload();
                         })
                                                                 })
@@ -181,6 +196,15 @@ function edit(elem){
                 querySnapshot.forEach(doc1 => {
 
                         db.collection("Vitaminders").doc(doc.id).collection("Levensvragen").doc(doc1.id).delete()
+
+                        db.collectionGroup("Reactions").where("Levensvraag", "==", dataEdit).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc2 => {
+
+                                        db.collection("Vitaminders").doc(doc.id).collection("Reactions").doc(doc2.id).update({
+                                                Levensvraag: "Levensvraag is verwijderd"
+                                        })
+                                })
+                        })
                         .then(() => {
                                 location.reload();
                                                         })
@@ -245,8 +269,26 @@ function editLessons(elem){
 
                         db.collection("Vitaminders").doc(doc.id).collection("Levenslessen").doc(doc1.id).update({
                                 Levensles: les.innerHTML
+                        })
+                        
+                        console.log(dataEdit)
+
+                        db.collectionGroup("Levensvragen").where("Levenslessen", "array-contains", dataEdit).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc2 => {
+
+                                        db.collection("Vitaminders").doc(doc.id).collection("Levensvragen").doc(doc2.id).update({
+                                                Levenslessen: firebase.firestore.FieldValue.arrayUnion(les.innerHTML),
+                                        }).then(() => {
+                                                db.collection("Vitaminders").doc(doc.id).collection("Levensvragen").doc(doc2.id).update({
+                                                        Levenslessen: firebase.firestore.FieldValue.arrayRemove(dataEdit)  
+                                                })
+                                })
+                        })
+                        
+                        
+                                
                         }).then(() => {
-                                location.reload();
+                                location.reload()
                         })
                                                 })
                                         })

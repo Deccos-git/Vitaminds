@@ -1,0 +1,66 @@
+.tool-outer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #122b463a;
+    margin: 15px;
+    border-radius: 15px;
+    width: 330px;
+    height: auto;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.tools-header{
+    background-image: url("../images/avontuur3.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 200px;
+    width: 100%;
+}
+
+.tool-text-div{
+    text-align: center;
+    margin: 0px 15px 0px 15px;
+}
+
+#tools-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tools-overview-button{
+    background-color: #fff;
+  border: 1px #0c6665 solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 16px;
+  color: #0c6665;
+  cursor: pointer;
+  margin: 50px 0px 15px 0px;
+}
+
+.options-tool{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+    background-color: rgb(247, 247, 247);
+}
+
+.options-tool input{
+    width: 5px;
+}
+
+.text-tool{
+    display: flex;
+    margin: 100px;
+}
+
+#alert-tool{
+    color: #0c6665;
+    display: none;
+}

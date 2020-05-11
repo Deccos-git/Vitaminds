@@ -37,7 +37,7 @@
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
     display: flex;
     flex-direction: column;
-    width: 400px;
+    width: 250px;
     height: auto;
     margin: 30px 10px 20px 10px;
     padding-bottom:20px;
@@ -52,7 +52,7 @@
 
 .mainTekst h4{
     color: #122b46;
-    font-size: 35px;
+    font-size: 25px;
     margin: 10px;
 }
 
@@ -66,7 +66,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    height: 300px;
+    height: 200px;
     width: 100%;
     margin: 0px 0px -30px 0px;
     border-radius: 3px;
@@ -112,25 +112,42 @@
     cursor: pointer;
 }
 
+#titeltext{
+    margin: 50px;
+}
+
 .stampTekst{
     font-size: 14px;
 }
 
 .bodyTekst{
-    margin: 0px 0px 0px 00px;
-    font-size: 18px;
-    font-family: 'Nunito Sans', sans-serif;
-    letter-spacing: 0.6px;
-    color: #25384d;
+    margin: 0px 0px 0px 0px;
+    font-size: 16px !important;
+    font-family: 'Nunito Sans', sans-serif !important;
+    letter-spacing: 0.6px !important;
+    color: #25384d !important;
+    text-align: left;
+    width: 200px;
+    font-weight: 500 !important;
+    max-height: 50px;
+}
+
+.bodyTekst p{
+    margin: 0px 0px 0px 0px;
+    font-size: 16px !important;
+    font-family: 'Nunito Sans', sans-serif !important;
+    letter-spacing: 0.6px !important;
+    color: #25384d !important;
     text-align: left;
     width: 350px;
-    font-weight: 500;
+    font-weight: 500 !important;
     max-height: 300px;
+    line-height: 1.3em !important;
 }
 
 .bodyTekst span{
     margin: 0px 0px 0px 0px !important;
-    font-size: 18px !important;
+    font-size: 16px !important;
     font-family: 'Nunito Sans', sans-serif !important;
     letter-spacing: 0.6px !important;
     color: #25384d !important;
@@ -138,6 +155,16 @@
     width: 350px;
     font-weight: 500 !important;
     max-height: 300px;
+    line-height: 1.3em !important;
+}
+
+.bodyTekst h3{
+    font-size: 18px !important;
+    font-family: 'Nunito Sans', sans-serif !important;
+    margin: 0px 00px 0px 0px !important;
+    letter-spacing: 0.6px !important;
+    color: #122b46 !important;
+    font-weight: 100 !important;
 }
 
 .divTekst{
@@ -146,7 +173,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 350px;
+    width: 200px;
 }
 
 .divHeader{
@@ -177,7 +204,6 @@
 }
 
 .artikel{
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
     display: flex;
     margin: -150px 0px 40px 0px;
     justify-content: center;
@@ -194,8 +220,13 @@
 }
 
 #thema{
+    font-size: 14px;
     cursor: pointer;
-    color: #cf6e13;
+    color: #FFF;
+    margin: 5px 5px 5px 5px;
+    background-color: #cf6e13;
+    border-radius: 5px;
+    padding: 5px;
 }
 
 .artikel h6{
@@ -220,7 +251,7 @@
 }
 
 #bodytext img{
-    width: auto !important;
+    width: 100% !important;
     height: auto !important;
     max-width: 100%;
     max-height: 100%;
@@ -237,6 +268,24 @@
 }
 
 #bodytext p{
+    font-size: 18px !important;
+    font-family: 'Nunito Sans', sans-serif !important;
+    margin: 0px 00px 0px 0px !important;
+    letter-spacing: 0.6px !important;
+    color: #122b46 !important;
+    font-weight: 100 !important;
+}
+
+#bodytext h3{
+    font-size: 20px !important;
+    font-family: 'Nunito Sans', sans-serif !important;
+    margin: 0px 0px 0px 0px !important;
+    letter-spacing: 0.6px !important;
+    color: #122b46 !important;
+    font-weight: 100 !important;
+}
+
+#bodytext ul{
     font-size: 18px !important;
     font-family: 'Nunito Sans', sans-serif !important;
     margin: 0px 00px 0px 0px !important;
@@ -280,7 +329,8 @@
 }
 
 .bijschrijven p{
-    cursor: pointer;
+    color: #0c6665;
+    margin-bottom: 5px;
 }
 
 #artikel-favorieten{
@@ -323,6 +373,10 @@
     color: red;
     font-size: 16px;
     cursor: default;
+}
+
+#submit-learning-div{
+    margin: 15px;
 }
 
 /* nieuwe post */
@@ -414,7 +468,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: left;
-    margin: 10%;
+    margin: 30px;
  }
 
  .learnDiv{
@@ -439,6 +493,7 @@
      font-weight: bold;
      font-size: 100%;
      margin: 0px;
+     font-size: 18px;
  }
 
  .sectionDiv p{
@@ -449,6 +504,7 @@
      display: flex;
      justify-content: space-evenly;
      border-top: 0.5px dotted #122b46;
+     margin-top: auto;
  }
 
  .social-div-inspiration p{

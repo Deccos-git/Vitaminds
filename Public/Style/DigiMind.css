@@ -183,7 +183,7 @@
 }
 
 .menu-icon{
-    margin-right: 5px;
+    margin: 0px 5px 0px 5px;
 }
 
 #empty-menu{
@@ -290,21 +290,24 @@
 
 #rewards-outer-div{
     margin: 15px;
-    border: 1px solid #122b46;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 #notifications{
     margin: 15px;
     width: 45%;
-    border: 1px solid #122b46;
     padding: 15px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 #inspiration-notifications{
     margin: 15px;
     width: 45%;
-    border: 1px solid #122b46;
     padding: 15px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 .gamefication-outer-div{
@@ -338,12 +341,13 @@
 
 #pageviews{
     margin: 25px;
-    border: 1px solid #122b46;
     display: flex;
     flex-direction: column;
     padding: 15px;
     align-items: center;
     text-align: center;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 #pageviews p{
@@ -357,6 +361,10 @@
 
 #trophies img{
     height: 131px;
+}
+
+.meta-notifications{
+    cursor: pointer;
 }
 
 /* Edit profile */
@@ -1091,13 +1099,18 @@
     align-self: center;
 }
 
-/* Dagelijks leven */
+/* Tools */
 #dagelijks{
     display: none;
     flex-direction: column;
     align-items: center;
     text-align: center;
     width: 100%;
+}
+
+#tools-inner-div{
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 /* Favorieten */
@@ -1124,6 +1137,19 @@
     border-radius: 15px;
     margin: 15px;
     border: 1px solid #122b4650;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+.favoCoachDiv p{
+    font-size: 14px;
+}
+
+.favoCoachDiv h2{
+    font-size: 22px;
 }
 
 .favoInspDiv{
@@ -1134,6 +1160,16 @@
     padding: 15px;
     height: auto;
     background-color: #FFF;
+}
+
+#profiel-foto-fav{
+    height: 100px;
+    width: 100px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    align-self: center;
+    border-radius: 50%;
 }
 
 /* Coach deel */
@@ -1178,7 +1214,7 @@
     flex-direction: column;
 }
 
-/* Tools */
+/* Marketing */
 
 #write-article{
     display: none;

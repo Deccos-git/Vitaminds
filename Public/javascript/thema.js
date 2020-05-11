@@ -49,6 +49,7 @@ thema.innerHTML = titel
 db.collection("Artikelen").where("Categorien", "array-contains", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
         const titelDB = doc.data().Titel
+        const titelClean = doc.data().TitelClean
         const auteur = doc.data().Auteur
 
         const DOM = document.getElementById("inspiratie-thema")
@@ -61,58 +62,34 @@ db.collection("Artikelen").where("Categorien", "array-contains", titel).get().th
             window.open("../Artikelen/" + [titelDB] + ".html", "_self");
         })
 
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", auteur).get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+
+               const auteurClean = doc1.data().GebruikersnaamClean
+               const photo = doc1.data().Profielfoto
+
+               const auteurDiv = document.createElement("div")
+                    auteurDiv.setAttribute("class", "themas-auteur-div")
+                const photoDiv = document.createElement("div")
+                    photoDiv.setAttribute("class", "auteur-photo-div")
         const auteurP = document.createElement("p")
 
-        auteurP.addEventListener("click", () => {
+        photoDiv.style.backgroundImage = `url(${photo})`
+
+        auteurDiv.addEventListener("click", () => {
             window.open("../Vitaminders/" + [auteur] + ".html", "_self");
         })
 
-        titelH3.innerHTML = titelDB
-        auteurP.innerHTML = auteur
+        titelH3.innerHTML = titelClean
+        auteurP.innerHTML = auteurClean
 
         DOM.appendChild(div)
         div.appendChild(titelH3)
-        div.appendChild(auteurP)
-
+        div.appendChild(auteurDiv)
+        auteurDiv.appendChild(photoDiv)
+        auteurDiv.appendChild(auteurP)
+            })
+        })
     })
 }) 
 
-// Coaches inladen
-db.collection("Vitaminders").where("Categorien", "array-contains", titel).get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-        const gebruikersnaam = doc.data().Gebruikersnaam
-        const coachstijl = doc.data().Coachstijl
-
-        const DOM = document.getElementById("coaches-thema")
-
-        const div = document.createElement("div")
-            div.setAttribute("class", "inner-div-thema")
-        const coach = document.createElement("h4")
-        const stijl = document.createElement("p")
- 
-        coach.innerHTML = gebruikersnaam
-        stijl.innerHTML = coachstijl
-        
-        DOM.appendChild(div)
-        div.appendChild(coach)
-        div.appendChild(stijl)
-    })
-}) 
-
-// Evenementen inladen
-db.collection("Evenementen").where("Categorien", "array-contains", titel).get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-        const titelE = doc.data().Titel
-
-        const DOM = document.getElementById("evenementen-thema")
-
-        const div = document.createElement("div")
-            div.setAttribute("class", "inner-div-thema")
-        const titelH4 = document.createElement("h4")
- 
-        titelH4.innerHTML = titelE
-
-        DOM.appendChild(div)
-        div.appendChild(titelH4)
-    })
-}) 

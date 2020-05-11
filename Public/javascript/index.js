@@ -53,4 +53,3 @@ if(cookies == "OK"){
         cookieDiv.style.display = "none"
 }
 
-localStorage.clear()

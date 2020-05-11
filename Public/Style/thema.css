@@ -76,3 +76,19 @@
     flex-direction: column;
     align-items: center;
 }
+
+.themas-auteur-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auteur-photo-div{
+    height: 30px;
+    width: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;
+}

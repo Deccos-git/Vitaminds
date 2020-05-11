@@ -4,7 +4,6 @@ const idAlpha = id.toString(36)
 const idClean = idAlpha.replace("0.", "")
 
 // Mobile menu
-
 const hamburgerMenu = document.getElementById("mobile-hamburger-menu")
 const mobileMenu = document.getElementById("mobile-menu-outer-div")
 
@@ -151,7 +150,7 @@ auth.onAuthStateChanged(User =>{
           })
 
           // Inspirationpoints
-          db.collectionGroup("Inspiration").where("User", "==", naamID).where("New", "==", "Yes").get().then(querySnapshot => {
+          db.collectionGroup("Inspiration").where("Reciever", "==", naamID).where("New", "==", "Yes").get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
     
               const docLengt = [doc]          
