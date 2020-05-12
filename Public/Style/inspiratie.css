@@ -186,6 +186,128 @@
     flex-wrap: wrap;
 }
 
+/* Levensvraag-artikelen */
+
+.levensvraag-artikel-section{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: auto;
+    margin: 30px 10px 20px 10px;
+    padding-bottom: 20px;
+    align-items: center;
+    border-radius: 15px;
+    background-color: #FFF;
+}
+
+.levensvraag-artikel-header img{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 200px;
+    width: 100%;
+    margin: 0px 0px -30px 0px;
+    border-radius: 3px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+
+.titelTekst{
+    color: #122b46;
+    font-size: 25px;
+    margin: 70px 20px 30px 20px;
+}
+
+#levensvraag-artikel-ouyter-div{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Levensvraag artikel deatil pagina */
+
+.levensvraag-artikel-main-information{
+    display: flex;
+    margin: 30px 100px 10px 100px;
+}
+
+.levensvraag-artikel-main-image img{
+    width: 80%;
+}
+
+#coach-input{
+    margin: 0px 100px 0px 100px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+#hidden-title-div{
+    visibility: hidden;
+}
+
+.meta-photo{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+#coach-insights{
+    margin-bottom: 100px;
+}
+
+.insights-outer-div{
+    display: flex;
+    margin: 10px 100px 10px 100px;
+    background-color: rgb(240, 240, 240);
+    padding: 15px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    border-radius: 2px;
+}
+
+.insights-outer-div p{
+    font-size: 16px;
+}
+
+.meta-div-insights{
+    border-right: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    min-width: 150px;
+    max-width: 150px;
+    cursor: pointer;
+    justify-content: center;
+}
+
+.text-div-insights{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    text-align: left;
+}
+
+.tox-tinymce {
+    border: 1px solid #ccc;
+    border-radius: 0;
+    box-shadow: none;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+    overflow: hidden;
+    position: relative;
+    visibility: inherit!important;
+    width: 75%;
+}
+
 /* Individueel artikel pagina */
 
 #headerInsp{
@@ -400,12 +522,11 @@
 }
 
 #nieuwposttitel{
-    width: 800px;
+    width: 520px;
     border: 1px solid #ccc;
-    width: 700px;
     border-radius: 0px;
     margin-bottom: 30px;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 #texteditor{
@@ -576,4 +697,51 @@
     #learningsInsp{
         margin: 30px 0px 30px 0px;
     }
+
+    .levensvraag-artikel-main-information {
+        margin: 30px 10px 10px 10px;
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+
+    .insights-outer-div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 10px 10px 10px 10px;
+        background-color: rgb(240, 240, 240);
+        padding: 15px;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+        border-radius: 2px;
+    }
+
+    .meta-div-insights {
+        border-bottom: 1px solid white;
+        border-right: 0;
+    }
+
+    #coach-input {
+        margin: 0px 10px 0px 10px;
+    }
+
+    #nieuwposttitel {
+        width: 95%;
+       
+    }
+
+    .tox-tinymce {
+        border: 1px solid #ccc;
+        border-radius: 0;
+        box-shadow: none;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+        overflow: hidden;
+        position: relative;
+        visibility: inherit!important;
+        width: 100%;
+    }
+
+    
 }

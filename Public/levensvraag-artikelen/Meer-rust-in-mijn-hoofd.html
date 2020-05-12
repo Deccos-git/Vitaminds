@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hoe krijg ik meer rust in mijn hoofd?</title>
+    <link rel="stylesheet" href="../Style/style.css">
+    <link rel="stylesheet" href="../Style/inspiratie.css">
+  <link rel="shortcut icon" href="images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+      <!-- Tiny MCE -->
+      <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+      <script>
+        tinymce.init({
+          height: 400,
+          selector: '#tiny-mce',
+          toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image',
+          plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists',
+          toolbar_mode: 'floating',
+          plugin_preview_width: 720,
+          forced_root_block : false,
+          paste_preprocess: function(plugin, args) {
+            console.log(args.content);
+            args.content += ' preprocess';
+          }
+        });
+      </script>
+      <!-- End Tiny MCE -->
+</head>
+<body>
+
+  <!-- Feedback -->
+  <div id="feedback">
+    <a href="../tickets.html"> <p>Feedback</p></a>
+  </div>
+
+  <!-- Mobile-menu -->
+<nav id="mobile-menu"> 
+  <div class="main-menu"><a href="../index.html"><img id="logo-menu" src="../images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+  <img id="mobile-hamburger-menu" src="../images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+  <div id="mobile-menu-outer-div">
+    <div id="mobile-menu-inner-div">
+      <div class="main-menu"><a href="../openup.html">Open up</a></div>
+      <div class="main-menu"><a href="../inspiratie.html">Inspiratie</a></div>
+      <div class="main-menu"><a href="../coaches.html">Coaches</a></div>
+      <div class = "login-logout"><p><a href="../voor-coach.html">Voor coaches</a></p></div> 
+    </div>
+</nav>
+
+   <!-- menu --> 
+   <nav id="menu">
+    <div id="navigation-menu">
+      <div class="main-menu"><a href="../index.html"><img id="logo-menu" src="../images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+      <div class="main-menu"><a href="../openup.html">Open up</a></div>
+      <div class="main-menu"><a href="../inspiratie.html">Inspiratie</a></div>
+      <!-- <li class="main-menu"><a href="evenementen.html">Evenementen</a></li> -->
+      <div class="main-menu"><a href="../coaches.html">Coaches</a></div>
+      <!-- <li class="main-menu"><a href="privacy.html">Privacy</a></li> -->
+    </div>
+    <div id="auth-menu">
+      <div id="auth-DOM"></div>
+      <div id="profile-picture">
+      </div>
+      <div id="button-login" class = "login-logout"><button><a href="../inlog.html">Log in</a></button></div>
+      <div id="slash" class = "login-logout"><a>|</a></div>
+      <div class = "login-logout"><p id="aanmeldCH"><a href="../voor-coach.html">Voor coaches</a></p></div> 
+    </div>
+  </nav>
+
+  <h1>Hoe krijg ik meer rust in mijn hoofd?</h1>
+  <section class="levensvraag-artikel-main-information">
+      <div>
+          <p>Rust in je hoofd is steeds meer een schaars goed geworden. Veel mensen hebben behoefte aan meer rust in hun hoofd. 
+          </p>
+      </div>
+      <div class="levensvraag-artikel-main-image"><img src="../images/undraw_farm_girl_dnpe.png" alt=""></div>
+  </section>
+
+  <section id="coach-insights"></section>
+
+  <section id="coach-input">
+      <h2>Geef je professionele inzicht over:<br> Hoe krijg ik meer rust in mijn hoofd?</h2>
+    <div id="nieuwepost">
+        <input id="nieuwposttitel" type="text" placeholder="Geef je inzicht een titel...">
+        <div id="tiny-mce"></div>
+        <div id="hidden-title-div">Hoe krijg ik meer rust in mijn hoofd?</div>
+        <button onclick = "nieuwepostsubmit(this)" class="button-algemeen">Delen</button>
+   </div> 
+  </section>
+
+
+    <!-- footer -->
+<footer class="footer">
+    <div>
+     <a href="https://www.vitaminds.nu"><img src="../images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+    </div>
+    <div>
+      <h3 id="slogan-footer">Op avontuur in je eigen karakter</h3>
+    </div>
+    <div>
+     <a href="https://www.facebook.com/VitamindsNederland/"><img src="../images/Logo-facebook.png" alt="" width="40px"></a>
+     <a href="https://www.youtube.com/channel/UC44W6GvZnKZqBw7hdH5OU0A"><img src="../images/Logo-youtube.png" alt="" width="40px"></a>
+    </div>
+  </footer>
+  
+    
+    <script type="text/javascript" src="../javascript/firebase.js"></script>
+    <script type="text/javascript" src="../javascript/auth.js"></script>
+    <script type="text/javascript" src="../javascript/inspiratie.js"></script>
+</body>
+</html>

@@ -148,13 +148,14 @@
               <div class="coach-menu">
                 <li id="mijn-coaching-tab" onclick="mijnCoachingCH(this)"><img class="menu-icon" src="../images/menu-coaching.png" alt="menu contact" width="20px"><a>Mijn coaching</a></li>
               </div>
-              <section id="mijn-coaching">
-              </section>
+              <div id="mijn-coaching">
+              </div>
               <div class="coach-menu">
                 <li id="mijn-bijdragen-tab" onclick="mijnBijdragenCH(this)"><img class="menu-icon" src="../images/menu-bijdragen.png" alt="menu contact" width="20px"><a>Mijn bijdragen</a></li>
               </div>
-              <section>
-              </section>
+              <div class="intervisie-menu">
+                <li id="intervisie-tab" onclick="intervisieCH(this)"><img class="menu-icon" src="../images/menu-bijdragen.png" alt="menu contact" width="20px"><a>Intervisie</a></li>
+              </div>
               <div id="empty-menu"></div>
             </section>
 
@@ -237,6 +238,26 @@
                 </div>
               </div>
 
+               <!-- Intervisie-->
+               <div id="intervisie">
+                <div id="intervisie-inner-div">
+                  <div id="visit-intervision-button">
+                    <a href="../intervisie.html"><p>Naar intervisie</p></a> 
+                  </div>
+                  <div id="visit-intervision-button" onclick="startCasus()">
+                    <p>Start casus</p>
+                  </div>
+                  <section id="new-casus-section">
+                    <h2>Start je casus</h2>
+                    <h3>Jouw titel</h3>
+                    <input type="text" id="new-casus-title" placeholder="Titel">
+                    <h3>Omschrijving van casus</h3>
+                    <textarea id="new-casus-textarea" cols="50" rows="10" placeholder="Omschrijf je casus"></textarea>
+                    <button id="new-casus-button" onclick="shareNewCasus()">Casus voorleggen</button>
+                  </section>
+                </div>
+              </div>
+
                <!-- Mijn bijdragen -->
                <div id="mijn-bijdragen-div">
                 <div id="my-contributions-outer-div"></div>
@@ -245,7 +266,6 @@
               <!-- Schrijf een artikel -->
                <div class="profiel-inhoud" id="artikel">
               <p>Dit deel is nog in de maak</p>
-              <p>Stuur voorlopig je artikel, vlog of podcast naar info@vitaminds.nu</p>
              
               <div id="write-article">
                 <h2>Schrijf een artikel</h2>

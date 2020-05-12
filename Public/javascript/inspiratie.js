@@ -131,6 +131,128 @@
         })
     }
 };
+// Fetching title from webadres
+titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
+titel1 = titelhtml.replace('.html', '')
+titel2 = titel1.replace('%20',' '),
+titel3 = titel2.replace('%20',' ')
+titel4 = titel3.replace('%20',' ')
+titel5 = titel4.replace('%20',' ')
+titel6 = titel4.replace('%20',' ')
+titel7 = titel6.replace('%20',' ')
+titel8 = titel7.replace('%20',' ')
+titel9 = titel8.replace('%20',' ')
+titel10 = titel9.replace('%20',' ')
+titel = titel10.replace('%20',' ')
+
+// User-role
+
+    // Visitor
+auth.onAuthStateChanged(User =>{
+    if (!User){
+        const coachInput = document.getElementById("coach-input")
+        coachInput.style.display = "none"
+    }
+})
+
+    //Non coach
+    auth.onAuthStateChanged(User =>{
+        db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                const usertype = doc.data().Usertype
+
+                if(usertype != "Coach"){
+                    const coachInput = document.getElementById("coach-input")
+                    coachInput.style.display = "none"
+                }
+            
+        })
+    })
+
+// Levensvraag artikelen detailpagina
+
+const DOM = document.getElementById("coach-insights")
+
+const hiddenTitel = document.getElementById("hidden-title-div").textContent
+
+db.collection("Insights").where("LevensvraagArtikel", "==", hiddenTitel).get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+        const titel = doc.data().Titel
+        const body = doc.data().Body
+        const coach = doc.data().Auteur
+
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+                const gebruikersnaamClean = doc1.data().GebruikersnaamClean
+                const photo = doc1.data().Profielfoto
+
+                const outerDiv = document.createElement("div")
+                    outerDiv.setAttribute("class", "insights-outer-div")
+                const metaDiv = document.createElement("div")
+                    metaDiv.setAttribute("class", "meta-div-insights")
+                const metaPhoto = document.createElement("img")
+                    metaPhoto.setAttribute("class", "meta-photo")
+                const metaName = document.createElement("p")
+                const metaStyle = document.createElement("p")
+                const textDiv = document.createElement("div")
+                    textDiv.setAttribute("class", "text-div-insights")
+                const textTitle = document.createElement("h2")
+                const textBody = document.createElement("p")
+
+                metaPhoto.src = photo
+                metaName.innerHTML = gebruikersnaamClean
+                textTitle.innerHTML = titel
+                textBody.innerHTML = body
+
+                metaDiv.addEventListener("click", () => {
+                    window.open("../Vitaminders/" + coach + ".html", "_self");
+                })
+
+                DOM.appendChild(outerDiv)
+                outerDiv.appendChild(metaDiv)
+                metaDiv.appendChild(metaPhoto)
+                metaDiv.appendChild(metaName)
+                outerDiv.appendChild(textDiv)
+                textDiv.appendChild(textTitle)
+                textDiv.appendChild(textBody)
+
+
+            })
+        })
+    })
+});
+
+
+// Saving coach insights to database
+
+function nieuwepostsubmit(elem){
+        auth.onAuthStateChanged(User =>{
+            if (User){
+
+                const levensvraagTitel = elem.previousElementSibling.innerHTML
+
+                let insightsRef = db.collection("Insights").doc();
+                let docRef = db.collection("Vitaminders").doc(User.uid);
+                    docRef.get().then(function(doc){
+                        const coachNaam = doc.data().Gebruikersnaam;
+                 
+                let nieuwePostTitelVar = document.getElementById("nieuwposttitel").value;
+
+                let nieuwePostBodyVar = tinyMCE.get('tiny-mce').getContent()
+
+                                insightsRef.set({
+                                    Titel: nieuwePostTitelVar,
+                                    Body: nieuwePostBodyVar,
+                                    Auteur: coachNaam,
+                                    LevensvraagArtikel: levensvraagTitel,
+                                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                    Type: "Insight"
+                                }).then(() => {
+                                    location.reload()
+                            })
+                        })     
+                }
+        })
+};
     
 
 // Alle artikel inladen in overzicht
@@ -347,18 +469,6 @@ auth.onAuthStateChanged(User =>{
 
 
 // Detailpagina inladen
-titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
-titel1 = titelhtml.replace('.html', '')
-titel2 = titel1.replace('%20',' '),
-titel3 = titel2.replace('%20',' ')
-titel4 = titel3.replace('%20',' ')
-titel5 = titel4.replace('%20',' ')
-titel6 = titel4.replace('%20',' ')
-titel7 = titel6.replace('%20',' ')
-titel8 = titel7.replace('%20',' ')
-titel9 = titel8.replace('%20',' ')
-titel10 = titel9.replace('%20',' ')
-titel = titel10.replace('%20',' ')
 
 const auteur = document.getElementById('auteur');
 const thema = document.getElementById('thema');

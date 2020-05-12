@@ -631,27 +631,27 @@ const docRef = db.collectionGroup("Reactions").where("Levensvraag", "==", titel)
                 // Naar Coach
             db.collection("Vitaminders").where("Gebruikersnaam", "==", coachData).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
-                    db.collection("Vitaminders").doc(doc.id).collection("Inspiration").doc().set({
+                    // db.collection("Vitaminders").doc(doc.id).collection("Inspiration").doc().set({
 
-                        New: "Yes",
-                        Reciever: coachData,
-                        Inspiration: reactieData,
-                        Source: levensvraag,
-                        Giver: naam,
-                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                        Type: "Openup"
-                    })
+                    //     New: "Yes",
+                    //     Reciever: coachData,
+                    //     Inspiration: reactieData,
+                    //     Source: levensvraag,
+                    //     Giver: naam,
+                    //     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                    //     Type: "Openup"
+                    // })
                     // Naar reactie
                     db.collectionGroup("Reactions").where("Reactie", "==", reactieData).get().then(querySnapshot => {
                         querySnapshot.forEach(doc3 => {
 
                     db.collection("Vitaminders").where("Gebruikersnaam", "==", coachData).get().then(querySnapshot => {
                             querySnapshot.forEach(doc4 => {
-                            db.collection("Vitaminders").doc(doc4.id).collection("Reactions").doc(doc3.id).update({
+                            // db.collection("Vitaminders").doc(doc4.id).collection("Reactions").doc(doc3.id).update({
         
-                                Inspiratiepunten: firebase.firestore.FieldValue.increment(1)
+                            //     Inspiratiepunten: firebase.firestore.FieldValue.increment(1)
                 
-                                    })
+                            //         })
                                 })
                             })
                         })

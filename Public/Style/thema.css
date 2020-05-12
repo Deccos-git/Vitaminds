@@ -92,3 +92,22 @@
     border-radius: 50%;
     cursor: pointer;
 }
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    margin: 50px 100px 100px 100px;
+    font-size: 18px;
+  }
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  #table-heading{
+    background-color: #858585;
+  }
+
+

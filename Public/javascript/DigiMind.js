@@ -20,6 +20,7 @@ const podcast = document.getElementById("podcast")
  const coachContact = document.getElementById("coach-contact");
  const mijnCoaching = document.getElementById("mijn-coaching-div");
  const mijnBijdragen = document.getElementById("mijn-bijdragen-div");
+ const intervisie = document.getElementById("intervisie")
 
 function dashboard(dashboard){
 
@@ -35,6 +36,7 @@ function dashboard(dashboard){
         video.style.display = "none"
         podcast.style.display = "none"
         dagelijksLeven.style.display = "none"
+        intervisie.style.display = "none"
      
  }
 
@@ -52,7 +54,7 @@ function dashboard(dashboard){
         video.style.display = "none"
         podcast.style.display = "none"
         dagelijksLeven.style.display = "none"
-     
+        intervisie.style.display = "none"
  }
 
  function overMijCH(){
@@ -69,6 +71,7 @@ function dashboard(dashboard){
         video.style.display = "none"
         podcast.style.display = "none"
         dagelijksLeven.style.display = "none"
+        intervisie.style.display = "none"
  }
 
  function mijnCoachingCH(){
@@ -84,6 +87,7 @@ function dashboard(dashboard){
         video.style.display = "none"
         podcast.style.display = "none"
         dagelijksLeven.style.display = "none"
+        intervisie.style.display = "none"
  }
 
  function mijnBijdragenCH(){
@@ -99,6 +103,7 @@ function dashboard(dashboard){
         video.style.display = "none"
         podcast.style.display = "none"
         dagelijksLeven.style.display = "none"
+        intervisie.style.display = "none"
  }
 
  // Vitaminders menu
@@ -116,6 +121,7 @@ function klikavontuur(levensvragen){
          video.style.display = "none"
         podcast.style.display = "none"
         dagelijksLeven.style.display = "none"
+        intervisie.style.display = "none"
 };
 
 function klikkarakter(levenslessen){
@@ -131,6 +137,7 @@ function klikkarakter(levenslessen){
          video.style.display = "none"
         podcast.style.display = "none"
         dagelijksLeven.style.display = "none"
+        intervisie.style.display = "none"
 };
 
 function klikdagelijks(dagelijks){
@@ -146,6 +153,7 @@ function klikdagelijks(dagelijks){
          nieuwArtikel.style.display = "none"
          video.style.display = "none"
         podcast.style.display = "none"
+        intervisie.style.display = "none"
 }
 
 // Tools menu
@@ -163,6 +171,7 @@ function artikel(artikel){
          video.style.display = "none"
         podcast.style.display = "none"
         dagelijksLeven.style.display = "none"
+        intervisie.style.display = "none"
 }
 
 // Favorieten menu
@@ -180,10 +189,28 @@ function klikFavInspiratie(favorietenInspiratie){
          video.style.display = "none"
         podcast.style.display = "none"
         dagelijksLeven.style.display = "none"
+        intervisie.style.display = "none"
 }
 
 function klikFavCoaches(favorietenCoaches){
         favoCoach.style.display = "flex";
+        avontuur.style.display = "none";
+        landing.style.display = "none"
+        karakter.style.display = "none";
+        favoInspiratie.style.display = "none";
+        coachContact.style.display = "none"
+         mijnCoaching.style.display = "none"
+         mijnBijdragen.style.display = "none"
+         nieuwArtikel.style.display = "none"
+         video.style.display = "none"
+        podcast.style.display = "none"
+        dagelijksLeven.style.display = "none"
+        intervisie.style.display = "none"
+}
+
+function intervisieCH(){
+        intervisie.style.display = "flex"
+        favoCoach.style.display = "none";
         avontuur.style.display = "none";
         landing.style.display = "none"
         karakter.style.display = "none";
@@ -208,11 +235,12 @@ const dagelijksLevenTab = document.getElementById("dagelijks-leven-tab")
 const favCoachesTab = document.getElementById("fav-coaches-tab")
 const favInspiratieTab = document.getElementById("fav-inspiratie-tab")
 const artikelToolTab = document.getElementById("artikel-tool-tab")
+const intervisieTab = document.getElementById("intervisie-tab")
 
 dashboardTab.style.backgroundColor = "#49beb7"
 dashboardTab.style.color = "white"
 
-        function active(a,b,c,d,e,f,g,h,i,j){
+        function active(a,b,c,d,e,f,g,h,i,j,k){
                 a.addEventListener("click", () => {
 
                         a.style.backgroundColor = "#49beb7"
@@ -234,20 +262,23 @@ dashboardTab.style.color = "white"
                         i.style.backgroundColor = "#122b4613"
                         i.style.color = "#122b46"   
                         j.style.backgroundColor = "#122b4613"
-                        j.style.color = "#122b46"   
+                        j.style.color = "#122b46"  
+                        k.style.backgroundColor = "#122b4613"
+                        k.style.color = "#122b46"   
                 })
         }
 
-        active(dashboardTab,mijnBijdragenTab,contactTab,mijnCoachingTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab)
-        active(contactTab,mijnBijdragenTab,mijnCoachingTab,dashboardTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab)
-        active(mijnCoachingTab,contactTab,mijnBijdragenTab,dashboardTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab)
-        active(mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab)
-        active(levenvragenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab)
-        active(levenslessenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenvragenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab)
-        active(dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,favInspiratieTab,artikelToolTab)
-        active(favCoachesTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favInspiratieTab,artikelToolTab)
-        active(favInspiratieTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,artikelToolTab)
-        active(artikelToolTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,favInspiratieTab)
+        active(dashboardTab,mijnBijdragenTab,contactTab,mijnCoachingTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab, intervisieTab)
+        active(contactTab,mijnBijdragenTab,mijnCoachingTab,dashboardTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab, intervisieTab)
+        active(mijnCoachingTab,contactTab,mijnBijdragenTab,dashboardTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab, intervisieTab)
+        active(mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab, intervisieTab)
+        active(levenvragenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab, intervisieTab)
+        active(levenslessenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenvragenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab, intervisieTab)
+        active(dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,favInspiratieTab,artikelToolTab, intervisieTab)
+        active(favCoachesTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favInspiratieTab,artikelToolTab, intervisieTab)
+        active(favInspiratieTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,artikelToolTab, intervisieTab)
+        active(artikelToolTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,favInspiratieTab, intervisieTab)
+        active(intervisieTab,artikelToolTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,favInspiratieTab)
 
 
   // Naam uit URL halen
@@ -265,7 +296,7 @@ const naam10 = naam9.replace('%20',' ')
 const naam11 = naam10.replace('%20',' ')
 const naam = naam11.replace('%20',' ')
 
-//User-role
+//Hide for non-coach Digimind
 db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
     .get()
     .then(function(querySnapshot) {
@@ -273,12 +304,31 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
         const usertype = doc.data().Usertype
 
         const coachMenu = document.getElementById("coach-menu")
+        const toolMenu = document.getElementById("tools-menu")
 
         if(usertype != "Coach"){
                 coachMenu.style.display = "none"
+                toolMenu.style.display = "none"
                 }
         })
 }) 
+
+// Hide for non-coach auth
+auth.onAuthStateChanged(User =>{
+        if (User){
+            let docRef = db.collection("Vitaminders").doc(User.uid);
+                docRef.get().then(function(doc){
+
+                        const usertype = doc.data().Usertype
+                        const intervisieMenu = document.getElementById("intervisie-tab")
+
+                        if(usertype != "Coach"){
+                                intervisieMenu.style.display = "none"   
+                        }
+
+                })
+        }
+});
 
 
 // Hide profile-elements for visiter
@@ -293,6 +343,8 @@ auth.onAuthStateChanged(User =>{
                 const activeDiv = document.getElementsByClassName("active-div")
                 const editDiv = document.getElementsByClassName("edit-div")
                 const changePhoto = document.getElementById("profile-picture-outer-div")
+                const intervisieMenu = document.getElementById("intervisie-tab")
+                const toolMenu = document.getElementById("tools-menu")
              
                     const activeDivArray = Array.from(activeDiv)
                     activeDivArray.forEach(active => {
@@ -300,10 +352,11 @@ auth.onAuthStateChanged(User =>{
                     })
 
                     changePhoto.style.display = "none"
- 
+                    toolMenu.style.display = "none"
                     nieuweKarakterTocht.style.display = "none"
                     toolsMenu.style.display = "none"
                     notifications.style.display = "none"
+                    intervisieMenu.style.display = "none"
 
                    setTimeout(() => {
                         editDiv[0].style.display = "none"
@@ -743,6 +796,41 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 }
         })
 })
+
+// Intervisie
+
+function startCasus(){
+       const nieuweCasus = document.getElementById("new-casus-section")
+       nieuweCasus.style.display = "flex"
+}
+
+function shareNewCasus(){
+
+        const title = document.getElementById("new-casus-title").value
+        const textarea = document.getElementById("new-casus-textarea").value
+
+        auth.onAuthStateChanged(User =>{
+                if (User){
+                    let docRef = db.collection("Vitaminders").doc(User.uid);
+                        docRef.get().then(function(doc){
+
+                                const coach = doc.data().Gebruikersnaam
+                                const ID = doc.data().ID
+                                const coachClean = coach.replace(ID, "")
+
+        db.collection("Intervisie").doc().set({
+                Owner: "Vitaminds",
+                Coach: coach,
+                CoachClean: coachClean,
+                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                Titel: title,
+                Omschrijving: textarea
+                                })
+
+                        })
+                }
+        })
+}
 
 // My contributions
 
@@ -1406,6 +1494,16 @@ function nieuwepostsubmit(){
                             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                             Type: "Artikel"
                         })
+
+                        // db.collectionGroup("Levenslessen").where("Levensles", "==", dataEdit).get().then(querySnapshot => {
+                        //         querySnapshot.forEach(doc1 => {
+                
+                        //                 db.collection("Vitaminders").doc(doc.id).collection("Levenslessen").doc(doc1.id).update({
+                        //                         Levensles: les.innerHTML
+                        //                                         })
+
+                        //                                 })
+                        //                         })
         
                         console.log("Geupdate")  
                      })
@@ -1448,16 +1546,6 @@ function nieuwepostsubmit(){
                 }
         }
     });
- 
-    
-    //Teksteditor bij nieuw artikel schrijven
-//     const style = document.querySelectorAll("button");
-    
-//     for(let st of style){
-//         st.addEventListener("click", () =>{
-//         let cmd = st.dataset['command'];
-//         const test = document.execCommand(cmd, false, null)
-//     })
-//     }
+
 
 
