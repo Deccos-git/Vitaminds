@@ -667,6 +667,89 @@ function editExperience(elem){
 }
 
 
+// Insights aanpassen in levensvragen artikelen
 
+function editIconInsights(elem){
+
+        const title = elem.nextSibling
+        const body = elem.nextSibling.nextSibling
+
+        titleEdit = elem.dataset.title
+
+        title.setAttribute("contenteditable", "true")
+        title.style.border = "1px dotted #122b46"
+
+        body.setAttribute("contenteditable", "true")
+        body.style.border = "1px dotted #122b46"
+        
+        const saveInsightDiv = document.createElement("div")
+        saveInsightDiv.setAttribute("class", "save-div")
+        const saveInsightP = document.createElement("p")
+
+        saveInsightDiv.appendChild(saveInsightP)
+
+        elem.parentElement.appendChild(saveInsightDiv)
+
+        saveInsightP.innerHTML = "Opslaan"
+
+        saveInsightP.addEventListener("click", () => {    
+
+                auth.onAuthStateChanged(User =>{
+                                if (User){
+                                let docRef = db.collection("Vitaminders").doc(User.uid);
+                                        docRef.get().then(function(doc){
+
+                                                const naam = doc.data().Gebruikersnaam
+
+                                        db.collection("Insights").where("Titel", "==", titleEdit).where("Auteur", "==", naam).get().then(querySnapshot => {
+                                                querySnapshot.forEach(doc1 => {
+        
+                                        db.collection("Insights").doc(doc1.id).update({
+                                        Titel: title.innerHTML,
+                                        Body: body.innerHTML
+                                }).then(() => {
+                                        location.reload();
+                                })
+                                                        })
+                                                })    
+                                        })
+                                }
+                        })
+                })
+
+                // Delete
+         const hiddenTitle = document.getElementById("hidden-title-div").innerHTML
+         const deleteDiv = document.createElement("div")
+         deleteDiv.setAttribute("class", "delete-div")
+         const deleteP = document.createElement("p")
+ 
+         deleteP.innerHTML = "Delete"
+ 
+         elem.parentElement.appendChild(deleteDiv)
+         deleteDiv.appendChild(deleteP)
+ 
+         deleteP.addEventListener("click", () => {    
+ 
+         auth.onAuthStateChanged(User =>{
+                         if (User){
+                             let docRef = db.collection("Vitaminders").doc(User.uid);
+                                 docRef.get().then(function(doc){
+
+                                        const naam = doc.data().Gebruikersnaam
+ 
+                                        db.collection("Insights").where("Titel", "==", titleEdit).where("Auteur", "==", naam).get().then(querySnapshot => {
+                                                querySnapshot.forEach(doc1 => {
+        
+                                        db.collection("Insights").doc(doc1.id).delete()
+                                                .then(() => {
+                                                location.reload();
+                                                         })
+                                                 })
+                                         })
+                                 })
+                         }
+                 })
+         })
+}
 
 

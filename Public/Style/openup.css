@@ -42,6 +42,7 @@
     margin: 15px 0px 15px 0px;
     text-align: center;
     border-bottom: 1px #122b46 dotted;
+    width: 100%;
 }
 
 .vraag-div h3{
@@ -80,12 +81,12 @@
 }
 
 .lees-meer-openup{
-    background-color: #0c6665;
-    border: 1px #0c6665 solid;
+    background-color: white;
+    border: 1px #49beb7 solid;
     border-radius: 10px;
     font-family: 'Nunito Sans', sans-serif;
     font-size: 18px;
-    color: #FFF;
+    color: #49beb7;
     cursor: pointer;
     width: 100px;
     margin-bottom: 15px;
@@ -248,8 +249,8 @@
 }
 
 #button-reactie-openup{
-    background-color: #0c6665;
-    border: 1px #0c6665 solid;
+    background-color: #49beb7;
+    border: 1px #49beb7 solid;
     border-radius: 10px;
     font-family: 'Nunito Sans', sans-serif;
     font-size: 18px;

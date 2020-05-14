@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="rust in hoofd, stress, burn-out">
+    <meta name="description" content="Hoe krijg ik meer rust in mijn hoofd?">
     <title>Hoe krijg ik meer rust in mijn hoofd?</title>
     <link rel="stylesheet" href="../Style/style.css">
     <link rel="stylesheet" href="../Style/inspiratie.css">
-  <link rel="shortcut icon" href="images/favicon.ico">
+  <link rel="shortcut icon" href="../images/favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
@@ -82,14 +84,25 @@
       <div class="levensvraag-artikel-main-image"><img src="../images/undraw_farm_girl_dnpe.png" alt=""></div>
   </section>
 
-  <section id="coach-insights"></section>
+  <section id="coach-insights">
+    <div id="loader">
+      <img src="../images/loader.gif" alt="loading">
+    </div>
+  </section>
 
   <section id="coach-input">
       <h2>Geef je professionele inzicht over:<br> Hoe krijg ik meer rust in mijn hoofd?</h2>
+      <div id="insights-theme-ideas">
+        <p>Ideeen:</p>
+        <div id="theme-list-insights"></div>
+      </div>
     <div id="nieuwepost">
         <input id="nieuwposttitel" type="text" placeholder="Geef je inzicht een titel...">
         <div id="tiny-mce"></div>
         <div id="hidden-title-div">Hoe krijg ik meer rust in mijn hoofd?</div>
+        <div id="categorieSelectie">
+          <h2>Selecteer evt. een bijpassend thema</h2>
+        </div>
         <button onclick = "nieuwepostsubmit(this)" class="button-algemeen">Delen</button>
    </div> 
   </section>
@@ -113,5 +126,6 @@
     <script type="text/javascript" src="../javascript/firebase.js"></script>
     <script type="text/javascript" src="../javascript/auth.js"></script>
     <script type="text/javascript" src="../javascript/inspiratie.js"></script>
+    <script type="text/javascript" src="../javascript/edit-profile.js"></script>
 </body>
 </html>

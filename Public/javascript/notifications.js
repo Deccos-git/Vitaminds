@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     docRef.get().then(function(doc){
                     const auth = doc.data().Gebruikersnaam;
                     const ID = doc.data().ID
-                    const authClean = auth.replace(ID, "")
+
     db.collectionGroup("Inspiration").where("Reciever", "==", auth).orderBy("Timestamp", "desc").get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
                     const giver = doc.data().Giver
@@ -214,6 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             querySnapshot.forEach(doc1 => {
 
                                     const giverClean = doc1.data().GebruikersnaamClean
+                console.log(type)
 
                     if(type == "Inspiratie"){
 
@@ -234,7 +235,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     liType.innerHTML = `Op je levensles ${inspiration}`
                     link.innerHTML = `<u>${inspiration}</u>`
-                    liSource.innerHTML = `Bron: ${titelClean}`
+                    liSource.innerHTML = `Bron: <i>${type}</i> ${titelClean}`
 
                     liSource.addEventListener("click", () => {
                         window.open("../Artikel/" + titel + ".html", "_self");
@@ -246,6 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     querySnapshot.forEach(doc3 => {
     
                                             const levensvraagClean = doc3.data().LevensvraagClean
+                                            const levensvraag = doc3.data().Levensvraag
     
                             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                             dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
@@ -258,10 +260,39 @@ document.addEventListener("DOMContentLoaded", () => {
     
                             liType.innerHTML = `Op je reactie ${inspiration}`
                             link.innerHTML = `<u>${inspiration}</u>`
-                            liSource.innerHTML = `Bron: ${levensvraagClean}`
+                            liSource.innerHTML = `Bron: <i>${type}</i> ${levensvraagClean}`
+                            
+                            liSource.addEventListener("click", () => {
+                                window.open("../Open/" + levensvraag + ".html", "_self");
+                                        })
                                     })
                             })   
-                    }
+                    } else if (type == "Insight"){
+                            console.log(source)
+                        db.collection("Insights").where("LevensvraagArtikel", "==", source).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc3 => {
+
+                                        const levensvraag = doc3.data().LevensvraagArtikel
+
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
+
+                        string.innerHTML = `Je hebt 1 nieuw inspiratiepunt ontvangen!`
+                        liGiver.innerHTML = `Van <u>${giverClean}</u>`
+                        liGiver.addEventListener("click", () => {
+                                window.open("../Vitaminders/" + giver + ".html", "_self");
+                        })
+
+                        liType.innerHTML = `Op je reactie ${inspiration}`
+                        link.innerHTML = `<u>${inspiration}</u>`
+                        liSource.innerHTML = `Bron: <i>${type}</i> ${levensvraag}`
+
+                        liSource.addEventListener("click", () => {
+                                window.open("../Open/" + levensvraag + ".html", "_self");
+                                        })
+                                })
+                        })   
+                } 
                 })
             })
 

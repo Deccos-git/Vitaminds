@@ -22,6 +22,7 @@ h1{
   font-family: 'Libre Baskerville', serif !important;
   font-size: 42px;
   text-align: center;
+  padding: 20px;
 }
 
 h2{
@@ -416,50 +417,31 @@ link{
 
 .button-standard{
   background-color: #fff;
-  border: 1px #0c6665 solid;
+  border: 1px #49beb7 solid;
   border-radius: 10px;
   font-family: 'Nunito Sans', sans-serif;
   font-size: 16px;
-  color: #0c6665;
+  color: #49beb7;
   cursor: pointer;
 }
 
 .button-algemeen {
-  background-color: #0c6665;
-  border: 1px #0c6665 solid;
+  background-color: white;
+  border: 1px #008e8e solid;
   border-radius: 10px;
   font-family: 'Nunito Sans', sans-serif;
   font-size: 18px;
-  color: #FFF;
+  color: #008e8e;
   cursor: pointer;
  }
- 
- .button-algemeen:hover {
-   background-color: #0c6665;
-   border: 2px #0c6665 solid;
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 20px;
-  color: #fff;
- }
- 
- .button-algemeen a:link{
-   text-decoration:none;
-   color: #FFF;
- }
- 
- .button-algemeen a:active{
-   text-decoration:none;
-   color: #fff
- }
- 
- .button-algemeen a:visited{
-   text-decoration:none;
-   color: #fff;
+
+ .button-algemeen a{
+   color: #008e8e;
  }
 
  .button-header{
-  background-color: #0c6665;
-  border: 1px #0c6665 solid;
+  background-color: #49beb7;
+  border: 1px #49beb7 solid;
   border-radius: 10px;
   font-family: 'Nunito Sans', sans-serif;
   font-size: 30px;
