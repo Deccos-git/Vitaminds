@@ -149,7 +149,6 @@ link{
 #auth-menu{
   width: 25%;
   margin: 10px 105px 15px 15px;
-  border-left: 1px solid #122b46;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -433,6 +432,7 @@ link{
   font-size: 18px;
   color: #008e8e;
   cursor: pointer;
+  margin-top: auto;
  }
 
  .button-algemeen a{
@@ -471,6 +471,19 @@ link{
   cursor: pointer;
   margin: 10px 10px 10px 10px;
   width: 100%;
+  align-self: center;
+}
+
+#button-start{
+  background-color: white;
+  border: 1px #008e8e solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 18px;
+  color: #008e8e;
+  cursor: pointer;
+  margin-top: auto;
+  width: 100px;
   align-self: center;
 }
 
@@ -531,6 +544,11 @@ link{
 }
 
 .header-image h2{
+  color: #fff;
+  margin-bottom: 20%;
+}
+
+.header-image h3{
   color: #fff;
 }
 

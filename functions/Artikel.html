@@ -1,16 +1,41 @@
-<html>
+<!DOCTYPE html>
+<html lang="nl">
 
 <head>
-  <title> Vitaminds </title>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta id="meta-keywords" name="keywords">
+    <meta id="meta-description" name="description">
+  <title></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../Style/style.css">
   <link rel="stylesheet" href="../Style/inspiratie.css">
+  <link rel="shortcut icon" href="../images/favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  <!-- Tiny MCE -->
+  <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
+    tinymce.init({
+      height: 400,
+      selector: '#tiny-mce',
+      toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image',
+      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists',
+      toolbar_mode: 'floating',
+      plugin_preview_width: 720,
+      forced_root_block : false,
+      paste_preprocess: function(plugin, args) {
+        console.log(args.content);
+        args.content += ' preprocess';
+      }
+    });
+  </script>
+  <!-- End Tiny MCE -->
 </head>
 
 <body>
@@ -55,54 +80,37 @@
   
 
 <!-- Artikel -->
-<div id="artikel-outer-div">
-  <div id="headerInsp"></div>
-  <section class="artikel">
-      <div id="meta">
-        <h6 id="auteur"></h6>
-        <h6 id="thema">Over</h6>
-        <h6 id="datum">Geschreven op</h6>
+<h1 id="title-article"></h1>
+  <section class="levensvraag-artikel-main-information">
+      <div>
+          <p id="summary-article">
+          </p>
       </div>
-      <h2 id="titeltext"></h2>
-      <div id="bodytext" ></div>
+      <div class="levensvraag-artikel-main-image"><img src="../images/undraw_farm_girl_dnpe.png" alt=""></div>
   </section>
-</div>
 
-<!-- Call to action -->
-
-<div class="calltoaction">
-  <h2 id="categorie">Heeft dit artikel je geinspireerd? Maak dan een <a href="../Register.html">Digimind</a> aan en leer jezelf steeds beter kennen</h2>
-  <section id="CTAAuth">
-    <div class="bijschrijven">
-        <input id="inputDB" type="text" placeholder="Wat ik heb geleerd..">
-        <p>Koppelen aan levensvraag</p>
-        <select id="learning-levensvraag">
-        </select>
-        <div id=levenvraag-notice>
-        </div>
-        <div id="submit-learning-div">
-          <button onclick="submitKT()" class="button-algemeen">Deel</button>
-        </div>
-        <div id="artikel-favorieten">
-          <div class="favorite-inner-dive">
-            <img src="../images/Favorite-inspiration.png" alt="" width="25px" height="25px">
-            <p id= "favArtikel" onclick = "favArtikel()" >Artikel in favorieten</p>
-          </div>
-          <div class="favorite-inner-dive">
-            <img src="../images/Favorite-coach.png" alt="" width="25px" height="25px">
-            <p id="favAuteur" onclick = "favAuteur()" >Coach in favorieten</p>
-          </div>
-        </div>
+  <section id="coach-insights">
+    <div id="loader">
+      <img src="../images/loader.gif" alt="loading">
     </div>
-  </section>  
-</div>
+  </section>
 
-<!-- Learnings-->
-
-<div id="learningsInsp">
-  <h2 id="learnH2"></h2>
-  <div id="learningsOutput"></div>
-</div>
+  <section id="coach-input">
+      <h2 id="insight-title"></h2>
+      <div id="insights-theme-ideas">
+        <p>Ideeen:</p>
+        <div id="theme-list-insights"></div>
+      </div>
+    <div id="nieuwepost">
+        <input id="nieuwposttitel" type="text" placeholder="Geef je inzicht een titel...">
+        <div id="tiny-mce"></div>
+        <div id="hidden-title-div"></div>
+        <div id="categorieSelectie">
+          <h2>Selecteer evt. een bijpassend thema</h2>
+        </div>
+        <button onclick = "nieuwepostsubmit(this)" class="button-algemeen">Delen</button>
+   </div> 
+  </section>
 
 <!-- footer -->
 <footer class="footer">
@@ -122,6 +130,7 @@
       <script type="text/javascript" src="../javascript/firebase.js"></script>
       <script type="text/javascript" src="../javascript/inspiratie.js"></script>
       <script type="text/javascript" src="../javascript/auth.js"></script>
+      <script type="text/javascript" src="../javascript/edit-profile.js"></script>
     </body>
   </html>
   

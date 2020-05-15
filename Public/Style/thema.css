@@ -1,113 +1,63 @@
-#paginaDankbaarheid{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+.domein-div{
+ margin: 50px;
+ box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+ border-radius: 5px;
+ padding: 10px;
+ border-left: 1px solid #8e0000;
 }
 
-#paginaDankbaarheid section{
-    margin: 15px;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
-    border-radius: 15px;
-    padding: 15px;
-    width: 25%;
-    text-align: center;
-}
-
-#paginaDankbaarheid section:hover{
-    box-shadow: 0 8px 8px 0 rgba(0,0,0,.14), 0 9px 7px -8px rgba(0,0,0,.2), 0 7px 11px 0 rgba(0,0,0,.12);
-}
-
-#paginaDankbaarheid p{
+.domein-div h3{
     font-size: 14px;
+    margin-bottom: 0px;
+    color: #8e0000;
 }
 
-#headerOU{
-    background-image: url("../images/openuppic.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    height: 200px;
-    width: 100%;
+.domein-div p{
+    font-size: 22px;
 }
 
-#headerInsp{
-    background-image: url("../images/inspiratiepic.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    height: 200px;
-    width: 100%;
+.levensvraag-div{
+    margin-left: 5%;
+    border-left: 1px solid #122b46;
+    padding-left: 10px;
 }
 
-#headerEve{
-    background-image: url("../images/activiteitenpic.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    height: 200px;
-    width: 100%;
+.levensvraag-div h3{
+    font-size: 14px;
+    color: #122b46;
 }
 
-#headerCH{
-    background-image: url("../images/coachingpic.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    height: 200px;
-    width: 100%;
+.levensvraag-div p{
+    font-size: 20px;
 }
 
-#headerOW{
-    background-image: url("../images/laptop.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    height: 200px;
-    width: 100%;
+.theme-div{
+    margin-left: 12%;
+    border-left: 1px solid #0c6665;
+    padding-left: 10px;
 }
 
-.inner-div-thema{
-    border-bottom: 1px solid #122b463a;
-    cursor: pointer;
+.theme-div h3{
+    font-size: 14px;
+    color: #0c6665;
 }
 
-#filter-thema-outer-div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.themas-auteur-div{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.auteur-photo-div{
-    height: 30px;
-    width: 30px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    margin: 50px 100px 100px 100px;
+.theme-div p{
     font-size: 18px;
-  }
-  
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
+}
 
-  #table-heading{
-    background-color: #858585;
-  }
+.paragraph-div{
+    margin-left: 15%;
+    border-left: 1px solid #49beb7;
+    padding-left: 10px;
+}
 
+.paragraph-div h3{
+    font-size: 14px;
+    color: #49beb7;
+}
+
+.paragraph-div p{
+    font-size: 16px;
+}
 

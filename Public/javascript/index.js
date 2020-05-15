@@ -53,3 +53,31 @@ if(cookies == "OK"){
         cookieDiv.style.display = "none"
 }
 
+// Main header select
+
+const select = document.getElementById("main-header-select")
+
+db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+    
+            const title = doc.data().Levensvraag
+
+            const option = document.createElement("option")
+
+            option.innerHTML = title
+
+            select.appendChild(option)
+
+        })
+});
+
+function start(){
+
+        const select = document.getElementById("main-header-select")
+
+        const selectOption = select.options
+        const selectSelect = selectOption[selectOption.selectedIndex].innerHTML;
+
+        window.open("../Artikelen/" + selectSelect + ".html", "_self")
+}
+

@@ -21,10 +21,16 @@ const app = express();
 
 // const urlencodedParser = bodyParser.urlencoded({extended: true});
 
-// Artikelen aanmaken op basis van URL
+// Levensvraag artikelen aanmaken op basis van URL
 app.get('/Artikelen/:id',function(req,res)
 {
     res.sendFile('Artikel.html', { root: __dirname });
+});
+
+// Thema artikelen aanmaken op basis van URL
+app.get('/Theme-articles/:id',function(req,res)
+{
+    res.sendFile('theme-article.html', { root: __dirname });
 });
 
 // Thema aanmaken op basis van URL
