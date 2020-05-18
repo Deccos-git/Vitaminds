@@ -834,7 +834,7 @@ function shareNewCasus(){
 
 // My contributions
 
-        // Inspiratie
+        // Insights
 
 const DOMcontributions = document.getElementById("my-contributions-outer-div")
 
@@ -843,38 +843,43 @@ const innerDivInspiration = document.createElement("div")
 
         const titelH3 = document.createElement("h3")
        
-        titelH3.innerHTML = "Inspiratie"
+        titelH3.innerHTML = "Inzichten"
 
         DOMcontributions.appendChild(innerDivInspiration)
         innerDivInspiration.appendChild(titelH3)
 
-db.collection("Artikelen").where("Auteur", "==", naam).get().then(querySnapshot => {
+        // Lifequestions article insights
+db.collection("Insights").where("Auteur", "==", naam).where("Type", "==", "Insight-levensvraag").get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
                 const titel = doc.data().Titel
-                const artikelID = doc.data().ID
-                const titelClean = titel.replace(artikelID, "")
+                 const levensvraagArtikel = doc.data().LevensvraagArtikel
                 
                 const titelP = document.createElement("p")
                         titelP.setAttribute("data-titel", titel)
                 
-
-               
-                titelP.innerHTML = `<a href="../Artikelen/${titel}.html"><u>${titelClean}</u></a>`
-                const editDiv = document.createElement("div")
-                        editDiv.setAttribute("class", "edit-div")
-                const edit = document.createElement("div")
-                edit.setAttribute("class", "edit-levensvraag")
-                edit.setAttribute("onclick", "editArticle(this)")
-
-                edit.innerHTML = '<img class="edit-icon" src="../images/edit-icon.png" alt="edit icon" width="20px"> ' 
-
-                edit.style.display = "block"
-               
+                titelP.innerHTML = `<a href="../Artikelen/${levensvraagArtikel}.html"><u>${titel}</u></a>`
+                
                 innerDivInspiration.appendChild(titelP)
-                titelP.appendChild(editDiv)
-                editDiv.appendChild(edit)
+
         })
-})
+});
+
+ // Theme article insights
+ db.collection("Insights").where("Auteur", "==", naam).where("Type", "==", "Insight-theme-article").get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+                const titel = doc.data().Titel
+                 const themeArtikel = doc.data().ThemeArtikel
+                
+                const titelP = document.createElement("p")
+                        titelP.setAttribute("data-titel", titel)
+                
+                titelP.innerHTML = `<a href="../Theme-articles/${themeArtikel}.html"><u>${titel}</u></a>`
+                
+                innerDivInspiration.appendChild(titelP)
+
+        })
+});
+       
 
         // Reactions
 const innerDivReactions = document.createElement("div")

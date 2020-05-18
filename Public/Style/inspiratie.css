@@ -235,6 +235,30 @@
     flex-wrap: wrap;
 }
 
+#paragraph-list h3{
+    font-size: 18px;
+    margin-left: 30%;
+}
+
+.paragraph-list-inner-div{
+    margin: 2px;
+    font-size: 16px;
+    color: #122b46;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.photo-div-paragraph{
+    width: 50px;
+    border-radius: 50%;
+}
+
+.paragraph-list-inner-div p{
+    margin: 0px 5px 0px 5px;
+    font-size: 14px;
+}
+
 #theme-list-insights{
     display: flex;
     justify-content: center;
@@ -282,6 +306,11 @@
     border-radius: 50%;
 }
 
+.visit-profile-button-insights{
+    color: #49beb7;
+    font-size: 14px;
+}
+
 #coach-insights{
     margin: 0px 0px 100px 0px;
 }
@@ -289,18 +318,20 @@
 .insights-outer-div{
     display: flex;
     margin: 10px 100px 5px 100px;
-    background-color: rgb(240, 240, 240);
+    background-color: white;
     padding: 15px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
     border-radius: 2px;
+    border: 1px solid #cfcfcf;
 }
 
 .insights-outer-div p{
-    font-size: 16px;
+    font-size: 14px;
+    text-align: center;
 }
 
 .meta-div-insights{
-    border-right: 1px solid white;
+    border-right: 1px solid #cfcfcf;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -388,11 +419,12 @@
         background-color: rgb(204, 203, 203);
         display: flex;
         margin: 0px 100px 30px 100px;
-        background-color: rgb(240, 240, 240);
+        background-color: white;
         box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
         border-radius: 2px;
         padding: 10px;
         justify-content: space-evenly;
+        border: 1px solid #cfcfcf;
 }
 
 .social-div-thema-div-insights{
@@ -452,17 +484,28 @@
 }
 
 #toevoegen-levensles-div{
-    padding: 5px;
-    margin: 5px;
-    background-color: rgb(235, 235, 235);
-    border-radius: 2px;
-    display: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+#toevoegen-levensles-div select{
+    font-size: 14px;
+    border: 1px solid #dfdfdf;
+    width: 60%;
+    margin-bottom: 0px;
 }
 
 #toevoegen-levensles-div p{
     margin: 5px;
+    font-size: 14px;
+    margin: 10px 0px 7px 0px;
+}
+
+.CTA-visitor{
     font-size: 16px;
-    margin: 0px 0px 7px 0px;
+    margin: 10px;
+    color: #cf6e13;
+    cursor: pointer;
 }
 
 .omschrijving-levensvraag{
@@ -524,6 +567,57 @@
     cursor: pointer;
     color: #0c6665;
     display: none;
+}
+
+#save-lifelesson-section{
+    width: 100%;
+    background-color: white;
+    position: sticky;
+    bottom: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+}
+
+#save-lifelesson-inner-div{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    box-shadow: 0px -1px 0px 0 #e4e4e4;
+}
+
+#save-lifelesson-section h3{
+    color: #747474;
+    font-size: 16px;
+    text-align: center;
+    margin: 5px;
+}
+
+#save-lifelesson-section input{
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+    border: 1px solid #747474;
+    color: #747474;
+    width: 50%;
+    font-size: 12px;
+}
+
+#button-CTA{
+    color: #747474;
+}
+
+#collapse-div{
+    border: 1px solid #747474;;
+    height: auto;
+    margin-left: auto;
+}
+
+#collapse-div img{
+    height: 20px;
+    width: 20px;
+    margin-bottom: auto;
 }
 
 /* Individueel artikel pagina */
@@ -936,6 +1030,7 @@
         border-top: 1px solid white;
         border-right: 0;
         display: flex;
+        justify-content: space-evenly;
         flex-direction: initial;
         min-width: 100%;
     }
@@ -997,5 +1092,21 @@
     #subtitel-theme-article-div{
         margin: 0px 20px 50px 20px;
         box-shadow: 0 0px 0px 0 rgba(0,0,0);
+    }
+
+    #save-lifelesson-section h3{
+        font-size: 12px;
+    }
+
+    #save-lifelesson-section input{
+        width: 40%;
+    }
+
+    #toevoegen-levensles-div select{
+        width: 100%;
+    }
+
+    #paragraph-list h3 {
+        margin-left: 0%;
     }
 }

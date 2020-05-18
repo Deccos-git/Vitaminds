@@ -279,7 +279,8 @@ if(button != null){
       Usertype: "Vitaminder",
       Inspiratiepunten: 1,
       Email: email, 
-      ID: cred.user.uid
+      ID: cred.user.uid,
+      Levensvragen: []
     })
   }).catch((err) => {
     alert(err)
@@ -349,8 +350,8 @@ function registerCoach(){
       Coachingstyle: method,
       City: city,
       Why: why,
-      ID: cred.user.uid
-
+      ID: cred.user.uid,
+      Levensvragen: []
     })
   }).then(() => {
     db.collection("Mail").doc().set({

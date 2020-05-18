@@ -2,8 +2,6 @@
 
 const filter = document.getElementById("inspiratiemenu")
 
-
-
 // Fetching title from webadres
 titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
 titel1 = titelhtml.replace('.html', '')
@@ -27,7 +25,7 @@ auth.onAuthStateChanged(User =>{
         const editIcon = document.getElementsByClassName("edit-icon-insights")
 
         const editIconArray = Array.from(editIcon)
-        
+
         editIconArray.forEach(icon => {
             icon.style.display = "none"
         })
@@ -76,13 +74,17 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
         titleH2.innerHTML = title
         buttonDiv.innerHTML = "Bekijk"
 
+        if(DOMarticle == null){
+            console.log("null")
+        } else {
+
         DOMarticle.appendChild(outerSection)
         outerSection.appendChild(headerDiv)
         headerDiv.appendChild(headerImg)
         outerSection.appendChild(titleDiv)
         titleDiv.appendChild(titleH2)
         outerSection.appendChild(buttonDiv)
-
+        }
     })
 })
 
@@ -106,6 +108,8 @@ const hiddenTitleArticle = document.getElementById("hidden-title-div")
 const titelHead = document.getElementsByTagName("title")
 const metaKeywords = document.getElementById("meta-keywords")
 const metaDescription = document.getElementById("meta-description")
+
+function loadingDOM(a){
 
 db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
@@ -140,13 +144,11 @@ db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(query
     })
 }).then(() => {   
 
-    // Loading Insights
+    // Loading Insight levensvraag articles
 
 const DOM = document.getElementById("coach-insights")
 
-const geenOption = document.createElement("option")
-
-db.collection("Insights").where("LevensvraagArtikel", "==", titel).get().then(querySnapshot => {
+db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
         const titelInsight = doc.data().Titel
         const body = doc.data().Body
@@ -165,6 +167,8 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).get().then(qu
                 const metaPhoto = document.createElement("img")
                     metaPhoto.setAttribute("class", "meta-photo")
                 const metaName = document.createElement("p")
+                const visitProfile = document.createElement("p")
+                    visitProfile.setAttribute("class", "visit-profile-button-insights")
                 const textDiv = document.createElement("div")
                     textDiv.setAttribute("class", "text-div-insights")
                 const textTitle = document.createElement("h2")
@@ -189,14 +193,14 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).get().then(qu
                     toevoegenLevenslesOuterDiv.setAttribute("class", "toevoegen-levensles-outer-div")
                 const toevoegenLevensles = document.createElement("h3")
                     toevoegenLevensles.setAttribute("class", "toevoegen-levensles")
-                const toevoegenLevenslesImg = document.createElement("img")
-                    toevoegenLevenslesImg.setAttribute("id", "add-to-lifelesson-img")
-                    toevoegenLevenslesImg.setAttribute("onclick", "toevoegenLevensles(this)")
+                const toevoegenLevenslesInput = document.createElement("input")
+                    toevoegenLevenslesInput.setAttribute("placeholder", "Wat heb je geleerd?")
+                const toevoegenLevenslesSelectButton = document.createElement("button")
                 const toevoegenLevenslesDiv = document.createElement("div")
                     toevoegenLevenslesDiv.setAttribute("id", "toevoegen-levensles-div")
-                const toevoegenLevenslesP = document.createElement("p")
                 const toevoegenLevenslesSelect = document.createElement("select")
                     toevoegenLevenslesSelect.setAttribute("class", "inspiratie-select")
+                const toevoegenLevenslesToggleDiv = document.createElement("div")
                 const toevoegenLevenslesButton = document.createElement("button")
                     toevoegenLevenslesButton.setAttribute("onclick", "toevoegenLevenslesButton(this)")
                     toevoegenLevenslesButton.setAttribute("data-titel", titelInsight)
@@ -210,20 +214,60 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).get().then(qu
                     editIcon.setAttribute("onclick", "editIconInsights(this)")
                     editIcon.setAttribute("data-title", titelInsight)
 
+
+                    //Levensvragen van auth toevoegen aan select
+                    auth.onAuthStateChanged(User =>{
+                        if (User){
+                            db.collection("Vitaminders").doc(User.uid)
+                            .collection("Levensvragen").get()
+                            .then(querySnapshot => {
+                                querySnapshot.forEach(doc => {
+                                    const levensvraag = doc.data().Levensvraag
+                                    const ID = doc.data().ID
+                                    const levensvraagClean = levensvraag.replace(ID, "")
+                    
+                                    const toevoegenLevenslesOption = document.createElement("option")
+                                    
+                                    toevoegenLevenslesOption.innerHTML = levensvraagClean
+                    
+                                    toevoegenLevenslesSelect.appendChild(toevoegenLevenslesOption)
+                             
+                
+               
+
+                            })
+                        })
+                    }
+                });
+
+                // Section title
+                auth.onAuthStateChanged(User =>{
+                    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                            const auth = doc.data().GebruikersnaamClean
+
+                            const sectionTitle = document.getElementById("insight-title")
+                            sectionTitle.innerHTML = `${auth}, <br> geef je professionele inzicht over: <br> ${titel}`
+                    })
+                })
+
+                toevoegenLevenslesToggleDiv.style.display = "none"
                 metaPhoto.src = photo
                 metaName.innerHTML = gebruikersnaamClean
+                visitProfile.innerHTML = "Bekijk profiel"
                 textTitle.innerHTML = titelInsight
                 textBody.innerHTML = body
                 themaH3.innerHTML = "Verder lezen"
                 inspirationalH3.innerHTML = "Inspirerend"
-                inspirationalImg.src = "../Images/menu-karakter.png"
+                inspirationalImg.src = "../images/menu-karakter.png"
                 bedankt.innerHTML = `<u>${gebruikersnaamClean}</u> zegt: Bedankt!`
-                toevoegenLevensles.innerHTML = "Toevoegen aan levensvraag"
-                toevoegenLevenslesImg.src = "../Images/menu-doelen.png"
-                toevoegenLevenslesP.innerHTML = "Selecteer levensvraag"
+                toevoegenLevensles.innerHTML = `Heeft ${gebruikersnaamClean} je geïnspireerd?`
+                toevoegenLevenslesSelectButton.innerHTML = "Selecteer levensvraag"
                 toevoegenLevenslesButton.innerHTML = "Opslaan"
-                geenOption.innerHTML = "Niet aan levensvraag toevoegen"
                 opgeslagen.innerHTML = `Opgeslagen in je <u>Digimind</u>`
+
+                toevoegenLevenslesSelectButton.addEventListener("click", () => {
+                    toevoegenLevenslesToggleDiv.style.display = "block"
+                })
 
                 bedankt.addEventListener("click", () => {
                     window.open("../Vitaminders/" + coach + ".html", "_self");
@@ -262,6 +306,7 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).get().then(qu
                 outerDiv.appendChild(metaDiv)
                 metaDiv.appendChild(metaPhoto)
                 metaDiv.appendChild(metaName)
+                metaDiv.appendChild(visitProfile)
                 outerDiv.appendChild(textDiv)
                 textDiv.appendChild(editIcon)
                 textDiv.appendChild(textTitle)
@@ -276,12 +321,13 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).get().then(qu
                 inspirationalDiv.appendChild(bedankt)
                 socialDiv.appendChild(toevoegenLevenslesOuterDiv)
                 toevoegenLevenslesOuterDiv.appendChild(toevoegenLevensles)
-                toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesImg)
                 toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesDiv)
-                toevoegenLevenslesDiv.appendChild(toevoegenLevenslesP)
                 toevoegenLevenslesDiv.appendChild(toevoegenLevenslesSelect)
-                toevoegenLevenslesDiv.appendChild(toevoegenLevenslesButton)
-                toevoegenLevenslesDiv.appendChild(opgeslagen)
+                toevoegenLevenslesDiv.appendChild(toevoegenLevenslesSelectButton)
+                toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesToggleDiv)
+                toevoegenLevenslesToggleDiv.appendChild(toevoegenLevenslesInput)
+                toevoegenLevenslesToggleDiv.appendChild(toevoegenLevenslesButton)
+                toevoegenLevenslesToggleDiv.appendChild(opgeslagen)
 
                 // User role
                     // Visitor
@@ -294,6 +340,19 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).get().then(qu
                         editIconArray.forEach(icon => {
                             icon.style.display = "none"
                         })
+
+                        toevoegenLevenslesDiv.style.display = "none"
+                        
+
+                        const CTAvisiter = document.createElement("p")
+                            CTAvisiter.setAttribute("class", "CTA-visitor")
+
+                        CTAvisiter.innerHTML = "Maak een Digimind aan en start je avontuur"
+                        CTAvisiter.addEventListener("click", () => {
+                            window.open("../Register.html", "_self");
+                        })
+
+                        toevoegenLevenslesOuterDiv.appendChild(CTAvisiter)
                     }
                 })
                    //Non coach
@@ -308,30 +367,111 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).get().then(qu
                 
                         editIconArray.forEach(icon => {
                             icon.style.display = "none"
-                                    })
-                            }
+                                        })
+                                }
+                        })
+                    }) 
+
+                    auth.onAuthStateChanged(User =>{
+                        db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                    const levensvragen = doc.data().Levensvragen
+                    const gebruikersnaam = doc.data().Gebruikersnaam
+    
+                    if(levensvragen.length == 0){
+                        toevoegenLevenslesDiv.style.display = "none"
                         
-                    })
+
+                        const CTAvisiter = document.createElement("p")
+                            CTAvisiter.setAttribute("class", "CTA-visitor")
+
+                        CTAvisiter.innerHTML = "Maak je eerste levensvraag aan!"
+                        CTAvisiter.addEventListener("click", () => {
+                            window.open(`/Vitaminders/${gebruikersnaam}.html`, "_self");
+                        })
+
+                        toevoegenLevenslesOuterDiv.appendChild(CTAvisiter)
+                                    }
+                            })
+                        }) 
                 })
             })
         })
     })
 })
+}   loadingDOM("LevensvraagArtikel")
+    loadingDOM("ThemeArtikel")
+
+// Paragraph-summary
+
+const paragraphSummary = document.getElementById("paragraph-list")
+
+db.collection("Insights").where("LevensvraagArtikel", "==", titel).get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const titel = doc.data().Titel
+        const auteur = doc.data().Auteur
+
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", auteur).get().then(querySnapshot => {
+            querySnapshot.forEach(doc1=> {
+
+                const profielFoto = doc1.data().Profielfoto
+                const gebruikersnaam = doc1.data().Gebruikersnaam
+        
+
+        const innerDiv = document.createElement("div")
+        innerDiv.setAttribute("class", "paragraph-list-inner-div")
+       const titelDiv = document.createElement("p")
+       const photoDiv = document.createElement("div")
+                photoDiv.setAttribute("class", "photo-div-paragraph")
+        const photoImg = document.createElement("img")
+                photoImg.setAttribute("class", "meta-photo")
+
+        titelDiv.innerHTML = titel
+        photoImg.src = profielFoto
+
+        photoDiv.addEventListener("click", () => {
+            window.open(`/Vitaminders/${gebruikersnaam}.html`, "_self");
+        })
+
+        paragraphSummary.appendChild(innerDiv)
+        innerDiv.appendChild(photoDiv)
+        photoDiv.appendChild(photoImg)
+        innerDiv.appendChild(titelDiv)
+        
+
+        // li.addEventListener("click", () => {
+        //      const insight = document.getElementsByClassName("text-div-insights")
+
+        // const insightArray = Array.from(insight)
+
+        //     insightArray.forEach(ins =>{
+
+        //         insInner = ins.firstElementChild.nextElementSibling.innerHTML
+
+        //         if( insInner == li.innerHTML){
+        //             location.href = `#${ins}`
+        //         }
+
+        //     })
+        // })
+            })
+        })
+    })
 });
 
 // Coach insights theme examples 
 const DOMlist = document.getElementById("theme-list-insights")
 const category = document.getElementById("categorieSelectie")
 
-db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
+db.collection("Themas").where("Levensvragen", "array-contains", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
-        const themas = doc.data().Themas
+        const themas = doc.data().Thema
 
-        themas.forEach(thema => {
+        console.log(themas)
 
             const p = document.createElement("p")
 
-            p.innerHTML = thema
+            p.innerHTML = themas
 
             DOMlist.appendChild(p)
 
@@ -348,18 +488,17 @@ db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(query
         const input = document.createElement("input")
                 input.type = "radio"
                 input.setAttribute("class", "category-input")
-                input.setAttribute("id", thema)  
+                input.setAttribute("id", themas)  
                 input.name = "Categorie"
-                input.value = thema
-                input.innerHTML = thema
+                input.value = themas
+                input.innerHTML = themas
         const label = document.createElement("label")
-                label.setAttribute("for", thema) 
-                label.innerHTML = thema
+                label.setAttribute("for", themas) 
+                label.innerHTML = themas
 
         category.appendChild(divCat)
         divCat.appendChild(input)
         divCat.appendChild(label)
-        })
     })
 });
     //No theme option
@@ -416,7 +555,7 @@ function nieuwepostsubmit(){
                                     Inspiratiepunten: 1,
                                     LevensvraagArtikel: titel,
                                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                                    Type: "Insight",
+                                    Type: "Insight-levensvraag",
                                     Thema: categorie
                                 }).then(() => {
                                     location.reload()
@@ -429,52 +568,18 @@ function nieuwepostsubmit(){
         })
 };
 
-
  // Toevoegen aan levensles verwerken in database
-    
-    // Add to lifequestion display flex
- function toevoegenLevensles(elem){
-
-    elem.nextSibling.style.display = "block"
-    elem.style.visibility = "hidden"
-
-    // Adding lifequestions to select
-const select = elem.nextSibling.firstElementChild.nextSibling
-
-auth.onAuthStateChanged(User =>{
-    if (User){
-        db.collection("Vitaminders").doc(User.uid)
-        .collection("Levensvragen").get()
-        .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-                const levensvraag = doc.data().Levensvraag
-                const ID = doc.data().ID
-                const levensvraagClean = levensvraag.replace(ID, "")
-
-                const toevoegenLevenslesOption = document.createElement("option")
-                
-                toevoegenLevenslesOption.innerHTML = levensvraagClean
-
-                select.appendChild(geenOption)
-                select.appendChild(toevoegenLevenslesOption)
-                })
-            })
-        }
-    })
-};
 
     // Saving insight to lifequestion
  function toevoegenLevenslesButton(elem){
 
      const titel = elem.dataset.titel
-     const body = elem.dataset.body
+     const input = elem.previousElementSibling.value
      const coach = elem.dataset.coach
      const levensvraagArtikel =  document.getElementById("hidden-title-div").innerHTML
 
-     const uitlezenOption = elem.previousSibling.options
+     const uitlezenOption = elem.parentElement.previousSibling.firstElementChild.options
      const uitlezenSelect = uitlezenOption[uitlezenOption.selectedIndex].innerHTML;
-
-     console.log(uitlezenSelect)
 
      auth.onAuthStateChanged(User =>{
          userRef = db.collection("Vitaminders").doc(User.uid)
@@ -484,7 +589,7 @@ auth.onAuthStateChanged(User =>{
 
      db.collection("Vitaminders").doc(User.uid).collection("Levenslessen").doc().set({
      Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-     Levensles: body,
+     Levensles: input,
      Auteur: coach,
      Gebruikersnaam: naam,
      Titel: titel,
@@ -500,7 +605,7 @@ auth.onAuthStateChanged(User =>{
          querySnapshot.forEach(doc => {
              
              userRef.collection("Levensvragen").doc(doc.id).update({
-                 Levenslessen: firebase.firestore.FieldValue.arrayUnion(body)
+                 Levenslessen: firebase.firestore.FieldValue.arrayUnion(input)
              })
              
          })
@@ -607,7 +712,6 @@ db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => 
         metaKeywordsThemePage.content = theme
         metaDescriptionThemePage.content = summary
 
-        console.log(metaDescriptionThemePage)
     })
 });
 
@@ -631,9 +735,9 @@ function nieuwepostsubmitThemePage(){
                                     Body: nieuwePostBodyVar,
                                     Auteur: coachNaam,
                                     Inspiratiepunten: 1,
-                                    LevensvraagArtikel: titel,
+                                    ThemeArtikel: titel,
                                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                                    Type: "Insight",
+                                    Type: "Insight-theme-article",
                                 }).then(() => {
                                     location.reload()
                                 })

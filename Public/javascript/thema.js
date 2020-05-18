@@ -33,6 +33,10 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
                 levensvraagH3.innerHTML = "Levensvraag"
                 levensvraagP.innerHTML = levensvragen
 
+                levensvraagP.addEventListener("click", () => {
+                    window.open(`../Artikelen/${levensvragen}.html`, "_self");
+                })
+
                 domeinDiv.appendChild(outerDiv)
                 outerDiv.appendChild(levensvraagDiv)
                 levensvraagDiv.appendChild(levensvraagH3)
@@ -50,6 +54,10 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
 
                         themeH3.innerHTML = "Thema"
                         themeP.innerHTML = themas
+
+                        themeP.addEventListener("click", () => {
+                            window.open(`../Theme-articles/${themas}.html`, "_self");
+                        })
 
                         levensvraagDiv.appendChild(themeDiv)
                         themeDiv.appendChild(themeH3)
