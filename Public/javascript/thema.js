@@ -30,12 +30,27 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
                     levensvraagDiv.setAttribute("class", "levensvraag-div")
                 const levensvraagP = document.createElement("p")
 
+                levensvraagP.style.cursor = "pointer"
+
                 levensvraagH3.innerHTML = "Levensvraag"
                 levensvraagP.innerHTML = levensvragen
 
                 levensvraagP.addEventListener("click", () => {
                     window.open(`../Artikelen/${levensvragen}.html`, "_self");
                 })
+
+                // count of insights in theme-list
+                db.collection("Insights").where("LevensvraagArtikel", "==", levensvragen).get().then(querySnapshot => {
+                    querySnapshot.forEach(doc2 => {
+
+                        const levensvraag = doc2.data().LevensvraagArtikel
+
+                        
+                        
+                    })
+                })
+
+               
 
                 domeinDiv.appendChild(outerDiv)
                 outerDiv.appendChild(levensvraagDiv)
@@ -52,7 +67,9 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
                             themeDiv.setAttribute("class", "theme-div")
                         const themeP = document.createElement("p")
 
-                        themeH3.innerHTML = "Thema"
+                            themeP.style.cursor = "pointer"
+
+                        themeH3.innerHTML = "Tool"
                         themeP.innerHTML = themas
 
                         themeP.addEventListener("click", () => {
@@ -93,3 +110,114 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
         }) 
     })
 });
+
+
+
+// Feedback themas
+
+function feedback(){
+
+const DOMfeedback = document.getElementById("feedback-thema")
+const feedbackArea = document.getElementById("feedback-div")
+
+const titelH2 = document.createElement("h2")
+const closeDiv = document.createElement("div")
+    closeDiv.setAttribute("id", "close-div-feedback")
+
+DOMfeedback.appendChild(titelH2)
+DOMfeedback.appendChild(closeDiv)
+
+titelH2.addEventListener("click", () => {
+    feedbackArea.style.display = "flex"
+    closeDiv.style.display = "flex"
+    titelH2.style.display = "none"
+})
+
+closeDiv.addEventListener("click", () => {
+    feedbackArea.style.display = "none"
+    closeDiv.style.display = "none"
+    titelH2.style.display = "block"
+})
+
+const welkomDiv = document.createElement("div")
+    welkomDiv.setAttribute("id", "welkom-div")
+    
+    closeDiv.innerHTML = "X"
+    titelH2.innerHTML = "Suggesties, aanvulling, aanpassingen"
+
+auth.onAuthStateChanged(User =>{
+    if(User){
+      const userRef = db.collection("Vitaminders").doc(User.uid);
+      userRef.get().then(function(doc) {
+        if (doc.exists) {
+         const naam = doc.data().GebruikersnaamClean;
+
+         const welkomP = document.getElementById("welkom-p")
+welkomP.innerHTML = `Hoi ${naam},<br> geef hier je suggesties, aanvulling en/of aanpassingen op de thema-lijst.`
+
+                }
+            })
+        }
+    })
+}; feedback()
+
+function feedbackThemeList(){
+
+    let input = tinyMCE.get('tiny-mce').getContent()
+    auth.onAuthStateChanged(User =>{
+        if(User){
+          const userRef = db.collection("Vitaminders").doc(User.uid);
+          userRef.get().then(function(doc) {
+            if (doc.exists) {
+             const naamClean = doc.data().GebruikersnaamClean;
+             const naam = doc.data().Gebruikersnaam
+
+    db.collection("Tickets").doc().set({
+        Gebruikersnaam: naam,
+        GebruikersnaamClean: naamClean,
+        Opmerking: input,
+        Verwerkt: "Nee",
+        Type: "Theme-list",
+        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+            }).then(() => {
+              location.reload();
+                    })
+                }
+            })
+        }
+    })
+}; 
+
+     // Feedback in DOM zetten
+  const DOMfeedback = document.getElementById("input-area")
+
+  db.collection("Tickets").where("Type", "==", "Theme-list").get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+      const naam = doc.data().GebruikersnaamClean
+      const opmerking = doc.data().Opmerking
+      const verwerkt = doc.data().Verwerkt
+
+      const reactDiv = document.createElement("div")
+        reactDiv.className = "react-div"
+      const naamP = document.createElement("h5")
+      const opmerkingP = document.createElement("p")
+      const verwerktP = document.createElement("h5")
+
+      naamP.innerHTML = "Door: " + naam
+      opmerkingP.innerHTML = opmerking
+      verwerktP.innerHTML = "Verwerkt: " + verwerkt
+
+      if(verwerkt == "Nee"){
+        opmerkingP.style.color = "#8e0000"
+      } else {
+        opmerkingP.style.color = "#0c6665"
+      }
+
+      DOMfeedback.appendChild(reactDiv)
+      reactDiv.appendChild(opmerkingP)
+      reactDiv.appendChild(naamP)
+      reactDiv.appendChild(verwerktP)
+    })
+  })
+

@@ -27,7 +27,9 @@ auth.onAuthStateChanged(User =>{
     Gebruikersnaam: Gnaam,
     GebruikersnaamClean, naamClean,
     Opmerking: opmerking,
-    Verwerkt: "Nee"
+    Verwerkt: "Nee",
+    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+    Type: "Feedback-general"
         }).then(() => {
           location.reload();
         })
@@ -39,7 +41,7 @@ auth.onAuthStateChanged(User =>{
   // Opmerkingen in DOM zetten
   const DOMreact = document.getElementById("tips-trucs")
 
-  db.collection("Tickets").get().then(querySnapshot => {
+  db.collection("Tickets").where("Type", "==", "Feedback-general").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
       const naam = doc.data().GebruikersnaamClean

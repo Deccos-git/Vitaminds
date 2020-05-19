@@ -130,6 +130,38 @@ db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(query
             })
         })
 
+        // Edit summary
+        const editDiv = document.createElement("div")
+        const editIcon = document.createElement("img")
+            editIcon.setAttribute("src", "../images/edit-icon.png")
+            editIcon.setAttribute("class", "edit-icon-insights")
+            editIcon.setAttribute("onclick", "editIconSummary(this)")
+            editIcon.setAttribute("data-title", titleArticle)
+
+
+            // summary.app(editDiv)
+            editDiv.appendChild(editIcon)
+
+        //Non admin
+        auth.onAuthStateChanged(User =>{
+            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                    const admin = doc.data().Admin
+
+                if(admin != "Yes"){
+                    editIcon.style.display = "none"
+                }
+            
+        })
+    })
+
+        // Visitor
+        auth.onAuthStateChanged(User =>{
+            if (!User){
+
+                editIcon.style.display = "none"
+            }
+        });
+
         // Pagetitle and meta's
 
         const titelHeadArray = Array.from(titelHead)

@@ -345,6 +345,7 @@ auth.onAuthStateChanged(User =>{
                 const changePhoto = document.getElementById("profile-picture-outer-div")
                 const intervisieMenu = document.getElementById("intervisie-tab")
                 const toolMenu = document.getElementById("tools-menu")
+                const themeOverview = document.getElementById("profile-notifications-theme-overview")
              
                     const activeDivArray = Array.from(activeDiv)
                     activeDivArray.forEach(active => {
@@ -357,6 +358,7 @@ auth.onAuthStateChanged(User =>{
                     toolsMenu.style.display = "none"
                     notifications.style.display = "none"
                     intervisieMenu.style.display = "none"
+                    themeOverview.style.display = "none"
 
                    setTimeout(() => {
                         editDiv[0].style.display = "none"
@@ -443,6 +445,23 @@ auth.onAuthStateChanged(User =>{
         })
     }
 });
+
+        // Hide elements for non coach
+        auth.onAuthStateChanged(User =>{
+                if (User){
+                    let docRef = db.collection("Vitaminders").doc(User.uid);
+                        docRef.get().then(function(doc){  
+                                
+                                const type = doc.data().Usertype
+                                const themeOverview = document.getElementById("profile-notifications-theme-overview")
+
+                                if (type != "Coach"){
+                                        themeOverview.style.display = "none"
+                                }
+
+                        })
+                }
+        });
 
 // Total inspirationpoints in Digimind
 

@@ -24,7 +24,26 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
     <script>src="https://www.gstatic.com/firebasejs/6.5.0/firebase-analytics.js"</script>
-    <title>Thema-lijst</title>
+    <title>Thema-overzicht</title>
+    <!-- Tiny MCE -->
+      <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+      <script>
+        tinymce.init({
+          plugins: 'placeholder',
+          height: 400,
+          selector: '#tiny-mce',
+          toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image',
+          plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists',
+          toolbar_mode: 'floating',
+          plugin_preview_width: 720,
+          forced_root_block : false,
+          paste_preprocess: function(plugin, args) {
+            console.log(args.content);
+            args.content += ' preprocess';
+          }
+        });
+      </script>
+      <!-- End Tiny MCE -->
 </head>
 <body>
 
@@ -48,15 +67,19 @@
 
    <!-- Mobile-menu -->
 <nav id="mobile-menu"> 
-  <div class="main-menu"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
-  <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+  <div id="menu-mobile-visible-layer">
+    <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+    <div class="main-menu-mobile"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+  </div>
   <div id="mobile-menu-outer-div">
     <div id="mobile-menu-inner-div">
-      <div class="main-menu"><a href="openup.html">Open up</a></div>
-      <div class="main-menu"><a href="inspiratie.html">Inspiratie</a></div>
-      <div class="main-menu"><a href="coaches.html">Coaches</a></div>
-      <div class="main-menu"><a href="tools.html">Tools</a></div>
-      <div class = "login-logout"><p><a href="voor-coach.html">Voor coaches</a></p></div> 
+          <div id="profile-picture-mobile"></div>
+          <div id="button-login-mobile" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
+      <div class="main-menu-mobile"><a href="openup.html">Open up</a></div>
+      <div class="main-menu-mobile"><a href="inspiratie.html">Inspiratie</a></div>
+      <div class="main-menu-mobile"><a href="tools.html">Tools</a></div>
+      <div class="main-menu-mobile"><a href="coaches.html">Coaches</a></div>
+      <div class="login-logout"><p><a href="voor-coach.html">Voor coaches</a></p></div> 
     </div>
 </nav>
 
@@ -66,9 +89,9 @@
       <div class="main-menu"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
       <div class="main-menu"><a href="openup.html">Open up</a></div>
       <div class="main-menu"><a href="inspiratie.html">Inspiratie</a></div>
+      <div class="main-menu"><a href="tools.html">Tools</a></div>
       <!-- <li class="main-menu"><a href="evenementen.html">Evenementen</a></li> -->
       <div class="main-menu"><a href="coaches.html">Coaches</a></div>
-      <div class="main-menu"><a href="tools.html">Tools</a></div>
       <!-- <li class="main-menu"><a href="privacy.html">Privacy</a></li> -->
     </div>
     <div id="auth-menu">
@@ -80,10 +103,22 @@
       <div class = "login-logout"><p id="aanmeldCH"><a href="voor-coach.html">Voor coaches</a></p></div> 
     </div>
   </nav>
-
-  <h1>Thema-lijst</h1>
+  <h1>Thema-overzicht</h1>
 
   <section id="list-of-themes"></section>
+
+  <section id="feedback-section">
+    <div id="feedback-thema"></div>
+    <div id="feedback-div">
+      <p id="welkom-p"></p>
+      <div id=input-div> 
+        <div id="tiny-mce" placeholder="Graag het domein, de levensvraag en eventueel de tool en/of paragrafen benoemen in je feedback"></div>
+        <button id="feedback-button" onclick = "feedbackThemeList(this)" class="button-algemeen">Delen</button>
+      </div>
+      <p id="feeback-input-title">Feedback</p>
+      <div id="input-area"></div>
+    </div>
+  </section>
   
 
     

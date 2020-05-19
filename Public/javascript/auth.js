@@ -16,7 +16,8 @@ hamburgerMenu.addEventListener("click", () => {
         }
 })
 
-//Ingelogd in main menu
+// Ingelogd in mobile-menu
+
 auth.onAuthStateChanged(User =>{
   if(User){
     const userRef = db.collection("Vitaminders").doc(User.uid);
@@ -25,7 +26,40 @@ auth.onAuthStateChanged(User =>{
        const naamID = doc.data().Gebruikersnaam;
        const ID = doc.data().ID
        const naam = naamID.replace(ID, "")
-        profilePic = doc.data().Profielfoto
+       const profilePic = doc.data().Profielfoto
+
+        const profilePicture = document.getElementById("profile-picture-mobile")
+        const login = document.getElementById("button-login-mobile")
+
+        login.style.display = "none" 
+
+        if(profilePic == undefined){
+          profilePicture.innerHTML = `<h6 class="menu-auth-name" >${naam}</h6>`
+        } else {
+            profilePicture.style.backgroundImage = `url('${profilePic}')`
+            profilePicture.setAttribute("class", "login-logout")
+        }
+
+        profilePicture.addEventListener("click", () => {
+          window.open("../Vitaminders/" + [naamID] + ".html", "_self");
+        })
+
+      }
+    })
+  }
+});
+
+
+//Ingelogd in main menu
+auth.onAuthStateChanged(User =>{
+  if(User){
+    const userRef = db.collection("Vitaminders").doc(User.uid);
+    userRef.get().then(function(doc) {
+      if (doc.exists) {
+        const naamID = doc.data().Gebruikersnaam;
+        const ID = doc.data().ID
+        const naam = naamID.replace(ID, "")
+        const profilePic = doc.data().Profielfoto
   
     const profilePicture = document.getElementById("profile-picture")
 

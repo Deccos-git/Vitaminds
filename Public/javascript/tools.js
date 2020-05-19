@@ -1,92 +1,32 @@
+toolDOM = document.getElementById("tools-section")
 
-// Installing tool dankbaarheid 
-function addToolDankbaarheid(){
-
-    // Frequention
-    const input = document.querySelectorAll("input")
-
-    const inputArray = Array.from(input)
-
-    inputArray.forEach(arr => {
-        const selectedFrequention = arr.checked
-
-        if(selectedFrequention == true){
-            const sel = arr.value
-   
-
-    auth.onAuthStateChanged(User =>{
-        const userRef = db.collection("Vitaminders").doc(User.uid);
-          userRef.get().then(function(doc) {
-             const auth = doc.data().Gebruikersnaam;
-
-    db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
-        querySnapshot.forEach(doc2 => {
-
-            db.collection("Vitaminders").doc(doc2.id).collection("Tools").doc().set({
-                Tool: "Dankbaarheid",
-                Gebruikersnaam: auth,
-                Frequention: sel
-                            })
-                        })
-                    }).then(() => {
-                        const alert = document.getElementById("alert-tool")
-                        alert.style.display = "block"
-                    })
-                })
-            })
-        }
-    })
-}
-
-// Activating tool dankbaarheid
-
-function toolDankbaarheid(a){
-
-setInterval(myTimer, a);
-
-function myTimer() {
-
-    db.collectionGroup("Tools").where("Tool", "==", "Dankbaarheid").get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-            const gebruikersnaam = doc.data().Gebruikersnaam
-    
-            db.collection("Vitaminders").where("Gebruikersnaam", "==", gebruikersnaam).get().then(querySnapshot => {
-                querySnapshot.forEach(doc2 => {
-    
-                    const email = doc2.data().Email
-                    const gebruikersnaamClean = doc2.data().GebruikersnaamClean
-    
-                    db.collection("Mail").doc().set({
-                        to: [email],
-                message: {
-                subject: `${gebruikersnaamClean}, waar ben jij vandaag dankbaar voor?`,
-                html: `Hallo ${gebruikersnaamClean}, </br></br>
-                        Dit is een berichtje van je Vitaminds Digimind.</br></br>
-                        Waar ben jij vandaag dankbaar voor?
-                        Vriendelijke groet, </br></br>
-                        Het Vitaminds Team </br></br>
-                        <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-                Gebruikersnaam: gebruikersnaam,
-                }
-                            
-                }).catch((err) => {
-                        console.log(err)
-                })
-    
-                    })
-                })
-            })
-        })
-    }
-}
-
-db.collectionGroup("Tools").where("Tool", "==", "Dankbaarheid").get().then(querySnapshot => {
+db.collection("Themas").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
-        const frequention = doc.data().Frequention
+        const titel = doc.data().Thema
+        const img = doc.data().HeaderImage
 
-        // if(frequention == "wekelijks"){
-        //     toolDankbaarheid(5000)
-        // }
+        const outerDiv = document.createElement("div")
+            outerDiv.setAttribute("class", "tool-outer-div")
+        const header = document.createElement("div")
+            header.setAttribute("class", "tools-header")
+        const textDiv = document.createElement("div")
+            textDiv.setAttribute("class", "tool-text-div")
+        const title = document.createElement("h2")
+            title.setAttribute("class", "title-tool")
+        const button = document.createElement("button")
+            button.setAttribute("class", "button-algemeen")
 
+        header.style.backgroundImage = `url("${img}")`
+        title.innerHTML = titel
+        button.innerHTML = "Bekijk"
+        button.addEventListener("click", () => {
+            window.open(`../Theme-articles/${titel}.html`, "_self")
+        })
+
+        toolDOM.appendChild(outerDiv)
+        outerDiv.appendChild(header)
+        outerDiv.appendChild(textDiv)
+        textDiv.appendChild(title)
+        outerDiv.appendChild(button)
     })
-})
+}) 

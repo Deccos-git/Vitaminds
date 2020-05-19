@@ -1,66 +1,42 @@
+#tools-section{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 .tool-outer-div{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background-color: #fff;
-    border: 1px solid #122b463a;
-    margin: 15px;
-    border-radius: 15px;
-    width: 330px;
+    width: 250px;
     height: auto;
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    margin: 30px 10px 20px 10px;
+    padding-bottom: 20px;
+    align-items: center;
+    border-radius: 15px;
+    background-color: #FFF;
 }
 
 .tools-header{
-    background-image: url("../images/avontuur3.jpg");
+    height: 200px;
+    width: 100%;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    height: 200px;
-    width: 100%;
 }
 
 .tool-text-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    margin: 0px 15px 0px 15px;
+    width: 100%;
+    padding: 10px;
+    word-break: break-all;
 }
 
-#tools-section{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.tools-overview-button{
-    background-color: #fff;
-  border: 1px #0c6665 solid;
-  border-radius: 10px;
-  font-family: 'Nunito Sans', sans-serif;
-  font-size: 16px;
-  color: #0c6665;
-  cursor: pointer;
-  margin: 50px 0px 15px 0px;
-}
-
-.options-tool{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 15px;
-    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
-    background-color: rgb(247, 247, 247);
-}
-
-.options-tool input{
-    width: 5px;
-}
-
-.text-tool{
-    display: flex;
-    margin: 100px;
-}
-
-#alert-tool{
-    color: #0c6665;
-    display: none;
+.title-tool{
+    color: #122b46;
+    font-size: 25px;
+    margin: 70px 20px 30px 20px;
 }

@@ -1037,8 +1037,65 @@ margin: 0px 0px 30px 0px;
 
 @media only screen and (max-width: 938px){
 
+  #mobile-menu{
+    display: flex;
+    flex-direction: column;
+  }
+
+  #menu-mobile-visible-layer{
+    display: flex;
+    padding: 10px;
+    margin-top: 20px;
+  }
+
+  #mobile-menu-outer-div{
+    display: none;
+    justify-content: center;
+  }
+
+  #profile-picture-mobile{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-right: 35%;
+  }
+
+  #auth-menu-mobile{
+    margin-top: 0px;
+    margin-right: auto;
+  }
+
+  #mobile-hamburger-menu{
+    margin-right: auto;
+  }
+
+  #button-login-mobile{
+    margin-right: 22%;
+  }
+
+  .main-menu-mobile{
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .main-menu-mobile a{
+    font-size: 16px;
+    color: #122b46;
+  }
+
+  #auth-menu{
+    display: none;
+  }
+
   .main-menu {
     font-size: 16px;
+  }
+
+  #slash{
+    display: none;
   }
 
   h2 {
@@ -1076,41 +1133,6 @@ margin: 0px 0px 30px 0px;
 
   #navigation-menu{
     display: none;
-  }
-
-  #mobile-menu{
-    display: flex;
-    align-items: center;
-  }
-
-  #mobile-hamburger-menu{
-    margin-top: 0px;
-  }
-
-  #auth-menu{
-    border: none;
-    justify-self: center;
-    justify-content: center;
-    margin: 10px;
-    width: 100%;
-  }
-
-  #slash{
-    display: none;
-  }
-
-  #mobile-menu-outer-div{
-    display: none;
-    justify-content: space-evenly;
-  }
-
-  #mobile-menu-inner-div{
-    display: flex;
-    flex-direction: column;
-  }
-
-  #menu-auth-div{
-    margin: 10px;
   }
 
   .welkom2{

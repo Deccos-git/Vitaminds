@@ -752,4 +752,14 @@ function editIconInsights(elem){
          })
 }
 
+// Summary's aanpassen
+
+function editIconSummary(elem){
+
+        const summary = elem
+
+        summary.setAttribute("contenteditable", "true")
+        summary.style.border = "1px dotted #122b46"
+
+}
 

@@ -61,3 +61,84 @@
     font-size: 16px;
 }
 
+/* Feedback */
+
+#feedback-section{
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+}
+
+#feedback-thema{
+    background-color: #49beb7;
+    height: 50px;
+    width: 100%;
+}
+
+#feedback-thema h2{
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
+}
+
+#feedback-div{
+    display: none;
+    flex-direction: column;
+    background-color: #49beb7;
+}
+
+#close-div-feedback{
+    display: none;
+    margin-left: 50%;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#welkom-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+#welkom-p{
+    text-align: center;
+}
+
+#input-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#feedback-button{
+    margin: 30px;
+}
+
+.react-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: white;
+    margin: 20px;
+}
+
+#feeback-input-title{
+    text-align: center;
+    color: white;
+}
+
+/* Mobile */
+
+@media only screen and (max-width: 938px){
+
+    #close-div-feedback {
+        margin-left: 50%;
+        margin-top: -10px;
+    }
+}
+
