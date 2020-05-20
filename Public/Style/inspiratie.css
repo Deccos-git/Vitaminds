@@ -229,6 +229,10 @@
 
 /* Levensvraag artikel detail pagina */
 
+.mce-notification-inner {
+    display: none !important;
+}
+
 #levensvraag-artikel-ouyter-div{
     display: flex;
     justify-content: center;
@@ -282,12 +286,46 @@
 
 .levensvraag-artikel-main-information{
     display: flex;
-    margin: 30px 100px 10px 100px;
+    flex-direction: column;
+    margin: 0px 0px 0px 0px;
+}
+
+#title-article-div{
+    margin: 0px 200px -110px 200px;
+    background-color: white;
+    border-radius: 5px;
+    position: relative;
+    box-shadow: 0 1px 0px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px 0px rgba(0,0,0,.12);
+}
+
+#summary-article{
+    color: #122b46;
+    margin: -70px 200px 50px 200px;
+    border-radius: 5px;
+    position: relative;
+    background-color: white;
+    padding: 10px 30px 10px 30px;
+    box-shadow: 0 -1px 0px 0 rgba(0,0,0,.2), 0 -1px 1px 0 rgba(0,0,0,.14), 0 -2px 1px 0px rgba(0,0,0,.12);
+}
+
+#paragraph-list{
+    margin-bottom: 80px;
 }
 
 .levensvraag-artikel-main-image img{
     width: 80%;
 }
+
+#levensvraag-artikel-main-image img{
+    width: 100%;
+}
+
+#summary-outer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 
 #coach-input{
     margin: 0px 100px 0px 100px;
@@ -322,7 +360,7 @@
     padding: 15px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
     border-radius: 2px;
-    border: 1px solid #cfcfcf;
+    border: 1px solid #f7f7f7;
 }
 
 .insights-outer-div p{
@@ -331,7 +369,7 @@
 }
 
 .meta-div-insights{
-    border-right: 1px solid #cfcfcf;
+    border-right: 1px solid #f7f7f7;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -345,10 +383,16 @@
 .text-div-insights{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     padding: 30px;
     text-align: left;
     width: 100%;
+}
+
+#coach-suggestions{
+    font-size: 14px;
+    text-decoration: underline;
+    color: #49beb7;
 }
 
 .tox-tinymce {
@@ -424,7 +468,7 @@
         border-radius: 2px;
         padding: 10px;
         justify-content: space-evenly;
-        border: 1px solid #cfcfcf;
+        border: 1px solid #f7f7f7;
 }
 
 .social-div-thema-div-insights{
@@ -1027,7 +1071,7 @@
     }
 
     .meta-div-insights {
-        border-top: 1px solid white;
+        border-top: 1px solid #d5d5d5;
         border-right: 0;
         display: flex;
         justify-content: space-evenly;
@@ -1108,5 +1152,26 @@
 
     #paragraph-list h3 {
         margin-left: 0%;
+    }
+
+    #title-article{
+        font-size: 30px;
+    }
+
+    #title-article-div {
+        margin: 0px;
+        background-color: white;
+        border-radius: 50px;
+        box-shadow: none;
+    }
+
+    #summary-article {
+        margin: 0px;
+        border-radius: 0px;
+        position: relative;
+        background-color: white;
+        padding: 10px 30px 10px 30px;
+        box-shadow: none;
+        font-size: 20px;
     }
 }

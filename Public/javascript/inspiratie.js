@@ -108,6 +108,8 @@ const hiddenTitleArticle = document.getElementById("hidden-title-div")
 const titelHead = document.getElementsByTagName("title")
 const metaKeywords = document.getElementById("meta-keywords")
 const metaDescription = document.getElementById("meta-description")
+const headerDiv = document.getElementById("levensvraag-artikel-main-image")
+const headerImg = document.createElement("img")
 
 function loadingDOM(a){
 
@@ -117,9 +119,14 @@ db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(query
         const titleArticle = doc.data().Levensvraag
         const summaryArticle = doc.data().Summary
         const keywords = doc.data().Keywords
+        const headerImage = doc.data().HeaderImage
 
         title.innerHTML = titleArticle
         summary.innerHTML = summaryArticle
+
+        headerImg.src = headerImage
+
+        headerDiv.appendChild(headerImg)
 
         auth.onAuthStateChanged(User =>{
             db.collection("Vitaminders").doc(User.uid).get().then(doc => {
@@ -508,7 +515,7 @@ db.collection("Themas").where("Levensvragen", "array-contains", titel).get().the
             DOMlist.appendChild(p)
 
             p.addEventListener("click", () => {
-                window.open("../Theme-articles/" + thema + ".html", "_self")
+                window.open("../Theme-articles/" + themas + ".html", "_self")
             })
 
                 // Loading Thema's in input
