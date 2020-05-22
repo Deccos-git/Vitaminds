@@ -234,13 +234,12 @@ const levenslessenTab = document.getElementById("levenlessen-tab")
 const dagelijksLevenTab = document.getElementById("dagelijks-leven-tab")
 const favCoachesTab = document.getElementById("fav-coaches-tab")
 const favInspiratieTab = document.getElementById("fav-inspiratie-tab")
-const artikelToolTab = document.getElementById("artikel-tool-tab")
 const intervisieTab = document.getElementById("intervisie-tab")
 
 dashboardTab.style.backgroundColor = "#49beb7"
 dashboardTab.style.color = "white"
 
-        function active(a,b,c,d,e,f,g,h,i,j,k){
+        function active(a,b,c,d,e,f,g,h,i,j){
                 a.addEventListener("click", () => {
 
                         a.style.backgroundColor = "#49beb7"
@@ -263,22 +262,20 @@ dashboardTab.style.color = "white"
                         i.style.color = "#122b46"   
                         j.style.backgroundColor = "#122b4613"
                         j.style.color = "#122b46"  
-                        k.style.backgroundColor = "#122b4613"
-                        k.style.color = "#122b46"   
                 })
         }
 
-        active(dashboardTab,mijnBijdragenTab,contactTab,mijnCoachingTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab, intervisieTab)
-        active(contactTab,mijnBijdragenTab,mijnCoachingTab,dashboardTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab, intervisieTab)
-        active(mijnCoachingTab,contactTab,mijnBijdragenTab,dashboardTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab, intervisieTab)
-        active(mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab, intervisieTab)
-        active(levenvragenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab, intervisieTab)
-        active(levenslessenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenvragenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab,artikelToolTab, intervisieTab)
-        active(dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,favInspiratieTab,artikelToolTab, intervisieTab)
-        active(favCoachesTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favInspiratieTab,artikelToolTab, intervisieTab)
-        active(favInspiratieTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,artikelToolTab, intervisieTab)
-        active(artikelToolTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,favInspiratieTab, intervisieTab)
-        active(intervisieTab,artikelToolTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,favInspiratieTab)
+        active(dashboardTab,mijnBijdragenTab,contactTab,mijnCoachingTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab, intervisieTab)
+        active(contactTab,mijnBijdragenTab,mijnCoachingTab,dashboardTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab, intervisieTab)
+        active(mijnCoachingTab,contactTab,mijnBijdragenTab,dashboardTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab, intervisieTab)
+        active(mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenvragenTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab, intervisieTab)
+        active(levenvragenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab, intervisieTab)
+        active(levenslessenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenvragenTab,dagelijksLevenTab,favCoachesTab,favInspiratieTab, intervisieTab)
+        active(dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,favInspiratieTab, intervisieTab)
+        active(favCoachesTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favInspiratieTab, intervisieTab)
+        active(favInspiratieTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab, intervisieTab)
+        active(dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,favInspiratieTab, intervisieTab)
+        active(intervisieTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,favInspiratieTab)
 
 
   // Naam uit URL halen
@@ -321,9 +318,11 @@ auth.onAuthStateChanged(User =>{
 
                         const usertype = doc.data().Usertype
                         const intervisieMenu = document.getElementById("intervisie-tab")
+                        const intervisieBar = document.getElementById("profile-notifications-intervisie")
 
                         if(usertype != "Coach"){
-                                intervisieMenu.style.display = "none"   
+                                intervisieMenu.style.display = "none"  
+                                intervisieBar.style.display = "none"   
                         }
 
                 })
@@ -337,15 +336,17 @@ auth.onAuthStateChanged(User =>{
 
                 console.log("Auth ingelogd")
         } else {
+
+                console.log("Auth offline")
+
                 const nieuweKarakterTocht = document.getElementById("nieuweKarakterTocht")
-                const toolsMenu = document.getElementById("tools-menu")
                 const notifications = document.getElementById("profile-notifications")
                 const activeDiv = document.getElementsByClassName("active-div")
                 const editDiv = document.getElementsByClassName("edit-div")
                 const changePhoto = document.getElementById("profile-picture-outer-div")
                 const intervisieMenu = document.getElementById("intervisie-tab")
-                const toolMenu = document.getElementById("tools-menu")
                 const themeOverview = document.getElementById("profile-notifications-theme-overview")
+                const intervisieBar = document.getElementById("profile-notifications-intervisie")
              
                     const activeDivArray = Array.from(activeDiv)
                     activeDivArray.forEach(active => {
@@ -353,12 +354,11 @@ auth.onAuthStateChanged(User =>{
                     })
 
                     changePhoto.style.display = "none"
-                    toolMenu.style.display = "none"
                     nieuweKarakterTocht.style.display = "none"
-                    toolsMenu.style.display = "none"
                     notifications.style.display = "none"
                     intervisieMenu.style.display = "none"
                     themeOverview.style.display = "none"
+                    intervisieBar.style.display = "none"
 
                    setTimeout(() => {
                         editDiv[0].style.display = "none"
@@ -383,14 +383,9 @@ auth.onAuthStateChanged(User =>{
                     const admin = doc.data().Admin;
 
                     const adminIcon = document.getElementById("profile-admin")
-                    const writeArticle = document.getElementById("write-article")
-                //     if (adminIcon || writeArticle == null){
-                //         console.log("Error")
-                //     } else {
                   
                     if(admin == "Yes"){
                         adminIcon.style.display = "flex"
-                        writeArticle.style.display = "block"
                     }
 
                     adminIcon.addEventListener("click", () => {
@@ -1293,31 +1288,6 @@ auth.onAuthStateChanged(User =>{
                 })
         })
 })  
-
-// Tools
-db.collectionGroup("Tools").get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-                const tool = doc.data().Tool
-                const frequention = doc.data().Frequention
-
-                const DOM = document.getElementById("tools-inner-div") 
-
-                const title = document.createElement("h3")
-                const frequentionP = document.createElement("p")
-
-                title.innerHTML = tool
-                frequentionP.innerHTML = frequention
-
-                if(tool == "Dankbaarheid"){
-
-                }
-
-                DOM.appendChild(title)
-                DOM.appendChild(frequentionP)
-
-        })
-})
 
 
 // Favorieten

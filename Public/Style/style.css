@@ -563,6 +563,10 @@ link{
   color: #122b46;
 }
 
+#main-header-select{
+  margin: 30px 0px 50px 0px;
+}
+
 /* DigiMind welkom */
 
 .welkom{
@@ -720,7 +724,7 @@ link{
 /* main informatie styling */
 
 .container{
-  margin: 0px 0px 150px 0px;
+  margin: 0px 20px 150px 20px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -1190,4 +1194,8 @@ margin: 0px 0px 30px 0px;
   #omgeving {
     align-items: left;
   }
+
+  .subtitel {
+    margin: 60px 10px 60px 10px;
+}
 } 

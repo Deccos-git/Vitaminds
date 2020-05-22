@@ -2,6 +2,70 @@
 
 const filter = document.getElementById("inspiratiemenu")
 
+const dataSet = []
+let filterValues = []
+
+db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const domains = doc.data().Domein
+
+        const option = document.createElement("option")
+
+        option.innerHTML = domains
+
+        filter.appendChild(option)
+
+        dataSet.push(domains)
+
+    })
+});
+
+function filterMenu(elem){
+
+    // Empty filter
+    filterValues = []
+
+    const levensvragenDiv = document.getElementsByClassName("levensvraag-artikel-section")
+        const levensvragenDivArray = Array.from(levensvragenDiv)
+        levensvragenDivArray.forEach(vraag => {
+
+                vraag.style.display = "flex"
+
+            })
+
+   const filterSelect = elem.previousElementSibling.options
+   const filterOption = filterSelect[filterSelect.selectedIndex].value;  
+
+   filterValues.push(filterOption)
+
+   console.log(filterValues)
+
+   dataSet.forEach(data => {
+
+    if(!filterValues.includes(data)){
+
+        db.collection("Levensvragen").where("Domein", "==", data)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                const titel = doc.data().Levensvraag
+
+                levensvragenDivArray.forEach(vraag => {
+
+                    const divData = vraag.dataset.title
+
+                    if(divData == titel){
+                        vraag.style.display = "none"
+                    }
+                })
+
+                })
+            })
+        }
+   })
+}
+
 // Fetching title from webadres
 titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
 titel1 = titelhtml.replace('.html', '')
@@ -59,6 +123,7 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
     
         const outerSection = document.createElement("section")
             outerSection.setAttribute("class", "levensvraag-artikel-section")
+            outerSection.setAttribute("data-title", title)
         const headerDiv = document.createElement("div")
             headerDiv.setAttribute("class", "levensvraag-artikel-header")
         const headerImg = document.createElement("img")
@@ -234,12 +299,15 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                     toevoegenLevensles.setAttribute("class", "toevoegen-levensles")
                 const toevoegenLevenslesInput = document.createElement("input")
                     toevoegenLevenslesInput.setAttribute("placeholder", "Wat heb je geleerd?")
+                    toevoegenLevenslesInput.setAttribute("class", "toevoegen-levensles-input")
+                const toevoegenLevenslesSelectButtonDiv = document.createElement("div")
                 const toevoegenLevenslesSelectButton = document.createElement("button")
                 const toevoegenLevenslesDiv = document.createElement("div")
                     toevoegenLevenslesDiv.setAttribute("id", "toevoegen-levensles-div")
                 const toevoegenLevenslesSelect = document.createElement("select")
                     toevoegenLevenslesSelect.setAttribute("class", "inspiratie-select")
                 const toevoegenLevenslesToggleDiv = document.createElement("div")
+                const toevoegenLevenslesButtonDiv = document.createElement("div")
                 const toevoegenLevenslesButton = document.createElement("button")
                     toevoegenLevenslesButton.setAttribute("onclick", "toevoegenLevenslesButton(this)")
                     toevoegenLevenslesButton.setAttribute("data-titel", titelInsight)
@@ -279,7 +347,7 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                     }
                 });
 
-                // Section title
+                // Insights title
                 auth.onAuthStateChanged(User =>{
                     db.collection("Vitaminders").doc(User.uid).get().then(doc => {
                             const auth = doc.data().GebruikersnaamClean
@@ -299,7 +367,7 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                 inspirationalH3.innerHTML = "Inspirerend"
                 inspirationalImg.src = "../images/menu-karakter.png"
                 bedankt.innerHTML = `<u>${gebruikersnaamClean}</u> zegt: Bedankt!`
-                toevoegenLevensles.innerHTML = `Heeft ${gebruikersnaamClean} je geïnspireerd?`
+                toevoegenLevensles.innerHTML = `Geïnspireerd?`
                 toevoegenLevenslesSelectButton.innerHTML = "Selecteer levensvraag"
                 toevoegenLevenslesButton.innerHTML = "Opslaan"
                 opgeslagen.innerHTML = `Opgeslagen in je <u>Digimind</u>`
@@ -324,7 +392,7 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                 })
                 
 
-                if(thema == "Geen"){
+                if(thema == undefined){
                     themaDiv.style.display = "none"
                 }else{
                 themaP.innerHTML = thema
@@ -362,10 +430,12 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                 toevoegenLevenslesOuterDiv.appendChild(toevoegenLevensles)
                 toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesDiv)
                 toevoegenLevenslesDiv.appendChild(toevoegenLevenslesSelect)
-                toevoegenLevenslesDiv.appendChild(toevoegenLevenslesSelectButton)
+                toevoegenLevenslesDiv.appendChild(toevoegenLevenslesSelectButtonDiv)
+                toevoegenLevenslesSelectButtonDiv.appendChild(toevoegenLevenslesSelectButton)
                 toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesToggleDiv)
                 toevoegenLevenslesToggleDiv.appendChild(toevoegenLevenslesInput)
-                toevoegenLevenslesToggleDiv.appendChild(toevoegenLevenslesButton)
+                toevoegenLevenslesToggleDiv.appendChild(toevoegenLevenslesButtonDiv)
+                toevoegenLevenslesButtonDiv.appendChild(toevoegenLevenslesButton)
                 toevoegenLevenslesToggleDiv.appendChild(opgeslagen)
 
                 // User role
@@ -506,8 +576,6 @@ db.collection("Themas").where("Levensvragen", "array-contains", titel).get().the
     querySnapshot.forEach(doc => {
         const themas = doc.data().Thema
 
-        console.log(themas)
-
             const p = document.createElement("p")
 
             p.innerHTML = themas
@@ -612,12 +680,11 @@ function nieuwepostsubmit(){
     // Saving insight to lifequestion
  function toevoegenLevenslesButton(elem){
 
-     const titel = elem.dataset.titel
-     const input = elem.previousElementSibling.value
+     const titelElem = elem.dataset.titel
+     const input = elem.parentElement.previousElementSibling.value
      const coach = elem.dataset.coach
-     const levensvraagArtikel =  document.getElementById("hidden-title-div").innerHTML
 
-     const uitlezenOption = elem.parentElement.previousSibling.firstElementChild.options
+     const uitlezenOption = elem.parentElement.parentElement.previousSibling.firstElementChild.options
      const uitlezenSelect = uitlezenOption[uitlezenOption.selectedIndex].innerHTML;
 
      auth.onAuthStateChanged(User =>{
@@ -634,7 +701,7 @@ function nieuwepostsubmit(){
      Titel: titel,
      Inspirerend: 1,
      Type: "Insight",
-     Source: levensvraagArtikel,
+     Source: titelElem,
      Levensvraag: uitlezenSelect
              })
 
@@ -650,7 +717,7 @@ function nieuwepostsubmit(){
          })
      })
 
-     elem.nextSibling.style.display = "block"
+     elem.parentElement.nextSibling.style.display = "block"
      })
 })
 };   
