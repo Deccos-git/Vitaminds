@@ -254,6 +254,20 @@ function close(elem){
   elem.parentElement.style.display = "none"
 }
 
+// Coach-menu
+
+const voorCoachDOM = document.getElementById("aanmeldCH")
+const coachMenu = document.getElementById("coach-menu-main")
+
+if(coachMenu.style.display = "none"){
+  voorCoachDOM.addEventListener("mouseover", () => {
+    coachMenu.style.display = "flex"
+  })
+} else {
+  voorCoachDOM.addEventListener("mouseover", () => {
+    coachMenu.style.display = "none"
+  })
+}
 
 //Inlog
 function inlogVM(){
@@ -322,10 +336,11 @@ if(button != null){
   .then(() => {
     db.collection("Mail").doc().set({
       to: [email],
+      cc: "info@vitaminds.nu",
 message: {
 subject: `Verifier je account op Vitaminds! `,
 html: `Hallo ${gebruikersnaam}, </br></br>
-      Wat geweldig dat je een account hebt aangemaakt op Vitaminds! Het beging van een geweldig avontuur in je eigen karakter!<br><br>
+      Wlekom bij Vitaminds! Het beging van een geweldig avontuur in je eigen karakter!<br><br>
 
       Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
       
@@ -347,6 +362,14 @@ Type: "Vitaminders"
     }
   })
 };
+
+function registerNoticeOK(){
+  firebase.auth().signOut().then(function() {
+    window.location.href = "/inspiratie.html"
+  }).catch(function(error) {
+    console.log(error)
+  })
+}
 
 //Register CH
 function registerCoach(){
@@ -386,10 +409,13 @@ function registerCoach(){
       Why: why,
       ID: cred.user.uid,
       Levensvragen: []
+    }).catch((err) => {
+      alert(err)
     })
   }).then(() => {
     db.collection("Mail").doc().set({
       to: [email],
+      cc: "info@vitaminds.nu",
 message: {
 subject: `Verifier je account op Vitaminds! `,
 html: `Hallo ${naam}, </br></br>
@@ -411,7 +437,7 @@ Type: "Coach"
 }
           
 }).then(() => {
-              const notice = document.getElementById("register-notice-CH")
+              const notice = document.getElementById("register-notice")
               notice.style.display = "block"
           })
         })

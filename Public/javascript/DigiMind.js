@@ -603,6 +603,7 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
         const userID = doc.data().Gebruikersnaam
         const IDuser = doc.data().ID
         const user = userID.replace(IDuser, "")
+        const usertypeDB = doc.data().Usertype
 
         const username = document.getElementsByClassName('welkom')[0];
         const usertype = document.getElementsByClassName('usertype')[0];
@@ -611,9 +612,14 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
         profielfoto.style.backgroundImage =`url('${doc.data().Profielfoto}')` 
 
         username.innerHTML = user
-        usertype.innerHTML = doc.data().Usertype;
+
+        if (usertypeDB == "Coach")
+        usertype.innerHTML = doc.data().Coachingstyle;
+        else {
+        usertype.innerHTML = doc.data().Usertype;
+        }
     })
-    })
+  })
 
 // Loading coach info
 db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
@@ -1073,6 +1079,7 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
 function nieuweLevensvraag(){
 
         const DOM = document.getElementById("nieuweO");
+        DOM.style.display = "flex"
 
         const vraagH3 = document.createElement("h3");
         const vraagSelect = document.createElement("input");
@@ -1128,7 +1135,7 @@ function nieuweLevensvraag(){
                 DOM.appendChild(vraagH3)
                 DOM.appendChild(vraagSelect)
                 DOM.appendChild(beschrijvingH3)
-                beschrijvingH3.appendChild(beschrijvingSelect)
+                DOM.appendChild(beschrijvingSelect)
                 DOM.appendChild(publicDiv)
                 publicDiv.appendChild(publicP)
                 publicDiv.appendChild(publicForm)
@@ -1379,167 +1386,6 @@ db.collectionGroup("Favorieten").where("Gebruikersnaam", "==", naam).where("Type
         })
 });
 
-     
-//Nieuw artikel schrijven  
-
-        // Themas inladen
-const catergory = document.getElementById("categorieSelectie")
-
-db.collection("Themas").get().then(querySnapshot => {
-        querySnapshot.forEach(doc1 => {
-
-                        const themas = doc1.data().Themas
-
-                        themas.forEach(thema => {
-                                const divCat = document.createElement("div")
-                                        divCat.setAttribute("class", "category-div")
-                                const input = document.createElement("input")
-                                        input.type = "radio"
-                                        input.setAttribute("class", "category-input")
-                                        input.setAttribute("id", thema)  
-                                        input.name = "Categorie"
-                                        input.value = thema
-                                        input.innerHTML = thema
-                                const label = document.createElement("label")
-                                        label.setAttribute("for", thema) 
-                                        label.innerHTML = thema
-
-                                catergory.appendChild(divCat)
-                                divCat.appendChild(input)
-                                divCat.appendChild(label)
-                        })
-                })
-        })
-
-// Add category
-
-function addCategory(){
-
-        const addCat = document.getElementById("add-category").value
-        
-        
-        db.collection("Themas").doc("CtXRWx6w0hTGrAyfnTd9").update({
-                Themas: firebase.firestore.FieldValue.arrayUnion(addCat)
-        }).then(()=> {
-                nieuwepostsubmit()
-
-        }).then(() => {
-                const titel = document.getElementById("nieuwposttitel").value;
-                const body = tinymce.get('tiny-mce').getContent()
-
-                localStorage.setItem('Titel', titel);
-                localStorage.setItem('Body', body);
-                localStorage.setItem('Category', addCat)
-        }).then(() => {
-                location.reload()
-        })
-};
-
-        // Artikel opslaan
-function nieuwepostsubmit(){
-        auth.onAuthStateChanged(User =>{
-            if (User){
-
-                let artikelRef = db.collection("Artikelen").doc();
-                let docRef = db.collection("Vitaminders").doc(User.uid);
-                    docRef.get().then(function(doc){
-                        const coachNaam = doc.data().Gebruikersnaam;
-    
-                const cat = document.getElementsByClassName("category-input")
-                catArray = Array.from(cat)
-
-                catArray.forEach(c => {
-                        const check = c.checked
-
-                        if (check == true){
-                               const categories = c.value
-                 
-                let nieuwePostTitelVar = document.getElementById("nieuwposttitel").value;
-
-                let nieuwePostBodyVar = tinyMCE.get('tiny-mce').getContent()
-
-                        const hiddenID = document.getElementById("hidden-ID").innerHTML
-
-                        if (hiddenID == ""){
-
-                                artikelRef.set({
-                                    ID: idClean,
-                                    Titel: idClean + nieuwePostTitelVar,
-                                    TitelClean: nieuwePostTitelVar,
-                                    Body: nieuwePostBodyVar,
-                                    Auteur: coachNaam,
-                                    Categorien: firebase.firestore.FieldValue.arrayUnion(categories),
-                                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                                    Type: "Artikel"
-                                })
-                                console.log("Opgeslagen")
-                        } 
-
-                        db.collection("Artikelen").where("ID", "==", hiddenID).get().then(querySnapshot => {
-                                querySnapshot.forEach(doc2 => {
-        
-                          db.collection("Artikelen").doc(doc2.id).update({
-                            ID: hiddenID,
-                            Titel: hiddenID + nieuwePostTitelVar,
-                            TitelClean: nieuwePostTitelVar,
-                            Body: nieuwePostBodyVar,
-                            Auteur: coachNaam,
-                            Categorien: firebase.firestore.FieldValue.arrayUnion(categories),
-                            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                            Type: "Artikel"
-                        })
-
-                        // db.collectionGroup("Levenslessen").where("Levensles", "==", dataEdit).get().then(querySnapshot => {
-                        //         querySnapshot.forEach(doc1 => {
-                
-                        //                 db.collection("Vitaminders").doc(doc.id).collection("Levenslessen").doc(doc1.id).update({
-                        //                         Levensles: les.innerHTML
-                        //                                         })
-
-                        //                                 })
-                        //                         })
-        
-                        console.log("Geupdate")  
-                     })
-                    
-                        }).then(() => {
-                                const saved = document.getElementById("article-saved")
-                                saved.innerHTML = "Je artikel is opgeslagen."
-                                        // saved.addEventListener("click", () => {
-                                        //         window.open("../Artikelen/" + titelClean + ".html", "_self");
-                                        // })
-                                saved.style.display = "block"
-                        }).then(() => {
-                        localStorage.clear()
-                                                 })
-                                        }  
-                                })
-                        })
-                }
-        })
-    };
-
-    document.addEventListener('readystatechange', event => { 
-    
-        // When window loaded ( external resources are loaded too- `css`,`src`, etc...) 
-        if (event.target.readyState === "complete") {
-
-           // Get article out of local storage
-           if (localStorage.getItem("Titel") == null){
-                console.log("Nothing in storage")
-        } else {
-        const titelStorage = localStorage.getItem('Titel');
-        const bodyStorage = localStorage.getItem('Body');
-        const checkedCategory = localStorage.getItem("Category")
-
-        const cate = document.getElementById(checkedCategory)
-        // cate.checked = true
-
-        document.getElementById("nieuwposttitel").value = titelStorage
-        tinymce.get("tiny-mce").setContent(bodyStorage);
-                }
-        }
-    });
 
 
 

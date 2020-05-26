@@ -1,38 +1,44 @@
+<!DOCTYPE html>
 <html lang="nl">
-<head>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'UA-159826016-1');
-</script>
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
+      gtag('config', 'UA-159826016-1');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vitaminds tickets</title>
-    <link rel="stylesheet" href="../Style/style.css">
-    <link rel="stylesheet" href="../Style/thema.css">
-    <link rel="stylesheet" href="../Style/alfa.css">
+    <meta name="keywords" content="Kenniscentrum coaching">
+    <meta name="description" content="Alles over coaching">
+    <Title> Vitaminds - Kenniscentrum coaching</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Style/style.css">
+    <link rel="stylesheet" href="Style/kenniscentrum.css">
+    <link rel="shortcut icon" href="images/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
-</head>
-<body>
+    <script>src="https://www.gstatic.com/firebasejs/6.5.0/firebase-analytics.js"</script>
+  </head>
 
-  <!-- Feedback -->
-  <div id="feedback">
+  <body>
+
+    <!-- Feedback -->
+   <div id="feedback">
     <a href="tickets.html"> <p>Feedback</p></a>
   </div>
-
- <!-- Mobile-menu -->
- <nav id="mobile-menu"> 
+  
+    <!-- Mobile-menu -->
+<nav id="mobile-menu"> 
   <div id="menu-mobile-visible-layer">
     <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
     <div class="main-menu-mobile"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
@@ -69,38 +75,34 @@
       <div class = "login-logout"><p id="aanmeldCH"><a href="voor-coach.html">Voor coaches</a></p></div> 
     </div>
   </nav>
-
-  <h1>Feedback</h1>
-
-  <div id="welkom-div">
-    <h3 id="welkom-auth"></h3>
-    <p>Is er iets dat je opvalt, dat je graag anders had gezien, dat je mist, dat niet werkt, etc?</p>
-    <textarea name="" id="textarea" cols="100" rows="20" placeholder="Jouw tip of truc"></textarea>
-      <button id="button">Opslaan</button>
-      <section id="tips-trucs-div">
-          <p>Tips/trucs van andere Vitaminders</p>
-          <div id="tips-trucs"></div>
-      </section>
-  </div>
-
-
-  <!-- footer -->
-  <footer class="footer">
-    <div>
-     <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
-    </div>
-    <div>
-      <h3 id="slogan-footer">Op avontuur in je eigen karakter</h3>
-    </div>
-    <div>
-     <a href="https://www.facebook.com/VitamindsNederland/"><img src="images/Logo-facebook.png" alt="" width="40px"></a>
-     <a href="https://www.youtube.com/channel/UC44W6GvZnKZqBw7hdH5OU0A"><img src="images/Logo-youtube.png" alt="" width="40px"></a>
-    </div>
-  </footer>
   
-<script type="text/javascript" src="../javascript/firebase.js"></script>
-<script type="text/javascript" src="../javascript/auth.js"></script>
-<script type="text/javascript" src="../javascript/alfa.js"></script>
-</body>
+<!-- Filter
+<h1 >Inspiratie</h1>
+<select id="inspiratiemenu"></select>
+<button class="button-menu" onclick="filterMenu(this)">Filter</button> -->
 
-</html>
+<h1>Kenniscentrum coaching</h1>
+
+<main id="kenniscentrum-artikel-outer-div"></main> 
+
+<!-- footer -->
+<footer class="footer">
+  <div>
+   <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+  </div>
+  <div>
+    <h3 id="slogan-footer">Op avontuur in je eigen karakter</h3>
+  </div>
+  <div>
+   <a href="https://www.facebook.com/VitamindsNederland/"><img src="images/Logo-facebook.png" alt="" width="40px"></a>
+   <a href="https://www.youtube.com/channel/UC44W6GvZnKZqBw7hdH5OU0A"><img src="images/Logo-youtube.png" alt="" width="40px"></a>
+  </div>
+</footer>
+
+      <script type="text/javascript" src="javascript/firebase.js"></script>
+      <script type="text/javascript" src="javascript/auth.js"></script>
+      <script type="text/javascript" src="javascript/index.js"></script>
+      <script type="text/javascript" src="javascript/kenniscentrum.js"></script>
+    </body>
+  </html>
+  

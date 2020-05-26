@@ -305,6 +305,15 @@ function editLessons(elem){
                          .then(() => {
                                  location.reload();
                                                          })
+                
+                        db. collectionGroup("Levensvragen").where("Levenslessen", "array-contains", dataEdit).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc2 => {
+
+                        db.collection("Vitaminders").doc(doc.id).collection("Levensvragen").doc(doc2.id).update({
+                                Levenslessen: firebase.firestore.FieldValue.arrayRemove(dataEdit)
+                                                                        })
+                                                                })
+                                                        })
                                                  })
                                          })
                                  })
@@ -358,32 +367,6 @@ function editReactions(elem){
                         })
                 })
 }
-
-        // Edit articles
-
-function editArticle(elem){
-        const titel = elem.parentElement.previousElementSibling.parentElement.dataset.titel
-
-        db.collection("Artikelen").where("Titel", "==", titel).get().then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-
-                        const body = doc.data().Body
-                        const titelClean = doc.data().TitelClean
-                        const hiddenID = doc.data().ID
-
-                       tinymce.get("tiny-mce").setContent(body);
-                       const titelReplace = document.getElementById("nieuwposttitel")
-                       titelReplace.value = titelClean
-                       const hideID = document.getElementById("hidden-ID")
-                       hideID.innerHTML = hiddenID
-
-
-                })
-        }).then(() => {
-                artikel()
-        })      
-}; 
-
 
 
 // Coach info aanpassen
@@ -675,6 +658,7 @@ function editIconInsights(elem){
         const body = elem.nextSibling.nextSibling
 
         titleEdit = elem.dataset.title
+        levensvraagTitle = elem.dataset.levensvraagtitle
 
         title.setAttribute("contenteditable", "true")
         title.style.border = "1px dotted #122b46"
@@ -715,10 +699,25 @@ function editIconInsights(elem){
                                         })
                                 }
                         })
+
+                                 //Storing insight in levensvraag
+                db.collection("Levensvragen").where("Levensvraag", "==", levensvraagTitle).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
+    
+                            db.collection("Levensvragen").doc(doc1.id).update({
+                                Insights: firebase.firestore.FieldValue.arrayUnion(title.innerHTML)
+    
+                                    })
+
+                                    db.collection("Levensvragen").doc(doc1.id).update({
+                                        Insights: firebase.firestore.FieldValue.arrayRemove(titleEdit)
+            
+                                            })
+                                })
+                            })
                 })
 
                 // Delete
-         const hiddenTitle = document.getElementById("hidden-title-div").innerHTML
          const deleteDiv = document.createElement("div")
          deleteDiv.setAttribute("class", "delete-div")
          const deleteP = document.createElement("p")
@@ -746,11 +745,134 @@ function editIconInsights(elem){
                                                          })
                                                  })
                                          })
+
+                                                       //Deleting insight in levensvraag
+                db.collection("Levensvragen").where("Levensvraag", "==", levensvraagTitle).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
+    
+                            db.collection("Levensvragen").doc(doc1.id).update({
+                                Insights: firebase.firestore.FieldValue.arrayRemove(title.innerHTML)
+    
+                                                        })
+                                                })
+                                        })
                                  })
                          }
                  })
          })
 }
+
+// Insights aanpassen in theme artikelen
+
+function editIconInsightsTheme(elem){
+
+        const title = elem.nextSibling
+        const body = elem.nextSibling.nextSibling
+
+        titleEdit = elem.dataset.title
+        themeTitle = elem.dataset.themetitle
+
+        title.setAttribute("contenteditable", "true")
+        title.style.border = "1px dotted #122b46"
+
+        body.setAttribute("contenteditable", "true")
+        body.style.border = "1px dotted #122b46"
+        
+        const saveInsightDiv = document.createElement("div")
+        saveInsightDiv.setAttribute("class", "save-div")
+        const saveInsightP = document.createElement("p")
+
+        saveInsightDiv.appendChild(saveInsightP)
+
+        elem.parentElement.appendChild(saveInsightDiv)
+
+        saveInsightP.innerHTML = "Opslaan"
+
+        saveInsightP.addEventListener("click", () => {    
+
+                auth.onAuthStateChanged(User =>{
+                                if (User){
+                                let docRef = db.collection("Vitaminders").doc(User.uid);
+                                        docRef.get().then(function(doc){
+
+                                                const naam = doc.data().Gebruikersnaam
+
+                                        db.collection("Insights").where("Titel", "==", titleEdit).where("Auteur", "==", naam).get().then(querySnapshot => {
+                                                querySnapshot.forEach(doc1 => {
+        
+                                        db.collection("Insights").doc(doc1.id).update({
+                                        Titel: title.innerHTML,
+                                        Body: body.innerHTML
+                                })
+                                                        })
+                                                })    
+                                        })
+                                }
+                        })
+
+                                 //Storing insight in theme
+                db.collection("Themas").where("Thema", "==", themeTitle).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
+    
+                            db.collection("Themas").doc(doc1.id).update({
+                                Insights: firebase.firestore.FieldValue.arrayUnion(title.innerHTML)
+                                    })  
+
+                                    db.collection("Themas").doc(doc1.id).update({
+                                        Insights: firebase.firestore.FieldValue.arrayRemove(titleEdit)
+                                            })  
+                                })
+                            })
+                            .then(() => {
+                                location.reload();
+                        })
+                })
+
+                // Delete
+         const deleteDiv = document.createElement("div")
+         deleteDiv.setAttribute("class", "delete-div")
+         const deleteP = document.createElement("p")
+ 
+         deleteP.innerHTML = "Delete"
+ 
+         elem.parentElement.appendChild(deleteDiv)
+         deleteDiv.appendChild(deleteP)
+ 
+         deleteP.addEventListener("click", () => {    
+ 
+         auth.onAuthStateChanged(User =>{
+                         if (User){
+                             let docRef = db.collection("Vitaminders").doc(User.uid);
+                                 docRef.get().then(function(doc){
+
+                                        const naam = doc.data().Gebruikersnaam
+ 
+                                        db.collection("Insights").where("Titel", "==", titleEdit).where("Auteur", "==", naam).get().then(querySnapshot => {
+                                                querySnapshot.forEach(doc1 => {
+        
+                                        db.collection("Insights").doc(doc1.id).delete()
+                                                .then(() => {
+                                                location.reload();
+                                                         })
+                                                 })
+                                         })
+
+                                                       //Deleting insight in levensvraag
+                db.collection("Themas").where("Thema", "==", themeTitle).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
+    
+                            db.collection("Themas").doc(doc1.id).update({
+                                Insights: firebase.firestore.FieldValue.arrayRemove(title.innerHTML)
+    
+                                                        })
+                                                })
+                                        })
+                                 })
+                         }
+                 })
+         })
+}
+
 
 // Summary's aanpassen
 
@@ -763,3 +885,87 @@ function editIconSummary(elem){
 
 }
 
+// Edit insights openup
+
+function editIconInsightsOpenUp(elem){
+
+        const body = elem.nextSibling
+
+        const oldBody = elem.dataset.reactie
+
+        body.setAttribute("contenteditable", "true")
+        body.style.border = "1px dotted #122b46"
+        
+        const saveInsightDiv = document.createElement("div")
+        saveInsightDiv.setAttribute("class", "save-div")
+        const saveInsightP = document.createElement("p")
+
+        saveInsightDiv.appendChild(saveInsightP)
+
+        elem.parentElement.appendChild(saveInsightDiv)
+
+        saveInsightP.innerHTML = "Opslaan"
+
+        saveInsightP.addEventListener("click", () => {   
+                
+                const bodyInner = body.innerHTML
+
+                auth.onAuthStateChanged(User =>{
+                                if (User){
+                                let docRef = db.collection("Vitaminders").doc(User.uid);
+                                        docRef.get().then(function(doc){
+
+                                                const naam = doc.data().Gebruikersnaam
+
+                                                console.log(naam)
+
+                                        db.collection("Insights").where("Body", "==", oldBody).where("Auteur", "==", naam).get().then(querySnapshot => {
+                                                querySnapshot.forEach(doc1 => {
+        
+                                        db.collection("Insights").doc(doc1.id).update({
+                                        Body: bodyInner
+                                })
+                                .then(() => {
+                                        location.reload();
+                                })
+                                                        })
+                                                })    
+                                        })
+                                }
+                        })
+                })
+
+                // Delete
+         const deleteDiv = document.createElement("div")
+         deleteDiv.setAttribute("class", "delete-div")
+         const deleteP = document.createElement("p")
+ 
+         deleteP.innerHTML = "Delete"
+ 
+         elem.parentElement.appendChild(deleteDiv)
+         deleteDiv.appendChild(deleteP)
+ 
+         deleteP.addEventListener("click", () => {    
+ 
+         auth.onAuthStateChanged(User =>{
+                         if (User){
+                             let docRef = db.collection("Vitaminders").doc(User.uid);
+                                 docRef.get().then(function(doc){
+
+                                        const naam = doc.data().Gebruikersnaam
+ 
+                                        db.collection("Insights").where("Body", "==", oldBody).where("Auteur", "==", naam).get().then(querySnapshot => {
+                                                querySnapshot.forEach(doc1 => {
+        
+                                        db.collection("Insights").doc(doc1.id).delete()
+                                                .then(() => {
+                                                location.reload();
+                                                         })
+                                                 })
+                                         })
+                                 })
+                         }
+                 })
+         })
+
+}

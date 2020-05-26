@@ -39,8 +39,6 @@ function filterMenu(elem){
 
    filterValues.push(filterOption)
 
-   console.log(filterValues)
-
    dataSet.forEach(data => {
 
     if(!filterValues.includes(data)){
@@ -66,7 +64,7 @@ function filterMenu(elem){
    })
 }
 
-// Fetching title from webadres
+// Fetching title from url
 titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
 titel1 = titelhtml.replace('.html', '')
 titel2 = titel1.replace('%20',' '),
@@ -120,7 +118,31 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
 
         const title = doc.data().Levensvraag
         const headerImage = doc.data().HeaderImage
+        const insights = doc.data().Insights
+        
+
+        // Hidding articles with no insights for visitor  non-coach
+        if (insights.length == 0){
+        auth.onAuthStateChanged(User =>{
+            if (!User){
+                outerSection.style.display = "none"
+                    }
+                })
+            };
+
+         // Hidding articles with no insights for non-coach
+            if (insights.length == 0){
+                auth.onAuthStateChanged(User =>{
+                db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                    const usertype = doc.data().Usertype
     
+                    if(usertype != "Coach"){
+                        outerSection.style.display = "none"
+                    }
+                })
+            })
+        };
+     
         const outerSection = document.createElement("section")
             outerSection.setAttribute("class", "levensvraag-artikel-section")
             outerSection.setAttribute("data-title", title)
@@ -160,7 +182,7 @@ function seeArticle(elem){
 
     window.open("../Artikelen/" + title + ".html", "_self")
 
-}
+};
 
 
 // Levensvraag artikelen detailpagina
@@ -176,7 +198,7 @@ const metaDescription = document.getElementById("meta-description")
 const headerDiv = document.getElementById("levensvraag-artikel-main-image")
 const headerImg = document.createElement("img")
 
-function loadingDOM(a){
+function loadingDOM(a,b){
 
 db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
@@ -258,14 +280,17 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
         const body = doc.data().Body
         const coach = doc.data().Auteur
         const thema = doc.data().Thema
+        const levensvraagArtikel = doc.data().LevensvraagArtikel
+        const themeArtikel = doc.data().ThemeArtikel
 
         db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
                 const gebruikersnaamClean = doc1.data().GebruikersnaamClean
                 const photo = doc1.data().Profielfoto
 
-                const outerDiv = document.createElement("div")
+                outerDiv = document.createElement("div")
                     outerDiv.setAttribute("class", "insights-outer-div")
+                    outerDiv.setAttribute("data-coach", coach)
                 const metaDiv = document.createElement("div")
                     metaDiv.setAttribute("class", "meta-div-insights")
                 const metaPhoto = document.createElement("img")
@@ -318,8 +343,10 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                 const editIcon = document.createElement("img")
                     editIcon.setAttribute("src", "../images/edit-icon.png")
                     editIcon.setAttribute("class", "edit-icon-insights")
-                    editIcon.setAttribute("onclick", "editIconInsights(this)")
+                    editIcon.setAttribute("onclick", b)
                     editIcon.setAttribute("data-title", titelInsight)
+                    editIcon.setAttribute("data-levensvraagtitle", levensvraagArtikel)
+                    editIcon.setAttribute("data-themetitle", themeArtikel)
 
 
                     //Levensvragen van auth toevoegen aan select
@@ -367,7 +394,7 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                 inspirationalH3.innerHTML = "Inspirerend"
                 inspirationalImg.src = "../images/menu-karakter.png"
                 bedankt.innerHTML = `<u>${gebruikersnaamClean}</u> zegt: Bedankt!`
-                toevoegenLevensles.innerHTML = `Geïnspireerd?`
+                toevoegenLevensles.innerHTML = `Heb je iets over jezelf geleerd?`
                 toevoegenLevenslesSelectButton.innerHTML = "Selecteer levensvraag"
                 toevoegenLevenslesButton.innerHTML = "Opslaan"
                 opgeslagen.innerHTML = `Opgeslagen in je <u>Digimind</u>`
@@ -391,7 +418,7 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                     })
                 })
                 
-
+                // Display read more button if read more is set
                 if(thema == undefined){
                     themaDiv.style.display = "none"
                 }else{
@@ -406,8 +433,15 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                     window.open("../Vitaminders/" + coach + ".html", "_self");
                 })
 
+
+                // Loader
                 const loader = document.getElementById("loader")
                     loader.style.display = "none"
+
+
+                     // Max height of insight
+                console.log(textDiv.outerHeight)
+
 
                 DOM.appendChild(outerDiv)
                 outerDiv.appendChild(metaDiv)
@@ -464,22 +498,24 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                         toevoegenLevenslesOuterDiv.appendChild(CTAvisiter)
                     }
                 })
-                   //Non coach
-                auth.onAuthStateChanged(User =>{
-                    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                const usertype = doc.data().Usertype
+                   //Non auth
 
-                if(usertype != "Coach"){
-                    const editIcon = document.getElementsByClassName("edit-icon-insights")
-                
-                        const editIconArray = Array.from(editIcon)
-                
-                        editIconArray.forEach(icon => {
-                            icon.style.display = "none"
-                                        })
-                                }
+                   const coachData = outerDiv.dataset.coach
+                   
+                   auth.onAuthStateChanged(User =>{
+                    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                            const auth = doc.data().Gebruikersnaam
+
+                            console.log(auth)
+                            console.log(coachData)
+                    
+                if(coachData != auth){
+
+                    editIcon.style.display = "none"
+
+                }
+                            })
                         })
-                    }) 
 
                     auth.onAuthStateChanged(User =>{
                         db.collection("Vitaminders").doc(User.uid).get().then(doc => {
@@ -507,14 +543,16 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
         })
     })
 })
-}   loadingDOM("LevensvraagArtikel")
-    loadingDOM("ThemeArtikel")
+};   loadingDOM("LevensvraagArtikel", "editIconInsights(this)")
+    loadingDOM("ThemeArtikel", "editIconInsightsTheme(this)")
+
 
 // Paragraph-summary
 
 const paragraphSummary = document.getElementById("paragraph-list")
 
-db.collection("Insights").where("LevensvraagArtikel", "==", titel).get().then(querySnapshot => {
+function paragraphSum(a){
+db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
         const titel = doc.data().Titel
@@ -548,25 +586,27 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).get().then(qu
         innerDiv.appendChild(titelDiv)
         
 
-        // li.addEventListener("click", () => {
-        //      const insight = document.getElementsByClassName("text-div-insights")
+        titelDiv.addEventListener("click", () => {
+             const insight = document.getElementsByClassName("text-div-insights")
 
-        // const insightArray = Array.from(insight)
+        const insightArray = Array.from(insight)
 
-        //     insightArray.forEach(ins =>{
+            insightArray.forEach(ins =>{
 
-        //         insInner = ins.firstElementChild.nextElementSibling.innerHTML
+                insInner = ins.firstElementChild.nextElementSibling.innerHTML
 
-        //         if( insInner == li.innerHTML){
-        //             location.href = `#${ins}`
-        //         }
+                if( insInner == titelDiv.innerHTML){
+                    ins.scrollIntoView()
+                }
 
-        //     })
-        // })
+            })
+        })
             })
         })
     })
-});
+})
+}; paragraphSum("LevensvraagArtikel")
+paragraphSum("ThemeArtikel")
 
 // Coach insights theme examples 
 const DOMlist = document.getElementById("theme-list-insights")
@@ -670,6 +710,16 @@ function nieuwepostsubmit(){
                             }
 
                         })
+                        //Storing insight in levensvraag
+                db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
+                    querySnapshot.forEach(doc1 => {
+
+                        db.collection("Levensvragen").doc(doc1.id).update({
+                            Insights: firebase.firestore.FieldValue.arrayUnion(nieuwePostTitelVar)
+
+                                })
+                            })
+                        })
                     })     
                 }
         })
@@ -725,10 +775,9 @@ function nieuwepostsubmit(){
 // Inspiratiepunt wegschrijven naar reactie en coach
 
 function inspirerend(elem){
-    const titel = elem.dataset.titel
+    const titelElem = elem.dataset.titel
     const body = elem.dataset.body
     const coach = elem.dataset.coach
-    const levensvraagArtikel =  document.getElementById("hidden-title-div").innerHTML
    
 
    auth.onAuthStateChanged(User =>{
@@ -746,7 +795,7 @@ function inspirerend(elem){
                 Reciever: coach,
                 Inspiration: body,
                 Titel: titel,
-                Source: levensvraagArtikel,
+                Source: titelElem,
                 Giver: naam,
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                 Type: "Insight"
@@ -770,6 +819,63 @@ function inspirerend(elem){
 })
 })
 };
+
+// Theme overview page
+toolDOM = document.getElementById("tools-section")
+
+db.collection("Themas").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+        const titel = doc.data().Thema
+        const img = doc.data().HeaderImage
+        const insights = doc.data().Insights
+
+        // Hidding articles with no insights for visitor  non-coach
+        if (insights.length == 0){
+        auth.onAuthStateChanged(User =>{
+            if (!User){
+                outerDiv.style.display = "none"
+                    }
+                })
+            };
+
+         // Hidding articles with no insights for non-coach
+            if (insights.length == 0){
+                auth.onAuthStateChanged(User =>{
+                db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                    const usertype = doc.data().Usertype
+    
+                    if(usertype != "Coach"){
+                        outerDiv.style.display = "none"
+                    }
+                })
+            })
+        };
+
+        const outerDiv = document.createElement("div")
+            outerDiv.setAttribute("class", "tool-outer-div")
+        const header = document.createElement("div")
+            header.setAttribute("class", "tools-header")
+        const textDiv = document.createElement("div")
+            textDiv.setAttribute("class", "tool-text-div")
+        const title = document.createElement("h2")
+            title.setAttribute("class", "title-tool")
+        const button = document.createElement("button")
+            button.setAttribute("class", "button-algemeen")
+
+        header.style.backgroundImage = `url("${img}")`
+        title.innerHTML = titel
+        button.innerHTML = "Bekijk"
+        button.addEventListener("click", () => {
+            window.open(`../Theme-articles/${titel}.html`, "_self")
+        })
+
+        toolDOM.appendChild(outerDiv)
+        outerDiv.appendChild(header)
+        outerDiv.appendChild(textDiv)
+        textDiv.appendChild(title)
+        outerDiv.appendChild(button)
+    })
+}) 
 
 // Individual theme article page
 
@@ -847,83 +953,18 @@ function nieuwepostsubmitThemePage(){
                                 }).then(() => {
                                     location.reload()
                                 })
+
+                                           //Storing insight in theme-article
+                db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => {
+                    querySnapshot.forEach(doc1 => {
+
+                        db.collection("Themas").doc(doc1.id).update({
+                            Insights: firebase.firestore.FieldValue.arrayUnion(nieuwePostTitelVar)
+
+                                })
+                            })
+                        })
                     })     
                 }
         })
 };
-
-
-// Favorieten Artikel wegschrijven naar database
-function favArtikel(){
-
-    db.collection('Artikelen').where('Titel', '==', titel )
-    .get()
-    .then(function(querySnapshot) {
-
-    querySnapshot.forEach(function(doc) {
-        
-        schrijver = doc.data().Auteur
-
-    auth.onAuthStateChanged(User =>{
-        db.collection("Vitaminders").doc(User.uid).collection("Favorieten").doc().set({
-        
-            Type: "Inspiratie",
-            Auteur: schrijver,
-            Titel: titel,
-            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-            Gebruikersnaam: naam
-        })
-
-       const DOM = document.getElementById("favArtikel");
-
-       const alertDiv = document.createElement("p");
-            alertDiv.setAttribute("class", "favAut");
-       const alert = document.createElement("p");
-
-        alert.innerHTML = "Opgeslagen in je favorieten!"
-        alert.style.backgroundColor = "#0c6665";
-
-        DOM.appendChild(alertDiv);
-        alertDiv.appendChild(alert);
-
-            })  
-        })
-    })
-}
-
-// Favorieten Auteur wegschrijven naar database
-function favAuteur(){
-
-    db.collection('Artikelen').where('Titel', '==', titel )
-    .get()
-    .then(function(querySnapshot) {
-
-    querySnapshot.forEach(function(doc) {
-        
-        schrijver = doc.data().Auteur
-
-    auth.onAuthStateChanged(User =>{
-        db.collection("Vitaminders").doc(User.uid).collection("Favorieten").doc().set({
-        
-            Type: "Coach",
-            Auteur: schrijver,
-            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-            Gebruikersnaam: naam
-        })
-
-       const DOM = document.getElementById("favAuteur");
-
-       const alertDiv = document.createElement("p");
-            alertDiv.setAttribute("class", "favAut");
-       const alert = document.createElement("p");
-
-        alert.innerHTML = "Opgeslagen in je favorieten!"
-        alert.style.backgroundColor = "#0c6665";
-
-        DOM.appendChild(alertDiv);
-        alertDiv.appendChild(alert);
-
-            })  
-        })
-    })
-}

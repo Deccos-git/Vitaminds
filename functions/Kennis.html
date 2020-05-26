@@ -1,35 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
+
 <head>
-      <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-159826016-1');
-</script>
-
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta id="meta-keywords" name="keywords">
     <meta id="meta-description" name="description">
-    <link rel="stylesheet" href="../Style/style.css">
-    <link rel="stylesheet" href="../Style/openup.css">
-    <link rel="shortcut icon" href="../images/favicon.ico">
-    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title></title>
-     <!-- Tiny MCE -->
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../Style/style.css">
+  <link rel="stylesheet" href="../Style/kenniscentrum.css">
+  <link rel="shortcut icon" href="../images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  <!-- Tiny MCE -->
   <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
     tinymce.init({
@@ -48,14 +37,15 @@
   </script>
   <!-- End Tiny MCE -->
 </head>
-<body>
 
+<body>
+  
    <!-- Feedback -->
    <div id="feedback">
     <a href="../tickets.html"> <p>Feedback</p></a>
   </div>
 
-   <!-- Mobile-menu -->
+  <!-- Mobile-menu -->
 <nav id="mobile-menu"> 
   <div id="menu-mobile-visible-layer">
     <img id="mobile-hamburger-menu" src="../images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
@@ -95,19 +85,43 @@
   </nav>
   
 
-
-<!-- Detailpagina -->
-<div id="open-up-detail-outer-div">
-  <section id="openup-overview"></section>
-
-  <section id="reactie-input"></section>
-  
-  <section id="insights-outer-section">
-    <h2 id="insights-title"></h2>
-    <div id="insights-overview"></div>
+<!-- Artikel -->
+  <div id="title-article-div">
+    <h1 id="title-article"></h1>
+  </div>
+  <div id="levensvraag-artikel-main-image"></div>
+  <section class="levensvraag-artikel-main-information">
+    <div id="summary-outer-div">
+      <div>
+          <h2 id="summary-article">
+          </h2>
+      </div>
+      <div id="paragraph-list">
+        <h3>Inhoud</h3>
+      </div>
+    </div>
   </section>
-</div>
-    
+
+  <section id="coach-insights">
+    <div id="loader">
+      <img src="../images/loader.gif" alt="loading">
+    </div>
+  </section>
+
+  <section id="coach-input">
+      <h2 id="insight-title"></h2>
+      <div id="insights-theme-ideas">
+        <p>Onderwerpen:</p>
+        <div id="theme-list-insights"></div>
+        <a href="../thema-lijst.html"><p id="coach-suggestions">Jouw suggestie</p></a> 
+      </div>
+    <div id="nieuwepost">
+        <input id="nieuwposttitel" type="text" placeholder="Geef je inzicht een titel...">
+        <div id="tiny-mce"></div>
+        <button onclick = "nieuwepostsubmit(this)" class="button-algemeen">Delen</button>
+   </div> 
+  </section>
+
 <!-- footer -->
 <footer class="footer">
   <div>
@@ -121,10 +135,12 @@
    <a href="https://www.youtube.com/channel/UC44W6GvZnKZqBw7hdH5OU0A"><img src="../images/Logo-youtube.png" alt="" width="40px"></a>
   </div>
 </footer>
+
+
+      <script type="text/javascript" src="../javascript/firebase.js"></script>
+      <script type="text/javascript" src="../javascript/kenniscentrum.js"></script>
+      <script type="text/javascript" src="../javascript/auth.js"></script>
+      <script type="text/javascript" src="../javascript/edit-profile.js"></script>
+    </body>
+  </html>
   
-<script type="text/javascript" src="../javascript/firebase.js"></script>
-<script type="text/javascript" src="../javascript/auth.js"></script>
-<script type="text/javascript" src="../javascript/openup.js"></script>
-<script type="text/javascript" src="../javascript/edit-profile.js"></script>      
-</body>
-</html>

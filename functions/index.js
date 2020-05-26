@@ -54,6 +54,11 @@ app.get('/Open/:id',function(req,res)
     res.sendFile('open.html', { root: __dirname });
 });
 
+app.get('/Kenniscentrum-coaching/:id',function(req,res)
+{
+    res.sendFile('Kennis.html', { root: __dirname });
+});
+
 // // Vitaminder profiel aanmaken
 
 // app.post("/user", urlencodedParser, (req, res) => {

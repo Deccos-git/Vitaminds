@@ -212,6 +212,7 @@ link{
   float: right;
   list-style: none;
   display: flex;
+  flex-direction: column;
   margin-left: 10px;
   vertical-align: center;
 }
@@ -288,15 +289,15 @@ link{
 
 #aanmeldCH a{
   text-decoration: none;
-  color: #122b46;
+  color: #8e0000;
 }
 
 #aanmeldCH a:active{
-  color: #122b46;
+  color: #8e0000;
 }
 
 #aanmeldCH a:visited{
-  color: #122b46;
+  color: #8e0000;
 }
 
 #profile-picture{
@@ -407,6 +408,24 @@ link{
   justify-content: space-evenly;
 }
 
+#coach-menu-main{
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  background-color: #FFF;
+  margin-top: 53px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+  padding: 10px;
+}
+
+.coach-menu-main-p{
+  font-size: 14px;
+  color: #8e0000;
+  cursor: pointer;
+}
+
 /* button algemeen */
 
 .button{
@@ -432,7 +451,6 @@ link{
   font-size: 18px;
   color: #008e8e;
   cursor: pointer;
-  margin-top: auto;
  }
 
  .button-algemeen a{

@@ -193,18 +193,33 @@
     width: 90%;
 }
 
-#reacties-overview{
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
-    border-radius: 2px;
-    margin: 30px;
-    width: 75%;
-    background-color: whitesmoke;
+#insights-outer-section{
+    width: 100%;
+    margin-top: 100px;
+}
+
+.coach-link-openup{
+    font-size: 14px;
+    color: #49beb7;
+    cursor: pointer;
 }
 
 #reactie-input{
     width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 100px 0px 100px 0px;
+}
+
+.inner-div-openup{
+    display: flex;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    border-radius: 2px;
+    margin: 0px 100px 0px 100px;
+    background-color: white;
 }
 
 #reactie-innerDiv{
@@ -246,6 +261,13 @@
 
 .reaction-coach-div{
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.meta-div-openup{
+    border-right: 1px solid #f7f7f7;
 }
 
 #button-reactie-openup{
@@ -256,27 +278,32 @@
     font-size: 18px;
     color: #FFF;
     cursor: pointer;
-    width: 100px;
     margin-bottom: 15px;
+    margin-top: 30px;
 }
 
 #social-div-openup{
     display: flex;
     justify-content: space-evenly;
-    background-color: rgb(241, 241, 241);
+    text-align: center;
+    background-color: white;
+    margin: 5px 100px 30px 100px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
 }
 
 #social-div-openup p{
-    margin: 0px 15px 0px 1px;
+    margin: 0px 15px 0px 15px;
     font-size: 14px;
     cursor: pointer;
+    color: #122b46;
 }
 
 #toevoegen-levensles-div{
     padding: 5px;
     margin: 5px;
-    background-color: rgb(235, 235, 235);
-    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #toevoegen-levensles-div p{
@@ -285,6 +312,40 @@
 
 .omschrijving-levensvraag{
     margin-bottom: 15px;
+}
+
+#bedankt-open-up-inspirerend{
+    color: #49beb7 !important;
+}
+
+.toevoegen-levensles-select{
+    font-size: 14px;
+    border: 1px solid #dfdfdf;
+}
+
+.edit-icon-insights{
+    width: 20px;
+    cursor: pointer;
+    align-self: normal;
+    flex-wrap: wrap;
+}
+
+.save-div{
+    cursor: pointer;
+}
+
+.save-div p{
+    font-size: 14px;
+    color: #49beb7;
+}
+
+.delete-div{
+    cursor: pointer;
+}
+
+.delete-div p{
+    color: red;
+    font-size: 14px;
 }
 
 @media only screen and (max-width: 938px){
@@ -323,6 +384,35 @@
         border-radius: 0px;
         margin: 30px;
         width: 100%;
+    }
+
+    .inner-div-openup {
+        margin: 0px 20px 0px 20px;
+
+    }
+
+    #social-div-openup {
+        margin: 5px 20px 30px 20px;
+    }
+
+    .toevoegen-levensles-select {
+        font-size: 12px;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .inner-div-openup {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .reaction-coach-div {
+        display: flex;
+        flex-direction: initial;
+        justify-content: space-evenly;
+        align-items: center;
+        padding: 20px;
+        border-top: 1px solid #dfdfdf;
     }
 
 }

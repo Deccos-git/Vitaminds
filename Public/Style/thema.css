@@ -132,6 +132,11 @@
     color: white;
 }
 
+.number-of-insights{
+    font-size: 12px !important;
+    margin: 0px !important;
+}
+
 /* Mobile */
 
 @media only screen and (max-width: 938px){

@@ -11,17 +11,19 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
             domeinDiv.setAttribute("class", "domein-div")
         const domeinP = document.createElement("p")
 
-        domeinH3.innerHTML = "Domein"
+        domeinH3.innerHTML = "<u>Domein</u>"
         domeinP.innerHTML = domein
 
         themeSection.appendChild(domeinDiv)
         domeinDiv.appendChild(domeinH3)
         domeinDiv.appendChild(domeinP)
 
+        // Levensvragen
         db.collection("Levensvragen").where("Domein", "==", domein).get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
 
                 const levensvragen = doc1.data().Levensvraag
+                const insights = doc1.data().Insights
 
                 const levensvraagH3 = document.createElement("h3")
                 const outerDiv = document.createElement("div")
@@ -29,48 +31,46 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
                 const levensvraagDiv = document.createElement("div")
                     levensvraagDiv.setAttribute("class", "levensvraag-div")
                 const levensvraagP = document.createElement("p")
+                const numberOfInsights = document.createElement("p")
+                    numberOfInsights.setAttribute("class", "number-of-insights")
 
                 levensvraagP.style.cursor = "pointer"
 
-                levensvraagH3.innerHTML = "Levensvraag"
+                levensvraagH3.innerHTML = "<u>Levensvraag</u>"
                 levensvraagP.innerHTML = levensvragen
+                numberOfInsights.innerHTML = `Aantal inzichten: (${insights.length})`
 
                 levensvraagP.addEventListener("click", () => {
                     window.open(`../Artikelen/${levensvragen}.html`, "_self");
-                })
-
-                // count of insights in theme-list
-                db.collection("Insights").where("LevensvraagArtikel", "==", levensvragen).get().then(querySnapshot => {
-                    querySnapshot.forEach(doc2 => {
-
-                        const levensvraag = doc2.data().LevensvraagArtikel
-
-                        
-                        
-                    })
-                })
-
-               
+                })    
 
                 domeinDiv.appendChild(outerDiv)
                 outerDiv.appendChild(levensvraagDiv)
                 levensvraagDiv.appendChild(levensvraagH3)
                 levensvraagDiv.appendChild(levensvraagP)
+                levensvraagP.appendChild(numberOfInsights)
 
+                // Themas
                 db.collection("Themas").where("Levensvragen", "array-contains", levensvragen).get().then(querySnapshot => {
                     querySnapshot.forEach(doc2 => {
 
                         const themas = doc2.data().Thema
+                        const insights = doc2.data().Insights
+
+                        console.log(themas + insights.length)
 
                         const themeH3 = document.createElement("h3")
                         const themeDiv = document.createElement("div")
                             themeDiv.setAttribute("class", "theme-div")
                         const themeP = document.createElement("p")
+                        const numberOfInsights = document.createElement("p")
+                            numberOfInsights.setAttribute("class", "number-of-insights")
 
                             themeP.style.cursor = "pointer"
 
-                        themeH3.innerHTML = "Tool"
+                        themeH3.innerHTML = "<u>Tool</u>"
                         themeP.innerHTML = themas
+                        numberOfInsights.innerHTML = `Aantal inzichten: (${insights.length})`
 
                         themeP.addEventListener("click", () => {
                             window.open(`../Theme-articles/${themas}.html`, "_self");
@@ -79,7 +79,9 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
                         levensvraagDiv.appendChild(themeDiv)
                         themeDiv.appendChild(themeH3)
                         themeDiv.appendChild(themeP)
+                        themeP.appendChild(numberOfInsights)
                         
+                        // Paragrafen
                         db.collection("Themas").where("Thema", "==", themas).get().then(querySnapshot => {
                             querySnapshot.forEach(doc3 => {
 
@@ -89,7 +91,7 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
                                 const paragraphDiv = document.createElement("div")
                                     paragraphDiv.setAttribute("class", "paragraph-div")
 
-                                paragraphH3.innerHTML = "Paragrafen"
+                                paragraphH3.innerHTML = "<u>Paragrafen</u>"
 
                                 themeP.appendChild(paragraphDiv)
                                 paragraphDiv.appendChild(paragraphH3)

@@ -122,16 +122,17 @@ document.addEventListener("DOMContentLoaded", () => {
             if (User){
             let docRef = db.collection("Vitaminders").doc(User.uid);
                     docRef.get().then(function(doc){
-                    const auth = doc.data().Gebruikersnaam;
+                    const auth = doc.data().GebruikersnaamClean;
 
-    db.collectionGroup("Reactions").where("Vraagsteller", "==", auth).orderBy("Timestamp", "desc").get().then(querySnapshot => {
+    db.collectionGroup("Insights").where("Vraagsteller", "==", auth).orderBy("Timestamp", "desc").get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
 
                     const DOM = document.getElementById("notifications")
 
-                    const coach = doc.data().Gebruikersnaam
+                    const coach = doc.data().Auteur
                     const levensvraag = doc.data().Levensvraag
-                    const reactie = doc.data().Reactie
+                    const body = doc.data().Body
+
 
                     const notificationsTitleDiv = document.createElement("div")
                     notificationsTitleDiv.setAttribute("class", "notification-div-profile")
@@ -151,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     const levensvraagClean = doc2.data().LevensvraagClean
 
                     notificationsTitleH4.innerHTML = `<a href="../Vitaminders/${coach}.html"><u>${coachClean}</u></a> heeft gereageerd op <a href="../Open/${levensvraag}.html"><u>${levensvraagClean}</u></a>`
-                    reactieP.innerHTML = `"${reactie}"`
+                    reactieP.innerHTML = `"${body}"`
                     reactieP.addEventListener("click", () => {
                             window.open("../Open/" + levensvraag + ".html" + "#reacties-overview", "_self")
                     })
@@ -189,8 +190,9 @@ document.addEventListener("DOMContentLoaded", () => {
             querySnapshot.forEach(doc => {
                     const giver = doc.data().Giver
                     const type = doc.data().Type
-                    const source = doc.data().Source 
+                    const titel = doc.data().Titel
                     const inspiration = doc.data().Inspiration
+                    const source = doc.data().Source
 
                     const DOM = document.getElementById("inspiration-notifications")
                     if(DOM == null){
@@ -214,36 +216,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             querySnapshot.forEach(doc1 => {
 
                                     const giverClean = doc1.data().GebruikersnaamClean
-                console.log(type)
 
-                    if(type == "Inspiratie"){
-
-                    db.collection("Artikelen").where("Titel", "==", source).get().then(querySnapshot => {
-                            querySnapshot.forEach(doc2 => {
-
-                                    const titelClean = doc2.data().TitelClean
-                                    const titel = doc2.data().Titel
-
-                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                    dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
-
-                    string.innerHTML = `Je hebt 1 nieuw inspiratiepunt ontvangen!`
-                    liGiver.innerHTML = `Van <u>${giverClean}</u>`
-                    liGiver.addEventListener("click", () => {
-                            window.open("../Vitaminders/" + giver + ".html", "_self");
-                    })
-
-                    liType.innerHTML = `Op je levensles ${inspiration}`
-                    link.innerHTML = `<u>${inspiration}</u>`
-                    liSource.innerHTML = `Bron: <i>${type}</i> ${titelClean}`
-
-                    liSource.addEventListener("click", () => {
-                        window.open("../Artikel/" + titel + ".html", "_self");
-                    })
-                            })
-                    })
-                    } else if (type == "Openup"){
-                            db.collectionGroup("Levensvragen").where("Levensvraag", "==", source).get().then(querySnapshot => {
+                                    //Open up
+                         if (type == "Openup"){
+                            db.collectionGroup("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
                                     querySnapshot.forEach(doc3 => {
     
                                             const levensvraagClean = doc3.data().LevensvraagClean
@@ -258,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     window.open("../Vitaminders/" + giver + ".html", "_self");
                             })
     
-                            liType.innerHTML = `Op je reactie ${inspiration}`
+                            liType.innerHTML = `Op je inzicht: ${source}`
                             link.innerHTML = `<u>${inspiration}</u>`
                             liSource.innerHTML = `Bron: <i>${type}</i> ${levensvraagClean}`
                             
@@ -268,8 +244,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                     })
                             })   
                     } else if (type == "Insight"){
-                            console.log(source)
-                        db.collection("Insights").where("LevensvraagArtikel", "==", source).get().then(querySnapshot => {
+                            // Levensvraag artikelen
+                        db.collection("Insights").where("LevensvraagArtikel", "==", titel).get().then(querySnapshot => {
                                 querySnapshot.forEach(doc3 => {
 
                                         const levensvraag = doc3.data().LevensvraagArtikel
@@ -283,12 +259,37 @@ document.addEventListener("DOMContentLoaded", () => {
                                 window.open("../Vitaminders/" + giver + ".html", "_self");
                         })
 
-                        liType.innerHTML = `Op je reactie ${inspiration}`
+                        liType.innerHTML = `Op je inzicht: ${inspiration}`
                         link.innerHTML = `<u>${inspiration}</u>`
-                        liSource.innerHTML = `Bron: <i>${type}</i> ${levensvraag}`
+                        liSource.innerHTML = `Bron: ${levensvraag}`
 
                         liSource.addEventListener("click", () => {
-                                window.open("../Open/" + levensvraag + ".html", "_self");
+                                window.open("../Artikelen/" + levensvraag + ".html", "_self");
+                                        })
+                                })
+                        })   
+
+                        // Theme artikelen
+                        db.collection("Insights").where("ThemeArtikel", "==", titel).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc3 => {
+
+                                        const levensvraag = doc3.data().ThemeArtikel
+
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
+
+                        string.innerHTML = `Je hebt 1 nieuw inspiratiepunt ontvangen!`
+                        liGiver.innerHTML = `Van <u>${giverClean}</u>`
+                        liGiver.addEventListener("click", () => {
+                                window.open("../Vitaminders/" + giver + ".html", "_self");
+                        })
+
+                        liType.innerHTML = `Op je inzicht: ${inspiration}`
+                        link.innerHTML = `<u>${inspiration}</u>`
+                        liSource.innerHTML = `Bron: ${levensvraag}`
+
+                        liSource.addEventListener("click", () => {
+                                window.open("../Artikelen/" + levensvraag + ".html", "_self");
                                         })
                                 })
                         })   
