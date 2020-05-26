@@ -3,6 +3,18 @@ const id = Math.random()
 const idAlpha = id.toString(36)
 const idClean = idAlpha.replace("0.", "")
 
+// Inlog/uitlog verbergen
+const login = document.getElementById("button-login")
+const logout = document.getElementById("button-logout")
+
+auth.onAuthStateChanged(User =>{
+  if(User){
+    login.style.display = "none"
+  } else {
+    logout.style.display = "none"
+  }
+});
+
 // Mobile menu
 const hamburgerMenu = document.getElementById("mobile-hamburger-menu")
 const mobileMenu = document.getElementById("mobile-menu-outer-div")
@@ -15,6 +27,15 @@ hamburgerMenu.addEventListener("click", () => {
         mobileMenu.style.display = "flex"    
         }
 })
+
+const coachMenuDOM = document.getElementById("aanmeldCH-mobile")
+const coachMenuMobile = document.getElementById("coach-menu-main-mobile")
+
+
+  coachMenuDOM.addEventListener("click", () => {
+    coachMenuMobile.style.display = "flex"
+  })
+
 
 // Ingelogd in mobile-menu
 
@@ -458,14 +479,4 @@ if(code.style.display = "none"){
 }
 
 
-// Inlog/uitlog verbergen
-const login = document.getElementById("button-login")
-const logout = document.getElementById("button-logout")
 
-auth.onAuthStateChanged(User =>{
-  if(User){
-    login.style.display = "none"
-  } else {
-    logout.style.display = "none"
-  }
-});

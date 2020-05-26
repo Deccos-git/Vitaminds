@@ -207,6 +207,63 @@ link{
   display: block;
 }
 
+.coach-menu-outer-div{
+  margin-top: 0px;
+  float: right;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  vertical-align: center;
+}
+
+.coach-menu-outer-div-mobile{
+  margin-top: 0px;
+  float: right;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  vertical-align: center;
+}
+
+#coach-menu-main-mobile{
+  display: none;
+  margin-top: 0px;
+  float: right;
+  list-style: none;
+  flex-direction: column;
+  margin-left: 10px;
+  text-align: center;
+}
+.coach-menu-main-p-mobile{
+ margin: 5px 0px 0px 0px;
+ color: #8e0000;
+ font-size: 14px;
+}
+
+#aanmeldCH-mobile{
+  z-index: 1;
+  text-align: center;
+  margin: 5px 0px 0px 0px;
+  color: #8e0000;
+  font-size: 16px;
+}
+
+#aanmeldCH-mobile a{
+  text-decoration: none;
+  color: #8e0000;
+  font-size: 16px;
+}
+
+#aanmeldCH-mobile a:active{
+  color: #8e0000;
+}
+
+#aanmeldCH-mobile a:visited{
+  color: #8e0000;
+}
+
 .login-logout{
   margin-top: 0px;
   float: right;
