@@ -241,7 +241,7 @@
 
 #paragraph-list h3{
     font-size: 18px;
-    margin-left: 30%;
+    text-align: center;
 }
 
 .paragraph-list-inner-div{
@@ -312,8 +312,15 @@
     margin-bottom: 80px;
     display: flex;
     flex-direction: column;
-    margin-left: 40%;
+    margin-left: 0px;
     width: fit-content;
+}
+
+#paragraph-list-theme{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
 }
 
 .levensvraag-artikel-main-image img{
@@ -367,9 +374,15 @@
     border: 1px solid #f7f7f7;
 }
 
-.insights-outer-div p{
-    font-size: 14px;
+.insights-outer-div h2{
     text-align: center;
+    align-self: center;
+}
+
+.insights-outer-div p{
+    font-size: 18px;
+    text-align: left;
+    letter-spacing: 1px;
 }
 
 .meta-div-insights{
@@ -391,6 +404,23 @@
     padding: 30px;
     text-align: left;
     width: 100%;
+}
+
+.read-more-div{
+    display: flex;
+    justify-content: center;
+    margin-top: -35px;
+    margin-bottom: 10px;
+}
+
+.button-read-more{
+    background-color: #fff;
+    border: 1px #1f6565 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 14px;
+    color: #1f6565;
+    cursor: pointer;
 }
 
 #coach-suggestions{
@@ -565,6 +595,10 @@
     font-size: 14px;
     color: #49beb7;
     text-decoration: underline;
+}
+
+#insights-tip{
+    margin: 10px;
 }
 
 /* Individual theme page */

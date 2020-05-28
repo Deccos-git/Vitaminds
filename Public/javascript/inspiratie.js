@@ -184,6 +184,35 @@ function seeArticle(elem){
 
 };
 
+// Register view count on article load
+window.addEventListener("load", () => {
+
+    // Levensvragen
+    db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            console.log(doc.id)
+
+            db.collection("Levensvragen").doc(doc.id).update({
+                Views: firebase.firestore.FieldValue.increment(1)
+            })  
+        })
+    })
+
+    // Theme articles
+    db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            console.log(doc.id)
+
+            db.collection("Themas").doc(doc.id).update({
+                Views: firebase.firestore.FieldValue.increment(1)
+            })  
+        })
+    })
+});
+
+
 
 // Levensvraag artikelen detailpagina
 
@@ -232,8 +261,6 @@ db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(query
             editIcon.setAttribute("onclick", "editIconSummary(this)")
             editIcon.setAttribute("data-title", titleArticle)
 
-
-            // summary.app(editDiv)
             editDiv.appendChild(editIcon)
 
         //Non admin
@@ -302,6 +329,10 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                     textDiv.setAttribute("class", "text-div-insights")
                 const textTitle = document.createElement("h2")
                 const textBody = document.createElement("p")
+                const readMoreDiv = document.createElement("div")
+                    readMoreDiv.setAttribute("class", "read-more-div")
+                const readMore = document.createElement("button")
+                    readMore.setAttribute("class", "button-read-more")
                 const socialDiv = document.createElement("div")
                     socialDiv.setAttribute("class", "sociale-div-insights")
                 const themaDiv = document.createElement("div")
@@ -390,6 +421,7 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                 visitProfile.innerHTML = "Bekijk profiel"
                 textTitle.innerHTML = titelInsight
                 textBody.innerHTML = body
+                readMore.innerHTML = "Lees meer"
                 themaH3.innerHTML = "Verder lezen"
                 inspirationalH3.innerHTML = "Inspirerend"
                 inspirationalImg.src = "../images/menu-karakter.png"
@@ -401,11 +433,11 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
 
                 toevoegenLevenslesSelectButton.addEventListener("click", () => {
                     toevoegenLevenslesToggleDiv.style.display = "block"
-                })
+                });
 
                 bedankt.addEventListener("click", () => {
                     window.open("../Vitaminders/" + coach + ".html", "_self");
-                })
+                });
 
                 auth.onAuthStateChanged(User =>{
                     db.collection("Vitaminders").doc(User.uid).get().then(doc => {
@@ -416,9 +448,9 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                             })       
                         
                     })
-                })
+                });
                 
-                // Display read more button if read more is set
+                // Display read more of this theme button if read more is set
                 if(thema == undefined){
                     themaDiv.style.display = "none"
                 }else{
@@ -427,21 +459,21 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                 themaP.addEventListener("click", () => {
                     window.open("../Theme-articles/" + thema + ".html", "_self")
                 })
-                }
+                };
 
                 metaDiv.addEventListener("click", () => {
                     window.open("../Vitaminders/" + coach + ".html", "_self");
+                });
+
+                readMore.addEventListener("click", () => {
+                    textDiv.style.maxHeight = "max-content"
+                    readMore.style.display = "none"
                 })
 
 
                 // Loader
                 const loader = document.getElementById("loader")
                     loader.style.display = "none"
-
-
-                     // Max height of insight
-                console.log(textDiv.outerHeight)
-
 
                 DOM.appendChild(outerDiv)
                 outerDiv.appendChild(metaDiv)
@@ -452,6 +484,17 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                 textDiv.appendChild(editIcon)
                 textDiv.appendChild(textTitle)
                 textDiv.appendChild(textBody)
+                
+
+                 // Append "read more" if max height is > 300px
+                    if(textDiv.offsetHeight >= 400){
+                        DOM.appendChild(readMoreDiv)
+                        readMoreDiv.appendChild(readMore)
+                        textDiv.style.maxHeight = "300px"
+                        textDiv.style.overflow = "hidden"
+                        outerDiv.style.paddingBottom = "50px"
+                    };
+
                 DOM.appendChild(socialDiv)
                 socialDiv.appendChild(themaDiv)
                 themaDiv.appendChild(themaH3)
@@ -471,6 +514,7 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                 toevoegenLevenslesToggleDiv.appendChild(toevoegenLevenslesButtonDiv)
                 toevoegenLevenslesButtonDiv.appendChild(toevoegenLevenslesButton)
                 toevoegenLevenslesToggleDiv.appendChild(opgeslagen)
+            
 
                 // User role
                     // Visitor
@@ -505,9 +549,6 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                    auth.onAuthStateChanged(User =>{
                     db.collection("Vitaminders").doc(User.uid).get().then(doc => {
                             const auth = doc.data().Gebruikersnaam
-
-                            console.log(auth)
-                            console.log(coachData)
                     
                 if(coachData != auth){
 
@@ -549,9 +590,12 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
 
 // Paragraph-summary
 
-const paragraphSummary = document.getElementById("paragraph-list")
 
-function paragraphSum(a){
+
+function paragraphSum(a,b){
+
+    const paragraphSummary = document.getElementById(b)
+
 db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
@@ -605,8 +649,8 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
         })
     })
 })
-}; paragraphSum("LevensvraagArtikel")
-paragraphSum("ThemeArtikel")
+}; paragraphSum("LevensvraagArtikel", "paragraph-list")
+paragraphSum("ThemeArtikel", "paragraph-list-theme")
 
 // Coach insights theme examples 
 const DOMlist = document.getElementById("theme-list-insights")

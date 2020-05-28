@@ -195,6 +195,10 @@
     justify-content: center;
 }
 
+.meta-div-insights p{
+    text-align: center !important;
+}
+
 .text-div-insights{
     display: flex;
     flex-direction: column;
@@ -402,4 +406,20 @@
     cursor: pointer;
     color: #0c6665;
     display: none;
+}
+
+#loader img{
+    width: 100px;
+    height: 100px;
+}
+
+.insights-outer-div h2{
+    text-align: center;
+    align-self: center;
+}
+
+.insights-outer-div p{
+    font-size: 18px;
+    text-align: left;
+    letter-spacing: 1px;
 }

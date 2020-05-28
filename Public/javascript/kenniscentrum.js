@@ -49,6 +49,21 @@ function seeArticle(elem){
 
 };
 
+// Register view count on article load
+window.addEventListener("load", () => {
+
+    db.collection("Kenniscentrum").where("Coachvraag", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            console.log(doc.id)
+
+            db.collection("Kenniscentrum").doc(doc.id).update({
+                Views: firebase.firestore.FieldValue.increment(1)
+            })  
+        })
+    })
+});
+
 // Fetching title from url
 titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
 titel1 = titelhtml.replace('.html', '')
@@ -63,8 +78,6 @@ titel9 = titel8.replace('%20',' ')
 titel10 = titel9.replace('%20',' ')
 titel = titel10.replace('%20',' ')
 
-
-console.log(titel)
 
 // Levensvraag artikelen detailpagina
 

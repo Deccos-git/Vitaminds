@@ -1,10 +1,13 @@
 
+
+// Theme overview Zelfkennis
 const themeSection = document.getElementById("list-of-themes")
 
 db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
         const domein = doc.data().Domein
+        console.log(domein)
 
         const domeinH3 = document.createElement("h3")
         const domeinDiv = document.createElement("div")
@@ -113,6 +116,30 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
     })
 });
 
+// Theme overview Coaches
+const themeSectionCoach = document.getElementById("list-of-themes-coaching")
+
+db.collection("Kenniscentrum").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const coachvraag = doc.data().Coachvraag
+
+        console.log(coachvraag)
+
+        const domeinH3 = document.createElement("h3")
+        const domeinDiv = document.createElement("div")
+            domeinDiv.setAttribute("class", "domein-div")
+        const domeinP = document.createElement("p")
+
+        domeinH3.innerHTML = "<u>Coachvraag</u>"
+        domeinP.innerHTML = coachvraag
+
+        themeSectionCoach.appendChild(domeinDiv)
+        domeinDiv.appendChild(domeinH3)
+        domeinDiv.appendChild(domeinP)
+
+    })
+});
 
 
 // Feedback themas

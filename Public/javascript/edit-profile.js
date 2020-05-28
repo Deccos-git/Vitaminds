@@ -26,6 +26,7 @@ function uploadFile(){
                     const docRef = db.collection("Vitaminders").doc(id);
                        
 const selectedFile = document.getElementById('foto-upload').files[0];
+const progressBar = document.getElementById("progress-bar")
 
 const storageRef = firebase.storage().ref("/Profielfotos/" + selectedFile.name);
 
@@ -39,7 +40,7 @@ const storageRef = firebase.storage().ref("/Profielfotos/" + selectedFile.name);
     // Observe state change events such as progress, pause, and resume
     // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    console.log('Upload is ' + progress + '% done');
+    progressBar.innerHTML = ` ${progress} %`;
     switch (snapshot.state) {
       case firebase.storage.TaskState.PAUSED: // or 'paused'
         console.log('Upload is paused');
@@ -373,11 +374,15 @@ function editReactions(elem){
         //Coach contact
 
 function editContact(elem){
+
         const bel = elem.parentElement.nextSibling.nextSibling.firstElementChild.nextSibling
         const belDiv =  elem.parentElement.nextSibling.nextSibling
         const websiteDiv = elem.parentElement.nextSibling.nextSibling.nextSibling
         const website = websiteDiv.firstElementChild.nextSibling
         const websiteLink = website.firstElementChild
+
+        console.log(website)
+        console.log(websiteLink)
 
         // Format for website notice
         const noticeP = document.createElement("p")
@@ -390,24 +395,26 @@ function editContact(elem){
         if(belDiv.style.display == "none" ){
         belDiv.style.display = "flex"
         bel.innerHTML = "Telefoonnummer"
+        bel.style.color = "#d4d4d4"
         }
 
         bel.setAttribute("contenteditable", "true")
-        bel.style.color = "#d4d4d4"
-        bel.style.borderBottom = "1px dotted #d4d4d4"
+        bel.style.border= "1px dotted #d4d4d4"
 
         if(websiteDiv.style.display == "none"){
         websiteDiv.style.display = "flex"
         website.innerHTML = "Website"
+        website.style.color = "#d4d4d4"
         }
 
-        websiteLink.setAttribute("contenteditable", "true")
-        if(websiteLink == null){
-                console.log("Error")
-        } else {
-        websiteLink.style.color = "#d4d4d4"
-        }
-        website.style.borderBottom = "1px dotted #d4d4d4"
+        
+        // if(websiteLink == null){
+        //         console.log("Error")
+        // } else {
+        // websiteLink.setAttribute("contenteditable", "true")
+        // }
+        website.setAttribute("contenteditable", "true")
+        website.style.border= "1px dotted #d4d4d4"
 
         const saveLes = document.createElement("div")
         saveLes.setAttribute("class", "save-div")
@@ -428,7 +435,7 @@ function editContact(elem){
 
                         db.collection("Vitaminders").doc(doc.id).update({
                                 PhoneNumber: bel.innerHTML,
-                                Website: website.firstElementChild.innerHTML
+                                Website: website.innerHTML
                         }).then(() => {
                                 location.reload();
                         })
@@ -444,37 +451,39 @@ function editContact(elem){
 function editShort(elem){
         const locatie = elem.parentElement.nextSibling.firstElementChild.nextSibling
                 const locatieDiv = elem.parentElement.nextSibling
-        const ervaring = elem.parentElement.nextSibling.nextSibling.firstElementChild.nextSibling
-                const ervaringDiv = elem.parentElement.nextSibling
-        const opleiding = elem.parentElement.nextSibling.nextSibling.nextSibling.firstElementChild.nextSibling
-                const opleidingDiv = elem.parentElement.nextSibling.nextSibling.nextSibling
+        const targetGroup = elem.parentElement.nextSibling.nextSibling.firstElementChild.nextSibling
+                const targetGroupDiv = elem.parentElement.nextSibling
+        const costs = elem.parentElement.nextSibling.nextSibling.nextSibling.firstElementChild.nextSibling
+                const costsDiv = elem.parentElement.nextSibling.nextSibling.nextSibling
+
+                console.log(targetGroup)
 
         if(locatieDiv.style.display == "none" ){
         locatieDiv.style.display = "flex"
         locatie.innerHTML = "Stad of dorp"
+        location.style.color = "#d4d4d4"
         }
 
         locatie.setAttribute("contenteditable", "true")
-        locatie.style.color = "#d4d4d4"
-        locatie.style.borderBottom = "1px dotted #d4d4d4"
+        locatie.style.border = "1px dotted #d4d4d4"
 
-        if(ervaringDiv.style.display == "none" ){
-        ervaringDiv.style.display = "flex"
-        ervaring.innerHTML = "Specialisatie"
+        if(targetGroupDiv.style.display == "none" ){
+        targetGroupDiv.style.display = "flex"
+        targetGroup.innerHTML = "Jouw doelgroep"
+        targetGroup.style.color = "#d4d4d4"
         }
 
-        ervaring.setAttribute("contenteditable", "true")
-        ervaring.style.color = "#d4d4d4"
-        ervaring.style.borderBottom = "1px dotted #d4d4d4"
+        targetGroup.setAttribute("contenteditable", "true")
+        targetGroup.style.border= "1px dotted #d4d4d4"
 
-        if(opleidingDiv.style.display == "none" ){
-        opleidingDiv.style.display = "flex"
-        opleiding.innerHTML = "€/uur"
+        if(costsDiv.style.display == "none" ){
+        costsDiv.style.display = "flex"
+        costs.innerHTML = "€/uur"
+        costs.style.color = "#d4d4d4"
         }
 
-        opleiding.setAttribute("contenteditable", "true")
-        opleiding.style.color = "#d4d4d4"
-        opleiding.style.borderBottom = "1px dotted #d4d4d4"
+        costs.setAttribute("contenteditable", "true")
+        costs.style.border = "1px dotted #d4d4d4"
         
 
         const saveLes = document.createElement("div")
@@ -496,8 +505,8 @@ function editShort(elem){
 
                         db.collection("Vitaminders").doc(doc.id).update({
                                 City: locatie.innerHTML,
-                                Targetgroup: ervaring.innerHTML,
-                                Costs: opleiding.innerHTML
+                                Targetgroup: targetGroup.innerHTML,
+                                Costs: costs.innerHTML
                         }).then(() => {
                                 location.reload();
                         })
@@ -511,41 +520,40 @@ function editShort(elem){
 //Coach Coaching
 
 function editCoach(elem){
-        const jaren = elem.parentElement.nextSibling.firstElementChild.nextSibling
-                const jarenDiv = elem.parentElement.nextSibling
-        const ervaring= elem.parentElement.nextSibling.nextSibling.firstElementChild.nextSibling
-                const ervaringDiv = elem.parentElement.nextSibling.nextSibling
+        const coachingstijl = elem.parentElement.nextSibling.firstElementChild.nextSibling
+                const coachingstijlDiv = elem.parentElement.nextSibling
+        const methodiek = elem.parentElement.nextSibling.nextSibling.firstElementChild.nextSibling
+                const methodiekDiv = elem.parentElement.nextSibling.nextSibling
 
-        console.log(ervaringDiv)
-        const opleiding = elem.parentElement.nextSibling.nextSibling.nextSibling.firstElementChild.nextSibling
-                const opleidingDiv = elem.parentElement.nextSibling.nextSibling.nextSibling
+        const motivatie = elem.parentElement.nextSibling.nextSibling.nextSibling.firstElementChild.nextSibling
+                const motivatieDiv = elem.parentElement.nextSibling.nextSibling.nextSibling
 
-        if(jarenDiv.style.display == "none" ){
-        jarenDiv.style.display = "flex"
-        jaren.innerHTML = "jaren"
+        if(coachingstijlDiv.style.display == "none" ){
+        coachingstijlDiv.style.display = "flex"
+        coachingstijl.innerHTML = "Jouw coachingstijl"
+        coachingstijl.style.color = "#d4d4d4"
         }
 
-        jaren.setAttribute("contenteditable", "true")
-        jaren.style.color = "#d4d4d4"
-        jaren.style.borderBottom = "1px dotted #d4d4d4"
+        coachingstijl.setAttribute("contenteditable", "true")
+        coachingstijl.style.border = "1px dotted #d4d4d4"
 
-        if(ervaringDiv.style.display == "none" ){
-        ervaringDiv.style.display = "flex"
-        ervaring.innerHTML = "ervaring"
+        if(methodiekDiv.style.display == "none" ){
+        methodiekDiv.style.display = "flex"
+        methodiek.innerHTML = "Jouw methodiek"
+        methodiek.style.color = "#d4d4d4"
         }
 
-        ervaring.setAttribute("contenteditable", "true")
-        ervaring.style.color = "#d4d4d4"
-        ervaring.style.borderBottom = "1px dotted #d4d4d4"
+        methodiek.setAttribute("contenteditable", "true")
+        methodiek.style.border = "1px dotted #d4d4d4"
 
-        if(opleidingDiv.style.display == "none" ){
-        opleidingDiv.style.display = "flex"
-        opleiding.innerHTML = "opleiding"
+        if(motivatieDiv.style.display == "none" ){
+        motivatieDiv.style.display = "flex"
+        motivatie.innerHTML = "Jouw motivatie om coach te worden"
+        motivatie.style.color = "#d4d4d4"
         }
 
-        opleiding.setAttribute("contenteditable", "true")
-        opleiding.style.color = "#d4d4d4"
-        opleiding.style.borderBottom = "1px dotted #d4d4d4"
+        motivatie.setAttribute("contenteditable", "true")
+        motivatie.style.border = "1px dotted #d4d4d4"
         
 
         const saveLes = document.createElement("div")
@@ -566,9 +574,9 @@ function editCoach(elem){
                                 docRef.get().then(function(doc){
 
                         db.collection("Vitaminders").doc(doc.id).update({
-                                Coachingstyle: jaren.innerHTML,
-                                Approach: ervaring.innerHTML,
-                                Why: opleiding.innerHTML
+                                Coachingstyle: coachingstijl.innerHTML,
+                                Approach: methodiek.innerHTML,
+                                Why: motivatie.innerHTML
                         }).then(() => {
                                 location.reload();
                         })
@@ -592,30 +600,30 @@ function editExperience(elem){
 
         if(jarenDiv.style.display == "none" ){
         jarenDiv.style.display = "flex"
-        jaren.innerHTML = "jaren"
+        jaren.innerHTML = "Aantal jaren ervaring"
+        jaren.style.color = "#d4d4d4"
         }
 
         jaren.setAttribute("contenteditable", "true")
-        jaren.style.color = "#d4d4d4"
-        jaren.style.borderBottom = "1px dotted #d4d4d4"
+        jaren.style.border = "1px dotted #d4d4d4"
 
         if(ervaringDiv.style.display == "none" ){
         ervaringDiv.style.display = "flex"
-        ervaring.innerHTML = "ervaring"
+        ervaring.innerHTML = "Jouw ervaring als coach"
+        ervaring.style.color = "#d4d4d4"
         }
 
         ervaring.setAttribute("contenteditable", "true")
-        ervaring.style.color = "#d4d4d4"
-        ervaring.style.borderBottom = "1px dotted #d4d4d4"
+        ervaring.style.border = "1px dotted #122b46"
 
         if(opleidingDiv.style.display == "none" ){
         opleidingDiv.style.display = "flex"
-        opleiding.innerHTML = "opleiding"
+        opleiding.innerHTML = "Jouw opleidingen & certificaten"
+        opleiding.style.color = "#d4d4d4"
         }
 
         opleiding.setAttribute("contenteditable", "true")
-        opleiding.style.color = "#d4d4d4"
-        opleiding.style.borderBottom = "1px dotted #d4d4d4"
+        opleiding.style.border = "1px dotted #d4d4d4"
         
 
         const saveLes = document.createElement("div")

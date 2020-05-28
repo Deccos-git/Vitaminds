@@ -46,6 +46,12 @@
     flex-direction: column;
 }
 
+#progress-bar{
+    color: #FFF;
+    font-size: 14px;
+    margin: 5px;
+}
+
 #userinfo{
     display: flex;
     width: 100%;
@@ -634,7 +640,7 @@
 #profielWrapper{
     height: auto;
     width: 100%;
-    height: auto;
+    min-height: 800px;
     margin: 0px 0px 0px 0px;
     border: 1px solid #8e969e;
     display: flex;
@@ -662,7 +668,7 @@
 #short-inner-div{
     background-color: #FFF;
     padding: 15px;
-    width: auto;
+    width: 100%;
     margin: 30px;
     border-radius: 2px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
@@ -671,7 +677,7 @@
 #coach-inner-div{
     background-color: #FFF;
     padding: 15px;
-    width: auto;
+    width: 100%;
     margin: 30px;
     border-radius: 2px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
@@ -680,7 +686,7 @@
 #experience-inner-div{
     background-color: #FFF;
     padding: 15px;
-    width: 550px;
+    width: 100%;
     margin: 30px;
     border-radius: 2px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
@@ -714,6 +720,10 @@
     margin-left: auto;
     margin-right: 15px;
     max-width: 50%;
+}
+
+.undefined-placeholder{
+    color: #cf6e13;
 }
 
 /* Intervisie */
@@ -1507,6 +1517,10 @@
 
     #info-bar{
         justify-content: center;
+    }
+
+    .item-div h6 {
+        max-width: 100%;
     }
 
 }

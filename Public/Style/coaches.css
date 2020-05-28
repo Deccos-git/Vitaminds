@@ -62,6 +62,7 @@
     color: #49beb7;
     cursor: pointer;
     margin-bottom: 15px;
+    margin-top: auto;
 }
 
 #overview{
@@ -78,6 +79,7 @@
 
 .locatie-div{
     display: flex;
+    margin: auto 0px 50px 0px;
 }
 
 .locatie-div p{
@@ -85,8 +87,8 @@
 }
 
 .locatie-div p{
-    margin: 0px;
     font-size: 14px;
+    margin-top: 0px
 }
 
 .pin-image-div{
@@ -128,6 +130,7 @@
 
 .coachnaam{ 
     margin: 15px;
+    cursor: pointer;
 }
 
 .coachCat{

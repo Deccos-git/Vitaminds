@@ -1,25 +1,21 @@
 <!DOCTYPE html>
 <html lang="nl">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  gtag('config', 'UA-159826016-1');
+</script>
 
-      gtag('config', 'UA-159826016-1');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="keywords" content="Kenniscentrum coaching">
-    <meta name="description" content="Alles over coaching">
-    <Title> Vitaminds - Kenniscentrum coaching</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Style/style.css">
-    <link rel="stylesheet" href="Style/kenniscentrum.css">
+    <link rel="stylesheet" href="Style/thema.css">
     <link rel="shortcut icon" href="images/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -28,16 +24,48 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
     <script>src="https://www.gstatic.com/firebasejs/6.5.0/firebase-analytics.js"</script>
-  </head>
+    <title>Thema-overzicht</title>
+    <!-- Tiny MCE -->
+      <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+      <script>
+        tinymce.init({
+          plugins: 'placeholder',
+          height: 400,
+          selector: '#tiny-mce',
+          toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image',
+          plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists',
+          toolbar_mode: 'floating',
+          plugin_preview_width: 720,
+          forced_root_block : false,
+          paste_preprocess: function(plugin, args) {
+            console.log(args.content);
+            args.content += ' preprocess';
+          }
+        });
+      </script>
+      <!-- End Tiny MCE -->
+</head>
+<body>
 
-  <body>
-
-    <!-- Feedback -->
+   <!-- Feedback -->
    <div id="feedback">
     <a href="tickets.html"> <p>Feedback</p></a>
   </div>
-  
-      <!-- Mobile-menu -->
+
+  <!-- Cookie notice -->
+  <div id="cookie-notice">
+    <h2>Vitaminds gebruikt cookies</h2>
+    <p>Dat doen we om de site goed te laten werken en om te achterhalen 
+      hoeveel mensen er gebruik maken van de website. 
+      We kunnen geen persoonsgegevens zien.<br><br>
+    Als je verder gaat met scrollen, op een link klikt of dit bericht wegklikt ga je akkoord met ons cookie-beleid.<br><br>
+  Bekijk anders direct ook even ons <a href="privacy.html"> privacy beleid</a></p>
+    <div>
+      <button onclick="cookiesOK()">Ok</button>
+    </div>
+  </div>
+
+     <!-- Mobile-menu -->
 <nav id="mobile-menu"> 
   <div id="menu-mobile-visible-layer">
     <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
@@ -90,33 +118,42 @@
     </div>
   </nav>
   
-<!-- Filter
-<h1 >Inspiratie</h1>
-<select id="inspiratiemenu"></select>
-<button class="button-menu" onclick="filterMenu(this)">Filter</button> -->
+  <h1>Thema overzicht Coaching</h1>
 
-<h1>Kenniscentrum coaching</h1>
+  <section id="list-of-themes-coaching"></section>
 
-<main id="kenniscentrum-artikel-outer-div"></main> 
-
-<!-- footer -->
-<footer class="footer">
-  <div>
-   <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
-  </div>
-  <div>
-    <h3 id="slogan-footer">Op avontuur in je eigen karakter</h3>
-  </div>
-  <div>
-   <a href="https://www.facebook.com/VitamindsNederland/"><img src="images/Logo-facebook.png" alt="" width="40px"></a>
-   <a href="https://www.youtube.com/channel/UC44W6GvZnKZqBw7hdH5OU0A"><img src="images/Logo-youtube.png" alt="" width="40px"></a>
-  </div>
-</footer>
-
-      <script type="text/javascript" src="javascript/firebase.js"></script>
-      <script type="text/javascript" src="javascript/auth.js"></script>
-      <script type="text/javascript" src="javascript/index.js"></script>
-      <script type="text/javascript" src="javascript/kenniscentrum.js"></script>
-    </body>
-  </html>
+  <section id="feedback-section">
+    <div id="feedback-thema"></div>
+    <div id="feedback-div">
+      <p id="welkom-p"></p>
+      <div id=input-div> 
+        <div id="tiny-mce" placeholder="Graag het domein, de levensvraag en eventueel de tool en/of paragrafen benoemen in je feedback"></div>
+        <button id="feedback-button" onclick = "feedbackThemeList(this)" class="button-algemeen">Delen</button>
+      </div>
+      <p id="feeback-input-title">Feedback</p>
+      <div id="input-area"></div>
+    </div>
+  </section>
   
+
+    
+      <!-- footer -->
+      <footer class="footer">
+        <div>
+         <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+        </div>
+        <div>
+          <h3 id="slogan-footer">Op avontuur in je eigen karakter</h3>
+        </div>
+        <div>
+         <a href="https://www.facebook.com/VitamindsNederland/"><img src="images/Logo-facebook.png" alt="" width="40px"></a>
+         <a href="https://www.youtube.com/channel/UC44W6GvZnKZqBw7hdH5OU0A"><img src="images/Logo-youtube.png" alt="" width="40px"></a>
+        </div>
+      </footer>
+      
+          <script type="text/javascript" src="javascript/firebase.js"></script>
+          <script type="text/javascript" src="javascript/auth.js"></script>
+          <script type="text/javascript" src="javascript/index.js"></script>
+          <script type="text/javascript" src="javascript/thema.js"></script>
+</body>
+</html>

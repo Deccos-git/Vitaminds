@@ -71,7 +71,7 @@
           <div><a href="../voor-coach.html"><p class="coach-menu-main-p-mobile">Aanmelden als coach</p></a></div>
           <div><a href="../kenniscentrum.html"><p class="coach-menu-main-p-mobile">Kenniscentrum coaching</p></a></div>
           <div><a href="../thema-lijst.html"><p class="coach-menu-main-p-mobile">Thema-overzicht Zelfkennis</p></a></div>
-          <div><p class="coach-menu-main-p-mobile">Thema-overzicht Coaching</p></div>
+          <div><a href="../thema-coaching.html"><p class="coach-menu-main-p-mobile">Thema-overzicht Coaching</p></a></div>
         </div>
       </div>  
     </div>
@@ -99,7 +99,7 @@
           <div><a href="../voor-coach.html"><p class="coach-menu-main-p">Aanmelden als coach</p></a></div>
           <div><a href="../kenniscentrum.html"><p class="coach-menu-main-p">Kenniscentrum coaching</p></a></div>
           <div><a href="../thema-lijst.html"><p class="coach-menu-main-p">Thema-overzicht Zelfkennis</p></a></div>
-          <div><p class="coach-menu-main-p">Thema-overzicht Coaching</p></div>
+          <div><a href="../thema-coaching.html"><p class="coach-menu-main-p-mobile">Thema-overzicht Coaching</p></a></div>
         </div>
       </div> 
     </div>
@@ -120,6 +120,7 @@
               </div>
             <div id="foto-upload-div">
               <input id="foto-upload" type="file">
+              <p id="progress-bar"></p>
               <button id="upload-file" onclick="uploadFile()">Upload</button>
             </div>
             </div>
@@ -177,15 +178,15 @@
                 <li id="contact-tab" onclick="contactCH(this)"> <img class="menu-icon" src="../images/menu-contact.png" alt="menu contact" width="20px"> Contact</li>
               </div>
               <div class="coach-menu">
-                <li id="mijn-coaching-tab" onclick="mijnCoachingCH(this)"><img class="menu-icon" src="../images/menu-coaching.png" alt="menu contact" width="20px"><a>Mijn coaching</a></li>
+                <li id="mijn-coaching-tab" onclick="mijnCoachingCH(this)"><img class="menu-icon" src="../images/menu-coaching.png" alt="menu contact" width="20px">Mijn coaching</li>
               </div>
               <div id="mijn-coaching">
               </div>
               <div class="coach-menu">
-                <li id="mijn-bijdragen-tab" onclick="mijnBijdragenCH(this)"><img class="menu-icon" src="../images/menu-bijdragen.png" alt="menu contact" width="20px"><a>Mijn bijdragen</a></li>
+                <li id="mijn-bijdragen-tab" onclick="mijnBijdragenCH(this)"><img class="menu-icon" src="../images/menu-bijdragen.png" alt="menu contact" width="20px">Mijn bijdragen</li>
               </div>
               <div class="intervisie-menu">
-                <li id="intervisie-tab" onclick="intervisieCH(this)"><img class="menu-icon" src="../images/Intervisie-icon.png" alt="menu contact" width="20px"><a>Intervisie</a></li>
+                <li id="intervisie-tab" onclick="intervisieCH(this)"><img class="menu-icon" src="../images/Intervisie-icon.png" alt="menu contact" width="20px">Intervisie</li>
               </div>
               <div id="empty-menu"></div>
             </section>
@@ -195,14 +196,14 @@
               <p>Vitaminder</p>
             </div>
               <div class="mens-menu">
-                <li id="levenvragen-tab" onclick="klikavontuur(this)"><img class="menu-icon" src="../images/menu-doelen.png" alt="menu contact" width="20px"><a>Levensvragen</a></li>
+                <li id="levenvragen-tab" onclick="klikavontuur(this)"><img class="menu-icon" src="../images/menu-doelen.png" alt="menu contact" width="20px">Levensvragen</li>
               </div>
               <div class="mens-menu">
-                <li id="levenlessen-tab" onclick="klikkarakter(this)"><img class="menu-icon" src="../images/menu-karakter.png" alt="menu contact" width="20px"><a>Levenslessen</a></li>
+                <li id="levenlessen-tab" onclick="klikkarakter(this)"><img class="menu-icon" src="../images/menu-karakter.png" alt="menu contact" width="20px">Levenslessen</li>
               </div>
               <section id="submenu-karakter"></section>
               <div class="mens-menu">
-                  <li id="dagelijks-leven-tab" onclick="klikdagelijks(this)"><img class="menu-icon" src="../images/menu-dagelijks-leven.png" alt="menu contact" width="20px"><a>Tools</a></li>
+                  <li id="dagelijks-leven-tab" onclick="klikdagelijks(this)"><img class="menu-icon" src="../images/menu-dagelijks-leven.png" alt="menu contact" width="20px">Tools</li>
                 </div>
               <div id="empty-menu"></div>
 
@@ -211,10 +212,10 @@
                 <p>Favorieten</p>
               </div>
               <div class="favo-menu">
-                <li id="fav-coaches-tab" onclick="klikFavCoaches(this)"><img class="menu-icon" src="../images/menu-mijncoaches.png" alt="menu contact" width="20px"><a>Coaches</a></li>
+                <li id="fav-coaches-tab" onclick="klikFavCoaches(this)"><img class="menu-icon" src="../images/menu-mijncoaches.png" alt="menu contact" width="20px">Coaches</li>
               </div>
               <div class="favo-menu">
-                <li id="fav-inspiratie-tab" onclick="klikFavInspiratie(this)"><img class="menu-icon" src="../images/menu-inspiratie.png" alt="menu contact" width="20px"><a>Inspiratie</a></li>
+                <li id="fav-inspiratie-tab" onclick="klikFavInspiratie(this)"><img class="menu-icon" src="../images/menu-inspiratie.png" alt="menu contact" width="20px">Inspiratie</li>
               </div>
               <div id="empty-menu"></div>
             </ul>

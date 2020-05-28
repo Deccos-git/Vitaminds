@@ -71,7 +71,7 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         nieuweDiv.appendChild(locatieDiv)
         locatieDiv.appendChild(pinImageDiv)
         locatieDiv.appendChild(locatieCH)
-        nieuweDiv.appendChild(omschrijvingCH)
+        // nieuweDiv.appendChild(omschrijvingCH)
         nieuweDiv.appendChild(link)
     
         })
@@ -109,6 +109,21 @@ const alleDoelgroepG = [];
 
          const data = doc.data()
          dataSet.push(data)
+
+         // Loading filters in DOM
+
+         const locationSelect = document.getElementById("filterLocatie")
+         const targetGroupSelect = document.getElementById("filterDoelgroep")
+
+         const locationOption = document.createElement("option")
+         const targetgroupOption = document.createElement("option")
+
+         locationOption.innerHTML = alleLocatie
+         targetgroupOption.innerHTML = alleDoelgroep
+
+         locationSelect.appendChild(locationOption)
+         targetGroupSelect.appendChild(targetgroupOption)
+
  
      })
  })    

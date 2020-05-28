@@ -342,7 +342,6 @@ auth.onAuthStateChanged(User =>{
                 const nieuweKarakterTocht = document.getElementById("nieuweKarakterTocht")
                 const notifications = document.getElementById("profile-notifications")
                 const activeDiv = document.getElementsByClassName("active-div")
-                const editDiv = document.getElementsByClassName("edit-div")
                 const changePhoto = document.getElementById("profile-picture-outer-div")
                 const intervisieMenu = document.getElementById("intervisie-tab")
                 const themeOverview = document.getElementById("profile-notifications-theme-overview")
@@ -358,20 +357,7 @@ auth.onAuthStateChanged(User =>{
                     notifications.style.display = "none"
                     intervisieMenu.style.display = "none"
                     themeOverview.style.display = "none"
-                    intervisieBar.style.display = "none"
-
-                   setTimeout(() => {
-                        editDiv[0].style.display = "none"
-                        editDiv[1].style.display = "none"
-                        editDiv[2].style.display = "none"
-                        editDiv[3].style.display = "none"
-                        editDiv[4].style.display = "none"
-                        editDiv[5].style.display = "none"
-                        editDiv[6].style.display = "none"
-                        editDiv[7].style.display = "none"
-                        editDiv[8].style.display = "none"
-                        editDiv[9].style.display = "none"
-                   }, 2000);             
+                    intervisieBar.style.display = "none"     
         }
 });
 
@@ -408,7 +394,6 @@ auth.onAuthStateChanged(User =>{
                 const toolsMenu = document.getElementById("tools-menu")
                 const notifications = document.getElementById("profile-notifications")
                 const activeDiv = document.getElementsByClassName("active-div")
-                const editDiv = document.getElementsByClassName("edit-div")
                 const changePhoto = document.getElementById("profile-picture-outer-div")
         
                 if(naam != coachNaam){
@@ -424,18 +409,6 @@ auth.onAuthStateChanged(User =>{
                 toolsMenu.style.display = "none"
                 notifications.style.display = "none"
 
-                setTimeout(() => {
-                editDiv[0].style.display = "none"
-                editDiv[1].style.display = "none"
-                editDiv[2].style.display = "none"
-                editDiv[3].style.display = "none"
-                editDiv[4].style.display = "none"
-                editDiv[5].style.display = "none"
-                editDiv[6].style.display = "none"
-                editDiv[7].style.display = "none"
-                editDiv[8].style.display = "none"
-                editDiv[9].style.display = "none"
-                }, 2000);    
                 }      
         })
     }
@@ -511,9 +484,11 @@ db.collectionGroup("Inspiration").where("Reciever", "==", naam).get().then(query
                 db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
                         querySnapshot.forEach(doc =>{
                                 const ID = doc.data().ID
-
                                 const levensvraagID = doc.data().Levensvraag
                                 const levensvragen = levensvraagID.replace(ID, "")
+                                const openbaar = doc.data().Openbaar
+
+                                console.log(openbaar)
                 
                 const exampleP = document.createElement("li")
                 const dateP = document.createElement("p")
@@ -521,6 +496,29 @@ db.collectionGroup("Inspiration").where("Reciever", "==", naam).get().then(query
                 exampleP.innerHTML = levensvragen
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
+
+                // Prive of openbaar
+                if(openbaar == "Nee"){
+
+                        // Hidden for non auth
+                auth.onAuthStateChanged(User =>{
+                        const userRef = db.collection("Vitaminders").doc(User.uid);
+                        userRef.get().then(function(doc) {
+
+                                const auth = doc.data().Gebruikersnaam
+
+                                if(auth != naam){
+                                        exampleP.style.display = "none"
+                                }
+                        })
+                })
+                        // Hidden for visitor
+                auth.onAuthStateChanged(User =>{
+                if(!User){
+                        exampleP.style.display = "none"
+                                }                      
+                        })
+                }
               
                titelDiv.appendChild(exampleDiv)
                 exampleDiv.appendChild(exampleP)
@@ -742,11 +740,12 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
 
                 titleH2.innerHTML = "Contact"
 
+                // Not yet filled in coach details
+
                 function dataUndefined(a,b,c,d,e,f){
                         e.innerHTML = f
                 if(a == undefined){
                         b.style.display = "none"
-                        console.log(a + " is undefined")
                 } else {
                         c.innerHTML = d
                 }
@@ -755,7 +754,7 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
         dataUndefined(website, websiteDiv, websiteData, `<a href="http://${website}" target="_blank">${website}</a>`, websiteDOM, "Website"  )
 
                 // About info
-        dataUndefined(city, cityDiv, cityData, city, cityDOM, `<img src="../images/locatie-pin.png" alt="locatie pin" width="25px">`)
+        dataUndefined(city, cityDiv, cityData, city, cityDOM, `Stad of dorp`)
         dataUndefined(targetGroup, targetDiv, targetData, targetGroup, targetDOM, "Doelgroep")
         dataUndefined(costs, costsDiv, costsData, costs, costsDOM, "Tarief")
         dataUndefined(style, styleDiv, styleData, style, styleDOM, "Coachingsstijl")
@@ -764,6 +763,61 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
         dataUndefined(years, yearsDiv, yearsData, years, yearsDOM, "Aantal jaren ervaring")
         dataUndefined(experience, experienceDiv, experienceData, experience, experienceDOM, "Ervaringen")
         dataUndefined(education, educationDiv, educationData, education, educationDOM, "Opleidingen & certificaten")
+
+
+        // Undefined coach details visible for auth
+
+        auth.onAuthStateChanged(User =>{
+                if(User){
+                  const userRef = db.collection("Vitaminders").doc(User.uid);
+                  userRef.get().then(function(doc) {
+                    if (doc.exists) {
+                      const auth = doc.data().Gebruikersnaam;
+
+                      if(naam == auth){
+                        editShort.click()
+                        editCoach.click()
+                        editExperience.click()
+                        editContact.click()
+
+                                        }
+                                }
+                        })
+                }
+        });
+
+
+        //Hide edit Icons
+                // For non auth
+                auth.onAuthStateChanged(User =>{
+                        if(User){
+                          const userRef = db.collection("Vitaminders").doc(User.uid);
+                          userRef.get().then(function(doc) {
+                            if (doc.exists) {
+                              const auth = doc.data().Gebruikersnaam;
+        
+                              if(naam != auth){
+                                editShort.style.display = "none"
+                                editCoach.style.display = "none"
+                                editExperience.style.display = "none"
+                                editContact.style.display = "none"
+        
+                                                }
+                                        }
+                                })
+                        }
+                });
+
+                // For visitor
+                auth.onAuthStateChanged(User =>{
+                        if(!User){
+                          
+                                editShort.style.display = "none"
+                                editCoach.style.display = "none"
+                                editExperience.style.display = "none"
+                                editContact.style.display = "none"
+                        }
+                });
 
                 //Contact
                 DOM.appendChild(editDivContact)
@@ -901,64 +955,6 @@ db.collection("Insights").where("Auteur", "==", naam).where("Type", "==", "Insig
 });
        
 
-        // Reactions
-const innerDivReactions = document.createElement("div")
-        innerDivReactions.setAttribute("class", "reactions-inner-div")
-const titelH3Reactions = document.createElement("h3")
-
-titelH3Reactions.innerHTML = "Reacties op levenvragen"
-
-DOMcontributions.appendChild(innerDivReactions)
-innerDivReactions.appendChild(titelH3Reactions)
-
-db.collectionGroup("Reactions").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-                const reactie = doc.data().Reactie
-                const levensvraag = doc.data().Levensvraag
-                const gebruikersnaam = doc.data().Gebruikersnaam
-                const vraagsteller = doc.data().Vraagsteller
-
-                db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraag).get().then(querySnapshot => {
-                        querySnapshot.forEach(doc1 => {
-
-                                const levensvraagID = doc1.data().ID
-                                const levensvraagClean = levensvraag.replace(levensvraagID, "")
-
-             
-                const titelP = document.createElement("p")
-                const sourceUl = document.createElement("ul")
-                const sourceP = document.createElement("li")
-                        sourceP.setAttribute("class", "meta-contributions")
-                const editDiv = document.createElement("div")
-                editDiv.setAttribute("class", "edit-div")
-                const edit = document.createElement("div")
-                edit.setAttribute("class", "edit-levensvraag")
-                edit.setAttribute("onclick", "editReactions(this)")
-                edit.setAttribute("data-gebruikersnaam", gebruikersnaam)
-                edit.setAttribute("data-vraagsteller", vraagsteller)
-
-               
-                titelP.innerHTML = reactie
-                sourceP.innerHTML = `In de levensvraag <u>${levensvraagClean}</u>`
-
-                sourceP.addEventListener("click", () => {
-                        window.open("../Open/" +levensvraag+ ".html", "_self")
-                })
-
-                edit.innerHTML = '<img class="edit-icon" src="../images/edit-icon.png" alt="edit icon" width="20px"> ' 
-
-                edit.style.display = "block"
-
-                innerDivReactions.appendChild(editDiv)
-                editDiv.appendChild(edit)
-                innerDivReactions.appendChild(titelP)
-                innerDivReactions.appendChild(sourceUl)
-                sourceUl.appendChild(sourceP)
-
-                        })
-                })
-        })
-})
 
 // Levensvragen inladen
 
@@ -967,6 +963,7 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
             const levenslessen = doc.data().Levenslessen
             const omschrijving = doc.data().Omschrijving
             const ID = doc.data().ID
+            const openbaar = doc.data().Openbaar
 
             const levensvraagID = doc.data().Levensvraag
             const levensvraag = levensvraagID.replace(ID, "")
@@ -1005,6 +1002,52 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
             button.addEventListener("click", () => {
                 window.open("../Open/" + ID + levensvraag + ".html", "_self")
             })
+
+            // Prive of openbaar
+            if(openbaar == "Nee"){
+                        // Hidden for non auth
+                auth.onAuthStateChanged(User =>{
+                          const userRef = db.collection("Vitaminders").doc(User.uid);
+                          userRef.get().then(function(doc) {
+
+                                const auth = doc.data().Gebruikersnaam
+
+                                if(auth != naam){
+                                        innerDiv.style.display = "none"
+                                }
+                        })
+                })
+                        // Privat levensvragen hidden for visitor
+                auth.onAuthStateChanged(User =>{
+                       if(!User){
+                        innerDiv.style.display = "none"
+                       }                      
+                })
+            }
+
+            //Hide edit Icons
+                // For non auth
+                auth.onAuthStateChanged(User =>{
+                        if(User){
+                          const userRef = db.collection("Vitaminders").doc(User.uid);
+                          userRef.get().then(function(doc) {
+                            if (doc.exists) {
+                              const auth = doc.data().Gebruikersnaam;
+        
+                              if(naam != auth){
+                                editDiv.style.display = "none"
+                                                }
+                                        }
+                                })
+                        }
+                });
+
+                // For visitor
+                auth.onAuthStateChanged(User =>{
+                        if(!User){
+                                editDiv.style.display = "none"
+                        }
+                });
             
     
             DOM.appendChild(innerDiv)
@@ -1283,6 +1326,31 @@ auth.onAuthStateChanged(User =>{
                         levensles.innerHTML = learn;
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         timeP.innerHTML = "Op: " + time.toDate().toLocaleDateString("nl-NL", options);
+
+                         //Hide edit Icons
+                // For non auth
+                auth.onAuthStateChanged(User =>{
+                        if(User){
+                          const userRef = db.collection("Vitaminders").doc(User.uid);
+                          userRef.get().then(function(doc) {
+                            if (doc.exists) {
+                              const auth = doc.data().Gebruikersnaam;
+        
+                              if(naam != auth){
+                                editDiv.style.display = "none"
+                                                }
+                                        }
+                                })
+                        }
+                });
+
+                // For visitor
+                auth.onAuthStateChanged(User =>{
+                        if(!User){
+                                editDiv.style.display = "none"
+                        }
+                });
+            
 
                         DOMlearnings.appendChild(badge)
                         badge.appendChild(editDiv)

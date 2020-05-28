@@ -38,12 +38,23 @@ h3{
   font-size: 25px;
 }
 
+h6{
+  font-family: 'Nunito Sans', sans-serif !important;
+  color: #122b46;
+}
+
 a{
   font-family: 'Nunito Sans', sans-serif;
+  color: #122b46;
+  text-decoration: underline;
+  text-decoration-color: #8e0000 ;
 }
 
 a:link{
   text-decoration: none;
+  color: #122b46;
+  text-decoration: underline;
+  text-decoration-color: #8e0000 ;
 }
 
 
@@ -112,20 +123,6 @@ link{
   color: #49beb7;
   cursor: pointer;
   margin-bottom: 30px;
-}
-
-/* Privacy statement */
-
-#statement{
-  margin: 0px 60px 0px 60px;
-}
-
-#privacySection{
-  margin: 0px 60px 0px 60px;
-}
-
-#privacySection li{
-  color: #122b46;
 }
 
 /* menu styling */
@@ -342,6 +339,7 @@ link{
 
 #aanmeldCH{
   z-index: 1;
+  font-size: 16px;
 }
 
 #aanmeldCH a{

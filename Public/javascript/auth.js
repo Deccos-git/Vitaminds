@@ -408,6 +408,7 @@ function registerCoach(){
   const naam = document.getElementById("register-gebruikersnaam").value;
   const method = document.getElementById("register-method").value;
   const city = document.getElementById("register-city").value;
+  const targetgroup = document.getElementById("register-targetgroup").value;
   const why = document.getElementById("register-why").value;
 
   if (password != repeatPassword){
@@ -428,6 +429,7 @@ function registerCoach(){
       Coachingstyle: method,
       City: city,
       Why: why,
+      Targetgroup: targetgroup,
       ID: cred.user.uid,
       Levensvragen: []
     }).catch((err) => {
