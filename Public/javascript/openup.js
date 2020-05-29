@@ -211,7 +211,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
 
         levenslessen.forEach(les => {
 
-        db.collectionGroup("Levenslessen").where("Levensles", "==", les).get().then(querySnapshot => {
+        db.collectionGroup("Levenslessen").where("Levensles", "==", les).orderBy("Timestamp", "desc").get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
                 const inspiratorID = doc.data().Auteur
                 const inspirator = inspiratorID.replace(userID, "")
@@ -230,7 +230,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                 
                 lessen.innerHTML ='<img class="menu-icon" src="../images/menu-karakter.png" alt="menu contact" width="20px"> ' + les
                 inspiratorP.innerHTML = "Geinspïreerd door coach: " + `<u>${inspirator}</u>`
-                lessenH2.innerHTML = "Levenslessen"  
+                lessenH2.innerHTML = "Mijn ontwikkeling"  
 
                 inspiratorP.addEventListener("click", () => {
                     window.open("../Vitaminders/" + [inspiratorID] + ".html", "_self");
