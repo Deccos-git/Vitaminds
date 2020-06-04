@@ -30,8 +30,16 @@
     }
 
     .privacyDiv{
-        width: 100%;
+      margin: 10px;
+      width: 100%;
     }
+
+    #privacy-main{
+      margin: 10px 10px 100px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
 
   }
   

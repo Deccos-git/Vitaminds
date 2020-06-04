@@ -2,9 +2,10 @@
 
 #welkomWrapper{
     display: flex;
-    background-image: url("../images/headerDigimind1.jpg");
+    background-image: url("../images/avontuur2.jpg");
     background-repeat: no-repeat;
     background-position: center;
+    background-size: cover;
     height: 300px;
     width: 100%;
     margin: 0px 0px 0px 0px;
@@ -55,7 +56,7 @@
 #userinfo{
     display: flex;
     width: 100%;
-    height: 150px;
+    height: auto;
     background-color: #122b46;
     margin: 0px 0px 70px 0px;
     box-shadow: 0 7px 15px 0 #000000b4;
@@ -80,7 +81,7 @@
     padding: 10px;
     color: #49beb7;
     cursor: pointer;
-    box-shadow: 0 2px 4px 0 #49beb7, 0 3px 9px 0 #49beb7;
+    box-shadow: 0 1px 1px 0 #49beb7, 0 1px 9px 0 #49beb7;
 }
 
 #inspiratiepunten-outer-div{
@@ -584,12 +585,16 @@
 }
 
 .public-div input{
-    width: 5px
+    width: 12px
 }
 
 .public-div label{
     color: #122b46;
     font-size: 14px;
+}
+
+.private-div{
+    width: 100%;
 }
 
 /* Profiel */
@@ -601,7 +606,7 @@
 }
 
 #dashboard-section{
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     width: 100%;
@@ -616,7 +621,7 @@
 }
 
 #ontwikkeling{
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%
@@ -637,11 +642,24 @@
 
 #digimind-ontwikkeling-outer-div{
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
 }
 
-#digimind-ontwikkeling-outer-div h2{
-    margin: 50px;
+.digimind-ontwikkeling-inner-div{
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    margin: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.digimind-ontwikkeling-inner-div h2{
+    margin: 50px 20px 20px 20px;
     font-size: 22px;
 }
 
@@ -654,10 +672,50 @@
     width: 500px;
 }
 
+.ontwikkeling-levensles-meta-div{
+    display: flex;
+    justify-content: space-evenly;
+    border-top: 1px dotted #8e969e;
+}
+
+.ontwikkeling-levensles-meta-div p{
+    font-size: 14px !important;
+    color: #122b46 !important;
+}
+
+#digimind-ontwikkeling-outer-div p{
+    color: #122b46;
+    font-size: 18px;
+}
+
+#button-check-in{
+    width: 150px;
+}
+
 .levensles-div-ontwikkeling h3{
     font-size: 16px;
 }
 
+#instruction-div-ontwikkeling{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #FFF;
+    padding: 10px;
+    margin: 100px 10px 10px 10px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+#check-in-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    padding: 10px;
+}
 
 /* Dashboard */
 #dasboard-example-list{
@@ -750,12 +808,24 @@
     width: 100%;
 }
 
+#instruction-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #FFF;
+    padding: 10px;
+    margin: 100px 10px 10px 10px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
 /* About info */
 
 #contact-inner-div{
     background-color: #FFF;
     padding: 15px;
-    width: 300px;
+    width: auto;
     margin: 30px;
     border-radius: 2px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
@@ -1280,8 +1350,8 @@
     align-self: center;
 }
 
-/* Tools */
-#dagelijks{
+/* Practice */
+#practice{
     display: none;
     flex-direction: column;
     align-items: center;
@@ -1303,6 +1373,7 @@
     flex-direction: column;
     justify-items: center;
     text-align: center;
+    width: 100%;
 }
 
 #favoCoach{
@@ -1310,6 +1381,7 @@
     flex-direction: column;
     justify-items: center;
     text-align: center;
+    width: 100%;
 }
 
 .favCoachDiv{
@@ -1325,6 +1397,18 @@
 .favCoachDiv p{
     font-size: 14px;
     color: #122b46;
+}
+
+#instruction-div-fav-coaches{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: #FFF;
+    padding: 10px;
+    margin: 100px 10px 10px 10px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
 /* Coach deel */

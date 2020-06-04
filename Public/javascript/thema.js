@@ -7,7 +7,6 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
     querySnapshot.forEach(doc => {
 
         const domein = doc.data().Domein
-        console.log(domein)
 
         const domeinH3 = document.createElement("h3")
         const domeinDiv = document.createElement("div")
@@ -59,8 +58,6 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
 
                         const themas = doc2.data().Thema
                         const insights = doc2.data().Insights
-
-                        console.log(themas + insights.length)
 
                         const themeH3 = document.createElement("h3")
                         const themeDiv = document.createElement("div")

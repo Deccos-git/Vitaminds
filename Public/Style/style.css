@@ -98,6 +98,12 @@ link{
   height: 100%;
 }
 
+/* Tiny mce */
+
+.tox .tox-notification--warn, .tox .tox-notification--warning {
+  display: none;
+}
+
 /* Cookies */
 
 #cookie-notice{
@@ -638,6 +644,16 @@ link{
 
 #main-header-select{
   margin: 30px 0px 50px 0px;
+}
+
+#input-header{
+  padding: 10px 10px 10px 10px;
+  border-radius: 10px;
+  margin: 5px;
+  border: 1px solid #122b46;
+  color: #122b46;
+  width: auto;
+  font-size: 14px;
 }
 
 /* DigiMind welkom */

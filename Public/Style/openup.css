@@ -54,9 +54,21 @@
 }
 
 .openup-profile-pic{
-    margin: -62px 0px 0px 0px;
-    height: 60px;
-    width: 60px;
+    margin: 0px 0px 0px 0px;
+    height: 100px;
+    width: 100px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid #FFF;
+}
+
+.openup-profile-pic-detail{
+    margin: -90px 0px 0px 0px;
+    height: 100px;
+    width: 100px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -77,7 +89,7 @@
     width: 100%;
     background-image: url("../images/avontuur1.jpg");
     background-size: cover;
-    margin-bottom: -30px;
+    margin-bottom: -70px;
 }
 
 .lees-meer-openup{
@@ -155,12 +167,15 @@
 }
 
 .vraag-div-detail{
-    margin: 15px 0px 15px 0px;
+    margin: 0px 0px 30px 0px;
     text-align: center;
     width: 90%;
     background-color: #FFF;
     padding: 30px;
-    box-shadow: 0 2px 0px 0 rgba(0,0,0,.14);
+}
+
+#lessen-titel-h2{
+    margin: 100px 0px 0px 0px;
 }
 
 .vraag-div-detail h3{
@@ -172,16 +187,33 @@
 }
 
 .bron-div-detail{
-    margin-right: 15px;
-    margin: 0px 30px 0px 30px; 
+    margin: 50px 0px 0px 0px;
     display: flex;
     flex-direction: column;
     align-items: left;
     text-align: left;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    padding: 20px 20px 0px 20px;
+}
+
+.bron-div-detail p{
+    font-size: 18px;
+    letter-spacing: 1px;
 }
 
 .bron-div-detail h4{
     font-size: 18px;
+}
+
+.meta-div-open-up{
+    display: flex;
+    justify-content: space-evenly;
+    border-top: 1px dotted #dfdfdf;
+}
+
+.meta-div-open-up p{
+    font-size: 14px;
 }
 
 .auth-div-detail{
@@ -191,6 +223,15 @@
     margin-top: 30px;
     text-align: center;
     width: 90%;
+}
+
+.photo-div-open-up-meta{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-size: cover;
+    cursor: pointer;
+    margin-left: 22%;
 }
 
 #insights-outer-section{
@@ -229,6 +270,10 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+}
+
+#doel-titel-h2{
+    margin: 50px 0px 0px 0px;
 }
 
 .reactie-div{

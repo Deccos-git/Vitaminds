@@ -721,12 +721,18 @@ function nieuwepostsubmit(){
         auth.onAuthStateChanged(User =>{
             if (User){
 
-                let insightsRef = db.collection("Insights").doc();
-                let docRef = db.collection("Vitaminders").doc(User.uid);
+                const insightsRef = db.collection("Insights").doc();
+                const docRef = db.collection("Vitaminders").doc(User.uid);
                     docRef.get().then(function(doc){
                         const coachNaam = doc.data().Gebruikersnaam;
                  
-                let nieuwePostTitelVar = document.getElementById("nieuwposttitel").value;
+                const nieuwePostTitelVar = document.getElementById("nieuwposttitel").value;
+                const titelInput = document.getElementById("nieuwposttitel")
+
+                if (nieuwePostTitelVar == ""){
+                    titelInput.style.borderColor = "red"
+                    titelInput.scrollIntoView()
+                }
 
                 let nieuwePostBodyVar = tinyMCE.get('tiny-mce').getContent()
 
@@ -781,6 +787,12 @@ function nieuwepostsubmit(){
      const uitlezenOption = elem.parentElement.parentElement.previousSibling.firstElementChild.options
      const uitlezenSelect = uitlezenOption[uitlezenOption.selectedIndex].innerHTML;
 
+     db.collectionGroup("Levensvragen").where("levenvraagClean", "==", uitlezenSelect).get()
+     .then(querySnapshot => {
+         querySnapshot.forEach(doc => {
+
+            const levensvraagID = doc.data.Levensvraag
+
      auth.onAuthStateChanged(User =>{
          userRef = db.collection("Vitaminders").doc(User.uid)
          userRef.get()
@@ -794,12 +806,12 @@ function nieuwepostsubmit(){
      Gebruikersnaam: naam,
      Titel: titel,
      Inspirerend: 1,
-     Type: "Insight",
+     Type: "Coach-inzicht",
      Source: titelElem,
-     Levensvraag: uitlezenSelect
+     Levensvraag: levensvraagID
              })
 
-     levensvraagRef = db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", uitlezenSelect).where("Gebruikersnaam", "==", naam)
+     levensvraagRef = db.collectionGroup("Levensvragen").where("LevensvraaG", "==", levensvraagID).where("Gebruikersnaam", "==", naam)
      levensvraagRef.get()
      .then(querySnapshot => {
          querySnapshot.forEach(doc => {
@@ -812,9 +824,11 @@ function nieuwepostsubmit(){
      })
 
      elem.parentElement.nextSibling.style.display = "block"
-     })
-})
-};   
+                })
+            })
+        })
+    })
+};  
 
 // Inspiratiepunt wegschrijven naar reactie en coach
 
@@ -983,6 +997,12 @@ function nieuwepostsubmitThemePage(){
                         const coachNaam = doc.data().Gebruikersnaam;
                  
                 let nieuwePostTitelVar = document.getElementById("nieuwposttitel").value;
+                const titelInput = document.getElementById("nieuwposttitel")
+
+                if (nieuwePostTitelVar == ""){
+                    titelInput.style.borderColor = "red"
+                    titelInput.scrollIntoView()
+                }
 
                 let nieuwePostBodyVar = tinyMCE.get('tiny-mce').getContent()
 

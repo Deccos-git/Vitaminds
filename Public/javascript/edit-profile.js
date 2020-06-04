@@ -381,9 +381,6 @@ function editContact(elem){
         const website = websiteDiv.firstElementChild.nextSibling
         const websiteLink = website.firstElementChild
 
-        console.log(website)
-        console.log(websiteLink)
-
         // Format for website notice
         const noticeP = document.createElement("p")
                 noticeP.setAttribute("id", "notice-website-format")
@@ -395,7 +392,7 @@ function editContact(elem){
         if(belDiv.style.display == "none" ){
         belDiv.style.display = "flex"
         bel.innerHTML = "Telefoonnummer"
-        bel.style.color = "#d4d4d4"
+        bel.style.color = "#49beb7"
         }
 
         bel.setAttribute("contenteditable", "true")
@@ -404,7 +401,7 @@ function editContact(elem){
         if(websiteDiv.style.display == "none"){
         websiteDiv.style.display = "flex"
         website.innerHTML = "Website"
-        website.style.color = "#d4d4d4"
+        website.style.color = "#49beb7"
         }
 
         
@@ -461,7 +458,7 @@ function editShort(elem){
         if(locatieDiv.style.display == "none" ){
         locatieDiv.style.display = "flex"
         locatie.innerHTML = "Stad of dorp"
-        location.style.color = "#d4d4d4"
+        location.style.color = "#49beb7"
         }
 
         locatie.setAttribute("contenteditable", "true")
@@ -470,7 +467,7 @@ function editShort(elem){
         if(targetGroupDiv.style.display == "none" ){
         targetGroupDiv.style.display = "flex"
         targetGroup.innerHTML = "Jouw doelgroep"
-        targetGroup.style.color = "#d4d4d4"
+        targetGroup.style.color = "#49beb7"
         }
 
         targetGroup.setAttribute("contenteditable", "true")
@@ -479,7 +476,7 @@ function editShort(elem){
         if(costsDiv.style.display == "none" ){
         costsDiv.style.display = "flex"
         costs.innerHTML = "€/uur"
-        costs.style.color = "#d4d4d4"
+        costs.style.color = "#49beb7"
         }
 
         costs.setAttribute("contenteditable", "true")
@@ -531,7 +528,7 @@ function editCoach(elem){
         if(coachingstijlDiv.style.display == "none" ){
         coachingstijlDiv.style.display = "flex"
         coachingstijl.innerHTML = "Jouw coachingstijl"
-        coachingstijl.style.color = "#d4d4d4"
+        coachingstijl.style.color = "#49beb7"
         }
 
         coachingstijl.setAttribute("contenteditable", "true")
@@ -540,7 +537,7 @@ function editCoach(elem){
         if(methodiekDiv.style.display == "none" ){
         methodiekDiv.style.display = "flex"
         methodiek.innerHTML = "Jouw methodiek"
-        methodiek.style.color = "#d4d4d4"
+        methodiek.style.color = "#49beb7"
         }
 
         methodiek.setAttribute("contenteditable", "true")
@@ -549,7 +546,7 @@ function editCoach(elem){
         if(motivatieDiv.style.display == "none" ){
         motivatieDiv.style.display = "flex"
         motivatie.innerHTML = "Jouw motivatie om coach te worden"
-        motivatie.style.color = "#d4d4d4"
+        motivatie.style.color = "#49beb7"
         }
 
         motivatie.setAttribute("contenteditable", "true")
@@ -601,7 +598,7 @@ function editExperience(elem){
         if(jarenDiv.style.display == "none" ){
         jarenDiv.style.display = "flex"
         jaren.innerHTML = "Aantal jaren ervaring"
-        jaren.style.color = "#d4d4d4"
+        jaren.style.color = "#49beb7"
         }
 
         jaren.setAttribute("contenteditable", "true")
@@ -610,7 +607,7 @@ function editExperience(elem){
         if(ervaringDiv.style.display == "none" ){
         ervaringDiv.style.display = "flex"
         ervaring.innerHTML = "Jouw ervaring als coach"
-        ervaring.style.color = "#d4d4d4"
+        ervaring.style.color = "#49beb7"
         }
 
         ervaring.setAttribute("contenteditable", "true")
@@ -619,7 +616,7 @@ function editExperience(elem){
         if(opleidingDiv.style.display == "none" ){
         opleidingDiv.style.display = "flex"
         opleiding.innerHTML = "Jouw opleidingen & certificaten"
-        opleiding.style.color = "#d4d4d4"
+        opleiding.style.color = "#49beb7"
         }
 
         opleiding.setAttribute("contenteditable", "true")

@@ -449,7 +449,7 @@ html: `Hallo ${naam}, </br></br>
 
       Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
       
-      Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.
+      Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.<br><br>
 
       Vriendelijke groet, </br></br>
       Het Vitaminds Team </br></br>
