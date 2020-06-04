@@ -498,6 +498,7 @@ function dashboardFunction(){
                 querySnapshot.forEach(doc => {
         
                         const followers = doc.data().FavCoaches
+                        const naamClean = doc.data().GebruikersnaamClean
 
                         const instructionDiv = document.createElement("div")
                                 instructionDiv.setAttribute("id", "instruction-div")
@@ -506,16 +507,27 @@ function dashboardFunction(){
                         const instructionP = document.createElement("p")
 
                         // No following yet
+                        auth.onAuthStateChanged(User =>{
+                                  const userRef = db.collection("Vitaminders").doc(User.uid);
+                                  userRef.get().then(function(doc) {
+                                     const auth = doc.data().Gebruikersnaam;
+                        if(auth == naam){
 
                         if (followers == undefined || followers.length == 0){
+                                console.log("auth")
                                 instructionDiv.style.display = "flex"
                         };
 
-                        instructionH4.innerHTML = "Je volgt nog geen coaches"
-                        instructionP.innerHTML = `De nieuwste inzichten van jouw favoriete coaches komen hier te staan <br><br>
-                                                Vind bijvoorbeeld <a href="../inspiratie.html"> hier</a> coaches om te volgen`
-                        instructionImg.src = "../images/menu-mijncoaches.png"
-                   
+                                        instructionH4.innerHTML = "Je volgt nog geen coaches"
+                                        instructionP.innerHTML = `De nieuwste inzichten van jouw favoriete coaches komen hier te staan <br><br>
+                                                                Vind bijvoorbeeld <a href="../coaches.html"> hier</a> coaches om te volgen`
+                                        instructionImg.src = "../images/menu-mijncoaches.png"
+                                        } else if (auth != naam) {
+                                                instructionDiv.style.display = "flex"
+                                                instructionH4.innerHTML = `${naamClean} volgt nog geen coaches`
+                                        };
+                                })
+                        });
 
                         dashboardDOM.appendChild(instructionDiv)
                         instructionDiv.appendChild(instructionH4)
@@ -647,9 +659,28 @@ function dashboardFunction(){
                                 if(openbaar == "Nee"){
                                 private.innerHTML = '<img class="edit-icon" src="../images/private.png" alt="doel is prive" width="20px"> '
 
+                                                // Private goals hidden for non auth
+                                                auth.onAuthStateChanged(User =>{
+                                                        const userRef = db.collection("Vitaminders").doc(User.uid);
+                                                        userRef.get().then(function(doc) {
+
+                                                                const auth = doc.data().Gebruikersnaam
+
+                                                                if(auth != naam){
+                                                                        innerDiv.style.display = "none"
+                                                                }
+                                                        })
+                                                });
+                                                        // Check in hidden for visitor
+                                                auth.onAuthStateChanged(User =>{
+                                                if(!User){
+                                                        innerDiv.style.display = "none"
+                                                                }                      
+                                                        });
+
                                 } else if(openbaar == "Ja"){
                                 private.innerHTML = '<img class="edit-icon" src="../images/public.png" alt="doel is openbaar" width="20px"> '
-                                }
+                                };
 
                                 // check in
 
@@ -662,6 +693,7 @@ function dashboardFunction(){
                                 const checkInDiv = document.createElement("div")
                                         checkInDiv.setAttribute("id", "check-in-div")
                                 const checkInH4 = document.createElement("h4")
+                                const checkInH5 = document.createElement("h5")
                                 const checkInTextArea = document.createElement("textarea")
                                         checkInTextArea.setAttribute("cols", "60")
                                         checkInTextArea.setAttribute("rows", "5")
@@ -669,11 +701,32 @@ function dashboardFunction(){
                                 const checkInButtonDiv = document.createElement("div")
                                 const checkInButton = document.createElement("button")
 
-                                checkInH4.innerHTML = "Hoe gaat het nu?"
+                                checkInH4.innerHTML = "Check In"
+                                checkInH5.innerHTML = `Hoe gaat het nu?`
                                 checkInButton.innerHTML = "Opslaan"
+
+                                        // Check in hidden for non auth
+                                auth.onAuthStateChanged(User =>{
+                                        const userRef = db.collection("Vitaminders").doc(User.uid);
+                                        userRef.get().then(function(doc) {
+
+                                                const auth = doc.data().Gebruikersnaam
+
+                                                if(auth != naam){
+                                                        checkInDiv.style.display = "none"
+                                                }
+                                        })
+                                })
+                                        // Check in hidden for visitor
+                                auth.onAuthStateChanged(User =>{
+                                if(!User){
+                                        checkInDiv.style.display = "none"
+                                                }                      
+                                        })
 
                                 innerDiv.appendChild(checkInDiv)
                                 checkInDiv.appendChild(checkInH4)
+                                checkInDiv.appendChild(checkInH5)
                                 checkInDiv.appendChild(checkInTextArea)
                                 checkInDiv.appendChild(checkInButtonDiv)
                                 checkInButtonDiv.appendChild(checkInButton)
@@ -1197,9 +1250,9 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
                 window.open("../Open/" + ID + levensvraag + ".html", "_self")
             })
 
-            // Prive of openbaar
+            // Private or public
             if(openbaar == "Nee"){
-                        // Hidden for non auth
+                        // private goal hidden for non auth
                 auth.onAuthStateChanged(User =>{
                           const userRef = db.collection("Vitaminders").doc(User.uid);
                           userRef.get().then(function(doc) {
@@ -1211,7 +1264,7 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
                                 }
                         })
                 })
-                        // Privat levensvragen hidden for visitor
+                        // Privat goal hidden for visitor
                 auth.onAuthStateChanged(User =>{
                        if(!User){
                         innerDiv.style.display = "none"
@@ -1321,10 +1374,15 @@ function nieuweLevensvraag(){
         DOM.style.display = "flex"
 
         const vraagH3 = document.createElement("h3");
+        const vraagInspirationDiv = document.createElement("div")
+                vraagInspirationDiv.setAttribute("id", "doel-inspiratie-div")
+        const vraagInspirationTitel = document.createElement("p")
+        const vraagInspirationSelect = document.createElement("select")
+
         const vraagSelect = document.createElement("input");
                 vraagSelect.setAttribute("id", "ontwikkelDoel");
                 vraagSelect.setAttribute("type", "text");
-                vraagSelect.setAttribute("placeholder", "Wat is je levensvraag?");
+                vraagSelect.setAttribute("placeholder", "Wat is je doel?");
 
         const beschrijvingH3 =  document.createElement("h4");
         const beschrijvingSelect = document.createElement("textarea");
@@ -1332,13 +1390,15 @@ function nieuweLevensvraag(){
                 beschrijvingSelect.setAttribute("cols", "63")
                 beschrijvingSelect.setAttribute("rows", "15")
                 beschrijvingSelect.setAttribute("type", "text");
-                const placeholder = "Omschrijf je levensvraag. Hoe voel je je op dit moment en hoe zou je je willen voelen?"
+                const placeholder = "Omschrijf je doel. Hoe voel je je op dit moment en hoe zou je je willen voelen?"
                 beschrijvingSelect.setAttribute("placeholder", placeholder);
 
                 //Public Yes/No
          const publicDiv = document.createElement("div")
+                publicDiv.setAttribute("class", "public-div-lifequestion")
          const publicP = document.createElement("p")
-         publicDiv.setAttribute("class", "public-div-lifequestion")
+         const publicExplaination = document.createElement("p")
+                publicExplaination.setAttribute("id", "public-explanation")
          const publicForm = document.createElement("form")
                 publicForm.setAttribute("id", "public-lifequestion")
          const publicInputYes = document.createElement("input")
@@ -1354,9 +1414,25 @@ function nieuweLevensvraag(){
          const publicLabelNo = document.createElement("label")
                  publicLabelNo.setAttribute("for", "Nee")
  
-         publicP.innerHTML = "Levensvraag openbaar of prive?"
+         publicP.innerHTML = "Doel openbaar of prive?"
+         publicExplaination.innerHTML = "Prive doelen zijn alleen zichbaar voor jezelf. Openbare doelen zijn zichtbaar voor bezoekers van je profiel en in Openup."
          publicLabelYes.innerHTML = "Openbaar"
          publicLabelNo.innerHTML = "Prive"
+
+         // Examples of goals 
+         db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+                 querySnapshot.forEach(doc=> {
+                         const doel = doc.data().Levensvraag
+
+                         const option = document.createElement("option")
+
+                         option.innerHTML = doel
+
+                         vraagInspirationSelect.appendChild(option)
+
+
+                 })
+         })
 
           // Pre-check public/private
           publicInputYes.checked = true
@@ -1366,17 +1442,22 @@ function nieuweLevensvraag(){
                 button.setAttribute("onclick", "startTocht()");
                 button.setAttribute("class", "button-algemeen");
 
-                vraagH3.innerHTML = "Wat is je levensvraag?"
-                beschrijvingH3.innerHTML = "Geef een korte omschrijving van je levensvraag"
+                vraagH3.innerHTML = "Wat is je doel?"
+                vraagInspirationTitel.innerHTML = "Voorbeelden van doelen"
+                beschrijvingH3.innerHTML = "Geef een korte omschrijving van je doel"
 
                 button.innerHTML = "Opslaan"
 
                 DOM.appendChild(vraagH3)
                 DOM.appendChild(vraagSelect)
+                DOM.appendChild(vraagInspirationDiv)
+                vraagInspirationDiv.appendChild(vraagInspirationTitel)
+                vraagInspirationDiv.appendChild(vraagInspirationSelect)
                 DOM.appendChild(beschrijvingH3)
                 DOM.appendChild(beschrijvingSelect)
                 DOM.appendChild(publicDiv)
                 publicDiv.appendChild(publicP)
+                publicDiv.appendChild(publicExplaination)
                 publicDiv.appendChild(publicForm)
                 publicForm.appendChild(publicInputYes)
                 publicForm.appendChild(publicLabelYes)
@@ -1497,6 +1578,7 @@ auth.onAuthStateChanged(User =>{
                                
                                 const badge = document.createElement("div");
                                         badge.setAttribute("class", "badge")
+                                        badge.setAttribute("data-lesson", learn)
                                 const bron = document.createElement("p")
                                         bron.setAttribute("class", "dank-meta")
                                 const methode = document.createElement("p");
@@ -1587,6 +1669,18 @@ auth.onAuthStateChanged(User =>{
                         }
                 });
             
+
+                // // Hide lessons form private goals
+
+                // db.collectionGroup("Levensvragen").where("Levenslessen", "array-contains", learn).then(querySnapshot => {
+                //         querySnapshot.forEach(doc => {
+
+                //                 const private = doc.data().Openbaar
+
+                //                 console.log(private)
+
+                //         })
+                // });
 
                         DOMlearnings.appendChild(badge)
                         badge.appendChild(editDiv)
@@ -1723,6 +1817,20 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
 
 
 // Follow coach
+        // Follow button hidden on non-coach Digimind
+        const followButton = document.getElementById("follow-button-digimind")
+
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        const usertype = doc.data().Usertype
+
+                        if(usertype != "Coach"){
+                                followButton.style.display = "none"
+                        }
+
+                })
+        });
 
         // Follow or unfollow
         auth.onAuthStateChanged(User =>{

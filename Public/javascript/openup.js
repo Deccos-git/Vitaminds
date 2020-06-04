@@ -221,28 +221,27 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                 const type = doc.data().Type
                 const timestamp = doc.data().Timestamp
                 const inspirator = doc.data().Auteur
+                const bron = doc.data().Titel
 
                 const outerBronDiv = document.createElement("div")
                     outerBronDiv.setAttribute("class", "outer-bron-div")
                 const bronDiv = document.createElement("div")
                     bronDiv.setAttribute("class", "bron-div-detail") 
-                const titelh3 = document.createElement("h3") 
+                const titelH3 = document.createElement("h3") 
                 const lessen = document.createElement("p")
                 const metaDiv = document.createElement("div")
                     metaDiv.setAttribute("class", "meta-div-open-up")
                 const typeMeta = document.createElement("p")
                 const timestampMeta = document.createElement("p")
+                    timestampMeta.setAttribute("class", "timestamp-meta-p")
                 const titelP = document.createElement("p")
-                    titelP.setAttribute("class", "openup-meta-detail")
-                const inspiratorP = document.createElement("p")
-                    inspiratorP.setAttribute("class", "openup-meta-detail")
+                    titelP.setAttribute("class", "openup-meta-source")
                 
-                console.log(type)
-                // Title 
+                // Titel
                 if(type == "Coach-inzicht"){
-                    titelh3.innerHTML = "Geinspireerd door coach"
+                    titelH3.innerHTML = "Geinspireerd door coach"
                 } else if (type == "Check-in"){
-                    titelh3.innerHTML = "Nieuwe check in"
+                    titelH3.innerHTML = "Check in"
                 }
                 
                 lessen.innerHTML = les
@@ -250,6 +249,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                 timestampMeta.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
 
+                // Coach
                 if(inspirator != undefined){
 
                 db.collection("Vitaminders").where("Gebruikersnaam", "==", inspirator).get().then(querySnapshot => {
@@ -275,30 +275,51 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                     });
                 };
     
+                // Bron
+                if(bron != undefined){
 
-                // db.collection('Artikelen').where("Titel", "==", titel).get().then(querySnapshot => {
-                //     querySnapshot.forEach(doc1 => {
+                    // Levensvragen
+                    db.collection("Levensvragen").where("Levensvraag", "==", bron).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
 
-                //         const ID = doc1.data().ID
-                //         const titelClean = titel.replace(ID, "")
-                
-                // titelP.innerHTML = `Geïnspireerd in ${type}: <u>${titelClean}</u>`
+                            const titel = doc1.data().Levensvraag
+                    
+                    titelP.innerHTML = `Geïnspireerd in <br><u>${titel}</u>`
 
-                // titelP.addEventListener("click", () => {
-                //     window.open("../Artikelen/" + titel + ".html", "_self");
-                //         })
-                //     })
-                // });
+                    titelP.addEventListener("click", () => {
+                        window.open("../Artikelen/" + titel + ".html", "_self");
+                            })
+                            
+                        metaDiv.appendChild(titelP)
+
+                        })
+                    });
+
+                    // Tools
+                    db.collection("Themas").where("Thema", "==", bron).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
+
+                            const titel = doc1.data().Thema
+                    
+                    titelP.innerHTML = `Geïnspireerd in <br><u>${titel}</u>`
+
+                    titelP.addEventListener("click", () => {
+                        window.open("../Theme-articles/" + titel + ".html", "_self");
+                            })
+                            
+                        metaDiv.appendChild(titelP)
+
+                        })
+                    });
+                };
                  
                DOM.appendChild(outerBronDiv)
                 outerBronDiv.appendChild(bronDiv)
-                bronDiv.appendChild(titelh3)
+                bronDiv.appendChild(titelH3)
+                titelH3.appendChild(timestampMeta)
                 bronDiv.appendChild(lessen)
-                bronDiv.appendChild(metaDiv)
-                metaDiv.appendChild(typeMeta)
-                metaDiv.appendChild(timestampMeta)
-                
-                // lessen.appendChild(titelP)
+                bronDiv.appendChild(metaDiv) 
+
                                 })
                             })
                         })

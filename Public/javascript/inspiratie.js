@@ -570,7 +570,7 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                         const CTAvisiter = document.createElement("p")
                             CTAvisiter.setAttribute("class", "CTA-visitor")
 
-                        CTAvisiter.innerHTML = "Maak je eerste levensvraag aan!"
+                        CTAvisiter.innerHTML = "Stel je eerste doel!"
                         CTAvisiter.addEventListener("click", () => {
                             window.open(`/Vitaminders/${gebruikersnaam}.html`, "_self");
                         })
@@ -753,7 +753,8 @@ function nieuwepostsubmit(){
                                     LevensvraagArtikel: titel,
                                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                                     Type: "Insight-levensvraag",
-                                    Thema: categorie
+                                    Thema: categorie,
+                                    Content: Text
                                 }).then(() => {
                                     location.reload()
                                 })
@@ -1014,6 +1015,7 @@ function nieuwepostsubmitThemePage(){
                                     ThemeArtikel: titel,
                                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                                     Type: "Insight-theme-article",
+                                    Content: Text
                                 }).then(() => {
                                     location.reload()
                                 })

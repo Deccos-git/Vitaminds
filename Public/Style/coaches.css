@@ -114,10 +114,12 @@
 
 .nieuweD p{
     font-size: 20px;
+    max-height: 50px;
+    overflow: hidden;
 }
 
 .background-div{
-    background-image: url("../images/headerDigimind1.jpg");
+    background-image: url("../images/avontuur2.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

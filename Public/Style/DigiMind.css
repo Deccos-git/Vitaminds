@@ -563,15 +563,20 @@
 }
 
 .public-div-lifequestion{
-    margin-top: 0px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .public-div-lifequestion p{
     font-size: 16px;
     color: #122b46;
+    margin: 40px 0px 0px 0px;
 }
+
 .public-div-lifequestion input{
-    width: 5px
+    width: 12px
 }
 
 .public-div-lifequestion label{
@@ -655,7 +660,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 90%;
 }
 
 .digimind-ontwikkeling-inner-div h2{
@@ -686,6 +691,7 @@
 #digimind-ontwikkeling-outer-div p{
     color: #122b46;
     font-size: 18px;
+    padding: 0px 50px 0px 50px;
 }
 
 #button-check-in{
@@ -715,6 +721,10 @@
     border-radius: 2px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
     padding: 10px;
+}
+
+#check-in-div h5{
+    color: #122b46;
 }
 
 /* Dashboard */
@@ -1107,7 +1117,19 @@
     flex-wrap: wrap;
 }
 
-/* Levensvragen */
+/* Doelen*/
+
+#doel-inspiratie-div{
+    border: 1px solid #0c6665;
+    padding: 5px;
+    margin: 20px;
+}
+
+#doel-inspiratie-div p, select{
+    font-size: 14px;
+    color: #0c6665;
+    margin: 5px;
+}
 
 #mijnKarakterTochten{
     display: flex;
@@ -1172,6 +1194,15 @@
     background-color: #FFF;
     border-radius: 2px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+#nieuweO input{
+    width: 280px;
+    font-size: 16px;
+}
+
+#public-lifequestion input{
+    width: 12px;
 }
 
 .levenslesDiv{
@@ -1273,6 +1304,16 @@
     font-size: 16px;
 }
 
+#public-explanation{
+    font-size: 14px;
+    border: 1px solid #2e8d8e;
+    width: 40%;
+    padding: 5px;
+    color: #2e8d8e;
+    align-self: center;
+    margin-top: 10px;
+}
+
 /* Levensvragen inladen */
 
 #verzamelOpenUps{
@@ -1304,7 +1345,7 @@
     width: auto;
     align-self: center;
     border-radius: 2px;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    box-shadow: 0 1px 3px 0 #2e8d8e, 0 1px 1px 0 #2e8d8e, 0 2px 1px -1px #2e8d8e;
   }
 
 .openup-meta{
