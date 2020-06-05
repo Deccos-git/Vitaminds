@@ -788,17 +788,19 @@ function nieuwepostsubmit(){
      const uitlezenOption = elem.parentElement.parentElement.previousSibling.firstElementChild.options
      const uitlezenSelect = uitlezenOption[uitlezenOption.selectedIndex].innerHTML;
 
-     db.collectionGroup("Levensvragen").where("levenvraagClean", "==", uitlezenSelect).get()
+     db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", uitlezenSelect).get()
      .then(querySnapshot => {
          querySnapshot.forEach(doc => {
 
-            const levensvraagID = doc.data.Levensvraag
+            const levensvraagID = doc.data().Levensvraag
 
      auth.onAuthStateChanged(User =>{
          userRef = db.collection("Vitaminders").doc(User.uid)
          userRef.get()
           .then(doc => {
                   const naam = doc.data().Gebruikersnaam
+
+                  console.log(naam)
 
      db.collection("Vitaminders").doc(User.uid).collection("Levenslessen").doc().set({
      Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -812,7 +814,7 @@ function nieuwepostsubmit(){
      Levensvraag: levensvraagID
              })
 
-     levensvraagRef = db.collectionGroup("Levensvragen").where("LevensvraaG", "==", levensvraagID).where("Gebruikersnaam", "==", naam)
+     levensvraagRef = db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraagID).where("Gebruikersnaam", "==", naam)
      levensvraagRef.get()
      .then(querySnapshot => {
          querySnapshot.forEach(doc => {
