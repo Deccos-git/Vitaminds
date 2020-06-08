@@ -328,6 +328,7 @@
 #social-notifications-outer-div{
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
 }
 
 #rewards-outer-div{
@@ -346,7 +347,7 @@
 
 #inspiration-notifications{
     margin: 15px;
-    width: 45%;
+    width: 100%;
     padding: 15px;
     border-radius: 2px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
@@ -1391,20 +1392,59 @@
     align-self: center;
 }
 
-/* Practice */
-#practice{
+/* Tools */
+#tools{
     display: none;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    width: 100%;
 }
 
-#tools-inner-div {
+#tool-outer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px;
+    width: 300px;
+    height: fit-content;
+    padding: 15px;
+    background-color: #FFF;
     border-radius: 2px;
-    margin: 100px;
-    background-color: white;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+#tool-outer-div a{
+    font-size: 14px;
+}
+
+#tool-outer-div img{
+    width: 50%;
+    height: 100px;
+}
+
+#tool-button-digimind{
+    background-color: #fff;
+    border: 1px #49beb7 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+    color: #49beb7;
+    cursor: pointer;
+}
+
+#tool-settings{
+    border-top: 1px dotted #122b46;
+    border-bottom: 1px dotted #122b46;
+    margin: 20px 20px;
+}
+
+#activate-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#activate-notice{
+    display: none;
+    font-size: 16px;
+    color: #0c6665
 }
 
 /* Favorieten */
@@ -1494,61 +1534,6 @@
     flex-direction: column;
 }
 
-/* Marketing */
-
-#write-article{
-    display: none;
-}
-
-#hidden-ID{
-    visibility: hidden;
-}
-
-#article-saved{
-    background-color: #0c6665;
-    padding: 15px;
-    color: #fff;
-    display: none;
-}
-.category-input{
-    display: flex;
-    flex-direction: column;
-    width: 15px;
-}
-
-.category-div{
-    display: flex;
-}
-
-.category-input label{
-    font-size: 14px;
-}
-
-#postbody{
-    font-size: 30px;
-}
-
-#categorieSelectie{
-    margin: 0px 0px 0px 0px;
-}
-
-#categorieSelectie label{
-    font-size: 14px;
-}
-
-#add-category-outer-div p{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 0px;
-}
-
-#button-div{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-}
 
 @media only screen and (max-width: 938px){
     #userinfo {
@@ -1732,6 +1717,37 @@
 
     .insights-outer-div p {
         font-size: 12px;
+    }
+
+    #check-in-div textarea{
+        width: 80%;
+    }
+
+    .levensles-div-ontwikkeling{
+        width: 100%;
+    }
+
+    #digimind-ontwikkeling-outer-div {
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .digimind-ontwikkeling-inner-div {
+        margin: 5px;
+        width: 90%;
+    }
+
+    #check-in-div {
+        width: 100%;
+    }
+
+    #ontwikkeling {
+        align-items: flex-start;
+        width: 78%;
+    }
+
+    #digimind-ontwikkeling-outer-div p {
+        padding: 0px 10px 0px 10px;
     }
 
 }

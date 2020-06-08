@@ -12,11 +12,12 @@
     "node": "8"
   },
   "dependencies": {
-    "firebase-admin": "^8.9.2",
-    "firebase-functions": "^3.3.0",
     "body-parser": "^1.19.0",
     "create-html": "^4.1.0",
     "express": "^4.17.1",
+    "firebase-admin": "^8.9.2",
+    "firebase-functions": "^3.3.0",
+    "node-cron": "^2.0.3",
     "nodemon": "^2.0.2"
   },
   "devDependencies": {

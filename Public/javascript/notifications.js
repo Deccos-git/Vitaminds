@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     const innerDiv = document.createElement("div")
                                             innerDiv.setAttribute("id", "inner-div-gamefication")
                                     const totalPoints = document.createElement("p")
-                                    const titel = document.createElement("h3")
+                                    const titel = document.createElement("h2")
                                     
                                     titel.innerHTML = "Totaal aantal inspiratiepunten"
 
@@ -106,76 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-
-    // Reaction-notifications
-
-    const notificationIcon = document.getElementById("profile-notifications")
-            if(notificationIcon == null){
-                    console.log("Error")
-            } else {
-            notificationIcon.addEventListener("click", () => {
-                    window.open("../notifications.html", "_self")
-            })
-    }
-
-    auth.onAuthStateChanged(User =>{
-            if (User){
-            let docRef = db.collection("Vitaminders").doc(User.uid);
-                    docRef.get().then(function(doc){
-                    const auth = doc.data().GebruikersnaamClean;
-
-    db.collectionGroup("Insights").where("Vraagsteller", "==", auth).orderBy("Timestamp", "desc").get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-
-                    const DOM = document.getElementById("notifications")
-
-                    const coach = doc.data().Auteur
-                    const levensvraag = doc.data().Levensvraag
-                    const body = doc.data().Body
-
-
-                    const notificationsTitleDiv = document.createElement("div")
-                    notificationsTitleDiv.setAttribute("class", "notification-div-profile")
-                    const h3 = document.createElement("h3")
-                    const notificationsTitleH4 = document.createElement("h4")
-                    const reactieP = document.createElement("p")
-                    const dateP = document.createElement("h5")
-
-                    db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
-                            querySnapshot.forEach(doc1 => {
-
-                                    const coachClean = doc1.data().GebruikersnaamClean
-
-                    db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraag).get().then(querySnapshot => {
-                            querySnapshot.forEach(doc2 => {
-
-                                    const levensvraagClean = doc2.data().LevensvraagClean
-
-                    notificationsTitleH4.innerHTML = `<a href="../Vitaminders/${coach}.html"><u>${coachClean}</u></a> heeft gereageerd op <a href="../Open/${levensvraag}.html"><u>${levensvraagClean}</u></a>`
-                    reactieP.innerHTML = `"${body}"`
-                    reactieP.addEventListener("click", () => {
-                            window.open("../Open/" + levensvraag + ".html" + "#reacties-overview", "_self")
-                    })
-                    h3.innerHTML = 'Je hebt een nieuwe reactie ontvangen op je levensvraag'
-                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                    dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
-                                            })
-                                    })
-                            })
-                    })
-                    DOM.appendChild(notificationsTitleDiv)
-                    notificationsTitleDiv.appendChild(h3)
-                    notificationsTitleDiv.appendChild(notificationsTitleH4)
-                    notificationsTitleDiv.appendChild(reactieP)
-                    notificationsTitleDiv.appendChild(dateP)
-    
-                    })
-            }).catch((err) => {
-            console.log("Error:" + err)
-            })
-            })
-    }
-    })
 
 
     // Inspiration-notifications

@@ -1,10 +1,9 @@
-#tools-section{
+#practice-overview{
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
 }
 
-.tool-outer-div{
+.practice-outer-div{
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
     display: flex;
     flex-direction: column;
@@ -17,26 +16,53 @@
     background-color: #FFF;
 }
 
-.tools-header{
-    height: 200px;
+.header-img img{
     width: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
+    height: 200px
 }
 
-.tool-text-div{
+.text-div{
+    margin: 20px;
+}
+
+.show-practice{
+    background-color: #fff;
+    border: 1px #49beb7 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 16px;
+    color: #49beb7;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+/* Check in */
+
+#check-in-header{
+    display: flex;
+    justify-content: space-evenly;
+    margin: 100px 100px 50px 100px;
+}
+
+#check-in-header img{
+    width: 400px;
+}
+
+main{
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    width: 100%;
-    padding: 10px;
-    word-break: break-all;
+    margin: 50px 100px 50px 100px;
 }
 
-.title-tool{
-    color: #122b46;
-    font-size: 25px;
-    margin: 70px 20px 30px 20px;
+#tool-download{
+    background-color: #49beb7;
+    border: 1px #49beb7 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 30px;
+    color: #fff;
+    cursor: pointer;
+    align-self: center;
+    margin: 60px 10px 100px 10px;
 }

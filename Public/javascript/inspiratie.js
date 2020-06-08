@@ -754,7 +754,7 @@ function nieuwepostsubmit(){
                                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                                     Type: "Insight-levensvraag",
                                     Thema: categorie,
-                                    Content: Text
+                                    Content: "Text"
                                 }).then(() => {
                                     location.reload()
                                 })
@@ -882,7 +882,7 @@ function inspirerend(elem){
 };
 
 // Theme overview page
-toolDOM = document.getElementById("tools-section")
+toolDOM = document.getElementById("levensvraag-artikel-ouyter-div")
 
 db.collection("Themas").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {

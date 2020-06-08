@@ -8,7 +8,7 @@ const ontwikkeling = document.getElementById("ontwikkeling")
 // Vitaminders menu
 const avontuur = document.getElementById("doelen");
 const karakter = document.getElementById("karakter");
-const dagelijksLeven = document.getElementById("practice");
+const dagelijksLeven = document.getElementById("tools");
 
 // Favorieten
 const favoInspiratie = document.getElementById("favoInspiratie");
@@ -429,6 +429,9 @@ auth.onAuthStateChanged(User =>{
                 const notifications = document.getElementById("profile-notifications")
                 const activeDiv = document.getElementsByClassName("active-div")
                 const changePhoto = document.getElementById("profile-picture-outer-div")
+
+                console.log(notifications)
+                notifications.style.display = "none"
         
                 if(naam != coachNaam){
                        
@@ -441,7 +444,7 @@ auth.onAuthStateChanged(User =>{
 
                 nieuweKarakterTocht.style.display = "none"
                 toolsMenu.style.display = "none"
-                notifications.style.display = "none"
+                
 
                 }      
         })
@@ -750,7 +753,7 @@ function dashboardFunction(){
                                 db.collection("Vitaminders").doc(User.uid).collection("Levenslessen").doc().set({
                                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                                 Levensles: input.value,
-                                Levensvraag: levensvragen,
+                                Levensvraag: levensvraagID,
                                 Gebruikersnaam: naam,
                                 Inspirerend: 1,
                                 Type: "Check-in"
@@ -1319,6 +1322,8 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
                     const inspirator = doc.data().Auteur
                     const source = doc.data().Titel
 
+                    if (inspirator != undefined){
+
                     db.collection("Vitaminders").where("Gebruikersnaam", "==", inspirator).get()
                         .then(querySnapshot => {
                         querySnapshot.forEach(doc1 => {
@@ -1360,6 +1365,7 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
                                                 })
                                         })
                                 })
+                        }
                         })
                 })
             })
@@ -1390,7 +1396,7 @@ function nieuweLevensvraag(){
                 beschrijvingSelect.setAttribute("cols", "63")
                 beschrijvingSelect.setAttribute("rows", "15")
                 beschrijvingSelect.setAttribute("type", "text");
-                const placeholder = "Omschrijf je doel. Hoe voel je je op dit moment en hoe zou je je willen voelen?"
+                const placeholder = "Omschrijf je doel. Hoe gaat het nu met je en waar zou je energie van krijgen. Als het zou gaan zoals jij zou willen, hoe zou dat eruit zien? "
                 beschrijvingSelect.setAttribute("placeholder", placeholder);
 
                 //Public Yes/No
@@ -1670,17 +1676,35 @@ auth.onAuthStateChanged(User =>{
                 });
             
 
-                // // Hide lessons form private goals
+                // Hide lessons form private goals
+                db.collectionGroup("Levensvragen").where("Levenslessen", "array-contains", learn).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
 
-                // db.collectionGroup("Levensvragen").where("Levenslessen", "array-contains", learn).then(querySnapshot => {
-                //         querySnapshot.forEach(doc => {
+                                const private = doc.data().Openbaar
 
-                //                 const private = doc.data().Openbaar
+                                if(private == "Nee"){
+                                        // For non auth
+                                        auth.onAuthStateChanged(User =>{
+                                                const userRef = db.collection("Vitaminders").doc(User.uid);
+                                                userRef.get().then(function(doc) {
+                                                const auth = doc.data().Gebruikersnaam;
+                                
+                                                if(naam != auth){
+                                                        badge.style.display = "none"
+                                                                        }
+                                                        })
+                                        });
 
-                //                 console.log(private)
+                                        // For visitor
+                                        auth.onAuthStateChanged(User =>{
+                                                if(!User){
+                                                        badge.style.display = "none"
+                                                }
+                                        });
+                                }
 
-                //         })
-                // });
+                        })
+                });
 
                         DOMlearnings.appendChild(badge)
                         badge.appendChild(editDiv)
@@ -1841,8 +1865,6 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
         
                         followersArray = Array.from(followers)
         
-                        console.log(followersArray)
-        
                         if(followersArray.includes(naam)){
                                 const button = document.getElementById("follow-button-digimind")
         
@@ -1885,22 +1907,46 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
 
 // Tools
 
-const DOMpractice = document.getElementById("practice")
+        // Check in
 
-db.collection("Practice").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+        const goalSelect = document.getElementById("check-in-select-goals")
 
-                const practice = doc.data().Practice
+        db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
 
-                console.log(practice)
+                        const goal = doc.data().LevensvraagClean
 
-                const titleH3Practice = document.createElement("h3")
+                        const option = document.createElement("option")
 
-                titleH3Practice.innerHTML = practice
+                        option.innerHTML = goal
 
-                DOMpractice.appendChild(titleH3Practice)
+                        goalSelect.appendChild(option)
 
+                })
+        });
 
-        })
-});
+        function activateCheckIn(){
 
+                // Filtered goal
+                const goalOptionDiv = document.getElementById("check-in-select-goals")
+
+                const goalSelect = goalOptionDiv.options
+                const goalOption = goalSelect[goalSelect.selectedIndex].innerHTML;
+
+                // Filtered frequence
+                const freqOptionDiv = document.getElementById("check-in-select-frequence")
+
+                const freqSelect = freqOptionDiv.options
+                const freqOption = freqSelect[freqSelect.selectedIndex].innerHTML;
+
+                db.collection("Practice").doc().set({
+                        Gebruikersnaam: naam,
+                        Levensvraag: goalOption,
+                        Practice: "Check-in",
+                }).then(() => {
+                        const activateNotice = document.getElementById("activate-notice")
+
+                        activateNotice.innerHTML = `Check in geactiveerd voor ${goalOption}`
+                        activateNotice.style.display = "block"
+                })
+        }

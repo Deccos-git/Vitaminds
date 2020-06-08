@@ -361,7 +361,7 @@ if(button != null){
 message: {
 subject: `Verifier je account op Vitaminds! `,
 html: `Hallo ${gebruikersnaam}, </br></br>
-      Wlekom bij Vitaminds! Het beging van een geweldig avontuur in je eigen karakter!<br><br>
+      Welkom bij Vitaminds! Het beging van een geweldig avontuur in je eigen karakter!<br><br>
 
       Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
       
