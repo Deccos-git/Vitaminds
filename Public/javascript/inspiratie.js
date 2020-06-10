@@ -800,8 +800,6 @@ function nieuwepostsubmit(){
           .then(doc => {
                   const naam = doc.data().Gebruikersnaam
 
-                  console.log(naam)
-
      db.collection("Vitaminders").doc(User.uid).collection("Levenslessen").doc().set({
      Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
      Levensles: input,

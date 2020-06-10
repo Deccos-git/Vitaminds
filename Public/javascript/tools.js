@@ -17,3 +17,17 @@ checkInButton.addEventListener("click", () => {
         })
     });
 });
+
+// CTA for visitors
+
+auth.onAuthStateChanged(User =>{
+    if(User){
+        console.log("Online")
+    } else {
+        checkInButton.innerHTML = "Maak je gratis Digimind aan om deze tool te kunnen installeren"
+
+        checkInButton.addEventListener("click", () => {
+            window.open("../Register.html", "_self");
+        })
+    }
+});

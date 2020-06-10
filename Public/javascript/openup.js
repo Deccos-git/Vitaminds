@@ -4,6 +4,9 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
         const gebruikersnaam = doc.data().Gebruikersnaam
         const omschrijving = doc.data().Omschrijving
         const ID = doc.data().ID
+        const levenslessen = doc.data().Levenslessen
+
+        console.log(levenslessen)
 
         const levensvraagID = doc.data().Levensvraag
         const levensvraag = levensvraagID.replace(ID, "")
@@ -54,6 +57,11 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
         naam.addEventListener("click", () => {
             window.open("../Vitaminders/" + [gebruikersnaam] + ".html", "_self");
         })
+
+        // Hide goals without lessons
+        if (levenslessen.length == 0){
+            innerDiv.style.display = "none"
+        }
 
          //Profielfoto achterhalen en inladen in DOM
          db.collection("Vitaminders").where("Gebruikersnaam", "==", gebruikersnaam).get()
@@ -199,7 +207,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
             doelTitel.innerHTML = "Doel"
             metaKeywords.content = levensvraag
             metaDescription.content = omschrijving
-            lessenTitel.innerHTML = "Levenslessen"
+            lessenTitel.innerHTML = "Mijn ontwikkeling"
 
         DOM.appendChild(innerDiv)
         innerDiv.appendChild(headDiv)
@@ -214,7 +222,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
 
         // Levenslessen metadata inladen die passen bij levensvragen
 
-        db.collectionGroup("Levenslessen").where("Levensvraag", "==", titel).orderBy("Timestamp", "asc").get().then(querySnapshot => {
+        db.collectionGroup("Levenslessen").where("Levensvraag", "==", titel).orderBy("Timestamp", "desc").get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
 
                 const les = doc.data().Levensles
@@ -278,7 +286,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                 // Bron
                 if(bron != undefined){
 
-                    // Levensvragen
+                    // Levensvraag Article
                     db.collection("Levensvragen").where("Levensvraag", "==", bron).get().then(querySnapshot => {
                         querySnapshot.forEach(doc1 => {
 
@@ -295,7 +303,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                         })
                     });
 
-                    // Tools
+                    // Theme Article
                     db.collection("Themas").where("Thema", "==", bron).get().then(querySnapshot => {
                         querySnapshot.forEach(doc1 => {
 

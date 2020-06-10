@@ -545,6 +545,7 @@ function dashboardFunction(){
                                                 const coach = doc1.data().Auteur
                                                 const levensvraagArtikel = doc1.data().LevensvraagArtikel
                                                 const themeArtikel = doc1.data().ThemeArtikel
+                                                const type = doc1.data().Type
 
                                                 db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
                                                         querySnapshot.forEach(doc2 => {
@@ -567,6 +568,11 @@ function dashboardFunction(){
                                                 metaName.innerHTML = gebruikersnaamClean
                                                 textTitle.innerHTML = titelInsight
                                                
+                                                // Hide kenniscentrum insights
+
+                                                if(type == "Insight-kenniscentrum"){
+                                                        outerDiv.style.display = "none"
+                                                }
 
                                                 function windowOpen(a,b){
                                                 if(a != undefined){
@@ -740,8 +746,6 @@ function dashboardFunction(){
 
                                 checkInButton.addEventListener("click", () => {
 
-                                        console.log(input.value)
-
                                 auth.onAuthStateChanged(User =>{
                                         userRef = db.collection("Vitaminders").doc(User.uid)
                                         userRef.get()
@@ -768,9 +772,11 @@ function dashboardFunction(){
                                                 Levenslessen: firebase.firestore.FieldValue.arrayUnion(input.value)
                                                                         })
                                                                 })
+                                                        }).then(() => {
+                                                                location.reload()
                                                         })
                                                 })
-                                        });
+                                        })
                                 });
 
                                 db.collectionGroup("Levenslessen").where("Levensvraag", "==", levensvraagID).orderBy("Timestamp", "desc").get().then(querySnapshot =>{
@@ -779,6 +785,8 @@ function dashboardFunction(){
                                                 const levensles = doc1.data().Levensles
                                                 const type = doc1.data().Type
                                                 const timestamp = doc1.data().Timestamp
+
+                                                console.log(type)
 
                                                 const levenslesDiv = document.createElement("div")
                                                         levenslesDiv.setAttribute("class", "levensles-div-ontwikkeling")
@@ -1162,14 +1170,40 @@ db.collection("Insights").where("Auteur", "==", naam).where("Type", "==", "Insig
         querySnapshot.forEach(doc => {
                 const titel = doc.data().Titel
                  const levensvraagArtikel = doc.data().LevensvraagArtikel
+                 const themeArtikel = doc.data().ThemeArtikel
+                 const timestamp = doc.data().Timestamp
 
                 const innerDiv = document.createElement('div')
+                        innerDiv.setAttribute("class", "inner-div-contributions")
                 const titelP = document.createElement("p")
                         titelP.setAttribute("data-titel", titel)
+                const metaDiv = document.createElement("div")
+                        metaDiv.setAttribute("class", "meta-div-contributions")
+                const timestampMeta = document.createElement("p")
+                const source = document.createElement("p")
                 
-                titelP.innerHTML = `<a href="../Artikelen/${levensvraagArtikel}.html"><u>${titel}</u></a>`
+                titelP.innerHTML = `<a href="../Artikelen/${levensvraagArtikel}.html">${titel}</a>`
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                timestampMeta.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
+
+                if(themeArtikel == undefined){
+                        source.innerHTML = levensvraagArtikel
+                        source.addEventListener("click", () => {
+                                window.open("/Artikelen/" + levensvraagArtikel + ".html", "_self")
+                        })
+                } else {
+                        source.innerHTML = themeArtikel
+                        source.addEventListener("click", () => {
+                                window.open("/Theme-articles/" + themeArtikel + ".html", "_self")
+                        })
+                }
                 
-                innerDivInspiration.appendChild(titelP)
+                innerDivInspiration.appendChild(innerDiv)
+                innerDiv.appendChild(titelP)
+                innerDiv.appendChild(metaDiv)
+                metaDiv.appendChild(timestampMeta)
+                metaDiv.appendChild(source)
+
 
         })
 });
@@ -1421,7 +1455,7 @@ function nieuweLevensvraag(){
                  publicLabelNo.setAttribute("for", "Nee")
  
          publicP.innerHTML = "Doel openbaar of prive?"
-         publicExplaination.innerHTML = "Prive doelen zijn alleen zichbaar voor jezelf. Openbare doelen zijn zichtbaar voor bezoekers van je profiel en in Openup."
+         publicExplaination.innerHTML = "Prive doelen zijn alleen zichbaar voor jezelf. Openbare doelen zijn zichtbaar voor bezoekers van je profiel en in Openup (Openbare doelen zijn zichtbaar in Open-up nadat je minimaal 1 levensles hebt toegevoegd)."
          publicLabelYes.innerHTML = "Openbaar"
          publicLabelNo.innerHTML = "Prive"
 
@@ -1880,9 +1914,43 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
 
                 auth.onAuthStateChanged(User =>{
                         if(User){
+                                db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                                        const gebruikersnaamCleanFollower = doc.data().GebruikersnaamClean
+                                
                                 db.collection("Vitaminders").doc(User.uid).update({
                                 FavCoaches: firebase.firestore.FieldValue.arrayUnion(naam)
-                                }); 
+                                }).then(() => {
+
+                                        db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+                                                querySnapshot.forEach(doc1 => {
+
+                                                        const email = doc1.data().Email
+                                                        const gebruikersnaamClean = doc1.data().GebruikersnaamClean
+                                                        const gebruikersnaam = doc1.data().Gebruikersnaam
+                                         
+
+                                        db.collection("Mail").doc().set({
+                                                to: email,
+                                                cc: "info@vitaminds.nu",
+                                            message: {
+                                            subject: `Nieuwe volger op Vitaminds`,
+                                            html: `Hallo, ${gebruikersnaamClean}</br></br>
+                                                
+                                                ${gebruikersnaamCleanFollower} volgt jouw nu op Vitaminds.</br></br>
+                                            
+                                                Vriendelijke groet, </br></br>
+                                                Het Vitaminds Team </br></br>
+                                                <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                                            Gebruikersnaam: gebruikersnaam
+                                            }
+                                                    
+                                            }).catch((err) => {
+                                                console.log(err)
+                                            })
+                                                })
+                                        })
+                                });
+                        });
 
                                 const button = document.getElementById("follow-button-digimind")
                                 button.innerHTML = "VOLGEND"
@@ -1934,19 +2002,124 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 const goalOption = goalSelect[goalSelect.selectedIndex].innerHTML;
 
                 // Filtered frequence
-                const freqOptionDiv = document.getElementById("check-in-select-frequence")
+                // const freqOptionDiv = document.getElementById("check-in-select-frequence")
 
-                const freqSelect = freqOptionDiv.options
-                const freqOption = freqSelect[freqSelect.selectedIndex].innerHTML;
+                // const freqSelect = freqOptionDiv.options
+                // const freqOption = freqSelect[freqSelect.selectedIndex].innerHTML;
 
                 db.collection("Practice").doc().set({
                         Gebruikersnaam: naam,
                         Levensvraag: goalOption,
                         Practice: "Check-in",
+                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
                 }).then(() => {
                         const activateNotice = document.getElementById("activate-notice")
 
                         activateNotice.innerHTML = `Check in geactiveerd voor ${goalOption}`
                         activateNotice.style.display = "block"
+                }).then(() => {
+                        db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc => {
+
+                                        db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", goalOption).get().then(querySnapshot => {
+                                                querySnapshot.forEach(doc1 => {
+                
+                                                        const levensvraag = doc1.data().Levensvraag
+
+                                        db.collection("Vitaminders").doc(doc.id).collection("Levenslessen").doc().set({
+                                                Type: "Tool: Check in",
+                                                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                                Gebruikersnaam: naam,
+                                                Levensvraag: levensvraag,
+                                                Levensles: "Tool geactiveerd: Check in"
+                                                        })
+                                                })
+                                        })
+                                });
+                        });
+                }).then(() => {
+                        db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", goalOption).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc => {
+
+                                        const levensvraag = doc.data().Levensvraag
+
+                        db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc1 => {
+                        db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraag).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc2 => {
+
+                                        db.collection("Vitaminders").doc(doc1.id).collection("Levensvragen").doc(doc2.id).update({
+                                                Levenslessen: firebase.firestore.FieldValue.arrayUnion("Tool geactiveerd: Check in")
+                                                                });
+                                                        })
+                                                });
+                                        })
+                                });
+                        })
                 })
-        }
+        })
+};
+
+// Display activated goals
+
+const activeGoalsDiv = document.getElementById("activated-goals")
+
+db.collectionGroup("Levensvragen").where("Levenslessen", "array-contains", "Tool geactiveerd: Check in").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+
+                                const levensvragen = doc.data().LevensvraagClean
+
+                                const activeGoalsH3 = document.createElement("h3")
+                                const activeGoalP = document.createElement("p")
+
+                                activeGoalsH3.innerHTML = "Geactiveerde doelen"
+                                activeGoalP.innerHTML = levensvragen
+
+                                activeGoalsDiv.appendChild(activeGoalsH3)
+                                activeGoalsDiv.appendChild(activeGoalP)
+
+        })
+});
+
+// Hide tool setting for non-auth en visitor
+
+        // Non-auth
+        auth.onAuthStateChanged(User =>{
+                if (User){
+                    let docRef = db.collection("Vitaminders").doc(User.uid);
+                        docRef.get().then(function(doc){
+                            const coachNaam = doc.data().Gebruikersnaam;
+            
+                            const settingDiv = document.getElementById("tool-settings")
+                            const activeDiv = document.getElementById("activate-div")
+                            const activatedDiv = document.getElementById("activated-goals")
+                    
+                            if(naam != coachNaam){
+                                   
+                                settingDiv.style.display = "none"
+                                activeDiv.style.display = "none"
+                                activatedDiv.style.display = "none"
+                           
+                            }      
+                    })
+                }
+            });
+
+            // Visitor
+        auth.onAuthStateChanged(User =>{
+                if (User){
+                        console.log("Auth ingelogd")
+                } else {
+        
+                        const settingDiv = document.getElementById("tool-settings")
+                        const activeDiv = document.getElementById("activate-div")
+                        const activatedDiv = document.getElementById("activated-goals")
+                                
+                        settingDiv.style.display = "none"
+                        activeDiv.style.display = "none"
+                        activatedDiv.style.display = "none"   
+                }
+        });
+        
+      
+        

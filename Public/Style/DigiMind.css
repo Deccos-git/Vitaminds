@@ -968,15 +968,6 @@
     flex-wrap: wrap;
 }
 
-.inspiration-inner-div{
-    padding: 15px;
-    background-color: #FFF;
-    margin: 30px;
-    width: 300px;
-    border-radius: 2px;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
-}
-
 .reactions-inner-div{
     padding: 15px;
     background-color: #FFF;
@@ -991,6 +982,29 @@
     color: #122b46;
     cursor: pointer;
 }
+
+.inner-div-contributions{
+    padding: 15px;
+    background-color: #FFF;
+    margin: 30px;
+    width: 400px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+.meta-div-contributions{
+    display: flex;
+    justify-content: space-evenly;
+    padding: 10px;
+    border-top: 1px dotted #122b46;
+}
+
+.meta-div-contributions p{
+    font-size: 14px;
+    margin: 5px;
+    cursor: pointer;
+}
+
 /* Levenslessen */
 
 #levenslessen-header{
@@ -1403,7 +1417,7 @@
     align-items: center;
     margin: 15px;
     width: 300px;
-    height: fit-content;
+    height: max-content;
     padding: 15px;
     background-color: #FFF;
     border-radius: 2px;
@@ -1445,6 +1459,20 @@
     display: none;
     font-size: 16px;
     color: #0c6665
+}
+
+#activated-goals{
+    margin-top: 30px;
+}
+
+#activated-goals h3{
+    font-size: 20px;
+    color: #49beb7
+}
+
+#activated-goals p{
+    font-size: 14px;
+    color: #49beb7;
 }
 
 /* Favorieten */
@@ -1748,6 +1776,10 @@
 
     #digimind-ontwikkeling-outer-div p {
         padding: 0px 10px 0px 10px;
+    }
+
+    .inner-div-contributions {
+        width: 70%;
     }
 
 }
