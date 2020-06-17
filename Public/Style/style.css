@@ -14,7 +14,6 @@ p{
   font-size: 22px;
   font-family: 'Nunito Sans', sans-serif;
   color: #122b46;
-  font-weight: 100;
 }
 
 h1{
@@ -98,10 +97,18 @@ link{
   height: 100%;
 }
 
+video{
+  margin-left: 70%;
+}
+
 /* Tiny mce */
 
 .tox .tox-notification--warn, .tox .tox-notification--warning {
   display: none;
+}
+
+.tox-notification { 
+  display: none !important 
 }
 
 /* Cookies */
@@ -181,7 +188,7 @@ link{
 }
 
 #logo-menu{
-  width: 120px;
+  width: 150px;
   margin-top: 7px;
 }
 

@@ -208,10 +208,15 @@
     z-index: 1;
 }
 
+.titleSub{
+    margin-top: 50px;
+    text-align: center;
+}
+
 .titelTekst{
     color: #122b46;
     font-size: 25px;
-    margin: 70px 20px 30px 20px;
+    margin: 0px 20px 30px 20px;
 }
 
 #tools-section{
@@ -239,6 +244,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    margin-bottom: -35px;
 }
 
 .tool-text-div{
@@ -254,7 +260,7 @@
 .title-tool{
     color: #122b46;
     font-size: 25px;
-    margin: 30px 20px 20px 20px;
+    margin: 0px 20px 20px 20px;
 }
 
 
@@ -281,7 +287,8 @@
     color: #122b46;
     cursor: pointer;
     display: flex;
-    align-items: center;
+    justify-content: center;
+    width: 100%;
 }
 
 .photo-div-paragraph{
@@ -388,7 +395,7 @@
 
 .visit-profile-button-insights{
     color: #49beb7;
-    font-size: 14px;
+    font-size: 14px !important;
 }
 
 #coach-insights{
@@ -487,6 +494,7 @@
 
 .save-div p{
     cursor: pointer;
+    color: #49beb7;
 }
 
 .delete-div{
@@ -1253,5 +1261,9 @@
 
     .toevoegen-levensles-input{
         width: auto;
+    }
+
+    .paragraph-list-inner-div{
+        margin-left: 20%;
     }
 }

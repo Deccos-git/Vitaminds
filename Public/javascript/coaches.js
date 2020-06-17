@@ -45,6 +45,10 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
             link.setAttribute("class", "button-coaches-overview")
         const profilePicture = document.createElement("div")
             profilePicture.setAttribute("class", "openup-profile-pic")
+        const readMoreDiv = document.createElement("div")
+            readMoreDiv.setAttribute("class", "read-more-div")
+        const readMore = document.createElement("p")
+            readMore.setAttribute("class", "button-read-more")
 
         profielFoto.style.backgroundImage = `url('${profilePic}')`
         
@@ -54,13 +58,21 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
 
             link.addEventListener('click', (e) => {
                 window.open("Vitaminders/" + [naam], "_self");
-            })   
+            }) 
+
+            // Exclude Gijs from list of coaches
+            if(naam == "fbKlPnWobJh0ldPROWQRYGCezhv2Gijs van Beusekom"){
+                nieuweDiv.style.display = "none"
+            }
+            
+
             //De coach-eigenschappen in de nieuwe HTML-elementen zetten
         nieuweH3.innerHTML = naamClean;
         stijlCH.innerHTML = stijl;  
         locatieCH.innerHTML = locatie 
         omschrijvingCH.innerHTML ='"' + omschrijving + '"'
         link.innerHTML = "Bekijk profiel"
+        readMore.innerHTML = "Lees meer"
 
             //De HTML-elementen vastmaken aan de DOM
         overview.appendChild(nieuweDiv)
@@ -68,11 +80,26 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         nieuweDiv.appendChild(profielFoto)
         nieuweDiv.appendChild(nieuweH3)
         nieuweDiv.appendChild(stijlCH)
+
+        if(stijlCH.offsetHeight >= 200){
+            nieuweDiv.appendChild(readMoreDiv)
+            readMoreDiv.appendChild(readMore)
+            stijlCH.style.maxHeight = "50px"
+            stijlCH.style.overflow = "hidden"
+        };
+
+        readMore.addEventListener("click", () => {
+            stijlCH.style.maxHeight = "max-content"
+            readMore.style.display = "none"
+        })
+
         nieuweDiv.appendChild(locatieDiv)
         locatieDiv.appendChild(pinImageDiv)
         locatieDiv.appendChild(locatieCH)
         // nieuweDiv.appendChild(omschrijvingCH)
         nieuweDiv.appendChild(link)
+
+        
     
         })
     }).catch((error) => {

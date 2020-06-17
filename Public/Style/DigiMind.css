@@ -168,6 +168,18 @@
       color: #FFF;
   }
 
+  #follow-massage-visitor{
+      display: none;
+  }
+
+  #follow-massage-visitor p{
+      color: white;
+  }
+
+  #follow-massage-visitor a{
+    color: white;
+}
+
 /* Submenu */
 
 
@@ -728,6 +740,13 @@
     color: #122b46;
 }
 
+.private-tooltip{
+    display: none;
+    padding: 0px !important;
+    margin: 0px;
+    font-size: 14px !important;
+}
+
 /* Dashboard */
 #dasboard-example-list{
     display: flex;
@@ -1108,6 +1127,7 @@
 
 .badge h3{
     font-size: 22px;
+    padding: 20px;
 }
 
 .learn{
@@ -1122,6 +1142,7 @@
     font-size: 14px;
     color: #122b46;
     cursor: pointer;
+    margin: 5px;
 }
 
 .karakter-section{
@@ -1130,6 +1151,22 @@
     flex-direction: column;
     align-items: center;
     flex-wrap: wrap;
+}
+
+.meta-div-lessons-digimind{
+    display: flex;
+    justify-content: space-evenly;
+    border-top: 1px dotted #122b46;
+    padding: 10px;
+}
+
+.photo-div-lessons-digmind-meta {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-size: cover;
+    cursor: pointer;
+    margin-left: 22%;
 }
 
 /* Doelen*/
@@ -1472,7 +1509,7 @@
 
 #activated-goals p{
     font-size: 14px;
-    color: #49beb7;
+    color: #122b46;
 }
 
 /* Favorieten */
@@ -1487,8 +1524,7 @@
 
 #favoCoach{
     display: none;
-    flex-direction: column;
-    justify-items: center;
+    justify-content: center;
     text-align: center;
     width: 100%;
 }
@@ -1500,6 +1536,7 @@
 
 .favCoachDiv img{
     height: 70px;
+    width: 70px;
     border-radius: 50%;
 }
 

@@ -63,7 +63,7 @@ app.get('/Kenniscentrum-coaching/:id',function(req,res)
 
 // Tool sheduling
 
-db.collection("Practice").where("Practice", "==", "Check In").get().then(querySnapshot => {
+db.collection("Practice").where("Practice", "==", "Check-in").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
         const levensvraag = doc.data().Levensvraag
@@ -75,7 +75,7 @@ db.collection("Practice").where("Practice", "==", "Check In").get().then(querySn
                 const email = doc1.data().Email
                 const gebruikersnaamClean = doc1.data().GebruikersnaamClean
 
-                cron.schedule("0 8 * * 6", () => {
+                cron.schedule(" 0 8 * * 6", () => {
 
                 db.collection("Mail").doc().set({
                     to: email,

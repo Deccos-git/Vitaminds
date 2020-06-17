@@ -973,4 +973,107 @@ function editIconInsightsOpenUp(elem){
                  })
          })
 
+};
+
+// Levenslessen aanpassen in Open Up
+
+function editLessonOpenUp(elem){
+
+        const les = elem.nextSibling.nextSibling
+
+        const dataEdit = elem.dataset.lesson
+
+        les.setAttribute("contenteditable", "true")
+        les.style.color = "#d4d4d4"
+        les.style.borderBottom = "1px dotted #d4d4d4"
+
+        const saveLes = document.createElement("div")
+        saveLes.setAttribute("class", "save-div")
+        const saveLesP = document.createElement("p")
+
+        saveLes.appendChild(saveLesP)
+
+        elem.parentElement.parentElement.appendChild(saveLes)
+
+        saveLesP.innerHTML = "Opslaan"
+
+        saveLesP.addEventListener("click", () => {    
+
+        auth.onAuthStateChanged(User =>{
+                        if (User){
+                        let docRef = db.collection("Vitaminders").doc(User.uid);
+                                docRef.get().then(function(doc){
+
+        db.collectionGroup("Levenslessen").where("Levensles", "==", dataEdit).get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                        db.collection("Vitaminders").doc(doc.id).collection("Levenslessen").doc(doc1.id).update({
+                                Levensles: les.innerHTML
+                                                }).then(() => {
+                                                        db. collectionGroup("Levensvragen").where("Levenslessen", "array-contains", dataEdit).get().then(querySnapshot => {
+                                                                querySnapshot.forEach(doc2 => {
+                                
+                                                        db.collection("Vitaminders").doc(doc.id).collection("Levensvragen").doc(doc2.id).update({
+                                                                Levenslessen: firebase.firestore.FieldValue.arrayUnion(les.innerHTML)
+                                                                                                        });
+                                                        db.collection("Vitaminders").doc(doc.id).collection("Levensvragen").doc(doc2.id).update({
+                                                                Levenslessen: firebase.firestore.FieldValue.arrayRemove(dataEdit)
+
+                                                                                                });
+                                                                                        });
+                                                        })                               
+                                                }).then(() => {
+                                        
+                                                        location.reload()
+                                                });               
+                                        })
+                                })
+                        })
+                }
+        })
+})
+        
+
+
+
+         // Delete
+         const deleteDiv = document.createElement("div")
+         deleteDiv.setAttribute("class", "delete-div")
+         const deleteP = document.createElement("p")
+ 
+         deleteP.innerHTML = "Delete"
+ 
+         elem.parentElement.parentElement.appendChild(deleteDiv)
+         deleteDiv.appendChild(deleteP)
+ 
+         deleteP.addEventListener("click", () => {    
+ 
+         auth.onAuthStateChanged(User =>{
+                         if (User){
+                             let docRef = db.collection("Vitaminders").doc(User.uid);
+                                 docRef.get().then(function(doc){
+ 
+         db.collectionGroup("Levenslessen").where("Levensles", "==", dataEdit).get().then(querySnapshot => {
+                 querySnapshot.forEach(doc1 => {
+ 
+                         db.collection("Vitaminders").doc(doc.id).collection("Levenslessen").doc(doc1.id).delete()
+                         .then(() => {                        
+                
+                        db. collectionGroup("Levensvragen").where("Levenslessen", "array-contains", dataEdit).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc2 => {
+
+                        db.collection("Vitaminders").doc(doc.id).collection("Levensvragen").doc(doc2.id).update({
+                                Levenslessen: firebase.firestore.FieldValue.arrayRemove(dataEdit)
+                                                                        })
+                                                                })
+                                                        });
+                                                })
+                                                 })
+                                         }).then(() => {
+                                                location.reload();
+                                         })
+                                 })
+                         }
+                 })
+         })
 }

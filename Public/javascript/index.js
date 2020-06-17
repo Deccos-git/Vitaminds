@@ -56,28 +56,32 @@ if(cookies == "OK"){
 // Main header select
 
 const select = document.getElementById("main-header-select")
+const startButton = document.getElementById("button-start")
 
 db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
     
             const title = doc.data().Levensvraag
+            const insights = doc.data().Insights
 
             const option = document.createElement("option")
 
             option.innerHTML = title
 
-            select.appendChild(option)
+            if (insights.length > 0){
+                select.appendChild(option)
+            };
 
+            startButton.addEventListener("click", () => {
+
+                const select = document.getElementById("main-header-select")
+
+                const selectOption = select.options
+                const selectSelect = selectOption[selectOption.selectedIndex].innerHTML;
+
+                window.open("../Artikelen/" + selectSelect + ".html", "_self")
+            })
         })
 });
 
-function start(){
-
-        const select = document.getElementById("main-header-select")
-
-        const selectOption = select.options
-        const selectSelect = selectOption[selectOption.selectedIndex].innerHTML;
-
-        window.open("../Artikelen/" + selectSelect + ".html", "_self")
-}
 

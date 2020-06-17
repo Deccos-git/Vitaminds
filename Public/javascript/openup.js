@@ -42,7 +42,10 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
         const omschrijvingDiv = document.createElement("div")
             omschrijvingDiv.setAttribute("class", "omschrijving-div")
         const omschrijvingP = document.createElement("h5")
-
+        const readMoreDiv = document.createElement("div")
+            readMoreDiv.setAttribute("class", "read-more-div")
+        const readMore = document.createElement("p")
+            readMore.setAttribute("class", "button-read-more-open-up")
         const leesMeer = document.createElement("button")
             leesMeer.setAttribute("data-vraag", levensvraag)
             leesMeer.setAttribute("class", "lees-meer-openup")
@@ -53,6 +56,7 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
         naam.innerHTML = gebruikersnaamClean
         omschrijvingP.innerHTML = omschrijving
         leesMeer.innerHTML = "Bekijk"
+        readMore.innerHTML = "Lees meer"
 
         naam.addEventListener("click", () => {
             window.open("../Vitaminders/" + [gebruikersnaam] + ".html", "_self");
@@ -92,6 +96,21 @@ db.collectionGroup('Levensvragen').where("Openbaar", "==", "Ja").get().then(quer
         omschrijvingDiv.appendChild(omschrijvingP)
         innerDiv.appendChild(leesMeer)
                 }   
+
+                console.log(omschrijvingP.offsetHeight)
+
+        // Read more if desription height > 200px 
+        if(omschrijvingP.offsetHeight >= 200){
+            omschrijvingDiv.appendChild(readMoreDiv)
+            readMoreDiv.appendChild(readMore)
+            omschrijvingP.style.maxHeight = "190px"
+            omschrijvingP.style.overflow = "hidden"
+        };
+
+        readMore.addEventListener("click", () => {
+            omschrijvingP.style.maxHeight = "max-content"
+            readMore.style.display = "none"
+        });
             })
         })
         .then(() => {
@@ -230,6 +249,7 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                 const timestamp = doc.data().Timestamp
                 const inspirator = doc.data().Auteur
                 const bron = doc.data().Titel
+                const gebruikersnaam = doc.data().Gebruikersnaam
 
                 const outerBronDiv = document.createElement("div")
                     outerBronDiv.setAttribute("class", "outer-bron-div")
@@ -244,6 +264,11 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                     timestampMeta.setAttribute("class", "timestamp-meta-p")
                 const titelP = document.createElement("p")
                     titelP.setAttribute("class", "openup-meta-source")
+                const editIcon = document.createElement("img")
+                    editIcon.setAttribute("src", "../images/edit-icon.png")
+                    editIcon.setAttribute("class", "edit-icon-insights")
+                    editIcon.setAttribute("onclick", "editLessonOpenUp(this)")
+                    editIcon.setAttribute("data-lesson", les)
                 
                 // Titel
                 if(type == "Coach-inzicht"){
@@ -264,10 +289,17 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                     querySnapshot.forEach(doc1 => {
 
                         const photo = doc1.data().Profielfoto
+                        const gebruikersnaamClean = doc1.data().GebruikersnaamClean
 
                         const photoDiv = document.createElement("div")
                             photoDiv.setAttribute("class", "photo-div-open-up-meta")
                         const photoTitel = document.createElement("p")
+
+                        const toolTipDiv = document.createElement("div")
+                            toolTipDiv.setAttribute("class", "tool-tip-inspirator-open-up")
+                        const toolTipP = document.createElement("p")
+
+                            toolTipP.innerHTML = gebruikersnaamClean
 
                         photoTitel.innerHTML = "Geïnspireerd door"
                         photoDiv.style.backgroundImage = `url(${photo}`
@@ -276,8 +308,19 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                             window.open("../Vitaminders/" + [inspirator] + ".html", "_self");
                             })
 
+                        toolTipDiv.addEventListener("click", () => {
+                            window.open("../Vitaminders/" + [inspirator] + ".html", "_self");
+                            })
+
+                        photoDiv.addEventListener("mouseover", () => {
+                            toolTipDiv.style.opacity = "100%"
+                            toolTipDiv.style.transition= "opacity 5s"
+                        })
+
                             metaDiv.appendChild(photoTitel)
                             photoTitel.appendChild(photoDiv)
+                            photoTitel.appendChild(toolTipDiv)
+                            toolTipDiv.appendChild(toolTipP)
 
                         })
                     });
@@ -320,9 +363,31 @@ db.collectionGroup('Levensvragen').where("Levensvraag", "==", titel).get().then(
                         })
                     });
                 };
+
+                     // User role
+                    // Visitor
+                    auth.onAuthStateChanged(User =>{
+                        if (!User){
+                            editIcon.style.display = "none"
+                        }
+                    });
+                       //Non auth
+                       
+                       auth.onAuthStateChanged(User =>{
+                        db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                                const auth = doc.data().Gebruikersnaam
+                        
+                    if(gebruikersnaam != auth){
+    
+                        editIcon.style.display = "none"
+    
+                            }
+                        })
+                    });
                  
                DOM.appendChild(outerBronDiv)
                 outerBronDiv.appendChild(bronDiv)
+                bronDiv.appendChild(editIcon)
                 bronDiv.appendChild(titelH3)
                 titelH3.appendChild(timestampMeta)
                 bronDiv.appendChild(lessen)

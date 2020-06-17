@@ -110,6 +110,13 @@
     padding: 15px;
 }
 
+.button-read-more-open-up{
+    font-size: 14px;
+    color: #0c6665;
+    cursor: pointer;
+    padding-top: 15px;
+}
+
 /* Detailpagina */
 
 #open-up-detail-outer-div{
@@ -207,6 +214,19 @@
     font-size: 18px;
 }
 
+.tool-tip-inspirator-open-up{
+    opacity: 0%;
+    background-color: #122b46;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    text-align: center;
+    cursor: pointer;
+}
+
+.tool-tip-inspirator-open-up p {
+    color: #FFF;
+}
+
 .meta-div-open-up{
     display: flex;
     justify-content: space-evenly;
@@ -240,7 +260,7 @@
     border-radius: 50%;
     background-size: cover;
     cursor: pointer;
-    margin-left: 22%;
+    margin-left: 28%;
 }
 
 #insights-outer-section{

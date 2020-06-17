@@ -110,6 +110,16 @@ auth.onAuthStateChanged(User =>{
     });
 
 // Levensvraag article overview pagina
+db.collection("Insights").where("LevensvraagArtikel", "==", "Positiviteit").get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const count = Array.from(doc)
+
+        console.log(count.length + 1)
+
+    })
+})
+
 
 DOMarticle = document.getElementById("levensvraag-artikel-ouyter-div")
 
@@ -119,6 +129,8 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
         const title = doc.data().Levensvraag
         const headerImage = doc.data().HeaderImage
         const insights = doc.data().Insights
+
+        console.log(title  + insights)
         
 
         // Hidding articles with no insights for visitor  non-coach
@@ -151,14 +163,25 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
         const headerImg = document.createElement("img")
             headerImg.setAttribute("class", "header-image-article")
         const titleDiv = document.createElement("div")
+        const titleSub = document.createElement("h5")
+            titleSub.setAttribute("class", "titleSub")
         const titleH2 = document.createElement("h2")
             titleH2.setAttribute("class", "titelTekst")
         const buttonDiv = document.createElement("button")
             buttonDiv.setAttribute("class", "button-algemeen")
             buttonDiv.setAttribute("onclick", "seeArticle(this)")
 
-        headerImg.src = headerImage
+        // Dynamic title
+        const count = insights.length
+
+        titleSub.innerHTML = `${count} coaches over`
+
+        if(count == 1){
+        titleSub.innerHTML = `${count} coach over`
+        }
+
         titleH2.innerHTML = title
+        headerImg.src = headerImage
         buttonDiv.innerHTML = "Bekijk"
 
         if(DOMarticle == null){
@@ -169,6 +192,7 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
         outerSection.appendChild(headerDiv)
         headerDiv.appendChild(headerImg)
         outerSection.appendChild(titleDiv)
+        titleDiv.appendChild(titleSub)
         titleDiv.appendChild(titleH2)
         outerSection.appendChild(buttonDiv)
         }
@@ -178,7 +202,7 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
 // Levensvraag artikelen openen na onclick in overview
 function seeArticle(elem){
 
-    const title = elem.previousElementSibling.firstElementChild.innerHTML
+    const title = elem.previousElementSibling.firstElementChild.nextElementSibling.innerHTML
 
     window.open("../Artikelen/" + title + ".html", "_self")
 
@@ -191,8 +215,6 @@ window.addEventListener("load", () => {
     db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
-            console.log(doc.id)
-
             db.collection("Levensvragen").doc(doc.id).update({
                 Views: firebase.firestore.FieldValue.increment(1)
             })  
@@ -202,8 +224,6 @@ window.addEventListener("load", () => {
     // Theme articles
     db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
-
-            console.log(doc.id)
 
             db.collection("Themas").doc(doc.id).update({
                 Views: firebase.firestore.FieldValue.increment(1)
@@ -226,6 +246,10 @@ const metaKeywords = document.getElementById("meta-keywords")
 const metaDescription = document.getElementById("meta-description")
 const headerDiv = document.getElementById("levensvraag-artikel-main-image")
 const headerImg = document.createElement("img")
+const facebookUrl = document.getElementById("facebook-url")
+const facebookTitle = document.getElementById("facebook-title")
+const facebookDescription = document.getElementById("facebook-description")
+const facebookImg = document.getElementById("facebook-img")
 
 function loadingDOM(a,b){
 
@@ -283,16 +307,20 @@ db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(query
             }
         });
 
-        // Pagetitle and meta's
+       // Pagetitle & meta's & facebook crawl
 
         const titelHeadArray = Array.from(titelHead)
 
         titelHeadArray.forEach(tit => {
             tit.innerHTML = titleArticle
-        })
+        });
 
         metaKeywords.content = keywords
         metaDescription.content = summaryArticle
+        facebookUrl.content = window.location.href
+        facebookTitle.content = titleArticle
+        facebookDescription.content = summaryArticle
+        facebookImg.content = headerImage
 
     })
 }).then(() => {   
@@ -301,7 +329,7 @@ db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(query
 
 const DOM = document.getElementById("coach-insights")
 
-db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
+db.collection("Insights").where(a, "==", titel).orderBy("Timestamp", "asc").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
         const titelInsight = doc.data().Titel
         const body = doc.data().Body
@@ -487,10 +515,10 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
                 
 
                  // Append "read more" if max height is > 300px
-                    if(textDiv.offsetHeight >= 400){
+                    if(textDiv.offsetHeight >= 300){
                         DOM.appendChild(readMoreDiv)
                         readMoreDiv.appendChild(readMore)
-                        textDiv.style.maxHeight = "300px"
+                        textDiv.style.maxHeight = "290px"
                         textDiv.style.overflow = "hidden"
                         outerDiv.style.paddingBottom = "50px"
                     };
@@ -541,7 +569,7 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
 
                         toevoegenLevenslesOuterDiv.appendChild(CTAvisiter)
                     }
-                })
+                });
                    //Non auth
 
                    const coachData = outerDiv.dataset.coach
@@ -556,7 +584,7 @@ db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
 
                 }
                             })
-                        })
+                        });
 
                     auth.onAuthStateChanged(User =>{
                         db.collection("Vitaminders").doc(User.uid).get().then(doc => {
@@ -596,7 +624,7 @@ function paragraphSum(a,b){
 
     const paragraphSummary = document.getElementById(b)
 
-db.collection("Insights").where(a, "==", titel).get().then(querySnapshot => {
+db.collection("Insights").where(a, "==", titel).orderBy("Timestamp", "asc").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
         const titel = doc.data().Titel
@@ -754,9 +782,7 @@ function nieuwepostsubmit(){
                                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                                     Type: "Insight-levensvraag",
                                     Thema: categorie,
-                                    Content: "Text"
-                                }).then(() => {
-                                    location.reload()
+                                    Content: "Text",
                                 })
                             }
 
@@ -770,6 +796,8 @@ function nieuwepostsubmit(){
 
                                 })
                             })
+                        }).then(() => {
+                            location.reload()
                         })
                     })     
                 }
@@ -916,12 +944,23 @@ db.collection("Themas").where("Eigenaar", "==", "Vitaminds").get().then(querySna
             header.setAttribute("class", "tools-header")
         const textDiv = document.createElement("div")
             textDiv.setAttribute("class", "tool-text-div")
+        const titleSub = document.createElement("h5")
+            titleSub.setAttribute("class", "titleSub")
         const title = document.createElement("h2")
             title.setAttribute("class", "title-tool")
         const button = document.createElement("button")
             button.setAttribute("class", "button-algemeen")
 
         header.style.backgroundImage = `url("${img}")`
+
+        // Dynamic title
+        const count = insights.length
+        titleSub.innerHTML = `${count} coaches over`
+
+        if(count == 1){
+        titleSub.innerHTML = `${count} coach over`
+        }
+
         title.innerHTML = titel
         button.innerHTML = "Bekijk"
         button.addEventListener("click", () => {
@@ -931,6 +970,7 @@ db.collection("Themas").where("Eigenaar", "==", "Vitaminds").get().then(querySna
         toolDOM.appendChild(outerDiv)
         outerDiv.appendChild(header)
         outerDiv.appendChild(textDiv)
+        textDiv.appendChild(titleSub)
         textDiv.appendChild(title)
         outerDiv.appendChild(button)
     })
@@ -947,6 +987,7 @@ const coachInputTitle = document.getElementById("coach-input-title")
 const titelHeadThemePage = document.getElementById("page-title-theme-page")
 const metaKeywordsThemePage = document.getElementById("meta-keywords-theme-page")
 const metaDescriptionThemePage = document.getElementById("meta-description-theme-page")
+
 
 db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
@@ -977,11 +1018,19 @@ db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => 
             })
         })
 
-        // Pagetitle & meta's
+        // Pagetitle & meta's & facebook crawl
+        const facebookUrl = document.getElementById("facebook-url")
+        const facebookTitle = document.getElementById("facebook-title")
+        const facebookDescription = document.getElementById("facebook-description")
+        const facebookImg = document.getElementById("facebook-img")
 
         titelHeadThemePage.innerHTML = theme
         metaKeywordsThemePage.content = theme
         metaDescriptionThemePage.content = summary
+        facebookUrl.content = window.location.href
+        facebookTitle.content = theme
+        facebookDescription.content = summary
+        facebookImg.content = headerImage
 
     })
 });
@@ -1015,20 +1064,22 @@ function nieuwepostsubmitThemePage(){
                                     ThemeArtikel: titel,
                                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                                     Type: "Insight-theme-article",
-                                    Content: Text
-                                }).then(() => {
-                                    location.reload()
+                                    Content: "Text"
                                 })
 
                                            //Storing insight in theme-article
                 db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => {
                     querySnapshot.forEach(doc1 => {
 
+                        console.log(nieuwePostTitelVar)
+
                         db.collection("Themas").doc(doc1.id).update({
                             Insights: firebase.firestore.FieldValue.arrayUnion(nieuwePostTitelVar)
 
                                 })
                             })
+                        }).then(() => {
+                            location.reload()
                         })
                     })     
                 }
