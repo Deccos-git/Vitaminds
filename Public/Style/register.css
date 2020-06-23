@@ -9,12 +9,20 @@
     border-radius: 15px;
 }
 
+#register-doel{
+    border: 1px solid orange;
+  }
+
+#goal-localstorage-div{
+    display: none;
+}
+
 #sub-titel{
     margin: 0px 50px 0px 50px;
 }
 
 #register-div input{
-    width: 200px;
+    width: 300px;
 }
 
 #register-button{

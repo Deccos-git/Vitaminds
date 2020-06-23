@@ -5,21 +5,24 @@ const filter = document.getElementById("inspiratiemenu")
 const dataSet = []
 let filterValues = []
 
-db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
+if(filter != null){
 
-        const domains = doc.data().Domein
+    db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
 
-        const option = document.createElement("option")
+            const domains = doc.data().Domein
 
-        option.innerHTML = domains
+            const option = document.createElement("option")
 
-        filter.appendChild(option)
+            option.innerHTML = domains
 
-        dataSet.push(domains)
+            filter.appendChild(option)
 
-    })
-});
+            dataSet.push(domains)
+
+        })
+    });
+};
 
 function filterMenu(elem){
 
@@ -91,9 +94,10 @@ auth.onAuthStateChanged(User =>{
         editIconArray.forEach(icon => {
             icon.style.display = "none"
         })
-
+        if(coachInput != null){
         coachInput.style.display = "none"
-    }
+        };
+    };
 });
 
     //Non coach
@@ -103,23 +107,15 @@ auth.onAuthStateChanged(User =>{
 
                 if(usertype != "Coach"){
                     const coachInput = document.getElementById("coach-input")
+                    if(coachInput != undefined){
                     coachInput.style.display = "none"
-                }
+                    };
+                };
             
         })
     });
 
 // Levensvraag article overview pagina
-db.collection("Insights").where("LevensvraagArtikel", "==", "Positiviteit").get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-
-        const count = Array.from(doc)
-
-        console.log(count.length + 1)
-
-    })
-})
-
 
 DOMarticle = document.getElementById("levensvraag-artikel-ouyter-div")
 
@@ -129,9 +125,6 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
         const title = doc.data().Levensvraag
         const headerImage = doc.data().HeaderImage
         const insights = doc.data().Insights
-
-        console.log(title  + insights)
-        
 
         // Hidding articles with no insights for visitor  non-coach
         if (insights.length == 0){
@@ -178,6 +171,15 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
 
         if(count == 1){
         titleSub.innerHTML = `${count} coach over`
+        }
+
+        // Exemption on dynamic title
+        if(title == "Zelfliefde"){
+            titleSub.innerHTML = `${count} tips voor meer`
+
+            if(count == 1){
+            titleSub.innerHTML = `${count} tip voor meer`
+        }
         }
 
         titleH2.innerHTML = title
@@ -267,15 +269,6 @@ db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(query
         headerImg.src = headerImage
 
         headerDiv.appendChild(headerImg)
-
-        auth.onAuthStateChanged(User =>{
-            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                    const naam = doc.data().GebruikersnaamClean
-
-                    insightsTitle.innerHTML = `${naam},<br> geef je professionele inzicht over:<br> ${titleArticle}`
-
-            })
-        })
 
         // Edit summary
         const editDiv = document.createElement("div")
@@ -406,6 +399,7 @@ db.collection("Insights").where(a, "==", titel).orderBy("Timestamp", "asc").get(
                     editIcon.setAttribute("data-title", titelInsight)
                     editIcon.setAttribute("data-levensvraagtitle", levensvraagArtikel)
                     editIcon.setAttribute("data-themetitle", themeArtikel)
+                    editIcon.setAttribute("data-coach", coach)
 
 
                     //Levensvragen van auth toevoegen aan select
@@ -436,10 +430,16 @@ db.collection("Insights").where(a, "==", titel).orderBy("Timestamp", "asc").get(
                 // Insights title
                 auth.onAuthStateChanged(User =>{
                     db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                            const auth = doc.data().GebruikersnaamClean
+                            const naam = doc.data().GebruikersnaamClean
 
                             const sectionTitle = document.getElementById("insight-title")
-                            sectionTitle.innerHTML = `${auth}, <br> geef je professionele inzicht over: <br> ${titel}`
+
+                                    // Exemptions for this title
+                            if(titel == "Zelfliefde"){
+                                sectionTitle.innerHTML = `${naam},<br> geef een tip voor meer<br> ${titel}`
+                            } else {
+                            sectionTitle.innerHTML = `${naam},<br> geef je professionele inzicht over:<br> ${titel}`
+                            };
                     })
                 })
 
@@ -585,6 +585,20 @@ db.collection("Insights").where(a, "==", titel).orderBy("Timestamp", "asc").get(
                 }
                             })
                         });
+
+                        // Admin
+
+                        auth.onAuthStateChanged(User =>{
+                            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                                    const admin = doc.data().Admin
+                            
+                        if(admin == "Yes"){
+        
+                            editIcon.style.display = "flex"
+        
+                        };
+                    })
+                });
 
                     auth.onAuthStateChanged(User =>{
                         db.collection("Vitaminders").doc(User.uid).get().then(doc => {
@@ -1085,3 +1099,122 @@ function nieuwepostsubmitThemePage(){
                 }
         })
 };
+
+// De meest dankbare plek van het internet
+
+    // Insights count on overview page
+    const titelSubGrateful = document.getElementById("titleSub-Grateful")
+
+    db.collection("Practice").where("Practice", "==", "Grateful").get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const count = doc.data().Grateful
+
+            const countArray = []
+
+            countArray.push(count)
+
+            const lengthSub = countArray.length
+
+            if(lengthSub == 1){
+                titelSubGrateful.innerHTML = `${lengthSub} mens heeft bijgedragen aan`
+            } else {
+                titelSubGrateful.innerHTML = `${lengthSub} mensen hebben bijgedragen aan`
+            };
+        })
+    });
+
+
+const titelH2Grateful = document.getElementById("insight-title-dankbaar")
+
+if(titelH2Grateful != null){
+
+    auth.onAuthStateChanged(User =>{
+        if (User){
+            db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                    const naamClean = doc.data().GebruikersnaamClean;
+
+    titelH2Grateful.innerHTML = `Waar ben jij vandaag dankbaar voor, ${naamClean}`
+
+            })
+        } else {
+            const visitorCTA = document.getElementById("visitorCTA")
+            const inputGrateful = document.getElementById("input-grateful")
+
+            inputGrateful.style.display = "none"
+            visitorCTA.style.display = "block"
+        }
+    });
+};
+
+    // Saving new submits to database
+
+    function nieuwepostsubmitDankbaar(elem){
+
+        const grateful = elem.previousElementSibling.value
+
+        auth.onAuthStateChanged(User =>{
+            if(User){
+                    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
+                            const naam = doc.data().Gebruikersnaam
+
+                            console.log(naam)
+
+                            db.collection("Practice").doc().set({
+                                Gebruikersnaam: naam,
+                                Grateful: grateful,
+                                Practice: "Grateful",
+                                Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
+                        }).then(() => {
+                                location.reload()
+                        });
+                    })
+                }
+        });
+    };
+
+    // Loading gratefuls in DOM
+
+    const gratefulsDiv = document.getElementById("grateful-div")
+
+    if(gratefulsDiv != null){
+
+    db.collection("Practice").where("Practice", "==", "Grateful").get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const grateful = doc.data().Grateful
+            const naam = doc.data().Gebruikersnaam
+
+            const innerDiv = document.createElement("div")
+                innerDiv.setAttribute("class", "inner-div-grateful")
+            const gratefulsP = document.createElement("p")
+
+            gratefulsP.innerHTML = grateful
+
+            db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    const profielfoto = doc1.data().Profielfoto
+                    const naamClean = doc1.data().GebruikersnaamClean
+
+                    const img = document.createElement("img")
+                        img.setAttribute("class", "meta-photo-grateful")
+
+                    img.src = profielfoto
+
+                    img.addEventListener("click", () => {
+                        window.open(`/Vitaminders/${gebruikersnaam}.html`, "_self");
+                    })
+
+            gratefulsDiv.appendChild(innerDiv)
+            innerDiv.appendChild(img)
+            innerDiv.appendChild(gratefulsP)
+
+                })
+            });
+        })
+    });
+};
+
+    

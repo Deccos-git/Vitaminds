@@ -6,14 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta id="meta-keywords" name="keywords">
-    <meta id="meta-description" name="description">
-  <title>Check in</title>
+    <meta id="meta-description" property="og:description" name="description">
+    <!-- Facebook crawl tags -->
+    <meta id="facebook-url" property="og:url"/>
+    <meta property="og:type"  content="article"/>
+    <meta id="facebook-description" property="og:description"/>
+    <meta id="facebook-img" property="og:image" content="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/Levensvragen-Artikelen%2Favontuur29.jpg?alt=media&token=b99b61fb-a8b1-422f-9c0e-1ce2e2bfcd61"/>
+  <title property="og:title">Samen bouwen aan de meest dankbare plek op het internet</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../Style/style.css">
-  <link rel="stylesheet" href="../Style/tools.css">
+  <link rel="stylesheet" href="../Style/inspiratie.css">
   <link rel="shortcut icon" href="../images/Favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700&display=swap" rel="stylesheet">
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
@@ -24,8 +30,8 @@
     tinymce.init({
       height: 400,
       selector: '#tiny-mce',
-      toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link',
-      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link',
+      toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media',
+      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media',
       toolbar_mode: 'floating',
       plugin_preview_width: 720,
       forced_root_block : false,
@@ -98,31 +104,42 @@
     </div>
   </nav>
 
-<section>
-  <header id="check-in-header">
-    <div>
-    <h1>Check in</h1>
-    <p>Deze tool helpt je om actief bezig te blijven met je doelen. Ontvang wekelijks een herinnering in de mail om een update te plaatsen voor een doel of meerdere doelen uit je Digimind</p>
+<!-- Artikel -->
+  <div id="title-article-div">
+    <h1 id="title-article">De meest dankbare plek op het internet</h1>
+  </div>
+  <div id="levensvraag-artikel-main-image">
+      <img src="../images/avontuur29.jpg" alt="">
+  </div>
+  <section class="levensvraag-artikel-main-information">
+    <div id="summary-outer-div">
+      <div id="summary-inner-div">
+          <h2 id="summary-article">Welkom op de meest dankbare plek van het internet. Hier bouwen we samen de grootste verzameling voorbeelden van dingen waar we dankbaar voor kunnen zijn. Doe je mee?
+          </h2>
+      </div>
     </div>
-    <img src="../images/tools-check-in.png" alt="">
-  </header>
-  <main>
-    <h2>Wat heb je aan deze tool?</h2>
-    <p>In de drukte van het dagelijks leven is het gemakkelijk om je doelen uit het oog te verliezen. Dat geldt voor alle doelen en zeker ook voor doelen op het gebied van persoonljke ontwikkkeling.<br><br> 
-      Deze tool helpt je om de doelen die je kiest een onderdeel te houden van je dagelijks leven.</p>
-    <h2>Hoe werkt het?</h2>
-    <ul>
-      <li>Installeer de tool in je Digimind</li>
-      <li>Je vind de tool in je Digimind menu onder Tools</li>
-      <li>Kies een van je doelen</li>
-      <li>Je ontvangt wekelijks een email-notificatie op de jou gekozen gekozen frequentie</li>
-      <li>Klik op de link in de email-notificatie en omschrijf hoe het nu met je gaat (met betrekking tot je doel)</li>
-    </ul>
-  
-    <button class="tool-redirect" id="tool-download">Tool is geïnstalleerd</button>
-    <h6 class="tool-redirect">Je vindt deze tool in je Digimind onder Tools</h6>
-  </main>
-</section>
+  </section>
+
+  <section id="coach-insights">
+    <div id="grateful-div">
+    </div>
+  </section>
+
+  <div id="input-grateful">
+    <h2 id="insight-title-dankbaar"></h2>
+    <div id="nieuwepost">
+        <input id="nieuwposttitel" type="text" placeholder="Waar ben je dankbaar voor?">
+        <button onclick = "nieuwepostsubmitDankbaar(this)" class="button-algemeen">Delen</button>
+    </div> 
+  </div>
+  <div id="visitorCTA">
+    <h2>Maak je gratis <a href="../Register.html">Digimind</a> aan om mee te kunnen bouwen aan de dankbaarste plek op het internet</h2>
+</div>
+<div class="meer-inspiratie">
+    <h3>Meer inspiratie</h3>
+    <main id="levensvraag-artikel-ouyter-div">
+   </main> 
+</div>
 
 <!-- footer -->
 <footer class="footer">
@@ -142,7 +159,7 @@
       <script type="text/javascript" src="../javascript/firebase.js"></script>
       <script type="text/javascript" src="../javascript/inspiratie.js"></script>
       <script type="text/javascript" src="../javascript/auth.js"></script>
-      <script type="text/javascript" src="../javascript/tools.js"></script>
+      <script type="text/javascript" src="../javascript/edit-profile.js"></script>
     </body>
   </html>
   

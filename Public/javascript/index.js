@@ -3,40 +3,43 @@ var insp = document.getElementById("inspiratie");
 // var act = document.getElementById("activiteiten");
 var coach = document.getElementById("coaching");
 
-window.onload = function(){
-        openen.style.display = "block";
-        insp.style.display = "none";
-        // act.style.display = "none";
-        coach.style.display = "none";   
-}
+if(openen != null || insp != null || coach != null){
 
-function openup(){
-        openen.style.display = "block";
-        insp.style.display = "none";
-        // act.style.display = "none";
-        coach.style.display = "none";
-}
+        window.onload = function(){
+                openen.style.display = "block";
+                insp.style.display = "none";
+                // act.style.display = "none";
+                coach.style.display = "none";   
+        };
 
-function inspiratie(){
-        insp.style.display = "block";
-        openen.style.display = "none";
-        // act.style.display = "none";
-        coach.style.display = "none";
-}
+        function openup(){
+                openen.style.display = "block";
+                insp.style.display = "none";
+                // act.style.display = "none";
+                coach.style.display = "none";
+        };
 
-// function activiteiten(){
-//         act.style.display = "block";
-//         openen.style.display = "none";
-//         insp.style.display = "none";
-//         coach.style.display = "none";
-// }
+        function inspiratie(){
+                insp.style.display = "block";
+                openen.style.display = "none";
+                // act.style.display = "none";
+                coach.style.display = "none";
+        };
 
-function coaching(){
-        coach.style.display = "block";
-        openen.style.display = "none";
-        insp.style.display = "none";
-        // act.style.display = "none";
-}
+        // function activiteiten(){
+        //         act.style.display = "block";
+        //         openen.style.display = "none";
+        //         insp.style.display = "none";
+        //         coach.style.display = "none";
+        // }
+
+        function coaching(){
+                coach.style.display = "block";
+                openen.style.display = "none";
+                insp.style.display = "none";
+                // act.style.display = "none";
+        };
+};
 
 // Cookies notice
 
@@ -50,38 +53,64 @@ function cookiesOK(){
 const cookies = localStorage.getItem("Cookies")
 
 if(cookies == "OK"){
+        if(cookieDiv != null){
         cookieDiv.style.display = "none"
+        };
 }
 
-// Main header select
+// Main header CTA
 
-const select = document.getElementById("main-header-select")
-const startButton = document.getElementById("button-start")
+      
+        const startButton = document.getElementById("button-start")
+        const select = document.getElementById("main-header-select")
 
-db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-    
-            const title = doc.data().Levensvraag
-            const insights = doc.data().Insights
+        // Examples
 
-            const option = document.createElement("option")
+        if(select != null || startButton != null){
 
-            option.innerHTML = title
+                db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+                
+                        const title = doc.data().Levensvraag
+                        const insights = doc.data().Insights
 
-            if (insights.length > 0){
-                select.appendChild(option)
-            };
+                        const option = document.createElement("option")
 
-            startButton.addEventListener("click", () => {
+                        option.innerHTML = title
 
-                const select = document.getElementById("main-header-select")
+                        if (insights.length > 0){
+                                select.appendChild(option)
+                                };
+                        })
+                });
+        };
 
-                const selectOption = select.options
-                const selectSelect = selectOption[selectOption.selectedIndex].innerHTML;
+// Goal in localstorage
 
-                window.open("../Artikelen/" + selectSelect + ".html", "_self")
-            })
-        })
-});
+const selectGoal = document.getElementById("main-header-select")
+
+function start(){
+
+        // Auth with goals
+auth.onAuthStateChanged(User =>{
+if(User){
+        db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
+        const auth = doc.data().Gebruikersnaam;
+
+        const select = selectGoal.options
+        const option = select[select.selectedIndex].innerHTML
+        localStorage.setItem("Goal", option);
+        window.open("../Vitaminders/" + auth + ".html", "_self");    
+
+        });
+} else {
+        // No auth (visitor)
+        const select = selectGoal.options
+        const option = select[select.selectedIndex].innerHTML
+        localStorage.setItem("Goal", option);
+        window.open("../Register.html", "_self")
+          };
+      });
+};
 
 

@@ -1251,6 +1251,7 @@
 #nieuweO input{
     width: 280px;
     font-size: 16px;
+    border: 1px solid orange;
 }
 
 #public-lifequestion input{

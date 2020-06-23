@@ -97,6 +97,54 @@
 
 }
 
+#register-method{
+    margin: 0px;
+    width: 300px;
+    height: 127px;
+}
+
+#register-why{
+    margin: 0px;
+    width: 300px;
+    height: 127px;
+}
+
+#register-style{
+    margin: 0px;
+    width: 300px;
+    height: 127px;
+}
+
+#register-experience{
+    margin: 0px;
+    width: 300px;
+    height: 127px;
+}
+
+#register-education{
+    margin: 0px;
+    width: 300px;
+    height: 127px;
+}
+
+.input-online-div{
+    display: flex;
+}
+
+.input-online-div input{
+    width: 10px !important;
+}
+
+.input-online-div label{
+    font-size: 16px;
+    color: #122b46;
+}
+
+#edit-profile-notice{
+    font-size: 16px;
+    text-align: center;
+}
+
 @media only screen and (max-width: 938px){
 
 #minimale-eisen{

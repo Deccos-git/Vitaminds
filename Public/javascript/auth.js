@@ -3,17 +3,71 @@ const id = Math.random()
 const idAlpha = id.toString(36)
 const idClean = idAlpha.replace("0.", "")
 
+ // If goal is set in local host 
+ const registerDiv = document.getElementById("register-div")
+ const goalLocaleStorageDiv = document.getElementById("goal-localstorage-div")
+ const registerSelect = document.getElementById("register-select")
+ const goalStorage = localStorage.getItem("Goal")
+
+ if(registerDiv != null){
+   registerDiv.scrollIntoView()
+  };
+   
+  if(goalLocaleStorageDiv != null){
+   goalLocaleStorageDiv.style.display = "block"
+  };
+
+   db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+    const title = doc.data().Levensvraag
+    const insights = doc.data().Insights
+
+    const option = document.createElement("option")
+
+    if(registerSelect != null){
+      registerSelect.setAttribute("value", option)
+ 
+
+    option.innerHTML = title
+
+    if (insights.length > 0){
+            registerSelect.appendChild(option)
+            };
+          };
+    })
+}).then(() => {
+
+  if (registerSelect != null){
+  const options = registerSelect.options
+
+  const optionsArray = Array.from(options)
+
+  optionsArray.forEach(opt =>{
+    if(opt.innerText == goalStorage){
+      const index = opt.index
+
+      registerSelect.selectedIndex = index
+    }
+  })
+};
+})
+
+
+
 // Inlog/uitlog verbergen
 const login = document.getElementById("button-login")
 const logout = document.getElementById("button-logout")
 
-auth.onAuthStateChanged(User =>{
-  if(User){
-    login.style.display = "none"
-  } else {
-    logout.style.display = "none"
-  }
-});
+
+  auth.onAuthStateChanged(User =>{
+      if(User){
+        login.style.display = "none"
+      } else {
+        logout.style.display = "none"
+      };
+  });
+
 
 // Mobile menu
 const hamburgerMenu = document.getElementById("mobile-hamburger-menu")
@@ -152,7 +206,7 @@ auth.onAuthStateChanged(User =>{
 
                 if(length.length == 0){
                   notifications.style.display = "none"
-                }
+                };
 
                 notifications.innerHTML = `<p id='notification-count-menu'>${length.length}</p>`
 
@@ -321,7 +375,7 @@ function logOut(){
     })
   }
 
-  // Register VM
+// Register VM
 const button = document.getElementById("register-button")
 if(button != null){
 
@@ -410,6 +464,14 @@ function registerCoach(){
   const city = document.getElementById("register-city").value;
   const targetgroup = document.getElementById("register-targetgroup").value;
   const why = document.getElementById("register-why").value;
+  const online = document.getElementsByClassName("input-radio-online")
+  const phone = document.getElementById("register-phone").value;
+  const website = document.getElementById("register-website").value;
+  const costs = document.getElementById("register-costs").value;
+  const approach = document.getElementById("register-style").value;
+  const experience = document.getElementById("register-experience").value;
+  const experienceType = document.getElementById("register-experience-type").value;
+  const education = document.getElementById("register-education").value;
 
   if (password != repeatPassword){
     passwordInput.style.borderColor = "red"
@@ -420,21 +482,39 @@ function registerCoach(){
   firebase.auth().createUserWithEmailAndPassword(email, password)
   
   .then(cred =>{
+
+                onlineArray = Array.from(online)
+                onlineArray.forEach(on => {
+                        const check = on.checked
+
+                        if (check == true){
+                          const onlineValue = on.value
+
     db.collection("Vitaminders").doc(cred.user.uid).set({
       Gebruikersnaam: cred.user.uid + naam,
       GebruikersnaamClean: naam,
       Usertype: "Coach",
       Inspiratiepunten: 1,
       Email: email,
+      PhoneNumber: phone,
+      Website: website,                 
       Coachingstyle: method,
       City: city,
+      Online: check,
       Why: why,
       Targetgroup: targetgroup,
+      YearsExperience: experience,
+      Experience: experienceType,
+      Education: education,
+      Approach: approach,
+      Costs: costs,
       ID: cred.user.uid,
       Levensvragen: []
     }).catch((err) => {
       alert(err)
-    })
+    });
+    };
+  });
   }).then(() => {
     db.collection("Mail").doc().set({
       to: [email],
@@ -470,7 +550,6 @@ Type: "Coach"
 }; registerCoach();
 
 // Gedragscode lezen
-
 function gedragscode(){
   const code = document.getElementById("gedragscode")
 if(code.style.display = "none"){
@@ -479,6 +558,184 @@ if(code.style.display = "none"){
   code.style.display = "none"
 }
 }
+
+// Goal in legend
+
+const goalLegend = document.getElementById("goal-legend-outer-div")
+const minimizeDLegend = document.getElementById("minimized-legend")
+const legendSelect = document.createElement("select")
+  legendSelect.setAttribute("id", "legend-select")
+const legendFocus = document.createElement("p")
+let legendP = document.createElement("p")
+const selectGoalBar = document.createElement("select")
+  selectGoalBar.setAttribute("id", "select-goal-bar")
+
+  // Minimize/maximize legend
+  const minimizeLegend = document.createElement("p")
+    minimizeLegend.setAttribute("id", "minimize-legend")
+    minimizeLegend.setAttribute("onclick", "minimizeLegendClick()")
+  const maximizeLegend = document.createElement("p")
+    maximizeLegend.setAttribute("id", "maximize-legend")
+    maximizeLegend.setAttribute("onclick", "maximizeLegendClick()")
+
+    minimizeDLegend.appendChild(maximizeLegend)
+
+  minimizeLegend.innerHTML = "x"
+  maximizeLegend.innerHTML = "+"
+
+  function minimizeLegendClick(){
+    goalLegend.style.display = "none"
+    maximizeLegend.style.display = "block"
+  };
+
+  function maximizeLegendClick(){
+    goalLegend.style.display = "flex"
+    maximizeLegend.style.display = "none"
+  };
+
+  const startButtonBar = document.createElement("button")
+    startButtonBar.setAttribute("class", "button-legend")
+
+  const allOptions = document.createElement("option")
+
+        allOptions.innerHTML = "Geen doel selecteren"
+  
+
+
+
+  // Auth with goals
+  auth.onAuthStateChanged(User =>{
+    if(User){
+      db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
+          const auth = doc.data().Gebruikersnaam;
+          const authClean = doc.data().GebruikersnaamClean
+
+      db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+          const goals = doc.data().LevensvraagClean
+
+          const legendOptions = document.createElement("option")
+        
+          legendOptions.innerHTML = goals
+          legendFocus.innerHTML = `Wat is vandaag je focus, ${authClean}?`
+
+          startButtonBar.innerHTML = "Selecteer"
+
+          goalLegend.appendChild(legendFocus)
+          goalLegend.appendChild(legendSelect)
+          legendSelect.appendChild(allOptions)
+          legendSelect.appendChild(legendOptions)
+          goalLegend.appendChild(startButtonBar)
+          goalLegend.appendChild(minimizeLegend)
+
+          })
+        });
+      });
+    } else {
+      // No auth (visitor)
+
+      legendP.innerHTML = "Mentale fitheid begint met een inspirerend doel."
+
+      db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+        querySnapshot.forEach(doc1 => {
+
+          const goals = doc1.data().Levensvraag
+          const insights = doc1.data().Insights
+
+      const options = document.createElement("option")
+
+      options.innerHTML = goals
+      startButtonBar.innerHTML = "Start"
+
+      goalLegend.appendChild(legendP)
+      goalLegend.appendChild(selectGoalBar)
+
+      if (insights.length > 0){
+      selectGoalBar.appendChild(options)
+      };
+
+      goalLegend.appendChild(startButtonBar)
+      goalLegend.appendChild(minimizeLegend)
+
+          // Start
+          startButtonBar.addEventListener("click", () => {
+
+            const select = selectGoalBar.options
+            const option = select[select.selectedIndex].innerHTML
+            localStorage.setItem("Goal", option);
+            window.open("../Register.html", "_self")
+          });
+
+
+          })
+        });
+      }
+  });
+
+    // Auth has no goals yet
+
+    const naamArray = []
+
+    auth.onAuthStateChanged(User =>{
+      if(User){
+    db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
+      const auth = doc.data().Gebruikersnaam;
+      const authClean = doc.data().GebruikersnaamClean
+
+    db.collectionGroup("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+      querySnapshot.forEach(doc1 => {
+
+        const naam = doc1.data().Gebruikersnaam
+
+        naamArray.push(naam)
+        })
+      }).then(() => {
+    
+        if(naamArray.includes(auth) == false){
+          legendP.innerHTML = `${authClean}, Mentale fitheid begint met een inspirerend doel`
+
+          db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+    
+              const goals = doc1.data().Levensvraag
+              const insights = doc1.data().Insights
+    
+          const options = document.createElement("option")
+    
+          options.innerHTML = goals
+          startButtonBar.innerHTML = "Start"
+    
+          goalLegend.appendChild(legendP)
+          goalLegend.appendChild(selectGoalBar)
+
+          if (insights.length > 0){
+            selectGoalBar.appendChild(options)
+            };
+          goalLegend.appendChild(startButtonBar)
+          goalLegend.appendChild(minimizeLegend)
+
+           // Start
+           startButtonBar.addEventListener("click", () => {
+
+            const select = selectGoalBar.options
+            const option = select[select.selectedIndex].innerHTML
+            localStorage.setItem("Goal", option);
+            window.open("../Vitaminders/" + auth + ".html", "_self");
+                  });
+                })
+              });
+            };
+        })
+      });
+    };
+  });
+
+
+   
+
+  
+
 
 
 

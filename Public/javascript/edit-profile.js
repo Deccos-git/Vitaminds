@@ -643,7 +643,7 @@ function editExperience(elem){
                         db.collection("Vitaminders").doc(doc.id).update({
                                 YearsExperience: jaren.innerHTML,
                                 Experience: ervaring.innerHTML,
-                                Ecudation: opleiding.innerHTML
+                                Education: opleiding.innerHTML
                         }).then(() => {
                                 location.reload();
                         })
@@ -662,8 +662,11 @@ function editIconInsights(elem){
         const title = elem.nextSibling
         const body = elem.nextSibling.nextSibling
 
-        titleEdit = elem.dataset.title
-        levensvraagTitle = elem.dataset.levensvraagtitle
+        const titleEdit = elem.dataset.title
+        const levensvraagTitle = elem.dataset.levensvraagtitle
+        const auteur = elem.dataset.coach
+
+        console.log(titleEdit)
 
         title.setAttribute("contenteditable", "true")
         title.style.border = "1px dotted #122b46"
@@ -689,6 +692,23 @@ function editIconInsights(elem){
                                         docRef.get().then(function(doc){
 
                                                 const naam = doc.data().Gebruikersnaam
+                                                const admin = doc.data().Admin
+
+                                                if (admin == "Yes"){
+                                                        console.log("admin")
+                                                        db.collection("Insights").where("Titel", "==", titleEdit).where("Auteur", "==", auteur).get().then(querySnapshot => {
+                                                                querySnapshot.forEach(doc1 => {
+
+                                                                        console.log(title.innerHTML)
+                        
+                                                        db.collection("Insights").doc(doc1.id).update({
+                                                        Body: body.innerHTML
+                                                }).then(() => {
+                                                        location.reload();
+                                                })
+                                                                        })
+                                                                });       
+                                                } else if (admin == undefined){
 
                                         db.collection("Insights").where("Titel", "==", titleEdit).where("Auteur", "==", naam).get().then(querySnapshot => {
                                                 querySnapshot.forEach(doc1 => {
@@ -696,14 +716,10 @@ function editIconInsights(elem){
                                         db.collection("Insights").doc(doc1.id).update({
                                         Titel: title.innerHTML,
                                         Body: body.innerHTML
-                                }).then(() => {
-                                        location.reload();
                                 })
-                                                        })
-                                                })    
-                                        })
-                                }
-                        })
+                                
+                                                                })
+                                                        })   
 
                                  //Storing insight in levensvraag
                 db.collection("Levensvragen").where("Levensvraag", "==", levensvraagTitle).get().then(querySnapshot => {
@@ -716,10 +732,16 @@ function editIconInsights(elem){
 
                                     db.collection("Levensvragen").doc(doc1.id).update({
                                         Insights: firebase.firestore.FieldValue.arrayRemove(titleEdit)
-            
-                                            })
-                                })
-                            })
+                
+                                                                        })
+                                                                })
+                                                        }).then(() => {
+                                                                location.reload();
+                                                        })
+                                                };        
+                                        })
+                                }
+                        });
                 })
 
                 // Delete
@@ -774,8 +796,11 @@ function editIconInsightsTheme(elem){
         const title = elem.nextSibling
         const body = elem.nextSibling.nextSibling
 
-        titleEdit = elem.dataset.title
-        themeTitle = elem.dataset.themetitle
+        const titleEdit = elem.dataset.title
+        const themeTitle = elem.dataset.themetitle
+        const auteur = elem.dataset.coach
+
+        console.log(titleEdit)
 
         title.setAttribute("contenteditable", "true")
         title.style.border = "1px dotted #122b46"
@@ -801,6 +826,21 @@ function editIconInsightsTheme(elem){
                                         docRef.get().then(function(doc){
 
                                                 const naam = doc.data().Gebruikersnaam
+                                                const admin = doc.data().Admin
+
+                                                if (admin == "Yes"){
+                                                        console.log("admin")
+                                                        db.collection("Insights").where("Titel", "==", titleEdit).where("Auteur", "==", auteur).get().then(querySnapshot => {
+                                                                querySnapshot.forEach(doc1 => {
+                        
+                                                        db.collection("Insights").doc(doc1.id).update({
+                                                        Body: body.innerHTML
+                                                }).then(() => {
+                                                        location.reload();
+                                                })
+                                                                        })
+                                                                });       
+                                                } else if (admin == undefined) {
 
                                         db.collection("Insights").where("Titel", "==", titleEdit).where("Auteur", "==", naam).get().then(querySnapshot => {
                                                 querySnapshot.forEach(doc1 => {
@@ -808,12 +848,9 @@ function editIconInsightsTheme(elem){
                                         db.collection("Insights").doc(doc1.id).update({
                                         Titel: title.innerHTML,
                                         Body: body.innerHTML
-                                })
-                                                        })
-                                                })    
-                                        })
-                                }
-                        })
+                                                                        })
+                                                                })
+                                                        })   
 
                                  //Storing insight in theme
                 db.collection("Themas").where("Thema", "==", themeTitle).get().then(querySnapshot => {
@@ -825,13 +862,17 @@ function editIconInsightsTheme(elem){
 
                                     db.collection("Themas").doc(doc1.id).update({
                                         Insights: firebase.firestore.FieldValue.arrayRemove(titleEdit)
-                                            })  
-                                })
-                            })
-                            .then(() => {
-                                location.reload();
-                        })
-                })
+                                                                        })  
+                                                                })
+                                                        })
+                                                        .then(() => {
+                                                                location.reload();
+                                                        })
+                                                }; 
+                                        })
+                                }
+                        });
+                });
 
                 // Delete
          const deleteDiv = document.createElement("div")
@@ -876,7 +917,7 @@ function editIconInsightsTheme(elem){
                          }
                  })
          })
-}
+};
 
 
 // Summary's aanpassen
@@ -1077,3 +1118,7 @@ function editLessonOpenUp(elem){
                  })
          })
 }
+
+
+// Admin edit insights
+

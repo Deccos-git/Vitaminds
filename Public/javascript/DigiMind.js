@@ -896,7 +896,7 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
 
                 const years = doc.data().YearsExperience
                 const experience = doc.data().Experience
-                const education = doc.data().Ecudation
+                const education = doc.data().Education
 
                 if(usertype == "Coach"){
 
@@ -1019,28 +1019,6 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
         dataUndefined(years, yearsDiv, yearsData, years, yearsDOM, "Aantal jaren ervaring")
         dataUndefined(experience, experienceDiv, experienceData, experience, experienceDOM, "Ervaringen")
         dataUndefined(education, educationDiv, educationData, education, educationDOM, "Opleidingen & certificaten")
-
-
-        // Undefined coach details visible for auth
-
-        auth.onAuthStateChanged(User =>{
-                if(User){
-                  const userRef = db.collection("Vitaminders").doc(User.uid);
-                  userRef.get().then(function(doc) {
-                    if (doc.exists) {
-                      const auth = doc.data().Gebruikersnaam;
-
-                      if(naam == auth){
-                        editShort.click()
-                        editCoach.click()
-                        editExperience.click()
-                        editContact.click()
-
-                                        }
-                                }
-                        })
-                }
-        });
 
 
         //Hide edit Icons
@@ -1419,21 +1397,16 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
  
           
 // Nieuwe levensvraag openen na onclick
+
 function nieuweLevensvraag(){
 
         const DOM = document.getElementById("nieuweO");
         DOM.style.display = "flex"
 
         const vraagH3 = document.createElement("h3");
-        const vraagInspirationDiv = document.createElement("div")
-                vraagInspirationDiv.setAttribute("id", "doel-inspiratie-div")
-        const vraagInspirationTitel = document.createElement("p")
-        const vraagInspirationSelect = document.createElement("select")
 
-        const vraagSelect = document.createElement("input");
+        const vraagSelect = document.createElement("select");
                 vraagSelect.setAttribute("id", "ontwikkelDoel");
-                vraagSelect.setAttribute("type", "text");
-                vraagSelect.setAttribute("placeholder", "Wat is je doel?");
 
         const beschrijvingH3 =  document.createElement("h4");
         const beschrijvingSelect = document.createElement("textarea");
@@ -1479,10 +1452,32 @@ function nieuweLevensvraag(){
 
                          option.innerHTML = doel
 
-                         vraagInspirationSelect.appendChild(option)
+                         vraagSelect.appendChild(option)
 
 
                  })
+         }).then(() => {
+                // If goal is in localStorage
+                const goalStorageDigimind = localStorage.getItem("Goal")
+
+                if(goalStorageDigimind != undefined){
+
+                const registerSelect = document.getElementById("ontwikkelDoel")
+
+                const options = registerSelect.options
+                const optionsArray = Array.from(options)
+
+                console.log(optionsArray)
+              
+                optionsArray.forEach(opt =>{
+                        console.log(goalStorageDigimind)
+                  if(opt.innerText == goalStorageDigimind){
+                    const index = opt.index
+              
+                    registerSelect.selectedIndex = index
+                                }       
+                        });
+                };
          })
 
           // Pre-check public/private
@@ -1494,16 +1489,12 @@ function nieuweLevensvraag(){
                 button.setAttribute("class", "button-algemeen");
 
                 vraagH3.innerHTML = "Wat is je doel?"
-                vraagInspirationTitel.innerHTML = "Voorbeelden van doelen"
                 beschrijvingH3.innerHTML = "Geef een korte omschrijving van je doel"
 
                 button.innerHTML = "Opslaan"
 
                 DOM.appendChild(vraagH3)
                 DOM.appendChild(vraagSelect)
-                DOM.appendChild(vraagInspirationDiv)
-                vraagInspirationDiv.appendChild(vraagInspirationTitel)
-                vraagInspirationDiv.appendChild(vraagInspirationSelect)
                 DOM.appendChild(beschrijvingH3)
                 DOM.appendChild(beschrijvingSelect)
                 DOM.appendChild(publicDiv)
@@ -1517,6 +1508,17 @@ function nieuweLevensvraag(){
                 DOM.appendChild(button)     
 };
 
+ // If goal is in localStorage
+ const goalStorageDigimind = localStorage.getItem("Goal")
+ const goalTab = document.getElementById("levenvragen-tab")
+ const newGoal = document.getElementById("newGoal")
+
+ if(goalStorageDigimind != undefined){
+         goalTab.click()
+         newGoal.click()
+ }
+         
+
 //Input nieuwe levensvraag wegschrijven naar database
 function startTocht(){
 
@@ -1527,7 +1529,12 @@ function startTocht(){
                     if (doc.exists) {
                       Gnaam = doc.data().Gebruikersnaam;
 
-        const inputDoel = document.getElementById("ontwikkelDoel").value 
+        const inputDoel = document.getElementById("ontwikkelDoel")
+        const select = inputDoel.options
+        const option = select[select.selectedIndex].innerHTML
+
+        console.log(option)
+
         const omschrijving = document.getElementById("levensvraag-beschrijving").value
 
         const form = document.getElementById("public-lifequestion")
@@ -1540,15 +1547,16 @@ function startTocht(){
               
        db.collection('Vitaminders').doc(User.uid).collection("Levensvragen").doc().set({
                 ID: idClean,
-                Levensvraag: idClean + inputDoel,
-                LevensvraagClean: inputDoel,
+                Levensvraag: option,
                 Levenslessen: [],
                 Gebruikersnaam: Gnaam,
                 Openbaar: arr.id,
+                Eigenaar: "Vitaminds",
                 Omschrijving: omschrijving,
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                 
         }).then(()=>{
+                localStorage.removeItem("Goal")
                 location.reload();
                                                 })
                                         }

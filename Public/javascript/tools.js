@@ -1,8 +1,14 @@
 // Check in
 
-const checkInButton = document.getElementById("tool-download")
+const checkInButton = document.getElementsByClassName("tool-redirect")
 
-checkInButton.addEventListener("click", () => {
+const checkInButtonArray = Array.from(checkInButton)
+
+checkInButtonArray.forEach(redirect => {
+    
+
+
+redirect.addEventListener("click", () => {
 
     auth.onAuthStateChanged(User =>{
        
@@ -12,9 +18,8 @@ checkInButton.addEventListener("click", () => {
              const naamID = doc.data().Gebruikersnaam;
 
                 window.open("../Vitaminders/" + [naamID] + ".html", "_self");
-
-      
-        })
+            })
+        });
     });
 });
 

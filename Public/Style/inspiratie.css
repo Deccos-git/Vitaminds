@@ -338,7 +338,7 @@
 
 #summary-article{
     color: #122b46;
-    margin: -70px 200px 50px 200px;
+    margin: -60px 200px 50px 200px;
     border-radius: 5px;
     position: relative;
     background-color: white;
@@ -558,7 +558,7 @@
     font-size: 14px;
     color: white;
     cursor: pointer;
-    background-color: #cf6e13;
+    background-color: #49beb7;
     padding: 5px;
     border-radius: 5px;
     margin-bottom: 0px;
@@ -608,7 +608,7 @@
 
 #toevoegen-levensles-div select{
     font-size: 14px;
-    border: 1px solid #dfdfdf;
+    border: 1px solid #49beb7;
     width: 100%;
     margin-bottom: 0px;
 }
@@ -639,6 +639,12 @@
 #insights-tip{
     margin: 10px;
     color: #cf6e13;
+}
+
+.meer-inspiratie{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Individual theme page */
@@ -1102,6 +1108,47 @@
     color: #FFF;
 }
 
+/* The most grateful place */
+#grateful-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.inner-div-grateful{
+    border: 1px solid #cccccc;
+    margin: 10px 100px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.inner-div-grateful{
+    display: flex;
+    align-items: center;
+}
+
+.meta-photo-grateful{
+    cursor: pointer;
+    margin-right: 15px;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+#visitorCTA{
+    display: none;
+}
+
+#visitorCTA h2{
+    font-size: 20px;
+    margin-bottom: 100px;
+}
+
+.title-sub{
+    text-align: center;
+    margin-top: 50px;
+}
+
 @media only screen and (max-width: 938px){
 
     #inspiratiemenu{
@@ -1265,5 +1312,9 @@
 
     .paragraph-list-inner-div{
         margin-left: 20%;
+    }
+
+    .inner-div-grateful {
+        margin: 10px; 
     }
 }
