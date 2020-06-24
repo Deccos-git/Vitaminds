@@ -651,9 +651,13 @@ function dashboardFunction(){
                                 const levensvragen = levensvraagID.replace(ID, "")
                                 const openbaar = doc.data().Openbaar
                                 const description = doc.data().Omschrijving
+                                const goal = doc.data().Goal
 
                                 const innerDiv = document.createElement("div")
                                         innerDiv.setAttribute("class", "digimind-ontwikkeling-inner-div")
+                                const goalDiv = document.createElement("div")
+                                        goalDiv.setAttribute("class", "goal-div")
+                                const goalP = document.createElement("p")
                                 const levensvraagTitle = document.createElement("h2")
                                 const descriptionP = document.createElement("p")
                                 const privateDiv = document.createElement("div")
@@ -662,6 +666,7 @@ function dashboardFunction(){
                                 const privateTooltip = document.createElement("p")
                                         privateTooltip.setAttribute("class", "private-tooltip")
 
+                                goalP.innerHTML = goal
                                 levensvraagTitle.innerHTML = levensvragen
                                 descriptionP.innerHTML = description
 
@@ -706,6 +711,8 @@ function dashboardFunction(){
                                 innerDiv.appendChild(privateDiv)
                                 privateDiv.appendChild(private)
                                 privateDiv.appendChild(privateTooltip)
+                                innerDiv.appendChild(goalDiv)
+                                goalDiv.appendChild(goalP)
                                 innerDiv.appendChild(levensvraagTitle)
                                 innerDiv.appendChild(descriptionP)
 
@@ -1223,6 +1230,7 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
             const omschrijving = doc.data().Omschrijving
             const ID = doc.data().ID
             const openbaar = doc.data().Openbaar
+            const goal = doc.data().Goal
 
             const levensvraagID = doc.data().Levensvraag
             const levensvraag = levensvraagID.replace(ID, "")
@@ -1234,6 +1242,9 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
                 innerDiv.setAttribute("class", "openup-div")
             const authDiv = document.createElement("div")
                 authDiv.setAttribute("class", "auth-div")
+            const goalDiv = document.createElement("div")
+                goalDiv.setAttribute("class", "goal-div")
+            const goalP = document.createElement("p")
             const vraagDiv = document.createElement("div") 
                 vraagDiv.setAttribute("class", "vraag-div")     
             const vraag = document.createElement("h2")
@@ -1255,6 +1266,7 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
 
                     edit.style.display = "block"
     
+            goalP.innerHTML = goal
             vraag.innerHTML = levensvraag
             omschrijvingP.innerHTML = omschrijving
 
@@ -1329,6 +1341,8 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
             innerDiv.appendChild(editDiv)
             editDiv.appendChild(edit)
             innerDiv.appendChild(authDiv)
+            innerDiv.appendChild(goalDiv)
+            goalDiv.appendChild(goalP)
             innerDiv.appendChild(vraagDiv)
             vraagDiv.appendChild(vraag)
             vraagDiv.appendChild(editDiv)
@@ -1407,6 +1421,11 @@ function nieuweLevensvraag(){
 
         const vraagSelect = document.createElement("select");
                 vraagSelect.setAttribute("id", "ontwikkelDoel");
+        
+        const subTitleH3 = document.createElement("h4")
+        const subTitleInput = document.createElement("input")
+                subTitleInput.setAttribute("id", "sub-titel-input")
+                subTitleInput.setAttribute("placeholder", "Geef je doel een titel")
 
         const beschrijvingH3 =  document.createElement("h4");
         const beschrijvingSelect = document.createElement("textarea");
@@ -1447,14 +1466,14 @@ function nieuweLevensvraag(){
          db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
                  querySnapshot.forEach(doc=> {
                          const doel = doc.data().Levensvraag
+                         const insights = doc.data().Insights
 
                          const option = document.createElement("option")
 
                          option.innerHTML = doel
-
-                         vraagSelect.appendChild(option)
-
-
+                         if (insights.length > 0){
+                                vraagSelect.appendChild(option)
+                                };
                  })
          }).then(() => {
                 // If goal is in localStorage
@@ -1466,11 +1485,9 @@ function nieuweLevensvraag(){
 
                 const options = registerSelect.options
                 const optionsArray = Array.from(options)
-
-                console.log(optionsArray)
               
                 optionsArray.forEach(opt =>{
-                        console.log(goalStorageDigimind)
+
                   if(opt.innerText == goalStorageDigimind){
                     const index = opt.index
               
@@ -1478,7 +1495,7 @@ function nieuweLevensvraag(){
                                 }       
                         });
                 };
-         })
+         });
 
           // Pre-check public/private
           publicInputYes.checked = true
@@ -1489,12 +1506,15 @@ function nieuweLevensvraag(){
                 button.setAttribute("class", "button-algemeen");
 
                 vraagH3.innerHTML = "Wat is je doel?"
+                subTitleH3.innerHTML = "Geef je doel een titel"
                 beschrijvingH3.innerHTML = "Geef een korte omschrijving van je doel"
 
                 button.innerHTML = "Opslaan"
 
                 DOM.appendChild(vraagH3)
                 DOM.appendChild(vraagSelect)
+                DOM.appendChild(subTitleH3)
+                DOM.appendChild(subTitleInput)
                 DOM.appendChild(beschrijvingH3)
                 DOM.appendChild(beschrijvingSelect)
                 DOM.appendChild(publicDiv)
@@ -1508,12 +1528,12 @@ function nieuweLevensvraag(){
                 DOM.appendChild(button)     
 };
 
- // If goal is in localStorage
- const goalStorageDigimind = localStorage.getItem("Goal")
+ // Link to new goal
+ const newGoal = localStorage.getItem("Link")
  const goalTab = document.getElementById("levenvragen-tab")
  const newGoal = document.getElementById("newGoal")
 
- if(goalStorageDigimind != undefined){
+ if(newGoal != undefined){
          goalTab.click()
          newGoal.click()
  }
@@ -1533,7 +1553,7 @@ function startTocht(){
         const select = inputDoel.options
         const option = select[select.selectedIndex].innerHTML
 
-        console.log(option)
+        const subTitel = document.getElementById("sub-titel-input").value
 
         const omschrijving = document.getElementById("levensvraag-beschrijving").value
 
@@ -1547,7 +1567,9 @@ function startTocht(){
               
        db.collection('Vitaminders').doc(User.uid).collection("Levensvragen").doc().set({
                 ID: idClean,
-                Levensvraag: option,
+                Goal: option,
+                Levensvraag: idClean + subTitel,
+                LevensvraagClean: subTitel,
                 Levenslessen: [],
                 Gebruikersnaam: Gnaam,
                 Openbaar: arr.id,
@@ -1556,7 +1578,6 @@ function startTocht(){
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                 
         }).then(()=>{
-                localStorage.removeItem("Goal")
                 location.reload();
                                                 })
                                         }

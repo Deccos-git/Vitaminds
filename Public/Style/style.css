@@ -1392,6 +1392,21 @@ margin: 0px 0px 30px 0px;
   }
 
   #goal-legend-outer-div {
+    height: auto;
     flex-direction: column;
+    text-align: center;
+  }
+
+  #goal-legend-outer-div p {
+    margin: 5px;
+  }
+
+  #legend-select {
+    width: 60%;
+  }
+
+  #minimize-legend {
+    margin: 5px !important;
+    align-self: flex-end;
   }
 } 

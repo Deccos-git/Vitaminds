@@ -601,8 +601,6 @@ const selectGoalBar = document.createElement("select")
         allOptions.innerHTML = "Geen doel selecteren"
   
 
-
-
   // Auth with goals
   auth.onAuthStateChanged(User =>{
     if(User){
@@ -629,6 +627,29 @@ const selectGoalBar = document.createElement("select")
           goalLegend.appendChild(startButtonBar)
           goalLegend.appendChild(minimizeLegend)
 
+          //Filter
+          startButtonBar.addEventListener("click", () => {
+
+            const select = legendSelect.options
+            const option = select[select.selectedIndex].innerHTML
+
+            if(option == "Geen doel selecteren"){
+              localStorage.removeItem("Goal")
+              location.reload()
+            }else{
+
+            db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", option).get().then(querySnapshot => {
+              querySnapshot.forEach(doc1 => {
+
+                const goal = doc1.data().Goal
+
+            localStorage.setItem("Goal", goal);
+            location.reload()
+
+                  })
+                });
+              };
+            });
           })
         });
       });
@@ -664,12 +685,10 @@ const selectGoalBar = document.createElement("select")
             const select = selectGoalBar.options
             const option = select[select.selectedIndex].innerHTML
             localStorage.setItem("Goal", option);
-            window.open("../Register.html", "_self")
-          });
-
-
+            location.reload()
+            });
           })
-        });
+        })
       }
   });
 
@@ -721,17 +740,47 @@ const selectGoalBar = document.createElement("select")
             const select = selectGoalBar.options
             const option = select[select.selectedIndex].innerHTML
             localStorage.setItem("Goal", option);
-            window.open("../Vitaminders/" + auth + ".html", "_self");
+            location.reload()
                   });
                 })
-              });
+              })
             };
         })
       });
     };
   });
 
+ //Goal from  storage in legend
+ const goalStorageLegend = localStorage.getItem("Goal")
 
+ if(goalStorageLegend != undefined){
+
+ auth.onAuthStateChanged(User =>{
+     db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
+
+       const auth = doc.data().Gebruikersnaam
+
+ db.collectionGroup("Levensvragen").where("Goal", "==", goalStorageLegend).where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
+   querySnapshot.forEach(doc1=> {
+
+     const levensvraag = doc1.data().LevensvraagClean
+
+ const options = legendSelect.options
+ const optionsArray = Array.from(options)
+
+ optionsArray.forEach(opt =>{
+
+   if(opt.innerText == levensvraag){
+     const index = opt.index
+
+     legendSelect.selectedIndex = index
+             };       
+           });
+         })
+       });
+     })
+   });
+ };
    
 
   

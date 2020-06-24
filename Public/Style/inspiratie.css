@@ -647,6 +647,14 @@
     align-items: center;
 }
 
+/* Theme page overview*/
+
+#theme-article-outer-div{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
 /* Individual theme page */
 
 #header-image-theme-article{

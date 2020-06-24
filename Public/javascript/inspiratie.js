@@ -1,71 +1,3 @@
-//Filter
-
-const filter = document.getElementById("inspiratiemenu")
-
-const dataSet = []
-let filterValues = []
-
-if(filter != null){
-
-    db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            const domains = doc.data().Domein
-
-            const option = document.createElement("option")
-
-            option.innerHTML = domains
-
-            filter.appendChild(option)
-
-            dataSet.push(domains)
-
-        })
-    });
-};
-
-function filterMenu(elem){
-
-    // Empty filter
-    filterValues = []
-
-    const levensvragenDiv = document.getElementsByClassName("levensvraag-artikel-section")
-        const levensvragenDivArray = Array.from(levensvragenDiv)
-        levensvragenDivArray.forEach(vraag => {
-
-                vraag.style.display = "flex"
-
-            })
-
-   const filterSelect = elem.previousElementSibling.options
-   const filterOption = filterSelect[filterSelect.selectedIndex].value;  
-
-   filterValues.push(filterOption)
-
-   dataSet.forEach(data => {
-
-    if(!filterValues.includes(data)){
-
-        db.collection("Levensvragen").where("Domein", "==", data)
-        .get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-
-                const titel = doc.data().Levensvraag
-
-                levensvragenDivArray.forEach(vraag => {
-
-                    const divData = vraag.dataset.title
-
-                    if(divData == titel){
-                        vraag.style.display = "none"
-                    }
-                })
-
-                })
-            })
-        }
-   })
-}
 
 // Fetching title from url
 titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
@@ -125,6 +57,7 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
         const title = doc.data().Levensvraag
         const headerImage = doc.data().HeaderImage
         const insights = doc.data().Insights
+        const goal = doc.data().Levensvraag
 
         // Hidding articles with no insights for visitor  non-coach
         if (insights.length == 0){
@@ -151,6 +84,7 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
         const outerSection = document.createElement("section")
             outerSection.setAttribute("class", "levensvraag-artikel-section")
             outerSection.setAttribute("data-title", title)
+            outerSection.setAttribute("data-goal", goal)
         const headerDiv = document.createElement("div")
             headerDiv.setAttribute("class", "levensvraag-artikel-header")
         const headerImg = document.createElement("img")
@@ -199,7 +133,36 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
         outerSection.appendChild(buttonDiv)
         }
     })
-})
+}).then(() => {
+
+    //Filter
+
+const goalFilter = localStorage.getItem("Goal")
+
+if(goalFilter != "All goals"){
+
+const DOMgoal = document.getElementsByClassName("levensvraag-artikel-section")
+
+const DOMgoalArray = Array.from(DOMgoal)
+
+    db.collection("Levensvragen").where("Levensvraag", "==", goalFilter).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const goal = doc.data().Levensvraag
+
+            DOMgoalArray.forEach(DOM => {
+
+            const data = DOM.dataset.goal
+
+            if(goal != data){
+
+                DOM.style.display = "none"
+                    };
+                })
+            });
+        });
+    };
+});
 
 // Levensvraag artikelen openen na onclick in overview
 function seeArticle(elem){
@@ -614,6 +577,7 @@ db.collection("Insights").where(a, "==", titel).orderBy("Timestamp", "asc").get(
 
                         CTAvisiter.innerHTML = "Stel je eerste doel!"
                         CTAvisiter.addEventListener("click", () => {
+                            localStorage.setItem("Link", "Yes")
                             window.open(`/Vitaminders/${gebruikersnaam}.html`, "_self");
                         })
 
@@ -922,13 +886,14 @@ function inspirerend(elem){
 };
 
 // Theme overview page
-toolDOM = document.getElementById("levensvraag-artikel-ouyter-div")
+toolDOM = document.getElementById("theme-article-outer-div")
 
 db.collection("Themas").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
         const titel = doc.data().Thema
         const img = doc.data().HeaderImage
         const insights = doc.data().Insights
+        const levensvragen = doc.data().Levensvragen
 
         // Hidding articles with no insights for visitor  non-coach
         if (insights.length == 0){
@@ -954,6 +919,7 @@ db.collection("Themas").where("Eigenaar", "==", "Vitaminds").get().then(querySna
 
         const outerDiv = document.createElement("div")
             outerDiv.setAttribute("class", "tool-outer-div")
+            outerDiv.setAttribute("data-title", titel)
         const header = document.createElement("div")
             header.setAttribute("class", "tools-header")
         const textDiv = document.createElement("div")
@@ -988,7 +954,38 @@ db.collection("Themas").where("Eigenaar", "==", "Vitaminds").get().then(querySna
         textDiv.appendChild(title)
         outerDiv.appendChild(button)
     })
-}) 
+}).then(() => {
+
+    // Filter
+    const goalFilter = localStorage.getItem("Goal")
+
+const DOMgoal = document.getElementsByClassName("tool-outer-div")
+
+const DOMgoalArray = Array.from(DOMgoal)
+
+const themeArray = []
+
+    db.collection("Themas").where("Levensvragen", "array-contains", goalFilter).get().then(querySnapshot => {
+        querySnapshot.forEach(doc1 => {
+
+            const thema = doc1.data().Thema
+
+            themeArray.push(thema)
+
+            });
+        }).then(() => {
+
+        DOMgoalArray.forEach(DOM => {
+
+            const data = DOM.dataset.title
+
+            if(!themeArray.includes(data)){
+
+                DOM.style.display = "none"
+            };
+        });
+    });
+}); 
 
 // Individual theme article page
 

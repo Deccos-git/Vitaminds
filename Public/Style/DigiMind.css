@@ -1420,6 +1420,20 @@
     margin-top: 30px;
 }
 
+.goal-div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.goal-div p{
+    font-size: 14px;
+    background-color: #cf6e13;
+    color: white !important;
+    border-radius: 5px;
+    padding: 10px;
+}
+
 #active-outerdiv{
     display: flex;
     justify-content: space-evenly;
