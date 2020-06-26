@@ -3,58 +3,6 @@ const id = Math.random()
 const idAlpha = id.toString(36)
 const idClean = idAlpha.replace("0.", "")
 
- // If goal is set in local host 
- const registerDiv = document.getElementById("register-div")
- const goalLocaleStorageDiv = document.getElementById("goal-localstorage-div")
- const registerSelect = document.getElementById("register-select")
- const goalStorage = localStorage.getItem("Goal")
-
- if(registerDiv != null){
-   registerDiv.scrollIntoView()
-  };
-   
-  if(goalLocaleStorageDiv != null){
-   goalLocaleStorageDiv.style.display = "block"
-  };
-
-   db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-
-    const title = doc.data().Levensvraag
-    const insights = doc.data().Insights
-
-    const option = document.createElement("option")
-
-    if(registerSelect != null){
-      registerSelect.setAttribute("value", option)
- 
-
-    option.innerHTML = title
-
-    if (insights.length > 0){
-            registerSelect.appendChild(option)
-            };
-          };
-    })
-}).then(() => {
-
-  if (registerSelect != null){
-  const options = registerSelect.options
-
-  const optionsArray = Array.from(options)
-
-  optionsArray.forEach(opt =>{
-    if(opt.innerText == goalStorage){
-      const index = opt.index
-
-      registerSelect.selectedIndex = index
-    }
-  })
-};
-})
-
-
-
 // Inlog/uitlog verbergen
 const login = document.getElementById("button-login")
 const logout = document.getElementById("button-logout")
@@ -644,6 +592,7 @@ const selectGoalBar = document.createElement("select")
                 const goal = doc1.data().Goal
 
             localStorage.setItem("Goal", goal);
+            localStorage.setItem("GoalTitle", option)
             location.reload()
 
                   })
@@ -671,6 +620,7 @@ const selectGoalBar = document.createElement("select")
 
       goalLegend.appendChild(legendP)
       goalLegend.appendChild(selectGoalBar)
+      selectGoalBar.appendChild(allOptions)
 
       if (insights.length > 0){
       selectGoalBar.appendChild(options)
@@ -684,11 +634,32 @@ const selectGoalBar = document.createElement("select")
 
             const select = selectGoalBar.options
             const option = select[select.selectedIndex].innerHTML
+
+            if(option == "Geen doel selecteren"){
+              localStorage.removeItem("Goal")
+              location.reload()
+            }else{
             localStorage.setItem("Goal", option);
             location.reload()
+            };
+
             });
           })
-        })
+        }).then(() => {
+          //Pre-selecting goal from storage in select Visitor
+      
+        const options = selectGoalBar.options
+        const optionsArray = Array.from(options)
+      
+        optionsArray.forEach(opt =>{
+      
+          if(opt.innerText == goalStorageLegend){
+            const index = opt.index
+
+        selectGoalBar.selectedIndex = index
+              };       
+            });
+        });
       }
   });
 
@@ -727,6 +698,7 @@ const selectGoalBar = document.createElement("select")
     
           goalLegend.appendChild(legendP)
           goalLegend.appendChild(selectGoalBar)
+          selectGoalBar.appendChild(allOptions)
 
           if (insights.length > 0){
             selectGoalBar.appendChild(options)
@@ -739,22 +711,46 @@ const selectGoalBar = document.createElement("select")
 
             const select = selectGoalBar.options
             const option = select[select.selectedIndex].innerHTML
+
+            if(option == "Geen doel selecteren"){
+              localStorage.removeItem("Goal")
+              location.reload()
+            }else{
             localStorage.setItem("Goal", option);
             location.reload()
+            };
+
                   });
                 })
-              })
+              }).then(() => {
+                //Pre-selecting goal from storage in select Visitor
+            
+              const options = selectGoalBar.options
+              const optionsArray = Array.from(options)
+            
+              optionsArray.forEach(opt =>{
+            
+                if(opt.innerText == goalStorageLegend){
+                  const index = opt.index
+      
+              selectGoalBar.selectedIndex = index
+                    };       
+                  });
+              });
             };
         })
       });
     };
   });
 
- //Goal from  storage in legend
+ //Goal from  storage in legend Auth with goals
  const goalStorageLegend = localStorage.getItem("Goal")
+
+ console.log(goalStorageLegend)
 
  if(goalStorageLegend != undefined){
 
+  // If auth has goals
  auth.onAuthStateChanged(User =>{
      db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
 

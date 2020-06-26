@@ -1410,7 +1410,22 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
     })
  
           
-// Nieuwe levensvraag openen na onclick
+// Create new goal
+
+    // If user comes from Inspiration CTA
+
+    const inspirationCTA = localStorage.getItem("DigimindGoal")
+
+    if(inspirationCTA != undefined){
+            const goalTab = document.getElementById("levenvragen-tab")
+            const newGoal = document.getElementById("newGoal")
+
+            goalTab.click()
+            newGoal.click()
+
+    }
+
+
 
 function nieuweLevensvraag(){
 
@@ -1526,18 +1541,7 @@ function nieuweLevensvraag(){
                 publicForm.appendChild(publicInputNo)
                 publicForm.appendChild(publicLabelNo)
                 DOM.appendChild(button)     
-};
-
- // Link to new goal
- const newGoal = localStorage.getItem("Link")
- const goalTab = document.getElementById("levenvragen-tab")
- const newGoal = document.getElementById("newGoal")
-
- if(newGoal != undefined){
-         goalTab.click()
-         newGoal.click()
- }
-         
+};         
 
 //Input nieuwe levensvraag wegschrijven naar database
 function startTocht(){
@@ -1579,6 +1583,7 @@ function startTocht(){
                 
         }).then(()=>{
                 location.reload();
+                localStorage.clearItem("DigimindGoal")
                                                 })
                                         }
                                 })

@@ -91,7 +91,7 @@ const selectGoal = document.getElementById("main-header-select")
 
 function start(){
 
-        // Auth with goals
+        // Auth 
 auth.onAuthStateChanged(User =>{
 if(User){
         db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
@@ -108,7 +108,7 @@ if(User){
         const select = selectGoal.options
         const option = select[select.selectedIndex].innerHTML
         localStorage.setItem("Goal", option);
-        window.open("../Register.html", "_self")
+        window.open("../Inspiratie.html", "_self")
           };
       });
 };
