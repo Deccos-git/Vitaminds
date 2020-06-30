@@ -18,7 +18,8 @@
     "firebase-admin": "^8.9.2",
     "firebase-functions": "^3.3.0",
     "node-cron": "^2.0.3",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "prerender-node": "^3.2.5"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.1.6"

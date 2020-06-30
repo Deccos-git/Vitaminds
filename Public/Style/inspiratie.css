@@ -359,6 +359,13 @@
     flex-direction: column;
     align-items: center;
     text-align: left;
+    background-color: #a7bdbd;
+}
+
+#paragraph-list-theme p{
+    font-size: 18px;
+    margin-top: 0px;
+    cursor: pointer;
 }
 
 .levensvraag-artikel-main-image img{
@@ -375,6 +382,10 @@
     align-items: center;
 }
 
+.article-paragraphs{
+    font-size: 28px;
+    margin-top: 100px;
+}
 
 #coach-input{
     margin: 0px 100px 0px 100px;
@@ -407,7 +418,6 @@
     margin: 10px 100px 5px 100px;
     background-color: white;
     padding: 15px;
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
     border-radius: 2px;
     border: 1px solid #f7f7f7;
 }
@@ -415,6 +425,8 @@
 .insights-outer-div h2{
     text-align: center;
     align-self: center;
+    color: #122b46;
+    font-size: 20px;
 }
 
 .insights-outer-div p{
@@ -533,15 +545,14 @@
 }
 
 .sociale-div-insights{
-        background-color: rgb(204, 203, 203);
-        display: flex;
-        margin: 0px 100px 30px 100px;
-        background-color: white;
-        box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
-        border-radius: 2px;
-        padding: 10px;
-        justify-content: space-evenly;
-        border: 1px solid #f7f7f7;
+    background-color: rgb(204, 203, 203);
+    display: flex;
+    margin: 0px 100px 30px 100px;
+    background-color: white;
+    border-radius: 2px;
+    padding: 10px;
+    justify-content: space-evenly;
+    border: 1px solid #f7f7f7;
 }
 
 .social-div-thema-div-insights{

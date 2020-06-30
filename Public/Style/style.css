@@ -83,6 +83,7 @@ select{
   padding: 10px;
   margin-bottom: 15px;
   border-color: #FFF;
+  width: 100%;
 }
 
 link{
@@ -602,6 +603,7 @@ ul{
   margin: 0px;
   padding: 0px;
   color: #858585;
+  width: 40%;
 }
 
 #minimize-legend{
@@ -712,7 +714,6 @@ ul{
 
 .header-image h2{
   color: #fff;
-  margin-bottom: 20%;
 }
 
 .header-image h3{
@@ -728,6 +729,22 @@ ul{
 
 #vertelMeMeer a{
   color: #122b46;
+}
+
+#dynamic-title-div{
+  display: flex;
+  justify-content: center;
+}
+
+#dynamic-title-div p{
+  color: white;
+  align-self: center;
+  margin-left: 10px;
+  font-size: 28px;
+}
+
+#dynamic-call-to-action{
+  margin-bottom: 50px;
 }
 
 #main-header-select{
@@ -801,7 +818,7 @@ ul{
 }
 
 .karakter p{
-  margin-bottom: 70px;
+  margin: 70px 10px;
 }
 
 #karakterHead{

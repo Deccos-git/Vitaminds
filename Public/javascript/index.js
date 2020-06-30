@@ -41,22 +41,139 @@ if(openen != null || insp != null || coach != null){
         };
 };
 
-// Cookies notice
+// Dynamic call to action
 
-const cookieDiv = document.getElementById("cookie-notice")
 
-function cookiesOK(){
-      localStorage.setItem("Cookies", "OK")
-        cookieDiv.style.display = "none"
-}
+const dynamicH2 = document.getElementById("dynamic-call-to-action")
+const dynamicH2Dots = document.getElementById("dynamic-title-dots")
 
-const cookies = localStorage.getItem("Cookies")
+if(dynamicH2 != null && dynamicH2Dots != null){
 
-if(cookies == "OK"){
-        if(cookieDiv != null){
-        cookieDiv.style.display = "none"
-        };
-}
+setTimeout(() => {
+dynamicH2.innerHTML = "Posiviteit"
+},0)
+
+        // Count down
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = "."
+        },500)
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = ".."
+        },1000)
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = "..."
+        },2000)
+
+setTimeout(() => {
+        dynamicH2.innerHTML = "Tevredenheid"
+        dynamicH2Dots.innerHTML = ""
+},3000)
+
+        // Count down
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = "."
+        },3500)
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = ".."
+        },4000)
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = "..."
+        },5000)
+
+setTimeout(() => {
+        dynamicH2.innerHTML = "Je eigen leven leven"
+        dynamicH2Dots.innerHTML = ""
+},6000)
+
+        // Count down
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = "."
+        },6500)
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = ".."
+        },7000)
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = "..."
+        },8000)
+
+setTimeout(() => {
+        dynamicH2.innerHTML = "Ontspanning"
+        dynamicH2Dots.innerHTML = ""
+},9000)
+
+         // Count down
+         setTimeout(() =>{
+                dynamicH2Dots.innerHTML = "."
+        },9500)
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = ".."
+        },10000)
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = "..."
+        },11000)
+
+setTimeout(() => {
+        dynamicH2.innerHTML = "Je eigen keuzes maken"
+        dynamicH2Dots.innerHTML = ""
+},12000)
+
+        // Count down
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = "."
+        },12500)
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = ".."
+        },13000)
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = "..."
+        },14000)
+
+setTimeout(() => {
+        dynamicH2.innerHTML = "Weten wat je wilt"
+        dynamicH2Dots.innerHTML = ""
+},15000)
+
+        // Count down
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = "."
+        },15500)
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = ".."
+        },16000)
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = "..."
+        },17000)
+        
+
+setTimeout(() => {
+        dynamicH2.innerHTML = "Rust in je hoofd"
+        dynamicH2Dots.innerHTML = ""
+},18000)
+
+        // Count down
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = "."
+        },18500)
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = ".."
+        },19000)
+        setTimeout(() =>{
+                dynamicH2Dots.innerHTML = "..."
+        },20000)
+        
+
+setTimeout(() => {
+        dynamicH2.innerHTML = "Waar wil jij je op focusen?"
+        dynamicH2Dots.innerHTML = ""
+
+        const CTAsubHeader = document.getElementById("call-to-action-sub-header")
+        CTAsubHeader.style.display = "none"
+},21000)
+};
+
+
+
+
 
 // Main header CTA
 
@@ -108,7 +225,7 @@ if(User){
         const select = selectGoal.options
         const option = select[select.selectedIndex].innerHTML
         localStorage.setItem("Goal", option);
-        window.open("../Inspiratie.html", "_self")
+        window.open("../inspiratie.html", "_self")
           };
       });
 };

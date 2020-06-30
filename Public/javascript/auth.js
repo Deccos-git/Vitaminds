@@ -3,6 +3,22 @@ const id = Math.random()
 const idAlpha = id.toString(36)
 const idClean = idAlpha.replace("0.", "")
 
+// Cookies notice
+const cookieDiv = document.getElementById("cookie-notice")
+
+function cookiesOK(){
+      localStorage.setItem("Cookies", "OK")
+        cookieDiv.style.display = "none"
+}
+
+const cookies = localStorage.getItem("Cookies")
+
+if(cookies == "OK"){
+        if(cookieDiv != null){
+        cookieDiv.style.display = "none"
+        };
+}
+
 // Inlog/uitlog verbergen
 const login = document.getElementById("button-login")
 const logout = document.getElementById("button-logout")
@@ -605,7 +621,7 @@ const selectGoalBar = document.createElement("select")
     } else {
       // No auth (visitor)
 
-      legendP.innerHTML = "Mentale fitheid begint met een inspirerend doel."
+      legendP.innerHTML = "Waar wil je je op focussen?"
 
       db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
         querySnapshot.forEach(doc1 => {
@@ -683,7 +699,7 @@ const selectGoalBar = document.createElement("select")
       }).then(() => {
     
         if(naamArray.includes(auth) == false){
-          legendP.innerHTML = `${authClean}, Mentale fitheid begint met een inspirerend doel`
+          legendP.innerHTML = `Waar wil je je op focussen, ${authClean}?`
 
           db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {

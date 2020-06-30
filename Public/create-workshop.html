@@ -14,12 +14,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="keywords" content="Levensvragen">
-    <meta name="description" content="Inspiratie voor jouw levensvragen">
-    <Title> Vitaminds - Inspiratie voor jouw levensvragen</title>
+    <meta name="keywords" content="workshops, mentale fitheid">
+    <meta name="description" content="Workshops voor mentale fitheid">
+    <Title> Vitaminds - Creeer een workshop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Style/style.css">
-    <link rel="stylesheet" href="Style/inspiratie.css">
+    <link rel="stylesheet" href="Style/workshops.css">
     <link rel="shortcut icon" href="images/Favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -28,6 +28,24 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
     <script>src="https://www.gstatic.com/firebasejs/6.5.0/firebase-analytics.js"</script>
+    <!-- Tiny MCE -->
+    <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        height: 400,
+        selector: '.tiny-mce',
+        toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | media',
+        plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, media',
+        toolbar_mode: 'floating',
+        plugin_preview_width: 720,
+        forced_root_block : false,
+        paste_preprocess: function(plugin, args) {
+          console.log(args.content);
+          args.content += ' preprocess';
+        }
+      });
+    </script>
+    <!-- End Tiny MCE -->
   </head>
 
   <body>
@@ -90,42 +108,75 @@
     </div>
   </nav>
   
-<!-- Filter
-<h1 >Inspiratie</h1>
-<select id="inspiratiemenu"></select>
-<button class="button-menu" onclick="filterMenu(this)">Filter</button> -->
 
-<h1>Inspiratie</h1>
+<h1>Creeer een workshop</h1>
 
-<!--Goals-->
-<h2 id="goals-subtitle">Doelen</h2>
+<section id="create-workshop-section">
 
-<main id="levensvraag-artikel-ouyter-div"></main>
+    <div id="edit-or-new-outer-div">
+        <p>Creeer een nieuwe workshop of bestaande workshop aanpassen?</p>
+        <div id="select-new-or-edit-div">
+            <select id="edit-workshop">
+                <option value="new-workshop">Nieuwe workshop creeren</option>
+            </select>
+        </div>
+        <button onclick="selectNewOrEdit()">Selecteer</button>
+    </div>  
 
-<!--Buildingblocks-->
-<h2 id="buildingblocks-subtitle">Bouwstenen</h2>
+    <div id="create-new-workshop-outer-div">
+        <h3>Selecteer een banner plaatje</h3>
 
-<section id="theme-article-outer-div">
+        <h3>Wat is de titel van je workshop?</h3>
+        <input type="text" id="workshop-title" placeholder="Inspirerende titel">
 
-<!-- Most grateful place -->
-<div class="levensvraag-artikel-section">
-  <div class="levensvraag-artikel-header">
-    <img class="header-image-article" src="images/avontuur16.jpg" alt="artikel over dankbaarheid">
-  </div>
-  <div>
-    <h5 class="title-sub" id="titleSub-Grateful"></h5>
-    <h2 class="titelTekst">De meest dankbare plek op het internet</h2>
-  </div>
-  <button class="button-algemeen"><a href="/Inspiratie/meest-dankbare-plek.html">Bekijk</a></button>
-</div>
+        <h3>Welke bijdrage wil je leveren aan de deelnemers van deze workshop?</h3>
+        <div class="pointer-div">
+            <p> <i>Tip: maak een opsomming van de leerdoelen. Dat maakt het overzichtelijk.</i> </p>
+            <p> <i>Tip: Voeg een leuk en toepasselijk <a href="https://www.pexels.com/nl-nl/" target="_blank"> plaatje</a> toe. Dat maakt je teksten mooier om te zien en leuker om te lezen.</i> </p>
+            <p>Meer tips?</p>
+        </div>
+        <div class="tiny-mce" id="editor1"placeholder="Wat kunnen je deelnemers leren in deze workshop?"></div>
+
+        <h3>Voorproefje van de eerste stap</h3>
+        <div class="tiny-mce" id="editor2" placeholder="Wat kunnen je deelnemers leren in de eerste stap van je workshop?"></div>
 
 
+        <div>
+            <button id="button-step-one" onclick="stepOne()">Voeg een stap toe</button>
+        </div>
+    </div>
 
 </section>
 
-<!-- Goal legend -->
-<div id="goal-legend-outer-div"></div>
-<div id="minimized-legend"></div>
+<section id="step-overview">
+    <div id="step-one-outer-div">
+        <h2>Stap 1</h2>
+        <h3>Geef deze stap een titel</h3>
+        <input type="text" id="step-one-title" placeholder="Inspirerende titel">
+
+        <h3>Wat kunnen deelnemers tijdens deze stap leren?</h3>
+        <div class="tiny-mce" id="editor3" placeholder="Wat kunnen je deelnemers leren in deze stap?"></div>
+
+        <h3>Wat wil je dat de deelnemers uit deze stap meenenem?</h3>
+        <div class="tiny-mce" id="editor4" placeholder="Wat mogen de deelnemers noteren in hun Digimind?"></div>
+
+        <button id="button-step-two" onclick="stepTwo()">Voeg nog een stap toe</button>
+
+    </div>
+</section>
+
+<div id="create-workshop-tool-bar">
+    <button id="saveWorkshop" onclick="saveWorkshop()">Opslaan(set)</button>
+    <p class="workshop-notification" id="workshop-saved-set-notification">Opgeslagen</p>
+    <button id="updateWorkshop" onclick="updateWorkshop()">Opslaan(update)</button>
+    <p class="workshop-notification" id="workshop-saved-updated-notification">Opgeslagen</p>
+    <button id="preview-workshop" onclick="previewWorkshop()">Preview</button>
+    <button id="publish-workshop" onclick="publishWorkshop()">Publiceer</button>
+    <p class="workshop-notification" id="workshop-published-notification">Gepubliceerd</p>
+    <div></div>
+</div>
+
+
 
 <!-- footer -->
 <footer class="footer">
@@ -144,7 +195,7 @@
       <script type="text/javascript" src="javascript/firebase.js"></script>
       <script type="text/javascript" src="javascript/auth.js"></script>
       <script type="text/javascript" src="javascript/index.js"></script>
-      <script type="text/javascript" src="javascript/inspiratie.js"></script>
+      <script type="text/javascript" src="javascript/workshops.js"></script>
     </body>
   </html>
   
