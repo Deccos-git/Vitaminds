@@ -362,7 +362,26 @@
     background-color: #a7bdbd;
 }
 
+#select-paragraph-coach-insight-levensvraag{
+    border-color: #cccccc;;
+}
+
+#paragraph-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    background-color: #a7bdbd;
+    width: 100%;
+}
+
 #paragraph-list-theme p{
+    font-size: 18px;
+    margin-top: 0px;
+    cursor: pointer;
+}
+
+#paragraph-list p{
     font-size: 18px;
     margin-top: 0px;
     cursor: pointer;

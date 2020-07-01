@@ -306,13 +306,12 @@ db.collection("Themas").where("Eigenaar", "==", "Vitaminds").get().then(querySna
     };
 }); 
 
-// Levensvraag artikelen detailpagina
+// Individual levensvraag page
 
     // Title, header-image and summary
 const title = document.getElementById("title-article")
 const summary = document.getElementById("summary-article")
 const insightsTitle = titel
-const hiddenTitleArticle = document.getElementById("hidden-title-div")
 const titelHead = document.getElementsByTagName("title")
 const metaKeywords = document.getElementById("meta-keywords")
 const metaDescription = document.getElementById("meta-description")
@@ -322,11 +321,17 @@ const facebookUrl = document.getElementById("facebook-url")
 const facebookTitle = document.getElementById("facebook-title")
 const facebookDescription = document.getElementById("facebook-description")
 const facebookImg = document.getElementById("facebook-img")
+const paragraphListLevensvraag= document.getElementById("paragraph-list")
+const coachInsightsLevensvraag = document.getElementById("coach-insights")
+const paragrphListInsightsLevensvraag = document.getElementById("paragraph-list-insights")
+const selectParagraphCoachInsightLevensvraag = document.createElement("select")
+    selectParagraphCoachInsightLevensvraag.setAttribute("id", "select-paragraph-coach-insight-levensvraag")
 
 
 db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
+        const paragraphs = doc.data().Paragraphs
         const titleArticle = doc.data().Levensvraag
         const summaryArticle = doc.data().Summary
         const keywords = doc.data().Keywords
@@ -334,10 +339,57 @@ db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(query
 
         title.innerHTML = titleArticle
         summary.innerHTML = summaryArticle
-
         headerImg.src = headerImage
 
         headerDiv.appendChild(headerImg)
+
+        //Paragraphs in article summary
+        paragraphs.forEach(paragraph => {
+
+            const p = document.createElement("p")
+                p.setAttribute("class", "menu-paragraph-item")
+
+            p.innerHTML = paragraph
+
+            paragraphListLevensvraag.appendChild(p)
+
+            const pTitle = p.innerText
+
+            p.style.display = "none"
+
+            db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragraph", "==", pTitle).orderBy("Timestamp", "asc").get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+            
+                    p.style.display = "block"
+                })
+            });
+        });
+
+        // Paragraphs in article as subtitles
+        paragraphs.forEach(paragraph => {
+
+            const parraDiv = document.createElement("div")
+                parraDiv.setAttribute("class", "article-paragraphs")
+
+            const parra = document.createElement("h2")
+
+            parra.innerHTML = paragraph
+
+            coachInsightsLevensvraag.appendChild(parraDiv)
+            parraDiv.appendChild(parra)
+        });
+
+            // Paragraphs in select coach insight
+
+            paragraphs.forEach(paragraph => {
+
+                const option = document.createElement("option")
+     
+                 option.innerHTML = paragraph
+     
+                 paragrphListInsightsLevensvraag.appendChild(selectParagraphCoachInsightLevensvraag)
+                 selectParagraphCoachInsightLevensvraag.appendChild(option)
+             });
 
         // Edit summary
         const editDiv = document.createElement("div")
@@ -387,11 +439,23 @@ db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(query
     })
 }).then(() => {   
 
+    // Append insight to paragraph
+
+    const paragraphList = document.getElementsByClassName("article-paragraphs")
+
+    const paraArray = Array.from(paragraphList)
+
+    paraArray.forEach(parra => {
+
+        parra.style.display = "none"
+
+        const parraTitle = parra.innerText
+
     // Loading Insight levensvraag articles
 
 const DOM = document.getElementById("coach-insights")
 
-db.collection("Insights").where("LevensvraagArtikel", "==", titel).orderBy("Timestamp", "asc").get().then(querySnapshot => {
+db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragraph", "==", parraTitle).orderBy("Timestamp", "asc").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
         const titelInsight = doc.data().Titel
         const body = doc.data().Body
@@ -399,6 +463,8 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).orderBy("Time
         const thema = doc.data().Thema
         const levensvraagArtikel = doc.data().LevensvraagArtikel
         const themeArtikel = doc.data().ThemeArtikel
+
+        parra.style.display = "block"
 
         db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
@@ -477,7 +543,6 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).orderBy("Time
 
                     // Auth has no goal
                     auth.onAuthStateChanged(User =>{
-                        if(User){
                         db.collection("Vitaminders").doc(User.uid).get().then(doc => {
 
                             const auth = doc.data().Gebruikersnaam
@@ -497,12 +562,11 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).orderBy("Time
 
                     CTAnoGoalDiv.addEventListener("click", () => {
                         window.open("../Vitaminders/" + auth, "_self");
-                    })
+                    });
 
                     localStorage.setItem("DigimindGoal", goal)
 
-                            })
-                        };
+                        })
                     });
 
                     // Auth has goal(s)
@@ -527,7 +591,7 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).orderBy("Time
                                     toevoegenLevensles.innerHTML = `Heb je iets geleerd over "${levensvraag}" ?`
 
                             })
-                        })
+                        });
                         
                     } else {
                          // Visitor
@@ -562,8 +626,8 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).orderBy("Time
                     })
 
                     CTAvisitorDiv.appendChild(CTAvisitor)
-                   };
-                    }
+                        };
+                    };
                 });
 
                 // Insights title
@@ -572,13 +636,14 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).orderBy("Time
                             const naam = doc.data().GebruikersnaamClean
 
                             const sectionTitle = document.getElementById("insight-title")
-
+                            if(sectionTitle != null){
                                     // Exemptions for this title
                             if(titel == "Zelfliefde"){
                                 sectionTitle.innerHTML = `${naam},<br> geef een tip voor meer<br> ${titel}`
                             } else {
                             sectionTitle.innerHTML = `${naam},<br> geef je professionele inzicht over:<br> ${titel}`
                             };
+                        };    
                     })
                 })
 
@@ -605,9 +670,8 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).orderBy("Time
             
                             opgeslagen.addEventListener("click", () => {
                                 window.open("../Vitaminders/" + auth + ".html", "_self");
-                            })       
-                        
-                    })
+                        });       
+                    });
                 });
                 
                 // Display read more of this theme button if read more is set
@@ -628,14 +692,14 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).orderBy("Time
                 readMore.addEventListener("click", () => {
                     textDiv.style.maxHeight = "max-content"
                     readMore.style.display = "none"
-                })
+                });
 
 
                 // Loader
                 const loader = document.getElementById("loader")
                     loader.style.display = "none"
 
-                DOM.appendChild(outerDiv)
+                parra.appendChild(outerDiv)
                 outerDiv.appendChild(metaDiv)
                 metaDiv.appendChild(metaPhoto)
                 metaDiv.appendChild(metaName)
@@ -648,14 +712,14 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).orderBy("Time
 
                  // Append "read more" if max height is > 300px
                     if(textDiv.offsetHeight >= 300){
-                        DOM.appendChild(readMoreDiv)
+                        parra.appendChild(readMoreDiv)
                         readMoreDiv.appendChild(readMore)
                         textDiv.style.maxHeight = "290px"
                         textDiv.style.overflow = "hidden"
                         outerDiv.style.paddingBottom = "50px"
                     };
 
-                DOM.appendChild(socialDiv)
+                parra.appendChild(socialDiv)
                 socialDiv.appendChild(themaDiv)
                 themaDiv.appendChild(themaH3)
                 themaDiv.appendChild(themaP)
@@ -673,6 +737,26 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).orderBy("Time
                 toevoegenLevenslesOuterDiv.appendChild(CTAnoGoalDiv)
                 toevoegenLevenslesOuterDiv.appendChild(opgeslagen)
             
+                // Menu scroll to paragraph
+
+            const menuItem = document.getElementsByClassName("menu-paragraph-item")
+            const paragraphTitle = document.getElementsByClassName("article-paragraphs")
+
+            const menuItemArray = Array.from(menuItem)
+
+            menuItemArray.forEach(menu => {
+
+                const paragraphTitleArray = Array.from(paragraphTitle)
+
+                paragraphTitleArray.forEach(para => {
+
+                    if(menu.innerText == para.firstElementChild.innerText){
+                        menu.addEventListener("click", () => {
+                            para.scrollIntoView()
+                        });
+                    };
+                })
+            });
 
                 // User role
                     // Visitor
@@ -697,11 +781,12 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).orderBy("Time
                     
                 if(coachData != auth){
 
+                    if(editIcon != undefined){
                     editIcon.style.display = "none"
-
-                }
-                            })
-                        });
+                };
+                    };
+                        })
+                            });
 
                         // Admin
 
@@ -714,75 +799,14 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).orderBy("Time
                             editIcon.style.display = "flex"
         
                                 };
-                            })
+                            });
                         });
-                    }) 
-                })
-            })
-        })
+                    });
+                });
+            });
+        });
     });
-
-// Coach insights theme examples 
-const DOMlist = document.getElementById("theme-list-insights")
-const category = document.getElementById("categorieSelectie")
-
-db.collection("Themas").where("Levensvragen", "array-contains", titel).get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-        const themas = doc.data().Thema
-
-            const p = document.createElement("p")
-
-            p.innerHTML = themas
-
-            DOMlist.appendChild(p)
-
-            p.addEventListener("click", () => {
-                window.open("../Theme-articles/" + themas + ".html", "_self")
-            })
-
-                // Loading Thema's in input
-
-                const category = document.getElementById("categorieSelectie")
-
-                const divCat = document.createElement("div")
-                divCat.setAttribute("class", "category-div")
-        const input = document.createElement("input")
-                input.type = "radio"
-                input.setAttribute("class", "category-input")
-                input.setAttribute("id", themas)  
-                input.name = "Categorie"
-                input.value = themas
-                input.innerHTML = themas
-        const label = document.createElement("label")
-                label.setAttribute("for", themas) 
-                label.innerHTML = themas
-
-        category.appendChild(divCat)
-        divCat.appendChild(input)
-        divCat.appendChild(label)
-    })
 });
-    //No theme option
-        const divNoCat = document.createElement("div")
-                divNoCat.setAttribute("class", "category-div")
-        const noInput = document.createElement("input")
-                noInput.type = "radio"
-                noInput.setAttribute("class", "category-input")
-                noInput.setAttribute("id", "Geen") 
-                noInput.setAttribute("checked", "checked") 
-                noInput.name = "Categorie"
-                noInput.value = "Geen"
-                noInput.innerHTML = "Geen"
-        const noLabel = document.createElement("label")
-                noLabel.setAttribute("for", "Geen") 
-                noLabel.innerHTML = "Geen"
-
-                if (category != null){
-        category.appendChild(divNoCat)
-        divNoCat.appendChild(noInput)
-        divNoCat.appendChild(noLabel)
-            }
-
 
 
 // Saving coach insights to database
@@ -804,16 +828,12 @@ function nieuwepostsubmit(){
                     titelInput.scrollIntoView()
                 }
 
+                const paragraphSelect = document.getElementById("select-paragraph-coach-insight-levensvraag")
+
+                const option = paragraphSelect.options
+                const selected = option[option.selectedIndex].innerHTML
+
                 let nieuwePostBodyVar = tinyMCE.get('tiny-mce').getContent()
-
-                const cat = document.getElementsByClassName("category-input")
-                catArray = Array.from(cat)
-
-                catArray.forEach(c => {
-                        const check = c.checked
-
-                        if (check == true){
-                               const categorie = c.value
 
                                 insightsRef.set({
                                     Titel: nieuwePostTitelVar,
@@ -823,12 +843,10 @@ function nieuwepostsubmit(){
                                     LevensvraagArtikel: titel,
                                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                                     Type: "Insight-levensvraag",
-                                    Thema: categorie,
+                                    Paragraph: selected,
                                     Content: "Text",
-                                })
-                            }
-
-                        })
+                                });
+                         
                         //Storing insight in levensvraag
                 db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
                     querySnapshot.forEach(doc1 => {
@@ -837,13 +855,13 @@ function nieuwepostsubmit(){
                             Insights: firebase.firestore.FieldValue.arrayUnion(nieuwePostTitelVar)
 
                                 })
-                            })
+                            });
                         }).then(() => {
                             location.reload()
-                        })
-                    })     
-                }
-        })
+                        });
+                    }) ;    
+                };
+        });
 };
 
  // Toevoegen aan levensles verwerken in database
@@ -950,8 +968,6 @@ function inspirerend(elem){
 
 // Individual theme article page
 
-const paragrphListInsights = document.getElementById("paragraph-list-insights")
-const selectParagraphCoachInsight = document.createElement("select")
 const DOMparagraph = document.getElementById("paragraph-list-insights")
 const titleThemeArticle = document.getElementById("title-theme-article")
 const summaryThemeArticle = document.getElementById("subtitel-theme-article-h2")
@@ -962,10 +978,15 @@ const metaKeywordsThemePage = document.getElementById("meta-keywords-theme-page"
 const metaDescriptionThemePage = document.getElementById("meta-description-theme-page")
 const paragraphListTheme = document.getElementById("paragraph-list-theme")
 const coachInsights = document.getElementById("coach-insights-theme")
+const paragrphListInsights = document.getElementById("paragraph-list-insights")
+const selectParagraphCoachInsight = document.createElement("select")
+    selectParagraphCoachInsight.setAttribute("id", "select-paragraph-coach-insight-theme")
+
 
 
 db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
+
         const paragraphs = doc.data().Paragraphs
         const theme = doc.data().Thema
         const summary = doc.data().Summary
@@ -979,7 +1000,7 @@ db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => 
         paragraphs.forEach(paragraph => {
 
             const p = document.createElement("p")
-                p.setAttribute("class", "menu-paragraph-item")
+                p.setAttribute("class", "menu-paragraph-item-theme")
 
             p.innerHTML = paragraph
 
@@ -995,14 +1016,13 @@ db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => 
                     p.style.display = "block"
                 })
             });
-            
-        })
+        });
 
         // Paragraphs in article as subtitles
         paragraphs.forEach(paragraph => {
 
             const parraDiv = document.createElement("div")
-                parraDiv.setAttribute("class", "article-paragraphs")
+                parraDiv.setAttribute("class", "article-paragraphs-theme")
 
             const parra = document.createElement("h2")
 
@@ -1011,7 +1031,7 @@ db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => 
             coachInsights.appendChild(parraDiv)
             parraDiv.appendChild(parra)
             
-        })
+        });
     
 
         // Paragraphs in select coach insight
@@ -1024,7 +1044,7 @@ db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => 
 
             paragrphListInsights.appendChild(selectParagraphCoachInsight)
             selectParagraphCoachInsight.appendChild(option)
-        })
+        });
 
         auth.onAuthStateChanged(User =>{
             db.collection("Vitaminders").doc(User.uid).get().then(doc => {
@@ -1033,7 +1053,7 @@ db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => 
                     coachInputTitle.innerHTML = `${naam},<br> geef je professionele inzicht over:<br> ${titel}`
 
             })
-        })
+        });
 
         // Pagetitle & meta's & facebook crawl
         const facebookUrl = document.getElementById("facebook-url")
@@ -1056,7 +1076,7 @@ db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => 
 
         // Append insight to paragraph
 
-        const paragraphList = document.getElementsByClassName("article-paragraphs")
+        const paragraphList = document.getElementsByClassName("article-paragraphs-theme")
 
         const paraArray = Array.from(paragraphList)
 
@@ -1175,7 +1195,7 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
 
                     CTAnoGoalDiv.addEventListener("click", () => {
                         window.open("../Vitaminders/" + auth, "_self");
-                    })
+                    });
 
                     localStorage.setItem("DigimindGoal", goal)
 
@@ -1201,11 +1221,9 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                                     toevoegenLevenslesButtonDiv.style.display = "block"
                                     toevoegenLevensles.innerHTML = `Heb je iets geleerd over "${levensvraag}" ?`
                             })
-                        })
+                        });
                         // Visitor
                     } else {
-
-                        console.log("test")
                         // Geen goal in storage
                         if(goal == null || goal == "Geen doel selecteren"){
                             toevoegenLevensles.innerHTML = `Heb je iets geleerd over jezelf?`
@@ -1282,9 +1300,8 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
             
                             opgeslagen.addEventListener("click", () => {
                                 window.open("../Vitaminders/" + auth + ".html", "_self");
-                            })       
-                        
-                    })
+                        })       
+                    });
                 });
                 
                 // Display read more of this theme button if read more is set
@@ -1305,7 +1322,7 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                 readMore.addEventListener("click", () => {
                     textDiv.style.maxHeight = "max-content"
                     readMore.style.display = "none"
-                })
+                });
 
                  // Loader
                  const loader = document.getElementById("loader")
@@ -1348,11 +1365,11 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                 toevoegenLevenslesOuterDiv.appendChild(CTAvisitorDiv)
                 toevoegenLevenslesOuterDiv.appendChild(CTAnoGoalDiv)
                 toevoegenLevenslesOuterDiv.appendChild(opgeslagen)
-            });
+            
 
             // Menu scroll to paragraph
 
-            const menuItem = document.getElementsByClassName("menu-paragraph-item")
+            const menuItem = document.getElementsByClassName("menu-paragraph-item-theme")
             const paragraphTitle = document.getElementsByClassName("article-paragraphs")
 
             const menuItemArray = Array.from(menuItem)
@@ -1384,6 +1401,7 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                         })
                     };
                 });
+            
                    //Non auth
 
                    const coachData = outerDiv.dataset.coach
@@ -1397,10 +1415,9 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                     if(editIcon != undefined){
                     editIcon.style.display = "none"
                     };
-
-                }
+                        };
                             })
-                        });
+                                });
 
                         // Admin
 
@@ -1415,11 +1432,12 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                                 };
                             })
                         });
-                    }) 
-                });
-            })
-        })
+                    });
+                }); 
+            });
+        });
     });
+});
 
 // Saving coach insights to database
 
@@ -1440,6 +1458,11 @@ function nieuwepostsubmitThemePage(){
                     titelInput.scrollIntoView()
                 }
 
+                const paragraphSelect = document.getElementById("select-paragraph-coach-insight-theme")
+
+                const option = paragraphSelect.options
+                const selected = option[option.selectedIndex].innerHTML
+
                 let nieuwePostBodyVar = tinyMCE.get('tiny-mce').getContent()
 
                                 insightsRef.set({
@@ -1450,23 +1473,23 @@ function nieuwepostsubmitThemePage(){
                                     ThemeArtikel: titel,
                                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                                     Type: "Insight-theme-article",
+                                    Paragraph: selected,
                                     Content: "Text"
-                                })
+                                });
 
                                            //Storing insight in theme-article
                 db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => {
                     querySnapshot.forEach(doc1 => {
 
-                        console.log(nieuwePostTitelVar)
 
                         db.collection("Themas").doc(doc1.id).update({
                             Insights: firebase.firestore.FieldValue.arrayUnion(nieuwePostTitelVar)
 
-                                })
+                                });
                             })
                         }).then(() => {
                             location.reload()
-                        })
+                        });
                     })     
                 }
         })
