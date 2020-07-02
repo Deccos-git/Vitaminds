@@ -65,7 +65,7 @@ dynamicH2.innerHTML = "Posiviteit"
         },2000)
 
 setTimeout(() => {
-        dynamicH2.innerHTML = "Tevredenheid"
+        dynamicH2.innerHTML = "Geluk"
         dynamicH2Dots.innerHTML = ""
 },3000)
 
@@ -97,7 +97,7 @@ setTimeout(() => {
         },8000)
 
 setTimeout(() => {
-        dynamicH2.innerHTML = "Ontspanning"
+        dynamicH2.innerHTML = "Los laten"
         dynamicH2Dots.innerHTML = ""
 },9000)
 

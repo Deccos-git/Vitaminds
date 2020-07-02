@@ -6,8 +6,6 @@ const admin = require('firebase-admin');
 
 var cron = require('node-cron');
 
-app.use(require('prerender-node').set('prerenderServiceUrl', 'http://localhost:3000/').set('prerenderToken', 'Ab0cCom4i1KuazJ2YhDA'));
-
 var firebaseConfig = {
   apiKey: "AIzaSyB_y0DwGVL7PCB7xc5s2lSiaPCyzrGZOV4",
   authDomain: "vitaminds-78cfa.firebaseapp.com",
