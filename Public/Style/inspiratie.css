@@ -177,6 +177,17 @@
     margin-top: auto;
 }
 
+#goals-subtitle{
+    text-align: center;
+    color: #1f6565;
+}
+
+#buildingblocks-subtitle{
+    text-align: center;
+    color: #1f6565;
+    margin-top: 60px;
+}
+
 /* Levensvraag-artikelen overview */
 
 .levensvraag-artikel-section{
@@ -381,10 +392,16 @@
     cursor: pointer;
 }
 
+#paragraph-list h3{
+    font-size: 22px;
+    color: white;
+}
+
 #paragraph-list p{
     font-size: 18px;
     margin-top: 0px;
     cursor: pointer;
+    color: white;
 }
 
 .levensvraag-artikel-main-image img{
@@ -464,6 +481,10 @@
     max-width: 150px;
     cursor: pointer;
     justify-content: center;
+}
+
+.meta-div-insights p{
+    text-align: center !important;
 }
 
 .text-div-insights{
@@ -665,7 +686,7 @@
 
 #CTA-no-goal-auth P{
     font-size: 16px;
-    color: #cf6e13;
+    color: #49beb7;
 }
 
 .omschrijving-levensvraag{

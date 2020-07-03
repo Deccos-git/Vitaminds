@@ -720,9 +720,9 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
                     };
 
                 parra.appendChild(socialDiv)
-                socialDiv.appendChild(themaDiv)
-                themaDiv.appendChild(themaH3)
-                themaDiv.appendChild(themaP)
+                // socialDiv.appendChild(themaDiv)
+                // themaDiv.appendChild(themaH3)
+                // themaDiv.appendChild(themaP)
                 socialDiv.appendChild(inspirationalDiv)
                 inspirationalDiv.appendChild(inspirationalH3)
                 inspirationalDiv.appendChild(inspirationalImg)

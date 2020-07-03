@@ -23,6 +23,7 @@ admin.initializeApp(firebaseConfig);
 
 // const urlencodedParser = bodyParser.urlencoded({extended: true});
 
+
 // Levensvraag artikelen aanmaken op basis van URL
 app.get('/Workshops/:id',function(req,res)
 {

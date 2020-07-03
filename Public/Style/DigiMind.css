@@ -227,6 +227,8 @@
     min-width: 170px;
     max-width: 170px;
     background-color:  #fff;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 .descriptie p{
@@ -235,11 +237,12 @@
 }
 
 #menuSub li{
-    background-color: #122b4613;
     border-bottom: 2px solid #fff;
     padding: 5px 0px 5px 0px;
     min-width: 170px;
     max-width: 170px;
+    border-bottom-right-radius: 15px;
+    border-top-right-radius: 15px;
 }
 
 #MKA{
@@ -1832,6 +1835,10 @@
 
     .inner-div-contributions {
         width: 70%;
+    }
+
+    #nieuweO input {
+        width: 100%;
     }
 
 }

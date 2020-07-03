@@ -526,6 +526,8 @@ if(code.style.display = "none"){
 // Goal in legend
 
 const goalLegend = document.getElementById("goal-legend-outer-div")
+const goalBarInnerDiv = document.createElement("div")
+  goalBarInnerDiv.setAttribute("id", "goal-bar-inner-div")
 const minimizeDLegend = document.getElementById("minimized-legend")
 const legendSelect = document.createElement("select")
   legendSelect.setAttribute("id", "legend-select")
@@ -585,11 +587,12 @@ const selectGoalBar = document.createElement("select")
           startButtonBar.innerHTML = "Selecteer"
 
           goalLegend.appendChild(legendFocus)
-          goalLegend.appendChild(legendSelect)
+          goalLegend.appendChild(goalBarInnerDiv)
+          goalBarInnerDiv.appendChild(legendSelect)
           legendSelect.appendChild(allOptions)
           legendSelect.appendChild(legendOptions)
-          goalLegend.appendChild(startButtonBar)
-          goalLegend.appendChild(minimizeLegend)
+          goalBarInnerDiv.appendChild(startButtonBar)
+          goalBarInnerDiv.appendChild(minimizeLegend)
 
           //Filter
           startButtonBar.addEventListener("click", () => {

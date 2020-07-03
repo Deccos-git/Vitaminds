@@ -598,6 +598,10 @@ ul{
   color: #aaaaaa;
 }
 
+#goal-bar-inner-div{
+  display: flex;
+}
+
 #legend-select{
   font-size: 16px;
   margin: 0px;
@@ -1156,6 +1160,12 @@ ul{
   margin-top: 50px;
 }
 
+.sub-title{
+  margin: -30px 0px 50px 0px;
+  font-size: 23px;
+  color: #122b46;
+}
+
 /* layout pages */
 
 .section-1{
@@ -1426,7 +1436,7 @@ margin: 0px 0px 30px 0px;
   }
 
   #minimize-legend {
-    margin: 5px !important;
+    margin: 5px 5px 5px auto !important;
     align-self: flex-end;
   }
 
@@ -1463,5 +1473,11 @@ margin: 0px 0px 30px 0px;
   #begin h2{
     font-size: 30px;
     color: #122b46;
+  }
+
+  #goal-bar-inner-div{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
   }
 } 
