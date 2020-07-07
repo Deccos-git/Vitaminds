@@ -73,8 +73,6 @@
         <div id="coach-menu-main-mobile">
           <div><a href="voor-coach.html"><p class="coach-menu-main-p-mobile">Aanmelden als coach</p></a></div>
           <div><a href="kenniscentrum.html"><p class="coach-menu-main-p-mobile">Kenniscentrum coaching</p></a></div>
-          <div><a href="thema-lijst.html"><p class="coach-menu-main-p-mobile">Thema-overzicht Zelfkennis</p></a></div>
-          <div><a href="thema-coaching.html"><p class="coach-menu-main-p-mobile">Thema-overzicht Coaching</p></a></div>
         </div>
       </div>  
     </div>
@@ -101,15 +99,13 @@
         <div id="coach-menu-main">
           <div><a href="voor-coach.html"><p class="coach-menu-main-p">Aanmelden als coach</p></a></div>
           <div><a href="kenniscentrum.html"><p class="coach-menu-main-p">Kenniscentrum coaching</p></a></div>
-          <div><a href="thema-lijst.html"><p class="coach-menu-main-p">Thema-overzicht Zelfkennis</p></a></div>
-          <div><a href="thema-coaching.html"><p class="coach-menu-main-p-mobile">Thema-overzicht Coaching</p></a></div>
         </div>
       </div> 
     </div>
   </nav>
   
 
-<h1>Creeer een workshop</h1>
+<h1>Maak een workshop</h1>
 
 <section id="create-workshop-section">
 
@@ -120,7 +116,7 @@
                 <option value="new-workshop">Nieuwe workshop creeren</option>
             </select>
         </div>
-        <button onclick="selectNewOrEdit()">Selecteer</button>
+        <button class="add-step" onclick="selectNewOrEdit()">Selecteer</button>
     </div>  
 
     <div id="create-new-workshop-outer-div">
@@ -142,15 +138,21 @@
 
 
         <div>
-            <button id="button-step-one" onclick="stepOne()">Voeg een stap toe</button>
+            <button class="add-step" id="button-step-one" onclick="stepOne()">Voeg een stap toe</button>
         </div>
     </div>
 
 </section>
 
 <section id="step-overview">
-    <div id="step-one-outer-div">
-        <h2>Stap 1</h2>
+
+  <!-- Step 1 -->
+    <div class="steps-outer-div" id="step-one-outer-div">
+      <div class="step-inner-div" id="step-one-inner-div">
+        <div class="title-delete-div">
+          <h2>Stap</h2>
+          <p id="delete-1" onclick="deleteStep1(this)">Delete</p>
+        </div>
         <h3>Geef deze stap een titel</h3>
         <input type="text" id="step-one-title" placeholder="Inspirerende titel">
 
@@ -160,8 +162,263 @@
         <h3>Wat wil je dat de deelnemers uit deze stap meenenem?</h3>
         <div class="tiny-mce" id="editor4" placeholder="Wat mogen de deelnemers noteren in hun Digimind?"></div>
 
-        <button id="button-step-two" onclick="stepTwo()">Voeg nog een stap toe</button>
+        <div id="add-step-or-finish-two" class="add-step-or-finish">
+          <button class="add-step" id="button-step-two" onclick="stepTwo()">Voeg nog een stap toe</button>
+          <p>- of -</p>
+          <button id="create-closing-1" onclick="createClosing(this)" class="add-step">Maak afsluiting</button>
+        </div>
+      </div>
 
+      <div class="closing-div" id="closing-1">
+        <div class="title-delete-div">
+          <h2>Afsluiting</h2>
+          <p id="delete-closing-1" onclick="deleteClosing1(this)">Delete</p>
+        </div>
+        <h3>Geef je afsluiting een titel</h3>
+        <input id="closing-title-input-1" type="text" placeholder="Titel van afsluiting">
+        <h3>Schrijf je afsluiting</h3>
+        <div class="tiny-mce" id="editor-closing-1" placeholder="Afsluiting"></div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="steps-outer-div" id="step-two-outer-div">
+      <div class="step-inner-div" id="step-two-inner-div">
+        <div class="title-delete-div">
+          <h2>Stap</h2>
+          <p id="delete-2" onclick="deleteStep2(this)">Delete</p>
+        </div>
+        <h3>Geef deze stap een titel</h3>
+        <input type="text" id="step-two-title" placeholder="Inspirerende titel">
+
+        <h3>Wat kunnen deelnemers tijdens deze stap leren?</h3>
+        <div class="tiny-mce" id="editor5" placeholder="Wat kunnen je deelnemers leren in deze stap?"></div>
+
+        <h3>Wat wil je dat de deelnemers uit deze stap meenenem?</h3>
+        <div class="tiny-mce" id="editor6" placeholder="Wat mogen de deelnemers noteren in hun Digimind?"></div>
+
+        <div id="add-step-or-finish-three" class="add-step-or-finish">
+          <button class="add-step" id="button-step-three" onclick="stepThree()">Voeg nog een stap toe</button>
+          <p>- of -</p>
+          <button id="create-closing-2" onclick="createClosing(this)" class="add-step">Maak afsluiting</button>
+        </div>
+      </div>
+
+      <div class="closing-div" id="closing-2">
+        <div class="title-delete-div">
+          <h2>Afsluiting</h2>
+          <p id="delete-closing-2" onclick="deleteClosing2(this)">Delete</p>
+        </div>
+        <h3>Geef je afsluiting een titel</h3>
+        <input id="closing-title-input-2" type="text" placeholder="Titel van afsluiting">
+        <h3>Schrijf je afsluiting</h3>
+        <div class="tiny-mce" id="editor-closing-2" placeholder="Afsluiting"></div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="steps-outer-div" id="step-three-outer-div">
+      <div class="step-inner-div" id="step-three-inner-div">
+        <div class="title-delete-div">
+          <h2>Stap</h2>
+          <p id="delete-3" onclick="deleteStep3(this)">Delete</p>
+        </div>
+        <h3>Geef deze stap een titel</h3>
+        <input type="text" id="step-three-title" placeholder="Inspirerende titel">
+
+        <h3>Wat kunnen deelnemers tijdens deze stap leren?</h3>
+        <div class="tiny-mce" id="editor7" placeholder="Wat kunnen je deelnemers leren in deze stap?"></div>
+
+        <h3>Wat wil je dat de deelnemers uit deze stap meenenem?</h3>
+        <div class="tiny-mce" id="editor8" placeholder="Wat mogen de deelnemers noteren in hun Digimind?"></div>
+
+        <div id="add-step-or-finish-four" class="add-step-or-finish">
+          <button class="add-step" id="button-step-four" onclick="stepFour()">Voeg nog een stap toe</button>
+          <p>- of -</p>
+          <button id="create-closing-3" onclick="createClosing(this)" class="add-step">Maak afsluiting</button>
+        </div>
+      </div>
+
+      <div class="closing-div" id="closing-3">
+        <div class="title-delete-div">
+          <h2>Afsluiting</h2>
+          <p id="delete-closing-3" onclick="deleteClosing3(this)">Delete</p>
+        </div>
+        <h3>Geef je afsluiting een titel</h3>
+        <input id="closing-title-input-3" type="text" placeholder="Titel van afsluiting">
+        <h3>Schrijf je afsluiting</h3>
+        <div class="tiny-mce" id="editor-closing-3" placeholder="Afsluiting"></div>
+      </div>
+    </div>
+
+     <!-- Step 4 -->
+     <div class="steps-outer-div" id="step-four-outer-div">
+      <div class="step-inner-div" id="step-four-inner-div">
+        <div class="title-delete-div">
+          <h2>Stap</h2>
+          <p id="delete-4" onclick="deleteStep4(this)">Delete</p>
+        </div>
+        <h3>Geef deze stap een titel</h3>
+        <input type="text" id="step-four-title" placeholder="Inspirerende titel">
+
+        <h3>Wat kunnen deelnemers tijdens deze stap leren?</h3>
+        <div class="tiny-mce" id="editor9" placeholder="Wat kunnen je deelnemers leren in deze stap?"></div>
+
+        <h3>Wat wil je dat de deelnemers uit deze stap meenenem?</h3>
+        <div class="tiny-mce" id="editor10" placeholder="Wat mogen de deelnemers noteren in hun Digimind?"></div>
+
+        <div id="add-step-or-finish-five" class="add-step-or-finish">
+          <button class="add-step" id="button-step-five" onclick="stepFive()">Voeg nog een stap toe</button>
+          <p>- of -</p>
+          <button id="create-closing-4" onclick="createClosing(this)" class="add-step">Maak afsluiting</button>
+        </div>
+      </div>
+
+      <div class="closing-div" id="closing-4">
+        <div class="title-delete-div">
+          <h2>Afsluiting</h2>
+          <p id="delete-closing-4" onclick="deleteClosing4(this)">Delete</p>
+        </div>
+        <h3>Geef je afsluiting een titel</h3>
+        <input id="closing-title-input-4" type="text" placeholder="Titel van afsluiting">
+        <h3>Schrijf je afsluiting</h3>
+        <div class="tiny-mce" id="editor-closing-4" placeholder="Afsluiting"></div>
+      </div>
+    </div>
+
+     <!-- Step 5 -->
+     <div class="steps-outer-div" id="step-five-outer-div">
+      <div class="step-inner-div" id="step-five-inner-div">
+        <div class="title-delete-div">
+          <h2>Stap</h2>
+          <p id="delete-5" onclick="deleteStep5(this)">Delete</p>
+        </div>
+        <h3>Geef deze stap een titel</h3>
+        <input type="text" id="step-five-title" placeholder="Inspirerende titel">
+
+        <h3>Wat kunnen deelnemers tijdens deze stap leren?</h3>
+        <div class="tiny-mce" id="editor11" placeholder="Wat kunnen je deelnemers leren in deze stap?"></div>
+
+        <h3>Wat wil je dat de deelnemers uit deze stap meenenem?</h3>
+        <div class="tiny-mce" id="editor12" placeholder="Wat mogen de deelnemers noteren in hun Digimind?"></div>
+
+        <div id="add-step-or-finish-six" class="add-step-or-finish">
+          <button class="add-step" id="button-step-six" onclick="stepSix()">Voeg nog een stap toe</button>
+          <p>- of -</p>
+          <button id="create-closing-5" onclick="createClosing(this)" class="add-step">Maak afsluiting</button>
+        </div>
+      </div>
+
+      <div class="closing-div" id="closing-5">
+        <div class="title-delete-div">
+          <h2>Afsluiting</h2>
+          <p id="delete-closing-5" onclick="deleteClosing5(this)">Delete</p>
+        </div>
+        <h3>Geef je afsluiting een titel</h3>
+        <input id="closing-title-input-5" type="text" placeholder="Titel van afsluiting">
+        <h3>Schrijf je afsluiting</h3>
+        <div class="tiny-mce" id="editor-closing-5" placeholder="Afsluiting"></div>
+      </div>
+    </div>
+
+    <!-- Step 6 -->
+    <div class="steps-outer-div" id="step-six-outer-div">
+      <div class="step-inner-div" id="step-six-inner-div">
+        <div class="title-delete-div">
+          <h2>Stap</h2>
+          <p id="delete-6" onclick="deleteStep6(this)">Delete</p>
+        </div>
+        <h3>Geef deze stap een titel</h3>
+        <input type="text" id="step-six-title" placeholder="Inspirerende titel">
+
+        <h3>Wat kunnen deelnemers tijdens deze stap leren?</h3>
+        <div class="tiny-mce" id="editor13" placeholder="Wat kunnen je deelnemers leren in deze stap?"></div>
+
+        <h3>Wat wil je dat de deelnemers uit deze stap meenenem?</h3>
+        <div class="tiny-mce" id="editor14" placeholder="Wat mogen de deelnemers noteren in hun Digimind?"></div>
+
+        <div id="add-step-or-finish-seven" class="add-step-or-finish">
+          <button class="add-step" id="button-step-seven" onclick="stepSeven()">Voeg nog een stap toe</button>
+          <p>- of -</p>
+          <button id="create-closing-6" onclick="createClosing6(this)" class="add-step">Maak afsluiting</button>
+        </div>
+      </div>
+
+      <div class="closing-div" id="closing-6">
+        <div class="title-delete-div">
+          <h2>Afsluiting</h2>
+          <p id="delete-closing-6" onclick="deleteClosing(this)">Delete</p>
+        </div>
+        <h3>Geef je afsluiting een titel</h3>
+        <input id="closing-title-input-6" type="text" placeholder="Titel van afsluiting">
+        <h3>Schrijf je afsluiting</h3>
+        <div class="tiny-mce" id="editor-closing-6" placeholder="Afsluiting"></div>
+      </div>
+    </div>
+
+    <!-- Step 7 -->
+    <div class="steps-outer-div" id="step-seven-outer-div">
+      <div class="step-inner-div" id="step-seven-inner-div">
+        <div class="title-delete-div">
+          <h2>Stap</h2>
+          <p id="delete-7" onclick="deleteStep7(this)">Delete</p>
+        </div>
+        <h3>Geef deze stap een titel</h3>
+        <input type="text" id="step-seven-title" placeholder="Inspirerende titel">
+
+        <h3>Wat kunnen deelnemers tijdens deze stap leren?</h3>
+        <div class="tiny-mce" id="editor15" placeholder="Wat kunnen je deelnemers leren in deze stap?"></div>
+
+        <h3>Wat wil je dat de deelnemers uit deze stap meenenem?</h3>
+        <div class="tiny-mce" id="editor16" placeholder="Wat mogen de deelnemers noteren in hun Digimind?"></div>
+
+        <div id="add-step-or-finish-eight" class="add-step-or-finish">
+          <button class="add-step" id="button-step-eight" onclick="stepEight()">Voeg nog een stap toe</button>
+          <p>- of -</p>
+          <button id="create-closing-7" onclick="createClosing(this)" class="add-step">Maak afsluiting</button>
+        </div>
+      </div>
+
+      <div class="closing-div" id="closing-7">
+        <div class="title-delete-div">
+          <h2>Afsluiting</h2>
+          <p id="delete-closing-7" onclick="deleteClosing7(this)">Delete</p>
+        </div>
+        <h3>Geef je afsluiting een titel</h3>
+        <input id="closing-title-input-7" type="text" placeholder="Titel van afsluiting">
+        <h3>Schrijf je afsluiting</h3>
+        <div class="tiny-mce" id="editor-closing-7" placeholder="Afsluiting"></div>
+      </div>
+    </div>
+
+    <!-- Step 8 -->
+    <div class="steps-outer-div" id="step-eight-outer-div">
+      <div class="step-inner-div" id="step-eight-inner-div">
+        <div class="title-delete-div">
+          <h2>Stap</h2>
+          <p id="delete-8" onclick="deleteStep8(this)">Delete</p>
+        </div>
+        <h3>Geef deze stap een titel</h3>
+        <input type="text" id="step-eight-title" placeholder="Inspirerende titel">
+
+        <h3>Wat kunnen deelnemers tijdens deze stap leren?</h3>
+        <div class="tiny-mce" id="editor17" placeholder="Wat kunnen je deelnemers leren in deze stap?"></div>
+
+        <h3>Wat wil je dat de deelnemers uit deze stap meenenem?</h3>
+        <div class="tiny-mce" id="editor18" placeholder="Wat mogen de deelnemers noteren in hun Digimind?"></div>
+        <button id="create-closing-8" onclick="createClosing(this)" class="add-step">Maak afsluiting</button>
+      </div>
+    </div>
+    
+    <div class="closing-div" id="closing-8">
+      <div class="title-delete-div">
+        <h2>Afsluiting</h2>
+        <p id="delete-closing-8" onclick="deleteClosing8(this)">Delete</p>
+      </div>
+      <h3>Geef je afsluiting een titel</h3>
+      <input id="closing-title-input-8" type="text" placeholder="Titel van afsluiting">
+      <h3>Schrijf je afsluiting</h3>
+      <div class="tiny-mce" id="editor-closing-8" placeholder="Afsluiting"></div>
     </div>
 </section>
 

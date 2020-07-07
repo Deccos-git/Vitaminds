@@ -74,8 +74,28 @@ window.addEventListener("load", () => {
     })
 });
 
-
 // Levensvraag article overview pagina
+
+    // Coach proposal
+
+    const authHeader = document.getElementById("titleSub-proposal")
+    const goalProposalOuterDiv = document.getElementById("goal-article-section-goal-proposal")
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
+
+            const userType = doc.data().Usertype
+            const nameClean = doc.data().GebruikersnaamClean
+
+            if(userType == "Coach"){
+                goalProposalOuterDiv.style.display = "flex"
+                authHeader.innerText = `${nameClean},`
+            };
+
+        });
+        };
+    });
 
 DOMarticle = document.getElementById("levensvraag-artikel-ouyter-div")
 
@@ -123,7 +143,7 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
         const titleH2 = document.createElement("h2")
             titleH2.setAttribute("class", "titelTekst")
         const buttonDiv = document.createElement("button")
-            buttonDiv.setAttribute("class", "button-algemeen")
+            buttonDiv.setAttribute("class", "button-algemeen-card")
             buttonDiv.setAttribute("onclick", "seeArticle(this)")
 
         // Dynamic title

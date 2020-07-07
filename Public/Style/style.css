@@ -531,6 +531,21 @@ ul{
    color: #008e8e;
  }
 
+ .button-algemeen-card {
+  background-color: white;
+  border: 1px #008e8e solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 18px;
+  color: #008e8e;
+  cursor: pointer;
+  margin-top: auto;
+ }
+
+ .button-algemeen-card a{
+   color: #008e8e;
+ }
+
  .button-header{
   background-color: #49beb7;
   border: 1px #49beb7 solid;
@@ -801,6 +816,7 @@ ul{
   width: 350px;
   border-radius: 0px 0px 15px 15px;
   margin: 20px;
+  padding-bottom: 20px;
   align-items: center;
   box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
 }
@@ -1480,4 +1496,17 @@ margin: 0px 0px 30px 0px;
     flex-direction: row;
     margin-bottom: 5px;
   }
+
+  .header-image {
+    background-image: url(../images/avontuur3.jpg);
+    height: auto;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 } 

@@ -19,7 +19,7 @@ db.collection("Kenniscentrum").where("Eigenaar", "==", "Vitaminds").get().then(q
         const titleH2 = document.createElement("h2")
             titleH2.setAttribute("class", "titelTekst")
         const buttonDiv = document.createElement("button")
-            buttonDiv.setAttribute("class", "button-algemeen")
+            buttonDiv.setAttribute("class", "button-algemeen-card")
             buttonDiv.setAttribute("onclick", "seeArticle(this)")
 
         headerImg.src = headerImage

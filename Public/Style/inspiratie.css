@@ -206,6 +206,10 @@
     background-color: #FFF;
 }
 
+#goal-article-section-goal-proposal{
+    display: none;
+}
+
 .levensvraag-artikel-header img{
     background-repeat: no-repeat;
     background-position: center;
@@ -279,6 +283,12 @@
 
 .mce-notification-inner {
     display: none !important;
+}
+
+#levensvraag-artikel-ouyter-div{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 #levensvraag-artikel-ouyter-div{

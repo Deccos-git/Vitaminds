@@ -55,7 +55,7 @@
 
 #paragraph-list h3{
     font-size: 18px;
-    margin-left: 30%;
+    color: white;
 }
 
 .paragraph-list-inner-div{
@@ -75,6 +75,7 @@
 .paragraph-list-inner-div p{
     margin: 0px 5px 0px 5px;
     font-size: 14px;
+    color: white;
 }
 
 #theme-list-insights{
@@ -125,6 +126,11 @@
 
 #paragraph-list{
     margin-bottom: 80px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a7bdbd;
 }
 
 .levensvraag-artikel-main-image img{
@@ -423,4 +429,10 @@
     font-size: 18px;
     text-align: left;
     letter-spacing: 1px;
+}
+
+#more-articles-knowledge-centre{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

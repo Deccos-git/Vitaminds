@@ -1,3 +1,5 @@
+/* Workshops overview */
+
 #workshops-outer-div{
     display: flex;
     justify-content: center;
@@ -38,10 +40,15 @@
     text-align: center;
 }
 
+#titleSub-workshop{
+    text-align: center;
+    margin: 30px 5px 20px 5px;
+}
+
 .titelTekst{
     color: #122b46;
     font-size: 25px;
-    margin: 50px 20px 30px 20px;
+    margin: 5px 20px 30px 20px;
 }
 
 /* Create workshop */
@@ -51,6 +58,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  z-index: 1;
   height: 40px;
   border: 1px solid #e8e8e8;
   position: sticky;
@@ -71,6 +79,23 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
+}
+
+.title-delete-div{
+    display: flex;
+    align-items: center;
+}
+
+.title-delete-div p{
+    font-size: 12px;
+    color: #ff000059;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.title-delete-div p:hover{
+    font-size: 12px;
+    color: red;
 }
 
 #step-overview{
@@ -114,11 +139,97 @@
     color: #cf6e13;
 }
 
+.add-step{
+    background-color: white;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #008e8e;
+    cursor: pointer;
+    margin: 20px 5px 20px 5px;
+}
+
 /* Workshop steps */
 
-#step-one-outer-div{
+.add-step-or-finish{
+    display: flex;
+}
+
+.add-step-or-finish p{
+    color: #008e8e;
+}
+
+.step-outer-div{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#step-one-inner-div{
     display: none;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    text-align: center;
 }
+
+#step-two-inner-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#step-three-inner-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#step-four-inner-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#step-five-inner-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#step-six-inner-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#step-seven-inner-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#step-eight-inner-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Closing section */
+
+.closing-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 30px 10px;
+}
+
+
