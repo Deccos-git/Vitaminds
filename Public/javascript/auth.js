@@ -537,6 +537,7 @@ const selectGoalBar = document.createElement("select")
   selectGoalBar.setAttribute("id", "select-goal-bar")
 
   // Minimize/maximize legend
+  if(minimizeDLegend != null){
   const minimizeLegend = document.createElement("p")
     minimizeLegend.setAttribute("id", "minimize-legend")
     minimizeLegend.setAttribute("onclick", "minimizeLegendClick()")
@@ -545,6 +546,7 @@ const selectGoalBar = document.createElement("select")
     maximizeLegend.setAttribute("onclick", "maximizeLegendClick()")
 
     minimizeDLegend.appendChild(maximizeLegend)
+
 
   minimizeLegend.innerHTML = "x"
   maximizeLegend.innerHTML = "+"
@@ -565,7 +567,7 @@ const selectGoalBar = document.createElement("select")
   const allOptions = document.createElement("option")
 
         allOptions.innerHTML = "Geen doel selecteren"
-  
+
 
   // Auth with goals
   auth.onAuthStateChanged(User =>{
@@ -614,10 +616,10 @@ const selectGoalBar = document.createElement("select")
             localStorage.setItem("GoalTitle", option)
             location.reload()
 
-                  })
-                });
-              };
-            });
+                    })
+                  });
+                };
+              });
           })
         });
       });
@@ -681,6 +683,7 @@ const selectGoalBar = document.createElement("select")
         });
       }
   });
+}
 
     // Auth has no goals yet
 

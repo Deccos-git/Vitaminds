@@ -51,6 +51,170 @@
     margin: 5px 20px 30px 20px;
 }
 
+.coach-pic-div-workshop img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-top: -20px;
+}
+
+/* Individual workshop page */
+
+#workshop-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#coach-introduction{
+    margin-bottom: 30px;
+    /* position: sticky;
+    top: 0; */
+    width: 100%;
+    cursor: pointer;
+}
+
+#coach-introduction p{
+    visibility: hidden;
+    font-size: 14px;
+    margin: 0px 5px 5px 5px;
+    /* animation-name: askMe;
+    animation-duration: 2s;
+    animation-delay: 7s;
+    animation-fill-mode: forwards; */
+}
+
+/* @keyframes askMe {
+    from {
+        visibility: hidden;
+    }
+    to {
+        visibility: visible;
+        }
+    } */
+
+#coach-pic{
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50%;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    /* animation-name: toLeft;
+    animation-duration: 4s;
+    animation-delay: 3s;
+    animation-fill-mode: forwards; */
+}
+
+/* @keyframes toLeft {
+    from {
+        margin-left: 50%;
+    }
+    to {
+        margin-left: 30px;
+        transform: translateX(0%);}
+    } */
+
+#coach-welcome{
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+#workshop-image{
+    width: 100%;
+    height: 100%;
+}
+
+#workshop-header-image{
+    width: auto;
+    height: 100%;
+}
+
+#workshop-summary{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#workshop-summary-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#steps-overview{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.step-check-div{
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid #008e8e;
+    margin-right: 15px;
+}
+
+.step-preview-inner-div{
+    display: flex;
+    align-items: center;
+}
+
+.step-introduction-div{
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    border-radius: 3px;
+    padding: 10px;
+    width: 200px;
+    height: auto;
+    margin: 10px 10px 30px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#tool-bar-div{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    border: 1px solid #e8e8e8;
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+.toolbar-inner-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.toolbar-count{
+    font-size: 16px;
+    margin: 0px;
+    text-align: center;
+    color: white;
+}
+
+#toolbar-check{
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    border: 1px solid #008e8e;
+    background-color: #008e8e;
+}
+
+#closing-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+
+}
+
 /* Create workshop */
 
 #create-workshop-tool-bar{

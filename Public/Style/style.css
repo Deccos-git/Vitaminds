@@ -176,7 +176,7 @@ ul{
   width: 120px;
   height: 40px;
   line-height: 40px;
-  font-size: 20px;
+  font-size: 16px;
   text-align: center;
   z-index: 10;
 }
@@ -1497,16 +1497,12 @@ margin: 0px 0px 30px 0px;
     margin-bottom: 5px;
   }
 
-  .header-image {
-    background-image: url(../images/avontuur3.jpg);
-    height: auto;
-    width: 100%;
-    background-repeat: no-repeat;
+  #background {
+    background-image: url(../images/avontuur3-mobile.jpg);
     background-position: center;
-    background-size: cover;
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+  }
+
+  .header-image{
+    background-image: none;
+  }
 } 
