@@ -120,7 +120,13 @@
     </div>  
 
     <div id="create-new-workshop-outer-div">
+      <h3>Wat is de titel van je workshop?</h3>
+      <input type="text" id="workshop-title" placeholder="Inspirerende titel">
+
         <h3>Selecteer een banner plaatje</h3>
+        <div>
+          <img id="selected-header-img">
+        </div>
         <button id="chosse-header-image">kies</button>
 
         <!-- Modal -->
@@ -131,33 +137,31 @@
             <label for="img-1"><img src="images/avontuur10.jpg" alt="" height= "200px" width="auto"></label>
           </div>
           <div class="select-header">
-            <input type="radio" name="select-header-img" value="img-2">
+            <input type="radio" name="select-header-img" value="img-2" id="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/Thema-artikelen%2Favontuur15.jpg?alt=media&token=0157e8cd-4406-4409-8fc5-74367385f236">
             <label for="img-2"><img src="images/avontuur15.jpg" alt="" height= "200px" width="auto"></label>
           </div>
           <div class="select-header">
-            <input type="radio" name="select-header-img" value="img-3">
+            <input type="radio" name="select-header-img" value="img-3" id="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/Thema-artikelen%2Favontuur11.jpg?alt=media&token=0157e8cd-4406-4409-8fc5-74367385f236">
             <label for="img-3"><img src="images/avontuur11.jpg" alt="" height= "200px" width="auto"></label>
           </div>
           <div class="select-header">
-            <input type="radio" name="select-header-img" value="img-4">
+            <input type="radio" name="select-header-img" value="img-4" id="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/Thema-artikelen%2Favontuur17.jpg?alt=media&token=0157e8cd-4406-4409-8fc5-74367385f236">
             <label for="img-4"><img src="images/avontuur17.jpg" alt="" height= "200px" width="auto"></label>
           </div>
           <div class="select-header">
-            <input type="radio" name="select-header-img" value="img-5">
+            <input type="radio" name="select-header-img" value="img-5" id="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/Thema-artikelen%2Favontuur19.jpg?alt=media&token=0157e8cd-4406-4409-8fc5-74367385f236">
             <label for="img-5"><img src="images/avontuur19.jpg" alt="" height= "200px" width="auto"></label>
           </div>
           <div class="select-header">
-            <input type="radio" name="select-header-img" value="img-6">
+            <input type="radio" name="select-header-img" value="img-6" id="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/Thema-artikelen%2Favontuur22.jpg?alt=media&token=0157e8cd-4406-4409-8fc5-74367385f236">
             <label for="img-6"><img src="images/avontuur22.jpg" alt="" height= "200px" width="auto"></label>
           </div>
 
           <div id="toolbar-select-header-image">
-            <button id="toolbar-select-header-image-button">Selecteer</button>
+            <button id="toolbar-select-header-image-button">Selecteer(set)</button>
+            <button id="toolbar-select-header-image-button-update">Selecteer(update)</button>
           </div>
         </div>
-
-        <h3>Wat is de titel van je workshop?</h3>
-        <input type="text" id="workshop-title" placeholder="Inspirerende titel">
 
         <h3>Kunnen de deelnemers hun eigen doel selecteren of heeft je workshop een vaststaand doel?</h3>
         <div class="pre-own-goal-div">
@@ -169,6 +173,10 @@
           <label for="pre-goal">Workshop heeft vaststaand doel</label>
         </div>
 
+        <button onclick="ownOrPreGoal()">Selecteer</button>
+
+        <div></div>
+
         <h3>Welke bijdrage wil je leveren aan de deelnemers van deze workshop?</h3>
         <div class="pointer-div">
             <p> <i>Tip: maak een opsomming van de leerdoelen. Dat maakt het overzichtelijk.</i> </p>
@@ -176,11 +184,6 @@
             <p>Meer tips?</p>
         </div>
         <div class="tiny-mce" id="editor1"placeholder="Wat kunnen je deelnemers leren in deze workshop?"></div>
-
-        <h3>Voorproefje van de eerste stap</h3>
-        <div class="tiny-mce" id="editor2" placeholder="Wat kunnen je deelnemers leren in de eerste stap van je workshop?"></div>
-
-
         <div>
             <button class="add-step" id="button-step-one" onclick="stepOne()">Voeg een stap toe</button>
         </div>
@@ -197,6 +200,8 @@
           <h2>Stap 1</h2>
           <p id="delete-1" onclick="deleteStep1(this)">Delete</p>
         </div>
+        <h3>Voorproefje van de eerste stap</h3>
+        <div class="tiny-mce" id="editor2" placeholder="Geef een korte preview van stap één"></div>
         <h3>Geef stap één een titel</h3>
         <input type="text" id="step-one-title" placeholder="Inspirerende titel">
 
@@ -233,7 +238,7 @@
           <p id="delete-2" onclick="deleteStep2(this)">Delete</p>
         </div>
         <h3>Voorproefje van stap twee</h3>
-        <div class="tiny-mce" id="editor-preview-step-two" placeholder="Wat kunnen je deelnemers leren in de tweede stap van je workshop?"></div>
+        <div class="tiny-mce" id="editor-preview-step-two" placeholder="Geef een korte preview van stap twee"></div>
         <h3>Geef stap twee een titel</h3>
         <input type="text" id="step-two-title" placeholder="Inspirerende titel">
 
@@ -270,7 +275,7 @@
           <p id="delete-3" onclick="deleteStep3(this)">Delete</p>
         </div>
         <h3>Voorproefje van stap drie</h3>
-        <div class="tiny-mce" id="editor-preview-step-two" placeholder="Wat kunnen je deelnemers leren in de derde stap van je workshop?"></div>
+        <div class="tiny-mce" id="editor-preview-step-three" placeholder="Geef een korte preview van stap drie"></div>
         <h3>Geef stap drie een titel</h3>
         <input type="text" id="step-three-title" placeholder="Inspirerende titel">
 
@@ -307,7 +312,7 @@
           <p id="delete-4" onclick="deleteStep4(this)">Delete</p>
         </div>
         <h3>Voorproefje van stap vier</h3>
-        <div class="tiny-mce" id="editor-preview-step-two" placeholder="Wat kunnen je deelnemers leren in de vierde stap van je workshop?"></div>
+        <div class="tiny-mce" id="editor-preview-step-four" placeholder="Geef een korte preview van stap vier"></div>
         <h3>Geef stap vier een titel</h3>
         <input type="text" id="step-four-title" placeholder="Inspirerende titel">
 
@@ -344,7 +349,7 @@
           <p id="delete-5" onclick="deleteStep5(this)">Delete</p>
         </div>
         <h3>Voorproefje van stap vijf</h3>
-        <div class="tiny-mce" id="editor-preview-step-two" placeholder="Wat kunnen je deelnemers leren in de vijfde stap van je workshop?"></div>
+        <div class="tiny-mce" id="editor-preview-step-five" placeholder="Geef een korte preview van stap vijf"></div>
         <h3>Geef stap vijf een titel</h3>
         <input type="text" id="step-five-title" placeholder="Inspirerende titel">
 
@@ -381,7 +386,7 @@
           <p id="delete-6" onclick="deleteStep6(this)">Delete</p>
         </div>
         <h3>Voorproefje van stap zes</h3>
-        <div class="tiny-mce" id="editor-preview-step-two" placeholder="Wat kunnen je deelnemers leren in de zesde stap van je workshop?"></div>
+        <div class="tiny-mce" id="editor-preview-step-six" placeholder="Geef een korte preview van stap zes"></div>
         <h3>Geef stap zes een titel</h3>
         <input type="text" id="step-six-title" placeholder="Inspirerende titel">
 
@@ -418,7 +423,7 @@
           <p id="delete-7" onclick="deleteStep7(this)">Delete</p>
         </div>
         <h3>Voorproefje van stap zeven</h3>
-        <div class="tiny-mce" id="editor-preview-step-two" placeholder="Wat kunnen je deelnemers leren in de zevende stap van je workshop?"></div>
+        <div class="tiny-mce" id="editor-preview-step-seven" placeholder="Geef een korte preview van stap zeven"></div>
         <h3>Geef stap zeven een titel</h3>
         <input type="text" id="step-seven-title" placeholder="Inspirerende titel">
 
@@ -455,7 +460,7 @@
           <p id="delete-8" onclick="deleteStep8(this)">Delete</p>
         </div>
         <h3>Voorproefje van stap acht</h3>
-        <div class="tiny-mce" id="editor-preview-step-two" placeholder="Wat kunnen je deelnemers leren in de achtste stap van je workshop?"></div>
+        <div class="tiny-mce" id="editor-preview-step-eight" placeholder="Geef een korte preview van stap acht"></div>
         <h3>Geef stap acht een titel</h3>
         <input type="text" id="step-eight-title" placeholder="Inspirerende titel">
 
