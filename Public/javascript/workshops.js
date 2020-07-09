@@ -158,8 +158,22 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
         const stepSixCTA = doc.data().StepSixCTA
         const stepSevenCTA = doc.data().StepSevenCTA
         const stepEightCTA = doc.data().StepEightCTA
-        const closingText = doc.data().ClosingText 
-        const closingTitle = doc.data().ClosingTitle
+        const closingOneText = doc.data().ClosingOneText 
+        const closingOneTitle = doc.data().ClosingOneTitle
+        const closingTwoText = doc.data().ClosingTwoText 
+        const closingTwoTitle = doc.data().ClosingTwoTitle
+        const closingThreeText = doc.data().ClosingThreeText 
+        const closingThreeTitle = doc.data().ClosingThreeTitle
+        const closingFourText = doc.data().ClosingFourText 
+        const closingFouritle = doc.data().ClosingFourTitle
+        const closingFiveText = doc.data().ClosingFiveText 
+        const closingFiveTitle = doc.data().ClosingFiveTitle
+        const closingSixText = doc.data().ClosingSixText 
+        const closingSixTitle = doc.data().ClosingSixTitle
+        const closingSevenText = doc.data().ClosingSevenText 
+        const closingSevenTitle = doc.data().ClosingSevenTitle
+        const closingEightText = doc.data().ClosingEightText 
+        const closingEightTitle = doc.data().ClosingEightTitle
 
         const DOM = document.getElementById("workshop-section")
 
@@ -236,7 +250,9 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const stepOneIntroductionTitle = document.createElement("h3")
                 const stepOneIntroductionP = document.createElement("p")
                 const stepOneIntroductionButton = document.createElement("button")
-                    stepOneIntroductionButton.setAttribute("class", "button-algemeen")    
+                    stepOneIntroductionButton.setAttribute("class", "button-algemeen")
+                    stepOneIntroductionButton.setAttribute("id", "step-one-button")
+                    stepOneIntroductionButton.setAttribute("onclick", "saveSet()")      
 
                 auth.onAuthStateChanged(User =>{
                     if (User){
@@ -312,7 +328,63 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const toolbarEightCheck = document.createElement("div")
                     toolbarEightCheck.setAttribute("id", "toolbar-check")
                 const saveButtonDiv = document.createElement("div")
-                const saveButton = document.createElement("button")
+                const saveOneButton = document.createElement("button")
+                    saveOneButton.setAttribute("id", "save-one-button")
+                    saveOneButton.setAttribute("onclick", "saveOne()")
+                const saveTwoButton = document.createElement("button")
+                    saveTwoButton.setAttribute("id", "save-two-button")
+                    saveTwoButton.setAttribute("onclick", "saveTwo()")
+                const saveThreeButton = document.createElement("button")
+                    saveThreeButton.setAttribute("id", "save-three-button")
+                    saveThreeButton.setAttribute("onclick", "saveThree()")
+                const saveFourButton = document.createElement("button")
+                    saveFourButton.setAttribute("id", "save-two-button")
+                    saveFourButton.setAttribute("onclick", "saveFour()")
+                const saveFiveButton = document.createElement("button")
+                    saveFiveButton.setAttribute("id", "save-five-button")
+                    saveFiveButton.setAttribute("onclick", "saveFive()")
+                    const saveSixButton = document.createElement("button")
+                    saveSixButton.setAttribute("id", "save-six-button")
+                    saveSixButton.setAttribute("onclick", "saveSix()")
+                    const saveSevenButton = document.createElement("button")
+                    saveSevenButton.setAttribute("id", "save-seven-button")
+                    saveSevenButton.setAttribute("onclick", "saveSeven()")
+                    const saveEightButton = document.createElement("button")
+                    saveEightButton.setAttribute("id", "save-eigth-button")
+                    saveEightButton.setAttribute("onclick", "saveEight()")
+                    const closingButton = document.createElement("button")
+                    closingButton.setAttribute("id", "closing-button")
+                    closingButton.setAttribute("onclick", "saveClosing()")
+
+                    saveButtonDiv.appendChild(saveOneButton)
+                    saveButtonDiv.appendChild(saveTwoButton)
+                    saveButtonDiv.appendChild(saveThreeButton)
+                    saveButtonDiv.appendChild(saveFourButton)
+                    saveButtonDiv.appendChild(saveFiveButton)
+                    saveButtonDiv.appendChild(saveSixButton)
+                    saveButtonDiv.appendChild(saveSevenButton)
+                    saveButtonDiv.appendChild(saveEightButton)
+                    saveButtonDiv.appendChild(closingButton)
+
+                    saveOneButton.innerText = "Opslaan(1)"
+                    saveTwoButton.innerText = "Opslaan(2)"
+                    saveThreeButton.innerText = "Opslaan(3)"
+                    saveFourButton.innerText = "Opslaan(4)"
+                    saveFiveButton.innerText = "Opslaan(5)"
+                    saveSixButton.innerText = "Opslaan(6)"
+                    saveSevenButton.innerText = "Opslaan(7)"
+                    saveEightButton.innerText = "Opslaan(8)"
+                    closingButton.innerText = "Opslaan(closing)"
+
+                    saveOneButton.style.display = "none"
+                    saveTwoButton.style.display = "none"
+                    saveThreeButton.style.display = "none"
+                    saveFourButton.style.display = "none"
+                    saveFiveButton.style.display = "none"
+                    saveSixButton.style.display = "none"
+                    saveSevenButton.style.display = "none"
+                    saveEightButton.style.display = "none"
+                    closingButton.style.display = "none"
 
                 toolbarOneCount.innerText = "1"
                 toolbarTwoCount.innerText = "2"
@@ -381,43 +453,57 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const stepTwoIntroductionTitle = document.createElement("h3")
                 const stepTwoIntroductionP = document.createElement("p")
                 const stepTwoIntroductionButton = document.createElement("button")
-                    stepTwoIntroductionButton.setAttribute("class", "button-algemeen")  
+                    stepTwoIntroductionButton.setAttribute("class", "button-algemeen")
+                    stepTwoIntroductionButton.setAttribute("id", "step-two-button")  
                 const stepThreeIntroductionDiv = document.createElement("div")
                     stepThreeIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const stepThreeIntroductionTitle = document.createElement("h3")
                 const stepThreeIntroductionP = document.createElement("p")
                 const stepThreeIntroductionButton = document.createElement("button")
                     stepThreeIntroductionButton.setAttribute("class", "button-algemeen")
+                    stepThreeIntroductionButton.setAttribute("id", "step-three-button")
                 const stepFourIntroductionDiv = document.createElement("div")
                     stepFourIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const stepFourIntroductionTitle = document.createElement("h3")
                 const stepFourIntroductionP = document.createElement("p")
                 const stepFourIntroductionButton = document.createElement("button")
                     stepFourIntroductionButton.setAttribute("class", "button-algemeen")
+                    stepFourIntroductionButton.setAttribute("id", "step-four-button")
                 const stepFiveIntroductionDiv = document.createElement("div")
                     stepFiveIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const stepFiveIntroductionTitle = document.createElement("h3")
                 const stepFiveIntroductionP = document.createElement("p")
                 const stepFiveIntroductionButton = document.createElement("button")
                     stepFiveIntroductionButton.setAttribute("class", "button-algemeen")
+                    stepFiveIntroductionButton.setAttribute("id", "step-five-button")
                 const stepSixIntroductionDiv = document.createElement("div")
                     stepSixIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const stepSixIntroductionTitle = document.createElement("h3")
                 const stepSixIntroductionP = document.createElement("p")
                 const stepSixIntroductionButton = document.createElement("button")
                     stepSixIntroductionButton.setAttribute("class", "button-algemeen")
+                    stepSixIntroductionButton.setAttribute("id", "step-six-button")
                 const stepSevenIntroductionDiv = document.createElement("div")
                     stepSevenIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const stepSevenIntroductionTitle = document.createElement("h3")
                 const stepSevenIntroductionP = document.createElement("p")
                 const stepSevenIntroductionButton = document.createElement("button")
                     stepSevenIntroductionButton.setAttribute("class", "button-algemeen")
+                    stepSevenIntroductionButton.setAttribute("id", "step-seven-button")
                 const stepEightIntroductionDiv = document.createElement("div")
                     stepEightIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const stepEightIntroductionTitle = document.createElement("h3")
                 const stepEightIntroductionP = document.createElement("p")
                 const stepEightIntroductionButton = document.createElement("button")
-                    stepEightIntroductionButton.setAttribute("class", "button-algemeen")    
+                    stepEightIntroductionButton.setAttribute("class", "button-algemeen")
+                    stepEightIntroductionButton.setAttribute("id", "step-eight-button")
+                const closingIntroductionDiv = document.createElement("div")
+                    closingIntroductionDiv.setAttribute("class", "step-introduction-div")
+                const closingIntroductionTitle = document.createElement("h3")
+                const closingIntroductionP = document.createElement("p")
+                const closingIntroductionButton = document.createElement("button")
+                    closingIntroductionButton.setAttribute("class", "button-algemeen")
+                    closingIntroductionButton.setAttribute("id", "closing-button")  
                     
                 // Closing div
 
@@ -491,21 +577,19 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     DOM.appendChild(stepOneIntroductionDiv)
                     stepOneIntroductionDiv.appendChild(stepOneIntroductionP)
                     stepOneIntroductionDiv.appendChild(stepOneIntroductionButton)
-                }
+                }    
 
                 // Load step one
                 if(stepOneTitle != ""){
                     stepOneIntroductionButton.addEventListener("click", () => {
 
                         toolbarOuterDiv.style.display = "flex"
-
-                        saveButtonDiv.appendChild(saveButton)
-
-                        saveButton.innerText = "Opslaan"
+                        saveOneButton.style.display = "block"
 
                         const stepOneOuterDiv = document.createElement("div")
                             stepOneOuterDiv.setAttribute("class", "step-outer-div")
                         const stepOneTitleH2 = document.createElement("h2")
+                            stepOneTitleH2.setAttribute("class", "step-title-h2")
                         const stepOneExplainerP = document.createElement("p")
                         const stepOneCTATitle = document.createElement("h3")
                         const stepOneCTAP = document.createElement("p")
@@ -539,26 +623,66 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                         stepOneOuterDiv.appendChild(stepOneInput)
 
                         stepTwoIntroductionTitle.innerText = "Volgende stap"
-                        stepTwoIntroductionP.innerText = "stepTwoIntroduction"
+                        stepTwoIntroductionP.innerText = stepTwoIntroduction
                         stepTwoIntroductionButton.innerText = "Volgende stap"
                         DOM.appendChild(stepTwoIntroductionTitle)
                         DOM.appendChild(stepTwoIntroductionDiv)
                         stepTwoIntroductionDiv.appendChild(stepTwoIntroductionP)
                         stepTwoIntroductionDiv.appendChild(stepTwoIntroductionButton)
+
+                        // Save set
+
+                    const localStorageSaveSet = localStorage.getItem("saveSet")
+
+                    console.log(localStorageSaveSet)
+
+                    if(localStorageSaveSet != "Set"){
+
+                    auth.onAuthStateChanged(User =>{
+                        if (User){
+
+                            db.collection("Vitaminders").doc(User.uid).get().then(doc1 => {
+                                const name = doc1.data().Gebruikersnaam
+                    
+                        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc().set({
+                            Workshop: titel,
+                            Gebruikersnaam: name,
+                            StepOneInput: "",
+                            StepTwoInput: "",
+                            StepThreeInput: "",
+                            StepFourInput: "",
+                            StepFiveInput: "",
+                            StepSixInput: "",
+                            StepSevenInput: "",
+                            StepEightInput: "",
+                            ClosingInput: "",
+                            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                        });
+                                    });
+                                };
+                            });
+
+                    localStorage.setItem("saveSet", "Set")
+
+                        };
                     })
                 };
 
                   // Load step two
+                  stepTwoIntroductionButton.addEventListener("click", () => {
                   if(stepTwoTitle != ""){
-                    stepTwoIntroductionButton.addEventListener("click", () => {
 
                         toolbarOneCount.innerText = "V"
                         toolbarOneCheck.style.backgroundColor = "white"
                         toolbarOneCount.style.color = "#008e8e"
 
+                        saveTwoButton.style.display = "block"
+                        saveOneButton.style.display = "none"
+
                         const stepTwoOuterDiv = document.createElement("div")
                             stepTwoOuterDiv.setAttribute("class", "step-outer-div")
                         const stepTwoTitleH2 = document.createElement("h2")
+                            stepTwoTitleH2.setAttribute("class", "step-title-h2")
                         const stepTwoExplainerP = document.createElement("p")
                         const stepTwoCTATitle = document.createElement("h3")
                         const stepTwoCTAP = document.createElement("p")
@@ -592,27 +716,94 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                         stepTwoOuterDiv.appendChild(stepTwoInput)
 
                         stepThreeIntroductionTitle.innerText = "Volgende stap"
-                        stepThreeIntroductionP.innerText = "stepThreeIntroduction"
+                        stepThreeIntroductionP.innerText = stepThreeIntroduction
                         stepThreeIntroductionButton.innerText = "Volgende stap"
                         DOM.appendChild(stepThreeIntroductionTitle)
                         DOM.appendChild(stepThreeIntroductionDiv)
                         stepThreeIntroductionDiv.appendChild(stepThreeIntroductionP)
                         stepThreeIntroductionDiv.appendChild(stepThreeIntroductionButton)
-                    })
+                    
+                } else {
+                    toolbarOneCount.innerText = "V"
+                    toolbarOneCheck.style.backgroundColor = "white"
+                    toolbarOneCount.style.color = "#008e8e"
+
+                    closingDiv.style.display = "flex"
+
+                    closingButton.style.display = "block"
+                    stepOneButton.style.display = "none"
+
+                    const closingTitleH3 = document.createElement("h3")
+                    const closingTextP = document.createElement("p")
+                    const closingInputTitle = document.createElement("h3")
+                    const closingInput = document.createElement("textarea")
+                        closingInput.setAttribute("rows", "10")
+                        closingInput.setAttribute("cols", "30")
+                        closingInput.setAttribute("placeholder", "Wat vond je van de workshop?")
+                        closingInput.setAttribute("id", "closing-input")
+                   
+                    closingTitleH3.innerText = closingOneTitle
+                    closingTextP.innerText = closingOneText
+
+                    auth.onAuthStateChanged(User =>{
+                        if (User){
+                    
+                        db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                                    const auth = doc.data().GebruikersnaamClean
+    
+                                    closingInputTitle.innerText = `Wat vond je van de workshop, ${auth}?`
+                            });
+                        }; 
+                    });
+                    
+
+                    DOM.appendChild(closingDiv)
+                    closingDiv.appendChild(closingTitleH3)
+                    closingDiv.appendChild(closingTextP)
+                    closingDiv.appendChild(closingInputTitle)
+                    closingDiv.appendChild(closingInput)
+
+                    // Save closing
+
+                    closingButton.addEventListener("click", ()  => {
+    
+                            const closingInput = document.getElementById("closing-input").value
+                            const stepOneInput = document.getElementById("step-one-input").value
+                        
+                            db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc => {
+                        
+                                    auth.onAuthStateChanged(User =>{
+                                        if (User){
+                            
+                                db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+                                    ClosingInput: closingInput,
+                                    StepOneInput: stepOneInput,
+                                            });
+                                        };
+                                    });
+                                });
+                            });
+                        });
                 };
 
+            });
+
                       // Load step three
-                      if(stepThreeTitle != ""){
                         stepThreeIntroductionButton.addEventListener("click", () => {
-    
+                            if(stepThreeTitle != ""){
+
                             toolbarTwoCount.innerText = "V"
                             toolbarTwoCheck.style.backgroundColor = "white"
                             toolbarTwoCount.style.color = "#008e8e"
 
-    
+                            saveThreeButton.style.display = "block"
+                            saveTwoButton.style.display = "none"
+
                             const stepThreeOuterDiv = document.createElement("div")
                                 stepThreeOuterDiv.setAttribute("class", "step-outer-div")
                             const stepThreeTitleH2 = document.createElement("h2")
+                                stepThreeTitleH2.setAttribute("class", "step-title-h2")
                             const stepThreeExplainerP = document.createElement("p")
                             const stepThreeCTATitle = document.createElement("h3")
                             const stepThreeCTAP = document.createElement("p")
@@ -646,28 +837,95 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                             stepThreeOuterDiv.appendChild(stepThreeInput)
     
                             stepFourIntroductionTitle.innerText = "Volgende stap"
-                            stepFourIntroductionP.innerText = "stepThreeIntroduction"
+                            stepFourIntroductionP.innerText = stepFourIntroduction
                             stepFourIntroductionButton.innerText = "Volgende stap"
                             DOM.appendChild(stepFourIntroductionTitle)
                             DOM.appendChild(stepFourIntroductionDiv)
                             stepFourIntroductionDiv.appendChild(stepFourIntroductionP)
                             stepFourIntroductionDiv.appendChild(stepFourIntroductionButton)
+                            } else {
+                                toolbarTwoCount.innerText = "V"
+                                toolbarTwoCheck.style.backgroundColor = "white"
+                                toolbarTwoCount.style.color = "#008e8e"
+    
+                                closingDiv.style.display = "flex"
+
+                                closingButton.style.display = "block"
+                                stepTwoButton.style.display = "none"
+    
+                                const closingTitleH3 = document.createElement("h3")
+                                const closingTextP = document.createElement("p")
+                                const closingInputTitle = document.createElement("h3")
+                                const closingInput = document.createElement("textarea")
+                                    closingInput.setAttribute("rows", "10")
+                                    closingInput.setAttribute("cols", "30")
+                                    closingInput.setAttribute("placeholder", "Wat vond je van de workshop?")
+                                    closingInput.setAttribute("id", "closing-input")
+                               
+                                closingTitleH3.innerText = closingTwoTitle
+                                closingTextP.innerText = closingTwoText
+    
+                                auth.onAuthStateChanged(User =>{
+                                    if (User){
+                                
+                                    db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                                                const auth = doc.data().GebruikersnaamClean
+                
+                                                closingInputTitle.innerText = `Wat vond je van de workshop, ${auth}?`
+                                        });
+                                    }; 
+                                });
+                                
+    
+                                DOM.appendChild(closingDiv)
+                                closingDiv.appendChild(closingTitleH3)
+                                closingDiv.appendChild(closingTextP)
+                                closingDiv.appendChild(closingInputTitle)
+                                closingDiv.appendChild(closingInput)
+
+                                                // Save closing
+
+                                                closingButton.addEventListener("click", ()  => {
+                                
+                                                    const closingInput = document.getElementById("closing-input").value
+                                                    const stepOneInput = document.getElementById("step-one-input").value
+                                                    const stepTwoInput = document.getElementById("step-two-input").value
+                                                
+                                                    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+                                                        querySnapshot.forEach(doc => {
+                                                
+                                                            auth.onAuthStateChanged(User =>{
+                                                                if (User){
+                                                    
+                                                db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+                                                    ClosingInput: closingInput,
+                                                    StepOneInput: stepOneInput,
+                                                    StepTwoInput: stepTwoInput,
+                                                        });
+                                                    };
+                                                });
+                                            });
+                                        });
+                                    });
+                            };
                         })
-                    };
+                    
 
                         // Load step four
                         stepFourIntroductionButton.addEventListener("click", () => {
                         if(stepFourTitle != ""){
-                           
         
                                 toolbarThreeCount.innerText = "V"
                                 toolbarThreeCheck.style.backgroundColor = "white"
                                 toolbarThreeCount.style.color = "#008e8e"
 
+                                saveFourButton.style.display = "block"
+                                saveThreeButton.style.display = "none"
         
                                 const stepFourOuterDiv = document.createElement("div")
                                     stepFourOuterDiv.setAttribute("class", "step-outer-div")
                                 const stepFourTitleH2 = document.createElement("h2")
+                                    stepFourTitleH2.setAttribute("class", "step-title-h2")
                                 const stepFourExplainerP = document.createElement("p")
                                 const stepFourCTATitle = document.createElement("h3")
                                 const stepFourCTAP = document.createElement("p")
@@ -701,7 +959,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                 stepFourOuterDiv.appendChild(stepFourInput)
         
                                 stepFiveIntroductionTitle.innerText = "Volgende stap"
-                                stepFiveIntroductionP.innerText = "stepFiveIntroduction"
+                                stepFiveIntroductionP.innerText = stepFiveIntroduction
                                 stepFiveIntroductionButton.innerText = "Volgende stap"
                                 DOM.appendChild(stepFiveIntroductionTitle)
                                 DOM.appendChild(stepFiveIntroductionDiv)
@@ -713,8 +971,11 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                             toolbarThreeCheck.style.backgroundColor = "white"
                             toolbarThreeCount.style.color = "#008e8e"
 
-
                             closingDiv.style.display = "flex"
+
+                            closingButton.style.display = "block"
+
+                            saveThreeButton.style.display = "none"
 
                             const closingTitleH3 = document.createElement("h3")
                             const closingTextP = document.createElement("p")
@@ -725,8 +986,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                 closingInput.setAttribute("placeholder", "Wat vond je van de workshop?")
                                 closingInput.setAttribute("id", "closing-input")
                            
-                            closingTitleH3.innerText = closingTitle
-                            closingTextP.innerText = closingText
+                            closingTitleH3.innerText = closingThreeTitle
+                            closingTextP.innerText = closingThreeText
 
                             auth.onAuthStateChanged(User =>{
                                 if (User){
@@ -745,14 +1006,996 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                             closingDiv.appendChild(closingTextP)
                             closingDiv.appendChild(closingInputTitle)
                             closingDiv.appendChild(closingInput)
+
+                                           // Save closing
+
+                                           closingButton.addEventListener("click", ()  => {
+                                
+                                            const closingInput = document.getElementById("closing-input").value
+                                            const stepOneInput = document.getElementById("step-one-input").value
+                                            const stepTwoInput = document.getElementById("step-two-input").value
+                                            const stepThreeInput = document.getElementById("step-three-input").value
+                                        
+                                            db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+                                                querySnapshot.forEach(doc => {
+                                        
+                                                    auth.onAuthStateChanged(User =>{
+                                                        if (User){
+                                            
+                                        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+                                            ClosingInput: closingInput,
+                                            StepOneInput: stepOneInput,
+                                            StepTwoInput: stepTwoInput,
+                                            StepThreeInput: stepThreeInput,
+                                                });
+                                            };
+                                        });
+                                    });
+                                });
+                            });
                         };
                     });
-            })
-        })
-    })
+
+                       // Load step five
+                       stepFiveIntroductionButton.addEventListener("click", () => {
+                        if(stepFiveTitle != ""){
+                                   
+                                toolbarFourCount.innerText = "V"
+                                toolbarFourCheck.style.backgroundColor = "white"
+                                toolbarFourCount.style.color = "#008e8e"
+
+                                saveFiveButton.style.display = "block"
+                                saveFourButton.style.display = "none"
+
+                                const stepFiveOuterDiv = document.createElement("div")
+                                    stepFiveOuterDiv.setAttribute("class", "step-outer-div")
+                                const stepFiveTitleH2 = document.createElement("h2")
+                                    stepFiveTitleH2.setAttribute("class", "step-title-h2")
+                                const stepFiveExplainerP = document.createElement("p")
+                                const stepFiveCTATitle = document.createElement("h3")
+                                const stepFiveCTAP = document.createElement("p")
+                                const stepFiveInput = document.createElement("textarea")
+                                    stepFiveInput.setAttribute("rows", "10")
+                                    stepFiveInput.setAttribute("cols", "30")
+                                    stepFiveInput.setAttribute("placeholder", "Wat heb je geleerd?")
+                                    stepFiveInput.setAttribute("id", "step-five-input")
+        
+                                stepFiveTitleH2.innerText = stepFiveTitle
+                                stepFiveExplainerP.innerText = stepFiveExplainer
+                                stepFiveCTAP.innerText = stepFiveCTA
+        
+                                auth.onAuthStateChanged(User =>{
+                                    if (User){
+                                
+                                    db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                                                const auth = doc.data().GebruikersnaamClean
+                
+                                                stepFiveCTATitle.innerText = `Wat heb je over jezelf geleerd, ${auth}?`
+                
+                                        });
+                                    }; 
+                                });
+                               
+                                DOM.appendChild(stepFiveOuterDiv)
+                                stepFiveOuterDiv.appendChild(stepFiveTitleH2)
+                                stepFiveOuterDiv.appendChild(stepFiveExplainerP)
+                                stepFiveOuterDiv.appendChild(stepFiveCTATitle)
+                                stepFiveOuterDiv.appendChild(stepFiveCTAP)
+                                stepFiveOuterDiv.appendChild(stepFiveInput)
+        
+                                stepSixIntroductionTitle.innerText = "Volgende stap"
+                                stepSixIntroductionP.innerText = stepSixIntroduction
+                                stepSixIntroductionButton.innerText = "Volgende stap"
+                                DOM.appendChild(stepSixIntroductionTitle)
+                                DOM.appendChild(stepSixIntroductionDiv)
+                                stepSixIntroductionDiv.appendChild(stepSixIntroductionP)
+                                stepSixIntroductionDiv.appendChild(stepSixIntroductionButton)
+                           
+                        } else {
+                            toolbarFourCount.innerText = "V"
+                            toolbarFourCheck.style.backgroundColor = "white"
+                            toolbarFourCount.style.color = "#008e8e"
+
+                            closingDiv.style.display = "flex"
+
+                            closingButton.style.display = "block"
+                            stepFourButton.style.display = "none"
+
+                            const closingTitleH3 = document.createElement("h3")
+                            const closingTextP = document.createElement("p")
+                            const closingInputTitle = document.createElement("h3")
+                            const closingInput = document.createElement("textarea")
+                                closingInput.setAttribute("rows", "10")
+                                closingInput.setAttribute("cols", "30")
+                                closingInput.setAttribute("placeholder", "Wat vond je van de workshop?")
+                                closingInput.setAttribute("id", "closing-input")
+                           
+                            closingTitleH3.innerText = closingFourTitle
+                            closingTextP.innerText = closingFourText
+
+                            auth.onAuthStateChanged(User =>{
+                                if (User){
+                            
+                                db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                                            const auth = doc.data().GebruikersnaamClean
+            
+                                            closingInputTitle.innerText = `Wat vond je van de workshop, ${auth}?`
+                                    });
+                                }; 
+                            });
+                            
+
+                            DOM.appendChild(closingDiv)
+                            closingDiv.appendChild(closingTitleH3)
+                            closingDiv.appendChild(closingTextP)
+                            closingDiv.appendChild(closingInputTitle)
+                            closingDiv.appendChild(closingInput)
+
+                                        // Save closing
+
+                                        closingButton.addEventListener("click", ()  => {
+                                            
+                                            const closingInput = document.getElementById("closing-input").value
+                                            const stepOneInput = document.getElementById("step-one-input").value
+                                            const stepTwoInput = document.getElementById("step-two-input").value
+                                            const stepThreeInput = document.getElementById("step-three-input").value
+                                            const stepFourInput = document.getElementById("step-four-input").value
+                                        
+                                            db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+                                                querySnapshot.forEach(doc => {
+                                        
+                                                    auth.onAuthStateChanged(User =>{
+                                                        if (User){
+                                            
+                                        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+                                            ClosingInput: closingInput,
+                                            StepOneInput: stepOneInput,
+                                            StepTwoInput: stepTwoInput,
+                                            StepThreeInput: stepThreeInput,
+                                            StepFourInput: stepFourInput,
+                                                });
+                                            };
+                                        });
+                                    });
+                                });
+                            });
+                        };
+                    });
+
+                         // Load step six
+                         stepSixIntroductionButton.addEventListener("click", () => {
+                            if(stepSixTitle != ""){
+                               
+                                    toolbarFiveCount.innerText = "V"
+                                    toolbarFiveCheck.style.backgroundColor = "white"
+                                    toolbarFiveCount.style.color = "#008e8e"
+
+                                    saveSixButton.style.display = "block"
+                                    saveFiveButton.style.display = "none"
+            
+                                    const stepSixOuterDiv = document.createElement("div")
+                                        stepSixOuterDiv.setAttribute("class", "step-outer-div")
+                                    const stepSixTitleH2 = document.createElement("h2")
+                                        stepSixTitleH2.setAttribute("class", "step-title-h2")
+                                    const stepSixExplainerP = document.createElement("p")
+                                    const stepSixCTATitle = document.createElement("h3")
+                                    const stepSixCTAP = document.createElement("p")
+                                    const stepSixInput = document.createElement("textarea")
+                                        stepSixInput.setAttribute("rows", "10")
+                                        stepSixInput.setAttribute("cols", "30")
+                                        stepSixInput.setAttribute("placeholder", "Wat heb je geleerd?")
+                                        stepSixInput.setAttribute("id", "step-six-input")
+            
+                                    stepSixTitleH2.innerText = stepSixTitle
+                                    stepSixExplainerP.innerText = stepSixExplainer
+                                    stepSixCTAP.innerText = stepSixCTA
+            
+                                    auth.onAuthStateChanged(User =>{
+                                        if (User){
+                                    
+                                        db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                                                    const auth = doc.data().GebruikersnaamClean
+                    
+                                                    stepSixCTATitle.innerText = `Wat heb je over jezelf geleerd, ${auth}?`
+                    
+                                            });
+                                        }; 
+                                    });
+                                   
+                                    DOM.appendChild(stepSixOuterDiv)
+                                    stepSixOuterDiv.appendChild(stepSixTitleH2)
+                                    stepSixOuterDiv.appendChild(stepSixExplainerP)
+                                    stepSixOuterDiv.appendChild(stepSixCTATitle)
+                                    stepSixOuterDiv.appendChild(stepSixCTAP)
+                                    stepSixOuterDiv.appendChild(stepSixInput)
+            
+                                    stepSevenIntroductionTitle.innerText = "Volgende stap"
+                                    stepSevenIntroductionP.innerText = stepSevenIntroduction
+                                    stepSevenIntroductionButton.innerText = "Volgende stap"
+                                    DOM.appendChild(stepSevenIntroductionTitle)
+                                    DOM.appendChild(stepSevenIntroductionDiv)
+                                    stepSevenIntroductionDiv.appendChild(stepSevenIntroductionP)
+                                    stepSevenIntroductionDiv.appendChild(stepSevenIntroductionButton)
+                               
+                            } else {
+                                toolbarFiveCount.innerText = "V"
+                                toolbarFiveCheck.style.backgroundColor = "white"
+                                toolbarFiveCount.style.color = "#008e8e"
+    
+                                closingDiv.style.display = "flex"
+
+                                closingButton.style.display = "block"
+                                stepFiveButton.style.display = "none"
+    
+                                const closingTitleH3 = document.createElement("h3")
+                                const closingTextP = document.createElement("p")
+                                const closingInputTitle = document.createElement("h3")
+                                const closingInput = document.createElement("textarea")
+                                    closingInput.setAttribute("rows", "10")
+                                    closingInput.setAttribute("cols", "30")
+                                    closingInput.setAttribute("placeholder", "Wat vond je van de workshop?")
+                                    closingInput.setAttribute("id", "closing-input")
+                               
+                                closingTitleH3.innerText = closingFiveTitle
+                                closingTextP.innerText = closingFiveText
+    
+                                auth.onAuthStateChanged(User =>{
+                                    if (User){
+                                
+                                    db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                                                const auth = doc.data().GebruikersnaamClean
+                
+                                                closingInputTitle.innerText = `Wat vond je van de workshop, ${auth}?`
+                                        });
+                                    }; 
+                                });
+                                
+    
+                                DOM.appendChild(closingDiv)
+                                closingDiv.appendChild(closingTitleH3)
+                                closingDiv.appendChild(closingTextP)
+                                closingDiv.appendChild(closingInputTitle)
+                                closingDiv.appendChild(closingInput)
+
+                                                // Save closing
+
+                                                closingButton.addEventListener("click", ()  => {
+                                                            
+                                                    const closingInput = document.getElementById("closing-input").value
+                                                    const stepOneInput = document.getElementById("step-one-input").value
+                                                    const stepTwoInput = document.getElementById("step-two-input").value
+                                                    const stepThreeInput = document.getElementById("step-three-input").value
+                                                    const stepFourInput = document.getElementById("step-four-input").value
+                                                    const stepFiveInput = document.getElementById("step-five-input").value
+                                                
+                                                    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+                                                        querySnapshot.forEach(doc => {
+                                                
+                                                            auth.onAuthStateChanged(User =>{
+                                                                if (User){
+                                                    
+                                                db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+                                                    ClosingInput: closingInput,
+                                                    StepOneInput: stepOneInput,
+                                                    StepTwoInput: stepTwoInput,
+                                                    StepThreeInput: stepThreeInput,
+                                                    StepFourInput: stepFourInput,
+                                                    StepFiveInput: stepFiveInput,
+                                                        });
+                                                    };
+                                                });
+                                            });
+                                        });
+                                    });
+                            };
+                        });
+
+                        // Load step seven
+                        stepSevenIntroductionButton.addEventListener("click", () => {
+                            if(stepSevenTitle != ""){
+                               
+                                    toolbarSixCount.innerText = "V"
+                                    toolbarSixCheck.style.backgroundColor = "white"
+                                    toolbarSixCount.style.color = "#008e8e"
+
+                                    saveSevenButton.style.display = "block"
+                                    saveSixButton.style.display = "none"
+            
+                                    const stepSevenOuterDiv = document.createElement("div")
+                                        stepSevenOuterDiv.setAttribute("class", "step-outer-div")
+                                    const stepSevenTitleH2 = document.createElement("h2")
+                                        stepSevenTitleH2.setAttribute("class", "step-title-h2")
+                                    const stepSevenExplainerP = document.createElement("p")
+                                    const stepSevenCTATitle = document.createElement("h3")
+                                    const stepSevenCTAP = document.createElement("p")
+                                    const stepSevenInput = document.createElement("textarea")
+                                        stepSevenInput.setAttribute("rows", "10")
+                                        stepSevenInput.setAttribute("cols", "30")
+                                        stepSevenInput.setAttribute("placeholder", "Wat heb je geleerd?")
+                                        stepSevenInput.setAttribute("id", "step-seven-input")
+            
+                                    stepSevenTitleH2.innerText = stepSevenTitle
+                                    stepSevenExplainerP.innerText = stepSevenExplainer
+                                    stepSevenCTAP.innerText = stepSevenCTA
+            
+                                    auth.onAuthStateChanged(User =>{
+                                        if (User){
+                                    
+                                        db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                                                    const auth = doc.data().GebruikersnaamClean
+                    
+                                                    stepSevenCTATitle.innerText = `Wat heb je over jezelf geleerd, ${auth}?`
+                    
+                                            });
+                                        }; 
+                                    });
+                                   
+                                    DOM.appendChild(stepSevenOuterDiv)
+                                    stepSevenOuterDiv.appendChild(stepSevenTitleH2)
+                                    stepSevenOuterDiv.appendChild(stepSevenExplainerP)
+                                    stepSevenOuterDiv.appendChild(stepSevenCTATitle)
+                                    stepSevenOuterDiv.appendChild(stepSevenCTAP)
+                                    stepSevenOuterDiv.appendChild(stepSevenInput)
+            
+                                    stepEightIntroductionTitle.innerText = "Volgende stap"
+                                    stepEightIntroductionP.innerText = stepEightIntroduction
+                                    stepEightIntroductionButton.innerText = "Volgende stap"
+                                    DOM.appendChild(stepEightIntroductionTitle)
+                                    DOM.appendChild(stepEightIntroductionDiv)
+                                    stepEightIntroductionDiv.appendChild(stepEightIntroductionP)
+                                    stepEightIntroductionDiv.appendChild(stepEightIntroductionButton)
+                               
+                            } else {
+                                toolbarSixCount.innerText = "V"
+                                toolbarSixCheck.style.backgroundColor = "white"
+                                toolbarSixCount.style.color = "#008e8e"
+    
+                                closingDiv.style.display = "flex"
+
+                                closingButton.style.display = "block"
+                                stepSixButton.style.display = "none"
+    
+                                const closingTitleH3 = document.createElement("h3")
+                                const closingTextP = document.createElement("p")
+                                const closingInputTitle = document.createElement("h3")
+                                const closingInput = document.createElement("textarea")
+                                    closingInput.setAttribute("rows", "10")
+                                    closingInput.setAttribute("cols", "30")
+                                    closingInput.setAttribute("placeholder", "Wat vond je van de workshop?")
+                                    closingInput.setAttribute("id", "closing-input")
+                               
+                                closingTitleH3.innerText = closingSixTitle
+                                closingTextP.innerText = closingSixText
+    
+                                auth.onAuthStateChanged(User =>{
+                                    if (User){
+                                
+                                    db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                                                const auth = doc.data().GebruikersnaamClean
+                
+                                                closingInputTitle.innerText = `Wat vond je van de workshop, ${auth}?`
+                                        });
+                                    }; 
+                                });
+                                
+    
+                                DOM.appendChild(closingDiv)
+                                closingDiv.appendChild(closingTitleH3)
+                                closingDiv.appendChild(closingTextP)
+                                closingDiv.appendChild(closingInputTitle)
+                                closingDiv.appendChild(closingInput)
+
+                                            // Save closing
+
+                                            closingButton.addEventListener("click", ()  => {
+                                                                        
+                                                const closingInput = document.getElementById("closing-input").value
+                                                const stepOneInput = document.getElementById("step-one-input").value
+                                                const stepTwoInput = document.getElementById("step-two-input").value
+                                                const stepThreeInput = document.getElementById("step-three-input").value
+                                                const stepFourInput = document.getElementById("step-four-input").value
+                                                const stepFiveInput = document.getElementById("step-five-input").value
+                                                const stepSixInput = document.getElementById("step-six-input").value
+                                            
+                                                db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+                                                    querySnapshot.forEach(doc => {
+                                            
+                                                        auth.onAuthStateChanged(User =>{
+                                                            if (User){
+                                                
+                                            db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+                                                ClosingInput: closingInput,
+                                                StepOneInput: stepOneInput,
+                                                StepTwoInput: stepTwoInput,
+                                                StepThreeInput: stepThreeInput,
+                                                StepFourInput: stepFourInput,
+                                                StepFiveInput: stepFiveInput,
+                                                StepSixInput: stepSixInput,
+                                                    });
+                                                };
+                                            });
+                                        });
+                                    });
+                                });
+                            };
+                        });
+
+                         // Load eight seven
+                         stepEightIntroductionButton.addEventListener("click", () => {
+                            if(stepEightTitle != ""){
+                               
+                                    toolbarSevenCount.innerText = "V"
+                                    toolbarSevenCheck.style.backgroundColor = "white"
+                                    toolbarSevenCount.style.color = "#008e8e"
+
+                                    saveEightButton.style.display = "block"
+                                    saveSevenButton.style.display = "none"
+            
+                                    const stepEightOuterDiv = document.createElement("div")
+                                        stepEightOuterDiv.setAttribute("class", "step-outer-div")
+                                    const stepEightTitleH2 = document.createElement("h2")
+                                        stepEightTitleH2.setAttribute("class", "step-title-h2")
+                                    const stepEightExplainerP = document.createElement("p")
+                                    const stepEightCTATitle = document.createElement("h3")
+                                    const stepEightCTAP = document.createElement("p")
+                                    const stepEightInput = document.createElement("textarea")
+                                        stepEightInput.setAttribute("rows", "10")
+                                        stepEightInput.setAttribute("cols", "30")
+                                        stepEightInput.setAttribute("placeholder", "Wat heb je geleerd?")
+                                        stepEightInput.setAttribute("id", "step-seven-input")
+            
+                                    stepEightTitleH2.innerText = stepEightTitle
+                                    stepEightExplainerP.innerText = stepEightExplainer
+                                    stepEightCTAP.innerText = stepEightCTA
+            
+                                    auth.onAuthStateChanged(User =>{
+                                        if (User){
+                                    
+                                        db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                                                    const auth = doc.data().GebruikersnaamClean
+                    
+                                                    stepEightCTATitle.innerText = `Wat heb je over jezelf geleerd, ${auth}?`
+                    
+                                            });
+                                        }; 
+                                    });
+                                   
+                                    DOM.appendChild(stepEightOuterDiv)
+                                    stepEightOuterDiv.appendChild(stepEightTitleH2)
+                                    stepEightOuterDiv.appendChild(stepEightExplainerP)
+                                    stepEightOuterDiv.appendChild(stepEightCTATitle)
+                                    stepEightOuterDiv.appendChild(stepEightCTAP)
+                                    stepEightOuterDiv.appendChild(stepEightInput)
+            
+                                    closingIntroductionTitle.innerText = "Afronden"
+                                    closingIntroductionP.innerText = "stepFiveIntroduction"
+                                    closingIntroductionButton.innerText = "Afronden"
+                                    DOM.appendChild(closingIntroductionTitle)
+                                    DOM.appendChild(closingIntroductionDiv)
+                                    closingIntroductionDiv.appendChild(closingIntroductionP)
+                                    closingIntroductionDiv.appendChild(closingIntroductionButton)
+                               
+                            } else {
+                                toolbarSevenCount.innerText = "V"
+                                toolbarSevenCheck.style.backgroundColor = "white"
+                                toolbarSevenCount.style.color = "#008e8e"
+    
+                                closingDiv.style.display = "flex"
+
+                                closingButton.style.display = "block"
+                                stepSevenButton.style.display = "none"
+    
+                                const closingTitleH3 = document.createElement("h3")
+                                const closingTextP = document.createElement("p")
+                                const closingInputTitle = document.createElement("h3")
+                                const closingInput = document.createElement("textarea")
+                                    closingInput.setAttribute("rows", "10")
+                                    closingInput.setAttribute("cols", "30")
+                                    closingInput.setAttribute("placeholder", "Wat vond je van de workshop?")
+                                    closingInput.setAttribute("id", "closing-input")
+                               
+                                closingTitleH3.innerText = closingSevenTitle
+                                closingTextP.innerText = closingSevenText
+    
+                                auth.onAuthStateChanged(User =>{
+                                    if (User){
+                                
+                                    db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                                                const auth = doc.data().GebruikersnaamClean
+                
+                                                closingInputTitle.innerText = `Wat vond je van de workshop, ${auth}?`
+                                        });
+                                    }; 
+                                });
+                                
+    
+                                DOM.appendChild(closingDiv)
+                                closingDiv.appendChild(closingTitleH3)
+                                closingDiv.appendChild(closingTextP)
+                                closingDiv.appendChild(closingInputTitle)
+                                closingDiv.appendChild(closingInput)
+
+                                            // Save closing
+
+                                            closingButton.addEventListener("click", ()  => {
+                                                                                    
+                                                const closingInput = document.getElementById("closing-input").value
+                                                const stepOneInput = document.getElementById("step-one-input").value
+                                                const stepTwoInput = document.getElementById("step-two-input").value
+                                                const stepThreeInput = document.getElementById("step-three-input").value
+                                                const stepFourInput = document.getElementById("step-four-input").value
+                                                const stepFiveInput = document.getElementById("step-five-input").value
+                                                const stepSixInput = document.getElementById("step-six-input").value
+                                                const stepSevenInput = document.getElementById("step-seven-input").value
+                                            
+                                                db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+                                                    querySnapshot.forEach(doc => {
+                                            
+                                                        auth.onAuthStateChanged(User =>{
+                                                            if (User){
+                                                
+                                            db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+                                                ClosingInput: closingInput,
+                                                StepOneInput: stepOneInput,
+                                                StepTwoInput: stepTwoInput,
+                                                StepThreeInput: stepThreeInput,
+                                                StepFourInput: stepFourInput,
+                                                StepFiveInput: stepFiveInput,
+                                                StepSixInput: stepSixInput,
+                                                StepSevenInput: stepSevenInput,
+                                                    });
+                                                };
+                                            });
+                                        });
+                                    });
+                                });
+                            };
+                        });
+
+                        closingIntroductionButton.addEventListener("click", () => {
+
+                            toolbarEightCount.innerText = "V"
+                            toolbarEightCheck.style.backgroundColor = "white"
+                            toolbarEightCount.style.color = "#008e8e"
+
+                            closingDiv.style.display = "flex"
+
+                            closingButton.style.display = "block"
+                            stepEightButton.style.display = "none"
+
+                            const closingTitleH3 = document.createElement("h3")
+                            const closingTextP = document.createElement("p")
+                            const closingInputTitle = document.createElement("h3")
+                            const closingInput = document.createElement("textarea")
+                                closingInput.setAttribute("rows", "10")
+                                closingInput.setAttribute("cols", "30")
+                                closingInput.setAttribute("placeholder", "Wat vond je van de workshop?")
+                                closingInput.setAttribute("id", "closing-input")
+                            
+                            closingTitleH3.innerText = closingEightTitle
+                            closingTextP.innerText = closingEightText
+
+                            auth.onAuthStateChanged(User =>{
+                                if (User){
+                            
+                                db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                                            const auth = doc.data().GebruikersnaamClean
+            
+                                            closingInputTitle.innerText = `Wat vond je van de workshop, ${auth}?`
+                                    });
+                                }; 
+                            });
+                            
+
+                            DOM.appendChild(closingDiv)
+                            closingDiv.appendChild(closingTitleH3)
+                            closingDiv.appendChild(closingTextP)
+                            closingDiv.appendChild(closingInputTitle)
+                            closingDiv.appendChild(closingInput)
+
+                                        // Save closing
+
+                                        closingButton.addEventListener("click", ()  => {
+                                                                                                
+                                            const closingInput = document.getElementById("closing-input").value
+                                            const stepOneInput = document.getElementById("step-one-input").value
+                                            const stepTwoInput = document.getElementById("step-two-input").value
+                                            const stepThreeInput = document.getElementById("step-three-input").value
+                                            const stepFourInput = document.getElementById("step-four-input").value
+                                            const stepFiveInput = document.getElementById("step-five-input").value
+                                            const stepSixInput = document.getElementById("step-six-input").value
+                                            const stepSevenInput = document.getElementById("step-seven-input").value
+                                            const stepEightInput = document.getElementById("step-eight-input").value
+                                        
+                                            db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+                                                querySnapshot.forEach(doc => {
+                                        
+                                                    auth.onAuthStateChanged(User =>{
+                                                        if (User){
+                                            
+                                        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+                                            ClosingInput: closingInput,
+                                            StepOneInput: stepOneInput,
+                                            StepTwoInput: stepTwoInput,
+                                            StepThreeInput: stepThreeInput,
+                                            StepFourInput: stepFourInput,
+                                            StepFiveInput: stepFiveInput,
+                                            StepSixInput: stepSixInput,
+                                            StepSevenInput: stepSevenInput,
+                                            StepEightInput: stepEightInput,
+                                                });
+                                            };
+                                        });
+                                    });
+                                });
+                            });
+                        });
+
+                        // Pre-fill workshops if auth has input in database
+                auth.onAuthStateChanged(User =>{
+                    if (User){
+
+                        db.collection("Vitaminders").doc(User.uid).collection("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+                            querySnapshot.forEach(doc => {
+
+                                const stepOneInput = doc.data().StepOneInput
+                                const stepTwoInput = doc.data().StepTwoInput
+                                const stepThreeInput = doc.data().StepThreeInput
+                                const stepFourInput = doc.data().StepFourInput
+                                const stepFiveInput = doc.data().StepFiveInput
+                                const stepSixInput = doc.data().StepSixInput
+                                const stepSevenInput = doc.data().StepSevenInput
+                                const stepEightInput = doc.data().StepEightInput
+                                const closingInput = doc.data().ClosingInput
+
+                                const stepOneButton = document.getElementById("step-one-button")
+
+                                if(stepOneInput != ""){
+
+                                    stepOneButton.click()
+
+                                const stepOneInputDOM = document.getElementById("step-one-input")
+
+                                stepOneInputDOM.innerText= stepOneInput
+
+                                toolbarOneCount.innerText = "V"
+                                toolbarOneCheck.style.backgroundColor = "white"
+                                toolbarOneCount.style.color = "#008e8e"
+                                };
+
+                                const stepTwoButton = document.getElementById("step-two-button")
+
+                                if(stepTwoInput != ""){
+
+                                    stepTwoButton.click()
+
+                                const stepTwoInputDOM = document.getElementById("step-two-input")
+
+                                stepTwoInputDOM.innerText= stepTwoInput
+
+                                toolbarTwoCount.innerText = "V"
+                                toolbarTwoCheck.style.backgroundColor = "white"
+                                toolbarTwoCount.style.color = "#008e8e"
+                                };
+
+                                const stepThreeButton = document.getElementById("step-three-button")
+
+                                if(stepThreeInput != ""){
+
+                                    stepThreeButton.click()
+
+                                const stepThreeInputDOM = document.getElementById("step-three-input")
+
+                                stepThreeInputDOM.innerText= stepThreeInput
+
+                                toolbarThreeCount.innerText = "V"
+                                toolbarThreeCheck.style.backgroundColor = "white"
+                                toolbarThreeCount.style.color = "#008e8e"
+                                };
+
+                                const stepFourButton = document.getElementById("step-four-button")
+
+                                if(stepFourInput != ""){
+
+                                    stepFourButton.click()
+
+                                const stepFourInputDOM = document.getElementById("step-four-input")
+
+                                stepFourInputDOM.innerText= stepFourInput
+
+                                toolbarFourCount.innerText = "V"
+                                toolbarFourCheck.style.backgroundColor = "white"
+                                toolbarFourCount.style.color = "#008e8e"
+                                };
+
+                                const stepFiveButton = document.getElementById("step-five-button")
+
+                                if(stepFiveInput != ""){
+
+                                    stepFiveButton.click()
+
+                                const stepFiveInputDOM = document.getElementById("step-five-input")
+
+                                stepFiveInputDOM.innerText= stepFiveInput
+
+                                toolbarFiveCount.innerText = "V"
+                                toolbarFiveCheck.style.backgroundColor = "white"
+                                toolbarFiveCount.style.color = "#008e8e"
+                                };
+
+                                const stepSixButton = document.getElementById("step-six-button")
+
+                                if(stepSixInput != ""){
+
+                                    stepSixButton.click()
+
+                                const stepSixInputDOM = document.getElementById("step-six-input")
+
+                                stepSixInputDOM.innerText= stepSixInput
+
+                                toolbarSixCount.innerText = "V"
+                                toolbarSixCheck.style.backgroundColor = "white"
+                                toolbarSixCount.style.color = "#008e8e"
+                                };
+
+                                const stepSevenButton = document.getElementById("step-seven-button")
+
+                                if(stepSevenInput != ""){
+
+                                    stepSevenButton.click()
+
+                                const stepSevenInputDOM = document.getElementById("step-seven-input")
+
+                                stepSevenInputDOM.innerText= stepSevenInput
+
+                                toolbarSevenCount.innerText = "V"
+                                toolbarSevenCheck.style.backgroundColor = "white"
+                                toolbarSevenCount.style.color = "#008e8e"
+                                };
+
+                                const stepEightButton = document.getElementById("step-eight-button")
+
+                                if(stepEightInput != ""){
+
+                                    stepEightButton.click()
+
+                                const stepEightInputDOM = document.getElementById("step-eight-input")
+
+                                stepEightInputDOM.innerText= stepEightInput
+
+                                toolbarEightCount.innerText = "V"
+                                toolbarEightCheck.style.backgroundColor = "white"
+                                toolbarEightCount.style.color = "#008e8e"
+                                };
+
+                                const closingButton = document.getElementById("closing-button")
+
+                                if(closingInput != ""){
+
+                                    closingButton.click()
+
+                                const closingInputDOM = document.getElementById("closing-input")
+
+                                closingInputDOM.innerText= closingInput
+
+                                };
+                            });
+                        });
+                    };
+                });  
+            });
+        });
+    });
 });
 
+// Save 
+function saveOne(){
+    
+    const stepOneInput = document.getElementById("step-one-input").value
 
+    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            auth.onAuthStateChanged(User =>{
+                if (User){
+    
+        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+            StepOneInput: stepOneInput,
+                    });
+                };
+            });
+        });
+    });
+};
+
+function saveTwo(){
+    
+    const stepTwoInput = document.getElementById("step-two-input").value
+    const stepOneInput = document.getElementById("step-one-input").value
+
+    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            auth.onAuthStateChanged(User =>{
+                if (User){
+    
+        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+            StepTwoInput: stepTwoInput,
+            StepOneInput: stepOneInput,
+                    });
+                };
+            });
+        });
+    });
+};
+
+function saveThree(){
+    
+    const stepThreeInput = document.getElementById("step-three-input").value
+    const stepOneInput = document.getElementById("step-one-input").value
+    const stepTwoInput = document.getElementById("step-two-input").value
+
+    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            auth.onAuthStateChanged(User =>{
+                if (User){
+    
+        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+            StepThreeInput: stepThreeInput,
+            StepOneInput: stepOneInput,
+            StepTwoInput: stepTwoInput,
+                    });
+                };
+            });
+        });
+    });
+};
+
+function saveFour(){
+    
+    const stepFourInput = document.getElementById("step-four-input").value
+    const stepOneInput = document.getElementById("step-one-input").value
+    const stepTwoInput = document.getElementById("step-two-input").value
+    const stepThreeInput = document.getElementById("step-three-input").value
+
+    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            auth.onAuthStateChanged(User =>{
+                if (User){
+    
+        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+            StepFourInput: stepFourInput,
+            StepOneInput: stepOneInput,
+            StepTwoInput: stepTwoInput,
+            StepThreeInput: stepThreeInput,
+                    });
+                };
+            });
+        });
+    });
+};
+
+function saveFive(){
+    
+    const stepFiveInput = document.getElementById("step-five-input").value
+    const stepOneInput = document.getElementById("step-one-input").value
+    const stepTwoInput = document.getElementById("step-two-input").value
+    const stepThreeInput = document.getElementById("step-three-input").value
+    const stepFourInput = document.getElementById("step-four-input").value
+
+    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            auth.onAuthStateChanged(User =>{
+                if (User){
+    
+        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+            StepFiveInput: stepFiveInput,
+            StepOneInput: stepOneInput,
+            StepTwoInput: stepTwoInput,
+            StepThreeInput: stepThreeInput,
+            StepFourInput: stepFourInput,
+                    });
+                };
+            });
+        });
+    });
+};
+
+function saveSix(){
+    
+    const stepSixInput = document.getElementById("step-six-input").value
+    const stepOneInput = document.getElementById("step-one-input").value
+    const stepTwoInput = document.getElementById("step-two-input").value
+    const stepThreeInput = document.getElementById("step-three-input").value
+    const stepFourInput = document.getElementById("step-four-input").value
+    const stepFiveInput = document.getElementById("step-five-input").value
+
+    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            auth.onAuthStateChanged(User =>{
+                if (User){
+    
+        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+            StepSixInput: stepSixInput,
+            StepOneInput: stepOneInput,
+            StepTwoInput: stepTwoInput,
+            StepThreeInput: stepThreeInput,
+            StepFourInput: stepFourInput,
+            StepFiveInput: stepFiveInput,
+                    });
+                };
+            });
+        });
+    });
+};
+
+function saveSeven(){
+    
+    const stepSevenInput = document.getElementById("step-seven-input").value
+    const stepOneInput = document.getElementById("step-one-input").value
+    const stepTwoInput = document.getElementById("step-two-input").value
+    const stepThreeInput = document.getElementById("step-three-input").value
+    const stepFourInput = document.getElementById("step-four-input").value
+    const stepFiveInput = document.getElementById("step-five-input").value
+    const stepSixInput = document.getElementById("step-six-input").value
+
+    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            auth.onAuthStateChanged(User =>{
+                if (User){
+    
+        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+            StepSevenInput: stepSevenInput,
+            StepOneInput: stepOneInput,
+            StepTwoInput: stepTwoInput,
+            StepThreeInput: stepThreeInput,
+            StepFourInput: stepFourInput,
+            StepFiveInput: stepFiveInput,
+            StepSixInput: stepSixInput,
+                    });
+                };
+            });
+        });
+    });
+};
+
+function saveEight(){
+    
+    const stepEightInput = document.getElementById("step-eight-input").value
+    const stepOneInput = document.getElementById("step-one-input").value
+    const stepTwoInput = document.getElementById("step-two-input").value
+    const stepThreeInput = document.getElementById("step-three-input").value
+    const stepFourInput = document.getElementById("step-four-input").value
+    const stepFiveInput = document.getElementById("step-five-input").value
+    const stepSixInput = document.getElementById("step-six-input").value
+    const stepSevenInput = document.getElementById("step-seven-input").value
+
+    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            auth.onAuthStateChanged(User =>{
+                if (User){
+    
+        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+            StepEightInput: stepEightInput,
+            StepOneInput: stepOneInput,
+            StepTwoInput: stepTwoInput,
+            StepThreeInput: stepThreeInput,
+            StepFourInput: stepFourInput,
+            StepFiveInput: stepFiveInput,
+            StepSixInput: stepSixInput,
+            StepSevenInput: stepSevenInput,
+                    });
+                };
+            });
+        });
+    });
+};
 
 
 // Create new or edit excisting workshop
@@ -1131,17 +2374,6 @@ function saveWorkshop(){
     saveWorkshopButton.style.display = "none"
     updateWorkshopButton.style.display = "flex"
 
-    //Closing
-    function closingDivGetInput(a,b){
-        const closingDiv = document.getElementById(a)
-        const closingText = tinyMCE.get(b).getContent()
-
-        const closingTitle = closingDiv.firstElementChild.nextElementSibling.nextElementSibling.value
-
-        const closingDivId = closingDiv.id
-
-        if(closingTitle != "" && closingText != ""){
-
     // Save input to database
     auth.onAuthStateChanged(User =>{
         if (User){
@@ -1187,26 +2419,16 @@ function saveWorkshop(){
                     });
                 };
             });
+            const previewWorkshop = document.getElementById("preview-workshop")
+
+            previewWorkshop.style.display = "block"
+        
+            const workshopSavedSetNotification = document.getElementById("workshop-saved-set-notification")
+        
+            workshopSavedSetNotification.style.display = "block"
         };
-    } closingDivGetInput("closing-1", "editor-closing-1")
-    closingDivGetInput("closing-2", "editor-closing-2")
-    closingDivGetInput("closing-3", "editor-closing-3")
-    closingDivGetInput("closing-4", "editor-closing-4")
-    closingDivGetInput("closing-5", "editor-closing-5")
-    closingDivGetInput("closing-6", "editor-closing-6")
-    closingDivGetInput("closing-7", "editor-closing-7")
-    closingDivGetInput("closing-8", "editor-closing-8")
 
-    const previewWorkshop = document.getElementById("preview-workshop")
-
-    previewWorkshop.style.display = "block"
-
-    const workshopSavedSetNotification = document.getElementById("workshop-saved-set-notification")
-
-    workshopSavedSetNotification.style.display = "block"
-};
-
-// Update or set input
+// Update input
 
 function updateWorkshop(){
     const workshopTitle = document.getElementById("workshop-title").value
@@ -1253,17 +2475,6 @@ function updateWorkshop(){
         const stepEightExplainer = tinyMCE.get('editor17').getContent()
         const stepEightCTA = tinyMCE.get('editor18').getContent()
 
-        //Closing
-        function closingDivGetInput(a,b){
-        const closingDiv = document.getElementById(a)
-        const closingText = tinyMCE.get(b).getContent()
-
-        const closingTitle = closingDiv.firstElementChild.nextElementSibling.nextElementSibling.value
-
-        const closingDivId = closingDiv.id
-
-        if(closingTitle != "" && closingText != ""){
-
     globalTitle.forEach(title => {
 
     db.collection("Workshops").where("WorkshopTitle", "==", title).get().then(querySnapshot => {
@@ -1304,21 +2515,11 @@ function updateWorkshop(){
                 })
             });
         });
+        const workshopSavedUpdateNotification = document.getElementById("workshop-saved-updated-notification")
+
+        workshopSavedUpdateNotification.style.display = "block"
     };
 
-    } closingDivGetInput("closing-1", "editor-closing-1")
-    closingDivGetInput("closing-2", "editor-closing-2")
-    closingDivGetInput("closing-3", "editor-closing-3")
-    closingDivGetInput("closing-4", "editor-closing-4")
-    closingDivGetInput("closing-5", "editor-closing-5")
-    closingDivGetInput("closing-6", "editor-closing-6")
-    closingDivGetInput("closing-7", "editor-closing-7")
-    closingDivGetInput("closing-8", "editor-closing-8")
-
-    const workshopSavedUpdateNotification = document.getElementById("workshop-saved-updated-notification")
-
-    workshopSavedUpdateNotification.style.display = "block"
-};
 
 // Preview workshop
 
@@ -1678,3 +2879,169 @@ function deleteClosing(ele){
     });
 
 }
+
+// Select header image
+
+const chooseHeaderImg = document.getElementById("chosse-header-image")
+const chooseHeaderImageModal = document.getElementById("select-header-img-modal")
+const chooseHeaderImageModalButton = document.getElementById("toolbar-select-header-image-button")
+
+chooseHeaderImg.addEventListener("click", () => {
+
+    chooseHeaderImageModal.style.display = "flex"
+})
+
+// Save(set) first set of input to database
+chooseHeaderImageModalButton.addEventListener("click", () => {
+
+    // Header image
+
+    const selectedImage = document.querySelectorAll("input[name=select-header-img]:checked")[0].id
+
+    const workshopTitle = document.getElementById("workshop-title").value
+    const workshopGoals = tinyMCE.get('editor1').getContent()
+    const stepOnePreview = tinyMCE.get('editor2').getContent()
+
+    // Step one
+    const stepOneTitle =  document.getElementById("step-one-title").value
+    const stepOneExplainer = tinyMCE.get('editor3').getContent()
+    const stepOneCTA = tinyMCE.get('editor4').getContent()
+
+    const innerDiv = document.getElementById("step-one-inner-div")
+        innerDiv.setAttribute("data-title", stepOneTitle)
+        innerDiv.setAttribute("data-explainer", stepOneExplainer)
+        innerDiv.setAttribute("data-cta", stepOneCTA)
+   
+     // Step two
+     const stepTwoTitle =  document.getElementById("step-two-title").value
+     const stepTwoExplainer = tinyMCE.get('editor5').getContent()
+     const stepTwoCTA = tinyMCE.get('editor6').getContent()
+
+      // Step three
+    const stepThreeTitle =  document.getElementById("step-three-title").value
+    const stepThreeExplainer = tinyMCE.get('editor7').getContent()
+    const stepThreeCTA = tinyMCE.get('editor8').getContent()
+
+     // Step four
+     const stepFourTitle =  document.getElementById("step-four-title").value
+     const stepFourExplainer = tinyMCE.get('editor9').getContent()
+     const stepFourCTA = tinyMCE.get('editor10').getContent()
+
+      // Step five
+    const stepFiveTitle =  document.getElementById("step-five-title").value
+    const stepFiveExplainer = tinyMCE.get('editor11').getContent()
+    const stepFiveCTA = tinyMCE.get('editor12').getContent()
+
+     // Step six
+     const stepSixTitle =  document.getElementById("step-six-title").value
+     const stepSixExplainer = tinyMCE.get('editor13').getContent()
+     const stepSixCTA = tinyMCE.get('editor14').getContent()
+
+      // Step seven
+    const stepSevenTitle =  document.getElementById("step-seven-title").value
+    const stepSevenExplainer = tinyMCE.get('editor15').getContent()
+    const stepSevenCTA = tinyMCE.get('editor16').getContent()
+
+     // Step eight
+     const stepEightTitle =  document.getElementById("step-eight-title").value
+     const stepEightExplainer = tinyMCE.get('editor17').getContent()
+     const stepEightCTA = tinyMCE.get('editor18').getContent()
+
+     // Closing
+
+     const closingTitleOne = document.getElementById("closing-title-input-1")
+     const closingTextOne = tinyMCE.get('editor-closing-1').getContent()
+     const closingTitleTwo = document.getElementById("closing-title-input-2")
+     const closingTextTwo = tinyMCE.get('editor-closing-2').getContent()
+     const closingTitleThree = document.getElementById("closing-title-input-3")
+     const closingTextThree = tinyMCE.get('editor-closing-3').getContent()
+     const closingTitleFour = document.getElementById("closing-title-input-4")
+     const closingTextFour = tinyMCE.get('editor-closing-4').getContent()
+     const closingTitleFive = document.getElementById("closing-title-input-5")
+     const closingTextFive = tinyMCE.get('editor-closing-5').getContent()
+     const closingTitleSix = document.getElementById("closing-title-input-6")
+     const closingTextSix= tinyMCE.get('editor-closing-6').getContent()
+     const closingTitleSeven = document.getElementById("closing-title-input-7")
+     const closingTextSeven = tinyMCE.get('editor-closing-7').getContent()
+     const closingTitleEight = document.getElementById("closing-title-input-8")
+     const closingTextEight = tinyMCE.get('editor-closing-18').getContent()
+
+    const saveWorkshopButton = document.getElementById("saveWorkshop")
+    const updateWorkshopButton = document.getElementById("updateWorkshop")
+
+    saveWorkshopButton.style.display = "none"
+    updateWorkshopButton.style.display = "flex"
+
+    // Save input to database
+    auth.onAuthStateChanged(User =>{
+        if (User){
+
+        db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                    const coachNaam = doc.data().Gebruikersnaam;
+
+    db.collection("Workshops").doc().set({
+        Eigenaar: "Vitaminds",
+        Coach: coachNaam,
+        Status: "Draft",
+        HeaderImage: selectedImage,
+        WorkshopTitle: workshopTitle,
+        WorkshopGoals: workshopGoals,
+        StepOnePreview: stepOnePreview,
+        StepOneTitle: stepOneTitle,
+        StepOneExplainer: stepOneExplainer,
+        StepOneCTA: stepOneCTA,
+        StepTwoTitle: stepTwoTitle,
+        StepTwoExplainer: stepTwoExplainer,
+        StepTwoCTA: stepTwoCTA,
+        StepThreeTitle: stepThreeTitle,
+        StepThreeExplainer: stepThreeExplainer,
+        StepThreeCTA: stepThreeCTA,
+        StepFourTitle: stepFourTitle,
+        StepFourExplainer: stepFourExplainer,
+        StepFourCTA: stepFourCTA,
+        StepFiveTitle: stepFiveTitle,
+        StepFiveExplainer: stepFiveExplainer,
+        StepFiveCTA: stepFiveCTA,
+        StepSixTitle: stepSixTitle,
+        StepSixExplainer: stepSixExplainer,
+        StepSixCTA: stepSixCTA,
+        StepSevenTitle: stepSevenTitle,
+        StepSevenExplainer: stepSevenExplainer,
+        StepSevenCTA: stepSevenCTA,
+        StepEightTitle: stepEightTitle,
+        StepEightExplainer: stepEightExplainer,
+        StepEightCTA: stepEightCTA,
+        ClosingOneTitle: closingOneTitle,
+        ClosingOneText: closingOneText,
+        ClosingOneTitle: closingOneTitle,
+        ClosingOneText: closingOneText,
+        ClosingOneTitle: closingOneTitle,
+        ClosingOneText: closingOneText,
+        ClosingOneTitle: closingOneTitle,
+        ClosingOneText: closingOneText,
+        ClosingOneTitle: closingOneTitle,
+        ClosingOneText: closingOneText,
+        ClosingOneTitle: closingOneTitle,
+        ClosingOneText: closingOneText,
+        ClosingOneTitle: closingOneTitle,
+        ClosingOneText: closingOneText,
+        ClosingOneTitle: closingOneTitle,
+        ClosingOneText: closingOneText,
+                    });
+                });
+            };
+        });
+
+        const previewWorkshop = document.getElementById("preview-workshop")
+
+        previewWorkshop.style.display = "block"
+    
+        const workshopSavedSetNotification = document.getElementById("workshop-saved-set-notification")
+    
+        workshopSavedSetNotification.style.display = "block"
+    
+        // Close modal
+    
+        chooseHeaderImageModal.style.display = "none"
+
+});

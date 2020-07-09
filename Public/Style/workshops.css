@@ -140,6 +140,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 #steps-overview{
@@ -151,7 +152,7 @@
 .step-check-div{
     width: 15px;
     height: 15px;
-    border-radius: 50%;
+    border-radius: 3px;
     border: 1px solid #008e8e;
     margin-right: 15px;
 }
@@ -212,7 +213,18 @@
     display: none;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 50px;
+}
 
+.step-title-h2{
+    width: 100%;
+    background-color: #a7bdbd;
+    color: white;
+    padding: 20px;
+}
+
+#save-update-button{
+    display: none;
 }
 
 /* Create workshop */
@@ -314,6 +326,62 @@
     margin: 20px 5px 20px 5px;
 }
 
+.pre-own-goal-div{
+    display: flex;
+}
+
+.pre-own-goal-div input{
+    width: 20px !important;
+}
+
+.pre-own-goal-div label{
+    font-size: 16px;
+    color: #122b46;
+}
+
+#select-header-img-modal{
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    align-items: center;
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: white; /* Fallback color */
+}
+
+.select-header{
+    margin-top: 20px;
+}
+
+.select-header input{
+    width: 20px !important;
+}
+
+#select-header-img-modal h3{
+    color: #122b46;
+}
+
+#toolbar-select-header-image{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    border: 1px solid #e8e8e8;
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+#toolbar-select-header-image-button{
+    margin: 10px;
+}
+
 /* Workshop steps */
 
 .add-step-or-finish{
@@ -328,6 +396,7 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    width: 100%;
 }
 
 #step-one-inner-div{
