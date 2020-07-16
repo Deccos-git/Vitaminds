@@ -42,3 +42,8 @@
     border-radius: 5px;
     display: none;
 }
+
+#proposal-disclaimer{
+    margin: 50px 300px;
+    text-align: left;
+}

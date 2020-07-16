@@ -119,6 +119,155 @@ function askMe(){
     });
 };
 
+// Append goal or new goal
+
+const levensvraagArray = []
+
+function appendGoal(){
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+          db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
+              const auth = doc.data().Gebruikersnaam;
+                const authGoal = doc.data().Goals
+
+                db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
+                    querySnapshot.forEach(doc1 => {
+    
+                        const workshopGoal = doc1.data().Goal
+
+                        if(authGoal.includes(workshopGoal)){
+
+                            if(authGoal == workshopGoal){
+
+                                authGoal.forEach(goal => {
+
+                                    db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", auth).where("Goal", "==", goal).get().then(querySnapshot => {
+                                        querySnapshot.forEach(doc2 => {
+
+                                            const levensvraag = doc2.data().Levensvraag
+
+                                            // If more than one
+                                            levensvraagArray.push(levensvraag)
+
+                                        });
+                                    }).then(()=>{
+
+                                        // Save set
+                                        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc().set({
+                                        Workshop: titel,
+                                        Gebruikersnaam: auth,
+                                        Goal: workshopGoal,
+                                        AuthGoal: levensvraagArray[0],
+                                        StepOneInput: "",
+                                        StepTwoInput: "",
+                                        StepThreeInput: "",
+                                        StepFourInput: "",
+                                        StepFiveInput: "",
+                                        StepSixInput: "",
+                                        StepSevenInput: "",
+                                        StepEightInput: "",
+                                        ClosingInput: "",
+                                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                    });
+                                });
+                            });
+                        };
+                    };
+                });
+            });
+          });
+        };
+    });
+
+    const workshopDiv = document.getElementById("workshop-inner-div")
+    workshopDiv.style.display = "block"
+}
+
+function newGoal(){
+
+    const workshopGoalNewGoalDiv = document.getElementById("set-new-goal-div")
+
+    workshopGoalNewGoalDiv.style.display = "flex"
+
+    const workshopGoalTitlePreFill = document.getElementById("workshop-goal-title")
+
+    db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc1 => {
+
+            const workshopGoal = doc1.data().Goal
+
+            workshopGoalTitlePreFill.innerHTML = `<i>${workshopGoal}</i>`
+        });
+    });
+};
+
+function setAndStart(){
+
+    const workshopGoalTitlePreFill = document.getElementById("workshop-goal-title")
+
+    const personalGoalTitle = document.getElementById("personal-goal-title").value
+    const goalSummary = document.getElementById("goal-summary").value
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+          db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
+              const auth = doc.data().Gebruikersnaam;
+
+              db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    const workshopGoal = doc1.data().Goal
+
+                    workshopGoalTitlePreFill.innerHTML = `<i>${workshopGoal}</i>`
+
+        db.collection('Vitaminders').doc(User.uid).collection("Levensvragen").doc().set({
+            ID: idClean,
+            Goal: workshopGoal,
+            Levensvraag: idClean + personalGoalTitle,
+            LevensvraagClean: personalGoalTitle,
+            Levenslessen: [],
+            Gebruikersnaam: auth,
+            Eigenaar: "Vitaminds",
+            Omschrijving: goalSummary,
+            Openbaar: "Nee",
+            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+
+                        }).then(() => {
+                        db.collection('Vitaminders').doc(User.uid).update({
+                                Goals: firebase.firestore.FieldValue.arrayUnion(workshopGoal)
+                            });
+                        });
+                
+                      // Save set
+
+                db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc().set({
+                    Workshop: titel,
+                    Gebruikersnaam: auth,
+                    Goal: workshopGoal,
+                    AuthGoal: personalGoalTitle,
+                    StepOneInput: "",
+                    StepTwoInput: "",
+                    StepThreeInput: "",
+                    StepFourInput: "",
+                    StepFiveInput: "",
+                    StepSixInput: "",
+                    StepSevenInput: "",
+                    StepEightInput: "",
+                    ClosingInput: "",
+                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                        });
+                    });
+                });                 
+            });
+        };
+    })
+
+    const workshopDiv = document.getElementById("workshop-inner-div")
+    workshopDiv.style.display = "block"
+};
+
+
 db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
@@ -174,8 +323,9 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
         const closingSevenTitle = doc.data().ClosingSevenTitle
         const closingEightText = doc.data().ClosingEightText 
         const closingEightTitle = doc.data().ClosingEightTitle
+        const workshopGoal = doc.data().Goal
 
-        const DOM = document.getElementById("workshop-section")
+        const DOM = document.getElementById("workshop-inner-div")
 
         // All images responsive
 
@@ -189,6 +339,67 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
             img.style.height = "100%"
             img.style.width = "100%"
         })
+
+        // Wokshop goal auth check
+
+        auth.onAuthStateChanged(User =>{
+            if(User){
+              db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
+                  const auth = doc.data().Gebruikersnaam;
+                  const authClean = doc.data().GebruikersnaamClean
+                    const authGoal = doc.data().Goals
+
+                    const workshopGoalDOM = document.getElementById("workshop-goal-check-inner-div")
+
+                    if(authGoal == undefined){
+                        const workshopMessage = `<p>Het doel van deze workshop is <i>${workshopGoal}</i>.<br> 
+                    Ik zie dat jij <i>${workshopGoal}</i> nog geen doel van je is.<br> 
+                    Maak het eerst het doel <i>${workshopGoal}</i> aan. Dan beginnen we direct daarna met de workshop. </p><br>
+                    <button onclick="newGoal()" id="new-goal">Nieuw doel aanmaken</button>`
+
+                    workshopGoalDOM.innerHTML = workshopMessage
+                    }
+
+                    if(authGoal.includes(workshopGoal)){
+
+                        if(authGoal == workshopGoal){
+                   
+                        const workshopMessage = `<p>Het doel van deze workshop is <i>${workshopGoal}</i>.<br> 
+                        Ik zie dat jij een doel hebt met de naam: <i> ${authGoal}</i>.<br> 
+                        Wil je deze workshop aan dat doel koppelen?</p><br>
+                        <button onclick="appendGoal()" id="append-goal">Koppelen</button><button onclick="newGoal()" id="new-goal">Nieuw doel aanmaken</button>`
+
+                        workshopGoalDOM.innerHTML = workshopMessage
+                            } 
+                        }
+                        else {
+                                const workshopMessage = `<p>Het doel van deze workshop is <i>${workshopGoal}</i>.<br> 
+                        Ik zie dat <i>${workshopGoal}</i> nog geen doel van je is.<br> 
+                        Maak het eerst het doel <i>${workshopGoal}</i> aan. Dan beginnen we direct daarna met de workshop. </p><br>
+                        <button onclick="newGoal()" id="new-goal">Nieuw doel aanmaken</button>`
+
+                        workshopGoalDOM.innerHTML = workshopMessage
+                            }
+
+                        if(authGoal == undefined){
+                            const workshopMessage = `<p>Het doel van deze workshop is <i>${workshopGoal}</i>.<br> 
+                        Ik zie dat jij <i>${workshopGoal}</i> nog geen doel van je is.<br> 
+                        Maak het eerst het doel <i>${workshopGoal}</i> aan. Dan beginnen we direct daarna met de workshop. </p><br>
+                        <button onclick="newGoal()" id="new-goal">Nieuw doel aanmaken</button>`
+
+                        workshopGoalDOM.innerHTML = workshopMessage
+                        }
+
+                            const appendGoal = document.getElementById("append-goal")
+                            const newGoal =document.getElementById("new-goal")
+
+                            // appendGoal.addEventListener("click", () => {
+                            //     console.log("Tets")
+                            // })
+                });
+            };
+        });
+
 
         db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
@@ -354,7 +565,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     saveEightButton.setAttribute("onclick", "saveEight()")
                     const closingButton = document.createElement("button")
                     closingButton.setAttribute("id", "closing-button")
-                    closingButton.setAttribute("onclick", "saveClosing()")
+                    // closingButton.setAttribute("onclick", "saveClosing()")
 
                     saveButtonDiv.appendChild(saveOneButton)
                     saveButtonDiv.appendChild(saveTwoButton)
@@ -628,42 +839,6 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                         DOM.appendChild(stepTwoIntroductionDiv)
                         stepTwoIntroductionDiv.appendChild(stepTwoIntroductionP)
                         stepTwoIntroductionDiv.appendChild(stepTwoIntroductionButton)
-
-                        // Save set
-
-                    const localStorageSaveSet = localStorage.getItem("saveSet")
-
-                    console.log(localStorageSaveSet)
-
-                    if(localStorageSaveSet != "Set"){
-
-                    auth.onAuthStateChanged(User =>{
-                        if (User){
-
-                            db.collection("Vitaminders").doc(User.uid).get().then(doc1 => {
-                                const name = doc1.data().Gebruikersnaam
-                    
-                        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc().set({
-                            Workshop: titel,
-                            Gebruikersnaam: name,
-                            StepOneInput: "",
-                            StepTwoInput: "",
-                            StepThreeInput: "",
-                            StepFourInput: "",
-                            StepFiveInput: "",
-                            StepSixInput: "",
-                            StepSevenInput: "",
-                            StepEightInput: "",
-                            ClosingInput: "",
-                            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                                        });
-                                    });
-                                };
-                            });
-
-                    localStorage.setItem("saveSet", "Set")
-
-                        };
                     })
                 };
 
@@ -1435,7 +1610,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                         stepEightInput.setAttribute("rows", "10")
                                         stepEightInput.setAttribute("cols", "30")
                                         stepEightInput.setAttribute("placeholder", "Wat heb je geleerd?")
-                                        stepEightInput.setAttribute("id", "step-seven-input")
+                                        stepEightInput.setAttribute("id", "step-eight-input")
             
                                     stepEightTitleH2.innerText = stepEightTitle
                                     stepEightExplainerP.innerText = stepEightExplainer
@@ -1646,9 +1821,17 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 
                                 const stepOneButton = document.getElementById("step-one-button")
 
+                                const newGoalorAppend = document.getElementById("workshop-goal-check")
+                                newGoalorAppend.style.display = "none"
+                    
+                                const workshopSection = document.getElementById("workshop-inner-div")
+                                    workshopSection.style.display = "flex"
+
                                 if(stepOneInput != ""){
 
                                     stepOneButton.click()
+
+                                    stepOneButton.parentElement.style.display = "none"
 
                                 const stepOneInputDOM = document.getElementById("step-one-input")
 
@@ -1993,7 +2176,6 @@ function saveEight(){
     });
 };
 
-
 // Create new or edit excisting workshop
 const inputNew = document.getElementById("edit-workshop")
 
@@ -2053,13 +2235,31 @@ function selectNewOrEdit(){
         saveWorkshop.style.display = "none"
         updateWorkshop.style.display = "block"
 
+        // Select goal of workshop
+
+        const selectGoal = document.getElementById("select-goel-workshop")
+
+        db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+
+                const levensvraag = doc1.data().Levensvraag
+
+                const options = document.createElement("option")
+
+                options.innerText = levensvraag
+
+                selectGoal.appendChild(options)
+
+            })
+        });
+
         auth.onAuthStateChanged(User =>{
             if (User){
     
             db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                         const coachNaam = doc.data().Gebruikersnaam;
 
-        db.collection("Workshops").where("WorkshopTitle", "==", selected).where("Coach", "==", coachNaam).get().then(querySnapshot => {
+        db.collection("Workshops").where("WorkshopTitle", "==", selected).where("Gebruikersnaam", "==", coachNaam).get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
         
                 const title = doc.data().WorkshopTitle
@@ -2113,6 +2313,7 @@ function selectNewOrEdit(){
                 const closingSevenTitle = doc.data().ClosingSevenTitle
                 const closingEightText = doc.data().ClosingEightText 
                 const closingEightTitle = doc.data().ClosingEightTitle
+                const workshopGoal = doc.data().Goal
 
                 // Load selected header image 
                 if(headerImg != undefined || headerImg != ""){
@@ -2132,6 +2333,21 @@ function selectNewOrEdit(){
                 const DOMtitle = document.getElementById("workshop-title")
                 DOMtitle.value = title
                 tinyMCE.get('editor1').setContent(workshopGoals)
+
+                // Load workshop goal
+                const selectGoal = document.getElementById("select-goel-workshop")
+
+                const options = selectGoal.options
+
+                const optionsArray = Array.from(options)
+
+                optionsArray.forEach(opt => {
+
+                    if(opt.innerHTML == workshopGoal){
+
+                        selectGoal.value = opt.innerHTML
+                    }
+                })
 
                 // Load step one content
                 if(stepOneTitle != ""){
@@ -2304,7 +2520,10 @@ function selectNewOrEdit(){
                 innerDivEight.setAttribute("data-cta", stepEightCTA)
 
                 // Load closing 
-                if(closingOneTitle != "" && closingOneText){
+                if(closingOneTitle != "" && closingOneText != ""){
+
+                    const closingButtonOne = document.getElementById("create-closing-1")
+                        closingButtonOne.click()
 
                     const closingOneTitleDOM = document.getElementById("closing-title-input-1")
                     tinyMCE.get('editor-closing-1').setContent(closingOneText)
@@ -2312,7 +2531,10 @@ function selectNewOrEdit(){
                     closingOneTitleDOM.value = closingOneTitle
                 }
 
-                if(closingTwoTitle != "" && closingTwoText){
+                if(closingTwoTitle != "" && closingTwoText != ""){
+
+                    const closingButtonTwo = document.getElementById("create-closing-2")
+                        closingButtonTwo.click()
 
                     const closingTwoTitleDOM = document.getElementById("closing-title-input-2")
                     tinyMCE.get('editor-closing-2').setContent(closingTwoText)
@@ -2320,7 +2542,10 @@ function selectNewOrEdit(){
                     closingTwoTitleDOM.value = closingTwoTitle
                 }
 
-                if(closingThreeTitle != "" && closingThreeText){
+                if(closingThreeTitle != "" && closingThreeText != ""){
+
+                    const closingButtonThree = document.getElementById("create-closing-3")
+                        closingButtonThree.click()
 
                     const closingThreeTitleDOM = document.getElementById("closing-title-input-3")
                     tinyMCE.get('editor-closing-3').setContent(closingThreeText)
@@ -2328,7 +2553,10 @@ function selectNewOrEdit(){
                     closingThreeTitleDOM.value = closingThreeTitle
                 }
 
-                if(closingFourTitle != "" && closingFourText){
+                if(closingFourTitle != "" && closingFourText != ""){
+
+                    const closingButtonFour = document.getElementById("create-closing-4")
+                        closingButtonFour.click()
 
                     const closingFourTitleDOM = document.getElementById("closing-title-input-4")
                     tinyMCE.get('editor-closing-4').setContent(closingFourText)
@@ -2336,7 +2564,10 @@ function selectNewOrEdit(){
                     closingFourTitleDOM.value = closingFourTitle
                 }
 
-                if(closingFiveTitle != "" && closingFiveText){
+                if(closingFiveTitle != "" && closingFiveText != ""){
+
+                    const closingButtonFive = document.getElementById("create-closing-5")
+                        closingButtonFive.click()
 
                     const closingFiveTitleDOM = document.getElementById("closing-title-input-5")
                     tinyMCE.get('editor-closing-5').setContent(closingFiveText)
@@ -2344,7 +2575,10 @@ function selectNewOrEdit(){
                     closingFiveTitleDOM.value = closingFiveTitle
                 }
 
-                if(closingSixTitle != "" && closingSixText){
+                if(closingSixTitle != "" && closingSixText != ""){
+
+                    const closingButtonSix = document.getElementById("create-closing-6")
+                        closingButtonSix.click()
 
                     const closingSixTitleDOM = document.getElementById("closing-title-input-6")
                     tinyMCE.get('editor-closing-6').setContent(closingSixText)
@@ -2352,7 +2586,10 @@ function selectNewOrEdit(){
                     closingSixTitleDOM.value = closingSixTitle
                 }
 
-                if(closingSevenTitle != "" && closingSevenText){
+                if(closingSevenTitle != "" && closingSevenText != ""){
+
+                    const closingButtonSeven = document.getElementById("create-closing-7")
+                        closingButtonSeven.click()
 
                     const closingSevenTitleDOM = document.getElementById("closing-title-input-7")
                     tinyMCE.get('editor-closing-7').setContent(closingSevenText)
@@ -2360,7 +2597,10 @@ function selectNewOrEdit(){
                     closingSevenTitleDOM.value = closingSevenTitle
                 }
 
-                if(closingEightTitle != "" && closingEightText){
+                if(closingEightTitle != "" && closingEightText != ""){
+
+                    const closingButtonEight= document.getElementById("create-closing-8")
+                        closingButtonEight.click()
 
                     const closingEightTitleDOM = document.getElementById("closing-title-input-8")
                     tinyMCE.get('editor-closing-8').setContent(closingEightText)
@@ -2390,6 +2630,12 @@ function saveWorkshop(){
     const workshopTitle = document.getElementById("workshop-title").value
     const workshopGoals = tinyMCE.get('editor1').getContent()
     const stepOnePreview = tinyMCE.get('editor2').getContent()
+
+    // Workshop goal
+    const workshopGoalSelect = document.getElementById("select-goel-workshop")
+
+    const select = workshopGoalSelect.options
+    const workshopGoal = select[select.selectedIndex].innerHTML
 
     // Step one
     const stepOneTitle =  document.getElementById("step-one-title").value
@@ -2478,6 +2724,7 @@ function saveWorkshop(){
         Eigenaar: "Vitaminds",
         Coach: coachNaam,
         Status: "Draft",
+        Goal: workshopGoal,
         WorkshopTitle: workshopTitle,
         WorkshopGoals: workshopGoals,
         StepOnePreview: stepOnePreview,
@@ -2524,7 +2771,7 @@ function saveWorkshop(){
         ClosingFiveText: closingFiveText,
         ClosingSixTitle: closingSixTitle,
         ClosingSixText: closingSixText,
-        ClosinSevenTitle: closingSevenTitle,
+        ClosingSevenTitle: closingSevenTitle,
         ClosingSevenText: closingSevenText,
         ClosingEightTitle: closingEightTitle,
         ClosingEightText: closingEightText,
@@ -2547,6 +2794,12 @@ function updateWorkshop(){
     const workshopTitle = document.getElementById("workshop-title").value
     const workshopGoals = tinyMCE.get('editor1').getContent()
     const stepOnePreview = tinyMCE.get('editor2').getContent()
+
+        // Workshop goal
+        const workshopGoalSelect = document.getElementById("select-goel-workshop")
+
+        const select = workshopGoalSelect.options
+        const workshopGoal = select[select.selectedIndex].innerHTML
 
        // Step one
        const stepOneTitle =  document.getElementById("step-one-title").value
@@ -2620,6 +2873,7 @@ function updateWorkshop(){
         querySnapshot.forEach(doc => {
 
             db.collection("Workshops").doc(doc.id).update({
+                Goal: workshopGoal,
                 WorkshopTitle: workshopTitle,
                 WorkshopGoals: workshopGoals,
                 StepOnePreview: stepOnePreview,
@@ -3053,6 +3307,12 @@ chooseHeaderImg.addEventListener("click", () => {
 // Save(set) first set of input to database
 chooseHeaderImageModalButton.addEventListener("click", () => {
 
+    // Workshop goal
+    const workshopGoalSelect = document.getElementById("select-goel-workshop")
+
+    const select = workshopGoalSelect.options
+    const workshopGoal = select[select.selectedIndex].innerHTML
+
     // Header image
 
     const selectedImage = document.querySelectorAll("input[name=select-header-img]:checked")[0].id
@@ -3151,6 +3411,7 @@ chooseHeaderImageModalButton.addEventListener("click", () => {
         Eigenaar: "Vitaminds",
         Coach: coachNaam,
         Status: "Draft",
+        Goal: workshopGoal,
         HeaderImage: selectedImage,
         WorkshopTitle: workshopTitle,
         WorkshopGoals: workshopGoals,
@@ -3198,7 +3459,7 @@ chooseHeaderImageModalButton.addEventListener("click", () => {
         ClosingFiveText: closingFiveText,
         ClosingSixTitle: closingSixTitle,
         ClosingSixText: closingSixText,
-        ClosinSevenTitle: closingSevenTitle,
+        ClosingSevenTitle: closingSevenTitle,
         ClosingSevenText: closingSevenText,
         ClosingEightTitle: closingEightTitle,
         ClosingEightText: closingEightText,
@@ -3385,7 +3646,7 @@ selectHeaderImageUpdate.addEventListener("click", () => {
         ClosingFiveText: closingFiveText,
         ClosingSixTitle: closingSixTitle,
         ClosingSixText: closingSixText,
-        ClosinSevenTitle: closingSevenTitle,
+        ClosingSevenTitle: closingSevenTitle,
         ClosingSevenText: closingSevenText,
         ClosingEightTitle: closingEightTitle,
         ClosingEightText: closingEightText,

@@ -111,13 +111,30 @@
       <img id="coach-pic" alt="">
       <p>Stel me een vraag</p>
     </div>
-    <div id="workshop-header-image"></div>
-    <div id="workshop-summary-div">
-      <h3>Wat kun je bij deze workshop leren?</h3>
-      <p id="workshop-summary"></p>
-    </div>
-    <div id="steps-overview">
-      <h3>Wat gaan we doen?</h3>
+      <div id="workshop-goal-check">
+        <h3>Jouw doel</h3>
+        <div id="workshop-goal-check-inner-div"></div>
+        <div id="set-new-goal-div">
+          <p>Doel</p>
+          <p id="workshop-goal-title"></p>
+          <p>Geef je doel een persoonlijke titel</p>
+          <input id="personal-goal-title" type="text" placeholder="Titel">
+          <p>Geef je doel een korte omschrijving</p>
+          <textarea name="" id="goal-summary" cols="30" rows="10" placeholder="Omschrijving van je doel"></textarea>
+          <div>
+            <button onclick="setAndStart()">Start de workshop</button>
+          </div>
+        </div>
+      </div>
+      <div id="workshop-inner-div">
+      <div id="workshop-header-image"></div>
+      <div id="workshop-summary-div">
+        <h3>Wat kun je bij deze workshop leren?</h3>
+        <p id="workshop-summary"></p>
+      </div>
+      <div id="steps-overview">
+        <h3>Wat gaan we doen?</h3>
+      </div>
     </div>
   </div>
 </section>

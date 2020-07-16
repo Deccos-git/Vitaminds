@@ -148,6 +148,7 @@ function edit(elem){
                 querySnapshot.forEach(doc1 => {
 
                         const ID = doc1.data().ID
+                        const goal = doc1.data().Goal
 
                         db.collection("Vitaminders").doc(doc.id).collection("Levensvragen").doc(doc1.id).update({
                                 Levensvraag: ID + vraag.innerHTML,
@@ -163,6 +164,10 @@ function edit(elem){
                                                 Levensvraag: ID + vraag.innerHTML
                                         })
                                 })
+                        })
+
+                        db.collection('Vitaminders').doc(User.uid).update({
+                                Goals: firebase.firestore.FieldValue.arrayUnion(goal)
                         })
                         .then(() => {
                                 location.reload();
@@ -196,6 +201,8 @@ function edit(elem){
         db.collectionGroup("Levensvragen").where("Levensvraag", "==", dataEdit).get().then(querySnapshot => {
                 querySnapshot.forEach(doc1 => {
 
+                        const levensvraagClean = doc1.data().LevensvraagClean
+
                         db.collection("Vitaminders").doc(doc.id).collection("Levensvragen").doc(doc1.id).delete()
 
                         db.collectionGroup("Reactions").where("Levensvraag", "==", dataEdit).get().then(querySnapshot => {
@@ -205,6 +212,10 @@ function edit(elem){
                                                 Levensvraag: "Levensvraag is verwijderd"
                                         })
                                 })
+                        })
+
+                        db.collection('Vitaminders').doc(User.uid).update({
+                                Levensvragen: firebase.firestore.FieldValue.arrayRemove(levensvraagClean)
                         })
                         .then(() => {
                                 location.reload();

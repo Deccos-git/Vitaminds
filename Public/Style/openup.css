@@ -6,8 +6,7 @@
     flex-wrap: wrap;
     width: 100%;
     background-color: #fff;
-    margin-top: 80px;
-    padding-bottom: 200px;
+    margin-top: 0px;
 }
 
 .openup-div{
@@ -129,6 +128,22 @@
     width: 75%;
 }
 
+.meta-user-div{
+    display: flex;
+    cursor: pointer;
+}
+
+.meta-user-div img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.meta-user-div p{
+  font-size: 14px !important;
+}
+
 .openup-div-detail{
     display: flex;
     flex-direction: column;
@@ -195,7 +210,7 @@
 }
 
 .bron-div-detail{
-    margin: 50px 0px 0px 0px;
+    margin: 30px 50px 30px 50px;
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -243,6 +258,7 @@
 
 .openup-meta-source{
     cursor: pointer;
+    font-size: 14px !important;
 }
 
 .auth-div-detail{
@@ -487,6 +503,14 @@
         align-items: center;
         padding: 20px;
         border-top: 1px solid #dfdfdf;
+    }
+
+    .bron-div-detail {
+        margin: 30px 10px 30px 10px;
+    }
+
+    .sub-title {
+        margin: -30px 10px 50px 10px;
     }
 
 }

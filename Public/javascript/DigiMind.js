@@ -1580,8 +1580,15 @@ function startTocht(){
                 Eigenaar: "Vitaminds",
                 Omschrijving: omschrijving,
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+        
+       }).then(() => {
+        db.collection('Vitaminders').doc(User.uid).update({
+                Goals: firebase.firestore.FieldValue.arrayUnion(option)
+        })
+
+       })
                 
-        }).then(()=>{
+        .then(()=>{
                 location.reload();
                 localStorage.clearItem("DigimindGoal")
                                                 })
