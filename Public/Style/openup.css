@@ -118,6 +118,78 @@
 
 /* Detailpagina */
 
+#check-in-outer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    border-radius: 3px;
+    margin: 10px 250px;
+}
+
+#check-in-outer-div p{
+    font-size: 16px;
+    text-align: center;
+}
+
+#check-in-select{
+    border: 1px solid #b3b3b3;
+    border-radius: 5px;
+    width: 440px;
+    display: none;
+}
+
+#input-check-in{
+    border: 1px solid #b3b3b3;
+    border-radius: 5px;
+    margin: 15px 0px;
+}
+
+#foto-upload-check-in{
+    border: 1px solid #b3b3b3;
+    border-radius: 5px;
+    width: 440px;
+    display: none;
+}
+
+#select-goal-check-in{
+    display: none;
+}
+
+#select-photo-check-in{
+    display: none;
+}
+
+#check-in-button{
+    margin-top: 15px;
+    background-color: white;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #008e8e;
+    cursor: pointer;
+    display: none;
+}
+
+.les-div{
+    min-height: 300px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.les-div p{
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: #122b46;
+    padding: 0px 5px;
+    background-color: #ffffff47;
+    margin: 10px;
+}
+
 #open-up-detail-outer-div{
     display: flex;
     flex-direction: column;
@@ -245,7 +317,6 @@
 .meta-div-open-up{
     display: flex;
     justify-content: space-evenly;
-    border-top: 1px dotted #dfdfdf;
 }
 
 .meta-div-open-up p{
@@ -511,6 +582,22 @@
 
     .sub-title {
         margin: -30px 10px 50px 10px;
+    }
+
+    #input-check-in {
+        width: 100%;
+    }
+
+    #check-in-outer-div {
+        margin: 10px 10px;
+    }
+
+    #check-in-select {
+        width: 100%;
+    }
+
+    #foto-upload-check-in {
+        width: 100%;
     }
 
 }

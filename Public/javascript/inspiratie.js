@@ -1,7 +1,7 @@
 
 // Fetching title from url
-const titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
-const titel1 = titelhtml.replace('.html', '')
+const titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
+const titel1 = titelhtml.replace('.html', '')
 const titel2 = titel1.replace('%20',' ')
 const titel3 = titel2.replace('%20',' ')
 const titel4 = titel3.replace('%20',' ')
@@ -1159,6 +1159,10 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                     bedankt.setAttribute("class", "social-note")
                 const toevoegenLevenslesOuterDiv = document.createElement("div")
                     toevoegenLevenslesOuterDiv.setAttribute("class", "toevoegen-levensles-outer-div")
+                const toevoegenLevenslesSelectDiv = document.createElement("div")
+                    toevoegenLevenslesSelectDiv.setAttribute("class", "toeveogen-levensles-select-div")
+                const toevoegenLevenslesSelect = document.createElement("select")
+                    toevoegenLevenslesSelect.setAttribute("class", "toevoegen-levensles-select")
                 const toevoegenLevensles = document.createElement("h3")
                     toevoegenLevensles.setAttribute("class", "toevoegen-levensles")
                 const toevoegenLevenslesInput = document.createElement("input")
@@ -1189,24 +1193,24 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                     editIcon.setAttribute("data-themetitle", themeArtikel)
                     editIcon.setAttribute("data-coach", coach)
 
+                    
+                toevoegenLevensles.innerText = "Heb je iets geleerd over:"
+               
 
-                    //LocalStorage goal to CTA
+                auth.onAuthStateChanged(User =>{
+                    if (User){
+                db.collection("Vitaminders").doc(User.uid).get().then(doc => {
 
-                    const goal = localStorage.getItem("Goal")
+                    const goals = doc.data().Goals
+                    const auth = doc.data().Gebruikersnaam
 
-                    // Auth has no goal
-                    auth.onAuthStateChanged(User =>{
-                        db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                    if(goals == undefined){
 
-                            const auth = doc.data().Gebruikersnaam
-
-                    toevoegenLevensles.innerHTML = `Heb je iets geleerd over ${goal}?`
+                    toevoegenLevensles.innerHTML = `Heb je iets geleerd over jezelf?`
+    
                     toevoegenLevenslesInput.style.display = "none"
-                    toevoegenLevenslesButtonDiv.style.display = "none"
-
-                    if(goal == null || goal == "Geen doel selecteren"){
-                        toevoegenLevensles.innerHTML = `Heb je iets geleerd over jezelf?`
-                    };
+                    toevoegenLevenslesButton.style.display = "none"
+                    toevoegenLevenslesSelect.style.display = "none"
 
                     CTAnoGoalDiv.appendChild(CTAnoGoalP)
 
@@ -1217,67 +1221,134 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                         window.open("../Vitaminders/" + auth, "_self");
                     });
 
-                    localStorage.setItem("DigimindGoal", goal)
-
-                        })
-                    });
-
-                    // Auth has goal(s)
-                    auth.onAuthStateChanged(User =>{
-                        if (User){
-
-                            if(goal == null || goal == "Geen doel selecteren"){
-                                console.log("test")
-                                toevoegenLevensles.innerHTML = `Heb je iets geleerd over jezelf?`
-                            }
-
-                            db.collection("Vitaminders").doc(User.uid)
-                            .collection("Levensvragen").where("Goal", "==", goal).get()
-                            .then(querySnapshot => {
-                                querySnapshot.forEach(doc => {
-                                    const levensvraag = doc.data().LevensvraagClean
-
-                                    toevoegenLevenslesInput.style.display = "block"
-                                    toevoegenLevenslesButtonDiv.style.display = "block"
-                                    toevoegenLevensles.innerHTML = `Heb je iets geleerd over "${levensvraag}" ?`
-                            })
-                        });
-                        // Visitor
                     } else {
-                        // Geen goal in storage
-                        if(goal == null || goal == "Geen doel selecteren"){
-                            toevoegenLevensles.innerHTML = `Heb je iets geleerd over jezelf?`
 
-                            toevoegenLevenslesInput.style.display = "none"
-                            toevoegenLevenslesButton.style.display = "none"
-    
-                            CTAvisitor.innerHTML = " Maak een Digimind aan om je lessen in op te slaan"
-                            CTAvisitorDiv.style.cursor = "pointer"
-    
-                            CTAvisitorDiv.addEventListener("click", () => {
-                                window.open("../Register.html", "_self");
-                            })
-    
-                            CTAvisitorDiv.appendChild(CTAvisitor)
-                        } else {
+                    goals.forEach(goal => {
 
-                        toevoegenLevensles.innerHTML = `Heb je iets geleerd over ${goal}?`
+                        db.collectionGroup("Levensvragen").where("Goal", "==", goal).where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
+                            querySnapshot.forEach(doc1 => {
 
-                        toevoegenLevenslesInput.style.display = "none"
-                        toevoegenLevenslesButton.style.display = "none"
+                                const levensvraag = doc1.data().LevensvraagClean
 
-                        CTAvisitor.innerHTML = " Maak een Digimind aan om je lessen in op te slaan"
-                        CTAvisitorDiv.style.cursor = "pointer"
+                                const toevoegenLevenslesOptions = document.createElement("option")
 
-                        CTAvisitorDiv.addEventListener("click", () => {
-                            window.open("../Register.html", "_self");
-                        })
+                                toevoegenLevenslesOptions.innerHTML = levensvraag  
 
-                        CTAvisitorDiv.appendChild(CTAvisitor)
+                                toevoegenLevenslesSelect.appendChild(toevoegenLevenslesOptions)
+                                            
+                                        }); 
+                                    });
+                                });
+                            }
+                        });
+                    } else {
 
-                        };
-                    };
+                                toevoegenLevensles.innerHTML = `Heb je iets geleerd over jezelf?`
+        
+                                toevoegenLevenslesInput.style.display = "none"
+                                toevoegenLevenslesButton.style.display = "none"
+                                toevoegenLevenslesSelect.style.display = "none"
+        
+                                CTAvisitor.innerHTML = " Maak een Digimind aan om je lessen in op te slaan"
+                                CTAvisitorDiv.style.cursor = "pointer"
+        
+                                CTAvisitorDiv.addEventListener("click", () => {
+                                    window.open("../Register.html", "_self");
+                                })
+        
+                                CTAvisitorDiv.appendChild(CTAvisitor)
+        
+                                };
                 });
+
+                //     //LocalStorage goal to CTA
+
+                //     const goal = localStorage.getItem("Goal")
+
+                //     // Auth has no goal
+                //     auth.onAuthStateChanged(User =>{
+                //         db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
+                //             const auth = doc.data().Gebruikersnaam
+
+                //     toevoegenLevensles.innerHTML = `Heb je iets geleerd over ${goal}?`
+                //     toevoegenLevenslesInput.style.display = "none"
+                //     toevoegenLevenslesButtonDiv.style.display = "none"
+
+                //     if(goal == null || goal == "Geen doel selecteren"){
+                //         toevoegenLevensles.innerHTML = `Heb je iets geleerd over jezelf?`
+                //     };
+
+                //     CTAnoGoalDiv.appendChild(CTAnoGoalP)
+
+                //     CTAnoGoalDiv.style.display = "block"
+                //     CTAnoGoalP.innerText = "Maak eerst een doel aan om je les aan te koppelen"
+
+                //     CTAnoGoalDiv.addEventListener("click", () => {
+                //         window.open("../Vitaminders/" + auth, "_self");
+                //     });
+
+                //     localStorage.setItem("DigimindGoal", goal)
+
+                //         })
+                //     });
+
+                //     // Auth has goal(s)
+                //     auth.onAuthStateChanged(User =>{
+                //         if (User){
+
+                //             if(goal == null || goal == "Geen doel selecteren"){
+                //                 console.log("test")
+                //                 toevoegenLevensles.innerHTML = `Heb je iets geleerd over jezelf?`
+                //             }
+
+                //             db.collection("Vitaminders").doc(User.uid)
+                //             .collection("Levensvragen").where("Goal", "==", goal).get()
+                //             .then(querySnapshot => {
+                //                 querySnapshot.forEach(doc => {
+                //                     const levensvraag = doc.data().LevensvraagClean
+
+                //                     toevoegenLevenslesInput.style.display = "block"
+                //                     toevoegenLevenslesButtonDiv.style.display = "block"
+                //                     toevoegenLevensles.innerHTML = `Heb je iets geleerd over "${levensvraag}" ?`
+                //             })
+                //         });
+                //         // Visitor
+                //     } else {
+                //         // Geen goal in storage
+                //         if(goal == null || goal == "Geen doel selecteren"){
+                //             toevoegenLevensles.innerHTML = `Heb je iets geleerd over jezelf?`
+
+                //             toevoegenLevenslesInput.style.display = "none"
+                //             toevoegenLevenslesButton.style.display = "none"
+    
+                //             CTAvisitor.innerHTML = " Maak een Digimind aan om je lessen in op te slaan"
+                //             CTAvisitorDiv.style.cursor = "pointer"
+    
+                //             CTAvisitorDiv.addEventListener("click", () => {
+                //                 window.open("../Register.html", "_self");
+                //             })
+    
+                //             CTAvisitorDiv.appendChild(CTAvisitor)
+                //         } else {
+
+                //         toevoegenLevensles.innerHTML = `Heb je iets geleerd over ${goal}?`
+
+                //         toevoegenLevenslesInput.style.display = "none"
+                //         toevoegenLevenslesButton.style.display = "none"
+
+                //         CTAvisitor.innerHTML = " Maak een Digimind aan om je lessen in op te slaan"
+                //         CTAvisitorDiv.style.cursor = "pointer"
+
+                //         CTAvisitorDiv.addEventListener("click", () => {
+                //             window.open("../Register.html", "_self");
+                //         })
+
+                //         CTAvisitorDiv.appendChild(CTAvisitor)
+
+                //         };
+                //     };
+                // });
 
                 // Insights title
                 auth.onAuthStateChanged(User =>{
@@ -1377,7 +1448,9 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                 inspirationalDiv.appendChild(inspirationalImg)
                 inspirationalDiv.appendChild(bedankt)
                 socialDiv.appendChild(toevoegenLevenslesOuterDiv)
-                toevoegenLevenslesOuterDiv.appendChild(toevoegenLevensles)
+                toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesSelectDiv)
+                toevoegenLevenslesSelectDiv.appendChild(toevoegenLevensles)
+                toevoegenLevenslesSelectDiv.appendChild(toevoegenLevenslesSelect)
                 toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesDiv)
                 toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesInput)
                 toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesButtonDiv)
