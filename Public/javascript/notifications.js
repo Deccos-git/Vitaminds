@@ -114,7 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
             let docRef = db.collection("Vitaminders").doc(User.uid);
                     docRef.get().then(function(doc){
                     const auth = doc.data().Gebruikersnaam;
-                    const ID = doc.data().ID
 
     db.collectionGroup("Inspiration").where("Reciever", "==", auth).orderBy("Timestamp", "desc").get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
@@ -148,12 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     const giverClean = doc1.data().GebruikersnaamClean
 
                                     //Open up
-                         if (type == "Openup"){
-                            db.collectionGroup("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
-                                    querySnapshot.forEach(doc3 => {
-    
-                                            const levensvraagClean = doc3.data().LevensvraagClean
-                                            const levensvraag = doc3.data().Levensvraag
+                         if (type == "Levensles"){
     
                             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                             dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
@@ -164,15 +158,11 @@ document.addEventListener("DOMContentLoaded", () => {
                                     window.open("../Vitaminders/" + giver + ".html", "_self");
                             })
     
-                            liType.innerHTML = `Op je inzicht: ${source}`
+                            liType.innerHTML = `Op je levensles: ${inspiration}`
                             link.innerHTML = `<u>${inspiration}</u>`
-                            liSource.innerHTML = `Bron: <i>${type}</i> ${levensvraagClean}`
-                            
-                            liSource.addEventListener("click", () => {
-                                window.open("../Open/" + levensvraag + ".html", "_self");
-                                        })
-                                    })
-                            })   
+
+                            liSource.style.display = "none"
+                           
                     } else if (type == "Insight"){
                             // Levensvraag artikelen
                         db.collection("Insights").where("LevensvraagArtikel", "==", titel).get().then(querySnapshot => {

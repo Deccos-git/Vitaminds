@@ -14,6 +14,7 @@ const DOM = document.getElementById("verzamelOpenUps")
                 const gebruikersnaam = doc.data().Gebruikersnaam
                 const levensvraag = doc.data().Levensvraag
                 const backgroundImage = doc.data().BackgroundImage
+                const likes = doc.data().Inspirerend
 
                 const outerBronDiv = document.createElement("div")
                     outerBronDiv.setAttribute("class", "outer-bron-div")
@@ -29,6 +30,7 @@ const DOM = document.getElementById("verzamelOpenUps")
                 const lessen = document.createElement("p")
                 const metaDiv = document.createElement("div")
                     metaDiv.setAttribute("class", "meta-div-open-up")
+                    metaDiv.setAttribute("data-user", gebruikersnaam)
                 const typeMeta = document.createElement("p")
                 const timestampMeta = document.createElement("p")
                     timestampMeta.setAttribute("class", "timestamp-meta-p")
@@ -39,6 +41,12 @@ const DOM = document.getElementById("verzamelOpenUps")
                     editIcon.setAttribute("class", "edit-icon-insights")
                     editIcon.setAttribute("onclick", "editLessonOpenUp(this)")
                     editIcon.setAttribute("data-lesson", les)
+                const likeCounter = document.createElement("p")
+                    likeCounter.setAttribute("class", "like-counter-p")
+                const heart = document.createElement("img")
+                    heart.setAttribute("class", "react-icons")
+                    heart.setAttribute("data-user", gebruikersnaam)
+                    heart.setAttribute("data-les", les)
 
 
                     // Loader display none
@@ -70,13 +78,105 @@ const DOM = document.getElementById("verzamelOpenUps")
 
                     metaUserDiv.addEventListener("click", () => {
                         window.open("../Vitaminders/" + [gebruikersnaam] + ".html", "_self");
+                            });
                         });
-
-                        })
                     });
 
                     metaUserDiv.appendChild(metaUserPhoto)
                     metaUserDiv.appendChild(metaUserName)
+
+                    // Like counter
+                    if(likes > 0){
+                    likeCounter.innerText = likes
+                    };
+
+                    // Heart icon
+
+                    heart.src = "images/heart-icon.png"
+
+                    metaDiv.appendChild(heart)
+                    metaDiv.appendChild(likeCounter)
+                    
+                    heart.style.cursor = "pointer"
+                    
+                    heart.addEventListener("mouseenter", () => {
+                        heart.src = "images/heart-icon-hover.png"
+                            })
+                
+                    heart.addEventListener("mouseleave", () => {
+                        heart.src = "images/heart-icon.png"
+                            })
+            
+                   // Heart icon save
+
+                   heart.addEventListener("click", () => {
+                       heart.src = "images/heart-icon-hover.png"
+
+                       heart.addEventListener("mouseleave", () => {
+                        heart.src = "images/heart-icon-hover.png"
+                            });
+
+                    auth.onAuthStateChanged(User =>{
+                        userRef = db.collection("Vitaminders").doc(User.uid)
+                        userRef.get()
+                        .then(doc => {
+                                const auth = doc.data().Gebruikersnaam
+                                const email = doc.data().Email
+                                const naam = doc.data().GebruikersnaamClean
+
+                            // Naar reciever
+                        db.collection("Vitaminders").where("Gebruikersnaam", "==", gebruikersnaam).get().then(querySnapshot => {
+                            querySnapshot.forEach(doc1 => {
+                                db.collection("Vitaminders").doc(doc1.id).collection("Inspiration").doc().set({
+
+                                    New: "Yes",
+                                    Reciever: gebruikersnaam,
+                                    Inspiration: les,
+                                    Titel: titelH3.innerText,
+                                    Giver: auth,
+                                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                    Type: "Levensles"
+                                });
+
+                                // Naar levensles
+                                db.collectionGroup("Levenslessen").where("Levensles", "==", les).where("Gebruikersnaam", "==", gebruikersnaam).get().then(querySnapshot => {
+                                    querySnapshot.forEach(doc2 => {
+
+                                        db.collection("Vitaminders").doc(doc1.id).collection("Levenslessen").doc(doc2.id).update({
+
+                                            Inspirerend: firebase.firestore.FieldValue.increment(1)
+                            
+                                                });
+                                            });
+                                        });
+                                
+                                // Mail naar reciever
+                                db.collection("Mail").doc().set({
+                                    to: email,
+                                    cc: "info@vitaminds.nu",
+                              message: {
+                              subject: `Je update heeft een like ontvangen op Vitaminds! `,
+                              html: `Hallo ${naam}, </br></br>
+                                    Je update <i>${les}</i> heeft een like ontvangen op Vitaminds! <br><br>
+                                    
+                                    Ga naar <a href="https://vitaminds.nu"> Vitaminds </a> om je like te bekijken.<br><br>
+                              
+                                    Vriendelijke groet, </br></br>
+                                    Het Vitaminds Team </br></br>
+                                    <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                              Gebruikersnaam: naam,
+                              Emailadres: email,
+                              Type: "Love"
+                              }
+                                        
+                              })
+                                    });
+                                });
+                            });
+                        });
+                   });
+
+
 
                 
                 // Titel
@@ -171,10 +271,51 @@ const DOM = document.getElementById("verzamelOpenUps")
                 bronDiv.appendChild(timestampMeta)
                 bronDiv.appendChild(metaDiv) 
 
-                                })
+            })
+        })
+    })
+}).then(() => {
+
+        // Fill heart if auth has liked post
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                const auth = doc.data().Gebruikersnaam
+
+    db.collectionGroup("Inspiration").where("Type", "==", "Levensles").where("Giver", "==", auth).get().then(querySnapshot =>{
+        querySnapshot.forEach(doc1 => {
+
+            const likedLesson = doc1.data().Inspiration
+
+            const DOM = document.getElementsByClassName("react-icons")
+
+            const DOMarray = Array.from(DOM)
+
+            DOMarray.forEach(D => {
+                const dataLes = D.dataset.les
+
+                if(likedLesson == dataLes){
+
+                    D.src = "images/heart-icon-hover.png"
+
+                    D.addEventListener("mouseenter", () => {
+                        D.src = "images/heart-icon-hover.png"
                             })
-                        })
+                
+                    D.addEventListener("mouseleave", () => {
+                        D.src = "images/heart-icon-hover.png"
+                            })
+                };
+            });
+                
+
+
                     });
+                });
+            });
+        };
+    });
+});
 
 // Check in
 
@@ -186,7 +327,7 @@ const DOM = document.getElementById("verzamelOpenUps")
     const inputCheckIn = document.getElementById("input-check-in")   
 
     // Open complete check in box with click
-    inputCheckIn.addEventListener("mouseover", () => {
+    inputCheckIn.addEventListener("click", () => {
 
         checkInSelect.style.display = "block"
         fotoUploadCheckIn.style.display = "block"
