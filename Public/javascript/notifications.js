@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                             dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
     
-                            string.innerHTML = `Je hebt 1 nieuw inspiratiepunt ontvangen!`
+                            string.innerHTML = `Je hebt 1 nieuw like ontvangen!`
                             liGiver.innerHTML = `Van <u>${giverClean}</u>`
                             liGiver.addEventListener("click", () => {
                                     window.open("../Vitaminders/" + giver + ".html", "_self");
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
 
-                        string.innerHTML = `Je hebt 1 nieuw inspiratiepunt ontvangen!`
+                        string.innerHTML = `Je hebt 1 nieuw like ontvangen!`
                         liGiver.innerHTML = `Van <u>${giverClean}</u>`
                         liGiver.addEventListener("click", () => {
                                 window.open("../Vitaminders/" + giver + ".html", "_self");
@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
 
-                        string.innerHTML = `Je hebt 1 nieuw inspiratiepunt ontvangen!`
+                        string.innerHTML = `Je hebt 1 nieuw like ontvangen!`
                         liGiver.innerHTML = `Van <u>${giverClean}</u>`
                         liGiver.addEventListener("click", () => {
                                 window.open("../Vitaminders/" + giver + ".html", "_self");

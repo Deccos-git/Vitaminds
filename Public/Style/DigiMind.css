@@ -550,7 +550,7 @@
 
 .edit-div{
     display: flex;
-    width: 100%;
+    width: auto;
 }
 
 .save-div{
@@ -856,11 +856,13 @@
 /* About info */
 
 #contact-inner-div{
+    display: flex;
     background-color: #FFF;
     padding: 15px;
     width: auto;
-    margin: 30px;
+    margin: 0px;
     border-radius: 2px;
+    justify-content: space-evenly;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
@@ -910,15 +912,12 @@
 
 .item-div p{
     justify-self: flex-start;
-    margin-left: 15px;
-    margin-right: 40px;
-    max-width: 50%;
+    margin: 0px 10px;
+    font-size: 16px;
 }
 
 .item-div h6{
-    margin-left: auto;
-    margin-right: 15px;
-    max-width: 50%;
+    margin: 0px 10px;
 }
 
 .undefined-placeholder{

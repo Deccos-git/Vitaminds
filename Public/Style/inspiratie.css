@@ -461,6 +461,7 @@
 
 .insights-outer-div{
     display: flex;
+    flex-direction: column;
     margin: 10px 100px 5px 100px;
     background-color: white;
     padding: 15px;
@@ -482,26 +483,21 @@
 }
 
 .meta-div-insights{
-    border-right: 1px solid #f7f7f7;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     padding: 10px;
-    min-width: 150px;
-    max-width: 150px;
     cursor: pointer;
-    justify-content: center;
 }
 
 .meta-div-insights p{
     text-align: center !important;
+    margin-left: 15px;
 }
 
 .text-div-insights{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 30px;
+    padding: 0px 30px 30px 30px;
     text-align: left;
     width: 100%;
 }
@@ -829,10 +825,6 @@
     height: 20px;
     width: 20px;
     margin-bottom: auto;
-}
-
-.article-paragraphs-theme h2{
-    margin-top: 100px;
 }
 
 /* Individueel artikel pagina */
@@ -1279,11 +1271,9 @@
 
     .insights-outer-div {
         margin: 10px 10px 5px 10px;
-        flex-direction: column-reverse;
     }
 
     .meta-div-insights {
-        border-top: 1px solid #d5d5d5;
         border-right: 0;
         display: flex;
         justify-content: space-evenly;

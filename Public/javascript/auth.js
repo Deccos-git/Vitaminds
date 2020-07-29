@@ -283,7 +283,10 @@ auth.onAuthStateChanged(User =>{
     }
     })
   } else {
-    console.log("Offline")
+    const logOutMobile = document.getElementById("log-out-mobile")
+
+    logOutMobile.style.display = "none"
+
   }
 })
 
@@ -524,7 +527,7 @@ if(code.style.display = "none"){
 }
 
 
-   
+
 
   
 

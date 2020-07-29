@@ -20,8 +20,11 @@ const DOM = document.getElementById("verzamelOpenUps")
                     outerBronDiv.setAttribute("class", "outer-bron-div")
                 const metaUserDiv = document.createElement("div")
                     metaUserDiv.setAttribute("class", "meta-user-div")
+                    metaUserDiv.setAttribute("data-user", gebruikersnaam)
                 const metaUserPhoto = document.createElement("img")
                 const metaUserName = document.createElement("p")
+                    metaUserName.setAttribute("id", "meta-user-name")
+                const nameCompareDiv = document.createElement("div")
                 const bronDiv = document.createElement("div")
                     bronDiv.setAttribute("class", "bron-div-detail") 
                 const titelH3 = document.createElement("h3")
@@ -76,14 +79,19 @@ const DOM = document.getElementById("verzamelOpenUps")
                     metaUserPhoto.src = userPhoto
                     metaUserName.innerHTML = userClean
 
-                    metaUserDiv.addEventListener("click", () => {
+                    metaUserPhoto.addEventListener("click", () => {
+                        window.open("../Vitaminders/" + [gebruikersnaam] + ".html", "_self");
+                            });
+
+                    metaUserName.addEventListener("click", () => {
                         window.open("../Vitaminders/" + [gebruikersnaam] + ".html", "_self");
                             });
                         });
                     });
 
                     metaUserDiv.appendChild(metaUserPhoto)
-                    metaUserDiv.appendChild(metaUserName)
+                    metaUserDiv.appendChild(nameCompareDiv)
+                    nameCompareDiv.appendChild(metaUserName)
 
                     // Like counter
                     if(likes > 0){
@@ -121,12 +129,14 @@ const DOM = document.getElementById("verzamelOpenUps")
                         userRef.get()
                         .then(doc => {
                                 const auth = doc.data().Gebruikersnaam
-                                const email = doc.data().Email
-                                const naam = doc.data().GebruikersnaamClean
 
                             // Naar reciever
                         db.collection("Vitaminders").where("Gebruikersnaam", "==", gebruikersnaam).get().then(querySnapshot => {
                             querySnapshot.forEach(doc1 => {
+
+                                const email = doc1.data().Email
+                                const naam = doc1.data().GebruikersnaamClean
+
                                 db.collection("Vitaminders").doc(doc1.id).collection("Inspiration").doc().set({
 
                                     New: "Yes",
@@ -177,7 +187,76 @@ const DOM = document.getElementById("verzamelOpenUps")
                    });
 
 
+                   // Add comparisons
 
+                   const AuthGoalArray = []
+                   const AuthGoalLength = [] 
+
+                   auth.onAuthStateChanged(User =>{
+                    db.collection("Vitaminders").doc(User.uid)
+                    .get()
+                    .then(doc => {
+                            const auth = doc.data().Gebruikersnaam
+
+                        // Naar reciever
+                    db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
+
+                            const AuthGoals = doc1.data().Goals
+
+                            AuthGoals.forEach(authGoal => {
+                                AuthGoalArray.push(authGoal)
+                            });
+                        });
+                    }).then(() => {
+                        db.collection("Vitaminders").where("Gebruikersnaam", "==", gebruikersnaam).get().then(querySnapshot => {
+                            querySnapshot.forEach(doc2 => {
+
+                                const UserGoals = doc2.data().Goals
+                                const gebruikersnaamClean = doc2.data().GebruikersnaamClean
+
+                                UserGoals.forEach(UserGoal => {
+                                    // console.log(UserGoal)
+                                    // console.log(AuthGoalArray)
+                                    if(auth != gebruikersnaam){
+                                    if (AuthGoalArray.includes(UserGoal)){
+
+                                        AuthGoalLength.push(UserGoal)
+
+                                        const goalLength = AuthGoalLength.length
+
+                                        const comparisonsIcon = document.createElement("img")
+                                            comparisonsIcon.setAttribute("id", "comparison-icon")
+
+                                        comparisonsIcon.src = "images/comparison-icon.png"
+
+                                        metaUserDiv.appendChild(nameCompareDiv)
+                                        nameCompareDiv.appendChild(comparisonsIcon)
+
+                                        const comparisonsDiv = document.createElement("div")
+                                        const comparisonsP = document.createElement("p")
+                                            comparisonsP.setAttribute("id", "comparison-p")
+
+                                        comparisonsIcon.addEventListener("click", () => {
+
+                                            comparisonsP.innerText = `Jij en ${gebruikersnaamClean} delen ${goalLength} doel.`
+
+                                            if(goalLength > 1){
+                                                comparisonsP.innerText = `Jij en ${gebruikersnaamClean} delen ${goalLength} doelen.`
+                                            }
+
+                                            nameCompareDiv.appendChild(comparisonsDiv)
+                                            comparisonsDiv.appendChild(comparisonsP)
+                                        })
+                                        
+                                            };
+                                        };
+                                    });
+                                });
+                            });
+                        });  
+                    });
+                });
                 
                 // Titel
                 if(type == "Coach-inzicht"){
@@ -347,7 +426,7 @@ const DOM = document.getElementById("verzamelOpenUps")
                 const gebruikersnaam = doc.data().Gebruikersnaam
                 const gebruikersnaamClean = doc.data().GebruikersnaamClean
 
-                inputCheckIn.placeholder = `Hoe gaat het met je, ${gebruikersnaamClean} ?`
+                inputCheckIn.placeholder = `Wat houdt je bezig, ${gebruikersnaamClean}?`
 
                 db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", gebruikersnaam).where("Openbaar", "==", "Ja").get().then(querySnapshot =>{
                     querySnapshot.forEach(doc1 => {

@@ -411,11 +411,10 @@ auth.onAuthStateChanged(User =>{
                     adminIcon.addEventListener("click", () => {
                             window.open("../admin.html", "_self")
                         
-                                })
-                        // }
-                })
-        }
-})
+                                });
+                });
+        };
+});
 
 // Hide profile-elements for non-auth
 auth.onAuthStateChanged(User =>{
@@ -449,22 +448,7 @@ auth.onAuthStateChanged(User =>{
     }
 });
 
-        // Hide elements for non coach
-        auth.onAuthStateChanged(User =>{
-                if (User){
-                    let docRef = db.collection("Vitaminders").doc(User.uid);
-                        docRef.get().then(function(doc){  
-                                
-                                const type = doc.data().Usertype
-                                const themeOverview = document.getElementById("profile-notifications-theme-overview")
-
-                                if (type != "Coach"){
-                                        themeOverview.style.display = "none"
-                                }
-
-                        })
-                }
-        });
+        
 
 // Total inspirationpoints in Digimind
 
@@ -519,13 +503,13 @@ function dashboardFunction(){
                                 instructionDiv.style.display = "flex"
                         
 
-                                        instructionH4.innerHTML = "Je volgt nog geen coaches"
-                                        instructionP.innerHTML = `De nieuwste inzichten van jouw favoriete coaches komen hier te staan <br><br>
-                                                                Vind bijvoorbeeld <a href="../coaches.html"> hier</a> coaches om te volgen`
+                                        instructionH4.innerHTML = "Je volgt nog niemand"
+                                        instructionP.innerHTML = `De nieuwste updates van jouw favoriete Vitaminders komen hier te staan <br><br>
+                                                                Vind bijvoorbeeld <a href="../openup.html"> hier</a> Vitaminders om te volgen`
                                         instructionImg.src = "../images/menu-mijncoaches.png"
                                         } else if (auth != naam) {
                                                 instructionDiv.style.display = "flex"
-                                                instructionH4.innerHTML = `${naamClean} volgt nog geen coaches`
+                                                instructionH4.innerHTML = `${naamClean} volgt nog niemand`
                                         };
                                 };
                                 })
@@ -910,7 +894,6 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 // Contact info
                 const DOM = document.getElementById("contact-inner-div")
 
-                const titleH2 = document.createElement("h2")
                 const phoneDiv = document.createElement("div")
                         phoneDiv.setAttribute("class", "item-div")
                 const phoneDOM = document.createElement("p")
@@ -999,10 +982,6 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 mouse(editCoach)
                 mouse(editExperience)
 
-                // Contact
-
-                titleH2.innerHTML = "Contact"
-
                 // Not yet filled in coach details
 
                 function dataUndefined(a,b,c,d,e,f){
@@ -1077,7 +1056,6 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 //Contact
                 DOM.appendChild(editDivContact)
                 editDivContact.appendChild(editContact)
-                DOM.appendChild(titleH2)
                 DOM.appendChild(phoneDiv)
                 phoneDiv.appendChild(phoneDOM)
                 phoneDiv.appendChild(phoneData)
@@ -1125,6 +1103,30 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 }
         })
 })
+
+// Chat
+
+const chatDOM = document.getElementById("chat-outer-div")
+
+auth.onAuthStateChanged(User =>{
+        if (User){
+            let docRef = db.collection("Vitaminders").doc(User.uid);
+                docRef.get().then(function(doc){
+
+                        const auth = doc.data().Gebruikersnaam
+
+                        if(auth == naam){
+                                const inputOwner = document.createElement("input")
+
+                                chatDOM.appendChild(inputOwner)
+                        } else {
+
+                        }
+
+                })
+        }
+});
+
 
 // Intervisie
 

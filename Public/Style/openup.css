@@ -502,6 +502,20 @@
     flex-wrap: wrap;
 }
 
+#comparison-icon{
+    height: 15px;
+    width: 15px;
+    margin-left: 0px;
+}
+
+#comparison-p{
+    color: #008e8e;
+}
+
+#meta-user-name{
+    margin-bottom: 0px; 
+}
+
 .save-div{
     cursor: pointer;
 }
