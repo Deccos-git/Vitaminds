@@ -326,6 +326,11 @@ ul{
   font-size: 16px;
 }
 
+#chats-groups-mobile a{
+  color: #0c6665 !important;
+  font-size: 16px;
+}
+
 #modal-div{
   display: none; /* Hidden by default */
   flex-direction: column;
@@ -502,6 +507,20 @@ ul{
 .coach-menu-main-p{
   font-size: 14px;
   color: #8e0000;
+  cursor: pointer;
+}
+
+#chats-groups-div-auth-menu h3{
+  font-size: 18px;
+  cursor: pointer;
+  margin: 0px;
+}
+
+#auth-profile a{
+  text-decoration: none !important;
+}
+
+#chats-groups-div-auth-menu{
   cursor: pointer;
 }
 

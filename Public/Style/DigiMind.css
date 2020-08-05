@@ -75,13 +75,15 @@
 }
 
 #follow-button-digimind{
-    font-size: 16px;
-    background-color: #FFF;
-    border-radius: 15px;
-    padding: 10px;
-    color: #49beb7;
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
     cursor: pointer;
-    box-shadow: 0 1px 1px 0 #49beb7, 0 1px 9px 0 #49beb7;
+    color: #122c46;
+    width: 110px;
+    font-size: 16px;
+    border: 1px solid lightgray;
+    box-shadow: 0 1px 1px 0 #ffffff, 0 1px 9px 0 #ffffff;
 }
 
 #inspiratiepunten-outer-div{
@@ -174,6 +176,7 @@
 
   #follow-massage-visitor p{
       color: white;
+      font-size: 14px;
   }
 
   #follow-massage-visitor a{
@@ -923,6 +926,37 @@
 .undefined-placeholder{
     color: #cf6e13;
 }
+
+#chat-button{
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    color: #122c46;
+    width: 110px;
+    font-size: 16px;
+    border: 1px solid lightgray;
+    box-shadow: 0 1px 1px 0 #ffffff, 0 1px 9px 0 #ffffff;
+}
+
+#chat-button:hover {
+    box-shadow: #49beb7;
+}
+
+#chat-button h3{
+    color: #FFF;
+}
+
+#chat-notification-visitor{
+    display: none;
+    color: white;
+    font-size: 14px;
+}
+
+#chat-notification-visitor a{
+    color: white;
+}
+
 
 /* Intervisie */
 

@@ -624,14 +624,14 @@
 .social-div-inspirational-div-insights{
     margin: 0px 10px 0px 10px;
     display: flex;
-    flex-direction: column;
     align-items: center;
     margin-bottom: auto;
+    justify-content: center;
 }
 
-.social-div-inspirational-div-insights h3{
-    font-size: 16px;
-    margin: 0px 0px 7px 0px;
+.social-div-inspirational-div-insights p{
+    font-size: 14px;
+    margin: 0px 0px 0px 5px;
 }
 
 .social-div-inspirational-div-insights img{
@@ -1391,5 +1391,9 @@
 
     .inner-div-grateful {
         margin: 10px; 
+    }
+
+    #paragraph-list p {
+        text-align: center;
     }
 }

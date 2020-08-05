@@ -23,6 +23,11 @@ admin.initializeApp(firebaseConfig);
 
 // const urlencodedParser = bodyParser.urlencoded({extended: true});
 
+// Chat aanmaken op basis van URL
+app.get('/Chats/:id',function(req,res)
+{
+    res.sendFile('chat.html', { root: __dirname });
+});
 
 // Workshops aanmaken op basis van URL
 app.get('/Workshops/:id',function(req,res)

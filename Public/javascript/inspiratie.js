@@ -515,20 +515,18 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
                 const themaP = document.createElement("p")
                 const inspirationalDiv = document.createElement("div")
                 inspirationalDiv.setAttribute("class", "social-div-inspirational-div-insights")
-                const inspirationalH3 = document.createElement("h3")
                 const inspirationalImg = document.createElement("img")
                     inspirationalImg.setAttribute("onclick", "inspirerend(this)")
                     inspirationalImg.setAttribute("data-titel", titelInsight)
                     inspirationalImg.setAttribute("data-coach", coach)
                     inspirationalImg.setAttribute("data-body", body)
-                const bedankt = document.createElement("p")
-                    bedankt.setAttribute("class", "social-note")
                 const toevoegenLevenslesOuterDiv = document.createElement("div")
                     toevoegenLevenslesOuterDiv.setAttribute("class", "toevoegen-levensles-outer-div")
                 const toevoegenLevenslesSelectDiv = document.createElement("div")
                     toevoegenLevenslesSelectDiv.setAttribute("class", "toeveogen-levensles-select-div")
                 const toevoegenLevenslesSelect = document.createElement("select")
                     toevoegenLevenslesSelect.setAttribute("class", "toevoegen-levensles-select")
+                    toevoegenLevenslesSelect.setAttribute("id", "toevoegen-levensles-select-id")
                 const toevoegenLevensles = document.createElement("h3")
                     toevoegenLevensles.setAttribute("class", "toevoegen-levensles")
                 const toevoegenLevenslesInput = document.createElement("input")
@@ -550,6 +548,7 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
                 const CTAvisitor = document.createElement("p")
                 const opgeslagen = document.createElement("p")
                     opgeslagen.setAttribute("class", "social-note")
+                    opgeslagen.setAttribute("id", "social-note-id")
                 const editIcon = document.createElement("img")
                     editIcon.setAttribute("src", "../images/edit-icon.png")
                     editIcon.setAttribute("class", "edit-icon-insights")
@@ -649,15 +648,70 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
                 textBody.innerHTML = body
                 readMore.innerHTML = "Lees meer"
                 themaH3.innerHTML = "Verder lezen"
-                inspirationalH3.innerHTML = "Inspirerend"
-                inspirationalImg.src = "../images/menu-karakter.png"
-                bedankt.innerHTML = `<u>${gebruikersnaamClean}</u> zegt: Bedankt!`
                 toevoegenLevenslesButton.innerHTML = "Opslaan"
                 opgeslagen.innerHTML = `Opgeslagen in je <u>Digimind</u>`
 
-                bedankt.addEventListener("click", () => {
-                    window.open("../Vitaminders/" + coach + ".html", "_self");
-                });
+                // Heart
+                inspirationalImg.src = "../images/heart-icon.png"
+
+                inspirationalImg.addEventListener("mouseenter", () => {
+                    inspirationalImg.src = "../images/heart-icon-hover.png"
+                        });
+            
+                inspirationalImg.addEventListener("mouseleave", () => {
+                    inspirationalImg.src = "../images/heart-icon.png"
+                        });
+                
+                inspirationalImg.addEventListener("click", () => {
+                    inspirationalImg.src = "../images/heart-icon-hover.png"
+
+                    inspirationalImg.addEventListener("mouseleave", () => {
+                        inspirationalImg.src = "../images/heart-icon-hover.png"
+                            });
+                        });
+
+                        //Pre-fill saved hearts 
+                        auth.onAuthStateChanged(User =>{
+                            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                                    const auth = doc.data().Gebruikersnaam
+
+                                    db.collectionGroup("Inspiration").where("Giver", "==", auth).get().then(querySnapshot => {
+                                        querySnapshot.forEach(doc1 => {
+
+                                            const insightTitle = doc1.data().Source
+
+                                            if(insightTitle == titelInsight){
+                                                inspirationalImg.src = "../images/heart-icon-hover.png"
+                                            }
+                                        })
+                                    })
+                            });
+                        });
+
+                        // Like count
+
+                        const lenghtArray = []
+
+                        db.collectionGroup("Inspiration").where("Source", "==", titelInsight).get().then(querySnapshot => {
+                            querySnapshot.forEach(doc => {
+
+                                const items = doc.data().Giver
+
+                                lenghtArray.push(items)
+
+                                const lenghtP = document.createElement("p")
+
+                                lenghtP.innerText = lenghtArray.length
+
+                                inspirationalDiv.appendChild(lenghtP)
+
+                                
+
+                            });
+                        });
+
+
+
 
                 auth.onAuthStateChanged(User =>{
                     db.collection("Vitaminders").doc(User.uid).get().then(doc => {
@@ -715,9 +769,7 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
 
                 parra.appendChild(socialDiv)
                 socialDiv.appendChild(inspirationalDiv)
-                inspirationalDiv.appendChild(inspirationalH3)
                 inspirationalDiv.appendChild(inspirationalImg)
-                inspirationalDiv.appendChild(bedankt)
                 socialDiv.appendChild(toevoegenLevenslesOuterDiv)
                 toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesSelectDiv)
                 toevoegenLevenslesSelectDiv.appendChild(toevoegenLevensles)
@@ -866,9 +918,11 @@ function nieuwepostsubmit(){
      const input = elem.parentElement.previousElementSibling.value
      const coach = elem.dataset.coach
 
-     const goalTitleStorage = localStorage.getItem("GoalTitle")
+     const select = document.getElementById("toevoegen-levensles-select-id")
+     const option = select.options
+     const selected = option[option.selectedIndex].innerHTML
 
-     db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", goalTitleStorage).get()
+     db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", selected).get()
      .then(querySnapshot => {
          querySnapshot.forEach(doc => {
 
@@ -903,8 +957,8 @@ function nieuwepostsubmit(){
              
          })
      })
-
-     elem.parentElement.nextSibling.nextSibling.style.display = "block"
+     const savedNotice = document.getElementById("social-note-id")
+     savedNotice.style.display = "block"
                 })
             })
         })

@@ -146,6 +146,19 @@ auth.onAuthStateChanged(User =>{
     authProfile.innerHTML = `<a href = "../Vitaminders/${naamID}">Mijn Digimind</a>`
     closeDiv.style.backgroundImage = "url(../images/close-icon.png)";
 
+    // Chats & groups link
+    const chatsGroupDiv = document.createElement("div")
+        chatsGroupDiv.setAttribute("id", "chats-groups-div-auth-menu")
+      
+    const titleLink = document.createElement("a")
+
+    titleLink.innerText = "Chats & Groepen"
+
+    titleLink.addEventListener("click", () => {
+      window.open("../chats-groups.html", "_self");
+    })
+
+
       // Notificaties in menu
       const length = []
 
@@ -276,6 +289,8 @@ auth.onAuthStateChanged(User =>{
              authDiv.appendChild(authPhoto)
              authDiv.appendChild(authName)
              authDiv.appendChild(authProfile)
+             authProfile.appendChild(chatsGroupDiv)
+             chatsGroupDiv.appendChild(titleLink)
              authProfile.appendChild(notificationsDiv)
              authDiv.appendChild(logout)
 
