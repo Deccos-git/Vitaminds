@@ -39,24 +39,6 @@ if(send != null){
 
 send.addEventListener("click", () => {
 
-    // Empty screen
-        // User
-    const chatDivsUser = document.getElementsByClassName("auth-message-div-user")
-
-    const chatDivsArrayUser = Array.from(chatDivsUser)
-
-    chatDivsArrayUser.forEach(chatUser => {
-        DOMchatScreen.removeChild(chatUser)
-    });
-        // Auth
-    const chatDivsAuth = document.getElementsByClassName("auth-message-div-auth")
-
-    const chatDivsArrayAuth = Array.from(chatDivsAuth)
-
-    chatDivsArrayAuth.forEach(chatAuth => {
-        DOMchatScreen.removeChild(chatAuth)
-    });
-
     const message = document.getElementById("chat-input").value 
 
     auth.onAuthStateChanged(User =>{
@@ -102,6 +84,24 @@ auth.onAuthStateChanged(User =>{
             const roomName = auth<naam ? auth+'_'+naam : naam+'_'+auth;
 
             db.collectionGroup("Messages").where("Room", "==", roomName).orderBy("Timestamp", "asc").onSnapshot(querySnapshot => {
+
+                // Empty screen
+        // User
+    const chatDivsUser = document.getElementsByClassName("auth-message-div-user")
+
+    const chatDivsArrayUser = Array.from(chatDivsUser)
+
+    chatDivsArrayUser.forEach(chatUser => {
+        DOMchatScreen.removeChild(chatUser)
+    });
+        // Auth
+    const chatDivsAuth = document.getElementsByClassName("auth-message-div-auth")
+
+    const chatDivsArrayAuth = Array.from(chatDivsAuth)
+
+    chatDivsArrayAuth.forEach(chatAuth => {
+        DOMchatScreen.removeChild(chatAuth)
+    });
                 
                 querySnapshot.forEach(doc2 => {
 
