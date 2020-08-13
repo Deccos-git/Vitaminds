@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta id="meta-keywords" name="keywords">
+    <meta id="meta-description" property="og:description" name="description">
+    <!-- Facebook crawl tags -->
+    <meta id="facebook-url" property="og:url"/>
+    <meta property="og:type"  content="article"/>
+    <meta id="facebook-title" property="og:title" content="Rust in je hoofd"/>
+    <meta id="facebook-description" property="og:description"/>
+    <meta id="facebook-img" property="og:image" content="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/Levensvragen-Artikelen%2Favontuur4a.jpg?alt=media&token=6c295cb4-5f40-4ad0-9bc8-83d17fb54bad">
+  <title> Groep</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../Style/style.css">
+  <link rel="stylesheet" href="../Style/groups.css">
+  <link rel="shortcut icon" href="../images/Favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  <!-- Tiny MCE -->
+  <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
+    tinymce.init({
+      height: 400,
+      selector: '#tiny-mce',
+      toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media',
+      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media',
+      toolbar_mode: 'floating',
+      plugin_preview_width: 720,
+      forced_root_block : false,
+      paste_preprocess: function(plugin, args) {
+        console.log(args.content);
+        args.content += ' preprocess';
+      }
+    });
+  </script>
+  <!-- End Tiny MCE -->
+</head>
+
+<body>
+  
+   <!-- Feedback -->
+   <div id="feedback">
+    <a href="../tickets.html"> <p>Feedback</p></a>
+  </div>
+
+  <!-- Mobile-menu -->
+<nav id="mobile-menu"> 
+  <div id="menu-mobile-visible-layer">
+    <img id="mobile-hamburger-menu" src="../images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+    <div class="main-menu-mobile"><a href="../index.html"><img id="logo-menu" src="../images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+  </div>
+  <div id="mobile-menu-outer-div">
+    <div id="mobile-menu-inner-div">
+          <div id="profile-picture-mobile"></div>
+          <div id="button-login-mobile" class="login-logout"><button><a href="../inlog.html">Log in</a></button></div>
+      <div class="main-menu-mobile"><a href="../openup.html">Open up</a></div>
+      <div class="main-menu-mobile"><a href="../inspiratie.html">Inspiratie</a></div>
+      <div class="main-menu-mobile"><a href="../tools.html">Tools</a></div>
+      <div class="main-menu-mobile"><a href="../coaches.html">Coaches</a></div>
+      <div class="coach-menu-outer-div-mobile"><p id="aanmeldCH-mobile">Voor coaches</p>
+        <div id="coach-menu-main-mobile">
+          <div><a href="../voor-coach.html"><p class="coach-menu-main-p-mobile">Aanmelden als coach</p></a></div>
+          <div><a href="../kenniscentrum.html"><p class="coach-menu-main-p-mobile">Kenniscentrum coaching</p></a></div>
+        </div>
+      </div>  
+      <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+    </div>
+</nav>
+
+   <!-- menu --> 
+   <nav id="menu">
+    <div id="navigation-menu">
+      <div class="main-menu"><a href="../index.html"><img id="logo-menu" src="../images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+      <div class="main-menu"><a href="../openup.html">Open up</a></div>
+      <div class="main-menu"><a href="../inspiratie.html">Inspiratie</a></div>
+      <div class="main-menu"><a href="../tools.html">Tools</a></div>
+      <!-- <li class="main-menu"><a href="evenementen.html">Evenementen</a></li> -->
+      <div class="main-menu"><a href="../coaches.html">Coaches</a></div>
+      <!-- <li class="main-menu"><a href="privacy.html">Privacy</a></li> -->
+    </div>
+    <div id="auth-menu">
+      <div id="auth-DOM"></div>
+      <div id="profile-picture">
+      </div>
+      <div id="button-login" class = "login-logout"><button><a href="../inlog.html">Log in</a></button></div>
+      <div id="slash" class = "login-logout"><a>|</a></div>
+      <div class="coach-menu-outer-div"><p id="aanmeldCH"><a href="../voor-coach.html">Voor coaches</a></p>
+        <div id="coach-menu-main">
+          <div><a href="../voor-coach.html"><p class="coach-menu-main-p">Aanmelden als coach</p></a></div>
+          <div><a href="../kenniscentrum.html"><p class="coach-menu-main-p">Kenniscentrum coaching</p></a></div>
+        </div>
+      </div> 
+    </div>
+  </nav>
+
+  <h1 id="group-title"></h1>
+  <div id="list-of-members">
+    <div id="list-of-members-inner-div"></div>
+  </div>
+  <div id="chat-screen"></div>
+
+  <div id="input-div">
+    <input id="chat-input" type="text">
+    <img id="send-icon-group" src="../images/send-icon.png" alt="">
+  </div>
+
+
+
+<!-- footer -->
+<footer class="footer">
+  <div>
+   <a href="https://www.vitaminds.nu"><img src="../images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+  </div>
+  <div>
+    <h3 id="slogan-footer">Op avontuur in je eigen karakter</h3>
+  </div>
+  <div>
+   <a href="https://www.facebook.com/VitamindsNederland/"><img src="../images/Logo-facebook.png" alt="" width="40px"></a>
+   <a href="https://www.youtube.com/channel/UC44W6GvZnKZqBw7hdH5OU0A"><img src="../images/Logo-youtube.png" alt="" width="40px"></a>
+  </div>
+</footer>
+
+
+      <script type="text/javascript" src="../javascript/firebase.js"></script>
+      <script type="text/javascript" src="../javascript/groups.js"></script>
+      <script type="text/javascript" src="../javascript/auth.js"></script>
+    </body>
+  </html>
+  

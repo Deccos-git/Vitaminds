@@ -143,7 +143,7 @@ auth.onAuthStateChanged(User =>{
       
     logout.innerHTML = "Log uit"
     authName.innerHTML = `<a href = "../Vitaminders/${naamID}">${naam}</a>`
-    authProfile.innerHTML = `<a href = "../Vitaminders/${naamID}">Mijn Digimind</a>`
+    authProfile.innerHTML = `<a href = "../Vitaminders/${naamID}"><img id="icon-auth-menu-digimind" src="../images/menu-dashboard.png">Mijn Digimind</a>`
     closeDiv.style.backgroundImage = "url(../images/close-icon.png)";
 
     // Chats & groups link
@@ -151,8 +151,10 @@ auth.onAuthStateChanged(User =>{
         chatsGroupDiv.setAttribute("id", "chats-groups-div-auth-menu")
       
     const titleLink = document.createElement("a")
+    const linkImg = document.createElement('img')
 
     titleLink.innerText = "Chats & Groepen"
+    linkImg.src = "../images/send-icon.png"
 
     titleLink.addEventListener("click", () => {
       window.open("../chats-groups.html", "_self");
@@ -290,6 +292,7 @@ auth.onAuthStateChanged(User =>{
              authDiv.appendChild(authName)
              authDiv.appendChild(authProfile)
              authProfile.appendChild(chatsGroupDiv)
+             chatsGroupDiv.appendChild(linkImg)
              chatsGroupDiv.appendChild(titleLink)
              authProfile.appendChild(notificationsDiv)
              authDiv.appendChild(logout)

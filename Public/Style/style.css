@@ -522,6 +522,20 @@ ul{
 
 #chats-groups-div-auth-menu{
   cursor: pointer;
+  display: flex;
+}
+
+#chats-groups-div-auth-menu img{
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+}
+
+#icon-auth-menu-digimind{
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+  margin-bottom: -5px;
 }
 
 /* button algemeen */

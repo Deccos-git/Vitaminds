@@ -21,7 +21,17 @@ admin.initializeApp(firebaseConfig);
   const db = admin.firestore();
   const auth = admin.auth();
 
+// Prerender
+
+app.use(require('prerender-node').set('prerenderToken', 'Ab0cCom4i1KuazJ2YhDA'));
+
 // const urlencodedParser = bodyParser.urlencoded({extended: true});
+
+// Group aanmaken op basis van URL
+app.get('/Group/:id',function(req,res)
+{
+    res.sendFile('group.html', { root: __dirname });
+});
 
 // Chat aanmaken op basis van URL
 app.get('/Chats/:id',function(req,res)

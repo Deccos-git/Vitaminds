@@ -138,7 +138,7 @@ auth.onAuthStateChanged(User =>{
     };
 });
 
-// Get chats of auth
+// Get chats and groups of auth
 
 const DOMchats = document.getElementById("overview-chats")
 
@@ -152,6 +152,13 @@ auth.onAuthStateChanged(User =>{
 
 db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
     querySnapshot.forEach(doc1 => {
+
+        const type = doc1.data().Type
+        const title = doc1.data().Room
+
+        // Chats
+
+        if(type === "Chat"){
 
         const users = doc1.data().Room
 
@@ -198,14 +205,47 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnap
                     photoDiv.appendChild(photoImg)
                     chatsDiv.appendChild(chatsP)
 
+                                    });
                                 });
-                            });
-                        };    
-                });
-            };
+                            };    
+                        });
+                    };
+                } else if(type === "Group"){
+
+                        const members = doc1.data().Members
+                
+                  if (members.includes(auth)){
+                
+                
+                                    console.log(auth)
+                
+                                    const chatsDiv = document.createElement("div")
+                                        chatsDiv.setAttribute("class", "chats-div")
+                                    const chatsP = document.createElement("p")
+                                    const photoDiv = document.createElement("div")
+                                        photoDiv.setAttribute("class", "photo-div")
+                                    const photoImg = document.createElement("img")
+                
+                                    chatsP.innerText = title
+                                    
+                                        photoImg.src = "images/groups-icon.jpg"
+                
+                                    chatsDiv.addEventListener("click", () => {
+                                        window.open(`../Group/${title}.html`, "_self");
+                                    })
+                
+                                    DOMchats.appendChild(chatsDiv)
+                                    chatsDiv.appendChild(photoDiv)
+                                    photoDiv.appendChild(photoImg)
+                                    chatsDiv.appendChild(chatsP)
+                
+                                               
+                    };                
+                };
             });
         });
       });
     };
 });
+
 
