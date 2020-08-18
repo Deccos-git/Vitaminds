@@ -83,8 +83,10 @@ if(coachgroupTab != null){
         const headerImg = document.createElement("img")
             headerImg.setAttribute("class", "header-image-groups")
         const titleDiv = document.createElement("div")
+            titleDiv.setAttribute("class", "title-div-themegroups")
         const titleH2 = document.createElement("h2")
             titleH2.setAttribute("class", "titelTekst")
+        const subTitle = document.createElement("h5")
         const buttonDiv = document.createElement("button")
             buttonDiv.setAttribute("class", "button-algemeen-card")
 
@@ -105,6 +107,8 @@ if(coachgroupTab != null){
 
             db.collection("Chats").where("Room", "==", title).get().then(querySnapshot => {
                 querySnapshot.forEach(doc1 => {
+
+                    // Store members in database
             
                     db.collection("Chats").doc(doc1.id).update({
                         Members: firebase.firestore.FieldValue.arrayUnion(auth)
@@ -118,10 +122,30 @@ if(coachgroupTab != null){
             });
         });
 
+        db.collection("Chats").where("Room", "==", title).get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+
+                const members = doc1.data().Members
+
+                console.log(members)
+
+                // Display number of members in the title
+
+                const numberOfMembers = members.length
+
+                subTitle.innerText = `${numberOfMembers} mensen praten over`
+
+                //Already a member of the group
+                alreadyMember(members, buttonDiv)
+
+            });
+        });
+
         DOMthemeView.appendChild(outerSection)
         outerSection.appendChild(headerDiv)
         headerDiv.appendChild(headerImg)
         outerSection.appendChild(titleDiv)
+        titleDiv.appendChild(subTitle)
         titleDiv.appendChild(titleH2)
         outerSection.appendChild(buttonDiv)
 
@@ -288,6 +312,34 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
             });
         };
     });
+
+    function getProfilePicture(a,b){
+
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", a).get().then(querySnapshot => {
+            querySnapshot.forEach(doc4 => {
+
+                const user = doc.data().Gebruikersnaam
+                const photo = doc4.data().Profielfoto
+
+                const photoImg = document.createElement("img")
+
+                photoImg.src = photo
+        
+        if(photo == undefined){
+            photoImg.src = "images/dummy-profile-photo.jpeg"
+        } else {
+            photoImg.src = photo
+        }
+
+        photo.addEventListener("click", () => {
+            window.open(`../Vitaminders/${user}.html`, "_self");
+        })
+
+        b.appendChild(photoImg)
+
+            });
+        });
+    };
 
     // Get chats of auth
 
@@ -641,6 +693,12 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
             metaDiv.appendChild(costsP)
             groupInnerDiv.appendChild(groupButton)
 
+              // Group is full message
+              groupIsFull(members.length, groupButton, numberParticipants)
+
+              //Already a member of the group
+            alreadyMember(members, groupButton)
+
     });
 });
 
@@ -708,8 +766,7 @@ db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnap
 
             authDiv.addEventListener("click", () => {
                 window.open("../Vitaminders/" + auth + ".html", "_self");
-            })
-
+                    });
                 });
             });
 
@@ -732,6 +789,12 @@ db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnap
             metaDiv.appendChild(costsP)
             groupInnerDiv.appendChild(groupButton)
 
+            // Group is full message
+            groupIsFull(members.length, groupButton, numberParticipants)
+
+
+            //Already a member of the group
+            alreadyMember(members, groupButton)
     });
 });
 
@@ -775,3 +838,32 @@ function memberCoachGroups(elem){
 
     saveNewMemberToGroup(roomTitle)
  };
+
+ // Group is full message
+
+ function groupIsFull(a,b,c){
+
+    if (a === c){
+        b.innerText = "Groep is vol"
+        b.setAttribute("onclick", "null()")
+    }; 
+ };
+
+ function alreadyMember(a,b){
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+    
+            const auth = doc.data().Gebruikersnaam
+     if(a.includes(auth)){
+            b.innerText = "Je bent lid"
+            b.setAttribute("onclick", "null()")
+
+                };
+            });
+        };
+    });
+;}
+

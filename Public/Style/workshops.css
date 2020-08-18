@@ -220,7 +220,7 @@
 }
 
 #tool-bar-div{
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -347,7 +347,7 @@
 }
 
 #preview-workshop{
-    display: none;
+    display: block;
 }
 
 #updateWorkshop{

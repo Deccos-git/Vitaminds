@@ -80,6 +80,8 @@ db.collection("Workshops").where("Status", "==", "Public").get().then(querySnaps
                 titleH3.innerText = title
                 button.innerText = "Bekijk"
 
+                if(DOM != null){
+
                 DOM.appendChild(innerDiv)
                 innerDiv.appendChild(header)
                 header.appendChild(img)
@@ -89,6 +91,7 @@ db.collection("Workshops").where("Status", "==", "Public").get().then(querySnaps
                 innerDiv.appendChild(buttonDiv)
                 buttonDiv.appendChild(button)
 
+                };
             })
         });
     })
@@ -104,20 +107,26 @@ function openWorkshop(elem){
 
 }
 
-// Individual workshop page
+    // Save set
+function saveSet(){
 
-function askMe(){
-
-    db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-    
-            const coach = doc.data().Coach
-
-            window.open("../Vitaminders/" + coach, " _blank");
-
-        })
+    db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc().set({
+        Workshop: titel,
+        Gebruikersnaam: auth,
+        Goal: workshopGoal,
+        AuthGoal: levensvraagArray[0],
+        StepOneInput: "",
+        StepTwoInput: "",
+        StepThreeInput: "",
+        StepFourInput: "",
+        StepFiveInput: "",
+        StepSixInput: "",
+        StepSevenInput: "",
+        StepEightInput: "",
+        ClosingInput: "",
+        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
     });
-};
+}
 
 // Append goal or new goal
 
@@ -153,23 +162,7 @@ function appendGoal(){
                                         });
                                     }).then(()=>{
 
-                                        // Save set
-                                        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc().set({
-                                        Workshop: titel,
-                                        Gebruikersnaam: auth,
-                                        Goal: workshopGoal,
-                                        AuthGoal: levensvraagArray[0],
-                                        StepOneInput: "",
-                                        StepTwoInput: "",
-                                        StepThreeInput: "",
-                                        StepFourInput: "",
-                                        StepFiveInput: "",
-                                        StepSixInput: "",
-                                        StepSevenInput: "",
-                                        StepEightInput: "",
-                                        ClosingInput: "",
-                                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                                    });
+                                       saveSet() 
                                 });
                             });
                         };
@@ -239,24 +232,7 @@ function setAndStart(){
                             });
                         });
                 
-                      // Save set
-
-                db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc().set({
-                    Workshop: titel,
-                    Gebruikersnaam: auth,
-                    Goal: workshopGoal,
-                    AuthGoal: personalGoalTitle,
-                    StepOneInput: "",
-                    StepTwoInput: "",
-                    StepThreeInput: "",
-                    StepFourInput: "",
-                    StepFiveInput: "",
-                    StepSixInput: "",
-                    StepSevenInput: "",
-                    StepEightInput: "",
-                    ClosingInput: "",
-                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                        });
+                     saveSet()
                     });
                 });                 
             });
@@ -267,6 +243,26 @@ function setAndStart(){
     workshopDiv.style.display = "block"
 };
 
+// All images responsive
+
+function allImagesResponsive(){
+    const workshopSection = document.getElementById("workshop-section")
+
+    if (workshopSection != undefined){
+
+    const allImg = workshopSection.querySelectorAll("img")
+    
+    allImgArray = Array.from(allImg)
+    
+    allImgArray.forEach(img => {
+        img.style.height = "100%"
+        img.style.width = "100%"
+    })
+};
+} allImagesResponsive()
+
+
+// Load prefilled workshop data from database
 
 db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
@@ -327,18 +323,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 
         const DOM = document.getElementById("workshop-inner-div")
 
-        // All images responsive
-
-        const workshopSection = document.getElementById("workshop-section")
-
-        const allImg = workshopSection.querySelectorAll("img")
-
-        allImgArray = Array.from(allImg)
-
-        allImgArray.forEach(img => {
-            img.style.height = "100%"
-            img.style.width = "100%"
-        })
+        
 
         // Wokshop goal auth check
 
@@ -348,6 +333,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                   const auth = doc.data().Gebruikersnaam;
                   const authClean = doc.data().GebruikersnaamClean
                     const authGoal = doc.data().Goals
+
 
                     const workshopGoalDOM = document.getElementById("workshop-goal-check-inner-div")
 
@@ -363,6 +349,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     if(authGoal.includes(workshopGoal)){
 
                         if(authGoal == workshopGoal){
+
+                            console.log(authGoal)
                    
                         const workshopMessage = `<p>Het doel van deze workshop is <i>${workshopGoal}</i>.<br> 
                         Ik zie dat jij een doel hebt met de naam: <i> ${authGoal}</i>.<br> 
@@ -2176,64 +2164,15 @@ function saveEight(){
     });
 };
 
-// Create new or edit excisting workshop
-const inputNew = document.getElementById("edit-workshop")
 
-auth.onAuthStateChanged(User =>{
-    if (User){
 
-    db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
-                const coachNaam = doc.data().Gebruikersnaam;
+// Edit workshop
 
-db.collection("Workshops").where("Coach", "==", coachNaam).get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
+        const saveWorkshopDOM = document.getElementById("saveWorkshop")
+        const updateWorkshopDOM = document.getElementById("updateWorkshop")
 
-        const title = doc.data().WorkshopTitle
-
-        const option = document.createElement("option")
-
-        option.innerHTML = title
-
-        inputNew.appendChild(option)
-
-                });
-            });
-        });
-    };
-});
-
-// Catch selected workshop or new workshop
-
-const createNewWorkshopOuterDiv = document.getElementById("create-new-workshop-outer-div")
-
-function selectNewOrEdit(){
-    const options = inputNew.options
-    const selected = options[options.selectedIndex].innerHTML
-
-    globalTitle.push(selected)
-
-    const toolBar = document.getElementById("create-workshop-tool-bar")
-    const editOrNewOuterDiv = document.getElementById("edit-or-new-outer-div")
-
-    editOrNewOuterDiv.style.display = "none"
-
-    if(selected == "Nieuwe workshop creeren"){
-
-        createNewWorkshopOuterDiv.style.display = "flex"
-        toolBar.style.display = "flex"
-    }else{
-        createNewWorkshopOuterDiv.style.display = "flex"
-        toolBar.style.display = "flex"
-
-        const previewButton = document.getElementById("preview-workshop")
-
-        previewButton.style.display = "block"
-
-        const saveWorkshop = document.getElementById("saveWorkshop")
-        const updateWorkshop = document.getElementById("updateWorkshop")
-
-        saveWorkshop.style.display = "none"
-        updateWorkshop.style.display = "block"
+        saveWorkshopDOM.style.display = "none"
+        updateWorkshopDOM.style.display = "block"
 
         // Select goal of workshop
 
@@ -2259,7 +2198,7 @@ function selectNewOrEdit(){
             db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                         const coachNaam = doc.data().Gebruikersnaam;
 
-        db.collection("Workshops").where("WorkshopTitle", "==", selected).where("Gebruikersnaam", "==", coachNaam).get().then(querySnapshot => {
+        db.collection("Workshops").where("WorkshopTitle", "==", "selected").where("Gebruikersnaam", "==", coachNaam).get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
         
                 const title = doc.data().WorkshopTitle
@@ -2329,7 +2268,7 @@ function selectNewOrEdit(){
                     selectHeaderImageUpdate.style.display = "block"
                 }
 
-                // Load workshop content
+                // Load workshop title
                 const DOMtitle = document.getElementById("workshop-title")
                 DOMtitle.value = title
                 tinyMCE.get('editor1').setContent(workshopGoals)
@@ -2350,6 +2289,19 @@ function selectNewOrEdit(){
                 })
 
                 // Load step one content
+
+                function loadSteps(a,b,c){
+                    if(a != ""){
+                        b = document.getElementById(c)
+        
+                        c.click()
+                        c.style.display = "none"
+                    };
+                };
+
+                loadSteps(stepOneTitle, buttonStepOne, "button-step-one" )
+
+
                 if(stepOneTitle != ""){
                 const buttonStepOne = document.getElementById("button-step-one")
 
@@ -2615,14 +2567,13 @@ function selectNewOrEdit(){
                 saveWorkshopButton.style.display = "none"
                 updateWorkshopButton.style.display = "flex"
 
-                            
-                        });
-                    });
-                })
-            };
-        });
+                        
+                });
+            });
+        })
     };
-};
+});
+
 
 // Save(set) first set of input to database
 

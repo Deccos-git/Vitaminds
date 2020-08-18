@@ -81,6 +81,17 @@
     margin: 10px 10px;
 }
 
+.title-div-themegroups{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-div-themegroups h5{
+    margin-top: 50px;
+}
+
+
 /* Individual group page */
 
 #input-div{
