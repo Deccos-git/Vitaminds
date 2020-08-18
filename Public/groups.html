@@ -87,15 +87,39 @@
 <!-- Main -->
 
 <h1> Groepen</h1>
-<h2 class="sub-title">Deel wat je bezig houdt in de gesloten thema groepen of ga actief aan de slag in de oefen groepen</h2>
+<h2 class="sub-title">Deel wat je bezig houdt in de gesloten thema groepen of ga actief aan de slag in de oefengroepen en coachgroepen</h2>
 
 <div id="tabs">
     <p id="themegroup-tab">Themagroepen</p>
     <p id="practicegroup-tab">Oefengroepen</p>
+    <p id="coachgroup-tab">Coachgroepen</p>
 </div>
 
 <div class="groups-outer-div" id="themegroups"></div>
-<div class="groups-outer-div" id="practicegroups"></div>
+
+<div class="groups-outer-div" id="practicegroups">
+    <div class="theme-groups-section">
+        <div class="theme-groups-header">
+            <img  class="header-image-groups" src="images/make-coachgroup.png.png" alt="Maak een coachgroep">
+        </div>
+        <div class="bottom-div">
+            <h2 class="titelTekst">Maak een oefengroep</h2>
+            <button onclick="startPracticegroupBuilder()" class="button-algemeen-card">Start</button>
+        </div>
+    </div>
+</div>
+
+<div class="groups-outer-div" id="coachgroups">
+    <div class="theme-groups-section">
+        <div class="theme-groups-header">
+            <img  class="header-image-groups" src="images/make-coachgroup.png.png" alt="Maak een coachgroep">
+        </div>
+        <div class="bottom-div">
+            <h2 class="titelTekst">Maak een coachgroep</h2>
+            <button onclick="startCoachgroupBuilder()" class="button-algemeen-card">Start</button>
+        </div>
+    </div>
+</div>
 
 <!-- footer -->
 <footer class="footer">

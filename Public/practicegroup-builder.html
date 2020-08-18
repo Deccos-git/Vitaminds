@@ -15,8 +15,7 @@
     <Title> Vitaminds Openup </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Style/style.css">
-    <link rel="stylesheet" href="Style/openup.css">
-    <link rel="stylesheet" href="Style/inspiratie.css">
+    <link rel="stylesheet" href="Style/groups.css">
     <link rel="shortcut icon" href="images/Favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -88,26 +87,38 @@
   
 <!-- Main -->
 
-<h1>Open up</h1>
-<h2 class="sub-title">Deel wat je bezig houdt en inspireer anderen om ook open te zijn</h2>
+<div id="coachgroup-builder-outer-div">
 
-<div id="check-in-outer-div">
-  <textarea id="input-check-in" cols="50" rows="2" placeholder="Wat houdt je bezig?"></textarea>
-  <p id="select-goal-check-in">Selecteer een openbaar doel</p>
-  <select id="check-in-select">
-    <option value="Niet aan doel koppelen">Niet aan doel koppelen</option>
-  </select>
-  <p id="select-photo-check-in">Selecteer eventueel een foto die bij je stemming past</p>
-  <input id="foto-upload-check-in" type="file">
-  <button id="check-in-button">Deel</button>
-  <p id="shared-notification">Gedeeld</p>
+    <h1 id="practicegroup-builder-title"></h1>
+    <h6 class="ask-vitaminds">Mocht je een vraag hebben kun je <a href="../Vitaminders/fbKlPnWobJh0ldPROWQRYGCezhv2Gijs%20van%20Beusekom">mij</a> altijd even een berichtje sturen</h6>
+
+    <h3>Geef je oefengroep een titel</h3>
+    <input id="coachgroup-title" type="text" placeholder="Titel van je coachgroep">
+
+    <h3>Upload een coverfoto</h3>
+    <div id="foto-upload-div">
+        <input id="foto-upload" type="file">
+        <p id="progress-bar"></p>
+        <button id="upload-cover-photo-practicegroup">Upload</button>
+    </div>
+
+    <h3>Wat kunnen mensen leren in jouw oefengroep?</h3>
+    <textarea id="coachgroup-description" name="" cols="30" rows="10"></textarea>
+
+    <h3>Hoeveel mensen kunnen maximaal deelnemen aan je oefengroep?</h3>
+    <input id="coachgroup-number-participants" type="number" placeholder="Maximaal aantaal deelnemers">
+
+    <h3>Bij hoeveel deelnemers kan je oefengroep van start?</h3>
+    <input id="coachgroup-start-number" type="number" placeholder="Minimum aantal deelnemers">
+
+    <div id="save-bar-coachgroup-builder">
+        <button onclick="savePracticegroup()" class="button-algemeen-card">Opslaan</button>
+    </div>
+
+   
 </div>
 
-<section id="verzamelOpenUps">
-  <div id="loader">
-    <img src="images/loader.gif" alt="loading" style="width:120px;height:120px;">
-  </div>
-</section>
+
 
 <!-- footer -->
 <footer class="footer">
@@ -126,7 +137,7 @@
       <script type="text/javascript" src="javascript/firebase.js"></script>
       <script type="text/javascript" src="javascript/index.js"></script>
       <script type="text/javascript" src="javascript/auth.js"></script>
-      <script type="text/javascript" src="javascript/openup.js"></script>
+      <script type="text/javascript" src="javascript/groups.js"></script>
     </body>
   </html>
   

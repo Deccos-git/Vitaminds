@@ -12,7 +12,7 @@
     border-radius: 3px;
 }
 
-#tabs p:hover{
+#themegroup-tab{
     background-color: #122b46;
     color: white;
 }
@@ -54,6 +54,31 @@
     flex-direction: column;
     align-items: center;
     z-index: 1;
+}
+
+.group-auth-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.group-auth-div p{
+    font-size: 14px;
+    margin-top: 0px;
+}
+
+.group-auth-img{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    margin-top: -50px;
+    border: 5px solid white;
+}
+
+.group-meta-div p{
+    font-size: 14px;
+    margin: 10px 10px;
 }
 
 /* Individual group page */
@@ -130,4 +155,27 @@
 
 #list-of-members-inner-div{
     display: flex;
+}
+
+.bottom-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.bottom-div p{
+    margin-top: 0px;
+}
+
+/* Coachgroup builder */
+
+#coachgroup-builder-outer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#save-bar-coachgroup-builder button{
+    margin: 50px 50px;
 }

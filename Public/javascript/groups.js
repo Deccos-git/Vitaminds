@@ -18,14 +18,23 @@ const titel = titel12[0]
 
 const practicegroupDOM = document.getElementById("practicegroups")
 const themegroupDOM = document.getElementById("themegroups")
+const coachGroupDOM = document.getElementById("coachgroups")
 
 const practicegroupTab = document.getElementById("practicegroup-tab")
 const themegroupTab = document.getElementById("themegroup-tab")
+const coachgroupTab = document.getElementById("coachgroup-tab")
 
 if(practicegroupTab != null){
     practicegroupTab.addEventListener("click", () => {
         practicegroupDOM.style.display = "flex"
         themegroupDOM.style.display = "none"
+        coachGroupDOM.style.display = "none"
+        practicegroupTab.style.backgroundColor = "#122b46"
+        practicegroupTab.style.color = "white"
+        themegroupTab.style.backgroundColor = "white"
+        themegroupTab.style.color = "#122b46"
+        coachgroupTab.style.backgroundColor = "white"
+        coachgroupTab.style.color = "#122b46"
     });
 };
 
@@ -33,6 +42,27 @@ if(themegroupTab != null){
     themegroupTab.addEventListener("click", () => {
         practicegroupDOM.style.display = "none"
         themegroupDOM.style.display = "flex"
+        coachGroupDOM.style.display = "none"
+        practicegroupTab.style.backgroundColor = "white"
+        practicegroupTab.style.color = "#122b46"
+        themegroupTab.style.backgroundColor = "#122b46"
+        themegroupTab.style.color = "white"
+        coachgroupTab.style.backgroundColor = "white"
+        coachgroupTab.style.color = "#122b46"
+    });
+};
+
+if(coachgroupTab != null){
+    coachgroupTab.addEventListener("click", () => {
+        practicegroupDOM.style.display = "none"
+        themegroupDOM.style.display = "none"
+        coachGroupDOM.style.display = "flex"
+        practicegroupTab.style.backgroundColor = "white"
+        practicegroupTab.style.color = "#122b46"
+        themegroupTab.style.backgroundColor = "white"
+        themegroupTab.style.color = "#122b46"
+        coachgroupTab.style.backgroundColor = "#122b46"
+        coachgroupTab.style.color = "white"
     });
 };
 
@@ -104,7 +134,9 @@ if(themegroupTab != null){
 
     const DOMtitle = document.getElementById("group-title")
 
+    if(DOMtitle != null){
     DOMtitle.innerText = titel
+    }
 
     const DOMchatScreen = document.getElementById("chat-screen")
 
@@ -253,7 +285,7 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
                             };
                     });
                 });
-        });
+            });
         };
     });
 
@@ -329,3 +361,417 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
     });
 
 
+// Coachgroup builder
+
+function startCoachgroupBuilder(){
+    window.open("coachgroup-builder.html", "_self");
+}
+
+function startPracticegroupBuilder(){
+    window.open("practicegroup-builder.html", "_self");
+}
+
+// Title
+
+function groupTitle(a,b){
+
+const coachGroupTitle = document.getElementById(a)
+
+const authRef = auth.onAuthStateChanged(User =>{
+    if(User){
+    const userRef = db.collection("Vitaminders").doc(User.uid);
+    userRef.get().then(function(doc) {
+
+        const auth = doc.data().GebruikersnaamClean
+        const usertype = doc.data().Usertype
+
+        coachGroupTitle.innerText = `Wat leuk dat je een ${b} gaat starten, ${auth}`
+
+            });
+        };
+    });
+}   groupTitle("coachgroup-builder-title", "coachgroep")
+    groupTitle("practicegroup-builder-title", "oefengroep")
+
+    // Save to database
+    const uploadCoverPhotoButton = document.getElementById("upload-cover-photo-coachgroup")
+
+    if(uploadCoverPhotoButton != null){
+
+    uploadCoverPhotoButton.addEventListener("click", () => {
+        const selectedFile = document.getElementById('foto-upload').files[0];
+        const progressBar = document.getElementById("progress-bar")
+
+        uploadCoverPhotoButton.innerText = "Uploaden..."
+        
+        const storageRef = firebase.storage().ref("/GroupCoverPhotos/" + selectedFile.name);
+        
+           const uploadTask = storageRef.put(selectedFile)
+           uploadTask.then(() => {
+            // Register three observers:
+            // 1. 'state_changed' observer, called any time the state changes
+            // 2. Error observer, called on failure
+            // 3. Completion observer, called on successful completion
+            uploadTask.on('state_changed', function(snapshot){
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            progressBar.innerHTML = ` ${progress} %`;
+            switch (snapshot.state) {
+              case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+              case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
+            }
+          }, function(error) {
+            // Handle unsuccessful uploads
+          }, function() {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+              console.log('File available at', downloadURL);
+              uploadCoverPhotoButton.innerText = "Geupload"
+              window.coverPhoto = downloadURL
+
+                });
+            });
+        });
+    });
+};
+
+    const uploadCoverPhotoButtonPracticegroup = document.getElementById("upload-cover-photo-practicegroup")
+
+    if (uploadCoverPhotoButtonPracticegroup != null){
+    uploadCoverPhotoButtonPracticegroup.addEventListener("click", () => {
+        const selectedFile = document.getElementById('foto-upload').files[0];
+        const progressBar = document.getElementById("progress-bar")
+
+        uploadCoverPhotoButtonPracticegroup.innerText = "Uploaden..."
+        
+        const storageRef = firebase.storage().ref("/GroupCoverPhotos/" + selectedFile.name);
+        
+           const uploadTask = storageRef.put(selectedFile)
+           uploadTask.then(() => {
+            // Register three observers:
+            // 1. 'state_changed' observer, called any time the state changes
+            // 2. Error observer, called on failure
+            // 3. Completion observer, called on successful completion
+            uploadTask.on('state_changed', function(snapshot){
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            progressBar.innerHTML = ` ${progress} %`;
+            switch (snapshot.state) {
+              case firebase.storage.TaskState.PAUSED: // or 'paused'
+                console.log('Upload is paused');
+                break;
+              case firebase.storage.TaskState.RUNNING: // or 'running'
+                console.log('Upload is running');
+                break;
+            }
+          }, function(error) {
+            // Handle unsuccessful uploads
+          }, function() {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+              console.log('File available at', downloadURL);
+              uploadCoverPhotoButtonPracticegroup.innerText = "Geupload"
+              window.coverPhoto = downloadURL
+
+                });
+            });
+        });
+    });
+};
+
+function saveCoachgroup(){
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+    
+            const auth = doc.data().Gebruikersnaam
+    
+    const title = document.getElementById("coachgroup-title").value
+    const description = document.getElementById("coachgroup-description").value
+    const numberParticipants = document.getElementById("coachgroup-number-participants").value
+    const costs = document.getElementById("coachgroup-costs").value
+    const startNumber = document.getElementById("coachgroup-start-number").value
+
+   db.collection("Chats").doc().set({
+        Eigenaar: "Vitaminds",
+        Room: idClean + title,
+        Creater: auth,
+        Description: description,
+        NumberParticipants: numberParticipants,
+        Costs: costs,
+        StartNumber: startNumber,
+        Members: [],
+        Messages: 0,
+        Type: "Coachgroup", 
+        CoverPhoto: coverPhoto
+                });
+            });
+        };
+    });
+};
+
+function savePracticegroup(){
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+    
+            const auth = doc.data().Gebruikersnaam
+    
+    const title = document.getElementById("coachgroup-title").value
+    const description = document.getElementById("coachgroup-description").value
+    const numberParticipants = document.getElementById("coachgroup-number-participants").value
+    const startNumber = document.getElementById("coachgroup-start-number").value
+
+   db.collection("Chats").doc().set({
+        Eigenaar: "Vitaminds",
+        Room: idClean + title,
+        RoomClean: title,
+        Creater: auth,
+        Description: description,
+        NumberParticipants: numberParticipants,
+        StartNumber: startNumber,
+        Members: [],
+        Messages: 0,
+        Type: "Practicegroup", 
+        CoverPhoto: coverPhoto
+                });
+            });
+        };
+    });
+};
+
+// Load coachgroups from database to overview
+
+db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const title = doc.data().Room
+        const titleClean = doc.data().RoomClean
+        const auth = doc.data().Creater
+        const description = doc.data().Description
+        const numberParticipants = doc.data().NumberParticipants
+        const startNumber = doc.data().StartNumber
+        const coverPhoto = doc.data().CoverPhoto
+        const costs = doc.data().Costs
+        const members = doc.data().Members
+
+        const DOM = document.getElementById("coachgroups")
+
+        const groupInnerDiv = document.createElement("div")
+            groupInnerDiv.setAttribute("class", "theme-groups-section")
+        const groupHeader = document.createElement("div")
+            groupHeader.setAttribute("class", "theme-groups-header")
+        const groupCoverPhoto = document.createElement("img")
+            groupCoverPhoto.setAttribute("class", "header-image-groups")
+        const authDiv = document.createElement("div")
+            authDiv.setAttribute("class", "group-auth-div")
+        const authImg = document.createElement("img")
+            authImg.setAttribute("class", "group-auth-img")
+        const authName = document.createElement("p")
+        const metaDiv = document.createElement("div")
+            metaDiv.setAttribute("class", "group-meta-div")
+        const numberParticipantsP = document.createElement("p")
+        const memberCount = document.createElement("p")
+        const startNumberP = document.createElement("p")
+        const costsP = document.createElement("p")
+        const bottomDiv = document.createElement("div")
+            bottomDiv.setAttribute("class", "bottom-div")
+        const groupTitleH2 = document.createElement("h2")
+            groupTitleH2.setAttribute("class", "titelTekst")
+        const descriptionP = document.createElement("p")
+        const groupButton = document.createElement("button")
+            groupButton.setAttribute("class", "button-algemeen-card")
+            groupButton.setAttribute("id", "coachgroup-button")
+            groupButton.setAttribute("data-room", title)
+            groupButton.setAttribute("onclick", "memberCoachGroups(this)")
+
+            groupCoverPhoto.src = coverPhoto
+            groupTitleH2.innerText = titleClean
+            descriptionP.innerText = description
+
+            groupButton.innerText = "Deelnemen"
+
+            db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    const nameClean = doc1.data().GebruikersnaamClean
+                    const profilePic = doc1.data().Profielfoto
+            
+            authImg.src = profilePic
+            authName.innerText = nameClean
+
+            authDiv.appendChild(authImg)
+            authDiv.appendChild(authName)
+
+            authDiv.addEventListener("click", () => {
+                window.open("../Vitaminders/" + auth + ".html", "_self");
+            })
+
+                });
+            });
+
+            numberParticipantsP.innerText = `Max. leden: ${numberParticipants}`
+            memberCount.innerText = `Huidig aantal leden: ${members.length}`
+            costsP.innerText = `Kosten per week: ${costs} euro`
+            startNumberP.innerText = `Coachgroep begint bij: ${startNumber} leden`
+
+            DOM.appendChild(groupInnerDiv)
+            groupInnerDiv.appendChild(groupHeader)
+            groupHeader.appendChild(groupCoverPhoto)
+            groupInnerDiv.appendChild(authDiv)
+            groupInnerDiv.appendChild(bottomDiv)
+            bottomDiv.appendChild(groupTitleH2)
+            bottomDiv.appendChild(descriptionP)
+            groupInnerDiv.appendChild(metaDiv)
+            metaDiv.appendChild(numberParticipantsP)
+            metaDiv.appendChild(startNumberP)
+            metaDiv.appendChild(memberCount)
+            metaDiv.appendChild(costsP)
+            groupInnerDiv.appendChild(groupButton)
+
+    });
+});
+
+// Load practicegroups from database to overview
+
+db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const title = doc.data().Room
+        const titleClean = doc.data().RoomClean
+        const auth = doc.data().Creater
+        const description = doc.data().Description
+        const numberParticipants = doc.data().NumberParticipants
+        const startNumber = doc.data().StartNumber
+        const coverPhoto = doc.data().CoverPhoto
+        const members = doc.data().Members
+
+        const DOM = document.getElementById("practicegroups")
+
+        const groupInnerDiv = document.createElement("div")
+            groupInnerDiv.setAttribute("class", "theme-groups-section")
+        const groupHeader = document.createElement("div")
+            groupHeader.setAttribute("class", "theme-groups-header")
+        const groupCoverPhoto = document.createElement("img")
+            groupCoverPhoto.setAttribute("class", "header-image-groups")
+        const authDiv = document.createElement("div")
+            authDiv.setAttribute("class", "group-auth-div")
+        const authImg = document.createElement("img")
+            authImg.setAttribute("class", "group-auth-img")
+        const authName = document.createElement("p")
+        const metaDiv = document.createElement("div")
+            metaDiv.setAttribute("class", "group-meta-div")
+        const numberParticipantsP = document.createElement("p")
+        const memberCount = document.createElement("p")
+        const startNumberP = document.createElement("p")
+        const costsP = document.createElement("p")
+        const bottomDiv = document.createElement("div")
+            bottomDiv.setAttribute("class", "bottom-div")
+        const groupTitleH2 = document.createElement("h2")
+            groupTitleH2.setAttribute("class", "titelTekst")
+        const descriptionP = document.createElement("p")
+        const groupButton = document.createElement("button")
+            groupButton.setAttribute("class", "button-algemeen-card")
+            groupButton.setAttribute("id", "practicegroup-button")
+            groupButton.setAttribute("data-room", title)
+            groupButton.setAttribute("onclick", "memberPracticeGroups(this)")
+
+            groupCoverPhoto.src = coverPhoto
+            groupTitleH2.innerText = titleClean
+            descriptionP.innerText = description
+
+            groupButton.innerText = "Deelnemen"
+
+            db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    const nameClean = doc1.data().GebruikersnaamClean
+                    const profilePic = doc1.data().Profielfoto
+            
+            authImg.src = profilePic
+            authName.innerText = nameClean
+
+            authDiv.appendChild(authImg)
+            authDiv.appendChild(authName)
+
+            authDiv.addEventListener("click", () => {
+                window.open("../Vitaminders/" + auth + ".html", "_self");
+            })
+
+                });
+            });
+
+            numberParticipantsP.innerText = `Max. leden: ${numberParticipants}`
+            memberCount.innerText = `Huidig aantal leden: ${members.length}`
+            startNumberP.innerText = `Coachgroep begint bij: ${startNumber} leden`
+            costsP.innerText = `Kosten: gratis`
+
+            DOM.appendChild(groupInnerDiv)
+            groupInnerDiv.appendChild(groupHeader)
+            groupHeader.appendChild(groupCoverPhoto)
+            groupInnerDiv.appendChild(authDiv)
+            groupInnerDiv.appendChild(bottomDiv)
+            bottomDiv.appendChild(groupTitleH2)
+            bottomDiv.appendChild(descriptionP)
+            groupInnerDiv.appendChild(metaDiv)
+            metaDiv.appendChild(numberParticipantsP)
+            metaDiv.appendChild(startNumberP)
+            metaDiv.appendChild(memberCount)
+            metaDiv.appendChild(costsP)
+            groupInnerDiv.appendChild(groupButton)
+
+    });
+});
+
+// New member
+
+const practicegroupButton = document.getElementById("practicegroup-button")
+
+function saveNewMemberToGroup(a){
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+    
+            const auth = doc.data().Gebruikersnaam
+
+    db.collection("Chats").where("Room", "==", a ).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            db.collection("Chats").doc(doc.id).update({
+                Members: firebase.firestore.FieldValue.arrayUnion(auth)
+                        });
+                    });
+                });
+            });
+        };
+    });
+};
+
+function memberPracticeGroups(elem){
+
+    const roomTitle = elem.dataset.room
+
+   saveNewMemberToGroup(roomTitle)
+};
+
+
+function memberCoachGroups(elem){
+
+    const roomTitle = elem.dataset.room
+
+    saveNewMemberToGroup(roomTitle)
+ };
