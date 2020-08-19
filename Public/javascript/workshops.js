@@ -264,6 +264,41 @@ function allImagesResponsive(){
 
 // Load prefilled workshop data from database
 
+// append step to DOM
+
+function appendStepToDom(stepOuterDiv, stepTitleH2, stepExplainerP, stepCTATitle, stepCTATitle, stepInput){
+    DOM.appendChild(stepOuterDiv)
+    stepOuterDiv.appendChild(stepTitleH2)
+    stepOuterDiv.appendChild(stepExplainerP)
+    stepOuterDiv.appendChild(stepCTATitle)
+    stepOuterDiv.appendChild(stepCTAP)
+    stepOuterDiv.appendChild(stepInput)
+};
+
+// toolbar counter
+function toolbarCountInnerText(toolbarCount, count){
+    toolbarCount.innerText = count
+};
+
+// Append toolbar
+function appendToolbar(stepTitle, toolbarDiv, toolbarCheck, toolbarCount){
+    if(stepTitle != ""){
+        toolbarOuterDiv.appendChild(toolbarDiv)
+        toolbarDiv.appendChild(toolbarCheck)
+        toolbarCheck.appendChild(toolbarCount)
+        };
+}; 
+
+ // Step overview
+ function stepOverview(stepTitle, stepTitleP, innerText, stepPreviewDiv, stepCheck){
+    if(stepTitle != ""){
+        stepTitleP.innerText = innerText
+    stepsOverview.appendChild(stepPreviewDiv)
+    stepOnePreviewDiv.appendChild(stepCheck)
+    stepOnePreviewDiv.appendChild(stepTitleP)
+    };
+};
+
 db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
@@ -349,8 +384,6 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     if(authGoal.includes(workshopGoal)){
 
                         if(authGoal == workshopGoal){
-
-                            console.log(authGoal)
                    
                         const workshopMessage = `<p>Het doel van deze workshop is <i>${workshopGoal}</i>.<br> 
                         Ik zie dat jij een doel hebt met de naam: <i> ${authGoal}</i>.<br> 
@@ -380,10 +413,6 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 
                             const appendGoal = document.getElementById("append-goal")
                             const newGoal =document.getElementById("new-goal")
-
-                            // appendGoal.addEventListener("click", () => {
-                            //     console.log("Tets")
-                            // })
                 });
             };
         });
@@ -585,62 +614,25 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     saveEightButton.style.display = "none"
                     closingButton.style.display = "none"
 
-                toolbarOneCount.innerText = "1"
-                toolbarTwoCount.innerText = "2"
-                toolbarThreeCount.innerText = "3"
-                toolbarFourCount.innerText = "4"
-                toolbarFiveCount.innerText = "5"
-                toolbarSixCount.innerText = "6"
-                toolbarSevenCount.innerText = "7"
-                toolbarEightCount.innerText = "8"
+                    
+                    toolbarCountInnerText(toolbarOneCount, "1")
+                    toolbarCountInnerText(toolbarTwoCount, "2")
+                    toolbarCountInnerText(toolbarThreeCount, "3")
+                    toolbarCountInnerText(toolbarfourCount, "4")
+                    toolbarCountInnerText(toolbarFiveCount, "5")
+                    toolbarCountInnerText(toolbarSixCount, "6")
+                    toolbarCountInnerText(toolbarSevenCount, "7")
+                    toolbarCountInnerText(toolbarEightCount, "8")
 
-                if(stepOneTitle != ""){
-                toolbarOuterDiv.appendChild(toolbarOneDiv)
-                toolbarOneDiv.appendChild(toolbarOneCheck)
-                toolbarOneCheck.appendChild(toolbarOneCount)
-                };
-
-                if(stepTwoTitle != ""){
-                toolbarOuterDiv.appendChild(toolbarTwoDiv)
-                toolbarTwoDiv.appendChild(toolbarTwoCheck)
-                toolbarTwoCheck.appendChild(toolbarTwoCount)
-                };
-
-                if(stepThreeTitle != ""){
-                toolbarOuterDiv.appendChild(toolbarThreeDiv)
-                toolbarThreeDiv.appendChild(toolbarThreeCheck)
-                toolbarThreeCheck.appendChild(toolbarThreeCount)
-                };
-
-                if(stepFourTitle != ""){
-                toolbarOuterDiv.appendChild(toolbarFourDiv)
-                toolbarFourDiv.appendChild(toolbarFourCheck)
-                toolbarFourCheck.appendChild(toolbarFourCount)
-                };
-
-                if(stepFiveTitle != ""){
-                toolbarOuterDiv.appendChild(toolbarFiveDiv)
-                toolbarFiveDiv.appendChild(toolbarFiveCheck)
-                toolbarFiveCheck.appendChild(toolbarFiveCount)
-                };
-
-                if(stepSixTitle != ""){
-                toolbarOuterDiv.appendChild(toolbarSixDiv)
-                toolbarSixDiv.appendChild(toolbarSixCheck)
-                toolbarSixCheck.appendChild(toolbarSixCount)
-                };
-
-                if(stepSevenTitle != ""){
-                toolbarOuterDiv.appendChild(toolbarSevenDiv)
-                toolbarSevenDiv.appendChild(toolbarSevenCheck)
-                toolbarSevenCheck.appendChild(toolbarSevenCount)
-                };
-
-                if(stepEightTitle != ""){
-                toolbarOuterDiv.appendChild(toolbarEightDiv)
-                toolbarEightDiv.appendChild(toolbarEightCheck)
-                toolbarEightCheck.appendChild(toolbarEightCount)
-                };
+               
+                appendToolbar(stepOneTitle, toolbarOneDiv, toolbarOneCheck, toolbarOneCount)
+                appendToolbar(stepTwoTitle, toolbarTwoDiv, toolbarTwoCheck, toolbarTwoCount)
+                appendToolbar(stepThreeTitle, toolbarThreeDiv, toolbarThreeCheck, toolbarThreeCount)
+                appendToolbar(stepFourTitle, toolbarFourDiv, toolbarFourCheck, toolbarFourCount)
+                appendToolbar(stepFiveTitle, toolbarFiveDiv, toolbarFiveCheck, toolbarFiveCount)
+                appendToolbar(stepSixTitle, toolbarSixDiv, toolbarSixCheck, toolbarSixCount)
+                appendToolbar(stepSevenTitle, toolbarSevenDiv, toolbarSevenCheck, toolbarSevenCount)
+                appendToolbar(stepEightTitle, toolbarEightDiv, toolbarEightCheck, toolbarEightCount)
 
                 //Save button
 
@@ -705,67 +697,19 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     closingIntroductionButton.setAttribute("id", "closing-button")  
                     
                 // Closing div
-
                 const closingDiv = document.createElement("div")
                     closingDiv.setAttribute("id", "closing-div")
 
-                // Step overview
+               
+                stepOverview(stepOneTitle, stepOneTitleP, `Stap 1: ${stepOneTitle}`, stepOnePreviewDiv, stepOneCheck, stepOneTitleP )
+                stepOverview(stepTwoTitle, stepTwoTitleP, `Stap 2: ${stepTwoTitle}`, stepTwoPreviewDiv, stepTwoCheck, stepTwoTitleP )
+                stepOverview(stepThreeTitle, stepThreeTitleP, `Stap 3: ${stepThreeTitle}`, stepThreePreviewDiv, stepThreeCheck, stepThreeTitleP )
+                stepOverview(stepFourTitle, stepFourTitleP, `Stap 4: ${stepFourTitle}`, stepFourPreviewDiv, stepFourCheck, stepFourTitleP )
+                stepOverview(stepFiveTitle, stepFiveTitleP, `Stap 5: ${stepFiveTitle}`, stepFivePreviewDiv, stepFiveCheck, stepFiveTitleP )
+                stepOverview(stepSixTitle, stepSIxTitleP, `Stap 6: ${stepSixTitle}`, stepSixPreviewDiv, stepSixCheck, stepSixTitleP )
+                stepOverview(stepSevenTitle, stepSevenTitleP, `Stap 7: ${stepSevenTitle}`, stepSevenPreviewDiv, stepSevenCheck, stepSevenTitleP )
+                stepOverview(stepEightTitle, stepEightTitleP, `Stap 8: ${stepEightTitle}`, stepEightPreviewDiv, stepEightCheck, stepEightTitleP )
                 
-                if(stepOneTitle != ""){
-                    stepOneTitleP.innerText = `Stap 1: ${stepOneTitle}`
-                stepsOverview.appendChild(stepOnePreviewDiv)
-                stepOnePreviewDiv.appendChild(stepOneCheck)
-                stepOnePreviewDiv.appendChild(stepOneTitleP)
-                }
-
-                if(stepTwoTitle != ""){
-                    stepTwoTitleP.innerText = `Stap 2: ${stepTwoTitle}`
-                stepsOverview.appendChild(stepTwoPreviewDiv)
-                stepTwoPreviewDiv.appendChild(stepTwoCheck)
-                stepTwoPreviewDiv.appendChild(stepTwoTitleP)
-                }
-
-                if(stepThreeTitle != ""){
-                    stepThreeTitleP.innerText = `Stap 3: ${stepThreeTitle}`
-                stepsOverview.appendChild(stepThreePreviewDiv)
-                stepThreePreviewDiv.appendChild(stepThreeCheck)
-                stepThreePreviewDiv.appendChild(stepThreeTitleP)
-                }
-
-                if(stepFourTitle != ""){
-                    stepFourTitleP.innerText = `Stap 4: ${stepFourTitle}`
-                stepsOverview.appendChild(stepFourPreviewDiv)
-                stepFourPreviewDiv.appendChild(stepFourCheck)
-                stepFourPreviewDiv.appendChild(stepFourTitleP)
-                }
-
-                if(stepFiveTitle != ""){
-                    stepFiveTitleP.innerText = `Stap 5: ${stepFiveTitle}`
-                stepsOverview.appendChild(stepFivePreviewDiv)
-                stepFivePreviewDiv.appendChild(stepFiveCheck)
-                stepFivePreviewDiv.appendChild(stepFiveTitleP)
-                }
-
-                if(stepSixTitle != ""){
-                    stepSixTitleP.innerText = `Stap 6: ${stepSixTitle}`
-                stepsOverview.appendChild(stepSixPreviewDiv)
-                stepSixPreviewDiv.appendChild(stepSixCheck)
-                stepSixPreviewDiv.appendChild(stepSixTitleP)
-                }
-
-                if(stepSevenTitle != ""){
-                    stepSevenTitleP.innerText = `Stap 7: ${stepSevenTitle}`
-                stepsOverview.appendChild(stepSevenPreviewDiv)
-                stepSevenPreviewDiv.appendChild(stepSevenCheck)
-                stepSevenPreviewDiv.appendChild(stepSevenTitleP)
-                }
-
-                if(stepEightTitle != ""){
-                    stepEightTitleP.innerText = `Stap 8: ${stepEightTitle}`
-                stepsOverview.appendChild(stepEightPreviewDiv)
-                stepEightPreviewDiv.appendChild(stepEightCheck)
-                stepEightPreviewDiv.appendChild(stepEightTitleP)
-                }
 
                 // Step one introduction
                 if(stepOneTitle != ""){
@@ -812,13 +756,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                 });
                             }; 
                         });
-                       
-                        DOM.appendChild(stepOneOuterDiv)
-                        stepOneOuterDiv.appendChild(stepOneTitleH2)
-                        stepOneOuterDiv.appendChild(stepOneExplainerP)
-                        stepOneOuterDiv.appendChild(stepOneCTATitle)
-                        stepOneOuterDiv.appendChild(stepOneCTAP)
-                        stepOneOuterDiv.appendChild(stepOneInput)
+                      
+                       appendStepToDom(stepOneOuterDiv, stepOneTitleH2, stepOneExplainerP, stepOneCTATitle, stepOneCTAP, stepOneInput)
 
                         stepTwoIntroductionTitle.innerText = "Volgende stap"
                         stepTwoIntroductionP.innerText = stepTwoIntroduction
@@ -869,12 +808,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                             }; 
                         });
                        
-                        DOM.appendChild(stepTwoOuterDiv)
-                        stepTwoOuterDiv.appendChild(stepTwoTitleH2)
-                        stepTwoOuterDiv.appendChild(stepTwoExplainerP)
-                        stepTwoOuterDiv.appendChild(stepTwoCTATitle)
-                        stepTwoOuterDiv.appendChild(stepTwoCTAP)
-                        stepTwoOuterDiv.appendChild(stepTwoInput)
+                        appendStepToDom(stepTwoOuterDiv, stepTwoTitleH2, stepTwoExplainerP, stepTwoCTATitle, stepTwoCTAP, stepTwoInput)
+
 
                         stepThreeIntroductionTitle.innerText = "Volgende stap"
                         stepThreeIntroductionP.innerText = stepThreeIntroduction
@@ -989,12 +924,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                 }; 
                             });
                            
-                            DOM.appendChild(stepThreeOuterDiv)
-                            stepThreeOuterDiv.appendChild(stepThreeTitleH2)
-                            stepThreeOuterDiv.appendChild(stepThreeExplainerP)
-                            stepThreeOuterDiv.appendChild(stepThreeCTATitle)
-                            stepThreeOuterDiv.appendChild(stepThreeCTAP)
-                            stepThreeOuterDiv.appendChild(stepThreeInput)
+                            appendStepToDom(stepThreeOuterDiv, stepThreeTitleH2, stepThreeExplainerP, stepThreeCTATitle, stepThreeCTAP, stepThreeInput)
+
     
                             stepFourIntroductionTitle.innerText = "Volgende stap"
                             stepFourIntroductionP.innerText = stepFourIntroduction
@@ -1110,12 +1041,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     }; 
                                 });
                                
-                                DOM.appendChild(stepFourOuterDiv)
-                                stepFourOuterDiv.appendChild(stepFourTitleH2)
-                                stepFourOuterDiv.appendChild(stepFourExplainerP)
-                                stepFourOuterDiv.appendChild(stepFourCTATitle)
-                                stepFourOuterDiv.appendChild(stepFourCTAP)
-                                stepFourOuterDiv.appendChild(stepFourInput)
+                                appendStepToDom(stepFourOuterDiv, stepFourTitleH2, stepFourExplainerP, stepFourCTATitle, stepFourCTAP, stepFourInput)
+
         
                                 stepFiveIntroductionTitle.innerText = "Volgende stap"
                                 stepFiveIntroductionP.innerText = stepFiveIntroduction
@@ -1234,12 +1161,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     }; 
                                 });
                                
-                                DOM.appendChild(stepFiveOuterDiv)
-                                stepFiveOuterDiv.appendChild(stepFiveTitleH2)
-                                stepFiveOuterDiv.appendChild(stepFiveExplainerP)
-                                stepFiveOuterDiv.appendChild(stepFiveCTATitle)
-                                stepFiveOuterDiv.appendChild(stepFiveCTAP)
-                                stepFiveOuterDiv.appendChild(stepFiveInput)
+                                appendStepToDom(stepFiveOuterDiv, stepFiveTitleH2, stepFiveExplainerP, stepFiveCTATitle, stepFiveCTAP, stepFiveInput)
+
         
                                 stepSixIntroductionTitle.innerText = "Volgende stap"
                                 stepSixIntroductionP.innerText = stepSixIntroduction
@@ -1359,12 +1282,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                         }; 
                                     });
                                    
-                                    DOM.appendChild(stepSixOuterDiv)
-                                    stepSixOuterDiv.appendChild(stepSixTitleH2)
-                                    stepSixOuterDiv.appendChild(stepSixExplainerP)
-                                    stepSixOuterDiv.appendChild(stepSixCTATitle)
-                                    stepSixOuterDiv.appendChild(stepSixCTAP)
-                                    stepSixOuterDiv.appendChild(stepSixInput)
+                                    appendStepToDom(stepSixOuterDiv, stepSixTitleH2, stepSixExplainerP, stepSixCTATitle, stepSixCTAP, stepSixInput)
+
             
                                     stepSevenIntroductionTitle.innerText = "Volgende stap"
                                     stepSevenIntroductionP.innerText = stepSevenIntroduction
@@ -1486,12 +1405,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                         }; 
                                     });
                                    
-                                    DOM.appendChild(stepSevenOuterDiv)
-                                    stepSevenOuterDiv.appendChild(stepSevenTitleH2)
-                                    stepSevenOuterDiv.appendChild(stepSevenExplainerP)
-                                    stepSevenOuterDiv.appendChild(stepSevenCTATitle)
-                                    stepSevenOuterDiv.appendChild(stepSevenCTAP)
-                                    stepSevenOuterDiv.appendChild(stepSevenInput)
+                                    appendStepToDom(stepSevenOuterDiv, stepSevenTitleH2, stepSevenExplainerP, stepSevenCTATitle, stepSevenCTAP, stepSevenInput)
+
             
                                     stepEightIntroductionTitle.innerText = "Volgende stap"
                                     stepEightIntroductionP.innerText = stepEightIntroduction
@@ -1615,12 +1530,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                         }; 
                                     });
                                    
-                                    DOM.appendChild(stepEightOuterDiv)
-                                    stepEightOuterDiv.appendChild(stepEightTitleH2)
-                                    stepEightOuterDiv.appendChild(stepEightExplainerP)
-                                    stepEightOuterDiv.appendChild(stepEightCTATitle)
-                                    stepEightOuterDiv.appendChild(stepEightCTAP)
-                                    stepEightOuterDiv.appendChild(stepEightInput)
+                                    appendStepToDom(stepEightOuterDiv, stepEightTitleH2, stepEightExplainerP, stepEightCTATitle, stepEightCTAP, stepEightInput)
+
             
                                     closingIntroductionTitle.innerText = "Afronden"
                                     closingIntroductionP.innerText = stepEightIntroduction
@@ -2288,278 +2199,62 @@ function saveEight(){
                     }
                 })
 
-                // Load step one content
+                // Load step content
 
-                function loadSteps(a,b,c){
-                    if(a != ""){
-                        b = document.getElementById(c)
+                function loadSteps(dbTitle,buttonID,DOMtitleID, editorA, editorB, editorC, setContentA, setContentB, setContentC, innerDiv ){
+                    if(dbTitle != ""){
+                        const button = document.getElementById(buttonID)
         
-                        c.click()
-                        c.style.display = "none"
+                        button.click()
+                        button.style.display = "none"
                     };
+
+                    const DOMtitle = document.getElementById(DOMtitleID)
+                    tinyMCE.get(editorA).setContent(setContentA)
+                    tinyMCE.get(editorB).setContent(setContentB)
+                    tinyMCE.get(editorC).setContent(setContentC)
+    
+                    DOMtitle.value = dbTitle
+    
+                    const innerDiv = document.getElementById(innerDiv)
+                    innerDiv.setAttribute("data-title", dbTitle)
+                    innerDiv.setAttribute("data-explainer", setContentB)
+                    innerDiv.setAttribute("data-cta", setContentC)
+                
                 };
 
-                loadSteps(stepOneTitle, buttonStepOne, "button-step-one" )
+                loadSteps(stepOneTitle, "button-step-one", "step-one-title", 'editor2', 'editor3', 'editor4', stepOnePreview, stepOneExplainer, stepOneCTA, "step-one-inner-div")
+                loadSteps(stepTwoTitle, "button-step-two", "step-two-title", 'editor-preview-step-two', 'editor5', 'editor6', stepTwoPreview, stepTwoExplainer, stepTwoCTA, "step-two-inner-div")
+                loadSteps(stepThreeTitle, "button-step-three", "step-three-title", 'editor-preview-step-three', 'editor7', 'editor8', stepThreePreview, stepThreeExplainer, stepThreeCTA, "step-three-inner-div")
+                loadSteps(stepFourTitle, "button-step-four", "step-four-title", 'editor-preview-step-four', 'editor9', 'editor10', stepFourPreview, stepFourExplainer, stepFourCTA, "step-four-inner-div")
+                loadSteps(stepFiveTitle, "button-step-five", "step-five-title", 'editor-preview-step-five', 'editor11', 'editor12', stepFivePreview, stepFiveExplainer, stepFiveCTA, "step-five-inner-div")
+                loadSteps(stepSixTitle, "button-step-six", "step-six-title", 'editor-preview-step-six', 'editor13', 'editor14', stepSixPreview, stepSixExplainer, stepSixCTA, "step-six-inner-div" )
+                loadSteps(stepSevenTitle, "button-step-seven", "step-seven-title", 'editor-preview-step-seven', 'editor15', 'editor16', stepSevenPreview, stepSevenExplainer, stepSevenCTA, "step-seven-inner-div" )
+                loadSteps(stepEightTitle, "button-step-eight", "step-eight-title", 'editor-preview-step-eight', 'editor17', 'editor18', stepEightPreview, stepEightExplainer, stepEightCTA, "step-eight-inner-div" )
 
+                // Load closing
+                
+                function loadClosing(closingTitle, closingText, createClosing, closingTitleInput, editorClosing){
 
-                if(stepOneTitle != ""){
-                const buttonStepOne = document.getElementById("button-step-one")
+                    if(closingTitle != "" && closingText != ""){
 
-                buttonStepOne.click()
-                buttonStepOne.style.display = "none"
+                        const closingButton = document.getElementById(createClosing)
+                            closingButton.click()
+    
+                        const closingTitleDOM = document.getElementById(closingTitleInput)
+                        tinyMCE.get(editorClosing).setContent(closingText)
+    
+                        closingTitleDOM.value = closingTitle
+                    };
+                } loadClosing(closingOneTitle, closingOneText, "create-closing-1", "closing-title-input-1", "editor-closing-1")
+                loadClosing(closingTwoTitle, closingTwoText, "create-closing-2", "closing-title-input-2", "editor-closing-2")
+                loadClosing(closingThreeTitle, closingThreeText, "create-closing-3", "closing-title-input-3", "editor-closing-3")
+                loadClosing(closingFourTitle, closingFourText, "create-closing-4", "closing-title-input-4", "editor-closing-4")
+                loadClosing(closingFiveTitle, closingFiveText, "create-closing-5", "closing-title-input-5", "editor-closing-5")
+                loadClosing(closingSixTitle, closingSixText, "create-closing-6", "closing-title-input-6", "editor-closing-6")
+                loadClosing(closingSevenTitle, closingSevenText, "create-closing-7", "closing-title-input-7", "editor-closing-7")
+                loadClosing(closingEightTitle, closingEightText, "create-closing-8", "closing-title-input-8", "editor-closing-8")
                
-        
-                const DOMtitelStepOne = document.getElementById("step-one-title")
-                tinyMCE.get('editor2').setContent(stepOnePreview)
-                tinyMCE.get('editor3').setContent(stepOneExplainer)
-                tinyMCE.get('editor4').setContent(stepOneCTA)
-
-                DOMtitelStepOne.value = stepOneTitle
-
-                const innerDivOne = document.getElementById("step-one-inner-div")
-                innerDivOne.setAttribute("data-title", stepOneTitle)
-                innerDivOne.setAttribute("data-explainer", stepOneExplainer)
-                innerDivOne.setAttribute("data-cta", stepOneCTA)
-                };
-
-                // Load step two content
-                if(stepTwoTitle != ""){
-                const addOrCloseDivTwo = document.getElementById("add-step-or-finish-two")
-                const buttonStepTwo = document.getElementById("button-step-two")
-
-                buttonStepTwo.click()
-                buttonStepTwo.style.display = "none"
-                } else {
-
-                }
-        
-                const DOMtitelStepTwo = document.getElementById("step-two-title")
-                tinyMCE.get('editor-preview-step-two').setContent(stepTwoPreview)
-                tinyMCE.get('editor5').setContent(stepTwoExplainer)
-                tinyMCE.get('editor6').setContent(stepTwoCTA)
-
-                DOMtitelStepTwo.value = stepTwoTitle
-
-                const innerDivTwo = document.getElementById("step-two-inner-div")
-                innerDivTwo.setAttribute("data-title", stepTwoTitle)
-                innerDivTwo.setAttribute("data-explainer", stepTwoExplainer)
-                innerDivTwo.setAttribute("data-cta", stepTwoCTA)
-
-                // Load step three content
-                if(stepThreeTitle != ""){
-                const addOrCloseDivThree = document.getElementById("add-step-or-finish-three")
-                const buttonStepThree = document.getElementById("button-step-three")
-
-                buttonStepThree.click()
-                buttonStepThree.style.display = "none"
-                };
-              
-                const DOMtitelStepThree = document.getElementById("step-three-title")
-                tinyMCE.get('editor-preview-step-three').setContent(stepThreePreview)
-                tinyMCE.get('editor7').setContent(stepThreeExplainer)
-                tinyMCE.get('editor8').setContent(stepThreeCTA)
-
-                DOMtitelStepThree.value = stepThreeTitle
-
-                const innerDivThree = document.getElementById("step-three-inner-div")
-                innerDivThree.setAttribute("data-title", stepThreeTitle)
-                innerDivThree.setAttribute("data-explainer", stepThreeExplainer)
-                innerDivThree.setAttribute("data-cta", stepThreeCTA)
-
-                // Load step four content
-                if(stepFourTitle!= ""){
-                const addOrCloseDivFour = document.getElementById("add-step-or-finish-four")
-                const buttonStepFour = document.getElementById("button-step-four")
-
-                buttonStepFour.click()
-                buttonStepFour.style.display = "none"
-                };
-            
-                const DOMtitelStepFour = document.getElementById("step-four-title")
-                tinyMCE.get('editor-preview-step-four').setContent(stepFourPreview)
-                tinyMCE.get('editor9').setContent(stepFourExplainer)
-                tinyMCE.get('editor10').setContent(stepFourCTA)
-
-                DOMtitelStepFour.value = stepFourTitle
-
-                const innerDivFour = document.getElementById("step-four-inner-div")
-                innerDivFour.setAttribute("data-title", stepFourTitle)
-                innerDivFour.setAttribute("data-explainer", stepFourExplainer)
-                innerDivFour.setAttribute("data-cta", stepFourCTA)
-
-                // Load step five content
-                if(stepFiveTitle != ""){
-                const addOrCloseDivFive = document.getElementById("add-step-or-finish-five")
-                const buttonStepFive = document.getElementById("button-step-five")
-
-                buttonStepFive.click()
-                buttonStepFive.style.display = "none"
-                };
-            
-                const DOMtitelStepFive = document.getElementById("step-five-title")
-                tinyMCE.get('editor-preview-step-five').setContent(stepFivePreview)
-                tinyMCE.get('editor11').setContent(stepFiveExplainer)
-                tinyMCE.get('editor12').setContent(stepFiveCTA)
-
-                DOMtitelStepFive.value = stepFiveTitle
-
-                const innerDivFive = document.getElementById("step-five-inner-div")
-                innerDivFive.setAttribute("data-title", stepFiveTitle)
-                innerDivFive.setAttribute("data-explainer", stepFiveExplainer)
-                innerDivFive.setAttribute("data-cta", stepFiveCTA)
-
-                // Load step six content
-                if(stepSixTitle != ""){
-                const addOrCloseDivSix = document.getElementById("add-step-or-finish-six")
-                const buttonStepSix = document.getElementById("button-step-six")
-
-                buttonStepSix.click()
-                buttonStepSix.style.display = "none"
-                };
-            
-                const DOMtitelStepSix = document.getElementById("step-six-title")
-                tinyMCE.get('editor-preview-step-six').setContent(stepSixPreview)
-                tinyMCE.get('editor13').setContent(stepSixExplainer)
-                tinyMCE.get('editor14').setContent(stepSixCTA)
-
-                DOMtitelStepSix.value = stepSixTitle
-
-                const innerDivSix = document.getElementById("step-six-inner-div")
-                innerDivSix.setAttribute("data-title", stepSixTitle)
-                innerDivSix.setAttribute("data-explainer", stepSixExplainer)
-                innerDivSix.setAttribute("data-cta", stepSixCTA)
-
-                // Load step seven content
-                if(stepSevenTitle !=""){
-                const addOrCloseDivSeven = document.getElementById("add-step-or-finish-seven")
-                const buttonStepSeven = document.getElementById("button-step-seven")
-
-                buttonStepSeven.click()
-                buttonStepSeven.style.display = "none"
-                };
-            
-                const DOMtitelStepSeven = document.getElementById("step-seven-title")
-                tinyMCE.get('editor-preview-step-seven').setContent(stepSevenPreview)
-                tinyMCE.get('editor15').setContent(stepSevenExplainer)
-                tinyMCE.get('editor16').setContent(stepSevenCTA)
-
-                DOMtitelStepSeven.value = stepSevenTitle
-
-                const innerDivSeven = document.getElementById("step-seven-inner-div")
-                innerDivSeven.setAttribute("data-title", stepSevenTitle)
-                innerDivSeven.setAttribute("data-explainer", stepSevenExplainer)
-                innerDivSeven.setAttribute("data-cta", stepSevenCTA)
-
-                // Load step eight content
-                if(stepEightTitle != ""){
-                const addOrCloseDivEight = document.getElementById("add-step-or-finish-eight")
-                const buttonStepEight = document.getElementById("button-step-eight")
-
-                buttonStepEight.click()
-                buttonStepEight.style.display = "none"
-                };
-            
-                const DOMtitelStepEight = document.getElementById("step-eight-title")
-                tinyMCE.get('editor-preview-step-eight').setContent(stepEightPreview)
-                tinyMCE.get('editor17').setContent(stepEightExplainer)
-                tinyMCE.get('editor18').setContent(stepEightCTA)
-
-                DOMtitelStepEight.value = stepEightTitle
-
-                const innerDivEight = document.getElementById("step-eight-inner-div")
-                innerDivEight.setAttribute("data-title", stepEightTitle)
-                innerDivEight.setAttribute("data-explainer", stepEightExplainer)
-                innerDivEight.setAttribute("data-cta", stepEightCTA)
-
-                // Load closing 
-                if(closingOneTitle != "" && closingOneText != ""){
-
-                    const closingButtonOne = document.getElementById("create-closing-1")
-                        closingButtonOne.click()
-
-                    const closingOneTitleDOM = document.getElementById("closing-title-input-1")
-                    tinyMCE.get('editor-closing-1').setContent(closingOneText)
-
-                    closingOneTitleDOM.value = closingOneTitle
-                }
-
-                if(closingTwoTitle != "" && closingTwoText != ""){
-
-                    const closingButtonTwo = document.getElementById("create-closing-2")
-                        closingButtonTwo.click()
-
-                    const closingTwoTitleDOM = document.getElementById("closing-title-input-2")
-                    tinyMCE.get('editor-closing-2').setContent(closingTwoText)
-
-                    closingTwoTitleDOM.value = closingTwoTitle
-                }
-
-                if(closingThreeTitle != "" && closingThreeText != ""){
-
-                    const closingButtonThree = document.getElementById("create-closing-3")
-                        closingButtonThree.click()
-
-                    const closingThreeTitleDOM = document.getElementById("closing-title-input-3")
-                    tinyMCE.get('editor-closing-3').setContent(closingThreeText)
-
-                    closingThreeTitleDOM.value = closingThreeTitle
-                }
-
-                if(closingFourTitle != "" && closingFourText != ""){
-
-                    const closingButtonFour = document.getElementById("create-closing-4")
-                        closingButtonFour.click()
-
-                    const closingFourTitleDOM = document.getElementById("closing-title-input-4")
-                    tinyMCE.get('editor-closing-4').setContent(closingFourText)
-
-                    closingFourTitleDOM.value = closingFourTitle
-                }
-
-                if(closingFiveTitle != "" && closingFiveText != ""){
-
-                    const closingButtonFive = document.getElementById("create-closing-5")
-                        closingButtonFive.click()
-
-                    const closingFiveTitleDOM = document.getElementById("closing-title-input-5")
-                    tinyMCE.get('editor-closing-5').setContent(closingFiveText)
-
-                    closingFiveTitleDOM.value = closingFiveTitle
-                }
-
-                if(closingSixTitle != "" && closingSixText != ""){
-
-                    const closingButtonSix = document.getElementById("create-closing-6")
-                        closingButtonSix.click()
-
-                    const closingSixTitleDOM = document.getElementById("closing-title-input-6")
-                    tinyMCE.get('editor-closing-6').setContent(closingSixText)
-
-                    closingSixTitleDOM.value = closingSixTitle
-                }
-
-                if(closingSevenTitle != "" && closingSevenText != ""){
-
-                    const closingButtonSeven = document.getElementById("create-closing-7")
-                        closingButtonSeven.click()
-
-                    const closingSevenTitleDOM = document.getElementById("closing-title-input-7")
-                    tinyMCE.get('editor-closing-7').setContent(closingSevenText)
-
-                    closingSevenTitleDOM.value = closingSevenTitle
-                }
-
-                if(closingEightTitle != "" && closingEightText != ""){
-
-                    const closingButtonEight= document.getElementById("create-closing-8")
-                        closingButtonEight.click()
-
-                    const closingEightTitleDOM = document.getElementById("closing-title-input-8")
-                    tinyMCE.get('editor-closing-8').setContent(closingEightText)
-
-                    closingEightTitleDOM.value = closingEightTitle
-                }
-
                 // Save/update
                 const saveWorkshopButton = document.getElementById("saveWorkshop")
                 const updateWorkshopButton = document.getElementById("updateWorkshop")
@@ -2917,69 +2612,20 @@ function publishWorkshop(){
 
 // Create steps
 
-function stepOne(){
+function createStep(stepInnerDiv){
 
-const stepOne = document.getElementById("step-one-inner-div")
+const step = document.getElementById(stepInnerDiv)
 
-stepOne.style.display = "flex"
+step.style.display = "flex"
 
-}
-
-function stepTwo(){
-
-    const stepTwo = document.getElementById("step-two-inner-div")
-    
-    stepTwo.style.display = "flex"
-    
-}
-
-function stepThree(){
-
-    const stepThree = document.getElementById("step-three-inner-div")
-    
-    stepThree.style.display = "flex"
-    
-}
-
-function stepFour(){
-
-    const stepFour = document.getElementById("step-four-inner-div")
-    
-    stepFour.style.display = "flex"
-    
-}
-
-function stepFive(){
-
-    const stepFive = document.getElementById("step-five-inner-div")
-    
-    stepFive.style.display = "flex"
-    
-}
-
-function stepSix(){
-
-    const stepSix = document.getElementById("step-six-inner-div")
-    
-    stepSix.style.display = "flex"
-    
-}
-
-function stepSeven(){
-
-    const stepSeven = document.getElementById("step-seven-inner-div")
-    
-    stepSeven.style.display = "flex"
-    
-}
-
-function stepEight(){
-
-    const stepEight = document.getElementById("step-eight-inner-div")
-    
-    stepEight.style.display = "flex"
-    
-}
+} createStep("step-one-inner-div")
+createStep("step-two-inner-div")
+createStep("step-three-inner-div")
+createStep("step-four-inner-div")
+createStep("step-five-inner-div")
+createStep("step-six-inner-div")
+createStep("step-seven-inner-div")
+createStep("step-eight-inner-div")
 
 // Create closing
 
@@ -3008,10 +2654,9 @@ function deleteStep1(ele){
     StepOneTitle: "",
     StepOneExplainer: "",
     StepOneCTA: "",
-                            });
+                            }).then(() => {
+                                location.reload()
                         });
-                    // }).then(() => {
-                    //     location.reload()
                     });
                 });
             })

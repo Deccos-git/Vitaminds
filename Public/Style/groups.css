@@ -21,6 +21,14 @@
     display: none;
 }
 
+#coachgroups{
+    display: none;
+}
+
+#coachgroup-builder-div{
+    display: none;
+}
+
 .groups-outer-div{
     display: flex;
     flex-wrap: wrap;
@@ -135,20 +143,6 @@
     margin: -15px 20px;
 }
 
-.auth-message-div-auth p{
-    border: 1px solid rgba(0,0,0,.2);
-    padding: 5px;
-    border-radius: 15px;
-    font-size: 16px;
-}
-
-.auth-message-div-user p{
-    border: 1px solid rgba(0,0,0,.2);
-    padding: 5px;
-    border-radius: 15px;
-    font-size: 16px;
-}
-
 .group-member-photo{
     width: 40px;
     height: 40px;
@@ -179,6 +173,28 @@
     margin-top: 0px;
 }
 
+.auth-message-p{
+    display: flex;
+    flex-direction: column-reverse;
+    border: 1px solid rgba(0,0,0,.2);
+    padding: 5px;
+    border-radius: 15px;
+    font-size: 16px;
+}
+
+.user-message-p{
+    display: flex;
+    flex-direction: column-reverse;
+    border: 1px solid rgba(0,0,0,.2);
+    padding: 5px;
+    border-radius: 15px;
+    font-size: 16px;
+}
+
+.sender-name-message{
+    font-size: 11px;
+    margin-top: 0px;
+}
 /* Coachgroup builder */
 
 #coachgroup-builder-outer-div{

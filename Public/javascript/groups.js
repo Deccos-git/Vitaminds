@@ -159,7 +159,15 @@ if(coachgroupTab != null){
     const DOMtitle = document.getElementById("group-title")
 
     if(DOMtitle != null){
-    DOMtitle.innerText = titel
+
+        db.collection("Chats").where("Room", "==", titel).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                const roomClean = doc.data().RoomClean
+        
+                DOMtitle.innerText = roomClean
+            });
+        });
     }
 
     const DOMchatScreen = document.getElementById("chat-screen")
@@ -282,64 +290,55 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
 
                         const authMessage = doc2.data().Message
                         const sender = doc2.data().Auth
+
+                        
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", sender).get().then(querySnapshot => {
+                    querySnapshot.forEach(doc1 => {
+
+                        const messageNameClean = doc1.data().GebruikersnaamClean
                     
                         if (auth == sender){
 
                         const authMessageDiv = document.createElement("div")
                         authMessageDiv.setAttribute("class", "auth-message-div-auth")
-
                         const authMessageP = document.createElement("p")
+                            authMessageP.setAttribute("class", "auth-message-p")
+                        const senderName = document.createElement("p")
+                            senderName.setAttribute("class", "sender-name-message")
+
+                        senderName.innerText = messageNameClean
 
                         authMessageP.innerText = authMessage
 
                         DOMchatScreen.appendChild(authMessageDiv)
                         authMessageDiv.appendChild(authMessageP)
+                        authMessageP.appendChild(senderName)
 
                         } else {
 
                         const userMessageDiv = document.createElement("div")
                         userMessageDiv.setAttribute("class", "auth-message-div-user")
-
                         const userMessageP = document.createElement("p")
+                            userMessageP.setAttribute("class", "user-message-p")
+                        const senderName = document.createElement("p")
+                        senderName.setAttribute("class", "sender-name-message")
+
+                        senderName.innerText = messageNameClean
 
                         userMessageP.innerText = authMessage
 
                         DOMchatScreen.appendChild(userMessageDiv)
                         userMessageDiv.appendChild(userMessageP)
+                        userMessageP.appendChild(senderName)
+
                             };
+                        });
                     });
                 });
             });
-        };
-    });
-
-    function getProfilePicture(a,b){
-
-        db.collection("Vitaminders").where("Gebruikersnaam", "==", a).get().then(querySnapshot => {
-            querySnapshot.forEach(doc4 => {
-
-                const user = doc.data().Gebruikersnaam
-                const photo = doc4.data().Profielfoto
-
-                const photoImg = document.createElement("img")
-
-                photoImg.src = photo
-        
-        if(photo == undefined){
-            photoImg.src = "images/dummy-profile-photo.jpeg"
-        } else {
-            photoImg.src = photo
-        }
-
-        photo.addEventListener("click", () => {
-            window.open(`../Vitaminders/${user}.html`, "_self");
-        })
-
-        b.appendChild(photoImg)
-
-            });
         });
     };
+});
 
     // Get chats of auth
 
@@ -365,9 +364,6 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
             userArray.forEach(user => {
 
                     if(auth != user){
-
-                        console.log(user)
-            
 
                         db.collection("Vitaminders").where("Gebruikersnaam", "==", user).get().then(querySnapshot => {
                             querySnapshot.forEach(doc4 => {
@@ -701,6 +697,33 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
 
     });
 });
+
+function hideCoachgroupBuilderForNoneCoach(){
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+    
+            const auth = doc.data().Gebruikersnaam
+
+            db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                    const userType = doc.data().Usertype
+
+                    const coachGroupBuiderDiv = document.getElementById("coachgroup-builder-div")
+
+                    if(userType === "Coach" ){
+                        coachGroupBuiderDiv.style.display = "block"
+                    }
+
+                    });
+                });
+            });
+        };
+    });
+}; 
+hideCoachgroupBuilderForNoneCoach()
 
 // Load practicegroups from database to overview
 

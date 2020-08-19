@@ -107,38 +107,55 @@ auth.onAuthStateChanged(User =>{
 
                     const authMessage = doc2.data().Message
                     const sender = doc2.data().Auth
-                   
+
+                    db.collection("Vitaminders").where("Gebruikersnaam", "==", sender).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
+    
+                            const messageNameClean = doc1.data().GebruikersnaamClean
+                    
                     if (auth == sender){
 
-                    const authMessageDiv = document.createElement("div")
-                    authMessageDiv.setAttribute("class", "auth-message-div-auth")
+                        const authMessageDiv = document.createElement("div")
+                        authMessageDiv.setAttribute("class", "auth-message-div-auth")
+                        const authMessageP = document.createElement("p")
+                            authMessageP.setAttribute("class", "auth-message-p")
+                        const senderName = document.createElement("p")
+                            senderName.setAttribute("class", "sender-name-message")
 
-                    const authMessageP = document.createElement("p")
+                        senderName.innerText = messageNameClean
 
-                    authMessageP.innerText = authMessage
+                        authMessageP.innerText = authMessage
 
-                    DOMchatScreen.appendChild(authMessageDiv)
-                    authMessageDiv.appendChild(authMessageP)
-
+                        DOMchatScreen.appendChild(authMessageDiv)
+                        authMessageDiv.appendChild(authMessageP)
+                        authMessageP.appendChild(senderName)
                     } else {
 
-                    const userMessageDiv = document.createElement("div")
-                    userMessageDiv.setAttribute("class", "auth-message-div-user")
+                        const userMessageDiv = document.createElement("div")
+                        userMessageDiv.setAttribute("class", "auth-message-div-user")
+                        const userMessageP = document.createElement("p")
+                            userMessageP.setAttribute("class", "user-message-p")
+                        const senderName = document.createElement("p")
+                        senderName.setAttribute("class", "sender-name-message")
 
-                    const userMessageP = document.createElement("p")
+                        senderName.innerText = messageNameClean
 
-                    userMessageP.innerText = authMessage
+                        userMessageP.innerText = authMessage
 
-                    DOMchatScreen.appendChild(userMessageDiv)
-                    userMessageDiv.appendChild(userMessageP)
+                        DOMchatScreen.appendChild(userMessageDiv)
+                        userMessageDiv.appendChild(userMessageP)
+                        userMessageP.appendChild(senderName)
                         };
+                    });
                 });
             });
+        });
       });
     };
 });
 
 // Get chats and groups of auth
+
 
 const DOMchats = document.getElementById("overview-chats")
 
@@ -155,6 +172,9 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnap
 
         const type = doc1.data().Type
         const title = doc1.data().Room
+        const titleClean = doc1.data().RoomClean
+        const members = doc1.data().Members
+        const creator = doc1.data().Creater
 
         // Chats
 
@@ -168,10 +188,7 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnap
 
         userArray.forEach(user => {
 
-                if(auth != user){
-
-                    console.log(user)
-        
+                if(auth != user){        
 
                     db.collection("Vitaminders").where("Gebruikersnaam", "==", user).get().then(querySnapshot => {
                         querySnapshot.forEach(doc4 => {
@@ -210,14 +227,9 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnap
                             };    
                         });
                     };
-                } else if(type === "Group"){
-
-                        const members = doc1.data().Members
+                } else if(type === "Group" || type === "Practicegroup" || type === "Coachgroup"){
                 
                   if (members.includes(auth)){
-                
-                
-                                    console.log(auth)
                 
                                     const chatsDiv = document.createElement("div")
                                         chatsDiv.setAttribute("class", "chats-div")
@@ -226,10 +238,17 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnap
                                         photoDiv.setAttribute("class", "photo-div")
                                     const photoImg = document.createElement("img")
                 
+                                    if(type === "Group"){
                                     chatsP.innerText = title
+                                    photoImg.src = "images/groups-icon.jpg"
+                                    } else if (type === "Practicegroup"){
+                                        chatsP.innerText = titleClean
+                                        photoImg.src = "images/practicegroup-icon.png"
+                                    } else if ( type === "Coachgroup"){
+                                        chatsP.innerText = titleClean
+                                        photoImg.src = "images/coachgroup-icon.png"
+                                    };     
                                     
-                                        photoImg.src = "images/groups-icon.jpg"
-                
                                     chatsDiv.addEventListener("click", () => {
                                         window.open(`../Group/${title}.html`, "_self");
                                     })
@@ -238,7 +257,6 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnap
                                     chatsDiv.appendChild(photoDiv)
                                     photoDiv.appendChild(photoImg)
                                     chatsDiv.appendChild(chatsP)
-                
                                                
                     };                
                 };

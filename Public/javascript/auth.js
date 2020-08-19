@@ -3,6 +3,17 @@ const id = Math.random()
 const idAlpha = id.toString(36)
 const idClean = idAlpha.replace("0.", "")
 
+// Random color
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 // Cookies notice
 const cookieDiv = document.getElementById("cookie-notice")
 

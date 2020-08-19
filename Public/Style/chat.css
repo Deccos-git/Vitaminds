@@ -39,18 +39,27 @@
     margin: -15px 20px;
 }
 
-.auth-message-div-auth p{
+.auth-message-p{
+    display: flex;
+    flex-direction: column-reverse;
     border: 1px solid rgba(0,0,0,.2);
     padding: 5px;
     border-radius: 15px;
     font-size: 16px;
 }
 
-.auth-message-div-user p{
+.user-message-p{
+    display: flex;
+    flex-direction: column-reverse;
     border: 1px solid rgba(0,0,0,.2);
     padding: 5px;
     border-radius: 15px;
     font-size: 16px;
+}
+
+.sender-name-message{
+    font-size: 11px;
+    margin-top: 0px;
 }
 
 /* List of chats & groups */
