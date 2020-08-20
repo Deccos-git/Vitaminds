@@ -202,8 +202,11 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnap
                     const photoDiv = document.createElement("div")
                         photoDiv.setAttribute("class", "photo-div")
                     const photoImg = document.createElement("img")
+                    const groupType = document.createElement("p")
+                            groupType.setAttribute("class", "grouptype-description")
 
                     chatsP.innerText = userClean
+                    groupType.innerText = type
                     
                     if(photo == undefined){
                         photoImg.src = "images/dummy-profile-photo.jpeg"
@@ -220,6 +223,7 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnap
                     DOMchats.appendChild(chatsDiv)
                     chatsDiv.appendChild(photoDiv)
                     photoDiv.appendChild(photoImg)
+                    photoDiv.appendChild(groupType)
                     chatsDiv.appendChild(chatsP)
 
                                     });
@@ -237,6 +241,11 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnap
                                     const photoDiv = document.createElement("div")
                                         photoDiv.setAttribute("class", "photo-div")
                                     const photoImg = document.createElement("img")
+                                    const groupType = document.createElement("p")
+                                        groupType.setAttribute("class", "grouptype-description")
+
+
+                                    groupType.innerText = type
                 
                                     if(type === "Group"){
                                     chatsP.innerText = title
@@ -256,6 +265,7 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnap
                                     DOMchats.appendChild(chatsDiv)
                                     chatsDiv.appendChild(photoDiv)
                                     photoDiv.appendChild(photoImg)
+                                    photoDiv.appendChild(groupType)
                                     chatsDiv.appendChild(chatsP)
                                                
                     };                

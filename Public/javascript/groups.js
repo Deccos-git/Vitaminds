@@ -568,6 +568,22 @@ function saveCoachgroup(){
     });
 };
 
+function groupSavedNotice(buttonID, groupName){
+    const notice = document.createElement("p")
+
+    notice.innerText = "Je groep is aangemaakt!"
+
+    const button = document.getElementById(buttonID)
+
+    button.appendChild(notice)
+
+    notice.style.cursor = "pointer"
+
+    notice.addEventListener("click", () => {
+        window.open(`../Group/${groupName}.html`, "_self");
+    });
+};
+
 function savePracticegroup(){
 
     auth.onAuthStateChanged(User =>{
@@ -590,11 +606,13 @@ function savePracticegroup(){
         Description: description,
         NumberParticipants: numberParticipants,
         StartNumber: startNumber,
-        Members: [],
+        Members: firebase.firestore.FieldValue.arrayUnion(auth),
         Messages: 0,
         Type: "Practicegroup", 
         CoverPhoto: coverPhoto
-                });
+                }).then(() => {
+                    groupSavedNotice("button-practicegroup", idClean + title)
+                })
             });
         };
     });
