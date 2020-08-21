@@ -195,6 +195,14 @@
     font-size: 11px;
     margin-top: 0px;
 }
+
+#inspiration-icon{
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+
+
 /* Coachgroup builder */
 
 #coachgroup-builder-outer-div{

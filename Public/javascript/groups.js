@@ -70,11 +70,20 @@ if(coachgroupTab != null){
 
     const DOMthemeView = document.getElementById("themegroups")
 
-    db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+    db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
-            const title = doc.data().Levensvraag
-            const headerImage = doc.data().HeaderImage
+            const type = doc.data().Type
+            const room = doc.data().Room
+
+            if(type === "Group"){
+
+
+    db.collection("Levensvragen").where("Levensvraag", "==", room).get().then(querySnapshot => {
+        querySnapshot.forEach(doc1 => {
+
+            const title = doc1.data().Levensvraag
+            const headerImage = doc1.data().HeaderImage
 
             const outerSection = document.createElement("section")
             outerSection.setAttribute("class", "theme-groups-section")
@@ -149,8 +158,11 @@ if(coachgroupTab != null){
         titleDiv.appendChild(titleH2)
         outerSection.appendChild(buttonDiv)
 
-        });
+                });
+            });
+        };
     });
+});
 
 // Themegroup individual page
 
@@ -164,8 +176,16 @@ if(coachgroupTab != null){
             querySnapshot.forEach(doc => {
 
                 const roomClean = doc.data().RoomClean
-        
-                DOMtitle.innerText = roomClean
+                const room = doc.data().Room
+
+                console.log(room)
+
+                if(roomClean == undefined){
+                    DOMtitle.innerText = room
+                } else {
+                    DOMtitle.innerText = roomClean
+                }
+    
             });
         });
     }
@@ -217,12 +237,8 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
      
 
     // Save message to database
-    const send = document.getElementById("send-icon-group")
 
-    if(send != null){
-
-    send.addEventListener("click", () => {
-
+    function saveMessage(){
         const message = document.getElementById("chat-input").value 
 
         auth.onAuthStateChanged(User =>{
@@ -246,6 +262,10 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
             }).then(() => {
                 db.collection("Chats").doc(doc.id).update({
                     Messages: firebase.firestore.FieldValue.increment(1)
+                                }).then(() => {
+                                    const input = document.getElementById("chat-input")
+
+                                    input.value = ""
                                 });
                             });  
                         });
@@ -253,7 +273,14 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
                 });
             };
         });
-    });
+    };
+    const send = document.getElementById("send-icon-group")
+
+    if(send != null){
+
+    send.addEventListener("click", saveMessage, false)
+    send.addEventListener("submit", saveMessage, false)
+
     };
 
     // Get chat from database in realtime
@@ -840,7 +867,6 @@ db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnap
 });
 
 // New member
-
 const practicegroupButton = document.getElementById("practicegroup-button")
 
 function saveNewMemberToGroup(a){

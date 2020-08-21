@@ -1216,10 +1216,8 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                     editIcon.setAttribute("data-levensvraagtitle", levensvraagArtikel)
                     editIcon.setAttribute("data-themetitle", themeArtikel)
                     editIcon.setAttribute("data-coach", coach)
-
                     
                 toevoegenLevensles.innerText = "Heb je iets geleerd over:"
-               
 
                 auth.onAuthStateChanged(User =>{
                     if (User){

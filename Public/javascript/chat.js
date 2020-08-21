@@ -33,12 +33,10 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
 const DOMchatScreen = document.getElementById("chat-screen")
 
 // Save message to database
-const send = document.getElementById("send-icon")
 
-if(send != null){
 
-send.addEventListener("click", () => {
-
+    
+function saveMessage(){
     const message = document.getElementById("chat-input").value 
 
     auth.onAuthStateChanged(User =>{
@@ -62,14 +60,23 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
         }).then(() => {
             db.collection("Chats").doc(doc.id).update({
                 Messages: firebase.firestore.FieldValue.increment(1)
-                            });
+                            }).then (() => {
+                                const input = document.getElementById("chat-input")
+
+                                input.value = ""
+                            })
                         });  
                     });
                 });
             });
         };
     });
-});
+};
+    const send = document.getElementById("send-icon")
+
+if(send != null){
+
+send.addEventListener("click", saveMessage, false)
 };
 
 // Get chat from database in realtime
@@ -212,13 +219,11 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnap
                         photoImg.src = "images/dummy-profile-photo.jpeg"
                     } else {
                     photoImg.src = photo
-                    }
-
-                    console.log(photo)
+                    };
 
                     chatsDiv.addEventListener("click", () => {
                         window.open(`../Chats/${user}.html`, "_self");
-                    })
+                    });
 
                     DOMchats.appendChild(chatsDiv)
                     chatsDiv.appendChild(photoDiv)
@@ -243,19 +248,19 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnap
                                     const photoImg = document.createElement("img")
                                     const groupType = document.createElement("p")
                                         groupType.setAttribute("class", "grouptype-description")
-
-
-                                    groupType.innerText = type
                 
                                     if(type === "Group"){
                                     chatsP.innerText = title
                                     photoImg.src = "images/groups-icon.jpg"
+                                    groupType.innerText = "Themagroep"
                                     } else if (type === "Practicegroup"){
                                         chatsP.innerText = titleClean
                                         photoImg.src = "images/practicegroup-icon.png"
+                                        groupType.innerText = "Oefengroep"
                                     } else if ( type === "Coachgroup"){
                                         chatsP.innerText = titleClean
                                         photoImg.src = "images/coachgroup-icon.png"
+                                        groupType.innerText = "Coachgroep"
                                     };     
                                     
                                     chatsDiv.addEventListener("click", () => {
