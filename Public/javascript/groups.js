@@ -66,6 +66,19 @@ if(coachgroupTab != null){
     });
 };
 
+function noticeVisitor(buttonDiv, button){
+    const notice = document.createElement("p")
+        notice.setAttribute("class", "notice-group-visitor")
+
+    notice.innerText = "Maak een Digimind aan om deel te nemen in een groep"
+    notice.addEventListener("click", () => {
+        window.open("Register.html", "_self")
+    })
+
+    buttonDiv.appendChild(notice)
+    buttonDiv.removeChild(button)
+}; 
+
     // Theme groups overview
 
     const DOMthemeView = document.getElementById("themegroups")
@@ -96,14 +109,15 @@ if(coachgroupTab != null){
         const titleH2 = document.createElement("h2")
             titleH2.setAttribute("class", "titelTekst")
         const subTitle = document.createElement("h5")
-        const buttonDiv = document.createElement("button")
-            buttonDiv.setAttribute("class", "button-algemeen-card")
+        const buttonDiv = document.createElement("div")
+        const button = document.createElement("button")
+            button.setAttribute("class", "button-algemeen-card")
 
         titleH2.innerHTML = title
         headerImg.src = headerImage
-        buttonDiv.innerHTML = "Lid worden"
+        button.innerHTML = "Lid worden"
 
-        buttonDiv.addEventListener("click", () => {
+        button.addEventListener("click", () => {
 
             // Add auth to list of members
 
@@ -127,7 +141,20 @@ if(coachgroupTab != null){
                             });
                         });
                     });
-                };
+                } else {
+
+                    const notice = document.createElement("p")
+                    notice.setAttribute("class", "notice-group-visitor")
+
+                notice.innerText = "Maak een Digimind aan om lid te worden van een groep"
+                notice.addEventListener("click", () => {
+                    window.open("Register.html", "_self")
+                })
+
+                buttonDiv.appendChild(notice)
+                buttonDiv.removeChild(button)
+
+                }
             });
         });
 
@@ -157,6 +184,7 @@ if(coachgroupTab != null){
         titleDiv.appendChild(subTitle)
         titleDiv.appendChild(titleH2)
         outerSection.appendChild(buttonDiv)
+        buttonDiv.appendChild(button)
 
                 });
             });
@@ -234,6 +262,117 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
             });
         });
     });
+
+    // Add learning
+
+    function addLearning(){
+
+        const inspirationIcon = document.getElementById("inspiration-icon")
+        const addLearningDiv = document.getElementById("add-learning-div")
+        const selectGoals = document.getElementById("select-goals")
+        const buttonAddLearning = document.getElementById("button-add-learning")
+        const inputAddLearning = document.getElementById("input-learning")
+        const addLearningH3 = document.getElementById("add-learning-h3")
+        const addLearningButtonDiv = document.getElementById("add-learning-button-div")
+
+        if(inspirationIcon != null){
+    
+        inspirationIcon.addEventListener("click", () => {
+    
+            addLearningDiv.style.display = "flex"
+    
+        });
+    };
+    
+        // Load goals of auth in select
+        db.collection("Chats").where("Room", "==", titel).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                const goal = doc.data().Goal
+
+                auth.onAuthStateChanged(User =>{
+                    if(User){
+                      const userRef = db.collection("Vitaminders").doc(User.uid);
+                      userRef.get().then(function(doc) {
+            
+                        const auth = doc.data().Gebruikersnaam
+
+                        console.log(goal)
+                
+                        db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", auth).where("Goal", "==", goal)
+                        .get()
+                        .then(querySnapshot => {
+                            querySnapshot.forEach(doc1 => {
+            
+                                const levensvraagClean = doc1.data().LevensvraagClean
+            
+                                const option = document.createElement("option")
+            
+                                option.innerText = levensvraagClean
+            
+                                selectGoals.appendChild(option)
+                            });
+                        });
+                      });
+                    };
+                });
+    
+            });
+        });
+    
+    if (buttonAddLearning != null){
+        buttonAddLearning.addEventListener("click", () => {
+    
+            const input = document.getElementById("input-learning").value
+       
+            const select = document.getElementById("select-goals")
+            const option = select.options
+            const selected = option[option.selectedIndex].innerHTML
+       
+            db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", selected).get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+       
+                   const levensvraagID = doc.data().Levensvraag
+       
+            auth.onAuthStateChanged(User =>{
+                userRef = db.collection("Vitaminders").doc(User.uid)
+                userRef.get()
+                 .then(doc => {
+                         const auth = doc.data().Gebruikersnaam
+       
+            db.collection("Vitaminders").doc(User.uid).collection("Levenslessen").doc().set({
+            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+            Levensles: input,
+            Gebruikersnaam: auth,
+            Inspirerend: 1,
+            Type: "Group-inzicht",
+            Source: titel,
+            Levensvraag: levensvraagID
+                    })
+       
+            levensvraagRef = db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraagID).where("Gebruikersnaam", "==", auth)
+            levensvraagRef.get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc4 => {
+    
+                    console.log(input)
+                    
+                    db.collection("Vitaminders").doc(User.uid).collection("Levensvragen").doc(doc4.id).update({
+                        Levenslessen: firebase.firestore.FieldValue.arrayUnion(input)
+                    })
+                    
+                })
+            })
+            const savedNotice = document.getElementById("notice-learning-added")
+            savedNotice.style.display = "block"
+                       })
+                   })
+               })
+           })
+        }); 
+    }; 
+    }; addLearning()
      
 
     // Save message to database
@@ -436,7 +575,7 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
     });
 
 
-// Coachgroup builder
+// Group builder
 
 function startCoachgroupBuilder(){
     window.open("coachgroup-builder.html", "_self");
@@ -445,6 +584,36 @@ function startCoachgroupBuilder(){
 function startPracticegroupBuilder(){
     window.open("practicegroup-builder.html", "_self");
 }
+
+// Group goal
+
+const groupGoalSelect = document.getElementById("create-practicegroup-goal-select")
+
+db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+    querySnapshot.forEach(doc=> {
+            const doel = doc.data().Levensvraag
+
+            const option = document.createElement("option")
+
+            option.innerHTML = doel
+
+            groupGoalSelect.appendChild(option)
+    });
+});
+
+const coachgroupGoalSelect = document.getElementById("create-coachgroup-goal-select")
+
+db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+    querySnapshot.forEach(doc=> {
+            const doel = doc.data().Levensvraag
+
+            const option = document.createElement("option")
+
+            option.innerHTML = doel
+
+            coachgroupGoalSelect.appendChild(option)
+    });
+});
 
 // Title
 
@@ -577,39 +746,46 @@ function saveCoachgroup(){
     const costs = document.getElementById("coachgroup-costs").value
     const startNumber = document.getElementById("coachgroup-start-number").value
 
+    // Group goal
+    const groupGoalSelect = document.getElementById("create-coachgroup-goal-select")
+
+    const select = groupGoalSelect.options
+    const option = select[select.selectedIndex].innerHTML
+
    db.collection("Chats").doc().set({
         Eigenaar: "Vitaminds",
         Room: idClean + title,
+        RoomClean: title,
         Creater: auth,
         Description: description,
         NumberParticipants: numberParticipants,
         Costs: costs,
         StartNumber: startNumber,
         Members: [],
+        Goal: option,
         Messages: 0,
         Type: "Coachgroup", 
         CoverPhoto: coverPhoto
+                }).then(() => {
+                        const notice = document.createElement("p")
+
+                        notice.innerText = "Je groep is aangemaakt!"
+
+                        const buttonCoachGroup = document.getElementById("button-coachgroup")
+
+                        buttonCoachGroup.appendChild(notice)
+
+                        notice.style.cursor = "pointer"
+
+                        notice.addEventListener("click", () => {
+                            window.open(`../Group/${idClean + title}.html`, "_self");
+                        });
                 });
             });
         };
     });
 };
 
-function groupSavedNotice(buttonID, groupName){
-    const notice = document.createElement("p")
-
-    notice.innerText = "Je groep is aangemaakt!"
-
-    const button = document.getElementById(buttonID)
-
-    button.appendChild(notice)
-
-    notice.style.cursor = "pointer"
-
-    notice.addEventListener("click", () => {
-        window.open(`../Group/${groupName}.html`, "_self");
-    });
-};
 
 function savePracticegroup(){
 
@@ -625,6 +801,13 @@ function savePracticegroup(){
     const numberParticipants = document.getElementById("coachgroup-number-participants").value
     const startNumber = document.getElementById("coachgroup-start-number").value
 
+    //group goal
+    const groupGoalSelect = document.getElementById("create-practicegroup-goal-select")
+
+    const select = groupGoalSelect.options
+    const option = select[select.selectedIndex].innerHTML
+
+
    db.collection("Chats").doc().set({
         Eigenaar: "Vitaminds",
         Room: idClean + title,
@@ -633,12 +816,25 @@ function savePracticegroup(){
         Description: description,
         NumberParticipants: numberParticipants,
         StartNumber: startNumber,
+        Goal: option,
         Members: firebase.firestore.FieldValue.arrayUnion(auth),
         Messages: 0,
         Type: "Practicegroup", 
         CoverPhoto: coverPhoto
                 }).then(() => {
-                    groupSavedNotice("button-practicegroup", idClean + title)
+                    const notice = document.createElement("p")
+
+                        notice.innerText = "Je groep is aangemaakt!"
+
+                        const buttonPracticeGroup = document.getElementById("button-practicegroup")
+
+                        buttonPracticeGroup.appendChild(notice)
+
+                        notice.style.cursor = "pointer"
+
+                        notice.addEventListener("click", () => {
+                            window.open(`../Group/${idClean + title}.html`, "_self");
+                        });
                 })
             });
         };
@@ -684,9 +880,11 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
         const groupTitleH2 = document.createElement("h2")
             groupTitleH2.setAttribute("class", "titelTekst")
         const descriptionP = document.createElement("p")
+        const buttonDiv = document.createElement("div")
+            buttonDiv.setAttribute("id", "group-button-div")
         const groupButton = document.createElement("button")
             groupButton.setAttribute("class", "button-algemeen-card")
-            groupButton.setAttribute("id", "coachgroup-button")
+            groupButton.setAttribute("id", "group-button")
             groupButton.setAttribute("data-room", title)
             groupButton.setAttribute("onclick", "memberCoachGroups(this)")
 
@@ -732,7 +930,8 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
             metaDiv.appendChild(startNumberP)
             metaDiv.appendChild(memberCount)
             metaDiv.appendChild(costsP)
-            groupInnerDiv.appendChild(groupButton)
+            groupInnerDiv.appendChild(buttonDiv)
+            buttonDiv.appendChild(groupButton)
 
               // Group is full message
               groupIsFull(members.length, groupButton, numberParticipants)
@@ -808,9 +1007,11 @@ db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnap
         const groupTitleH2 = document.createElement("h2")
             groupTitleH2.setAttribute("class", "titelTekst")
         const descriptionP = document.createElement("p")
+        const buttonDiv = document.createElement("div")
+            buttonDiv.setAttribute("id", "group-button-div")
         const groupButton = document.createElement("button")
             groupButton.setAttribute("class", "button-algemeen-card")
-            groupButton.setAttribute("id", "practicegroup-button")
+            groupButton.setAttribute("id", "group-button")
             groupButton.setAttribute("data-room", title)
             groupButton.setAttribute("onclick", "memberPracticeGroups(this)")
 
@@ -840,7 +1041,7 @@ db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnap
 
             numberParticipantsP.innerText = `Max. leden: ${numberParticipants}`
             memberCount.innerText = `Huidig aantal leden: ${members.length}`
-            startNumberP.innerText = `Coachgroep begint bij: ${startNumber} leden`
+            startNumberP.innerText = `Oefengroep begint bij: ${startNumber} leden`
             costsP.innerText = `Kosten: gratis`
 
             DOM.appendChild(groupInnerDiv)
@@ -855,7 +1056,8 @@ db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnap
             metaDiv.appendChild(startNumberP)
             metaDiv.appendChild(memberCount)
             metaDiv.appendChild(costsP)
-            groupInnerDiv.appendChild(groupButton)
+            groupInnerDiv.appendChild(buttonDiv)
+            buttonDiv.appendChild(groupButton)
 
             // Group is full message
             groupIsFull(members.length, groupButton, numberParticipants)
@@ -866,10 +1068,48 @@ db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnap
     });
 });
 
+const countArray = []
+
+function hidePracticegroupBuilderForLeesThenTenLikes(){
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+    
+            const auth = doc.data().Gebruikersnaam
+
+            db.collectionGroup("Inspiration").where("Reciever", "==", auth).get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    const likeCount = doc1.data().Reciever
+
+                    countArray.push(likeCount)
+                        });
+                    }).then(() => {
+    
+                        const practiceGroupButton = document.getElementById("create-practicegroup-button")
+                        const minimumLikesNotice = document.getElementById("minimum-likes-notice")
+    
+                            if(countArray.length < 10 ){
+
+                                practiceGroupButton.style.display = "none"
+                                minimumLikesNotice.style.display = "block"
+                            };
+                });
+            });
+        };
+    });
+}; 
+hidePracticegroupBuilderForLeesThenTenLikes()
+
+
 // New member
-const practicegroupButton = document.getElementById("practicegroup-button")
+
 
 function saveNewMemberToGroup(a){
+
+    const groupButton = document.getElementById("group-button")
+    const groupButtonDiv = document.getElementById("group-button-div")
 
     auth.onAuthStateChanged(User =>{
         if(User){
@@ -887,7 +1127,9 @@ function saveNewMemberToGroup(a){
                     });
                 });
             });
-        };
+        } else {
+           noticeVisitor(groupButtonDiv, groupButton)
+        }
     });
 };
 

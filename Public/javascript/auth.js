@@ -556,40 +556,6 @@ if(code.style.display = "none"){
 }
 
 
-function openModal(){
-
-  const tooltip = document.createElement("p")
-    tooltip.setAttribute("class", "tooltip-inspiration-icon")
-
-  const modalLearning = document.getElementById("modal-learning")
-
-  const learningIconDiv = document.getElementsByClassName("inspiration-icon-div")
-
-  const learningIconArray = Array.from(learningIconDiv)
-
-  learningIconArray.forEach(icon => {
-
-    icon.addEventListener("mouseenter", (e) => {
-  
-      tooltip.innerText = "Heb je iets over jezelf geleerd?"
-
-      icon.appendChild(tooltip)
-    });
-
-    icon.addEventListener("mouseleave", (e) => {
-
-      icon.removeChild(tooltip)
-    });
-
-    icon.addEventListener("click", (e) => {
-
-      modalLearning.style.display = "block"
-    });
-  });
-};
-
-
-
 
   
 

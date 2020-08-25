@@ -282,3 +282,133 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").get().then(querySnap
 });
 
 
+function addLearning(){
+
+    const inspirationIcon = document.getElementById("inspiration-icon")
+    const addLearningDiv = document.getElementById("add-learning-div")
+    const selectGoals = document.getElementById("select-goals")
+    const buttonAddLearning = document.getElementById("button-add-learning")
+    const inputAddLearning = document.getElementById("input-learning")
+    const addLearningH3 = document.getElementById("add-learning-h3")
+    const addLearningButtonDiv = document.getElementById("add-learning-button-div")
+
+    inspirationIcon.addEventListener("click", () => {
+
+        addLearningDiv.style.display = "flex"
+
+    })
+
+    // Load goals of auth in select
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+          const userRef = db.collection("Vitaminders").doc(User.uid);
+          userRef.get().then(function(doc) {
+
+            const auth = doc.data().Gebruikersnaam
+    
+            db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", auth)
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    const levensvraagClean = doc1.data().LevensvraagClean
+
+                    const option = document.createElement("option")
+
+                    option.innerText = levensvraagClean
+
+                    selectGoals.appendChild(option)
+                });
+            }).then (() => {
+            // If auth has no goals display notice
+            const optionLenght = Array.from(selectGoals.options)
+
+            console.log(optionLenght.length)
+
+            if(optionLenght.length == 0){
+
+                selectGoals.style.display = "none"
+                inputAddLearning.style.display = "none"
+                addLearningButtonDiv.style.display = "none"
+
+                addLearningH3.innerText = "Maak een doel aan in je Digimind om een levensles op te kunnen slaan"
+                addLearningH3.style.cursor = "pointer"
+                addLearningH3.style.color = "#cf6e13"
+
+                addLearningH3.addEventListener("click", () => {
+
+                    auth.onAuthStateChanged(User =>{
+                        if(User){
+                          const userRef = db.collection("Vitaminders").doc(User.uid);
+                          userRef.get().then(function(doc) {
+
+                              const naamID = doc.data().Gebruikersnaam;
+
+                              window.open("../Vitaminders/" + [naamID] + ".html", "_self");
+
+                          });
+                        };
+                    });
+
+
+                });
+
+            };
+        });
+          });
+        };
+    });
+
+
+    buttonAddLearning.addEventListener("click", () => {
+
+        const input = document.getElementById("input-learning").value
+   
+        const select = document.getElementById("select-goals")
+        const option = select.options
+        const selected = option[option.selectedIndex].innerHTML
+   
+        db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", selected).get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+   
+               const levensvraagID = doc.data().Levensvraag
+   
+        auth.onAuthStateChanged(User =>{
+            userRef = db.collection("Vitaminders").doc(User.uid)
+            userRef.get()
+             .then(doc => {
+                     const auth = doc.data().Gebruikersnaam
+   
+        db.collection("Vitaminders").doc(User.uid).collection("Levenslessen").doc().set({
+        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+        Levensles: input,
+        Gebruikersnaam: auth,
+        Inspirerend: 1,
+        Type: "Chat-inzicht",
+        Source: `Chat met ${naam}`,
+        Levensvraag: levensvraagID
+                })
+   
+        levensvraagRef = db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraagID).where("Gebruikersnaam", "==", auth)
+        levensvraagRef.get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc4 => {
+
+                console.log(input)
+                
+                db.collection("Vitaminders").doc(User.uid).collection("Levensvragen").doc(doc4.id).update({
+                    Levenslessen: firebase.firestore.FieldValue.arrayUnion(input)
+                })
+                
+            })
+        })
+        const savedNotice = document.getElementById("notice-learning-added")
+        savedNotice.style.display = "block"
+                   })
+               })
+           })
+       })
+    });  
+}; addLearning()

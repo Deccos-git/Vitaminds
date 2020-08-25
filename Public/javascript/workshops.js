@@ -2216,10 +2216,10 @@ function saveEight(){
     
                     DOMtitle.value = dbTitle
     
-                    const innerDiv = document.getElementById(innerDiv)
-                    innerDiv.setAttribute("data-title", dbTitle)
-                    innerDiv.setAttribute("data-explainer", setContentB)
-                    innerDiv.setAttribute("data-cta", setContentC)
+                    const innerDivDOM = document.getElementById(innerDiv)
+                    innerDivDOM.setAttribute("data-title", dbTitle)
+                    innerDivDOM.setAttribute("data-explainer", setContentB)
+                    innerDivDOM.setAttribute("data-cta", setContentC)
                 
                 };
 
@@ -2261,8 +2261,7 @@ function saveEight(){
 
                 saveWorkshopButton.style.display = "none"
                 updateWorkshopButton.style.display = "flex"
-
-                        
+                
                 });
             });
         })
