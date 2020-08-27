@@ -106,78 +106,92 @@ function start(elem){
         window.open(`../Artikelen/${option}.html`, "_self")
 }
 
+// IOS PWA instructions
 
-// Feedback
+const isIOS = !!navigator.platform.match(/iPhone|iPod|iPad/)
+const IOSpopup = document.getElementById("ios-popup")
+const popupTitle = document.getElementById("ios-popup-title")
+const popupInstructions = document.getElementById("ios-popup-instruction")
 
-const welkomAuth = document.getElementById("welkom-auth")
+// Title personalized
 
-auth.onAuthStateChanged(User =>{
-  const userRef = db.collection("Vitaminders").doc(User.uid);
-    userRef.get().then(function(doc) {
-      if (doc.exists) {
-        const Gnaam = doc.data().Gebruikersnaam;
-        const id = doc.data().ID
-        const naamClean = Gnaam.replace(id, "")
+        auth.onAuthStateChanged(User =>{
+                if(User){
+                  const userRef = db.collection("Vitaminders").doc(User.uid);
+                  userRef.get().then(function(doc) {
 
-        const welkom = document.createElement("h2")
+                        const authClean = doc.data().GebruikersnaamClean
 
-        welkom.innerHTML = `Houdoe, ${naamClean}`
+                        popupTitle.innerText = `Hoi ${authClean}, Wist je dat er ook een Vitaminds app is?`
 
-        welkomAuth.appendChild(welkom)
-  
+                                });
+                        };
+                });
 
-  //Opmerking opvangen
-  const buttonReact = document.getElementById("button")
-  buttonReact.addEventListener("click", () => {
 
-  const opmerking = document.getElementById("textarea").value
-    
-  db.collection("Tickets").doc().set({
-    Gebruikersnaam: Gnaam,
-    GebruikersnaamClean, naamClean,
-    Opmerking: opmerking,
-    Verwerkt: "Nee",
-    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-    Type: "Feedback-general"
-        }).then(() => {
-          location.reload();
-        })
-      })
-    }
-  })
+
+// PWA for IOS
+
+const downloadButton = document.getElementById("download-pwa")
+const dontDownloadButton = document.getElementById("dont-download-pwa")
+const PWAdownloaded = document.getElementById("downloaded-pwa")
+const iosPopupNotice = document.getElementById("ios-popup-notice")
+
+const instructionDiv = document.getElementById("ios-popup-instruction")
+
+downloadButton.addEventListener("click", (e) => {
+        instructionDiv.style.display = "flex"
+        iosPopupNotice.style.display = "none"
 });
 
-  // Opmerkingen in DOM zetten
-  const DOMreact = document.getElementById("tips-trucs")
+dontDownloadButton.addEventListener("click", (e) => {
+        auth.onAuthStateChanged(User =>{
+                if(User){
+                  const userRef = db.collection("Vitaminders").doc(User.uid).update({
+                          PWA: "Declined"
+                  }).then(() => {
+                        IOSpopup.style.display = "none"
+                  });
+                };
+        });
+});
 
-  db.collection("Tickets").where("Type", "==", "Feedback-general").get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
+PWAdownloaded.addEventListener("click", (e) => {
+        auth.onAuthStateChanged(User =>{
+                if(User){
+                  const userRef = db.collection("Vitaminders").doc(User.uid).update({
+                          PWA: "Accepted"
+                  }).then(() => {
+                        IOSpopup.style.display = "none"
+                  });
+                };
+        });
+})
 
-      const naam = doc.data().GebruikersnaamClean
-      const opmerking = doc.data().Opmerking
-      const verwerkt = doc.data().Verwerkt
+// Display IOS or not
+if(isIOS === true){
+        if (window.innerWidth < 938){
+auth.onAuthStateChanged(User =>{
+        if(User){
+          const userRef = db.collection("Vitaminders").doc(User.uid);
+          userRef.get().then(function(doc) {
 
+                const PWA = doc.data().PWA
 
-      const reactDiv = document.createElement("div")
-        reactDiv.className = "react-div"
-      const naamP = document.createElement("h5")
-      const opmerkingP = document.createElement("p")
-      const verwerktP = document.createElement("h5")
+                console.log(PWA)
 
-      naamP.innerHTML = "Door: " + naam
-      opmerkingP.innerHTML = opmerking
-      verwerktP.innerHTML = "Opgelost: " + verwerkt
+                if(PWA == undefined){
+                        IOSpopup.style.display = "flex"
+                } else if (PWA == "Declined"){
+                        IOSpopup.style.display = "none"
+                } else if (PWA == "Accepted"){
+                        IOSpopup.style.display = "none"
+                }
 
-      if(verwerkt == "Nee"){
-        opmerkingP.style.color = "#8e0000"
-      } else {
-        opmerkingP.style.color = "#0c6665"
-      }
+          });
+        };
+});
+        };
+};
 
-      DOMreact.appendChild(reactDiv)
-      reactDiv.appendChild(opmerkingP)
-      reactDiv.appendChild(naamP)
-      reactDiv.appendChild(verwerktP)
-    })
-  })
 
