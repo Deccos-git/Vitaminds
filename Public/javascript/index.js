@@ -139,11 +139,14 @@ const iosPopupNotice = document.getElementById("ios-popup-notice")
 
 const instructionDiv = document.getElementById("ios-popup-instruction")
 
+if(downloadButton != undefined){
 downloadButton.addEventListener("click", (e) => {
         instructionDiv.style.display = "flex"
         iosPopupNotice.style.display = "none"
 });
+};
 
+if(dontDownloadButton != undefined){
 dontDownloadButton.addEventListener("click", (e) => {
         auth.onAuthStateChanged(User =>{
                 if(User){
@@ -155,7 +158,9 @@ dontDownloadButton.addEventListener("click", (e) => {
                 };
         });
 });
+};
 
+if(PWAdownloaded != undefined){
 PWAdownloaded.addEventListener("click", (e) => {
         auth.onAuthStateChanged(User =>{
                 if(User){
@@ -166,7 +171,8 @@ PWAdownloaded.addEventListener("click", (e) => {
                   });
                 };
         });
-})
+});
+};
 
 // Display IOS or not
 if(isIOS === true){
@@ -188,10 +194,79 @@ auth.onAuthStateChanged(User =>{
                         IOSpopup.style.display = "none"
                 }
 
-          });
-        };
-});
+                                });
+                         };
+                });
         };
 };
 
+// Mobile toolbar
 
+const toolbarMobile = document.getElementsByClassName("toolbar-mobile")
+
+const toolbarHome = document.getElementById("toolbar-home")
+const toolbarChatsGroups = document.getElementById("toolbar-chats-groups")
+const toolbarInspiration = document.getElementById("toolbar-inspiration")
+const toolbarDigimind = document.getElementById("toolbar-digimind")
+
+const toolbarInspirationOption = document.getElementById("toolbar-inspration-options")
+const toolbarInspirationPublic = document.getElementById("toolbar-inspiration-public")
+const toolbarInspirationPrivate = document.getElementById("toolbar-inspiration-private")
+
+
+        // Hide on screen bigger then 938
+
+        if (window.innerWidth < 938){
+                const toolbarMobileArray = Array.from(toolbarMobile)
+
+                toolbarMobileArray.forEach(TB => {
+
+                        console.log(TB)
+                        TB.style.display = "flex"
+                });
+        };
+
+        // Links
+
+        toolbarHome.addEventListener("click", (e) => {
+                window.open("../openup.html", "_self")
+        });
+
+        toolbarChatsGroups.addEventListener("click", (e) => {
+                window.open("../chats-groups.html", "_self");
+        });
+
+        toolbarInspiration.addEventListener("click", (e) => {
+                toolbarInspirationOption.style.display = "flex"
+                toolbarInspiration.style.display = "none"
+        });
+
+        if(toolbarInspirationPublic != undefined){
+                toolbarInspirationPublic.addEventListener("click", (e) =>{
+                        window.open("../openup.html", "_self")
+                });
+        };
+
+        if(toolbarInspirationPrivate != undefined){
+                toolbarInspirationPrivate.addEventListener("click", (e) => {
+                        linkDigimind()
+                });
+        };
+
+        toolbarDigimind.addEventListener("click", (e) => {
+                linkDigimind()
+        });
+
+        function linkDigimind(){
+                auth.onAuthStateChanged(User =>{
+                        if(User){
+                          const userRef = db.collection("Vitaminders").doc(User.uid);
+                          userRef.get().then(function(doc) {
+        
+                             const naamID = doc.data().Gebruikersnaam;
+
+                window.open("../Vitaminders/" + [naamID] + ".html", "_self");
+                          });
+                        };
+                });
+        }

@@ -1129,6 +1129,40 @@ ul{
   text-align: center;
 }
 
+/* Toolbar mobile */
+
+.toolbar-mobile{
+  display: none;
+  justify-content: space-evenly;
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  background-color: white;
+  border-radius: 0px 0px 0px 5px;
+  padding: 5px;
+  margin: 0px;
+  width: 100%;
+  border-top: 1px solid #b3b3b3;
+}
+
+.toolbar-mobile img{
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+
+#toolbar-inspration-options{
+  display: none;
+}
+
+#toolbar-inspration-options p{
+  font-size: 14px;
+  border: 1px solid #b3b3b3;
+  border-radius: 3px;
+  padding: 5px;
+  margin: 0px;
+}
+
 /* footer */
 
 .footer {
