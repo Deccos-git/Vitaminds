@@ -18,6 +18,7 @@
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
   <!-- Tiny MCE -->
   <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
@@ -69,17 +70,18 @@
       </div>
     </nav>
   
-     <!-- menu --> 
-     <nav id="menu-functions">
+    <!-- menu --> 
+    <nav id="menu">
       <div id="navigation-menu">
         <div class="main-menu"><a href="../index.html"><img id="logo-menu" src="../images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
         <div class="main-menu"><a href="../openup.html">Open up</a></div>
         <div class="main-menu"><a href="../groups.html">Groepen</a></div> 
+        <!--<div class="main-menu"><a href="../workshops.html">Workshops</a></div> -->
         <div class="main-menu"><a href="../inspiratie.html">Inspiratie</a></div>
         <!-- <div class="main-menu"><a href="../tools.html">Tools</a></div> -->
-        <!-- <li class="main-menu"><a href="evenementen.html">Evenementen</a></li> -->
+        <!-- <li class="main-menu"><a href="../evenementen.html">Evenementen</a></li> -->
         <div class="main-menu"><a href="../coaches.html">Coaches</a></div>
-        <!-- <li class="main-menu"><a href="privacy.html">Privacy</a></li> -->
+        <!-- <li class="main-menu"><a href="privacy.html"../>Privacy</a></li> -->
       </div>
       <div id="auth-menu">
         <div id="auth-DOM"></div>
@@ -144,16 +146,16 @@
 
 <!-- Toolbar mobile -->
 <div class="toolbar-mobile">
-  <img src="../Images/home-icon.png" alt="" id="toolbar-home">
-  <img src="../Images/send-icon.png" alt="" id="toolbar-chats-groups">
+  <img src="../images/home-icon.png" alt="" id="toolbar-home">
+  <img src="../images/send-icon.png" alt="" id="toolbar-chats-groups">
   <div id="toolbar-inspiration-div">
     <div id="toolbar-inspration-options">
       <p id="toolbar-inspiration-public">Publiek</p>
       <p id="toolbar-inspiration-private">Prive</p>
     </div>
-    <img src="../Images/inspiration-icon-2.png" alt="" id="toolbar-inspiration">
+    <img src="../images/inspiration-icon-2.png" alt="" id="toolbar-inspiration">
   </div>
-  <img src="../Images/menu-dashboard.png" alt="" id="toolbar-digimind">
+  <img src="../images/menu-dashboard.png" alt="" id="toolbar-digimind">
 </div>
 
 <!-- footer -->

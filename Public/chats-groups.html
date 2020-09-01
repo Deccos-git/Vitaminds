@@ -24,6 +24,7 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
     <script>src="https://www.gstatic.com/firebasejs/6.5.0/firebase-analytics.js"</script>
+    <script src="https://js.stripe.com/v3/"></script>
     </head>
 
     <body>
@@ -35,28 +36,27 @@
 
     <!-- Mobile-menu -->
     <nav id="mobile-menu"> 
-        <div id="menu-mobile-visible-layer">
-          <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
-          <div class="main-menu-mobile"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+      <div id="menu-mobile-visible-layer">
+        <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+        <div class="main-menu-mobile"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+      </div>
+      <div id="mobile-menu-outer-div">
+        <div id="mobile-menu-inner-div">
+              <div id="profile-picture-mobile"></div>
+              <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
+          <div class="main-menu-mobile"><a href="openup.html">Open up</a></div>
+          <div class="main-menu-mobile"><a href="groups.html">Groepen</a></div> 
+          <div class="main-menu-mobile"><a href="inspiratie.html">Inspiratie</a></div>
+          <!-- <div class="main-menu-mobile"><a href="tools.html">Tools</a></div> -->
+          <div class="main-menu-mobile"><a href="coaches.html">Coaches</a></div>
+          <div class="coach-menu-outer-div-mobile"><p id="aanmeldCH-mobile">Voor coaches</p>
+            <div id="coach-menu-main-mobile">
+              <div><a href="voor-coach.html"><p class="coach-menu-main-p-mobile">Aanmelden als coach</p></a></div>
+              <div><a href="kenniscentrum.html"><p class="coach-menu-main-p-mobile">Kenniscentrum coaching</p></a></div>
+            </div>
+          </div>  
+          <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
         </div>
-        <div id="mobile-menu-outer-div">
-          <div id="mobile-menu-inner-div">
-                <div id="profile-picture-mobile"></div>
-                <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
-            <div class="main-menu-mobile"><a href="openup.html">Open up</a></div>
-            <div class="main-menu-mobile"><a href="inspiratie.html">Inspiratie</a></div>
-            <div class="main-menu-mobile"><a href="groups.html">Groepen</a></div> 
-            <!-- <div class="main-menu-mobile"><a href="tools.html">Tools</a></div> -->
-            <div class="main-menu-mobile"><a href="coaches.html">Coaches</a></div>
-            <div id="chats-groups-mobile"><a href="chats-groups.html">Mijn chat & groepen</a></div>
-            <div class="coach-menu-outer-div-mobile"><p id="aanmeldCH-mobile">Voor coaches</p>
-              <div id="coach-menu-main-mobile">
-                <div><a href="voor-coach.html"><p class="coach-menu-main-p-mobile">Aanmelden als coach</p></a></div>
-                <div><a href="kenniscentrum.html"><p class="coach-menu-main-p-mobile">Kenniscentrum coaching</p></a></div>
-              </div>
-            </div>  
-            <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
-          </div>
       </nav>
       
          <!-- menu --> 
@@ -96,16 +96,16 @@
 
 <!-- Toolbar mobile -->
 <div class="toolbar-mobile">
-  <img src="Images/home-icon.png" alt="" id="toolbar-home">
-  <img src="Images/send-icon.png" alt="" id="toolbar-chats-groups">
+  <img src="images/home-icon.png" alt="" id="toolbar-home">
+  <img src="images/send-icon.png" alt="" id="toolbar-chats-groups">
   <div id="toolbar-inspiration-div">
     <div id="toolbar-inspration-options">
       <p id="toolbar-inspiration-public">Publiek</p>
       <p id="toolbar-inspiration-private">Prive</p>
     </div>
-    <img src="Images/inspiration-icon-2.png" alt="" id="toolbar-inspiration">
+    <img src="images/inspiration-icon-2.png" alt="" id="toolbar-inspiration">
   </div>
-  <img src="Images/menu-dashboard.png" alt="" id="toolbar-digimind">
+  <img src="images/menu-dashboard.png" alt="" id="toolbar-digimind">
 </div>
 
 <!-- footer -->

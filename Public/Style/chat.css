@@ -1,9 +1,15 @@
 #input-div{
-    width: 93%;
+    
+    width: 100%;
     margin: 10px 20px;
     display: flex;
     align-items: center;
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    margin: 0px;
 }
+
 
 #chat-input{
     width: 100%;
@@ -25,20 +31,6 @@
     padding: 20px 0px;
 }
 
-.auth-message-div-auth{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin: -15px 20px -15px 55%;
-}
-
-.auth-message-div-user{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin: -15px 55% -15px 20px;
-}
-
 .auth-message-p{
     display: flex;
     flex-direction: column-reverse;
@@ -46,15 +38,7 @@
     padding: 5px;
     border-radius: 15px;
     font-size: 16px;
-}
-
-.user-message-p{
-    display: flex;
-    flex-direction: column-reverse;
-    border: 1px solid rgba(0,0,0,.2);
-    padding: 5px;
-    border-radius: 15px;
-    font-size: 16px;
+    margin: 2px;
 }
 
 .sender-name-message{

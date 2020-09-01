@@ -56,6 +56,7 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
         Auth: auth,
         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
         Message: message,
+        Status: "New", 
         Room: roomName
         }).then(() => {
             db.collection("Chats").doc(doc.id).update({
@@ -115,6 +116,12 @@ auth.onAuthStateChanged(User =>{
                     const authMessage = doc2.data().Message
                     const sender = doc2.data().Auth
 
+                    const messageP = document.createElement("p")
+                    messageP.setAttribute("class", "auth-message-p")
+
+                    const senderName = document.createElement("p")
+                    senderName.setAttribute("class", "sender-name-message")
+
                     db.collection("Vitaminders").where("Gebruikersnaam", "==", sender).get().then(querySnapshot => {
                         querySnapshot.forEach(doc1 => {
     
@@ -122,39 +129,27 @@ auth.onAuthStateChanged(User =>{
                     
                     if (auth == sender){
 
-                        const authMessageDiv = document.createElement("div")
-                        authMessageDiv.setAttribute("class", "auth-message-div-auth")
-                        const authMessageP = document.createElement("p")
-                            authMessageP.setAttribute("class", "auth-message-p")
-                        const senderName = document.createElement("p")
-                            senderName.setAttribute("class", "sender-name-message")
-
                         senderName.innerText = messageNameClean
 
-                        authMessageP.innerText = authMessage
+                        messageP.innerText = authMessage
 
-                        DOMchatScreen.appendChild(authMessageDiv)
-                        authMessageDiv.appendChild(authMessageP)
-                        authMessageP.appendChild(senderName)
+                        messageP.style.alignSelf = "flex-end"
+
                     } else {
 
-                        const userMessageDiv = document.createElement("div")
-                        userMessageDiv.setAttribute("class", "auth-message-div-user")
-                        const userMessageP = document.createElement("p")
-                            userMessageP.setAttribute("class", "user-message-p")
-                        const senderName = document.createElement("p")
-                        senderName.setAttribute("class", "sender-name-message")
-
                         senderName.innerText = messageNameClean
 
-                        userMessageP.innerText = authMessage
+                        messageP.innerText = authMessage
 
-                        DOMchatScreen.appendChild(userMessageDiv)
-                        userMessageDiv.appendChild(userMessageP)
-                        userMessageP.appendChild(senderName)
+                        messageP.style.alignSelf = "flex-start"
+                        
                         };
+
+                        messageP.appendChild(senderName)
                     });
                 });
+                    DOMchatScreen.appendChild(messageP)
+                    
             });
         });
       });

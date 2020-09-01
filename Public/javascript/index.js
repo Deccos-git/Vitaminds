@@ -137,11 +137,11 @@ const dontDownloadButton = document.getElementById("dont-download-pwa")
 const PWAdownloaded = document.getElementById("downloaded-pwa")
 const iosPopupNotice = document.getElementById("ios-popup-notice")
 
-const instructionDiv = document.getElementById("ios-popup-instruction")
+const instructionDivPopup = document.getElementById("ios-popup-instruction")
 
 if(downloadButton != undefined){
 downloadButton.addEventListener("click", (e) => {
-        instructionDiv.style.display = "flex"
+        instructionDivPopup.style.display = "flex"
         iosPopupNotice.style.display = "none"
 });
 };

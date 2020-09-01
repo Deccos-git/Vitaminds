@@ -457,56 +457,48 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
                         const authMessage = doc2.data().Message
                         const sender = doc2.data().Auth
 
-                        
+                        const messageP = document.createElement("p")
+                        messageP.setAttribute("class", "auth-message-p")
+    
+                        const senderName = document.createElement("p")
+                        senderName.setAttribute("class", "sender-name-message")
+    
                 db.collection("Vitaminders").where("Gebruikersnaam", "==", sender).get().then(querySnapshot => {
                     querySnapshot.forEach(doc1 => {
 
                         const messageNameClean = doc1.data().GebruikersnaamClean
                     
                         if (auth == sender){
-
-                        const authMessageDiv = document.createElement("div")
-                        authMessageDiv.setAttribute("class", "auth-message-div-auth")
-                        const authMessageP = document.createElement("p")
-                            authMessageP.setAttribute("class", "auth-message-p")
-                        const senderName = document.createElement("p")
-                            senderName.setAttribute("class", "sender-name-message")
-
-                        senderName.innerText = messageNameClean
-
-                        authMessageP.innerText = authMessage
-
-                        DOMchatScreen.appendChild(authMessageDiv)
-                        authMessageDiv.appendChild(authMessageP)
-                        authMessageP.appendChild(senderName)
-
+    
+                            senderName.innerText = messageNameClean
+    
+                            messageP.innerText = authMessage
+    
+                            messageP.style.alignSelf = "flex-end"
+    
                         } else {
-
-                        const userMessageDiv = document.createElement("div")
-                        userMessageDiv.setAttribute("class", "auth-message-div-user")
-                        const userMessageP = document.createElement("p")
-                            userMessageP.setAttribute("class", "user-message-p")
-                        const senderName = document.createElement("p")
-                        senderName.setAttribute("class", "sender-name-message")
-
-                        senderName.innerText = messageNameClean
-
-                        userMessageP.innerText = authMessage
-
-                        DOMchatScreen.appendChild(userMessageDiv)
-                        userMessageDiv.appendChild(userMessageP)
-                        userMessageP.appendChild(senderName)
-
+    
+                            senderName.innerText = messageNameClean
+    
+                            messageP.innerText = authMessage
+    
+                            messageP.style.alignSelf = "flex-start"
+                            
                             };
+    
+                            messageP.appendChild(senderName)
+
                         });
                     });
+
+                    DOMchatScreen.appendChild(messageP)
                 });
             });
         });
     };
 });
 
-    // Get chats of auth
+    // Get chats and groups of auth in overview
 
     const DOMchats = document.getElementById("overview-chats")
 
@@ -1068,7 +1060,7 @@ db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnap
     });
 });
 
-const countArray = []
+const NewChatsCountArray = []
 
 function hidePracticegroupBuilderForLeesThenTenLikes(){
     auth.onAuthStateChanged(User =>{
@@ -1083,14 +1075,14 @@ function hidePracticegroupBuilderForLeesThenTenLikes(){
 
                     const likeCount = doc1.data().Reciever
 
-                    countArray.push(likeCount)
+                    NewChatsCountArray.push(likeCount)
                         });
                     }).then(() => {
     
                         const practiceGroupButton = document.getElementById("create-practicegroup-button")
                         const minimumLikesNotice = document.getElementById("minimum-likes-notice")
     
-                            if(countArray.length < 10 ){
+                            if(NewChatsCountArray.length < 10 ){
 
                                 practiceGroupButton.style.display = "none"
                                 minimumLikesNotice.style.display = "block"

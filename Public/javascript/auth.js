@@ -14,6 +14,8 @@ function getRandomColor() {
   return color;
 }
 
+const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
+
 // Cookies notice
 const cookieDiv = document.getElementById("cookie-notice")
 
@@ -99,6 +101,10 @@ auth.onAuthStateChanged(User =>{
   }
 });
 
+const lengthArray = []
+
+const notifications = document.createElement("div")
+      notifications.setAttribute("id", "menu-notifications")
 
 //Ingelogd in main menu
 auth.onAuthStateChanged(User =>{
@@ -126,8 +132,6 @@ auth.onAuthStateChanged(User =>{
         authName.setAttribute("id", "profile-name")
       const authProfile = document.createElement("h5")
         authProfile.setAttribute("id", "auth-profile")
-    const notifications = document.createElement("div")
-      notifications.setAttribute("id", "menu-notifications")
     const authPhoto = document.createElement("div")
         authPhoto.style.backgroundImage = `url('${profilePic}')`
         authPhoto.setAttribute("id", "profile-photo")
@@ -173,8 +177,6 @@ auth.onAuthStateChanged(User =>{
 
 
       // Notificaties in menu
-      const length = []
-
       const notificationsDiv = document.createElement("div")
       notificationsDiv.setAttribute("class", "notification-div-menu")
       const notificationsTitle = document.createElement("h3")
@@ -192,13 +194,11 @@ auth.onAuthStateChanged(User =>{
 
           const docLengt = [doc]          
                 objectLength = Object.keys(docLengt).length
-                length.push(objectLength)
+                lengthArray.push(objectLength)
 
-                if(length.length == 0){
+                if(lengthArray.length == 0){
                   notifications.style.display = "none"
                 };
-
-                notifications.innerHTML = `<p id='notification-count-menu'>${length.length}</p>`
 
                 const coach = doc.data().Gebruikersnaam
                 const levensvraag = doc.data().Levensvraag
@@ -254,9 +254,7 @@ auth.onAuthStateChanged(User =>{
     
               const docLengt = [doc]          
                     objectLength = Object.keys(docLengt).length
-                    length.push(objectLength)
-    
-                    notifications.innerHTML = `<p id='notification-count-menu'>${length.length}</p>`
+                    lengthArray.push(objectLength)
     
                     const giver = doc.data().Giver
     
@@ -318,6 +316,52 @@ auth.onAuthStateChanged(User =>{
 
   }
 })
+
+// Notifications from chats and groups
+const newMessageArray = []
+
+auth.onAuthStateChanged(User =>{
+  if(User){
+    const userRef = db.collection("Vitaminders").doc(User.uid);
+    userRef.get().then(function(doc) {
+
+      const auth = doc.data().Gebruikersnaam
+
+  // Chats
+db.collection("Chats").get().then(querySnapshot => {
+  querySnapshot.forEach(doc => {
+
+    const users = doc.data().Room
+    const type = doc.data().Type
+
+    if(type == "Chat"){
+
+    const userArray = users.split("_")
+
+    if(userArray.includes(auth)){
+
+      db.collection("Chats").doc(doc.id).collection("Messages").where("Status", "==", "New").get().then(querySnapshot => {
+        querySnapshot.forEach(doc1 => {
+
+          const authUser = doc1.data().Auth
+
+          if(authUser != auth){
+             newMessageArray.push(authUser)
+             lengthArray.push(authUser)
+          };
+                });
+              }).then(() => {
+                console.log(newMessageArray.length)
+                console.log(lengthArray.length)
+              })
+            };
+          };
+        });
+      });
+    });
+  };
+});
+
 
 // Close authmenu
 
@@ -412,11 +456,9 @@ message: {
 subject: `Verifier je account op Vitaminds! `,
 html: `Hallo ${gebruikersnaam}, </br></br>
       Welkom bij Vitaminds! Het beging van een geweldig avontuur in je eigen karakter!<br><br>
-
       Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
       
       Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.
-
       Vriendelijke groet, </br></br>
       Het Vitaminds Team </br></br>
       <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
@@ -479,15 +521,8 @@ function registerCoach(){
   
   .then(cred =>{
 
-                onlineArray = Array.from(online)
-                onlineArray.forEach(on => {
-                        const check = on.checked
-
-                        if (check == true){
-                          const onlineValue = on.value
-
     db.collection("Vitaminders").doc(cred.user.uid).set({
-      Gebruikersnaam: cred.user.uid + naam,
+      Gebruikersnaam: idClean + naam,
       GebruikersnaamClean: naam,
       Usertype: "Coach",
       Inspiratiepunten: 1,
@@ -496,7 +531,7 @@ function registerCoach(){
       Website: website,                 
       Coachingstyle: method,
       City: city,
-      Online: check,
+      Online: "Ja",
       Why: why,
       Targetgroup: targetgroup,
       YearsExperience: experience,
@@ -508,37 +543,61 @@ function registerCoach(){
       Levensvragen: []
     }).catch((err) => {
       alert(err)
+    }).then(() => {
+
+      db
+      .collection('customers')
+      .doc(cred.user.uid)
+      .collection('checkout_sessions')
+      .add({
+        price: 'price_1GqIC8HYgolSBA35zoTTN2Zl',
+        success_url: 'https://vitaminds.nu/index.html?session_id={CHECKOUT_SESSION_ID}',
+        cancel_url: window.location.origin,
+        mode: "subscription",
+        payment_method_types: "ideal"
+      }).then(() => {
+    // Wait for the CheckoutSession to get attached by the extension
+      db
+      .collection('customers')
+      .doc(cred.user.uid)
+      .collection('checkout_sessions').onSnapshot((snap) => {
+        snap.forEach(doc => {
+          const sessionId = doc.data().sessionId
+          if (sessionId) {
+            // We have a session, let's redirect to Checkout
+            stripe.redirectToCheckout( sessionId );
+          };
+        });
     });
-    };
   });
-  }).then(() => {
-    db.collection("Mail").doc().set({
-      to: [email],
-      cc: "info@vitaminds.nu",
-message: {
-subject: `Verifier je account op Vitaminds! `,
-html: `Hallo ${naam}, </br></br>
-      Wat geweldig dat je een coach-account hebt aangemaakt op Vitaminds! Je bent in ieder geval van harte welkom in onze community. 
-      Daarnaast hopen we van harte dat is een mooie stap is in de online vindbaarheid van je praktijk.<br><br>
 
-      Vergeet niet om je coachgegevens goed in- en aan te vullen in je Digimind (je persoonlijke ontwikkelomgeving en tevens coachprofiel op Vitaminds).
+    })
 
-      Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
+//   }).then(() => {
+//     db.collection("Mail").doc().set({
+//       to: [email],
+//       cc: "info@vitaminds.nu",
+// message: {
+// subject: `Verifier je account op Vitaminds! `,
+// html: `Hallo ${naam}, </br></br>
+//       Wat geweldig dat je een coach-account hebt aangemaakt op Vitaminds! Je bent in ieder geval van harte welkom in onze community. 
+//       Daarnaast hopen we van harte dat is een mooie stap is in de online vindbaarheid van je praktijk.<br><br>
+//       Vergeet niet om je coachgegevens goed in- en aan te vullen in je Digimind (je persoonlijke ontwikkelomgeving en tevens coachprofiel op Vitaminds).
+//       Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
       
-      Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.<br><br>
-
-      Vriendelijke groet, </br></br>
-      Het Vitaminds Team </br></br>
-      <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-Gebruikersnaam: naam,
-Emailadres: email,
-Type: "Coach"
-}
+//       Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.<br><br>
+//       Vriendelijke groet, </br></br>
+//       Het Vitaminds Team </br></br>
+//       <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+// Gebruikersnaam: naam,
+// Emailadres: email,
+// Type: "Coach"
+// }
           
-}).then(() => {
-              const notice = document.getElementById("register-notice")
-              notice.style.display = "block"
-          })
+// }).then(() => {
+//               const notice = document.getElementById("register-notice")
+//               notice.style.display = "block"
+//           })
         })
       }
     })
@@ -554,10 +613,6 @@ if(code.style.display = "none"){
   code.style.display = "none"
 }
 }
-
-
-
-  
 
 
 

@@ -28,16 +28,13 @@
     justify-content: center;
     flex-wrap: wrap;
     background-color: rgb(245, 245, 245);
-    padding: 50px;
-    flex-wrap: wrap;
 }
 
 .subscription-colom{
     margin: 5px;
     padding: 10px;
-    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
     border-radius: 15px;
-    max-width: 30%;
+    max-width: 100%;
 }
 
 .subscription-colom h3{
@@ -46,7 +43,8 @@
 
 .subscription-colom h4{
     align-self: center;
-    font-size: 18px;
+    font-size: 20px;
+    margin-left: 30%;
 }
 
 .subscription-colom h5{

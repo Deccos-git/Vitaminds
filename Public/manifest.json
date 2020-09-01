@@ -1,32 +1,32 @@
 {
-    "name": "Vitaminds PWA",
-    "short_name": "Vitaminds",
-    "icons": [{
-      "src": "images/Logo-icon128x128.png",
-        "sizes": "128x128",
-        "type": "image/png"
-      }, {
-        "src": "images/Logo-icon144x144.png",
-        "sizes": "144x144",
-        "type": "image/png"
-      }, {
-        "src": "images/Logo-icon152x152.png",
-        "sizes": "152x152",
-        "type": "image/png"
-      }, {
-        "src": "images/Logo-icon192x192.png",
-        "sizes": "192x192",
-        "type": "image/png"
-      },
-      {
-        "src": "images/Logo-icon512x512.png",
-        "sizes": "512x512",
-        "type": "image/png"
-      }
-    ],
-    "start_url": "/openup.html",
-    "gcm_sender_id": "103953800507",
-    "display": "standalone",
-    "background_color": "#122b46",
-    "theme_color": "#8e0000"
-  }
+  "name": "Vitaminds PWA",
+  "short_name": "Vitaminds",
+  "icons": [{
+    "src": "images/Logo-icon128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }, {
+      "src": "images/Logo-icon144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }, {
+      "src": "images/Logo-icon152x152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    }, {
+      "src": "images/Logo-icon192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/Logo-icon512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "gcm_sender_id": "103953800507",
+  "display": "standalone",
+  "background_color": "#122b46",
+  "theme_color": "#8e0000"
+}
