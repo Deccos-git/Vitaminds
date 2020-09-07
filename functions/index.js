@@ -3,8 +3,8 @@ const express = require('express');
 const app = express();
 // const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
-
-var cron = require('node-cron');
+// const stripe = require('stripe')('sk_test_licm1PHJnZ26zQHj8OGkBV1Z00CgJf2SX8');
+const cron = require('node-cron');
 
 var firebaseConfig = {
   apiKey: "AIzaSyB_y0DwGVL7PCB7xc5s2lSiaPCyzrGZOV4",
@@ -22,9 +22,11 @@ admin.initializeApp(firebaseConfig);
   const auth = admin.auth();
 
 // Prerender
-
 app.use(require('prerender-node').set('prerenderToken', 'Ab0cCom4i1KuazJ2YhDA'));
 
+// Bodyparser Middleware
+// app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({extended: false}))
 // const urlencodedParser = bodyParser.urlencoded({extended: true});
 
 // Group aanmaken op basis van URL

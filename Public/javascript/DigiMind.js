@@ -911,12 +911,18 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
 
                                 const roomName = auth<naam ? auth+'_'+naam : naam+'_'+auth;
 
+                                const membersArray = [
+                                        auth,
+                                        naam,
+                                ]
+
                 db.collection("Chats").doc().set({
                         Room: roomName,
                         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                         Type: "Chat",
                         Messages: 0,
-                        Eigenaar: "Vitaminds"
+                        Eigenaar: "Vitaminds",
+                        Members: membersArray
                 }).then(() => {
                         window.open(`../Chats/${gebruikersnaam}.html`, "_self");
                                                                 });

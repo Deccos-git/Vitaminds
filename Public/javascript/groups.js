@@ -110,14 +110,21 @@ function noticeVisitor(buttonDiv, button){
             titleH2.setAttribute("class", "titelTekst")
         const subTitle = document.createElement("h5")
         const buttonDiv = document.createElement("div")
+            buttonDiv.setAttribute("id", "button-div-theme-group")
         const button = document.createElement("button")
             button.setAttribute("class", "button-algemeen-card")
+            button.setAttribute("id", "button-theme-group")
+        const leaveGroup = document.createElement("p")
+            leaveGroup.setAttribute("class", "leave-group-button")
 
         titleH2.innerHTML = title
         headerImg.src = headerImage
         button.innerHTML = "Lid worden"
+        leaveGroup.innerText = "Groep verlaten"
 
         button.addEventListener("click", () => {
+
+            button.innerText = "Laden..."
 
             // Add auth to list of members
 
@@ -158,12 +165,17 @@ function noticeVisitor(buttonDiv, button){
             });
         });
 
+        auth.onAuthStateChanged(User =>{
+            if(User){
+              const userRef = db.collection("Vitaminders").doc(User.uid);
+              userRef.get().then(function(doc) {
+        
+                    const auth = doc.data().Gebruikersnaam
+
         db.collection("Chats").where("Room", "==", title).get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
 
                 const members = doc1.data().Members
-
-                console.log(members)
 
                 // Display number of members in the title
 
@@ -172,9 +184,27 @@ function noticeVisitor(buttonDiv, button){
                 subTitle.innerText = `${numberOfMembers} mensen praten over`
 
                 //Already a member of the group
-                alreadyMember(members, buttonDiv)
+                alreadyMember(members, button)
+
+                 //Leave group
+                leaveGroup.addEventListener("click", () => {
+
+                leaveTheGroup(title)
+
+                    const buttonThemeGroup = document.getElementById("button-theme-group")
+
+                    buttonThemeGroup.innerText = "Lid worden"
+
+                });
+
+            if(members.includes(auth)){
+                buttonDiv.appendChild(leaveGroup)
+                };
 
             });
+        });
+    });
+};
         });
 
         DOMthemeView.appendChild(outerSection)
@@ -392,12 +422,16 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
     db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
+            const members = doc.data().Members
 
         db.collection("Chats").doc(doc.id).collection("Messages").doc().set({
             Auth: auth,
             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
             Message: message,
-            Room: roomName
+            Room: roomName,
+            Members: members,
+            Read: [],
+            Status: "New"
             }).then(() => {
                 db.collection("Chats").doc(doc.id).update({
                     Messages: firebase.firestore.FieldValue.increment(1)
@@ -879,12 +913,14 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
             groupButton.setAttribute("id", "group-button")
             groupButton.setAttribute("data-room", title)
             groupButton.setAttribute("onclick", "memberCoachGroups(this)")
+        const leaveGroup = document.createElement("p")
+            leaveGroup.setAttribute("class", "leave-group-button")
 
             groupCoverPhoto.src = coverPhoto
             groupTitleH2.innerText = titleClean
             descriptionP.innerText = description
 
-            groupButton.innerText = "Deelnemen"
+            groupButton.innerText = "Lid worden"
 
             db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
                 querySnapshot.forEach(doc1 => {
@@ -909,6 +945,7 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
             memberCount.innerText = `Huidig aantal leden: ${members.length}`
             costsP.innerText = `Kosten per week: ${costs} euro`
             startNumberP.innerText = `Coachgroep begint bij: ${startNumber} leden`
+            leaveGroup.innerText = "Groep verlaten"
 
             DOM.appendChild(groupInnerDiv)
             groupInnerDiv.appendChild(groupHeader)
@@ -925,11 +962,24 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
             groupInnerDiv.appendChild(buttonDiv)
             buttonDiv.appendChild(groupButton)
 
+            if(members.includes(auth)){
+                buttonDiv.appendChild(leaveGroup)
+                };
+
               // Group is full message
               groupIsFull(members.length, groupButton, numberParticipants)
 
               //Already a member of the group
             alreadyMember(members, groupButton)
+
+             //Leave group
+             leaveGroup.addEventListener("click", () => {
+
+                leaveTheGroup(title)
+
+                groupButton.innerText = "Lid worden"
+
+            });
 
     });
 });
@@ -1001,17 +1051,19 @@ db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnap
         const descriptionP = document.createElement("p")
         const buttonDiv = document.createElement("div")
             buttonDiv.setAttribute("id", "group-button-div")
-        const groupButton = document.createElement("button")
-            groupButton.setAttribute("class", "button-algemeen-card")
-            groupButton.setAttribute("id", "group-button")
-            groupButton.setAttribute("data-room", title)
-            groupButton.setAttribute("onclick", "memberPracticeGroups(this)")
+        const PracticegroupButton = document.createElement("button")
+            PracticegroupButton.setAttribute("class", "button-algemeen-card")
+            PracticegroupButton.setAttribute("id", "group-button")
+            PracticegroupButton.setAttribute("data-room", title)
+            PracticegroupButton.setAttribute("onclick", "memberPracticeGroups(this)")
+        const leaveGroup = document.createElement("p")
+            leaveGroup.setAttribute("class", "leave-group-button")
 
             groupCoverPhoto.src = coverPhoto
             groupTitleH2.innerText = titleClean
             descriptionP.innerText = description
 
-            groupButton.innerText = "Deelnemen"
+            PracticegroupButton.innerText = "Deelnemen"
 
             db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
                 querySnapshot.forEach(doc1 => {
@@ -1035,6 +1087,7 @@ db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnap
             memberCount.innerText = `Huidig aantal leden: ${members.length}`
             startNumberP.innerText = `Oefengroep begint bij: ${startNumber} leden`
             costsP.innerText = `Kosten: gratis`
+            leaveGroup.innerText = "Groep verlaten"
 
             DOM.appendChild(groupInnerDiv)
             groupInnerDiv.appendChild(groupHeader)
@@ -1049,20 +1102,32 @@ db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnap
             metaDiv.appendChild(memberCount)
             metaDiv.appendChild(costsP)
             groupInnerDiv.appendChild(buttonDiv)
-            buttonDiv.appendChild(groupButton)
+            buttonDiv.appendChild(PracticegroupButton)
+
+            if(members.includes(auth)){
+            buttonDiv.appendChild(leaveGroup)
+            };
+
 
             // Group is full message
-            groupIsFull(members.length, groupButton, numberParticipants)
+            groupIsFull(members.length, PracticegroupButton, numberParticipants)
 
 
             //Already a member of the group
-            alreadyMember(members, groupButton)
+            alreadyMember(members, PracticegroupButton)
+
+            //Leave group
+            leaveGroup.addEventListener("click", () => {
+
+                leaveTheGroup(title)
+
+            });
     });
 });
 
 const NewChatsCountArray = []
 
-function hidePracticegroupBuilderForLeesThenTenLikes(){
+function hidePracticegroupBuilderForLessThenTenLikes(){
     auth.onAuthStateChanged(User =>{
         if(User){
         const userRef = db.collection("Vitaminders").doc(User.uid);
@@ -1092,16 +1157,16 @@ function hidePracticegroupBuilderForLeesThenTenLikes(){
         };
     });
 }; 
-hidePracticegroupBuilderForLeesThenTenLikes()
+hidePracticegroupBuilderForLessThenTenLikes()
 
 
 // New member
-
-
 function saveNewMemberToGroup(a){
 
     const groupButton = document.getElementById("group-button")
     const groupButtonDiv = document.getElementById("group-button-div")
+
+    groupButton.innerText = "Laden..."
 
     auth.onAuthStateChanged(User =>{
         if(User){
@@ -1115,7 +1180,9 @@ function saveNewMemberToGroup(a){
 
             db.collection("Chats").doc(doc.id).update({
                 Members: firebase.firestore.FieldValue.arrayUnion(auth)
-                        });
+                        }).then(() => {
+                            window.open("../Group/" + title + ".html", "_self") 
+                                    });
                     });
                 });
             });
@@ -1150,6 +1217,8 @@ function memberCoachGroups(elem){
     }; 
  };
 
+ // Already a member notice
+
  function alreadyMember(a,b){
 
     auth.onAuthStateChanged(User =>{
@@ -1168,3 +1237,24 @@ function memberCoachGroups(elem){
     });
 ;}
 
+// Leave group
+function leaveTheGroup(a){
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+
+            const auth = doc.data().Gebruikersnaam
+
+            db.collection("Chats").where("Room", "==", a ).get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+        
+                    db.collection("Chats").doc(doc.id).update({
+                        Members: firebase.firestore.FieldValue.arrayRemove(auth)
+                                });
+                            });
+                        });
+        });
+    };
+});
+};

@@ -4,7 +4,6 @@ const idAlpha = id.toString(36)
 const idClean = idAlpha.replace("0.", "")
 
 // Random color
-
 function getRandomColor() {
   var letters = '0123456789ABCDEF';
   var color = '#';
@@ -14,34 +13,56 @@ function getRandomColor() {
   return color;
 }
 
+
+auth.onAuthStateChanged(User =>{
+  if(!User){
+    const userRef = db.collection("Vitaminders").doc(User.uid);
+    userRef.get().then(function(doc) {
+
+      const auth = doc.data().Gebruikersnaam
+
+      db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "array-contains", auth).get().then(querySnapshot => {
+        querySnapshot.forEach(doc1 => {
+
+      db.collection("Chats").doc(doc1.id).update({
+          Online: firebase.firestore.FieldValue.arrayRemove(auth)
+      });
+    });
+  });
+});
+    };
+  });
+
+
+// Stripe
 const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
 
 // Cookies notice
+
+const cookies = localStorage.getItem("Cookies")
 const cookieDiv = document.getElementById("cookie-notice")
+
+if(cookies != "OK"){
+  if(cookieDiv != null || cookieDiv != undefined){
+  cookieDiv.style.display = "flex"
+  };
+}
 
 function cookiesOK(){
       localStorage.setItem("Cookies", "OK")
         cookieDiv.style.display = "none"
 }
 
-const cookies = localStorage.getItem("Cookies")
-
-if(cookies == "OK"){
-        if(cookieDiv != null){
-        cookieDiv.style.display = "none"
-        };
-}
-
 // Inlog/uitlog verbergen
-const login = document.getElementById("button-login")
-const logout = document.getElementById("button-logout")
+const loginDOM = document.getElementById("button-login")
+const logoutDOM = document.getElementById("button-logout")
 
 
   auth.onAuthStateChanged(User =>{
       if(User){
-        login.style.display = "none"
+        loginDOM.style.display = "none"
       } else {
-        logout.style.display = "none"
+        logoutDOM.style.display = "none"
       };
   });
 
@@ -101,45 +122,99 @@ auth.onAuthStateChanged(User =>{
   }
 });
 
+//Auth menu
+const authDOM = document.getElementById("auth-DOM")
+
+      if(authDOM == null){
+        console.log("No auth menu")
+      }; 
+
 const lengthArray = []
+const newMessageArray = []
 
-const notifications = document.createElement("div")
-      notifications.setAttribute("id", "menu-notifications")
+const authDiv = document.createElement("div")
+    authDiv.setAttribute("id", "menu-auth-div")
+const authName = document.createElement("h5")
+    authName.setAttribute("id", "profile-name")
+const authProfile = document.createElement("h5")
+    authProfile.setAttribute("id", "auth-profile")
+const authProfileP = document.createElement("p")
+const authPhoto = document.createElement("div")
+    authPhoto.setAttribute("id", "profile-photo")
+const closeDiv = document.createElement("div")
+    closeDiv.setAttribute("id", "close-div")
+    closeDiv.setAttribute("onclick", "close(this)") 
 
-//Ingelogd in main menu
+const profilePicture = document.getElementById("profile-picture")
+
+const logout = document.createElement("h5")
+      logout.setAttribute("id", "button-logout")
+      logout.setAttribute("onclick", "logOut()")
+
+const chatsGroupDiv = document.createElement("div")
+      chatsGroupDiv.setAttribute("id", "chats-groups-div-auth-menu")
+
+const chatGroupNewMessageCountDiv = document.createElement("div")
+      chatGroupNewMessageCountDiv.setAttribute("id", "chats-groups-new-message-div")
+const chatGroupNewMessageCountP = document.createElement("p")
+
+const titleLink = document.createElement("a")
+const linkImg = document.createElement('img')
+
+const notificationsTotalDiv = document.createElement("div")
+      notificationsTotalDiv.setAttribute("id", "menu-notifications")
+const notificationsTotalP = document.createElement("p")
+const notificationsDiv = document.createElement("div")
+      notificationsDiv.setAttribute("class", "notification-div-menu")
+const notificationsTitle = document.createElement("h3")
+const notificationsPDiv = document.createElement("div")
+const notificationsP = document.createElement("p")
+
+const chatsDiv = document.getElementsByClassName("chats-div")
+
+  // Construct auth menu with naam and pic
+  function constructAuthMenu(){
 auth.onAuthStateChanged(User =>{
   if(User){
     const userRef = db.collection("Vitaminders").doc(User.uid);
     userRef.get().then(function(doc) {
-      if (doc.exists) {
+
         const naamID = doc.data().Gebruikersnaam;
         const ID = doc.data().ID
         const naam = naamID.replace(ID, "")
         const profilePic = doc.data().Profielfoto
-  
-    const profilePicture = document.getElementById("profile-picture")
+
+        console.log(naamID)
 
     if(profilePic == undefined){
       profilePicture.innerHTML = `<h6 class="menu-auth-name" >${naam}</h6>`
     } else {
         profilePicture.style.backgroundImage = `url('${profilePic}')`
         profilePicture.setAttribute("class", "login-logout")
-    }
+    };
 
-    const authDiv = document.createElement("div")
-        authDiv.setAttribute("id", "menu-auth-div")
-    const authName = document.createElement("h5")
-        authName.setAttribute("id", "profile-name")
-      const authProfile = document.createElement("h5")
-        authProfile.setAttribute("id", "auth-profile")
-    const authPhoto = document.createElement("div")
-        authPhoto.style.backgroundImage = `url('${profilePic}')`
-        authPhoto.setAttribute("id", "profile-photo")
-    const closeDiv = document.createElement("div")
-        closeDiv.setAttribute("id", "close-div")
-        closeDiv.setAttribute("onclick", "close(this)") 
+    notificationsTotalDiv.style.display = "block"
+    authPhoto.style.backgroundImage = `url('${profilePic}')`
+    authName.innerHTML = `<a href = "../Vitaminders/${naamID}">${naam}</a>`
+    authProfileP.innerHTML = `<a href = "../Vitaminders/${naamID}"><img id="icon-auth-menu-digimind" src="../images/menu-dashboard.png">Mijn Digimind</a>`
+    authPhoto.addEventListener("click", () => {
+      window.open("../Vitaminders/" + [naamID] + ".html", "_self");
+    });
+  });
+
+  } else {
+    const logOutMobile = document.getElementById("log-out-mobile")
+
+    logOutMobile.style.display = "none"
+    };
+  });
+}; constructAuthMenu()
 
         // Open & close
+      function openCloseAutMenu(){
+        
+        closeDiv.style.backgroundImage = "url(../images/close-icon.png)";
+
         closeDiv.addEventListener("click", () => {
           authDiv.style.display= "none"
         })
@@ -147,27 +222,17 @@ auth.onAuthStateChanged(User =>{
         profilePicture.addEventListener("click", () => {
           authDiv.style.display= "flex"
         })
+      }; openCloseAutMenu()
 
-        authPhoto.addEventListener("click", () => {
-            window.open("../Vitaminders/" + [naamID] + ".html", "_self");
-        })
- 
-    const logout = document.createElement("h5")
-      logout.setAttribute("id", "button-logout")
-      logout.setAttribute("onclick", "logOut()")
+
+      // Logout
+      function logOutAuthMenu(){
       
     logout.innerHTML = "Log uit"
-    authName.innerHTML = `<a href = "../Vitaminders/${naamID}">${naam}</a>`
-    authProfile.innerHTML = `<a href = "../Vitaminders/${naamID}"><img id="icon-auth-menu-digimind" src="../images/menu-dashboard.png">Mijn Digimind</a>`
-    closeDiv.style.backgroundImage = "url(../images/close-icon.png)";
+      } logOutAuthMenu()
+
 
     // Chats & groups link
-    const chatsGroupDiv = document.createElement("div")
-        chatsGroupDiv.setAttribute("id", "chats-groups-div-auth-menu")
-      
-    const titleLink = document.createElement("a")
-    const linkImg = document.createElement('img')
-
     titleLink.innerText = "Chats & Groepen"
     linkImg.src = "../images/send-icon.png"
 
@@ -177,89 +242,26 @@ auth.onAuthStateChanged(User =>{
 
 
       // Notificaties in menu
-      const notificationsDiv = document.createElement("div")
-      notificationsDiv.setAttribute("class", "notification-div-menu")
-      const notificationsTitle = document.createElement("h3")
-
       notificationsTitle.innerHTML = "Notificaties"
 
-      const authDOM = document.getElementById("auth-DOM")
-      if(authDOM == null){
-        console.log("Error")
-      } else {
+      auth.onAuthStateChanged(User =>{
+        if(User){
+          const userRef = db.collection("Vitaminders").doc(User.uid);
+          userRef.get().then(function(doc) {
+      
+              const naamID = doc.data().Gebruikersnaam;
 
-                // Reacties
-      db.collectionGroup("Reactions").where("Vraagsteller", "==", naamID).where("New", "==", "Yes").get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-          const docLengt = [doc]          
-                objectLength = Object.keys(docLengt).length
-                lengthArray.push(objectLength)
-
-                if(lengthArray.length == 0){
-                  notifications.style.display = "none"
-                };
-
-                const coach = doc.data().Gebruikersnaam
-                const levensvraag = doc.data().Levensvraag
-                const domain = doc.data().Domain
-
-                const notificationsPDiv = document.createElement("div")
-                const notificationsP = document.createElement("p")
-
-                db.collection("Vitaminders").where("Gebruikersnaam", "==", coach)
-                .get().then(querySnapshot => {
-                  querySnapshot.forEach(doc1 => {
-
-                  const coachID = doc1.data().ID
-                  const coachClean = coach.replace(coachID, "")
-
-                  db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraag).get().then(querySnapshot => {
-                    querySnapshot.forEach(doc2 => {
-                      
-                      const vraagID = doc2.data().ID
-                      const levensvraagClean = levensvraag.replace(vraagID, "")
-
-                notificationsP.innerHTML = `<b>${coachClean}</b> heeft <i>gereageerd</i> op je ${domain} <b>${levensvraagClean}</b>`
-                      })
-                    })
-                  })
-                })
-
-                notificationsDiv.addEventListener("click", () => { 
-                  db.collection("Vitaminders").where("Gebruikersnaam", "==", naamID).get().then(querySnapshot =>{
-                    querySnapshot.forEach(doc2 => { 
-                  db.collection("Vitaminders").doc(doc2.id).collection("Reactions").doc(doc.id).update({
-                    New: "No"
-                  }).then(() => {
-                      window.open("../notifications.html", "_self")
-                  })
-                })
-              })
-            })
-
-                notificationsDiv.appendChild(notificationsTitle)
-                notificationsTitle.appendChild(notificationsPDiv)
-                notificationsPDiv.appendChild(notificationsP)
-                authDiv.appendChild(logout)
-                
-                })
-          }).catch((err) => {
-            console.log(err)
-          })
-
-          // Inspirationpoints
+             // Inspirationpoints
           db.collectionGroup("Inspiration").where("Reciever", "==", naamID).where("New", "==", "Yes").get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
     
               const docLengt = [doc]          
                     objectLength = Object.keys(docLengt).length
                     lengthArray.push(objectLength)
+
+                    console.log(objectLength)
     
                     const giver = doc.data().Giver
-    
-                    const notificationsPDiv = document.createElement("div")
-                    const notificationsP = document.createElement("p")
 
                     db.collection("Vitaminders").where("Gebruikersnaam", "==", giver)
                     .get().then(querySnapshot => {
@@ -269,8 +271,8 @@ auth.onAuthStateChanged(User =>{
                     const giverClean = giver.replace(giverID, "")
       
                     notificationsP.innerHTML = `Je hebt 1 nieuw <i>inspiratiepunt</i> ontvangen van ${giverClean} `
-                      })
-                    })
+                      });
+                    });
     
                     notificationsDiv.addEventListener("click", () => { 
                       
@@ -280,88 +282,83 @@ auth.onAuthStateChanged(User =>{
                         New: "No"
                       }).then(() => {
                           window.open("../notifications.html", "_self")
-                      })
-                    })
-                  })
-                    })
-    
-                    notificationsDiv.appendChild(notificationsTitle)
-                    notificationsTitle.appendChild(notificationsPDiv)
-                    notificationsPDiv.appendChild(notificationsP)
-                    
-                    })
-              }).catch((err) => {
-                console.log(err)
-              })
-
-              profilePicture.appendChild(notifications)
-              authDOM.appendChild(authDiv)
-             authDiv.appendChild(closeDiv)
-             authDiv.appendChild(authPhoto)
-             authDiv.appendChild(authName)
-             authDiv.appendChild(authProfile)
-             authProfile.appendChild(chatsGroupDiv)
-             chatsGroupDiv.appendChild(linkImg)
-             chatsGroupDiv.appendChild(titleLink)
-             authProfile.appendChild(notificationsDiv)
-             authDiv.appendChild(logout)
-
-      }
-    }
-    })
-  } else {
-    const logOutMobile = document.getElementById("log-out-mobile")
-
-    logOutMobile.style.display = "none"
-
-  }
-})
-
-// Notifications from chats and groups
-const newMessageArray = []
-
-auth.onAuthStateChanged(User =>{
-  if(User){
-    const userRef = db.collection("Vitaminders").doc(User.uid);
-    userRef.get().then(function(doc) {
-
-      const auth = doc.data().Gebruikersnaam
-
-  // Chats
-db.collection("Chats").get().then(querySnapshot => {
-  querySnapshot.forEach(doc => {
-
-    const users = doc.data().Room
-    const type = doc.data().Type
-
-    if(type == "Chat"){
-
-    const userArray = users.split("_")
-
-    if(userArray.includes(auth)){
-
-      db.collection("Chats").doc(doc.id).collection("Messages").where("Status", "==", "New").get().then(querySnapshot => {
-        querySnapshot.forEach(doc1 => {
-
-          const authUser = doc1.data().Auth
-
-          if(authUser != auth){
-             newMessageArray.push(authUser)
-             lengthArray.push(authUser)
-          };
-                });
+                      });
+                    });
+                  });
+                });      
+              });
               }).then(() => {
-                console.log(newMessageArray.length)
-                console.log(lengthArray.length)
-              })
-            };
-          };
-        });
-      });
-    });
-  };
-});
 
+                // Notifications from chats and groups
+
+                db.collection("Chats").where("Members", "array-contains", naamID).get().then(querySnapshot =>{
+                  querySnapshot.forEach(doc3 => { 
+
+                  db.collection("Chats").doc(doc3.id).collection("Messages").where("Status", "==", "New").get().then(querySnapshot => {
+                    querySnapshot.forEach(doc1 => {
+
+                      const authUser = doc1.data().Auth
+                      const users = doc1.data().Room
+                      const readList = doc1.data().Read
+
+                      const userArray = users.split("_")
+
+                      // Groups
+                      if (readList != undefined){
+                      if(!readList.includes(naamID)){
+                        if(authUser != naamID){
+
+                          newMessageArray.push(doc1.id)
+                          lengthArray.push(doc1.id)
+                        };
+                      };
+                    };
+
+                    // Chats
+                if(userArray.includes(naamID)){
+                  if(authUser != naamID){
+
+                    console.log(authUser)
+
+                    newMessageArray.push(doc1.id)
+                    lengthArray.push(doc1.id)
+                  };
+                };
+              });
+                  }).then(() => {
+                    chatGroupNewMessageCountP.innerText = newMessageArray.length
+                    notificationsTotalDiv.appendChild(notificationsTotalP)
+                    notificationsTotalP.innerText = lengthArray.length
+                  });
+                });
+              }); 
+                });
+                });
+              };
+            });
+    
+            notificationsDiv.appendChild(notificationsTitle)
+            notificationsTitle.appendChild(notificationsPDiv)
+            notificationsPDiv.appendChild(notificationsP)
+
+            notificationsDiv.appendChild(notificationsTitle)
+            notificationsTitle.appendChild(notificationsPDiv)
+            notificationsPDiv.appendChild(notificationsP)
+
+            profilePicture.appendChild(notificationsTotalDiv)
+            authDOM.appendChild(authDiv)
+            authDiv.appendChild(closeDiv)
+            authDiv.appendChild(authPhoto)
+            authDiv.appendChild(authName)
+            authDiv.appendChild(authProfile)
+            authProfile.appendChild(authProfileP)
+            authProfile.appendChild(chatsGroupDiv)
+            chatsGroupDiv.appendChild(linkImg)
+            chatsGroupDiv.appendChild(titleLink)
+            chatsGroupDiv.appendChild(chatGroupNewMessageCountDiv)
+            chatGroupNewMessageCountDiv.appendChild(chatGroupNewMessageCountP)
+            authProfile.appendChild(notificationsDiv)
+            authDiv.appendChild(logout)
 
 // Close authmenu
 
@@ -390,30 +387,49 @@ function inlogVM(){
   const inlogEmail = document.getElementById("emailVM").value;
   const inlogPassword = document.getElementById("passwordVM").value;
 
+  const button = document.getElementById("button-inlog")
+  button.innerHTML = "Laden..."
+
     auth.signInWithEmailAndPassword(inlogEmail, inlogPassword).then(() => {
       auth.onAuthStateChanged(User =>{
         if(User){
           const userRef = db.collection("Vitaminders").doc(User.uid);
+
+          userRef.update({
+            Online: "Yes"
+            })
+            .then(() =>{
+             
           userRef.get().then(function(doc) {
             if (doc.exists) {
               naam = doc.data().Gebruikersnaam;
 
               window.open("../Vitaminders/" + naam + ".html", "_self");
-          }
-        })
-      }
-    })
-  })
-}
+          };
+        });
+      });
+      };
+    });
+  });
+};
   
 //Log out
 function logOut(){
-  firebase.auth().signOut().then(function() {
-      window.location.href = "../index.html"
-    }).catch(function(error) {
-      console.log(error)
-    })
-  }
+  auth.onAuthStateChanged(User =>{
+    if(User){
+      const userRef = db.collection("Vitaminders").doc(User.uid);
+  userRef.update({
+    Online: "No"
+  }).then(() => {
+    firebase.auth().signOut().then(function() {
+        window.location.href = "../index.html"
+      }).catch(function(error) {
+        console.log(error)
+      });
+    });
+};
+  })
+  };
 
 // Register VM
 const button = document.getElementById("register-button")
@@ -443,7 +459,8 @@ if(button != null){
       Inspiratiepunten: 1,
       Email: email, 
       ID: cred.user.uid,
-      Levensvragen: []
+      Levensvragen: [],
+      Profielfoto: `images/dummy-profile-photo.jpeg`
     })
   }).catch((err) => {
     alert(err)
@@ -485,7 +502,7 @@ function registerNoticeOK(){
 }
 
 //Register CH
-function registerCoach(){
+async function registerCoach(){
 
   const button = document.getElementById("register-button-coach")
   
@@ -541,39 +558,42 @@ function registerCoach(){
       Costs: costs,
       ID: cred.user.uid,
       Levensvragen: []
-    }).catch((err) => {
-      alert(err)
-    }).then(() => {
-
-      db
-      .collection('customers')
-      .doc(cred.user.uid)
-      .collection('checkout_sessions')
-      .add({
-        price: 'price_1GqIC8HYgolSBA35zoTTN2Zl',
-        success_url: 'https://vitaminds.nu/index.html?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url: window.location.origin,
-        mode: "subscription",
-        payment_method_types: "ideal"
-      }).then(() => {
-    // Wait for the CheckoutSession to get attached by the extension
-      db
-      .collection('customers')
-      .doc(cred.user.uid)
-      .collection('checkout_sessions').onSnapshot((snap) => {
-        snap.forEach(doc => {
-          const sessionId = doc.data().sessionId
-          if (sessionId) {
-            // We have a session, let's redirect to Checkout
-            stripe.redirectToCheckout( sessionId );
-          };
-        });
-    });
-  });
-
     })
+    .then(() => {
+      // the method CollectionReference.add returns a DocumentReference instance
+   // which you have to receive inside the "then" call:
+   auth.onAuthStateChanged(User =>{
+    if(User){
+      const userRef = db.collection("Vitaminders").doc(User.uid);
+      userRef.get().then(function(doc) {
+   db.collection('customers').doc(doc.id).collection('checkout_sessions')
+   .add({
+     price: 'price_1HLXnVFIim4HzRlUQQXl50Z1l',
+     success_url: window.location.origin,
+     cancel_url: window.location.origin,
+   })
+   .then(docRef => {
+     // Wait for the CheckoutSession to get attached by the extension
+     docRef.onSnapshot((snap) => {
+   
+       const { sessionId } = snap.data();
 
-//   }).then(() => {
+       console.log(sessionId)
+       if (sessionId) {
+         // We have a session, let's redirect to Checkout
+         // Init Stripe
+         const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
+         stripe.redirectToCheckout({ sessionId });
+       }
+     });
+   });
+  });
+};
+   });
+   });
+  })
+
+//   .then(() => {
 //     db.collection("Mail").doc().set({
 //       to: [email],
 //       cc: "info@vitaminds.nu",
@@ -598,7 +618,7 @@ function registerCoach(){
 //               const notice = document.getElementById("register-notice")
 //               notice.style.display = "block"
 //           })
-        })
+//         })
       }
     })
   }

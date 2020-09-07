@@ -98,4 +98,19 @@
     margin-right: 15px;
 }
 
+.new-message-div{
+    border-radius: 50%;
+    background-color: #8e0000;
+    height: 12px;
+    width: 12px;
+    margin: 0px 0px 15px 5px;
+}
+
+.new-message-div p{
+    font-size: 10px;
+    color: white;
+    margin: 0px 0px 0px 3px; 
+}
+
+
 

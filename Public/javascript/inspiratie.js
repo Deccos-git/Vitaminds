@@ -700,22 +700,16 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
 
                         // Like count
 
-                        const lenghtArray = []
-
-                        db.collectionGroup("Inspiration").where("Source", "==", titelInsight).get().then(querySnapshot => {
+                        db.collection("Insights").where("Titel", "==", titelInsight).onSnapshot(querySnapshot => {
                             querySnapshot.forEach(doc => {
 
-                                const items = doc.data().Giver
-
-                                lenghtArray.push(items)
+                                const likes = doc.data().Inspiratiepunten
 
                                 const lenghtP = document.createElement("p")
 
-                                lenghtP.innerText = lenghtArray.length
+                                lenghtP.innerText = likes
 
                                 inspirationalDiv.appendChild(lenghtP)
-
-                                
 
                             });
                         });
@@ -1019,8 +1013,6 @@ function inspirerend(elem){
             })
         })
     })
-    const bedankt = elem.nextSibling
-    bedankt.style.display = "block"
 })
 })
 };
@@ -1191,8 +1183,6 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                     inspirationalImg.setAttribute("data-titel", titelInsight)
                     inspirationalImg.setAttribute("data-coach", coach)
                     inspirationalImg.setAttribute("data-body", body)
-                const bedankt = document.createElement("p")
-                    bedankt.setAttribute("class", "social-note")
                 const inspirationIconDiv = document.createElement("div")
                     inspirationIconDiv.setAttribute("class", "inspiration-icon-div")
                 const inspirationIcon = document.createElement("img")
@@ -1331,13 +1321,62 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                 readMore.innerHTML = "Lees meer"
                 themaH3.innerHTML = "Verder lezen"
                 inspirationalImg.src = "../images/heart-icon.png"
-                bedankt.innerHTML = `<u>${gebruikersnaamClean}</u> zegt: Bedankt!`
                 toevoegenLevenslesButton.innerHTML = "Opslaan"
                 opgeslagen.innerHTML = `Opgeslagen in je <u>Digimind</u>`
 
-                bedankt.addEventListener("click", () => {
-                    window.open("../Vitaminders/" + coach + ".html", "_self");
-                });
+                 // Heart
+                 inspirationalImg.src = "../images/heart-icon.png"
+
+                 inspirationalImg.addEventListener("mouseenter", () => {
+                     inspirationalImg.src = "../images/heart-icon-hover.png"
+                         });
+             
+                 inspirationalImg.addEventListener("mouseleave", () => {
+                     inspirationalImg.src = "../images/heart-icon.png"
+                         });
+                 
+                 inspirationalImg.addEventListener("click", () => {
+                     inspirationalImg.src = "../images/heart-icon-hover.png"
+ 
+                     inspirationalImg.addEventListener("mouseleave", () => {
+                         inspirationalImg.src = "../images/heart-icon-hover.png"
+                             });
+                         });
+ 
+                         //Pre-fill saved hearts 
+                         auth.onAuthStateChanged(User =>{
+                             db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                                     const auth = doc.data().Gebruikersnaam
+ 
+                                     db.collectionGroup("Inspiration").where("Giver", "==", auth).get().then(querySnapshot => {
+                                         querySnapshot.forEach(doc1 => {
+ 
+                                             const insightTitle = doc1.data().Source
+ 
+                                             if(insightTitle == titelInsight){
+                                                 inspirationalImg.src = "../images/heart-icon-hover.png"
+                                             }
+                                         })
+                                     })
+                             });
+                         });
+ 
+                         // Like count
+ 
+                         db.collection("Insights").where("Titel", "==", titelInsight).onSnapshot(querySnapshot => {
+                             querySnapshot.forEach(doc => {
+ 
+                                 const likes = doc.data().Inspiratiepunten
+ 
+                                 const lenghtP = document.createElement("p")
+ 
+                                 lenghtP.innerText = likes
+ 
+                                 inspirationalDiv.appendChild(lenghtP)
+ 
+                             });
+                         });
+ 
 
                 auth.onAuthStateChanged(User =>{
                     db.collection("Vitaminders").doc(User.uid).get().then(doc => {
@@ -1395,7 +1434,6 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                 parra.appendChild(socialDiv)
                 socialDiv.appendChild(inspirationalDiv)
                 inspirationalDiv.appendChild(inspirationalImg)
-                inspirationalDiv.appendChild(bedankt)
                 socialDiv.appendChild(inspirationIconDiv)
                 inspirationIconDiv.appendChild(inspirationIcon)
                 socialDiv.appendChild(toevoegenLevenslesOuterDiv)

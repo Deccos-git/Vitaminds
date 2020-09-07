@@ -115,7 +115,7 @@ ul{
 /* Cookies */
 
 #cookie-notice{
-  display: flex;
+  display: none;
   flex-direction: column;
   background-color: #49beb7;
   align-items: center;
@@ -444,6 +444,13 @@ ul{
   border-radius: 50%;
   background-color: #8e0000;
   margin: -3px 0px 0px 20px;
+  display: none;
+}
+
+#menu-notifications p{
+  font-size: 10px;
+  color: white;
+  margin: -1px 0px 0px 2px;
 }
 
 #notification-count-menu{
@@ -470,6 +477,19 @@ ul{
   font-size: 12px;
   color: #122b46;
   border-left: 1px solid #8e0000;
+}
+
+#chats-groups-new-message-div{
+  border-radius: 50%;
+  background-color: #8e0000;
+  height: 12px;
+  width: 12px;
+}
+
+#chats-groups-new-message-div p{
+  font-size: 10px;
+  color: white;
+  margin: 0px 0px 0px 3px;
 }
 
 #close-div{

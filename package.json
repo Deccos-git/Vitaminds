@@ -21,7 +21,8 @@
     "node-cron": "^2.0.3",
     "nodemon": "^2.0.2",
     "prerender-node": "^3.2.5",
-    "pwacompat": "^2.0.16"
+    "pwacompat": "^2.0.16",
+    "stripe": "^8.92.0"
   },
   "devDependencies": {
     "firebase-functions-test": "^0.1.6"
