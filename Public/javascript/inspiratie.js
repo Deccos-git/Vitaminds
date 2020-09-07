@@ -699,13 +699,21 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
                         });
 
                         // Like count
+                        const lenghtP = document.createElement("p")
+
+                        inspirationalDiv.appendChild(lenghtP)
 
                         db.collection("Insights").where("Titel", "==", titelInsight).onSnapshot(querySnapshot => {
+
+                            // Remove old count
+                            if(lenghtP)
+                            inspirationalDiv.removeChild(lenghtP)
+
                             querySnapshot.forEach(doc => {
 
-                                const likes = doc.data().Inspiratiepunten
+                                console.log("tets")
 
-                                const lenghtP = document.createElement("p")
+                                const likes = doc.data().Inspiratiepunten
 
                                 lenghtP.innerText = likes
 
@@ -998,11 +1006,13 @@ function inspirerend(elem){
                 Giver: naam,
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                 Type: "Insight"
-            })
+            });
 
             // Naar insight
-            db.collectionGroup("Insights").where("Titel", "==", titel).where("Auteur", "==", coach).get().then(querySnapshot => {
+            db.collectionGroup("Insights").where("Titel", "==", titelElem).where("Auteur", "==", coach).get().then(querySnapshot => {
                 querySnapshot.forEach(doc3 => {
+
+                    console.log("test")
 
                     db.collection("Insights").doc(doc3.id).update({
 
@@ -1362,17 +1372,22 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                          });
  
                          // Like count
+                         const lengthP = document.createElement("p")
+
+                         inspirationalDiv.appendChild(lengthP)
  
                          db.collection("Insights").where("Titel", "==", titelInsight).onSnapshot(querySnapshot => {
+
+                            // Remove old like count
+                            inspirationalDiv.removeChild(lengthP)
+
                              querySnapshot.forEach(doc => {
  
                                  const likes = doc.data().Inspiratiepunten
  
-                                 const lenghtP = document.createElement("p")
+                                 lengthP.innerText = likes
  
-                                 lenghtP.innerText = likes
- 
-                                 inspirationalDiv.appendChild(lenghtP)
+                                 inspirationalDiv.appendChild(lengthP)
  
                              });
                          });

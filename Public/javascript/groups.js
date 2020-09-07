@@ -15,7 +15,6 @@ const titel12 = titel11.split("?fb")
 const titel = titel12[0]
 
 // Groups overview page
-
 const practicegroupDOM = document.getElementById("practicegroups")
 const themegroupDOM = document.getElementById("themegroups")
 const coachGroupDOM = document.getElementById("coachgroups")

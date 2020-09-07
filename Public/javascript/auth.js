@@ -1,3 +1,19 @@
+// Fetching title from url
+const titelURLDOM = window.location.href.replace(/^.*[\\\/]/, '')
+const titelURL1 = titelURLDOM.replace('.html', '')
+const titelURL2 = titelURL1.replace('%20',' ')
+const titelURL3 = titelURL2.replace('%20',' ')
+const titelURL4 = titelURL3.replace('%20',' ')
+const titelURL5 = titelURL4.replace('%20',' ')
+const titelURL6 = titelURL4.replace('%20',' ')
+const titelURL7 = titelURL6.replace('%20',' ')
+const titelURL8 = titelURL7.replace('%20',' ')
+const titelURL9 = titelURL8.replace('%20',' ')
+const titelURL10 = titelURL9.replace('%20',' ')
+const titelURL11 = titelURL10.replace('%20',' ')
+const titelURL12 = titelURL11.split("?fb")
+const titelURL = titelURL12[0]
+
 // Random ID
 const id = Math.random()
 const idAlpha = id.toString(36)
@@ -11,28 +27,7 @@ function getRandomColor() {
     color += letters[Math.floor(Math.random() * 16)];
   }
   return color;
-}
-
-
-auth.onAuthStateChanged(User =>{
-  if(!User){
-    const userRef = db.collection("Vitaminders").doc(User.uid);
-    userRef.get().then(function(doc) {
-
-      const auth = doc.data().Gebruikersnaam
-
-      db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "array-contains", auth).get().then(querySnapshot => {
-        querySnapshot.forEach(doc1 => {
-
-      db.collection("Chats").doc(doc1.id).update({
-          Online: firebase.firestore.FieldValue.arrayRemove(auth)
-      });
-    });
-  });
-});
-    };
-  });
-
+};
 
 // Stripe
 const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
@@ -52,6 +47,42 @@ function cookiesOK(){
       localStorage.setItem("Cookies", "OK")
         cookieDiv.style.display = "none"
 }
+
+// Register a pageleave
+
+window.addEventListener("unload", (e) => { 
+  
+  localStorage.setItem("leftPages", [titelURL])
+        
+});
+
+// Update online/offline of chat/group when user leaves page
+const pageLeaves = localStorage.getItem("leftPages")
+
+function updateOnlineStatusFromPagesLeave(){
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+          const userRef = db.collection("Vitaminders").doc(User.uid);
+          userRef.get().then(function(doc) {
+    
+                const auth = doc.data().Gebruikersnaam
+
+    db.collection("Chats").where("Members", "array-contains", auth).where("Room", "==", pageLeaves)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+    db.collection("Chats").doc(doc.id).update({
+        Online: firebase.firestore.FieldValue.arrayRemove(auth)
+              }).then(() => {
+                localStorage.removeItem(pageLeaves)
+              })
+            });
+          });
+        });
+      };
+    });
+} updateOnlineStatusFromPagesLeave()
 
 // Inlog/uitlog verbergen
 const loginDOM = document.getElementById("button-login")

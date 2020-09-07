@@ -29,10 +29,9 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
     });
 });
 
+// Save message to database
 
 const DOMchatScreen = document.getElementById("chat-screen")
-
-// Save message to database
     
 function saveMessage(){
     const message = document.getElementById("chat-input").value 
@@ -174,9 +173,9 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
         const titleClean = doc1.data().RoomClean
         const members = doc1.data().Members
         const creator = doc1.data().Creater
+        const online = doc1.data().Online
 
         // Chats
-
         if(type === "Chat"){
 
         const users = doc1.data().Room
@@ -282,6 +281,41 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
                 });
             });
 
+            // Update online/offline when user leaves page
+            function updateOnlineStatusFromPagesLeave(){
+
+                const pageLeaves = localStorage.getItem("leftPages")
+
+                db.collection("Chats").where("Members", "array-contains", auth).where("Room", "==", pageLeaves)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc10 => {
+
+                db.collection("Chats").doc(doc10.id).update({
+                    Online: firebase.firestore.FieldValue.arrayRemove(auth)
+                });
+
+                // Update status of message based on online/offline in room
+                console.log(online)
+            if(online.includes(auth)){
+               const docRefOnline = db.collection("Chats").doc(doc10.id)
+               docRefOnline.collection("Messages").where("Status", "==", "New")
+               
+               docRefOnline.get().then(querySnapshot => {
+                querySnapshot.forEach(doc11 => {
+
+                    console.log(doc11.id)
+
+                docRefOnline.collection("Messages").doc(doc11.id).update({
+                    Read: firebase.firestore.FieldValue.arrayUnion(auth)
+                });
+            });
+        });
+            }
+            });
+        });
+
+            } updateOnlineStatusFromPagesLeave();
+       
                     DOMchats.appendChild(chatsDiv)
                     chatsDiv.appendChild(photoDiv)
                     photoDiv.appendChild(photoImg)
@@ -427,6 +461,35 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
                         });
                     });
                 });
+
+                      // Update status of message based on online/offline in room
+            function updateOnlineStatusFromPagesLeave(){
+
+                db.collection("Chats").where("Members", "array-contains", auth)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc11 => {
+
+                console.log(online)
+            if(online.includes(auth)){
+               const docRefOnline = db.collection("Chats").doc(doc11.id)
+               docRefOnline.collection("Messages").where("Status", "==", "New")
+               
+               docRefOnline.get().then(querySnapshot => {
+                querySnapshot.forEach(doc12 => {
+
+                    console.log(doc12.id)
+
+                docRefOnline.collection("Messages").doc(doc12.id).update({
+                    Read: firebase.firestore.FieldValue.arrayUnion(auth)
+                });
+            });
+        });
+            }
+            });
+        });
+
+            } updateOnlineStatusFromPagesLeave();
+
 
                                     DOMchats.appendChild(chatsDiv)
                                     chatsDiv.appendChild(photoDiv)

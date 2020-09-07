@@ -10,6 +10,7 @@
     padding: 5px;
     border:  1px solid rgba(0,0,0,.2);
     border-radius: 3px;
+    font-size: 16px;
 }
 
 #themegroup-tab{
@@ -180,6 +181,8 @@
 
 .bottom-div p{
     margin-top: 0px;
+    font-size: 18px;
+    padding: 0px 15px;
 }
 
 .auth-message-p{
