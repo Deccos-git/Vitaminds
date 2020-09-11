@@ -770,6 +770,7 @@ function saveCoachgroup(){
     const numberParticipants = document.getElementById("coachgroup-number-participants").value
     const costs = document.getElementById("coachgroup-costs").value
     const startNumber = document.getElementById("coachgroup-start-number").value
+    const exercises = document.getElementById("coachgroup-number-exercises").value
 
     // Group goal
     const groupGoalSelect = document.getElementById("create-coachgroup-goal-select")
@@ -788,6 +789,7 @@ function saveCoachgroup(){
         StartNumber: startNumber,
         Members: [],
         Goal: option,
+        AmountExersices: exercises,
         Messages: 0,
         Type: "Coachgroup", 
         CoverPhoto: coverPhoto
@@ -880,6 +882,7 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
         const coverPhoto = doc.data().CoverPhoto
         const costs = doc.data().Costs
         const members = doc.data().Members
+        const exersices = doc.data().AmountExercises
 
         const DOM = document.getElementById("coachgroups")
 
@@ -899,6 +902,7 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
         const numberParticipantsP = document.createElement("p")
         const memberCount = document.createElement("p")
         const startNumberP = document.createElement("p")
+        const exersicesP = document.createElement("p")
         const costsP = document.createElement("p")
         const bottomDiv = document.createElement("div")
             bottomDiv.setAttribute("class", "bottom-div")
@@ -944,7 +948,25 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
             memberCount.innerText = `Huidig aantal leden: ${members.length}`
             costsP.innerText = `Kosten per week: ${costs} euro`
             startNumberP.innerText = `Coachgroep begint bij: ${startNumber} leden`
+            exersicesP.innerText = `Aantal oefeningen per maand: ${exersices}`
             leaveGroup.innerText = "Groep verlaten"
+
+            // coachgroup agreement
+
+            coachgroupAgreementTitle(`${description}. Ik plaats ${exersices} keer per maand een nieuwe oefening.`)
+
+            db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    const profilePic = doc1.data().Profielfoto
+                    const coachNameClean = doc1.data().GebruikersnaamClean
+
+                    coachGroupAgreementQuestions(profilePic, coachNameClean, auth)
+
+                });
+            });   
+            
+            visitCoachgroupAgreement(title)
 
             DOM.appendChild(groupInnerDiv)
             groupInnerDiv.appendChild(groupHeader)
@@ -954,6 +976,7 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
             bottomDiv.appendChild(groupTitleH2)
             bottomDiv.appendChild(descriptionP)
             groupInnerDiv.appendChild(metaDiv)
+            metaDiv.appendChild(exersicesP)
             metaDiv.appendChild(numberParticipantsP)
             metaDiv.appendChild(startNumberP)
             metaDiv.appendChild(memberCount)
@@ -1175,13 +1198,32 @@ function saveNewMemberToGroup(a){
             const auth = doc.data().Gebruikersnaam
 
     db.collection("Chats").where("Room", "==", a ).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+        querySnapshot.forEach(doc1 => {
 
-            db.collection("Chats").doc(doc.id).update({
+            const type = doc1.data().Type
+            const groupName = doc1.data().RoomClean
+            const coach = doc1.data().Creater
+
+           db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
+               querySnapshot.forEach(doc => {
+              
+                      const coachNameClean = doc.data().GebruikersnaamClean;
+
+            groupButton.setAttribute("data-groupname", groupName)
+            groupButton.setAttribute("data-coachname", coachNameClean)
+
+                });
+            });
+
+            db.collection("Chats").doc(doc1.id).update({
                 Members: firebase.firestore.FieldValue.arrayUnion(auth)
                         }).then(() => {
+                            if(type === "Coachgroup"){
+                                window.open("coachgroup-agreement.html", "_self") 
+                            } else {
                             window.open("../Group/" + title + ".html", "_self") 
-                                    });
+                            };
+                        });
                     });
                 });
             });
@@ -1256,4 +1298,55 @@ function leaveTheGroup(a){
         });
     };
 });
+};
+
+// Coachgroup agreement title and welkom message
+function coachgroupAgreementTitle(welkomMessage){
+const title = document.getElementById("coachgroup-member-agreement-title")
+const goalAndAmountExercises = document.getElementById("goal-coachgroup")
+
+auth.onAuthStateChanged(User =>{
+    if(User){
+    const userRef = db.collection("Vitaminders").doc(User.uid);
+    userRef.get().then(function(doc) {
+
+        const auth = doc.data().GebruikersnaamClean
+
+title.innerText = `Welkom bij mijn coachgroep, ${auth}`
+goalAndAmountExercises.innerText = welkomMessage
+
+            });
+        };
+    });
+};
+
+// Coachgroup agreement questions
+function coachGroupAgreementQuestions(imageSource, coachNameClean, coachName){
+
+    const DOM = document.getElementById("questions-coachgroup-agreement")
+
+    const imgAndNameDiv = document.createElement("div")
+        imgAndNameDiv.setAttribute("id", "img-name-div-coachgroup-agreement-questions")
+    const img = document.createElement("img")
+    const name = document.createElement("p")
+
+    img.src = imageSource
+    name.innerText = coachNameClean
+
+    DOM.appendChild(imgAndNameDiv)
+    imgAndNameDiv.appendChild(img)
+    imgAndNameDiv.appendChild(name)
+
+    imgAndNameDiv.addEventListener("click", () => {
+        window.open("../Vitaminders/" + coachName + ".html", "_self");
+    })
+};
+
+function visitCoachgroupAgreement(coachGroupButton){
+
+    const button = document.getElementById("visitCoachgroup")
+
+    button.addEventListener("click", () => {
+        window.open(`../Group/${coachGroupButton}.html`, "_self");
+    });
 };

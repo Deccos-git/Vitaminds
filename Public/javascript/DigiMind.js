@@ -2265,5 +2265,18 @@ db.collectionGroup("Levensvragen").where("Levenslessen", "array-contains", "Tool
                 }
         });
         
-      
-        
+// Subscriptions
+function subscriptionPage(){
+
+        auth.onAuthStateChanged(User =>{
+                if (User){
+                    let docRef = db.collection("Vitaminders").doc(User.uid);
+                        docRef.get().then(function(doc){
+                            const auth = doc.data().Gebruikersnaam;
+
+        window.open("../subscrition/" + auth, "_self")
+
+                        });
+                };
+        });
+};

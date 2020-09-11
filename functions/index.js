@@ -29,6 +29,12 @@ app.use(require('prerender-node').set('prerenderToken', 'Ab0cCom4i1KuazJ2YhDA'))
 // app.use(bodyParser.urlencoded({extended: false}))
 // const urlencodedParser = bodyParser.urlencoded({extended: true});
 
+// Subscriptions aanmaken op basis van URL
+app.get('/subscrition/:id',function(req,res)
+{
+    res.sendFile('subscriptions.html', { root: __dirname });
+});
+
 // Group aanmaken op basis van URL
 app.get('/Group/:id',function(req,res)
 {
@@ -46,7 +52,6 @@ app.get('/Workshops/:id',function(req,res)
 {
     res.sendFile('workshop.html', { root: __dirname });
 });
-
 
 // Levensvraag artikelen aanmaken op basis van URL
 app.get('/Artikelen/:id',function(req,res)

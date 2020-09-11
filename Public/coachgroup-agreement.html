@@ -1,19 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="nl">
 
-  <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-159826016-1');
-</script>
-
-    <Title> Inlog </title>
+<head>
+  <Title> Welkom bij Vitaminds </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Style/style.css">
+    <link rel="stylesheet" href="Style/groups.css">
     <link rel="shortcut icon" href="images/Favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -23,39 +15,39 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
     <script>src="https://www.gstatic.com/firebasejs/6.5.0/firebase-analytics.js"</script>
     <script src="https://js.stripe.com/v3/"></script>
-  </head>
+</head>
 
-  <body> 
+<body>
 
-   <!-- Feedback -->
-   <div id="feedback">
+  <!-- Feedback -->
+  <div id="feedback">
     <a href="tickets.html"> <p>Feedback</p></a>
   </div>
-
-         <!-- Mobile-menu -->
-         <nav id="mobile-menu"> 
-          <div id="menu-mobile-visible-layer">
-            <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
-            <div class="main-menu-mobile"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
-          </div>
-          <div id="mobile-menu-outer-div">
-            <div id="mobile-menu-inner-div">
-                  <div id="profile-picture-mobile"></div>
-                  <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
-              <div class="main-menu-mobile"><a href="openup.html">Open up</a></div>
-              <div class="main-menu-mobile"><a href="groups.html">Groepen</a></div> 
-              <div class="main-menu-mobile"><a href="inspiratie.html">Inspiratie</a></div>
-              <!-- <div class="main-menu-mobile"><a href="tools.html">Tools</a></div> -->
-              <div class="main-menu-mobile"><a href="coaches.html">Coaches</a></div>
-              <div class="coach-menu-outer-div-mobile"><p id="aanmeldCH-mobile">Voor coaches</p>
-                <div id="coach-menu-main-mobile">
-                  <div><a href="voor-coach.html"><p class="coach-menu-main-p-mobile">Aanmelden als coach</p></a></div>
-                  <div><a href="kenniscentrum.html"><p class="coach-menu-main-p-mobile">Kenniscentrum coaching</p></a></div>
-                </div>
-              </div>  
-              <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+  
+     <!-- Mobile-menu -->
+     <nav id="mobile-menu"> 
+      <div id="menu-mobile-visible-layer">
+        <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+        <div class="main-menu-mobile"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+      </div>
+      <div id="mobile-menu-outer-div">
+        <div id="mobile-menu-inner-div">
+              <div id="profile-picture-mobile"></div>
+              <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
+          <div class="main-menu-mobile"><a href="openup.html">Open up</a></div>
+          <div class="main-menu-mobile"><a href="groups.html">Groepen</a></div> 
+          <div class="main-menu-mobile"><a href="inspiratie.html">Inspiratie</a></div>
+          <!-- <div class="main-menu-mobile"><a href="tools.html">Tools</a></div> -->
+          <div class="main-menu-mobile"><a href="coaches.html">Coaches</a></div>
+          <div class="coach-menu-outer-div-mobile"><p id="aanmeldCH-mobile">Voor coaches</p>
+            <div id="coach-menu-main-mobile">
+              <div><a href="voor-coach.html"><p class="coach-menu-main-p-mobile">Aanmelden als coach</p></a></div>
+              <div><a href="kenniscentrum.html"><p class="coach-menu-main-p-mobile">Kenniscentrum coaching</p></a></div>
             </div>
-          </nav>
+          </div>  
+          <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+        </div>
+      </nav>
 
    <!-- menu --> 
    <nav id="menu">
@@ -84,15 +76,30 @@
       </div> 
     </div>
   </nav>
-  
-      <h1>Log in</h1>
-      <div class="inlogVM">
-          <input id="emailVM" type="email" name="email" placeholder="emailadres">
-          <input id="passwordVM" type="password" name="password" id="" placeholder="password">
-          <button class="button-algemeen" id="button-inlog" onclick= "inlogVM()" >Go!</button>
-      </div>
 
-      <!-- Toolbar mobile -->
+  <section class="page-title">
+
+    <div id="register-notice">
+      <h2 id="coachgroup-member-agreement-title"></h2>
+      <img src="/images/register-notice.png" alt="Coachgroup abonnement is aangemaakt.">
+      <h3>Wat kun je verwachten?</h3>
+      <p id="goal-coachgroup"></p>
+      <p>Je kan de oefening op je eigen tijd doen. 
+          Ik raad je wel aan om niet teveel achter te lopen, 
+          omdat veel van het leren ook gebeurd in de gesprekken die we met elkaar hebben in de groep.</p>
+        <h3>Je abonnement</h3>
+        <p>Je kunt je abonnement terugvinden in je Digimind onder het kopje "abonnementen".<br>
+            Ik neem zo snel mogelijk contact met je op over de betaling van je abonnement.</p>
+        <h3>Vragen</h3>
+        Voor vragen kun je mij altijd even een berichtje sturen.
+        <div id="questions-coachgroup-agreement"></div>  
+        <div>
+            <button class="button-algemeen" id="visitCoachgroup">Bekijk coachgroep</button>
+        </div>
+    </div>
+  </section>
+
+     <!-- Toolbar mobile -->
 <div class="toolbar-mobile">
   <img src="images/home-icon.png" alt="" id="toolbar-home">
   <img src="images/send-icon.png" alt="" id="toolbar-chats-groups">
@@ -106,22 +113,21 @@
   <img src="images/menu-dashboard.png" alt="" id="toolbar-digimind">
 </div>
 
-      <!-- footer -->
       <footer class="footer">
         <div>
          <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
         </div>
         <div>
-          <h3 id="slogan-footer">Op avontuur in je eigen karakter</h3>
+          <h3 id="slogan-footer">Het sociale netwerk voor imperfecte mensen</h3>
         </div>
         <div>
          <a href="https://www.facebook.com/VitamindsNederland/"><img src="images/Logo-facebook.png" alt="" width="40px"></a>
          <a href="https://www.youtube.com/channel/UC44W6GvZnKZqBw7hdH5OU0A"><img src="images/Logo-youtube.png" alt="" width="40px"></a>
         </div>
       </footer>
-      
-          <script type="text/javascript" src="javascript/firebase.js"></script>
-          <script type="text/javascript" src="javascript/auth.js"></script>
-          <script type="text/javascript" src="javascript/index.js"></script>
-        </body>
+
+      <script type="text/javascript" src="javascript/firebase.js"></script>
+      <script type="text/javascript" src="javascript/auth.js"></script>
+      <script type="text/javascript" src="javascript/groups.js"></script>
+</body>
 </html>

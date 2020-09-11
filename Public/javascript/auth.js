@@ -540,6 +540,8 @@ async function registerCoach(){
   if(button != null){
   button.addEventListener("click", () => {
 
+    button.innerText = "Laden.."
+
   const email = document.getElementById("register-email").value;
   const password = document.getElementById("register-wachtwoord").value;
   const passwordInput = document.getElementById("register-wachtwoord")
@@ -599,9 +601,11 @@ async function registerCoach(){
       userRef.get().then(function(doc) {
    db.collection('customers').doc(doc.id).collection('checkout_sessions')
    .add({
-     price: 'price_1HLXnVFIim4HzRlUQQXl50Z1l',
-     success_url: window.location.origin,
-     cancel_url: window.location.origin,
+     price: 'price_1HLXnVFIim4HzRlUQQXl50Z1',
+     success_url: "https://vitaminds.nu/succes.html",
+     cancel_url: "https://vitaminds.nu/voor-coach.html",
+     tax_rates: ['txr_1HLYPxFIim4HzRlUFAvMv9ti'],
+     payment_method_types: ['sepa_debit']
    })
    .then(docRef => {
      // Wait for the CheckoutSession to get attached by the extension
@@ -624,32 +628,31 @@ async function registerCoach(){
    });
   })
 
-//   .then(() => {
-//     db.collection("Mail").doc().set({
-//       to: [email],
-//       cc: "info@vitaminds.nu",
-// message: {
-// subject: `Verifier je account op Vitaminds! `,
-// html: `Hallo ${naam}, </br></br>
-//       Wat geweldig dat je een coach-account hebt aangemaakt op Vitaminds! Je bent in ieder geval van harte welkom in onze community. 
-//       Daarnaast hopen we van harte dat is een mooie stap is in de online vindbaarheid van je praktijk.<br><br>
-//       Vergeet niet om je coachgegevens goed in- en aan te vullen in je Digimind (je persoonlijke ontwikkelomgeving en tevens coachprofiel op Vitaminds).
-//       Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
+  .then(() => {
+    db.collection("Mail").doc().set({
+      to: [email],
+      cc: "info@vitaminds.nu",
+message: {
+subject: `Verifier je account op Vitaminds! `,
+html: `Hallo ${naam}, </br></br>
+      Wat geweldig dat je een coach-account hebt aangemaakt op Vitaminds! Je bent in ieder geval van harte welkom in onze community. 
+      Daarnaast hopen we van harte dat is een mooie stap is in de online vindbaarheid van je praktijk.<br><br>
+      Vergeet niet om je coachgegevens goed in- en aan te vullen in je Digimind (je persoonlijke ontwikkelomgeving en tevens coachprofiel op Vitaminds).
+      Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
       
-//       Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.<br><br>
-//       Vriendelijke groet, </br></br>
-//       Het Vitaminds Team </br></br>
-//       <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-// Gebruikersnaam: naam,
-// Emailadres: email,
-// Type: "Coach"
-// }
+      Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.<br><br>
+      Vriendelijke groet, </br></br>
+      Het Vitaminds Team </br></br>
+      <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+Gebruikersnaam: naam,
+Emailadres: email,
+Type: "Coach"
+}
           
-// }).then(() => {
-//               const notice = document.getElementById("register-notice")
-//               notice.style.display = "block"
-//           })
-//         })
+});
+
+window.open("succes.html", "_self");
+        })
       }
     })
   }
@@ -664,6 +667,54 @@ if(code.style.display = "none"){
   code.style.display = "none"
 }
 }
+
+
+// Succes pagina
+async function getAdminUsernameAndProfilePicture(){
+  
+const succesQuestion = document.getElementById("succes-questions")
+
+const photoDiv = document.createElement("div")
+      photoDiv.setAttribute("id", "admin-photo-img-div")
+const photoImg = document.createElement("img")
+const adminName = document.createElement("h3")
+const adminContactMe = document.createElement("p")
+
+ await db.collection("Vitaminders")
+.where("GebruikersnaamClean", "==", "Gijs van Beusekom")
+.get()
+.then(querySnapshot => {
+  querySnapshot.forEach(doc => {
+
+    const gebruikersnaamClean = doc.data().GebruikersnaamClean
+    const profilePicture = doc.data().Profielfoto
+    const admin = doc.data().Gebruikersnaam
+
+    photoImg.src = profilePicture
+    adminName.innerText = gebruikersnaamClean
+    adminContactMe.innerText = `Voor alle vragen over Vitaminds kun je mij altijd even een berichtje sturen.`
+
+    function linkToDigimind(a){
+      a.addEventListener("click", () => {
+        window.open("../Vitaminders/" + admin + ".html", "_self");
+      });
+    } linkToDigimind(photoImg)
+    linkToDigimind(adminName)
+    linkToDigimind(adminContactMe)
+
+    });
+  });
+
+  succesQuestion.appendChild(photoDiv)
+    photoDiv.appendChild(adminContactMe) 
+    photoDiv.appendChild(photoImg)
+    photoDiv.appendChild(adminName)
+
+} getAdminUsernameAndProfilePicture()
+
+
+
+
 
 
 
