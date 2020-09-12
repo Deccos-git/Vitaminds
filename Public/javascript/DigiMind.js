@@ -922,7 +922,8 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                         Type: "Chat",
                         Messages: 0,
                         Eigenaar: "Vitaminds",
-                        Members: membersArray
+                        Members: membersArray,
+                        Online: []
                 }).then(() => {
                         window.open(`../Chats/${gebruikersnaam}.html`, "_self");
                                                                 });

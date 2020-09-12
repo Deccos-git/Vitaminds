@@ -227,6 +227,8 @@ function noticeVisitor(buttonDiv, button){
 
     const DOMtitle = document.getElementById("group-title")
 
+    console.log(DOMtitle)
+
     if(DOMtitle != null){
 
         db.collection("Chats").where("Room", "==", titel).get().then(querySnapshot => {
@@ -234,8 +236,6 @@ function noticeVisitor(buttonDiv, button){
 
                 const roomClean = doc.data().RoomClean
                 const room = doc.data().Room
-
-                console.log(room)
 
                 if(roomClean == undefined){
                     DOMtitle.innerText = room
@@ -1300,7 +1300,7 @@ function leaveTheGroup(a){
 });
 };
 
-// Coachgroup agreement title and welkom message
+// Coachgroup payment agreement title and welkom message
 function coachgroupAgreementTitle(welkomMessage){
 const title = document.getElementById("coachgroup-member-agreement-title")
 const goalAndAmountExercises = document.getElementById("goal-coachgroup")
@@ -1320,7 +1320,7 @@ goalAndAmountExercises.innerText = welkomMessage
     });
 };
 
-// Coachgroup agreement questions
+// Coachgroup payment agreement questions
 function coachGroupAgreementQuestions(imageSource, coachNameClean, coachName){
 
     const DOM = document.getElementById("questions-coachgroup-agreement")

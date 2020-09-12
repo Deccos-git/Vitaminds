@@ -25,7 +25,6 @@
 #chat-screen{
     min-height: 350px;
     border-top: 1px solid rgba(0,0,0,.2);
-    border-bottom: 1px solid rgba(0,0,0,.2);
     display: flex;
     flex-direction: column;
     padding: 20px 0px;
