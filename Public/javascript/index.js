@@ -113,20 +113,23 @@ const IOSpopup = document.getElementById("ios-popup")
 const popupTitle = document.getElementById("ios-popup-title")
 const popupInstructions = document.getElementById("ios-popup-instruction")
 
+if(popupTitle != null){
+
 // Title personalized
 
-        auth.onAuthStateChanged(User =>{
-                if(User){
-                  const userRef = db.collection("Vitaminders").doc(User.uid);
-                  userRef.get().then(function(doc) {
+auth.onAuthStateChanged(User =>{
+        if(User){
+                const userRef = db.collection("Vitaminders").doc(User.uid);
+                userRef.get().then(function(doc) {
 
-                        const authClean = doc.data().GebruikersnaamClean
+                const authClean = doc.data().GebruikersnaamClean
 
-                        popupTitle.innerText = `Hoi ${authClean}, Wist je dat er ook een Vitaminds app is?`
+                popupTitle.innerText = `Hoi ${authClean}, Wist je dat er ook een Vitaminds app is?`
 
-                                });
-                        };
-                });
+                        });
+                };
+        });
+};
 
 
 
@@ -143,7 +146,7 @@ if(downloadButton != undefined){
 downloadButton.addEventListener("click", (e) => {
         instructionDivPopup.style.display = "flex"
         iosPopupNotice.style.display = "none"
-});
+        });
 };
 
 if(dontDownloadButton != undefined){

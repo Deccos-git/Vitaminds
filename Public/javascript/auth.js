@@ -325,6 +325,8 @@ auth.onAuthStateChanged(User =>{
                 db.collection("Chats").where("Members", "array-contains", naamID).get().then(querySnapshot =>{
                   querySnapshot.forEach(doc3 => { 
 
+                    const type = doc3.data().Type
+
                   db.collection("Chats").doc(doc3.id).collection("Messages").where("Status", "==", "New").get().then(querySnapshot => {
                     querySnapshot.forEach(doc1 => {
 
@@ -334,6 +336,7 @@ auth.onAuthStateChanged(User =>{
 
                       const userArray = users.split("_")
 
+                      if (type === "Group" || type === "Practicegroup" || type === "Coachgroup"){
                       // Groups
                       if (readList != undefined){
                       if(!readList.includes(naamID)){
@@ -344,6 +347,7 @@ auth.onAuthStateChanged(User =>{
                         };
                       };
                     };
+                  } else {
 
                     // Chats
                 if(userArray.includes(naamID)){
@@ -355,6 +359,8 @@ auth.onAuthStateChanged(User =>{
                     lengthArray.push(doc1.id)
                   };
                 };
+              };
+              
               });
                   }).then(() => {
                     chatGroupNewMessageCountP.innerText = newMessageArray.length
@@ -671,8 +677,10 @@ if(code.style.display = "none"){
 
 // Succes pagina
 async function getAdminUsernameAndProfilePicture(){
+
+  const succesQuestion = document.getElementById("succes-questions")
   
-const succesQuestion = document.getElementById("succes-questions")
+  if (succesQuestion != null){
 
 const photoDiv = document.createElement("div")
       photoDiv.setAttribute("id", "admin-photo-img-div")
@@ -709,8 +717,8 @@ const adminContactMe = document.createElement("p")
     photoDiv.appendChild(adminContactMe) 
     photoDiv.appendChild(photoImg)
     photoDiv.appendChild(adminName)
-
-} getAdminUsernameAndProfilePicture()
+  };
+}; getAdminUsernameAndProfilePicture()
 
 
 

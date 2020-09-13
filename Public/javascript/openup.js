@@ -76,7 +76,12 @@ const DOM = document.getElementById("verzamelOpenUps")
                             const userClean = doc4.data().GebruikersnaamClean
                             const userPhoto = doc4.data().Profielfoto
 
+                            if(userPhoto == undefined){
+                                metaUserPhoto.src = "images/dummy-profile-photo.jpeg"
+                            } else {
                     metaUserPhoto.src = userPhoto
+                            };
+                            
                     metaUserName.innerHTML = userClean
 
                     metaUserPhoto.addEventListener("click", () => {

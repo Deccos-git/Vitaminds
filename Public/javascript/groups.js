@@ -614,6 +614,8 @@ function startPracticegroupBuilder(){
 
 const groupGoalSelect = document.getElementById("create-practicegroup-goal-select")
 
+if(groupGoalSelect != null){
+
 db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
     querySnapshot.forEach(doc=> {
             const doel = doc.data().Levensvraag
@@ -623,10 +625,13 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
             option.innerHTML = doel
 
             groupGoalSelect.appendChild(option)
+        });
     });
-});
+};
 
 const coachgroupGoalSelect = document.getElementById("create-coachgroup-goal-select")
+
+if(coachgroupGoalSelect != null){
 
 db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
     querySnapshot.forEach(doc=> {
@@ -637,14 +642,17 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
             option.innerHTML = doel
 
             coachgroupGoalSelect.appendChild(option)
+        });
     });
-});
+};
 
 // Title
 
 function groupTitle(a,b){
 
 const coachGroupTitle = document.getElementById(a)
+
+if (coachGroupTitle != null){
 
 const authRef = auth.onAuthStateChanged(User =>{
     if(User){
@@ -656,9 +664,10 @@ const authRef = auth.onAuthStateChanged(User =>{
 
         coachGroupTitle.innerText = `Wat leuk dat je een ${b} gaat starten, ${auth}`
 
-            });
-        };
-    });
+                });
+            };
+        });
+    };
 }   groupTitle("coachgroup-builder-title", "coachgroep")
     groupTitle("practicegroup-builder-title", "oefengroep")
 
@@ -787,7 +796,7 @@ function saveCoachgroup(){
         NumberParticipants: numberParticipants,
         Costs: costs,
         StartNumber: startNumber,
-        Members: [],
+        Members: firebase.firestore.FieldValue.arrayUnion(auth),
         Goal: option,
         AmountExersices: exercises,
         Messages: 0,
@@ -1279,7 +1288,7 @@ function memberCoachGroups(elem){
 ;}
 
 // Leave group
-function leaveTheGroup(a){
+function leaveTheGroup(roomTitle){
     auth.onAuthStateChanged(User =>{
         if(User){
         const userRef = db.collection("Vitaminders").doc(User.uid);
@@ -1287,23 +1296,25 @@ function leaveTheGroup(a){
 
             const auth = doc.data().Gebruikersnaam
 
-            db.collection("Chats").where("Room", "==", a ).get().then(querySnapshot => {
+            db.collection("Chats").where("Room", "==", roomTitle ).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
         
-                    db.collection("Chats").doc(doc.id).update({
-                        Members: firebase.firestore.FieldValue.arrayRemove(auth)
-                                });
+                db.collection("Chats").doc(doc.id).update({
+                    Members: firebase.firestore.FieldValue.arrayRemove(auth)
                             });
                         });
-        });
-    };
-});
+                    });
+            });
+        };
+    });
 };
 
 // Coachgroup payment agreement title and welkom message
 function coachgroupAgreementTitle(welkomMessage){
 const title = document.getElementById("coachgroup-member-agreement-title")
 const goalAndAmountExercises = document.getElementById("goal-coachgroup")
+
+if (title != null){
 
 auth.onAuthStateChanged(User =>{
     if(User){
@@ -1315,15 +1326,18 @@ auth.onAuthStateChanged(User =>{
 title.innerText = `Welkom bij mijn coachgroep, ${auth}`
 goalAndAmountExercises.innerText = welkomMessage
 
-            });
-        };
-    });
+                });
+            };
+        });
+    };
 };
 
 // Coachgroup payment agreement questions
 function coachGroupAgreementQuestions(imageSource, coachNameClean, coachName){
 
     const DOM = document.getElementById("questions-coachgroup-agreement")
+
+    if (DOM != null){
 
     const imgAndNameDiv = document.createElement("div")
         imgAndNameDiv.setAttribute("id", "img-name-div-coachgroup-agreement-questions")
@@ -1339,14 +1353,18 @@ function coachGroupAgreementQuestions(imageSource, coachNameClean, coachName){
 
     imgAndNameDiv.addEventListener("click", () => {
         window.open("../Vitaminders/" + coachName + ".html", "_self");
-    })
+        });
+    };
 };
 
 function visitCoachgroupAgreement(coachGroupButton){
 
     const button = document.getElementById("visitCoachgroup")
 
+    if (button != null){
+
     button.addEventListener("click", () => {
         window.open(`../Group/${coachGroupButton}.html`, "_self");
-    });
+        });
+    };
 };
