@@ -25,9 +25,10 @@
 
 #coach-subscriptions{
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
     background-color: rgb(245, 245, 245);
+    width: 100%;
 }
 
 .subscription-colom{
@@ -44,7 +45,6 @@
 .subscription-colom h4{
     align-self: center;
     font-size: 20px;
-    margin-left: 30%;
 }
 
 .subscription-colom h5{
@@ -141,6 +141,31 @@
 #edit-profile-notice{
     font-size: 16px;
     text-align: center;
+}
+
+#coach-register-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#coach-register-form h2{
+    margin: 50px 0px 0px 0px;
+}
+
+#price-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#price-div h6{
+    margin-top: 0px;
+    color: #cf6e13;
+}
+
+#choice-subscription{
+    color: #cf6e13;
 }
 
 @media only screen and (max-width: 938px){

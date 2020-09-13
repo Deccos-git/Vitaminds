@@ -180,7 +180,11 @@ function noticeVisitor(buttonDiv, button){
 
                 const numberOfMembers = members.length
 
-                subTitle.innerText = `${numberOfMembers} mensen praten over`
+                if(numberOfMembers === 1){
+                    subTitle.innerText = `${numberOfMembers} mens praat over`
+                } else {
+                    subTitle.innerText = `${numberOfMembers} mensen praten over`
+                };
 
                 //Already a member of the group
                 alreadyMember(members, button)

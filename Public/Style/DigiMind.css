@@ -947,6 +947,21 @@
     color: #FFF;
 }
 
+#chat-button-contact{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#chat-button-contact h3{
+    cursor: pointer;
+}
+
+#chat-button-contact h3:hover{
+    color: #0c6665;
+}
+
 #chat-notification-visitor{
     display: none;
     color: white;

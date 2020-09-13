@@ -899,6 +899,9 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
 
                 // Chat 
                 const chatButton = document.getElementById("chat-button")
+                const chatButtonContact = document.getElementById("chat-button-contact")
+
+                function startChat(button){
 
                 chatButton.addEventListener("click", () => {
 
@@ -935,6 +938,8 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                                                 }
                                         });
                                 });
+                        }; startChat(chatButton)
+                        startChat(chatButtonContact)
 
                 // Hide chat button if auth is coach en user is Vitaminder & if Digimind belongs to auth
 

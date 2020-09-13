@@ -50,7 +50,13 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         const readMore = document.createElement("p")
             readMore.setAttribute("class", "button-read-more")
 
-        profielFoto.style.backgroundImage = `url('${profilePic}')`
+
+
+            if(profilePic === undefined){
+                profielFoto.style.backgroundImage = `url('images/dummy-profile-photo.jpeg')`
+            } else {
+                profielFoto.style.backgroundImage = `url('${profilePic}')`
+            };
         
             nieuweH3.addEventListener('click', (e) => {
                 window.open("Vitaminders/" + [naam], "_self");

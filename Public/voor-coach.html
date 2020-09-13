@@ -103,6 +103,7 @@
       <img src="images/undraw_mobile_web_2g8b (1).png" alt="" width="500px">
     </div>
   </div>
+
   <div class="coach-information">
     <div class="coach-information-image">
       <img src="images/undraw_meet_the_team_e5b7 (1).png" alt="" width="500px">
@@ -115,9 +116,25 @@
       </ul>
       <a href="#choice-subscription"><button class="button-standard">Bekijk abonnement</button></a>
     </div>
+
+    <div class="coach-information">
+      <div class="coach-information-text">
+        <h2>Coach online via Vitaminds</h2>
+        <ul>
+          <li>Organiseer coachgroepen, creëer online workshops en chat één-op-één</li>
+          <li>Verdien inkomsten rechtsreeks via de website</li>
+        </ul>
+        <a href="#choice-subscription"><button class="button-standard">Bekijk abonnement</button></a>
+      </div>
+      <div class="coach-information-image">
+        <img src="images/undraw_meet_the_team_e5b7 (1).png" alt="" width="500px">
+      </div>
     
   </div>
   <div class="coach-information">
+    <div class="coach-information-image">
+      <img src="images/undraw_sentiment_analysis_jp6w (1).png" alt="" width="500px">
+    </div>
     <div class="coach-information-text">
       <h2>Help mensen op weg met je profesionele inzichten</h2>
       <ul>
@@ -126,9 +143,7 @@
       </ul>
       <a href="#choice-subscription"><button class="button-standard">Bekijk abonnement</button></a>
     </div>
-    <div class="coach-information-image">
-      <img src="images/undraw_sentiment_analysis_jp6w (1).png" alt="" width="500px">
-    </div>
+
   </div>
 
   <section id="minimale-eisen">
@@ -262,8 +277,8 @@ Beroepscoaches hebben, zoals het woord al zegt, van coachen hun beroep gemaakt. 
     <h4>Heb je een vraag over de minimale voorwaarden? Stuur een mailtje naar info@vitaminds.nu</h4>
   </section>
 
-<h2 id="choice-subscription">Het Vitaminds coach abonnement</h2>
   <section id="coach-subscriptions">
+    <h2 id="choice-subscription">Het Vitaminds coach abonnement</h2>
     <div class="subscription-colom" id="coachprofiel">
       <!-- Coachprofile -->
       <!-- <h3>Coachprofiel</h3>
@@ -289,7 +304,10 @@ Beroepscoaches hebben, zoals het woord al zegt, van coachen hun beroep gemaakt. 
     </div> -->
     <!-- Coachprofile PLUS -->
     <div class="subscription-colom" id="coachprofiel-plus">
-      <h4>€25 per maand (excl. BTW)</h4>
+      <div id="price-div">
+        <h4>€25 per maand (excl. BTW)</h4>
+        <h6>Eerste maand gratis</h6>
+      </div>
       <div class="checked-sellingpoint">
         <img src="images/Check-icon.png" alt="" width="30px" height="30px">
         <p>Vergroot je online vindbaarheid</p>
@@ -348,59 +366,62 @@ Beroepscoaches hebben, zoals het woord al zegt, van coachen hun beroep gemaakt. 
     </div> -->
   </section>
   
-  <h2>Maak je coachprofiel aan</h2>
-  <div id="register-div">
-    <h5>Je naam</h5>
-    <input id="register-gebruikersnaam" type="text" placeholder="Naam">
-    <h5>Je emailadres</h5>
-    <input id="register-email" type="email" placeholder="Emailadres">
-    <h5>Je wachtwoord</h5>
-    <input id="register-wachtwoord" type="password" placeholder="Wachtwoord">
-    <h5>Herhaal je wachtwoord</h5>
-    <input id="register-wachtwoord-repeat" type="password" placeholder="Herhaal je wachtwoord">
-    <h5>Je website (vul in als: www.website.nl, dus geen https://")</h5>
-    <input id="register-website" type="text" placeholder="Wat is je website">
-    <h5>Je telefoonnummer</h5>
-    <input id="register-phone" type="text" placeholder="Wat is je telefoonnummer?">
-    <h5>Je coachsmethodiek(en)</h5>
-    <textarea id="register-method" type="text" placeholder="Omschrijf kort en puntsgewijs je coachmethodiek(en)"></textarea>
-    <h5>Je stad of dorp</h5>
-    <input id="register-city" type="text" placeholder="Waar bevindt je praktijk zich?">
-    <h5>Biedt je ook online coaching?</h5>
-    <div class="input-online-div">
-      <input class="input-radio-online" value="Ja" id="register-online" type="radio" name="register-online" placeholder="Is online coaching ook mogelijk?">
-      <label for="register-online">Ja</label>
-    </div>
-    <div class="input-online-div">
-      <input class="input-radio-online" value="Nee" id="register-online" type="radio" name="register-online" placeholder="Is online coaching ook mogelijk?">
-      <label for="register-online">Nee</label>
-    </div>
-    <h5>Je doelgroep (volwassenen, kinderen, studenten, etc)</h5>
-    <input id="register-targetgroup" type="text" placeholder="Wat is je doelgroep?">
-    <h5>Je coachingsstijl</h5>
-    <textarea id="register-style" type="text" placeholder="Wat is je coachingsstijl?"></textarea>
-    <h5>Je motivatie</h5>
-    <textarea id="register-why" type="text" placeholder="Waarom ben je coach geworden?"></textarea>
-    <h5>Je tarief per uur voor 1 op 1 coaching</h5>
-    <input id="register-costs" type="text" placeholder="Wat is je tarief?">
-    <h5>Aantal jaren ervaring</h5>
-    <input id="register-experience-type" type="text" placeholder="Hoeveel jaar ervaring heb je als coach?">
-    <h5>Je ervaringen</h5>
-    <textarea id="register-experience" type="text" placeholder="Welke ervaringen heb je als coach?"></textarea>
-    <h5>Je opleidingen & certificaten</h5>
-    <textarea id="register-education" type="text" placeholder="Welke relevante opleidingen en ervaringen heb je?"></textarea>
-    <form class="check-code" id="minimale-eisen-form">
-      <input type="checkbox" id="minimale-eisen-check">
-      <label for="minimale-eisen-check">Ik voldoe aan de <a href="#minimale-eisen"> minimale voorwaarden</a></label>
-    </form>
-    <form class="check-code" id="gedragscode-form-2">
-      <input type="checkbox" id="gedragscode-check">
-      <label for="gedragscode-check">Ik onderschrijf de <a href="#minimale-eisen"> gedragscode</a></label>
-    </form>
-    <div id="coach-register-button">
-    <button class="button-standard" id="register-button-coach">Aanmaken</button>
-    </div>
-</div>
+  <section id="coach-register-form">
+    <h2>Maak je coachprofiel aan</h2>
+
+    <div id="register-div">
+      <h5>Je naam</h5>
+      <input id="register-gebruikersnaam" type="text" placeholder="Naam">
+      <h5>Je emailadres</h5>
+      <input id="register-email" type="email" placeholder="Emailadres">
+      <h5>Je wachtwoord</h5>
+      <input id="register-wachtwoord" type="password" placeholder="Wachtwoord">
+      <h5>Herhaal je wachtwoord</h5>
+      <input id="register-wachtwoord-repeat" type="password" placeholder="Herhaal je wachtwoord">
+      <h5>Je website (vul in als: www.website.nl, dus geen https://")</h5>
+      <input id="register-website" type="text" placeholder="Wat is je website">
+      <h5>Je telefoonnummer</h5>
+      <input id="register-phone" type="text" placeholder="Wat is je telefoonnummer?">
+      <h5>Je coachsmethodiek(en)</h5>
+      <textarea id="register-method" type="text" placeholder="Omschrijf kort en puntsgewijs je coachmethodiek(en)"></textarea>
+      <h5>Je stad of dorp</h5>
+      <input id="register-city" type="text" placeholder="Waar bevindt je praktijk zich?">
+      <h5>Biedt je ook online coaching?</h5>
+      <div class="input-online-div">
+        <input class="input-radio-online" value="Ja" id="register-online" type="radio" name="register-online" placeholder="Is online coaching ook mogelijk?">
+        <label for="register-online">Ja</label>
+      </div>
+      <div class="input-online-div">
+        <input class="input-radio-online" value="Nee" id="register-online" type="radio" name="register-online" placeholder="Is online coaching ook mogelijk?">
+        <label for="register-online">Nee</label>
+      </div>
+      <h5>Je doelgroep (volwassenen, kinderen, studenten, etc)</h5>
+      <input id="register-targetgroup" type="text" placeholder="Wat is je doelgroep?">
+      <h5>Je coachingsstijl</h5>
+      <textarea id="register-style" type="text" placeholder="Wat is je coachingsstijl?"></textarea>
+      <h5>Je motivatie</h5>
+      <textarea id="register-why" type="text" placeholder="Waarom ben je coach geworden?"></textarea>
+      <h5>Je tarief per uur voor 1 op 1 coaching</h5>
+      <input id="register-costs" type="text" placeholder="Wat is je tarief?">
+      <h5>Aantal jaren ervaring</h5>
+      <input id="register-experience-type" type="text" placeholder="Hoeveel jaar ervaring heb je als coach?">
+      <h5>Je ervaringen</h5>
+      <textarea id="register-experience" type="text" placeholder="Welke ervaringen heb je als coach?"></textarea>
+      <h5>Je opleidingen & certificaten</h5>
+      <textarea id="register-education" type="text" placeholder="Welke relevante opleidingen en ervaringen heb je?"></textarea>
+      <form class="check-code" id="minimale-eisen-form">
+        <input type="checkbox" id="minimale-eisen-check">
+        <label for="minimale-eisen-check">Ik voldoe aan de <a href="#minimale-eisen"> minimale voorwaarden</a></label>
+      </form>
+      <form class="check-code" id="gedragscode-form-2">
+        <input type="checkbox" id="gedragscode-check">
+        <label for="gedragscode-check">Ik onderschrijf de <a href="#minimale-eisen"> gedragscode</a></label>
+      </form>
+      <div id="coach-register-button">
+      <button class="button-standard" id="register-button-coach">Aanmaken</button>
+      </div>
+  </div>
+</section>
 
 <!-- Toolbar mobile -->
 <div class="toolbar-mobile">
