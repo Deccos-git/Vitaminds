@@ -194,12 +194,16 @@ const linkImg = document.createElement('img')
 
 const notificationsTotalDiv = document.createElement("div")
       notificationsTotalDiv.setAttribute("id", "menu-notifications")
+const notificationsTotalDivToolbar = document.createElement("div")
+      notificationsTotalDivToolbar.setAttribute("id", "notification-div-menu-toolbar")
 const notificationsTotalP = document.createElement("p")
 const notificationsDiv = document.createElement("div")
       notificationsDiv.setAttribute("class", "notification-div-menu")
 const notificationsTitle = document.createElement("h3")
 const notificationsPDiv = document.createElement("div")
 const notificationsP = document.createElement("p")
+
+const messagesMobileMenu = document.getElementById("toolbar-inner-div-chats-groups")
 
 const chatsDiv = document.getElementsByClassName("chats-div")
 
@@ -353,8 +357,6 @@ auth.onAuthStateChanged(User =>{
                 if(userArray.includes(naamID)){
                   if(authUser != naamID){
 
-                    console.log(authUser)
-
                     newMessageArray.push(doc1.id)
                     lengthArray.push(doc1.id)
                   };
@@ -365,6 +367,9 @@ auth.onAuthStateChanged(User =>{
                   }).then(() => {
                     chatGroupNewMessageCountP.innerText = newMessageArray.length
                     notificationsTotalDiv.appendChild(notificationsTotalP)
+                    notificationsTotalP.innerText = lengthArray.length
+                    messagesMobileMenu.appendChild(notificationsTotalDivToolbar)
+                    notificationsTotalDivToolbar.appendChild(notificationsTotalP)
                     notificationsTotalP.innerText = lengthArray.length
                   });
                 });

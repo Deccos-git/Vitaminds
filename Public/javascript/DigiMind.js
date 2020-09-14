@@ -855,12 +855,19 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
         const IDuser = doc.data().ID
         const user = userID.replace(IDuser, "")
         const usertypeDB = doc.data().Usertype
+        const profilePic = doc.data().Profielfoto
 
         const username = document.getElementsByClassName('welkom')[0];
         const usertype = document.getElementsByClassName('usertype')[0];
         const profielfoto = document.getElementById("profielfoto");
         
-        profielfoto.style.backgroundImage =`url('${doc.data().Profielfoto}')` 
+         
+
+        if(profilePic == undefined){
+                profielfoto.style.backgroundImage ="url('../images/dummy-profile-photo.jpeg')"
+            } else {
+                profielfoto.style.backgroundImage =`url('${profilePic}')`
+            };
 
         username.innerHTML = user
 

@@ -410,6 +410,8 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
 
     // Save message to database
 
+    const DOMchatScreenChat = document.getElementById("chat-screen")
+
     function saveMessage(){
         const message = document.getElementById("chat-input").value 
 
@@ -461,6 +463,17 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
 
     // Get chat from database in realtime
 
+        //Functions
+        function emptyScreenByOnsnapshot(){
+            const chatDivsUser = document.getElementsByClassName("auth-message-p")
+        
+            const chatDivsArrayUser = Array.from(chatDivsUser)
+        
+            chatDivsArrayUser.forEach(chatUser => {
+                DOMchatScreenChat.removeChild(chatUser)
+            });
+        };
+
     auth.onAuthStateChanged(User =>{
         if(User){
         const userRef = db.collection("Vitaminders").doc(User.uid);
@@ -470,24 +483,12 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
 
                 const roomName = titel
 
-                db.collectionGroup("Messages").where("Room", "==", roomName).orderBy("Timestamp", "asc").onSnapshot(querySnapshot => {
+                db.collectionGroup("Messages")
+                .where("Room", "==", roomName)
+                .orderBy("Timestamp", "asc")
+                .onSnapshot(querySnapshot => {
 
-            // User
-        const chatDivsUser = document.getElementsByClassName("auth-message-div-user")
-
-        const chatDivsArrayUser = Array.from(chatDivsUser)
-
-        chatDivsArrayUser.forEach(chatUser => {
-            DOMchatScreen.removeChild(chatUser)
-        });
-            // Auth
-        const chatDivsAuth = document.getElementsByClassName("auth-message-div-auth")
-
-        const chatDivsArrayAuth = Array.from(chatDivsAuth)
-
-        chatDivsArrayAuth.forEach(chatAuth => {
-            DOMchatScreen.removeChild(chatAuth)
-        });
+                emptyScreenByOnsnapshot()
                     
                     querySnapshot.forEach(doc2 => {
 
@@ -576,7 +577,7 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
                         chatsP.innerText = userClean
                         
                         if(photo == undefined){
-                            photoImg.src = "images/dummy-profile-photo.jpeg"
+                            photoImg.src = "../images/dummy-profile-photo.jpeg"
                         } else {
                         photoImg.src = photo
                         }

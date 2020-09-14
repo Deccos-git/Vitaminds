@@ -365,6 +365,7 @@ ul{
 #aanmeldCH{
   z-index: 1;
   font-size: 16px;
+  margin-bottom: 0px;
 }
 
 #aanmeldCH a{
@@ -445,6 +446,20 @@ ul{
   background-color: #8e0000;
   margin: -3px 0px 0px 20px;
   display: none;
+}
+
+#notification-div-menu-toolbar{
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #8e0000;
+  margin: -45px 0px 0px 0px;
+}
+
+#notification-div-menu-toolbar p{
+  font-size: 10px;
+  color: white;
+  margin: -2px 0px 0px 3px;
 }
 
 #menu-notifications p{
@@ -552,6 +567,23 @@ ul{
   width: 25px;
   margin-right: 5px;
   margin-bottom: -5px;
+}
+
+#info-menu{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#about-vitaminds{
+  margin: 0px 0px 0px 0px;
+}
+
+#about-vitaminds a{
+  font-size: 16px;
+  color: #8e0000;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 /* button algemeen */
@@ -1183,6 +1215,23 @@ ul{
   margin: 0px;
 }
 
+.description-menu-icons-toolbar-mobile{
+  font-size: 12px;
+  margin: 0px;
+}
+
+.toolbar-mobile-inner-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#list-mobile-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
 /* Succes */
 
 #register-notice{
@@ -1632,4 +1681,11 @@ margin: 0px 0px 30px 0px;
   height: 60px;
   width: 60px;
   }
+
+.section-1 {
+  display: flex;
+  margin-left: 20px;
+  margin-right: 20px;
+  align-items: center;
+}
 } 
