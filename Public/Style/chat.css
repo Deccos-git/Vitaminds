@@ -113,5 +113,18 @@
     margin: 0px 0px 0px 3px; 
 }
 
+.new-message-count-chats{
+    border-radius: 50%;
+    background-color: #8e0000;
+    height: 12px;
+    width: 12px;
+    font-size: 10px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 0px 20px 3px;
+}
+
 
 

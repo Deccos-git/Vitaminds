@@ -59,6 +59,40 @@ window.addEventListener("unload", (e) => {
 // Update online/offline of chat/group when user leaves page
 const pageLeaves = localStorage.getItem("leftPages")
 
+function onlineFunctionQueryGroups(authName){
+  db.collection("Chats").where("Members", "array-contains", authName).where("Room", "==", pageLeaves)
+  .get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+
+  db.collection("Chats").doc(doc.id).update({
+      Online: firebase.firestore.FieldValue.arrayRemove(authName)
+            }).then(() => {
+              localStorage.removeItem(pageLeaves)
+            })
+          });
+        });
+};
+
+function onlineFunctionQueryChats(authName){
+  db.collection("Chats").where("Members", "array-contains", authName).where("Type", "==", "Chat")
+  .get().then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+
+        const members = doc.data().Members
+
+
+        if(members.includes(pageLeaves) && members.includes(authName)){
+
+  db.collection("Chats").doc(doc.id).update({
+      Online: firebase.firestore.FieldValue.arrayRemove(authName)
+            }).then(() => {
+              localStorage.removeItem(pageLeaves)
+            })
+          };
+          });
+        });
+};
+
 function updateOnlineStatusFromPagesLeave(){
 
     auth.onAuthStateChanged(User =>{
@@ -68,17 +102,8 @@ function updateOnlineStatusFromPagesLeave(){
     
                 const auth = doc.data().Gebruikersnaam
 
-    db.collection("Chats").where("Members", "array-contains", auth).where("Room", "==", pageLeaves)
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-    db.collection("Chats").doc(doc.id).update({
-        Online: firebase.firestore.FieldValue.arrayRemove(auth)
-              }).then(() => {
-                localStorage.removeItem(pageLeaves)
-              })
-            });
-          });
+                onlineFunctionQueryGroups(auth)
+                onlineFunctionQueryChats(auth)
         });
       };
     });
@@ -197,6 +222,7 @@ const notificationsTotalDiv = document.createElement("div")
 const notificationsTotalDivToolbar = document.createElement("div")
       notificationsTotalDivToolbar.setAttribute("id", "notification-div-menu-toolbar")
 const notificationsTotalP = document.createElement("p")
+const notificationsTotalPAuthMenu = document.createElement("p")
 const notificationsDiv = document.createElement("div")
       notificationsDiv.setAttribute("class", "notification-div-menu")
 const notificationsTitle = document.createElement("h3")
@@ -293,8 +319,6 @@ auth.onAuthStateChanged(User =>{
               const docLengt = [doc]          
                     objectLength = Object.keys(docLengt).length
                     lengthArray.push(objectLength)
-
-                    console.log(objectLength)
     
                     const giver = doc.data().Giver
 
@@ -365,12 +389,14 @@ auth.onAuthStateChanged(User =>{
               
               });
                   }).then(() => {
+                    if(newMessageArray.length != 0){
                     chatGroupNewMessageCountP.innerText = newMessageArray.length
-                    notificationsTotalDiv.appendChild(notificationsTotalP)
-                    notificationsTotalP.innerText = lengthArray.length
+                    notificationsTotalDiv.appendChild(notificationsTotalPAuthMenu)
+                    notificationsTotalPAuthMenu.innerText = lengthArray.length
                     messagesMobileMenu.appendChild(notificationsTotalDivToolbar)
                     notificationsTotalDivToolbar.appendChild(notificationsTotalP)
                     notificationsTotalP.innerText = lengthArray.length
+                    };
                   });
                 });
               }); 
