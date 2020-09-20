@@ -884,6 +884,8 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
         querySnapshot.forEach(doc => {
 
                 const gebruikersnaam = doc.data().Gebruikersnaam
+                const nameClean = doc.data().GebruikersnaamClean
+                const email = doc.data().Email
 
                 // Contact info
                 const usertype = doc.data().Usertype
@@ -918,6 +920,7 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                           userRef.get().then(function(doc) {
 
                                 const auth = doc.data().Gebruikersnaam
+                                const authClean = doc.data().GebruikersnaamClean
 
                                 const roomName = auth<naam ? auth+'_'+naam : naam+'_'+auth;
 
@@ -935,8 +938,26 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                         Members: membersArray,
                         Online: []
                 }).then(() => {
-                        window.open(`../Chats/${gebruikersnaam}.html`, "_self");
-                                                                });
+                        db.collection("Mail").doc().set({
+                                to: [email],
+                                cc: "info@vitaminds.nu",
+                          message: {
+                          subject: `Nieuw chatverzoek op Vitaminds`,
+                          html: `Hallo ${nameClean}, </br></br>
+                               ${authClean} heeft je een chatverzoek gestuurd.<br><br> 
+                                
+                                Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om naar je chats te gaan.
+                                Vriendelijke groet, </br></br>
+                                Het Vitaminds Team </br></br>
+                                <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                          Gebruikersnaam: gebruikersnaam,
+                          Emailadres: email,
+                          Type: "Vitaminders"
+                          }        
+                          }).then(() => {
+                                window.open(`../Chats/${gebruikersnaam}.html`, "_self");
+                                                                        });
+                                });     
                                                         });
                                                 } else {
                                                         const notification = document.getElementById("chat-notification-visitor")

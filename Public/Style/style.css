@@ -136,7 +136,7 @@ ul{
   font-size: 16px;
   color: #49beb7;
   cursor: pointer;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 /* menu styling */
@@ -683,10 +683,10 @@ ul{
 /* header*/
 
 .header-image{
-  background-image: url("../images/avontuur3.jpg");
-  height: 900px;
+  /* background-image: url("../images/avontuur3.jpg"); */
+  height: 600px;
   width: 100%;
-  background-attachment: fixed;
+  /* background-attachment: fixed; */
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -707,7 +707,7 @@ ul{
 }
 
 .header-title{
-  color: #FFF;
+  color: #8e0000;
   font-family: 'Libre Baskerville', serif;
   font-size: 70px;
   text-align: center;
@@ -733,11 +733,10 @@ ul{
   padding-bottom: 0px;
   padding-left: 0px;
   margin-bottom: 0px;
-  color: #fff;
 }
 
 .header-image h2{
-  color: #fff;
+  color: #122b46;
 }
 
 .header-image h3{
@@ -818,6 +817,7 @@ ul{
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: -250px;
 }
 
 .DigiMind section{
@@ -846,12 +846,16 @@ ul{
   overflow: hidden;
 }
 
+.karakter:hover {
+  box-shadow: 0 10px 18px 0 rgba(0, 0, 0, 0.2), 0 14px 42px 0 rgba(0, 0, 0, 0.19);
+}
+
 .karakter p{
   margin: 70px 10px;
 }
 
 #karakterHead{
-  background-image: url("../images/welkomKarakter.jpg");
+  background-image: url("../images/hero-II.jpg");
   background-size: 400px 200px;
   height: 200px;
   width: 100%;
@@ -864,6 +868,10 @@ ul{
   align-content: center;
   text-align: center;
   overflow: hidden;
+}
+
+.ervaring:hover {
+  box-shadow: 0 10px 18px 0 rgba(0, 0, 0, 0.2), 0 14px 42px 0 rgba(0, 0, 0, 0.19);
 }
 
 .ervaring p{
@@ -884,6 +892,10 @@ ul{
   align-content: center;
   text-align: center;
   overflow: hidden;
+}
+
+.groei:hover {
+  box-shadow: 0 10px 18px 0 rgba(0, 0, 0, 0.2), 0 14px 42px 0 rgba(0, 0, 0, 0.19);
 }
 
 .groei p{
@@ -1143,6 +1155,44 @@ ul{
   color: #FFF;
 }
 
+#welkom-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(231, 231, 231);
+  margin-top: 30px;
+}
+
+#welkom-div p, h3{
+    margin: 5px;
+}
+
+#tips-trucs{
+    border: 1px solid #122b46;
+    border-radius: 15px;
+    margin: 15px;
+    padding: 15px;
+    background-color: #fff;
+}
+
+#tips-trucs-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#button{
+    margin: 15px;
+}
+
+#textarea{
+    margin-top: 15px;
+}
+
+.react-div{
+    border-bottom: 1px dotted #122b46;
+}
+
 /* IOS popup */
 
 #ios-popup{
@@ -1238,7 +1288,8 @@ ul{
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0px 200px;
+  margin: 0px;
+  padding: 0px;
 }
 
 #register-notice img{
@@ -1514,7 +1565,7 @@ margin: 0px 0px 30px 0px;
   }
 
   .header-image{
-    background-image: url("../images/avontuur3.jpg");
+    background-image: url("../images/hero-vitaminds-I.png");
     height: 100%;
     width: 100%;
     background-repeat: no-repeat;
@@ -1527,7 +1578,11 @@ margin: 0px 0px 30px 0px;
   }
 
   .header-image h1 {
-    font-size: 50;
+    font-size: 50px;
+}
+
+.header-image h2 {
+  color: #122b46;
 }
 
   #logo-menu{
@@ -1660,7 +1715,7 @@ margin: 0px 0px 30px 0px;
   }
 
   #background {
-    background-image: url(../images/avontuur3-mobile.jpg);
+    background-image: none;
     background-position: center;
   }
 
@@ -1688,4 +1743,27 @@ margin: 0px 0px 30px 0px;
   margin-right: 20px;
   align-items: center;
 }
+
+#welkom-div p{
+  padding: 10px;
+}
+
+#textarea{
+    width: 80%;
+}
+
+#button{
+  background-color: #fff;
+  border: 1px #0c6665 solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 16px;
+  color: #0c6665;
+  cursor: pointer;
+}
+
+.DigiMind {
+  margin-top: 0px;
+}
+
 } 

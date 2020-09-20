@@ -169,32 +169,6 @@ function setInnerTextOfDOMobjects(chat, grouptype, user, typeOfGroup){
     grouptype.innerText = typeOfGroup
   };
 
-function openChatIfNoNewMessagesChat(titleRoom){
-    const docRef = db.collection("Chats")
-
-    .where("Messages", "==", 0)
-    .get()
-    .then(querySnapshot => {
-    querySnapshot.forEach(doc2 => {
-
-        const messages = doc2.data().Messages
-
-        console.log(messages)
-
-            // window.open(`../Chats/${titleRoom}.html`, "_self");
-        });
-    });
-};
-
-function openChatIfNoNewMessagesGroups(titleRoom, messageCount){
-    if (messageCount === 0){
-
-        console.log("Group met 0 messages")
-
-            window.open(`../Group/${titleRoom}.html`, "_self");
-    };
-};
-
 function updateOnlineStatus(docID, authName){
     db.collection("Chats")
     .doc(docID)
@@ -206,9 +180,14 @@ function updateOnlineStatus(docID, authName){
 function saveAuthToReadlist(docID, authName, userName){
     const docRef = db.collection("Chats")
     .doc(docID)
-    .collection("Messages")
 
-    docRef.get()
+    docRef.get().then(doc3 => {
+
+        const messages = doc3.data().Messages
+
+        if(messages != 0){
+    
+    messageRef.collection("Messages").get()
     .then(querySnapshot => {
     querySnapshot.forEach(doc2 => {
 
@@ -217,7 +196,7 @@ function saveAuthToReadlist(docID, authName, userName){
 
         if(status === "New" && messages >= 1){
 
-            docRef.doc(doc2.id).update({
+            messageRef.doc(doc2.id).update({
 
             Read: firebase.firestore.FieldValue.arrayUnion(authName)
 
@@ -229,6 +208,10 @@ function saveAuthToReadlist(docID, authName, userName){
             };
         });
     });
+} else {
+    window.open(`../Chats/${userName}.html`, "_self");
+};
+});
 }; 
 
 function updateNewStatusOfMessageChat(authName){
@@ -411,9 +394,16 @@ function groupsOverviewTitle(groupType, titleURL, titleURLClean, chatDOM, photoD
 }; 
 
 function updateReadList(docID, authName, titleURL){
-    db.collection("Chats")
+    const chatRef = db.collection("Chats")
     .doc(docID)
-    .collection("Messages")
+
+    chatRef.get().then(doc2 => {
+
+        const messages = doc2.data().Messages
+
+        if (messages != 0){
+
+    chatRef.collection("Messages")
     .get()
     .then(querySnapshot => {
         querySnapshot.forEach(doc6 => {
@@ -421,12 +411,12 @@ function updateReadList(docID, authName, titleURL){
             const status = doc6.data().Status
             const messages = doc6.data().Messages
 
-            if(status === "New" && messages >= 1){
+            if(status === "New"){
 
-        const docRef = db.collection("Chats").doc(docID)
+        const messageRef = chatRef
     .collection("Messages").doc(doc6.id)
     
-    docRef.get().then(doc7 => {
+    messageRef.get().then(doc7 => {
 
         const authSender = doc7.data().Auth
 
@@ -448,7 +438,11 @@ function updateReadList(docID, authName, titleURL){
     } else {
         window.open(`../Group/${titleURL}.html`, "_self");
     };
-        });
+                });
+            });
+        } else {
+            window.open(`../Group/${titleURL}.html`, "_self");
+        }
     });
 }; 
 
@@ -509,8 +503,6 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
                     // Open chat
                     chatsDiv.addEventListener("click", () => {
 
-                         openChatIfNoNewMessages(user, messages)
-
                          updateOnlineStatus(doc1.id, auth)
                             
                          saveAuthToReadlist(doc1.id, auth, user)
@@ -551,8 +543,6 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
                                     
                     // Open group
                     chatsDiv.addEventListener("click", () => {
-
-                        openChatIfNoNewMessagesGroups(title)
 
                         updateOnlineStatus(doc1.id, auth)
                     

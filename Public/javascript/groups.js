@@ -87,8 +87,9 @@ function noticeVisitor(buttonDiv, button){
 
             const type = doc.data().Type
             const room = doc.data().Room
+            const members = doc.data().Members
 
-            if(type === "Group"){
+            if(type === "Group" || type === "Practicegroup" || type === "Coachgroup"){
 
 
     db.collection("Levensvragen").where("Levensvraag", "==", room).get().then(querySnapshot => {
@@ -199,6 +200,8 @@ function noticeVisitor(buttonDiv, button){
                     buttonThemeGroup.innerText = "Lid worden"
 
                 });
+
+                console.log(auth)
 
             if(members.includes(auth)){
                 buttonDiv.appendChild(leaveGroup)
@@ -1235,7 +1238,7 @@ function saveNewMemberToGroup(a){
                             if(type === "Coachgroup"){
                                 window.open("coachgroup-agreement.html", "_self") 
                             } else {
-                            window.open("../Group/" + title + ".html", "_self") 
+                            window.open("../Group/" + a + ".html", "_self") 
                             };
                         });
                     });
@@ -1259,7 +1262,7 @@ function memberCoachGroups(elem){
 
     const roomTitle = elem.dataset.room
 
-    saveNewMemberToGroup(roomTitle)
+    saveNewMemberToGroup(title)
  };
 
  // Group is full message
@@ -1294,6 +1297,9 @@ function memberCoachGroups(elem){
 
 // Leave group
 function leaveTheGroup(roomTitle){
+    const button = document.getElementById("group-button")
+
+    button.innerText = "Groep verlaten"
     auth.onAuthStateChanged(User =>{
         if(User){
         const userRef = db.collection("Vitaminders").doc(User.uid);

@@ -1,3 +1,5 @@
+// localStorage.clear()
+
 // Fetching title from url
 const titelURLDOM = window.location.href.replace(/^.*[\\\/]/, '')
 const titelURL1 = titelURLDOM.replace('.html', '')
@@ -486,6 +488,7 @@ function logOut(){
   auth.onAuthStateChanged(User =>{
     if(User){
       const userRef = db.collection("Vitaminders").doc(User.uid);
+
   userRef.update({
     Online: "No"
   }).then(() => {
@@ -496,7 +499,7 @@ function logOut(){
       });
     });
 };
-  })
+  });
   };
 
 // Register VM
@@ -510,37 +513,49 @@ if(button != null){
   const passwordInput = document.getElementById('register-wachtwoord')
   const repeatPasswordVM = document.getElementById("register-wachtwoord-repeat").value
   const repeatPasswordVMInput = document.getElementById("register-wachtwoord-repeat")
-  const gebruikersnaam = document.getElementById('register-gebruikersnaam').value;
+  const firstName = document.getElementById('register-firstname').value;
+  const lastName = document.getElementById('register-lastname').value;
+
+  let userName = ""
+
+  if (lastName != ""){
+    userName = firstName + lastName
+  } else {
+    userName = firstName
+  };
 
   if (passwordVM != repeatPasswordVM){
     passwordInput.style.borderColor = "red"
     repeatPasswordVMInput.style.borderColor = "red"
     alert("De wachtwoorden zijn niet gelijk")
   } else {
+
+    if (firstName === ""){
+      alert("Vergeet niet je voornaam in te vullen")
+
+    } else {
   
   firebase.auth().createUserWithEmailAndPassword(email, passwordVM)
   .then(cred =>{
     db.collection('Vitaminders').doc(cred.user.uid).set({
-      Gebruikersnaam: cred.user.uid + gebruikersnaam,
-      GebruikersnaamClean: gebruikersnaam,
+      Gebruikersnaam: cred.user.uid + userName,
+      GebruikersnaamClean: userName,
+      Firstname: firstName,
+      Lastname: lastName,
       Usertype: "Vitaminder",
       Inspiratiepunten: 1,
       Email: email, 
       ID: cred.user.uid,
       Levensvragen: [],
       Profielfoto: `images/dummy-profile-photo.jpeg`
-    })
-  }).catch((err) => {
-    alert(err)
-  })
-  .then(() => {
+  }).then(() => {
     db.collection("Mail").doc().set({
       to: [email],
       cc: "info@vitaminds.nu",
 message: {
 subject: `Verifier je account op Vitaminds! `,
 html: `Hallo ${gebruikersnaam}, </br></br>
-      Welkom bij Vitaminds! Het beging van een geweldig avontuur in je eigen karakter!<br><br>
+      Welkom bij de Vitaminds community. Het sociale netwerk voor imperfecte mensen.<br><br>
       Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
       
       Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.
@@ -550,20 +565,25 @@ html: `Hallo ${gebruikersnaam}, </br></br>
 Gebruikersnaam: gebruikersnaam,
 Emailadres: email,
 Type: "Vitaminders"
-}
-          
-}).then(() => {
+}        
+});
+  })
+.then(() => {
             const notice = document.getElementById("register-notice")
             notice.style.display = "block"
         })
-      })
-    }
-  })
-};
+    }).catch((err) => {
+      alert(err)
+    });
+    };
+  };
+});
+  }
+
 
 function registerNoticeOK(){
   firebase.auth().signOut().then(function() {
-    window.location.href = "/inspiratie.html"
+    window.location.href = "/index.html"
   }).catch(function(error) {
     console.log(error)
   })
@@ -752,7 +772,81 @@ const adminContactMe = document.createElement("p")
 }; getAdminUsernameAndProfilePicture()
 
 
+// Tickets
 
+// Testing
+
+const welkomAuth = document.getElementById("welkom-auth")
+
+auth.onAuthStateChanged(User =>{
+  const userRef = db.collection("Vitaminders").doc(User.uid);
+    userRef.get().then(function(doc) {
+      if (doc.exists) {
+        const Gname = doc.data().Gebruikersnaam;
+        const id = doc.data().ID
+        const nameClean = Gname.replace(id, "")
+
+        const welkom = document.createElement("h2")
+
+        welkom.innerHTML = `Houdoe, ${nameClean}`
+
+        welkomAuth.appendChild(welkom)
+  
+
+  //Opmerking opvangen
+  const buttonReact = document.getElementById("button-feedback")
+  buttonReact.addEventListener("click", () => {
+
+  const opmerking = document.getElementById("textarea").value
+    
+  db.collection("Tickets").doc().set({
+    Gebruikersnaam: Gname,
+    GebruikersnaamClean: nameClean,
+    Opmerking: opmerking,
+    Verwerkt: "Nee",
+    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+    Type: "Feedback-general"
+        }).then(() => {
+          location.reload();
+        })
+      })
+    }
+  })
+});
+
+  // Opmerkingen in DOM zetten
+  const DOMreact = document.getElementById("tips-trucs")
+
+  db.collection("Tickets").where("Type", "==", "Feedback-general").get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+      const naam = doc.data().GebruikersnaamClean
+      const opmerking = doc.data().Opmerking
+      const verwerkt = doc.data().Verwerkt
+
+
+      const reactDiv = document.createElement("div")
+        reactDiv.className = "react-div"
+      const naamP = document.createElement("h5")
+      const opmerkingP = document.createElement("p")
+      const verwerktP = document.createElement("h5")
+
+      naamP.innerHTML = "Door: " + naam
+      opmerkingP.innerHTML = opmerking
+      verwerktP.innerHTML = "Opgelost: " + verwerkt
+
+      if(verwerkt == "Nee"){
+        opmerkingP.style.color = "#8e0000"
+      } else {
+        opmerkingP.style.color = "#0c6665"
+      }
+
+      DOMreact.appendChild(reactDiv)
+      reactDiv.appendChild(opmerkingP)
+      reactDiv.appendChild(naamP)
+      reactDiv.appendChild(verwerktP)
+    })
+  })
 
 
 

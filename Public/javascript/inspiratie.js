@@ -99,7 +99,18 @@ window.addEventListener("load", () => {
 
 DOMarticle = document.getElementById("levensvraag-artikel-ouyter-div")
 
-db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+
+const loadMoreButtonDiv = document.createElement("div")
+const loadMoreButton16 = document.createElement("button")
+    loadMoreButton16.setAttribute("class", "button-algemeen")
+    loadMoreButton16.setAttribute("id", "button-pagination16")
+const loadMoreButton24 = document.createElement("button")
+    loadMoreButton24.setAttribute("class", "button-algemeen")
+    loadMoreButton24.setAttribute("id", "button-pagination24")
+
+    function paginateGoalArticles(numberOfArticles){
+
+db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").limit(numberOfArticles).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
         const title = doc.data().Levensvraag
@@ -146,6 +157,9 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
             buttonDiv.setAttribute("class", "button-algemeen-card")
             buttonDiv.setAttribute("onclick", "seeArticle(this)")
 
+        // loadMorePageination(lastVisible, loadMoreButton16)
+        
+
         // Dynamic title
         const count = insights.length
 
@@ -183,6 +197,9 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(qu
     })
 }).then(() => {
 
+    DOMarticle.appendChild(loadMoreButtonDiv)
+loadMoreButtonDiv.appendChild(loadMoreButton16)
+
     //Filter
 
 const goalFilter = localStorage.getItem("Goal")
@@ -211,6 +228,22 @@ const DOMgoalArray = Array.from(DOMgoal)
         });
     };
 });
+};
+
+function paginateEventListeners(button, numberOfGoalArticlesQuery){
+
+    button.addEventListener("click", () => {
+        paginateGoalArticles(numberOfGoalArticlesQuery)
+    });
+};
+
+!function allPaginationEventsGoalArticles(){ 
+paginateGoalArticles(8)
+paginateEventListeners(loadMoreButton16, 16)
+paginateEventListeners(loadMoreButton24, 24)
+}();
+
+
 
 // Levensvraag artikelen openen na onclick in overview
 function seeArticle(elem){
