@@ -683,7 +683,7 @@ ul{
 /* header*/
 
 .header-image{
-  background-image: url("../images/Hero-III.jpg");
+  background-image: url("../images/avontuur3.jpg");
   height: 900px;
   width: 100%;
   background-attachment: fixed;
@@ -811,7 +811,7 @@ ul{
 }
 
 #begin h2{
-  margin: 0px 100px 50px 100px;
+  margin: -30px 100px 50px 100px;
 }
 
 .DigiMind{
@@ -851,7 +851,7 @@ ul{
 }
 
 #karakterHead{
-  background-image: url("../images/hero-II.jpg");
+  background-image: url("../images/welkomKarakter.jpg");
   background-size: 400px 200px;
   height: 200px;
   width: 100%;
@@ -933,7 +933,7 @@ ul{
 
 .welkom2 h1{
   color: #122b46;
-  margin: 50px 0px 0px 0px;
+  margin: 250px 0px 0px 0px;
 }
 
 .welkom2 h2{
@@ -1526,8 +1526,8 @@ margin: 0px 0px 30px 0px;
     align-items: center;
   }
 
-  .header-title {
-    font-size: 50px;
+  .header-image h1 {
+    font-size: 50;
 }
 
   #logo-menu{
@@ -1660,7 +1660,7 @@ margin: 0px 0px 30px 0px;
   }
 
   #background {
-    background-image: url(../images/Hero-III.jpg);
+    background-image: url(../images/avontuur3-mobile.jpg);
     background-position: center;
   }
 

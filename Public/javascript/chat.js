@@ -187,7 +187,7 @@ function saveAuthToReadlist(docID, authName, userName){
 
         if(messages != 0){
     
-    messageRef.collection("Messages").get()
+    const messageRef = docRef.collection("Messages").get()
     .then(querySnapshot => {
     querySnapshot.forEach(doc2 => {
 

@@ -912,7 +912,7 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
 
                 function startChat(button){
 
-                chatButton.addEventListener("click", () => {
+                button.addEventListener("click", () => {
 
                 auth.onAuthStateChanged(User =>{
                         if(User){
