@@ -31,6 +31,9 @@ function getRandomColor() {
   return color;
 };
 
+const colour = getRandomColor()
+console.log(colour)
+
 // Stripe
 const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
 
@@ -219,12 +222,11 @@ const chatGroupNewMessageCountP = document.createElement("p")
 const titleLink = document.createElement("a")
 const linkImg = document.createElement('img')
 
-const notificationsTotalDiv = document.createElement("div")
-      notificationsTotalDiv.setAttribute("id", "menu-notifications")
 const notificationsTotalDivToolbar = document.createElement("div")
       notificationsTotalDivToolbar.setAttribute("id", "notification-div-menu-toolbar")
 const notificationsTotalP = document.createElement("p")
 const notificationsTotalPAuthMenu = document.createElement("p")
+      notificationsTotalPAuthMenu.setAttribute("id", "menu-notifications")
 const notificationsDiv = document.createElement("div")
       notificationsDiv.setAttribute("class", "notification-div-menu")
 const notificationsTitle = document.createElement("h3")
@@ -256,7 +258,6 @@ auth.onAuthStateChanged(User =>{
         profilePicture.setAttribute("class", "login-logout")
     };
 
-    notificationsTotalDiv.style.display = "block"
     authPhoto.style.backgroundImage = `url('${profilePic}')`
     authName.innerHTML = `<a href = "../Vitaminders/${naamID}">${naam}</a>`
     authProfileP.innerHTML = `<a href = "../Vitaminders/${naamID}"><img id="icon-auth-menu-digimind" src="../images/menu-dashboard.png">Mijn Digimind</a>`
@@ -393,7 +394,6 @@ auth.onAuthStateChanged(User =>{
                   }).then(() => {
                     if(newMessageArray.length != 0){
                     chatGroupNewMessageCountP.innerText = newMessageArray.length
-                    notificationsTotalDiv.appendChild(notificationsTotalPAuthMenu)
                     notificationsTotalPAuthMenu.innerText = lengthArray.length
                     messagesMobileMenu.appendChild(notificationsTotalDivToolbar)
                     notificationsTotalDivToolbar.appendChild(notificationsTotalP)
@@ -415,7 +415,7 @@ auth.onAuthStateChanged(User =>{
             notificationsTitle.appendChild(notificationsPDiv)
             notificationsPDiv.appendChild(notificationsP)
 
-            profilePicture.appendChild(notificationsTotalDiv)
+            profilePicture.appendChild(notificationsTotalPAuthMenu)
             authDOM.appendChild(authDiv)
             authDiv.appendChild(closeDiv)
             authDiv.appendChild(authPhoto)
@@ -516,6 +516,8 @@ if(button != null){
   const firstName = document.getElementById('register-firstname').value;
   const lastName = document.getElementById('register-lastname').value;
 
+  const colour = getRandomColor()
+
   let userName = ""
 
   if (lastName != ""){
@@ -546,8 +548,9 @@ if(button != null){
       Inspiratiepunten: 1,
       Email: email, 
       ID: cred.user.uid,
+      Color: colour,
       Levensvragen: [],
-      Profielfoto: `images/dummy-profile-photo.jpeg`
+      Profielfoto: "https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/dummy-profile-photo.jpeg?alt=media&token=229cf7eb-b7df-4815-9b33-ebcdc614bd25"
   }).then(() => {
     db.collection("Mail").doc().set({
       to: [email],
@@ -618,6 +621,8 @@ async function registerCoach(){
   const experienceType = document.getElementById("register-experience-type").value;
   const education = document.getElementById("register-education").value;
 
+  const colour = getRandomColor()
+
   if (password != repeatPassword){
     passwordInput.style.borderColor = "red"
     repeatPasswordInput.style.borderColor = "red"
@@ -639,6 +644,7 @@ async function registerCoach(){
       Coachingstyle: method,
       City: city,
       Online: "Ja",
+      Color: colour,
       Why: why,
       Targetgroup: targetgroup,
       YearsExperience: experience,
@@ -649,40 +655,40 @@ async function registerCoach(){
       ID: cred.user.uid,
       Levensvragen: []
     })
-    .then(() => {
-      // the method CollectionReference.add returns a DocumentReference instance
-   // which you have to receive inside the "then" call:
-   auth.onAuthStateChanged(User =>{
-    if(User){
-      const userRef = db.collection("Vitaminders").doc(User.uid);
-      userRef.get().then(function(doc) {
-   db.collection('customers').doc(doc.id).collection('checkout_sessions')
-   .add({
-     price: 'price_1HLXnVFIim4HzRlUQQXl50Z1',
-     success_url: "https://vitaminds.nu/succes.html",
-     cancel_url: "https://vitaminds.nu/voor-coach.html",
-     tax_rates: ['txr_1HLYPxFIim4HzRlUFAvMv9ti'],
-     payment_method_types: ['sepa_debit']
-   })
-   .then(docRef => {
-     // Wait for the CheckoutSession to get attached by the extension
-     docRef.onSnapshot((snap) => {
+//     .then(() => {
+//       // the method CollectionReference.add returns a DocumentReference instance
+//    // which you have to receive inside the "then" call:
+//    auth.onAuthStateChanged(User =>{
+//     if(User){
+//       const userRef = db.collection("Vitaminders").doc(User.uid);
+//       userRef.get().then(function(doc) {
+//    db.collection('customers').doc(doc.id).collection('checkout_sessions')
+//    .add({
+//      price: 'price_1HLXnVFIim4HzRlUQQXl50Z1',
+//      success_url: "https://vitaminds.nu/succes.html",
+//      cancel_url: "https://vitaminds.nu/voor-coach.html",
+//      tax_rates: ['txr_1HLYPxFIim4HzRlUFAvMv9ti'],
+//      payment_method_types: ['sepa_debit']
+//    })
+//    .then(docRef => {
+//      // Wait for the CheckoutSession to get attached by the extension
+//      docRef.onSnapshot((snap) => {
    
-       const { sessionId } = snap.data();
+//        const { sessionId } = snap.data();
 
-       console.log(sessionId)
-       if (sessionId) {
-         // We have a session, let's redirect to Checkout
-         // Init Stripe
-         const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
-         stripe.redirectToCheckout({ sessionId });
-       }
-     });
-   });
-  });
-};
-   });
-   });
+//        console.log(sessionId)
+//        if (sessionId) {
+//          // We have a session, let's redirect to Checkout
+//          // Init Stripe
+//          const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
+//          stripe.redirectToCheckout({ sessionId });
+//        }
+//      });
+//    });
+//   });
+// };
+//    });
+//    });
   })
 
   .then(() => {
@@ -773,8 +779,6 @@ const adminContactMe = document.createElement("p")
 
 
 // Tickets
-
-// Testing
 
 const welkomAuth = document.getElementById("welkom-auth")
 

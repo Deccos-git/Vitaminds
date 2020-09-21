@@ -280,7 +280,7 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
 
                 
                     if(photo == undefined){
-                        memberPhoto.src = "../images/dummy-profile-photo.jpeg"
+                        memberPhoto.src = "https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/dummy-profile-photo.jpeg?alt=media&token=229cf7eb-b7df-4815-9b33-ebcdc614bd25"
                     } else {
                         memberPhoto.src = photo
                     }    
@@ -466,6 +466,10 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
 
     // Get chat from database in realtime
 
+        // Variables
+
+        const senderNameArray = []
+
         //Functions
         function emptyScreenByOnsnapshot(){
             const chatDivsUser = document.getElementsByClassName("auth-message-p")
@@ -497,6 +501,7 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
 
                         const authMessage = doc2.data().Message
                         const sender = doc2.data().Auth
+                        const members = doc2.data().Members
 
                         const messageP = document.createElement("p")
                         messageP.setAttribute("class", "auth-message-p")
@@ -508,6 +513,7 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
                     querySnapshot.forEach(doc1 => {
 
                         const messageNameClean = doc1.data().GebruikersnaamClean
+                        const colour = doc1.data().Color
                     
                         if (auth == sender){
     
@@ -516,6 +522,9 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
                             messageP.innerText = authMessage
     
                             messageP.style.alignSelf = "flex-end"
+                            senderName.style.color = colour
+                            senderName.style.fontWeight = "bold"
+                            senderName.style.alignSelf = "flex-end"
     
                         } else {
     
@@ -524,6 +533,9 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
                             messageP.innerText = authMessage
     
                             messageP.style.alignSelf = "flex-start"
+                            senderName.style.fontWeight = "bold"
+                            senderName.style.alignSelf = "flex-start"
+                            senderName.style.color = colour
                             
                             };
     
@@ -580,7 +592,7 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
                         chatsP.innerText = userClean
                         
                         if(photo == undefined){
-                            photoImg.src = "../images/dummy-profile-photo.jpeg"
+                            photoImg.src = "https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/dummy-profile-photo.jpeg?alt=media&token=229cf7eb-b7df-4815-9b33-ebcdc614bd25"
                         } else {
                         photoImg.src = photo
                         }

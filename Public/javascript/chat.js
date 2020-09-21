@@ -115,7 +115,9 @@ auth.onAuthStateChanged(User =>{
 
                     const messageP = document.createElement("p")
                     messageP.setAttribute("class", "auth-message-p")
-                
+
+                    messageP.style.alignSelf = "flex-start"
+
                     const senderName = document.createElement("p")
                     senderName.setAttribute("class", "sender-name-message")
 
@@ -123,6 +125,7 @@ auth.onAuthStateChanged(User =>{
                         querySnapshot.forEach(doc1 => {
     
                             const messageNameClean = doc1.data().GebruikersnaamClean
+                            const colour = doc1.data().Color
                     
                     if (auth == sender){
 
@@ -131,6 +134,9 @@ auth.onAuthStateChanged(User =>{
                         messageP.innerText = authMessage
 
                         messageP.style.alignSelf = "flex-end"
+                        senderName.style.color = colour
+                        senderName.style.fontWeight = "bold"
+                        senderName.style.alignSelf = "flex-end"
 
                     } else {
 
@@ -139,6 +145,9 @@ auth.onAuthStateChanged(User =>{
                         messageP.innerText = authMessage
 
                         messageP.style.alignSelf = "flex-start"
+                        senderName.style.color = colour
+                        senderName.style.fontWeight = "bold"
+                        senderName.style.alignSelf = "flex-start"
                         
                         };
 
@@ -192,9 +201,9 @@ function saveAuthToReadlist(docID, authName, userName){
     querySnapshot.forEach(doc2 => {
 
         const status = doc2.data().Status
-        const messages = doc2.data().Messages
+        const sender = doc2.data().Auth
 
-        if(status === "New" && messages >= 1){
+        if(status === "New" && sender != authName){
 
             messageRef.doc(doc2.id).update({
 

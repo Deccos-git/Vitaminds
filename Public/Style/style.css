@@ -445,7 +445,11 @@ ul{
   border-radius: 50%;
   background-color: #8e0000;
   margin: -3px 0px 0px 20px;
-  display: none;
+  font-size: 10px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #notification-div-menu-toolbar{
@@ -460,12 +464,6 @@ ul{
   font-size: 10px;
   color: white;
   margin: -2px 0px 0px 3px;
-}
-
-#menu-notifications p{
-  font-size: 10px;
-  color: white;
-  margin: -1px 0px 0px 2px;
 }
 
 #notification-count-menu{
@@ -1165,6 +1163,7 @@ ul{
 }
 
 #button-div{
+  margin-bottom: 30px;
   display: flex;
   justify-content: center;
 }

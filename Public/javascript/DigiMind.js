@@ -1770,7 +1770,7 @@ auth.onAuthStateChanged(User =>{
                                                 photoTitel.setAttribute("class", "dank-meta")
                 
                                         photoTitel.innerHTML = "Geïnspireerd door"
-                                        photoDiv.style.backgroundImage = `url(${photo}`
+                                        photoDiv.style.backgroundImage = `url(${photo})`
                 
                                         photoDiv.addEventListener("click", () => {
                                         window.open("../Vitaminders/" + [auteur] + ".html", "_self");
