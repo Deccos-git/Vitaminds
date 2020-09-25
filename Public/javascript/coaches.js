@@ -18,9 +18,8 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         const omschrijving = doc.data().Why
         const profilePic = doc.data().Profielfoto
         const locatie = doc.data().City
-        const ID = doc.data().ID
 
-        const naamClean = naam.replace(ID, "")
+        const naamClean = doc.data().GebruikersnaamClean;
 
             // De nieuwe HTML-elementen en classes
         const nieuweDiv = document.createElement("div");

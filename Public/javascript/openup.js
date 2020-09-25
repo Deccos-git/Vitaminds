@@ -496,7 +496,6 @@ const DOM = document.getElementById("verzamelOpenUps")
 
             } else if (selectedFile != undefined && selected == "Niet aan doel koppelen") {
 
-                console.log("test")
         const storageRef = firebase.storage().ref("/Check-in-photos/" + selectedFile.name);
 
         const uploadTask = storageRef.put(selectedFile)
@@ -525,9 +524,6 @@ const DOM = document.getElementById("verzamelOpenUps")
         // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
         console.log('File available at', downloadURL);
-        
-
-        //LevensvraagClean naar levensvraag met ID
 
     db.collection("Vitaminders").doc(User.uid).collection("Levenslessen").doc().set({
         Gebruikersnaam: gebruikersnaam,

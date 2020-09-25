@@ -289,7 +289,7 @@
 }
 
 #create-new-workshop-outer-div{
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
@@ -334,7 +334,7 @@
 }
 
 #create-workshop-tool-bar{
-    display: none;
+    display: flex;
 }
 
 #create-workshop-section input{
@@ -454,56 +454,56 @@
 }
 
 #step-one-inner-div{
-    display: none;
+    visibility: hidden;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #step-two-inner-div{
-    display: none;
+    visibility: hidden;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #step-three-inner-div{
-    display: none;
+    visibility: hidden;;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #step-four-inner-div{
-    display: none;
+    visibility: hidden;;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #step-five-inner-div{
-    display: none;
+    visibility: hidden;;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #step-six-inner-div{
-    display: none;
+    visibility: hidden;;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #step-seven-inner-div{
-    display: none;
+    visibility: hidden;;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #step-eight-inner-div{
-    display: none;
+    visibility: hidden;;
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -512,11 +512,9 @@
 /* Closing section */
 
 .closing-div{
-    display: none;
+    visibility: hidden;
     flex-direction: column;
     align-items: center;
     text-align: center;
     margin: 30px 10px;
 }
-
-

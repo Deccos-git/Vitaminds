@@ -852,6 +852,7 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
     querySnapshot.forEach(function(doc) {
 
         const userID = doc.data().Gebruikersnaam
+        const naamClean = doc.data().GebruikersnaamClean
         const IDuser = doc.data().ID
         const user = userID.replace(IDuser, "")
         const usertypeDB = doc.data().Usertype
@@ -869,7 +870,7 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
                 profielfoto.style.backgroundImage =`url('${profilePic}')`
             };
 
-        username.innerHTML = user
+        username.innerHTML = naamClean
 
         if (usertypeDB == "Coach")
         usertype.innerHTML = doc.data().Coachingstyle;

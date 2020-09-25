@@ -1,7 +1,3 @@
-// Global title
-
-const globalTitle = []
-
 // URL title
 const titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
 const titel1 = titelhtml.replace('.html', '')
@@ -50,7 +46,7 @@ db.collection("Workshops").where("Status", "==", "Public").get().then(querySnaps
 
         const title = doc.data().WorkshopTitle
         const coach = doc.data().Coach
-        const headerImg = doc.data().HeaderImage
+        const headerImg = doc.data().BannerImage
 
         db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
@@ -105,10 +101,15 @@ function openWorkshop(elem){
 
     window.open("../Workshops/" + divTitle + ".html", "_self")
 
-}
+};
 
-    // Save set
-function saveSet(){
+const titleWorkshop = document.getElementById("workshop-title").value
+
+   // Save set
+   function saveSet(){
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
 
     db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc().set({
         Workshop: titel,
@@ -125,12 +126,20 @@ function saveSet(){
         StepEightInput: "",
         ClosingInput: "",
         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+            });
+        };
     });
 }
 
 // Append goal or new goal
 
 const levensvraagArray = []
+
+function hideGoalDivAfterChoose(){
+    const goalDiv = document.getElementById("workshop-goal-check")
+
+    goalDiv.style.display = "none"
+};
 
 function appendGoal(){
 
@@ -147,11 +156,12 @@ function appendGoal(){
 
                         if(authGoal.includes(workshopGoal)){
 
-                            if(authGoal == workshopGoal){
-
                                 authGoal.forEach(goal => {
 
-                                    db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", auth).where("Goal", "==", goal).get().then(querySnapshot => {
+                                    if(goal == workshopGoal){
+
+                                    db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", auth)
+                                    .where("Goal", "==", goal).get().then(querySnapshot => {
                                         querySnapshot.forEach(doc2 => {
 
                                             const levensvraag = doc2.data().Levensvraag
@@ -162,10 +172,12 @@ function appendGoal(){
                                         });
                                     }).then(()=>{
 
-                                       saveSet() 
+                                        hideGoalDivAfterChoose()
+
+                                        saveSet() 
                                 });
-                            });
-                        };
+                            };
+                        });
                     };
                 });
             });
@@ -231,8 +243,10 @@ function setAndStart(){
                                 Goals: firebase.firestore.FieldValue.arrayUnion(workshopGoal)
                             });
                         });
-                
-                     saveSet()
+
+                        hideGoalDivAfterChoose()
+
+                        saveSet()
                     });
                 });                 
             });
@@ -266,8 +280,8 @@ function allImagesResponsive(){
 
 // append step to DOM
 
-function appendStepToDom(stepOuterDiv, stepTitleH2, stepExplainerP, stepCTATitle, stepCTATitle, stepInput){
-    DOM.appendChild(stepOuterDiv)
+function appendStepToDom(workshopDOM,stepOuterDiv, stepTitleH2, stepExplainerP, stepCTATitle, stepCTAP, stepInput){
+    workshopDOM.appendChild(stepOuterDiv)
     stepOuterDiv.appendChild(stepTitleH2)
     stepOuterDiv.appendChild(stepExplainerP)
     stepOuterDiv.appendChild(stepCTATitle)
@@ -281,21 +295,21 @@ function toolbarCountInnerText(toolbarCount, count){
 };
 
 // Append toolbar
-function appendToolbar(stepTitle, toolbarDiv, toolbarCheck, toolbarCount){
+function appendToolbar(stepTitle, toolbarDiv, toolbarCheck, toolbarCount, toolBar){
     if(stepTitle != ""){
-        toolbarOuterDiv.appendChild(toolbarDiv)
+        toolBar.appendChild(toolbarDiv)
         toolbarDiv.appendChild(toolbarCheck)
         toolbarCheck.appendChild(toolbarCount)
         };
 }; 
 
  // Step overview
- function stepOverview(stepTitle, stepTitleP, innerText, stepPreviewDiv, stepCheck){
+ function stepOverview(stepTitle, stepTitleP, innerTextTitleP, stepPreviewDiv, stepCheck, stepOverviewDom){
     if(stepTitle != ""){
-        stepTitleP.innerText = innerText
-    stepsOverview.appendChild(stepPreviewDiv)
-    stepOnePreviewDiv.appendChild(stepCheck)
-    stepOnePreviewDiv.appendChild(stepTitleP)
+        stepTitleP.innerText = innerTextTitleP
+    stepOverviewDom.appendChild(stepPreviewDiv)
+    stepPreviewDiv.appendChild(stepCheck)
+    stepPreviewDiv.appendChild(stepTitleP)
     };
 };
 
@@ -304,7 +318,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 
         const title = doc.data().WorkshopTitle
         const coach = doc.data().Coach
-        const headerImg = doc.data().HeaderImage
+        const headerImg = doc.data().BannerImage
         const workshopGoals = doc.data().WorkshopGoals
         const stepOneTitle = doc.data().StepOneTitle
         const stepTwoTitle = doc.data().StepTwoTitle
@@ -369,6 +383,9 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                   const authClean = doc.data().GebruikersnaamClean
                     const authGoal = doc.data().Goals
 
+                    console.log(authGoal)
+                    console.log(workshopGoal)
+
 
                     const workshopGoalDOM = document.getElementById("workshop-goal-check-inner-div")
 
@@ -383,15 +400,21 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 
                     if(authGoal.includes(workshopGoal)){
 
-                        if(authGoal == workshopGoal){
+                            let authgoalThatsTheSameAsWorkshopGoal = ""
+
+                            authGoal.forEach(goal => {
+
+                                if(workshopGoal === goal){
+                                    authgoalThatsTheSameAsWorkshopGoal = goal
+                                };
+                            });
                    
                         const workshopMessage = `<p>Het doel van deze workshop is <i>${workshopGoal}</i>.<br> 
-                        Ik zie dat jij een doel hebt met de naam: <i> ${authGoal}</i>.<br> 
+                        Ik zie dat jij een doel hebt met de naam: <i> ${authgoalThatsTheSameAsWorkshopGoal}</i>.<br> 
                         Wil je deze workshop aan dat doel koppelen?</p><br>
                         <button onclick="appendGoal()" id="append-goal">Koppelen</button><button onclick="newGoal()" id="new-goal">Nieuw doel aanmaken</button>`
 
-                        workshopGoalDOM.innerHTML = workshopMessage
-                            } 
+                        workshopGoalDOM.innerHTML = workshopMessage 
                         }
                         else {
                                 const workshopMessage = `<p>Het doel van deze workshop is <i>${workshopGoal}</i>.<br> 
@@ -431,7 +454,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const coachWelcome = document.getElementById("coach-welcome")
                 const coachPic = document.getElementById("coach-pic")
                 const summary = document.getElementById("workshop-summary")
-                const stepsOverview = document.getElementById("steps-overview")
+                const stepsOverviewWorkshop = document.getElementById("steps-overview")
                 const stepOnePreviewDiv = document.createElement("div")
                     stepOnePreviewDiv.setAttribute("class", "step-preview-inner-div")
                 const stepOneTitleP = document.createElement("p")
@@ -618,21 +641,21 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     toolbarCountInnerText(toolbarOneCount, "1")
                     toolbarCountInnerText(toolbarTwoCount, "2")
                     toolbarCountInnerText(toolbarThreeCount, "3")
-                    toolbarCountInnerText(toolbarfourCount, "4")
+                    toolbarCountInnerText(toolbarFourCount, "4")
                     toolbarCountInnerText(toolbarFiveCount, "5")
                     toolbarCountInnerText(toolbarSixCount, "6")
                     toolbarCountInnerText(toolbarSevenCount, "7")
                     toolbarCountInnerText(toolbarEightCount, "8")
 
                
-                appendToolbar(stepOneTitle, toolbarOneDiv, toolbarOneCheck, toolbarOneCount)
-                appendToolbar(stepTwoTitle, toolbarTwoDiv, toolbarTwoCheck, toolbarTwoCount)
-                appendToolbar(stepThreeTitle, toolbarThreeDiv, toolbarThreeCheck, toolbarThreeCount)
-                appendToolbar(stepFourTitle, toolbarFourDiv, toolbarFourCheck, toolbarFourCount)
-                appendToolbar(stepFiveTitle, toolbarFiveDiv, toolbarFiveCheck, toolbarFiveCount)
-                appendToolbar(stepSixTitle, toolbarSixDiv, toolbarSixCheck, toolbarSixCount)
-                appendToolbar(stepSevenTitle, toolbarSevenDiv, toolbarSevenCheck, toolbarSevenCount)
-                appendToolbar(stepEightTitle, toolbarEightDiv, toolbarEightCheck, toolbarEightCount)
+                appendToolbar(stepOneTitle, toolbarOneDiv, toolbarOneCheck, toolbarOneCount, toolbarOuterDiv)
+                appendToolbar(stepTwoTitle, toolbarTwoDiv, toolbarTwoCheck, toolbarTwoCount, toolbarOuterDiv)
+                appendToolbar(stepThreeTitle, toolbarThreeDiv, toolbarThreeCheck, toolbarThreeCount, toolbarOuterDiv)
+                appendToolbar(stepFourTitle, toolbarFourDiv, toolbarFourCheck, toolbarFourCount, toolbarOuterDiv)
+                appendToolbar(stepFiveTitle, toolbarFiveDiv, toolbarFiveCheck, toolbarFiveCount, toolbarOuterDiv)
+                appendToolbar(stepSixTitle, toolbarSixDiv, toolbarSixCheck, toolbarSixCount, toolbarOuterDiv)
+                appendToolbar(stepSevenTitle, toolbarSevenDiv, toolbarSevenCheck, toolbarSevenCount, toolbarOuterDiv)
+                appendToolbar(stepEightTitle, toolbarEightDiv, toolbarEightCheck, toolbarEightCount, toolbarOuterDiv)
 
                 //Save button
 
@@ -701,15 +724,14 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     closingDiv.setAttribute("id", "closing-div")
 
                
-                stepOverview(stepOneTitle, stepOneTitleP, `Stap 1: ${stepOneTitle}`, stepOnePreviewDiv, stepOneCheck, stepOneTitleP )
-                stepOverview(stepTwoTitle, stepTwoTitleP, `Stap 2: ${stepTwoTitle}`, stepTwoPreviewDiv, stepTwoCheck, stepTwoTitleP )
-                stepOverview(stepThreeTitle, stepThreeTitleP, `Stap 3: ${stepThreeTitle}`, stepThreePreviewDiv, stepThreeCheck, stepThreeTitleP )
-                stepOverview(stepFourTitle, stepFourTitleP, `Stap 4: ${stepFourTitle}`, stepFourPreviewDiv, stepFourCheck, stepFourTitleP )
-                stepOverview(stepFiveTitle, stepFiveTitleP, `Stap 5: ${stepFiveTitle}`, stepFivePreviewDiv, stepFiveCheck, stepFiveTitleP )
-                stepOverview(stepSixTitle, stepSIxTitleP, `Stap 6: ${stepSixTitle}`, stepSixPreviewDiv, stepSixCheck, stepSixTitleP )
-                stepOverview(stepSevenTitle, stepSevenTitleP, `Stap 7: ${stepSevenTitle}`, stepSevenPreviewDiv, stepSevenCheck, stepSevenTitleP )
-                stepOverview(stepEightTitle, stepEightTitleP, `Stap 8: ${stepEightTitle}`, stepEightPreviewDiv, stepEightCheck, stepEightTitleP )
-                
+                stepOverview(stepOneTitle, stepOneTitleP, `Stap 1: ${stepOneTitle}`, stepOnePreviewDiv, stepOneCheck, stepsOverviewWorkshop)
+                stepOverview(stepTwoTitle, stepTwoTitleP, `Stap 2: ${stepTwoTitle}`, stepTwoPreviewDiv, stepTwoCheck, stepsOverviewWorkshop )
+                stepOverview(stepThreeTitle, stepThreeTitleP, `Stap 3: ${stepThreeTitle}`, stepThreePreviewDiv, stepThreeCheck, stepsOverviewWorkshop )
+                stepOverview(stepFourTitle, stepFourTitleP, `Stap 4: ${stepFourTitle}`, stepFourPreviewDiv, stepFourCheck, stepsOverviewWorkshop )
+                stepOverview(stepFiveTitle, stepFiveTitleP, `Stap 5: ${stepFiveTitle}`, stepFivePreviewDiv, stepFiveCheck, stepsOverviewWorkshop )
+                stepOverview(stepSixTitle, stepSixTitleP, `Stap 6: ${stepSixTitle}`, stepSixPreviewDiv, stepSixCheck, stepsOverviewWorkshop)
+                stepOverview(stepSevenTitle, stepSevenTitleP, `Stap 7: ${stepSevenTitle}`, stepSevenPreviewDiv, stepSevenCheck, stepsOverviewWorkshop)
+                stepOverview(stepEightTitle, stepEightTitleP, `Stap 8: ${stepEightTitle}`, stepEightPreviewDiv, stepEightCheck, stepsOverviewWorkshop)
 
                 // Step one introduction
                 if(stepOneTitle != ""){
@@ -757,7 +779,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                             }; 
                         });
                       
-                       appendStepToDom(stepOneOuterDiv, stepOneTitleH2, stepOneExplainerP, stepOneCTATitle, stepOneCTAP, stepOneInput)
+                       appendStepToDom(DOM, stepOneOuterDiv, stepOneTitleH2, stepOneExplainerP, stepOneCTATitle, stepOneCTAP, stepOneInput)
 
                         stepTwoIntroductionTitle.innerText = "Volgende stap"
                         stepTwoIntroductionP.innerText = stepTwoIntroduction
@@ -2079,197 +2101,243 @@ function saveEight(){
 
 // Edit workshop
 
-        const saveWorkshopDOM = document.getElementById("saveWorkshop")
-        const updateWorkshopDOM = document.getElementById("updateWorkshop")
+//         const saveWorkshopDOM = document.getElementById("saveWorkshop")
+//         const updateWorkshopDOM = document.getElementById("updateWorkshop")
 
-        saveWorkshopDOM.style.display = "none"
-        updateWorkshopDOM.style.display = "block"
+//         saveWorkshopDOM.style.display = "none"
+//         updateWorkshopDOM.style.display = "block"
 
-        // Select goal of workshop
+//         // Select goal of workshop
 
-        const selectGoal = document.getElementById("select-goel-workshop")
+//         const selectGoal = document.getElementById("select-goel-workshop")
 
-        db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
-            querySnapshot.forEach(doc1 => {
+//         db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
+//             querySnapshot.forEach(doc1 => {
 
-                const levensvraag = doc1.data().Levensvraag
+//                 const levensvraag = doc1.data().Levensvraag
 
-                const options = document.createElement("option")
+//                 const options = document.createElement("option")
 
-                options.innerText = levensvraag
+//                 options.innerText = levensvraag
 
-                selectGoal.appendChild(options)
+//                 selectGoal.appendChild(options)
 
-            })
-        });
+//             })
+//         });
 
-        auth.onAuthStateChanged(User =>{
-            if (User){
+//         auth.onAuthStateChanged(User =>{
+//             if (User){
     
-            db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
-                        const coachNaam = doc.data().Gebruikersnaam;
+//             db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+//                         const coachNaam = doc.data().Gebruikersnaam;
 
-        db.collection("Workshops").where("WorkshopTitle", "==", "selected").where("Gebruikersnaam", "==", coachNaam).get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
+//         db.collection("Workshops").where("WorkshopTitle", "==", "selected").where("Gebruikersnaam", "==", coachNaam).get().then(querySnapshot => {
+//             querySnapshot.forEach(doc => {
         
-                const title = doc.data().WorkshopTitle
-                const headerImg = doc.data().HeaderImage
-                const workshopGoals = doc.data().WorkshopGoals
-                const stepOnePreview = doc.data().StepOnePreview
-                const stepOneTitle = doc.data().StepOneTitle
-                const stepOneExplainer = doc.data().StepOneExplainer
-                const stepOneCTA = doc.data().StepOneCTA
-                const stepTwoPreview = doc.data().StepTwoPreview
-                const stepTwoTitle = doc.data().StepTwoTitle
-                const stepTwoExplainer = doc.data().StepTwoExplainer
-                const stepTwoCTA = doc.data().StepTwoCTA
-                const stepThreePreview = doc.data().StepThreePreview
-                const stepThreeTitle = doc.data().StepThreeTitle
-                const stepThreeExplainer = doc.data().StepThreeExplainer
-                const stepThreeCTA = doc.data().StepThreeCTA
-                const stepFourPreview = doc.data().StepFourPreview
-                const stepFourTitle = doc.data().StepFourTitle
-                const stepFourExplainer = doc.data().StepFourExplainer
-                const stepFourCTA = doc.data().StepFourCTA
-                const stepFivePreview = doc.data().StepFivePreview
-                const stepFiveTitle = doc.data().StepFiveTitle
-                const stepFiveExplainer = doc.data().StepFiveExplainer
-                const stepFiveCTA = doc.data().StepFiveCTA
-                const stepSixPreview = doc.data().StepSixPreview
-                const stepSixTitle = doc.data().StepSixTitle
-                const stepSixExplainer = doc.data().StepSixExplainer
-                const stepSixCTA = doc.data().StepSixCTA
-                const stepSevenPreview = doc.data().StepSevenPreview
-                const stepSevenTitle = doc.data().StepSevenTitle
-                const stepSevenExplainer = doc.data().StepSevenExplainer
-                const stepSevenCTA = doc.data().StepSevenCTA
-                const stepEightPreview = doc.data().StepEightPreview
-                const stepEightTitle = doc.data().StepEightTitle
-                const stepEightExplainer = doc.data().StepEightExplainer
-                const stepEightCTA = doc.data().StepEightCTA
-                const closingOneText = doc.data().ClosingOneText 
-                const closingOneTitle = doc.data().ClosingOneTitle
-                const closingTwoText = doc.data().ClosingTwoText 
-                const closingTwoTitle = doc.data().ClosingTwoTitle
-                const closingThreeText = doc.data().ClosingThreeText 
-                const closingThreeTitle = doc.data().ClosingThreeTitle
-                const closingFourText = doc.data().ClosingFourText 
-                const closingFourTitle = doc.data().ClosingFourTitle
-                const closingFiveText = doc.data().ClosingFiveText 
-                const closingFiveTitle = doc.data().ClosingFiveTitle
-                const closingSixText = doc.data().ClosingSixText 
-                const closingSixTitle = doc.data().ClosingSixTitle
-                const closingSevenText = doc.data().ClosingSevenText 
-                const closingSevenTitle = doc.data().ClosingSevenTitle
-                const closingEightText = doc.data().ClosingEightText 
-                const closingEightTitle = doc.data().ClosingEightTitle
-                const workshopGoal = doc.data().Goal
+//                 const title = doc.data().WorkshopTitle
+//                 const headerImg = doc.data().HeaderImage
+//                 const workshopGoals = doc.data().WorkshopGoals
+//                 const stepOnePreview = doc.data().StepOnePreview
+//                 const stepOneTitle = doc.data().StepOneTitle
+//                 const stepOneExplainer = doc.data().StepOneExplainer
+//                 const stepOneCTA = doc.data().StepOneCTA
+//                 const stepTwoPreview = doc.data().StepTwoPreview
+//                 const stepTwoTitle = doc.data().StepTwoTitle
+//                 const stepTwoExplainer = doc.data().StepTwoExplainer
+//                 const stepTwoCTA = doc.data().StepTwoCTA
+//                 const stepThreePreview = doc.data().StepThreePreview
+//                 const stepThreeTitle = doc.data().StepThreeTitle
+//                 const stepThreeExplainer = doc.data().StepThreeExplainer
+//                 const stepThreeCTA = doc.data().StepThreeCTA
+//                 const stepFourPreview = doc.data().StepFourPreview
+//                 const stepFourTitle = doc.data().StepFourTitle
+//                 const stepFourExplainer = doc.data().StepFourExplainer
+//                 const stepFourCTA = doc.data().StepFourCTA
+//                 const stepFivePreview = doc.data().StepFivePreview
+//                 const stepFiveTitle = doc.data().StepFiveTitle
+//                 const stepFiveExplainer = doc.data().StepFiveExplainer
+//                 const stepFiveCTA = doc.data().StepFiveCTA
+//                 const stepSixPreview = doc.data().StepSixPreview
+//                 const stepSixTitle = doc.data().StepSixTitle
+//                 const stepSixExplainer = doc.data().StepSixExplainer
+//                 const stepSixCTA = doc.data().StepSixCTA
+//                 const stepSevenPreview = doc.data().StepSevenPreview
+//                 const stepSevenTitle = doc.data().StepSevenTitle
+//                 const stepSevenExplainer = doc.data().StepSevenExplainer
+//                 const stepSevenCTA = doc.data().StepSevenCTA
+//                 const stepEightPreview = doc.data().StepEightPreview
+//                 const stepEightTitle = doc.data().StepEightTitle
+//                 const stepEightExplainer = doc.data().StepEightExplainer
+//                 const stepEightCTA = doc.data().StepEightCTA
+//                 const closingOneText = doc.data().ClosingOneText 
+//                 const closingOneTitle = doc.data().ClosingOneTitle
+//                 const closingTwoText = doc.data().ClosingTwoText 
+//                 const closingTwoTitle = doc.data().ClosingTwoTitle
+//                 const closingThreeText = doc.data().ClosingThreeText 
+//                 const closingThreeTitle = doc.data().ClosingThreeTitle
+//                 const closingFourText = doc.data().ClosingFourText 
+//                 const closingFourTitle = doc.data().ClosingFourTitle
+//                 const closingFiveText = doc.data().ClosingFiveText 
+//                 const closingFiveTitle = doc.data().ClosingFiveTitle
+//                 const closingSixText = doc.data().ClosingSixText 
+//                 const closingSixTitle = doc.data().ClosingSixTitle
+//                 const closingSevenText = doc.data().ClosingSevenText 
+//                 const closingSevenTitle = doc.data().ClosingSevenTitle
+//                 const closingEightText = doc.data().ClosingEightText 
+//                 const closingEightTitle = doc.data().ClosingEightTitle
+//                 const workshopGoal = doc.data().Goal
 
-                // Load selected header image 
-                if(headerImg != undefined || headerImg != ""){
+//                 // Load selected header image 
+//                 if(headerImg != undefined || headerImg != ""){
 
-                    const headerImageDOM = document.getElementById("selected-header-img")
+//                     const headerImageDOM = document.getElementById("selected-header-img")
 
-                    headerImageDOM.src = headerImg
+//                     headerImageDOM.src = headerImg
                     
-                    const selectHeaderImageSet = document.getElementById("toolbar-select-header-image-button") 
-                    const selectHeaderImageUpdate = document.getElementById("toolbar-select-header-image-button-update") 
+//                     const selectHeaderImageSet = document.getElementById("toolbar-select-header-image-button") 
+//                     const selectHeaderImageUpdate = document.getElementById("toolbar-select-header-image-button-update") 
 
-                    selectHeaderImageSet.style.display = "none"
-                    selectHeaderImageUpdate.style.display = "block"
-                }
+//                     selectHeaderImageSet.style.display = "none"
+//                     selectHeaderImageUpdate.style.display = "block"
+//                 }
 
-                // Load workshop title
-                const DOMtitle = document.getElementById("workshop-title")
-                DOMtitle.value = title
-                tinyMCE.get('editor1').setContent(workshopGoals)
+//                 // Load workshop title
+//                 const DOMtitle = document.getElementById("workshop-title")
+//                 DOMtitle.value = title
+//                 tinyMCE.get('editor1').setContent(workshopGoals)
 
-                // Load workshop goal
-                const selectGoal = document.getElementById("select-goel-workshop")
+//                 // Load workshop goal
+//                 const selectGoal = document.getElementById("select-goel-workshop")
 
-                const options = selectGoal.options
+//                 const options = selectGoal.options
 
-                const optionsArray = Array.from(options)
+//                 const optionsArray = Array.from(options)
 
-                optionsArray.forEach(opt => {
+//                 optionsArray.forEach(opt => {
 
-                    if(opt.innerHTML == workshopGoal){
+//                     if(opt.innerHTML == workshopGoal){
 
-                        selectGoal.value = opt.innerHTML
-                    }
-                })
+//                         selectGoal.value = opt.innerHTML
+//                     }
+//                 })
 
-                // Load step content
+//                 // Load step content
 
-                function loadSteps(dbTitle,buttonID,DOMtitleID, editorA, editorB, editorC, setContentA, setContentB, setContentC, innerDiv ){
-                    if(dbTitle != ""){
-                        const button = document.getElementById(buttonID)
+//                 function loadSteps(dbTitle,buttonID,DOMtitleID, editorA, editorB, editorC, setContentA, setContentB, setContentC, innerDiv ){
+//                     if(dbTitle != ""){
+//                         const button = document.getElementById(buttonID)
         
-                        button.click()
-                        button.style.display = "none"
-                    };
+//                         button.click()
+//                         button.style.display = "none"
+//                     };
 
-                    const DOMtitle = document.getElementById(DOMtitleID)
-                    tinyMCE.get(editorA).setContent(setContentA)
-                    tinyMCE.get(editorB).setContent(setContentB)
-                    tinyMCE.get(editorC).setContent(setContentC)
+//                     const DOMtitle = document.getElementById(DOMtitleID)
+//                     tinyMCE.get(editorA).setContent(setContentA)
+//                     tinyMCE.get(editorB).setContent(setContentB)
+//                     tinyMCE.get(editorC).setContent(setContentC)
     
-                    DOMtitle.value = dbTitle
+//                     DOMtitle.value = dbTitle
     
-                    const innerDivDOM = document.getElementById(innerDiv)
-                    innerDivDOM.setAttribute("data-title", dbTitle)
-                    innerDivDOM.setAttribute("data-explainer", setContentB)
-                    innerDivDOM.setAttribute("data-cta", setContentC)
+//                     const innerDivDOM = document.getElementById(innerDiv)
+//                     innerDivDOM.setAttribute("data-title", dbTitle)
+//                     innerDivDOM.setAttribute("data-explainer", setContentB)
+//                     innerDivDOM.setAttribute("data-cta", setContentC)
                 
-                };
+//                 };
 
-                loadSteps(stepOneTitle, "button-step-one", "step-one-title", 'editor2', 'editor3', 'editor4', stepOnePreview, stepOneExplainer, stepOneCTA, "step-one-inner-div")
-                loadSteps(stepTwoTitle, "button-step-two", "step-two-title", 'editor-preview-step-two', 'editor5', 'editor6', stepTwoPreview, stepTwoExplainer, stepTwoCTA, "step-two-inner-div")
-                loadSteps(stepThreeTitle, "button-step-three", "step-three-title", 'editor-preview-step-three', 'editor7', 'editor8', stepThreePreview, stepThreeExplainer, stepThreeCTA, "step-three-inner-div")
-                loadSteps(stepFourTitle, "button-step-four", "step-four-title", 'editor-preview-step-four', 'editor9', 'editor10', stepFourPreview, stepFourExplainer, stepFourCTA, "step-four-inner-div")
-                loadSteps(stepFiveTitle, "button-step-five", "step-five-title", 'editor-preview-step-five', 'editor11', 'editor12', stepFivePreview, stepFiveExplainer, stepFiveCTA, "step-five-inner-div")
-                loadSteps(stepSixTitle, "button-step-six", "step-six-title", 'editor-preview-step-six', 'editor13', 'editor14', stepSixPreview, stepSixExplainer, stepSixCTA, "step-six-inner-div" )
-                loadSteps(stepSevenTitle, "button-step-seven", "step-seven-title", 'editor-preview-step-seven', 'editor15', 'editor16', stepSevenPreview, stepSevenExplainer, stepSevenCTA, "step-seven-inner-div" )
-                loadSteps(stepEightTitle, "button-step-eight", "step-eight-title", 'editor-preview-step-eight', 'editor17', 'editor18', stepEightPreview, stepEightExplainer, stepEightCTA, "step-eight-inner-div" )
+//                 loadSteps(stepOneTitle, "button-step-one", "step-one-title", 'editor2', 'editor3', 'editor4', stepOnePreview, stepOneExplainer, stepOneCTA, "step-one-inner-div")
+//                 loadSteps(stepTwoTitle, "button-step-two", "step-two-title", 'editor-preview-step-two', 'editor5', 'editor6', stepTwoPreview, stepTwoExplainer, stepTwoCTA, "step-two-inner-div")
+//                 loadSteps(stepThreeTitle, "button-step-three", "step-three-title", 'editor-preview-step-three', 'editor7', 'editor8', stepThreePreview, stepThreeExplainer, stepThreeCTA, "step-three-inner-div")
+//                 loadSteps(stepFourTitle, "button-step-four", "step-four-title", 'editor-preview-step-four', 'editor9', 'editor10', stepFourPreview, stepFourExplainer, stepFourCTA, "step-four-inner-div")
+//                 loadSteps(stepFiveTitle, "button-step-five", "step-five-title", 'editor-preview-step-five', 'editor11', 'editor12', stepFivePreview, stepFiveExplainer, stepFiveCTA, "step-five-inner-div")
+//                 loadSteps(stepSixTitle, "button-step-six", "step-six-title", 'editor-preview-step-six', 'editor13', 'editor14', stepSixPreview, stepSixExplainer, stepSixCTA, "step-six-inner-div" )
+//                 loadSteps(stepSevenTitle, "button-step-seven", "step-seven-title", 'editor-preview-step-seven', 'editor15', 'editor16', stepSevenPreview, stepSevenExplainer, stepSevenCTA, "step-seven-inner-div" )
+//                 loadSteps(stepEightTitle, "button-step-eight", "step-eight-title", 'editor-preview-step-eight', 'editor17', 'editor18', stepEightPreview, stepEightExplainer, stepEightCTA, "step-eight-inner-div" )
 
-                // Load closing
+//                 // Load closing
                 
-                function loadClosing(closingTitle, closingText, createClosing, closingTitleInput, editorClosing){
+//                 function loadClosing(closingTitle, closingText, createClosing, closingTitleInput, editorClosing){
 
-                    if(closingTitle != "" && closingText != ""){
+//                     if(closingTitle != "" && closingText != ""){
 
-                        const closingButton = document.getElementById(createClosing)
-                            closingButton.click()
+//                         const closingButton = document.getElementById(createClosing)
+//                             closingButton.click()
     
-                        const closingTitleDOM = document.getElementById(closingTitleInput)
-                        tinyMCE.get(editorClosing).setContent(closingText)
+//                         const closingTitleDOM = document.getElementById(closingTitleInput)
+//                         tinyMCE.get(editorClosing).setContent(closingText)
     
-                        closingTitleDOM.value = closingTitle
-                    };
-                } loadClosing(closingOneTitle, closingOneText, "create-closing-1", "closing-title-input-1", "editor-closing-1")
-                loadClosing(closingTwoTitle, closingTwoText, "create-closing-2", "closing-title-input-2", "editor-closing-2")
-                loadClosing(closingThreeTitle, closingThreeText, "create-closing-3", "closing-title-input-3", "editor-closing-3")
-                loadClosing(closingFourTitle, closingFourText, "create-closing-4", "closing-title-input-4", "editor-closing-4")
-                loadClosing(closingFiveTitle, closingFiveText, "create-closing-5", "closing-title-input-5", "editor-closing-5")
-                loadClosing(closingSixTitle, closingSixText, "create-closing-6", "closing-title-input-6", "editor-closing-6")
-                loadClosing(closingSevenTitle, closingSevenText, "create-closing-7", "closing-title-input-7", "editor-closing-7")
-                loadClosing(closingEightTitle, closingEightText, "create-closing-8", "closing-title-input-8", "editor-closing-8")
+//                         closingTitleDOM.value = closingTitle
+//                     };
+//                 } loadClosing(closingOneTitle, closingOneText, "create-closing-1", "closing-title-input-1", "editor-closing-1")
+//                 loadClosing(closingTwoTitle, closingTwoText, "create-closing-2", "closing-title-input-2", "editor-closing-2")
+//                 loadClosing(closingThreeTitle, closingThreeText, "create-closing-3", "closing-title-input-3", "editor-closing-3")
+//                 loadClosing(closingFourTitle, closingFourText, "create-closing-4", "closing-title-input-4", "editor-closing-4")
+//                 loadClosing(closingFiveTitle, closingFiveText, "create-closing-5", "closing-title-input-5", "editor-closing-5")
+//                 loadClosing(closingSixTitle, closingSixText, "create-closing-6", "closing-title-input-6", "editor-closing-6")
+//                 loadClosing(closingSevenTitle, closingSevenText, "create-closing-7", "closing-title-input-7", "editor-closing-7")
+//                 loadClosing(closingEightTitle, closingEightText, "create-closing-8", "closing-title-input-8", "editor-closing-8")
                
-                // Save/update
-                const saveWorkshopButton = document.getElementById("saveWorkshop")
-                const updateWorkshopButton = document.getElementById("updateWorkshop")
+//                 // Save/update
+//                 const saveWorkshopButton = document.getElementById("saveWorkshop")
+//                 const updateWorkshopButton = document.getElementById("updateWorkshop")
 
-                saveWorkshopButton.style.display = "none"
-                updateWorkshopButton.style.display = "flex"
+//                 saveWorkshopButton.style.display = "none"
+//                 updateWorkshopButton.style.display = "flex"
                 
-                });
-            });
-        })
-    };
-});
+//                 });
+//             });
+//         })
+//     };
+// });
 
 
 // Save(set) first set of input to database
+
+let bannerImage = ""
+
+!function uploadBanner(){
+    const uploadImageButton = document.getElementById("upload-banner")
+
+    uploadImageButton.addEventListener("click", () => {
+
+        uploadImageButton.innerText = "Uploaden.."
+    
+    const selectedFile = document.getElementById('foto-upload-create-workshop').files[0];
+    const storageRef = firebase.storage().ref("/Workshop-banners/" + selectedFile.name);
+
+    const uploadTask = storageRef.put(selectedFile)
+    uploadTask.then(() => {
+    // Register three observers:
+    // 1. 'state_changed' observer, called any time the state changes
+    // 2. Error observer, called on failure
+    // 3. Completion observer, called on successful completion
+    uploadTask.on('state_changed', function(snapshot){
+    // Observe state change events such as progress, pause, and resume
+    // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    progressBar.innerHTML = ` ${progress} %`;
+    switch (snapshot.state) {
+    case firebase.storage.TaskState.PAUSED: // or 'paused'
+        console.log('Upload is paused');
+        break;
+    case firebase.storage.TaskState.RUNNING: // or 'running'
+        console.log('Upload is running');
+        break;
+    }
+    }, function(error) {
+    // Handle unsuccessful uploads
+    }, function() {
+    // Handle successful uploads on complete
+    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+        bannerImage = downloadURL
+        uploadImageButton.innerText = "Geupload"
+        console.log(downloadURL)
+                });                                                
+            });
+        });
+    });
+}();
 
 function saveWorkshop(){
     const workshopTitle = document.getElementById("workshop-title").value
@@ -2372,6 +2440,7 @@ function saveWorkshop(){
         Goal: workshopGoal,
         WorkshopTitle: workshopTitle,
         WorkshopGoals: workshopGoals,
+        BannerImage: bannerImage,
         StepOnePreview: stepOnePreview,
         StepOneTitle: stepOneTitle,
         StepOneExplainer: stepOneExplainer,
@@ -2434,7 +2503,6 @@ function saveWorkshop(){
         };
 
 // Update input
-
 function updateWorkshop(){
     const workshopTitle = document.getElementById("workshop-title").value
     const workshopGoals = tinyMCE.get('editor1').getContent()
@@ -2494,7 +2562,6 @@ function updateWorkshop(){
         const stepEightCTA = tinyMCE.get('editor18').getContent()
 
         // Closing
-
         const closingOneTitle = document.getElementById("closing-title-input-1").value
         const closingOneText = tinyMCE.get('editor-closing-1').getContent()
         const closingTwoTitle = document.getElementById("closing-title-input-2").value
@@ -2512,9 +2579,7 @@ function updateWorkshop(){
         const closingEightTitle = document.getElementById("closing-title-input-8").value
         const closingEightText = tinyMCE.get('editor-closing-8').getContent()
 
-    globalTitle.forEach(title => {
-
-    db.collection("Workshops").where("WorkshopTitle", "==", title).get().then(querySnapshot => {
+    db.collection("Workshops").where("WorkshopTitle", "==", workshopTitle).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
             db.collection("Workshops").doc(doc.id).update({
@@ -2572,7 +2637,6 @@ function updateWorkshop(){
                     });   
                 })
             });
-        });
         const workshopSavedUpdateNotification = document.getElementById("workshop-saved-updated-notification")
 
         workshopSavedUpdateNotification.style.display = "block"
@@ -2609,33 +2673,58 @@ function publishWorkshop(){
     
 };
 
+// Select workshopgoal
+!function selectWorkshopGoal(){
+
+    const select = document.getElementById("select-goel-workshop")
+
+    db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get()
+    .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const goal = doc.data().Levensvraag
+
+            const option = document.createElement("option")
+
+            option.innerText = goal
+
+            select.appendChild(option)
+        });
+    });
+}();
+
 // Create steps
 
-function createStep(stepInnerDiv){
+function createStep(stepInnerDiv, buttonStep){
+
+    const createStep = document.getElementById(buttonStep)
 
 const step = document.getElementById(stepInnerDiv)
 
-step.style.display = "flex"
-
-} createStep("step-one-inner-div")
-createStep("step-two-inner-div")
-createStep("step-three-inner-div")
-createStep("step-four-inner-div")
-createStep("step-five-inner-div")
-createStep("step-six-inner-div")
-createStep("step-seven-inner-div")
-createStep("step-eight-inner-div")
+createStep.addEventListener("click", () => {
+    step.style.visibility = "visible"
+    });
+} createStep("step-one-inner-div", "button-step-one")
+createStep("step-two-inner-div", "button-step-two")
+createStep("step-three-inner-div", "button-step-three")
+createStep("step-four-inner-div", "button-step-four")
+createStep("step-five-inner-div", "button-step-five")
+createStep("step-six-inner-div", "button-step-six")
+createStep("step-seven-inner-div", "button-step-seven")
+createStep("step-eight-inner-div", "button-step-eight")
 
 // Create closing
 
 function createClosing(elem){
 
-  elem.parentElement.parentElement.nextElementSibling.style.display = "flex"
+  const closingElem = elem.parentElement.parentElement.nextElementSibling.style.visibility = "visible" 
 }
 
 // Delete
 
 function deleteStep1(ele){
+
+    const workshopTitle = document.getElementById("workshop-title").value
 
     auth.onAuthStateChanged(User =>{
         if (User){
@@ -2643,9 +2732,8 @@ function deleteStep1(ele){
         db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                     const coachNaam = doc.data().Gebruikersnaam;
 
-    globalTitle.forEach(title => {
 
-    db.collection("Workshops").where("WorkshopTitle", "==", title).where("Coach", "==", coachNaam).get().then(querySnapshot => {
+    db.collection("Workshops").where("WorkshopTitle", "==", workshopTitle).where("Coach", "==", coachNaam).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
    db.collection("Workshops").doc(doc.id).update({
@@ -2658,10 +2746,11 @@ function deleteStep1(ele){
                         });
                     });
                 });
-            })
+            });
         };
     });
 };
+
 
 function deleteStep2(ele){
 
@@ -2885,375 +2974,4 @@ function deleteClosing(ele){
             });
         };
     });
-
-}
-
-// Select header image
-
-const chooseHeaderImg = document.getElementById("chosse-header-image")
-const chooseHeaderImageModal = document.getElementById("select-header-img-modal")
-const chooseHeaderImageModalButton = document.getElementById("toolbar-select-header-image-button")
-
-chooseHeaderImg.addEventListener("click", () => {
-
-    chooseHeaderImageModal.style.display = "flex"
-})
-
-// Save(set) first set of input to database
-chooseHeaderImageModalButton.addEventListener("click", () => {
-
-    // Workshop goal
-    const workshopGoalSelect = document.getElementById("select-goel-workshop")
-
-    const select = workshopGoalSelect.options
-    const workshopGoal = select[select.selectedIndex].innerHTML
-
-    // Header image
-
-    const selectedImage = document.querySelectorAll("input[name=select-header-img]:checked")[0].id
-
-    // Workshops general details
-
-    const workshopTitle = document.getElementById("workshop-title").value
-    const workshopGoals = tinyMCE.get('editor1').getContent()
-    const stepOnePreview = tinyMCE.get('editor2').getContent()
-
-    // Step one
-    const stepOneTitle =  document.getElementById("step-one-title").value
-    const stepOneExplainer = tinyMCE.get('editor3').getContent()
-    const stepOneCTA = tinyMCE.get('editor4').getContent()
-
-    const innerDiv = document.getElementById("step-one-inner-div")
-        innerDiv.setAttribute("data-title", stepOneTitle)
-        innerDiv.setAttribute("data-explainer", stepOneExplainer)
-        innerDiv.setAttribute("data-cta", stepOneCTA)
-   
-     // Step two
-     const stepTwoPreview = tinyMCE.get('editor-preview-step-two').getContent()
-     const stepTwoTitle =  document.getElementById("step-two-title").value
-     const stepTwoExplainer = tinyMCE.get('editor5').getContent()
-     const stepTwoCTA = tinyMCE.get('editor6').getContent()
-
-      // Step three
-    const stepThreePreview = tinyMCE.get('editor-preview-step-three').getContent()
-    const stepThreeTitle =  document.getElementById("step-three-title").value
-    const stepThreeExplainer = tinyMCE.get('editor7').getContent()
-    const stepThreeCTA = tinyMCE.get('editor8').getContent()
-
-     // Step four
-     const stepFourPreview = tinyMCE.get('editor-preview-step-four').getContent()
-     const stepFourTitle =  document.getElementById("step-four-title").value
-     const stepFourExplainer = tinyMCE.get('editor9').getContent()
-     const stepFourCTA = tinyMCE.get('editor10').getContent()
-
-      // Step five
-    const stepFivePreview = tinyMCE.get('editor-preview-step-five').getContent()
-    const stepFiveTitle =  document.getElementById("step-five-title").value
-    const stepFiveExplainer = tinyMCE.get('editor11').getContent()
-    const stepFiveCTA = tinyMCE.get('editor12').getContent()
-
-     // Step six
-     const stepSixPreview = tinyMCE.get('editor-preview-step-six').getContent()
-     const stepSixTitle =  document.getElementById("step-six-title").value
-     const stepSixExplainer = tinyMCE.get('editor13').getContent()
-     const stepSixCTA = tinyMCE.get('editor14').getContent()
-
-      // Step seven
-    const stepSevenPreview = tinyMCE.get('editor-preview-step-seven').getContent()
-    const stepSevenTitle =  document.getElementById("step-seven-title").value
-    const stepSevenExplainer = tinyMCE.get('editor15').getContent()
-    const stepSevenCTA = tinyMCE.get('editor16').getContent()
-
-     // Step eight
-     const stepEightPreview = tinyMCE.get('editor-preview-step-eight').getContent()
-     const stepEightTitle =  document.getElementById("step-eight-title").value
-     const stepEightExplainer = tinyMCE.get('editor17').getContent()
-     const stepEightCTA = tinyMCE.get('editor18').getContent()
-
-     // Closing
-
-     const closingOneTitle = document.getElementById("closing-title-input-1").value
-     const closingOneText = tinyMCE.get('editor-closing-1').getContent()
-     const closingTwoTitle = document.getElementById("closing-title-input-2").value
-     const closingTwoText = tinyMCE.get('editor-closing-2').getContent()
-     const closingThreeTitle = document.getElementById("closing-title-input-3").value
-     const closingThreeText = tinyMCE.get('editor-closing-3').getContent()
-     const closingFourTitle = document.getElementById("closing-title-input-4").value
-     const closingFourText = tinyMCE.get('editor-closing-4').getContent()
-     const closingFiveTitle = document.getElementById("closing-title-input-5").value
-     const closingFiveText = tinyMCE.get('editor-closing-5').getContent()
-     const closingSixTitle = document.getElementById("closing-title-input-6").value
-     const closingSixText = tinyMCE.get('editor-closing-6').getContent()
-     const closingSevenTitle = document.getElementById("closing-title-input-7").value
-     const closingSevenText = tinyMCE.get('editor-closing-7').getContent()
-     const closingEightTitle = document.getElementById("closing-title-input-8").value
-     const closingEightText = tinyMCE.get('editor-closing-8').getContent()
-
-    const saveWorkshopButton = document.getElementById("saveWorkshop")
-    const updateWorkshopButton = document.getElementById("updateWorkshop")
-
-    saveWorkshopButton.style.display = "none"
-    updateWorkshopButton.style.display = "flex"
-
-    // Save input to database
-    auth.onAuthStateChanged(User =>{
-        if (User){
-
-        db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
-                    const coachNaam = doc.data().Gebruikersnaam;
-
-    db.collection("Workshops").doc().set({
-        Eigenaar: "Vitaminds",
-        Coach: coachNaam,
-        Status: "Draft",
-        Goal: workshopGoal,
-        HeaderImage: selectedImage,
-        WorkshopTitle: workshopTitle,
-        WorkshopGoals: workshopGoals,
-        StepOnePreview: stepOnePreview,
-        StepOneTitle: stepOneTitle,
-        StepOneExplainer: stepOneExplainer,
-        StepOneCTA: stepOneCTA,
-        StepTwoPreview: stepTwoPreview,
-        StepTwoTitle: stepTwoTitle,
-        StepTwoExplainer: stepTwoExplainer,
-        StepTwoCTA: stepTwoCTA,
-        StepThreePreview: stepThreePreview,
-        StepThreeTitle: stepThreeTitle,
-        StepThreeExplainer: stepThreeExplainer,
-        StepThreeCTA: stepThreeCTA,
-        StepFourPreview: stepFourPreview,
-        StepFourTitle: stepFourTitle,
-        StepFourExplainer: stepFourExplainer,
-        StepFourCTA: stepFourCTA,
-        StepFivePreview: stepFivePreview,
-        StepFiveTitle: stepFiveTitle,
-        StepFiveExplainer: stepFiveExplainer,
-        StepFiveCTA: stepFiveCTA,
-        StepSixPreview: stepSixPreview,
-        StepSixTitle: stepSixTitle,
-        StepSixExplainer: stepSixExplainer,
-        StepSixCTA: stepSixCTA,
-        StepSevenPreview: stepSevenPreview,
-        StepSevenTitle: stepSevenTitle,
-        StepSevenExplainer: stepSevenExplainer,
-        StepSevenCTA: stepSevenCTA,
-        StepEightPreview: stepEightPreview,
-        StepEightTitle: stepEightTitle,
-        StepEightExplainer: stepEightExplainer,
-        StepEightCTA: stepEightCTA,
-        ClosingOneTitle: closingOneTitle,
-        ClosingOneText: closingOneText,
-        ClosingTwoTitle: closingTwoTitle,
-        ClosingTwoText: closingTwoText,
-        ClosingThreeTitle: closingThreeTitle,
-        ClosingThreeText: closingThreeText,
-        ClosingFourTitle: closingFourTitle,
-        ClosingFourText: closingFourText,
-        ClosingFiveTitle: closingFiveTitle,
-        ClosingFiveText: closingFiveText,
-        ClosingSixTitle: closingSixTitle,
-        ClosingSixText: closingSixText,
-        ClosingSevenTitle: closingSevenTitle,
-        ClosingSevenText: closingSevenText,
-        ClosingEightTitle: closingEightTitle,
-        ClosingEightText: closingEightText,
-                    });
-                });
-            };
-        });
-
-        const previewWorkshop = document.getElementById("preview-workshop")
-
-        previewWorkshop.style.display = "block"
-    
-        const workshopSavedSetNotification = document.getElementById("workshop-saved-set-notification")
-    
-        workshopSavedSetNotification.style.display = "block"
-    
-        // Close modal
-    
-        chooseHeaderImageModal.style.display = "none"
-
-        // Select header image set to select header image update
-
-        const selectHeaderImageSet = document.getElementById("toolbar-select-header-image-button") 
-        const selectHeaderImageUpdate = document.getElementById("toolbar-select-header-image-button-update") 
-
-        selectHeaderImageSet.style.display = "none"
-        selectHeaderImageUpdate.style.display = "block"
-
-});
-
-const selectHeaderImageUpdate = document.getElementById("toolbar-select-header-image-button-update") 
-
-// Save(update) first set of input to database
-selectHeaderImageUpdate.addEventListener("click", () => {
-
-    // Header image
-
-    const selectedImage = document.querySelectorAll("input[name=select-header-img]:checked")[0].id
-
-    console.log(selectedImage)
-
-    // Workshops general details
-
-    const workshopTitle = document.getElementById("workshop-title").value
-    const workshopGoals = tinyMCE.get('editor1').getContent()
-    const stepOnePreview = tinyMCE.get('editor2').getContent()
-
-    // Step one
-    const stepOneTitle =  document.getElementById("step-one-title").value
-    const stepOneExplainer = tinyMCE.get('editor3').getContent()
-    const stepOneCTA = tinyMCE.get('editor4').getContent()
-
-    const innerDiv = document.getElementById("step-one-inner-div")
-        innerDiv.setAttribute("data-title", stepOneTitle)
-        innerDiv.setAttribute("data-explainer", stepOneExplainer)
-        innerDiv.setAttribute("data-cta", stepOneCTA)
-   
-     // Step two
-     const stepTwoPreview = tinyMCE.get('editor-preview-step-two').getContent()
-     const stepTwoTitle =  document.getElementById("step-two-title").value
-     const stepTwoExplainer = tinyMCE.get('editor5').getContent()
-     const stepTwoCTA = tinyMCE.get('editor6').getContent()
-
-      // Step three
-    const stepThreePreview = tinyMCE.get('editor-preview-step-three').getContent()
-    const stepThreeTitle =  document.getElementById("step-three-title").value
-    const stepThreeExplainer = tinyMCE.get('editor7').getContent()
-    const stepThreeCTA = tinyMCE.get('editor8').getContent()
-
-     // Step four
-     const stepFourPreview = tinyMCE.get('editor-preview-step-four').getContent()
-     const stepFourTitle =  document.getElementById("step-four-title").value
-     const stepFourExplainer = tinyMCE.get('editor9').getContent()
-     const stepFourCTA = tinyMCE.get('editor10').getContent()
-
-      // Step five
-    const stepFivePreview = tinyMCE.get('editor-preview-step-five').getContent()
-    const stepFiveTitle =  document.getElementById("step-five-title").value
-    const stepFiveExplainer = tinyMCE.get('editor11').getContent()
-    const stepFiveCTA = tinyMCE.get('editor12').getContent()
-
-     // Step six
-     const stepSixPreview = tinyMCE.get('editor-preview-step-six').getContent()
-     const stepSixTitle =  document.getElementById("step-six-title").value
-     const stepSixExplainer = tinyMCE.get('editor13').getContent()
-     const stepSixCTA = tinyMCE.get('editor14').getContent()
-
-      // Step seven
-    const stepSevenPreview = tinyMCE.get('editor-preview-step-seven').getContent()
-    const stepSevenTitle =  document.getElementById("step-seven-title").value
-    const stepSevenExplainer = tinyMCE.get('editor15').getContent()
-    const stepSevenCTA = tinyMCE.get('editor16').getContent()
-
-     // Step eight
-     const stepEightPreview = tinyMCE.get('editor-preview-step-eight').getContent()
-     const stepEightTitle =  document.getElementById("step-eight-title").value
-     const stepEightExplainer = tinyMCE.get('editor17').getContent()
-     const stepEightCTA = tinyMCE.get('editor18').getContent()
-
-     // Closing
-     const closingOneTitle = document.getElementById("closing-title-input-1").value
-     const closingOneText = tinyMCE.get('editor-closing-1').getContent()
-     const closingTwoTitle = document.getElementById("closing-title-input-2").value
-     const closingTwoText = tinyMCE.get('editor-closing-2').getContent()
-     const closingThreeTitle = document.getElementById("closing-title-input-3").value
-     const closingThreeText = tinyMCE.get('editor-closing-3').getContent()
-     const closingFourTitle = document.getElementById("closing-title-input-4").value
-     const closingFourText = tinyMCE.get('editor-closing-4').getContent()
-     const closingFiveTitle = document.getElementById("closing-title-input-5").value
-     const closingFiveText = tinyMCE.get('editor-closing-5').getContent()
-     const closingSixTitle = document.getElementById("closing-title-input-6").value
-     const closingSixText = tinyMCE.get('editor-closing-6').getContent()
-     const closingSevenTitle = document.getElementById("closing-title-input-7").value
-     const closingSevenText = tinyMCE.get('editor-closing-7').getContent()
-     const closingEightTitle = document.getElementById("closing-title-input-8").value
-     const closingEightText = tinyMCE.get('editor-closing-8').getContent()
-
-    const saveWorkshopButton = document.getElementById("saveWorkshop")
-    const updateWorkshopButton = document.getElementById("updateWorkshop")
-
-    saveWorkshopButton.style.display = "none"
-    updateWorkshopButton.style.display = "flex"
-
-    const title = document.getElementById("workshop-title").value
-
-    // Save input to database
-    auth.onAuthStateChanged(User =>{
-        if (User){
-
-        db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
-                    const coachNaam = doc.data().Gebruikersnaam;
-
-        db.collection("Workshops").where("WorkshopTitle", "==", title).get().then(querySnapshot => {
-            querySnapshot.forEach(doc1 => {
-
-    db.collection("Workshops").doc(doc1.id).update({
-        Eigenaar: "Vitaminds",
-        Coach: coachNaam,
-        Status: "Draft",
-        HeaderImage: selectedImage,
-        WorkshopTitle: workshopTitle,
-        WorkshopGoals: workshopGoals,
-        StepOnePreview: stepOnePreview,
-        StepOneTitle: stepOneTitle,
-        StepOneExplainer: stepOneExplainer,
-        StepOneCTA: stepOneCTA,
-        StepTwoPreview: stepTwoPreview,
-        StepTwoTitle: stepTwoTitle,
-        StepTwoExplainer: stepTwoExplainer,
-        StepTwoCTA: stepTwoCTA,
-        StepThreePreview: stepThreePreview,
-        StepThreeTitle: stepThreeTitle,
-        StepThreeExplainer: stepThreeExplainer,
-        StepThreeCTA: stepThreeCTA,
-        StepFourPreview: stepFourPreview,
-        StepFourTitle: stepFourTitle,
-        StepFourExplainer: stepFourExplainer,
-        StepFourCTA: stepFourCTA,
-        StepFivePreview: stepFivePreview,
-        StepFiveTitle: stepFiveTitle,
-        StepFiveExplainer: stepFiveExplainer,
-        StepFiveCTA: stepFiveCTA,
-        StepSixPreview: stepSixPreview,
-        StepSixTitle: stepSixTitle,
-        StepSixExplainer: stepSixExplainer,
-        StepSixCTA: stepSixCTA,
-        StepSevenPreview: stepSevenPreview,
-        StepSevenTitle: stepSevenTitle,
-        StepSevenExplainer: stepSevenExplainer,
-        StepSevenCTA: stepSevenCTA,
-        StepEightPreview: stepEightPreview,
-        StepEightTitle: stepEightTitle,
-        StepEightExplainer: stepEightExplainer,
-        StepEightCTA: stepEightCTA,
-        ClosingOneTitle: closingOneTitle,
-        ClosingOneText: closingOneText,
-        ClosingTwoTitle: closingTwoTitle,
-        ClosingTwoText: closingTwoText,
-        ClosingThreeTitle: closingThreeTitle,
-        ClosingThreeText: closingThreeText,
-        ClosingFourTitle: closingFourTitle,
-        ClosingFourText: closingFourText,
-        ClosingFiveTitle: closingFiveTitle,
-        ClosingFiveText: closingFiveText,
-        ClosingSixTitle: closingSixTitle,
-        ClosingSixText: closingSixText,
-        ClosingSevenTitle: closingSevenTitle,
-        ClosingSevenText: closingSevenText,
-        ClosingEightTitle: closingEightTitle,
-        ClosingEightText: closingEightText,
-                            });
-                        })
-                    });
-                });
-            };
-        });
-    
-        // Close modal
-    
-        chooseHeaderImageModal.style.display = "none"
-
-});
+};

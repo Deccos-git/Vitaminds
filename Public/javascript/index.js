@@ -43,32 +43,32 @@ if(openen != null || insp != null || coach != null){
 
 // Dynamic call to action
 
-const dynamicH2 = document.getElementById("dynamic-call-to-action")
-const dynamicH2Dots = document.getElementById("dynamic-title-dots")
+// const dynamicH2 = document.getElementById("dynamic-call-to-action")
+// const dynamicH2Dots = document.getElementById("dynamic-title-dots")
 
-if(dynamicH2 != null && dynamicH2Dots != null){
+// if(dynamicH2 != null && dynamicH2Dots != null){
 
-function goalExample(a,b){
+// function goalExample(a,b){
 
-        setTimeout(() => {
-                dynamicH2.innerHTML = a
-                dynamicH2Dots.innerHTML = ""
-                },b)
-};
+//         setTimeout(() => {
+//                 dynamicH2.innerHTML = a
+//                 dynamicH2Dots.innerHTML = ""
+//                 },b)
+// };
 
-goalExample("Posiviteit", 0)
-goalExample("Geluk", 3000)
-goalExample("Je eigen leven leven", 6000)
-goalExample("Los laten", 9000)
-goalExample("Je eigen keuzes maken", 12000)
-goalExample("Weten wat je wilt", 15000)
-goalExample("Rust in je hoofd", 18000)
-goalExample("Waar wil jij je op focussen?", 21000)
-setTimeout(() => {
-        const CTAsubHeader = document.getElementById("call-to-action-sub-header")
-        CTAsubHeader.style.display = "none"
-},21000)
-};
+// goalExample("Posiviteit", 0)
+// goalExample("Geluk", 3000)
+// goalExample("Je eigen leven leven", 6000)
+// goalExample("Los laten", 9000)
+// goalExample("Je eigen keuzes maken", 12000)
+// goalExample("Weten wat je wilt", 15000)
+// goalExample("Rust in je hoofd", 18000)
+// goalExample("Waar wil jij je op focussen?", 21000)
+// setTimeout(() => {
+//         const CTAsubHeader = document.getElementById("call-to-action-sub-header")
+//         CTAsubHeader.style.display = "none"
+// },21000)
+// };
 
 
 // Main header CTA
