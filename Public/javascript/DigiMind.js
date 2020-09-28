@@ -786,7 +786,8 @@ function dashboardFunction(){
                                         })
                                 });
 
-                                db.collectionGroup("Levenslessen").where("Levensvraag", "==", levensvraagID).orderBy("Timestamp", "desc").get().then(querySnapshot =>{
+                                db.collectionGroup("Levenslessen").where("Levensvraag", "==", levensvraagID)
+                                .orderBy("Timestamp", "desc").get().then(querySnapshot =>{
                                         querySnapshot.forEach(doc1 =>{     
 
                                                 const levensles = doc1.data().Levensles
@@ -815,6 +816,33 @@ function dashboardFunction(){
 
                                         })
                                 });
+
+                                // Workshops
+                        db.collectionGroup("Workshops").where("Gebruikersnaam", "==", naam)
+                        .where("Goal", "==", goal).get()
+                        .then(querySnapshot => {
+                                querySnapshot.forEach(doc3 => {
+
+                                        const authGoal = doc3.data().AuthGoal
+                                        const workshopTitle = doc3.data().Workshop
+
+                                        const workshopType = document.createElement("h3")
+                                 
+                                        const workshopTitleH2 = document.createElement("h2")
+                                        const workshopDiv = document.createElement("div")
+                                                workshopDiv.setAttribute("class", "workshop-div")
+
+                                        workshopTitleH2.innerText = workshopTitle
+                                        workshopType.innerText = "Workshop"
+
+                                        innerDiv.appendChild(workshopDiv)
+                                        workshopDiv.appendChild(workshopType)
+                                        workshopDiv.appendChild(workshopTitleH2)
+
+                                });
+                        });
+
+
                 
 
                 // Prive of openbaar
@@ -1445,7 +1473,8 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
     
             levenslessen.forEach(les => {
     
-            db.collectionGroup("Levenslessen").where("Levensles", "==", les).get().then(querySnapshot => {
+            db.collectionGroup("Levenslessen").where("Levensles", "==", les)
+            .where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     const inspirator = doc.data().Auteur
                     const source = doc.data().Titel
@@ -1484,21 +1513,21 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
                     titelP.addEventListener("click", () => {
                         window.open("../Artikelen/" + source + ".html", "_self");
                     })
-                     
+
                     innerDiv.appendChild(bronDiv)
                     bronDiv.appendChild(lessen)
                     lessen.appendChild(inspiratorP)
                     lessen.appendChild(titelP)
-                                                        })
-                                                })
-                                        })
-                                })
-                        }
-                        })
-                })
-            })
-        })
-    })
+                                                                });
+                                                        });
+                                                });
+                                        });
+                                };
+                        });
+                });
+            });
+        });
+    });
  
 
 function nieuweLevensvraag(){

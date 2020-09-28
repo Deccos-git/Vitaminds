@@ -557,15 +557,15 @@ if(button != null){
       cc: "info@vitaminds.nu",
 message: {
 subject: `Verifier je account op Vitaminds! `,
-html: `Hallo ${gebruikersnaam}, </br></br>
+html: `Hallo ${userName}, </br></br>
       Welkom bij de Vitaminds community. Het sociale netwerk voor imperfecte mensen.<br><br>
       Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
       
-      Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.
+      Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.</br></br>
       Vriendelijke groet, </br></br>
       Het Vitaminds Team </br></br>
       <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-Gebruikersnaam: gebruikersnaam,
+Gebruikersnaam: userName,
 Emailadres: email,
 Type: "Vitaminders"
 }        

@@ -110,6 +110,10 @@
 <section id="workshop-section">
   <div id="header-div">
     <h1 id="workshop-title"></h1>
+    <div id="edit-workshop-div">
+      <img src="../images/edit-icon.png" alt="edit-workshop">
+      <h2 id="edit-workshop">Je workshop aanpassen</h2>
+    </div>
     <p id="coach-welcome"></p>
     <div id="coach-introduction" onclick="askMe()">
       <img id="coach-pic" alt="">
@@ -126,7 +130,7 @@
           <p>Geef je doel een korte omschrijving</p>
           <textarea name="" id="goal-summary" cols="30" rows="10" placeholder="Omschrijving van je doel"></textarea>
           <div>
-            <button onclick="setAndStart()">Start de workshop</button>
+            <button onclick="createGoalAndStartWorkshop()">Start de workshop</button>
           </div>
         </div>
       </div>

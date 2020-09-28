@@ -15,6 +15,7 @@
     margin: 30px 10px 20px 10px;
     padding-bottom: 20px;
     align-items: center;
+    text-align: center;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     border-bottom-left-radius: 15px;
@@ -120,6 +121,10 @@
     text-align: center;
 }
 
+#header-div{
+    width: 100%;
+}
+
 #workshop-goal-check{
     display: flex;
     flex-direction: column;
@@ -165,6 +170,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0px 20px;
 }
 
 #workshop-summary-div{
@@ -172,12 +178,34 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
+    margin: 0px 20px;
+}
+
+#workshop-summary-div h3{
+    margin: 30px 20px;
 }
 
 #steps-overview{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+}
+
+#steps-overview h3{
+    text-align: center;
+    margin: 30px 20px;
+}
+
+.step-explainer-p{
+    margin: 0px 20px;
+}
+
+.stepCTATitle{
+    margin: 30px 20px;
+}
+
+.stepIntroductionTitle{
+    text-align: center;
 }
 
 .step-check-div{
@@ -191,15 +219,14 @@
 .step-preview-inner-div{
     display: flex;
     align-items: center;
+    margin: 0px 20px;
 }
 
 .step-introduction-div{
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
     border-radius: 3px;
     padding: 10px;
-    width: 200px;
-    height: auto;
-    margin: 10px 10px 30px 10px;
+    margin: 10px 300px 30px 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -261,8 +288,15 @@
     margin-bottom: 50px;
 }
 
+.closing-text-p{
+    margin: 0px 20px;
+}
+
+.closing-input-title{
+    margin: 30px 20px;
+}
+
 .step-title-h2{
-    width: 100%;
     background-color: #a7bdbd;
     color: white;
     padding: 20px;
@@ -436,6 +470,14 @@
     margin: 10px;
 }
 
+#workshop-price-div{
+    display: flex;
+}
+
+#workshop-price{
+    width: 100px !important;
+}
+
 /* Workshop steps */
 
 .add-step-or-finish{
@@ -454,67 +496,133 @@
 }
 
 #step-one-inner-div{
-    visibility: hidden;
+    display: none;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #step-two-inner-div{
-    visibility: hidden;
+    display: none;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #step-three-inner-div{
-    visibility: hidden;;
+    display: none;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #step-four-inner-div{
-    visibility: hidden;;
+    display: none;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #step-five-inner-div{
-    visibility: hidden;;
+    display: none;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #step-six-inner-div{
-    visibility: hidden;;
+    display: none;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #step-seven-inner-div{
-    visibility: hidden;;
+    display: none;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
 #step-eight-inner-div{
-    visibility: hidden;;
+    display: none;
     flex-direction: column;
     align-items: center;
     text-align: center;
 }
 
+textarea{
+    width: 80%;
+}
+
+.tox-tinymce {
+    border: 1px solid #ccc;
+    border-radius: 0;
+    box-shadow: none;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Nunito Sans', sans-serif;
+    overflow: hidden;
+    position: relative;
+    visibility: inherit!important;
+    width: 100%;
+}
+
 /* Closing section */
 
 .closing-div{
-    visibility: hidden;
+    display: none;
     flex-direction: column;
     align-items: center;
     text-align: center;
     margin: 30px 10px;
+}
+
+/* Edit workshop */
+
+#edit-workshop-div{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 10px;
+    width: auto;
+    margin: 0px 300px 0px 300px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+#edit-workshop-div img{
+    height: 40px !important;
+    width: 40px !important;
+    margin: -10px 10px 0px 0px;
+}
+
+#edit-workshop{
+    color: #0c6665;
+    margin-bottom: 50px;
+}
+
+@media only screen and (max-width: 938px){
+
+    #edit-workshop-div{
+        margin: 0px 0px 0px 0px;
+    }
+
+    .step-introduction-div{
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+        border-radius: 3px;
+        padding: 10px;
+        margin: 10px 0px 30px 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #steps-overview h3 {
+        text-align: center;
+        width: 100%;
+        margin: 0px 0px;
+    }
+
 }

@@ -104,7 +104,6 @@ const DOM = document.getElementById("verzamelOpenUps")
                     };
 
                     // Heart icon
-
                     heart.src = "images/heart-icon.png"
 
                     metaDiv.appendChild(heart)
@@ -214,13 +213,16 @@ const DOM = document.getElementById("verzamelOpenUps")
                             });
                         });
                     }).then(() => {
-                        db.collection("Vitaminders").where("Gebruikersnaam", "==", gebruikersnaam).get().then(querySnapshot => {
+                        db.collection("Vitaminders").where("Gebruikersnaam", "==", gebruikersnaam)
+                        .get().then(querySnapshot => {
                             querySnapshot.forEach(doc2 => {
 
-                                const UserGoals = doc2.data().Goals
-                                const gebruikersnaamClean = doc2.data().GebruikersnaamClean
+                                const userGoals = doc2.data().Goals
+                                const gebruikersnaamClean = doc2.data().gebruikersnaamClean
 
-                                UserGoals.forEach(UserGoal => {
+                                if (userGoals != undefined){
+
+                                userGoals.forEach(UserGoal => {
                                     // console.log(UserGoal)
                                     // console.log(AuthGoalArray)
                                     if(auth != gebruikersnaam){
@@ -253,10 +255,11 @@ const DOM = document.getElementById("verzamelOpenUps")
                                             nameCompareDiv.appendChild(comparisonsDiv)
                                             comparisonsDiv.appendChild(comparisonsP)
                                         })
-                                        
+                                            
+                                                };
                                             };
-                                        };
-                                    });
+                                        });
+                                    };
                                 });
                             });
                         });  

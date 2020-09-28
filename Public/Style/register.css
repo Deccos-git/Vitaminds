@@ -59,12 +59,11 @@
 }
 
 #register-notice{
-    padding: 50px 0px 50px 0px;
+    padding: 0px 0px 0px 0px;
     display: none; /* Hidden by default */
     flex-direction: column;
     position: fixed; /* Stay in place */
     z-index: 4; /* Sit on top */
-    left: 0;
     top: 0;
     width: 100%;
     height: 100%; /* Full height */
@@ -80,6 +79,7 @@
 
 #register-notice p{
     color: #0c6665;
+    padding: 0px 50px 0px 50px;
 }
 
 #register-notice-CH{

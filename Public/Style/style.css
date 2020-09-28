@@ -1412,6 +1412,7 @@ margin: 0px 0px 30px 0px;
     font-size: 16px;
     padding: 10px;
     font-family: 'Nunito Sans', sans-serif;
+    max-width: 90%;
   }
 
 /* Menu Auth */
