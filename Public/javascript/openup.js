@@ -3,7 +3,7 @@
 const DOM = document.getElementById("verzamelOpenUps")
 
 
-        db.collectionGroup("Levenslessen").orderBy("Timestamp", "desc").get().then(querySnapshot => {
+        db.collectionGroup("Levenslessen").where("Status", "==", "Approved").orderBy("Timestamp", "desc").get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
 
                 const les = doc.data().Levensles
@@ -471,7 +471,8 @@ const DOM = document.getElementById("verzamelOpenUps")
                 Type: "Update",
                 Levensles: inputCheckIn.value,
                 Levensvraag: "Geen",
-                BackgroundImage: "Geen"
+                BackgroundImage: "Geen",
+                Status: "Approved"
                 });
         } else if (selectedFile == undefined && selected != "Niet aan doel koppelen") {
              //LevensvraagClean naar levensvraag met ID
@@ -488,7 +489,8 @@ const DOM = document.getElementById("verzamelOpenUps")
             Type: "Check-in",
             Levensles: inputCheckIn.value,
             Levensvraag: levensvraagID,
-            BackgroundImage: "Geen"
+            BackgroundImage: "Geen",
+            Status: "Approved"
                                     });
     
         db.collection("Vitaminders").doc(User.uid).collection("Levensvragen").doc(doc2.id).update({
@@ -535,7 +537,8 @@ const DOM = document.getElementById("verzamelOpenUps")
         Type: "Update",
         Levensles: inputCheckIn.value,
         Levensvraag: "Geen",
-        BackgroundImage: downloadURL
+        BackgroundImage: downloadURL,
+        Status: "Approved"
                                     });
                                 });                                                
                             });
@@ -586,7 +589,8 @@ const DOM = document.getElementById("verzamelOpenUps")
                         Type: "Check-in",
                         Levensles: inputCheckIn.value,
                         Levensvraag: levensvraagID,
-                        BackgroundImage: downloadURL
+                        BackgroundImage: downloadURL,
+                        Status: "Approved"
                                                 });
                 
                     db.collection("Vitaminders").doc(User.uid).collection("Levensvragen").doc(doc2.id).update({

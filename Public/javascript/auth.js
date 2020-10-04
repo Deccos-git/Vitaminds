@@ -1,5 +1,6 @@
 // localStorage.clear()
 
+
 // Fetching title from url
 const titelURLDOM = window.location.href.replace(/^.*[\\\/]/, '')
 const titelURL1 = titelURLDOM.replace('.html', '')
@@ -35,7 +36,7 @@ const colour = getRandomColor()
 console.log(colour)
 
 // Stripe
-const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
+// const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
 
 // Cookies notice
 
@@ -73,9 +74,9 @@ function onlineFunctionQueryGroups(authName){
       Online: firebase.firestore.FieldValue.arrayRemove(authName)
             }).then(() => {
               localStorage.removeItem(pageLeaves)
-            })
-          });
-        });
+      });
+    });
+  });
 };
 
 function onlineFunctionQueryChats(authName){
@@ -93,9 +94,9 @@ function onlineFunctionQueryChats(authName){
             }).then(() => {
               localStorage.removeItem(pageLeaves)
             })
-          };
-          });
-        });
+        };
+      });
+  });
 };
 
 function updateOnlineStatusFromPagesLeave(){
@@ -157,7 +158,7 @@ auth.onAuthStateChanged(User =>{
     const userRef = db.collection("Vitaminders").doc(User.uid);
     userRef.get().then(function(doc) {
       if (doc.exists) {
-       const naamID = doc.data().Gebruikersnaam;
+       const naamID = doc.data().Gebruikersnaam
        const ID = doc.data().ID
        const naam = naamID.replace(ID, "")
        const profilePic = doc.data().Profielfoto
@@ -172,15 +173,14 @@ auth.onAuthStateChanged(User =>{
         } else {
             profilePicture.style.backgroundImage = `url('${profilePic}')`
             profilePicture.setAttribute("class", "login-logout")
-        }
+        };
 
         profilePicture.addEventListener("click", () => {
           window.open("../Vitaminders/" + [naamID] + ".html", "_self");
-        })
-
-      }
-    })
-  }
+        });
+      };
+    });
+  };
 });
 
 //Auth menu
@@ -521,7 +521,7 @@ if(button != null){
   let userName = ""
 
   if (lastName != ""){
-    userName = firstName + lastName
+    userName = firstName +""+ lastName
   } else {
     userName = firstName
   };

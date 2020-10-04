@@ -767,7 +767,8 @@ function dashboardFunction(){
                                 Levensvraag: levensvraagID,
                                 Gebruikersnaam: naam,
                                 Inspirerend: 1,
-                                Type: "Check-in"
+                                Type: "Check-in",
+                                Status: "Approved"
                                         })
 
                                 levensvraagRef = db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraagID)

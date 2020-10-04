@@ -180,7 +180,7 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").limit(numberO
 
         titleH2.innerHTML = title
         headerImg.src = headerImage
-        buttonDiv.innerHTML = "Bekijk"
+        buttonDiv.innerHTML = `<a href="../Artikelen/${title}.html">Bekijk</a>`
 
         if(DOMarticle == null){
             console.log("null")
@@ -244,16 +244,6 @@ paginateEventListeners(loadMoreButton24, 24)
 }();
 
 
-
-// Levensvraag artikelen openen na onclick in overview
-function seeArticle(elem){
-
-    const title = elem.previousElementSibling.firstElementChild.nextElementSibling.innerHTML
-
-    window.open("../Artikelen/" + title + ".html", "_self")
-
-};
-
 // Theme overview page
 toolDOM = document.getElementById("theme-article-outer-div")
 
@@ -312,9 +302,7 @@ db.collection("Themas").where("Eigenaar", "==", "Vitaminds").get().then(querySna
 
         title.innerHTML = titel
         button.innerHTML = "Bekijk"
-        button.addEventListener("click", () => {
-            window.open(`../Theme-articles/${titel}.html`, "_self")
-        })
+        button.innerHTML = `<a href="../Theme-articles/${titel}.html">Bekijk</a>`
 
         toolDOM.appendChild(outerDiv)
         outerDiv.appendChild(header)
@@ -578,6 +566,7 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
                     toevoegenLevenslesButton.setAttribute("data-titel", titelInsight)
                     toevoegenLevenslesButton.setAttribute("data-coach", coach)
                     toevoegenLevenslesButton.setAttribute("data-body", body)
+                    toevoegenLevenslesButton.setAttribute("class", "button-algemeen")
                 const CTAnoGoalDiv = document.createElement("div")
                     CTAnoGoalDiv.setAttribute("id", "CTA-no-goal-auth")
                 const CTAnoGoalP = document.createElement("p")
@@ -990,7 +979,8 @@ function nieuwepostsubmit(){
      Inspirerend: 1,
      Type: "Coach-inzicht",
      Source: titelElem,
-     Levensvraag: levensvraagID
+     Levensvraag: levensvraagID,
+     Status: "Approved"
              })
 
      levensvraagRef = db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraagID).where("Gebruikersnaam", "==", naam)
@@ -1000,12 +990,14 @@ function nieuwepostsubmit(){
              
              userRef.collection("Levensvragen").doc(doc.id).update({
                  Levenslessen: firebase.firestore.FieldValue.arrayUnion(input)
+             }).then(() => {
+                 
+                elem.innerHTML = "Opgeslagen in je Digimind"
+                elem.setAttribute("onclick", "none")
              })
-             
          })
      })
-     const savedNotice = document.getElementById("social-note-id")
-     savedNotice.style.display = "block"
+     
                 })
             })
         })
