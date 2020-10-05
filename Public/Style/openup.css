@@ -534,6 +534,13 @@
     font-size: 14px;
 }
 
+#flag-icon-open-up{
+    height: 15px;
+    width: 15px;
+    margin-left: auto;
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 938px){
 
     #openup-overview{

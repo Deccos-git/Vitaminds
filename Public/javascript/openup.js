@@ -2,6 +2,34 @@
 
 const DOM = document.getElementById("verzamelOpenUps")
 
+function flagOpenUpPost(flag){
+
+    const lesson = flag.dataset.les
+    const user = flag.dataset.user
+
+    flag.addEventListener("click", () => {
+
+        flag.src = "images/flag-icon-flagged.png"
+
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", user)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+
+        db.collectionGroup("Levenslessen").where("Levensles", "==", lesson)
+        .where("Gebruikersnaam", "==", user).get().then(querySnapshot => {
+            querySnapshot.forEach(doc2 => {
+
+                db.collection("Vitaminders").doc(doc1.id)
+                .collection("Levenslessen").doc(doc2.id).update({
+                    Status: "Under review"
+                        });
+                    });
+                });
+            });
+        });
+    });
+};
+
 
         db.collectionGroup("Levenslessen").where("Status", "==", "Approved").orderBy("Timestamp", "desc").get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
@@ -50,6 +78,20 @@ const DOM = document.getElementById("verzamelOpenUps")
                     heart.setAttribute("class", "react-icons")
                     heart.setAttribute("data-user", gebruikersnaam)
                     heart.setAttribute("data-les", les)
+                const flagIcon = document.createElement("img")
+                    flagIcon.setAttribute("id", "flag-icon-open-up")
+                    flagIcon.setAttribute("data-user", gebruikersnaam)
+                    flagIcon.setAttribute("data-les", les)
+
+                    DOM.appendChild(outerBronDiv)
+                    outerBronDiv.appendChild(bronDiv)
+                    bronDiv.appendChild(metaUserDiv)
+                    bronDiv.appendChild(editIcon)
+                    bronDiv.appendChild(titelH3)
+                    bronDiv.appendChild(lesDiv)
+                    bronDiv.appendChild(lessen)
+                    bronDiv.appendChild(timestampMeta)
+                    bronDiv.appendChild(metaDiv) 
 
 
                     // Loader display none
@@ -106,8 +148,14 @@ const DOM = document.getElementById("verzamelOpenUps")
                     // Heart icon
                     heart.src = "images/heart-icon.png"
 
+                    // Flag Icon
+                    flagIcon.src = "images/flag-icon.png"
+
+                    flagOpenUpPost(flagIcon)
+
                     metaDiv.appendChild(heart)
                     metaDiv.appendChild(likeCounter)
+                    metaDiv.appendChild(flagIcon)
                     
                     heart.style.cursor = "pointer"
                     
@@ -267,7 +315,7 @@ const DOM = document.getElementById("verzamelOpenUps")
                 });
                 
                 // Titel
-                if(type == "Coach-inzicht"){
+                if(type === "Coach-inzicht"){
 
                     db.collection("Vitaminders").where("Gebruikersnaam", "==", inspirator).get().then(querySnapshot => {
                         querySnapshot.forEach(doc3 => {
@@ -284,7 +332,7 @@ const DOM = document.getElementById("verzamelOpenUps")
 
                         })
                     });
-                } else if (type == "Check-in"){
+                } else if (type === "Check-in"){
 
                     db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraag).get().then(querySnapshot => {
                         querySnapshot.forEach(doc2 => {
@@ -294,20 +342,10 @@ const DOM = document.getElementById("verzamelOpenUps")
 
                         })
                     });
-                } else if (type == "Update") {
+                } else if (type === "Update") {
+                    console.log(type)
                     titelH3.innerText = "Update"
-
-                    DOM.appendChild(outerBronDiv)
-                    outerBronDiv.appendChild(bronDiv)
-                    bronDiv.appendChild(metaUserDiv)
-                    bronDiv.appendChild(editIcon)
-                    bronDiv.appendChild(titelH3)
-                    bronDiv.appendChild(lesDiv)
-                    bronDiv.appendChild(lessen)
-                    bronDiv.appendChild(timestampMeta)
-                    bronDiv.appendChild(metaDiv) 
-
-                }
+                };
                 
                 lessen.innerHTML = les
                 typeMeta.innerHTML = type
@@ -347,20 +385,9 @@ const DOM = document.getElementById("verzamelOpenUps")
                             if(public == "Nee"){
                                 bronDiv.style.display = "none"
                             }
-                 
-                DOM.appendChild(outerBronDiv)
-                outerBronDiv.appendChild(bronDiv)
-                bronDiv.appendChild(metaUserDiv)
-                bronDiv.appendChild(editIcon)
-                bronDiv.appendChild(titelH3)
-                bronDiv.appendChild(lesDiv)
-                bronDiv.appendChild(lessen)
-                bronDiv.appendChild(timestampMeta)
-                bronDiv.appendChild(metaDiv) 
-
-            })
-        })
-    })
+            });
+        });
+    });
 }).then(() => {
 
         // Fill heart if auth has liked post

@@ -97,6 +97,38 @@ window.addEventListener("load", () => {
         };
     });
 
+    // Save proposal to database
+
+    const proposalButton = document.getElementById("proposal-button")
+    const proposalTitle = document.getElementById("proposal-title")
+    const proposalSummary = document.getElementById("proposal-summary")
+    
+
+    !function saveProposalToDatabase(){
+
+        if(proposalButton != null){
+        proposalButton.addEventListener("click", () => {
+
+            proposalButton.innerText = "Verstuurd!"
+
+        auth.onAuthStateChanged(User =>{
+            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                const auth = doc.data().Gebruikersnaam
+
+                console.log(proposalTitle.value)
+
+                db.collection("Tickets").doc().set({
+                    UserName: auth,
+                    Type: "Proposal",
+                    Title: proposalTitle.value,
+                    Summary: proposalSummary.value
+                    });
+                });
+            });
+        });
+    };
+}();
+
 DOMarticle = document.getElementById("levensvraag-artikel-ouyter-div")
 
 
