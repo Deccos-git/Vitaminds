@@ -59,6 +59,12 @@
     margin-top: -20px;
 }
 
+#draft-status-workshop{
+    color: #cf6e13;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 /* Individual workshop page */
 
 #workshop-section{
@@ -170,7 +176,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0px 20px;
+    margin: 0px 100px;
 }
 
 #workshop-summary-div{
@@ -189,19 +195,22 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    margin: 30px 100px;
 }
 
 #steps-overview h3{
     text-align: center;
     margin: 30px 20px;
+    width: 100%;
 }
 
 .step-explainer-p{
-    margin: 0px 20px;
+    margin: 0px 100px;
+    text-align: left;
 }
 
 .stepCTATitle{
-    margin: 30px 20px;
+    margin: 60px 100px;
 }
 
 .stepIntroductionTitle{
@@ -289,7 +298,7 @@
 }
 
 .closing-text-p{
-    margin: 0px 20px;
+    margin: 0px 100px;
 }
 
 .closing-input-title{
@@ -478,6 +487,12 @@
     width: 100px !important;
 }
 
+#workshop-title-notice{
+    color: #cf6e13;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 /* Workshop steps */
 
 .add-step-or-finish{
@@ -593,14 +608,14 @@ textarea{
 }
 
 #edit-workshop-div img{
-    height: 40px !important;
-    width: 40px !important;
+    height: 20px !important;
+    width: 20px !important;
     margin: -10px 10px 0px 0px;
 }
 
 #edit-workshop{
-    color: #0c6665;
-    margin-bottom: 50px;
+    color: #cf6e13;
+    font-size: 16px;
 }
 
 @media only screen and (max-width: 938px){
@@ -623,6 +638,26 @@ textarea{
         text-align: center;
         width: 100%;
         margin: 0px 0px;
+    }
+
+    #workshop-summary {
+        margin: 0px 20px;
+    }
+
+    #steps-overview {
+        margin: 30px 20px;
+    }
+
+    .step-explainer-p {
+        margin: 0px 20px;
+    }
+
+    .stepCTATitle {
+        margin: 30px 20px;
+    }
+
+    .closing-text-p {
+        margin: 0px 20px;
     }
 
 }

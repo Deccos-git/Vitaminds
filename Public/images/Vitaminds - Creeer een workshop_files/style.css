@@ -1,0 +1,1696 @@
+html {
+	scroll-behavior: smooth;
+}
+
+body{
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 23px;
+}
+
+p{
+  font-size: 22px;
+  font-family: 'Nunito Sans', sans-serif;
+  color: #122b46;
+}
+
+h1{
+  color: #8e0000;
+  font-family: 'Libre Baskerville', serif !important;
+  font-size: 42px;
+  text-align: center;
+  padding: 20px;
+}
+
+h2{
+  font-family: 'Libre Baskerville', serif;
+  font-size: 30px;
+  text-align: center;
+  color: #0c6665;
+}
+
+h3{
+  font-family: 'Nunito Sans', sans-serif !important;
+  color: #122b46;
+  font-size: 25px;
+}
+
+h6{
+  font-family: 'Nunito Sans', sans-serif !important;
+  color: #122b46;
+}
+
+a{
+  font-family: 'Nunito Sans', sans-serif;
+  color: #122b46;
+  text-decoration: underline;
+  text-decoration-color: #8e0000 ;
+}
+
+a:link{
+  text-decoration: none;
+  color: #122b46;
+  text-decoration: underline;
+  text-decoration-color: #8e0000 ;
+}
+
+
+
+h4{
+  font-family: 'Nunito Sans', sans-serif;
+  color: #49beb7;
+  font-size: 23px;
+}
+
+h5{
+  font-family: 'Nunito Sans', sans-serif;
+  color: #122b46;
+  font-size: 18px;
+  letter-spacing: 0.6px;
+}
+
+.subtitel {
+  color: #122b46;
+  text-align: center;
+}
+
+select{
+  font-size: 16px;
+  background-color: #FFF;
+  color: #122b46;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-color: #FFF;
+  width: 100%;
+}
+
+link{
+  display: block;
+  height: 330px;
+}
+
+.loader{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+ul{
+  color: #122b46;
+}
+
+/* Tiny mce */
+
+.tox .tox-notification--warn, .tox .tox-notification--warning {
+  display: none;
+}
+
+.tox-notification { 
+  display: none !important 
+}
+
+/* Cookies */
+
+#cookie-notice{
+  display: none;
+  flex-direction: column;
+  background-color: #49beb7;
+  align-items: center;
+  text-align: center;
+}
+
+#cookie-notice p{
+  font-size: 16px;
+  margin-top: 5px;
+  color: #fff;
+}
+
+#button-cookies{
+  background-color: #fff;
+  border: 1px #49beb7 solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 16px;
+  color: #49beb7;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+/* menu styling */
+
+#menu{
+  height: auto;
+  display: flex;
+  z-index: 1;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+#navigation-menu{
+  width: 75%;
+  margin: 10px 15px 15px 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 1;
+}
+
+#auth-menu{
+  width: 25%;
+  margin: 10px 105px 15px 15px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.main-menu{
+  margin: 10px 15px 15px 15px;
+  float: left;
+  width: 120px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 16px;
+  text-align: center;
+  z-index: 10;
+}
+
+.main-menu a:link{
+  color: #122b46;
+}
+
+.main-menu a:active{
+  color: #122b46;
+}
+
+.main-menu a:visited{
+  color: #122b46;
+}
+
+#logo-menu{
+  width: 150px;
+  margin-top: 7px;
+}
+
+ #ul-ul{
+  list-style: none;
+  margin: 0px;
+  margin-left: 0px;
+  padding: 0px;
+  z-index: 10;
+}
+
+.main-menu a {
+  text-decoration: none;
+  display: block;
+}
+
+.main-menu a:hover {
+  color: #8e0000;
+}
+
+.main-menu ul li {
+  display: none;
+}
+
+.main-menu:hover ul li {
+  display: block;
+}
+
+.coach-menu-outer-div{
+  margin-top: 0px;
+  float: right;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  vertical-align: center;
+}
+
+.coach-menu-outer-div-mobile{
+  margin-top: 0px;
+  float: right;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  vertical-align: center;
+}
+
+#coach-menu-main-mobile{
+  display: none;
+  margin-top: 0px;
+  float: right;
+  list-style: none;
+  flex-direction: column;
+  margin-left: 10px;
+  text-align: center;
+}
+.coach-menu-main-p-mobile{
+ margin: 5px 0px 0px 0px;
+ color: #8e0000;
+ font-size: 14px;
+}
+
+#aanmeldCH-mobile{
+  z-index: 1;
+  text-align: center;
+  margin: 5px 0px 0px 0px;
+  color: #8e0000;
+  font-size: 16px;
+}
+
+#aanmeldCH-mobile a{
+  text-decoration: none;
+  color: #8e0000;
+  font-size: 16px;
+}
+
+#aanmeldCH-mobile a:active{
+  color: #8e0000;
+}
+
+#aanmeldCH-mobile a:visited{
+  color: #8e0000;
+}
+
+.login-logout{
+  margin-top: 0px;
+  float: right;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  vertical-align: center;
+}
+
+.login-logout button {
+  background-color: #0c6665;
+  border: 1px #0c6665 solid;
+  border-radius: 8px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 18px;
+  color: #FFF;
+  cursor: pointer;
+}
+
+.login-logout button:hover {
+  border: 2px #FFF solid;
+}
+
+.login-logout button a:link {
+  text-decoration: none;
+  color: #FFF;
+}
+
+.login-logout button a:active {
+  color: #FFF;
+}
+
+.login-logout button a:visited {
+  color: #FFF;
+}
+
+.login-logout a{
+  font-size: 18px;
+}
+
+#log-out-mobile {
+  color: #008e8e;
+  font-size: 16px;
+}
+
+#chats-groups-mobile a{
+  color: #0c6665 !important;
+  font-size: 16px;
+}
+
+#modal-div{
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  position: fixed; /* Stay in place */
+  z-index: 4; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  align-items: center;
+  background-color: #fff;
+}
+
+#menu-auth-div{
+  display: none;
+  margin: 2px 0px -640px 0px;
+  flex-direction: column;
+  /* z-index: 2; */
+  width: 220px;
+  background-color: #fff;
+  border: 1px solid #858585;
+  border-radius: 5px;
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);   
+}
+
+#menu-auth-div p, h5{
+  margin: 10px;
+  color: #122b46;
+}
+
+.menu-auth-name{
+  margin-top: 0px;
+}
+
+#aanmeldCH{
+  z-index: 1;
+  font-size: 16px;
+  margin-bottom: 0px;
+}
+
+#aanmeldCH a{
+  text-decoration: none;
+  color: #8e0000;
+}
+
+#aanmeldCH a:active{
+  color: #8e0000;
+}
+
+#aanmeldCH a:visited{
+  color: #8e0000;
+}
+
+#profile-picture{
+  margin: 0px 0px 0px 20px;
+  width: 30px;
+  height: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  align-self: center;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+#profile-name{
+  align-self: center;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+#profile-name a{
+  font-size: 14px;
+  color: #122b46;
+  justify-self: center;
+}
+
+#profile-photo{
+  margin: 15px 15px 5px 15px;
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+  align-self: center;
+  border: 1px solid #122b4621;
+  cursor: pointer;
+}
+
+#button-logout{
+  cursor: pointer;
+  color: #122b46;
+  border-top: 1px dotted #122b46;
+}
+
+#tickets{
+  background-color: #ad6d6d;
+}
+
+#tickets a{
+  color: #FFF;
+}
+
+#tickets:hover{
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+}
+
+#menu-notifications{
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #8e0000;
+  margin: -3px 0px 0px 20px;
+  font-size: 10px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#notification-div-menu-toolbar{
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #8e0000;
+  margin: -45px 0px 0px 0px;
+}
+
+#notification-div-menu-toolbar p{
+  font-size: 10px;
+  color: white;
+  margin: -2px 0px 0px 3px;
+}
+
+#notification-count-menu{
+  margin: -1px 0px 0px 3px;
+  font-size: 11px;
+  color: #FFF;
+}
+
+.notification-div-menu{
+  padding: 10px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.notification-div-menu h3{
+  margin: 0px;
+  font-size: 18px;
+  color: #8e0000;
+}
+
+.notification-div-menu p{
+  margin-left: 0px;
+  padding-left: 10px;
+  font-size: 12px;
+  color: #122b46;
+  border-left: 1px solid #8e0000;
+}
+
+#chats-groups-new-message-div{
+  border-radius: 50%;
+  background-color: #8e0000;
+  height: 12px;
+  width: 12px;
+}
+
+#chats-groups-new-message-div p{
+  font-size: 10px;
+  color: white;
+  margin: 0px 0px 0px 3px;
+}
+
+#close-div{
+  height: 14px;
+  width: 15px;
+  align-self: flex-end;
+  border: 0.5px solid #122b46;
+  border-radius: 50%;
+  margin: -5px;
+  z-index: 4;
+  cursor: pointer;
+}
+
+#mobile-menu{
+  display: none;
+  justify-content: space-evenly;
+}
+
+#coach-menu-main{
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  background-color: #FFF;
+  margin-top: 53px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+  padding: 10px;
+}
+
+.coach-menu-main-p{
+  font-size: 14px;
+  color: #8e0000;
+  cursor: pointer;
+}
+
+#chats-groups-div-auth-menu h3{
+  font-size: 18px;
+  cursor: pointer;
+  margin: 0px;
+}
+
+#auth-profile a{
+  text-decoration: none !important;
+}
+
+#chats-groups-div-auth-menu{
+  cursor: pointer;
+  display: flex;
+}
+
+#chats-groups-div-auth-menu img{
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+}
+
+#icon-auth-menu-digimind{
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+  margin-bottom: -5px;
+}
+
+#info-menu{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#about-vitaminds{
+  margin: 0px 0px 0px 0px;
+}
+
+#about-vitaminds a{
+  font-size: 16px;
+  color: #8e0000;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* button algemeen */
+
+.button{
+  display: flex;
+  justify-content: center;
+}
+
+.button-standard{
+  background-color: #fff;
+  border: 1px #49beb7 solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 16px;
+  color: #49beb7;
+  cursor: pointer;
+}
+
+.button-algemeen {
+  background-color: white;
+  border: 1px #008e8e solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 18px;
+  color: #008e8e;
+  cursor: pointer;
+ }
+
+ .button-algemeen a{
+   color: #008e8e;
+ }
+
+ .button-algemeen-card {
+  background-color: white;
+  border: 1px #008e8e solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 18px;
+  color: #008e8e;
+  cursor: pointer;
+  margin-top: auto;
+ }
+
+ .button-algemeen-card a{
+   color: #008e8e;
+ }
+
+ .button-header{
+  background-color: #49beb7;
+  border: 1px #49beb7 solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+  align-self: center;
+  margin: 60px 10px 100px 10px;
+ }
+
+ .button-header a:link{
+   text-decoration: none;
+   color: #ffffff;
+ }
+
+ .button-header a:visited{
+  text-decoration: none;
+  color: #FFF;
+}
+
+.button-welkom{
+  background-color: #0c6665;
+  border: 1px #0c6665 solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+  margin: 10px 10px 10px 10px;
+  width: 100%;
+  align-self: center;
+}
+
+#button-start{
+  background-color: white;
+  border: 0px #008e8e solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 18px;
+  color: #008e8e;
+  cursor: pointer;
+  margin-top: auto;
+  width: 100px;
+  align-self: center;
+}
+
+/* header*/
+
+.header-image{
+  background-image: url("../images/Hero-III.jpg");
+  height: 900px;
+  width: 100%;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;;
+  align-items: center;;
+}
+
+.header-image a:link{
+  text-decoration: none;;
+  color: #fff;
+}
+
+.header-image a:visited{
+  text-decoration: none;;
+  color: #fff;
+}
+
+.header-title{
+  color: #FFF;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 70px;
+  text-align: center;
+}
+
+.header {
+  width: 100%;
+  z-index: 1;
+}
+
+#background{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 80px;
+  padding: 15px;
+  text-align: center;
+}
+
+.header-image h1{  
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  margin-bottom: 0px;
+  color: #8e0000;
+}
+
+.header-image h2{
+  color: #122b46 ;
+}
+
+.header-image h3{
+  color: #fff;
+}
+
+.subheader{
+  color: #FFF;
+  font-size: 25px;
+  text-align: center;
+  margin-top: 0px;
+}
+
+#vertelMeMeer a{
+  color: #122b46;
+}
+
+#dynamic-title-div{
+  display: flex;
+  justify-content: center;
+}
+
+#dynamic-title-div p{
+  color: white;
+  align-self: center;
+  margin-left: 10px;
+  font-size: 28px;
+}
+
+#dynamic-call-to-action{
+  margin-bottom: 50px;
+}
+
+#main-header-select{
+  margin: 0px 0px 50px 0px;
+  border-radius: 5px;
+  color: #747474;
+  font-size: 16px;
+}
+
+#input-header{
+  padding: 10px 10px 10px 10px;
+  border-radius: 10px;
+  margin: 5px;
+  border: 1px solid #122b46;
+  color: #122b46;
+  width: auto;
+  font-size: 14px;
+}
+
+#input-cta-landing{
+  width: 100%;
+  margin: 20px 0px;
+  border: 0px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+#goal-examples-cta-landing{
+  color: white;
+}
+
+/*DigiMind welkom */
+
+.welkom{
+  margin-bottom: 50px;
+}
+
+.subtitel{
+  margin: 60px 100px 60px 100px;
+}
+
+#begin h2{
+  margin: 0px 100px 50px 100px;
+}
+
+.DigiMind{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.DigiMind section{
+  height: 500px;
+  width: 350px;
+  border-radius: 0px 0px 15px 15px;
+  margin: 20px;
+  padding-bottom: 20px;
+  align-items: center;
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+}
+
+.DigiMind div h3{
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  text-transform: uppercase;
+  margin-top: 40px;
+}
+
+.karakter{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.karakter p{
+  margin: 70px 10px;
+}
+
+#karakterHead{
+  background-image: url("../images/hero-II.jpg");
+  background-size: 400px 200px;
+  height: 200px;
+  width: 100%;
+  margin: 0px;
+}
+
+.ervaring{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.ervaring p{
+  margin-bottom: 70px;
+}
+
+#ervaringHead{
+  background-image: url("../images/welkomOntwikkeling.jpg");
+  background-size: 400px 200px;
+  height: 200px;
+  width: 100%;
+  margin: 0px;
+}
+
+.groei{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.groei p{
+  margin-bottom: 70px;
+}
+
+.explainer-p{
+  padding: 0px 20px;
+}
+
+#groeiHead{
+  background-image: url("../images/welkomGroei.jpg");
+  background-size: 400px 200px;
+  height: 200px;
+  width: 100%;
+  margin: 0px;
+}
+
+#pers{
+  color: #122b46;
+  background-color: #fff;
+  margin: 30px 30px 0px 15px;
+  width: 80%;
+}
+
+#ont{
+  color: #122b46;
+  background-color: #fff;
+  margin: 30px 30px 0px 15px;
+  width: 80%;
+}
+
+#erv{
+  background-color: #fff;
+  margin: 30px 30px 0px 15px;
+  width: 80%;
+  color: #122b46;
+}
+
+.welkom2{
+  background-image: url("../images/welkomTwee3.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 800px;
+}
+
+.welkom2 h1{
+  color: #122b46;
+  margin: 50px 0px 0px 0px;
+}
+
+.welkom2 h2{
+  color: #0c6665;
+  margin: 100px 200px 10px 200px;
+}
+
+#omgeving{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #122b46;
+  font-size: 30px;
+}
+
+#omgeving li{
+  list-style: none;
+}
+
+#omgeving li:before {
+  content: "\2022";
+  color: #0c6665;
+  font-weight: bold;
+  display: inline-block;
+  width: 30px;
+  margin-left: -10px;
+}
+
+
+/* main informatie styling */
+
+.container{
+  margin: 0px 20px 150px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+}
+
+.subtitelTwee{
+  color: #122b46;
+  margin: 60px 0px 0px 0px;
+  padding: 80px 0px 0px 0px;
+}
+
+.infoMenu{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 0px 0px 40px 0px;
+}
+
+.infoMenu li{
+  display: block;
+  padding: 30px;
+  color: #0c6665;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.infoMenu a {
+  text-decoration: none;
+  color: #122b46; 
+}
+
+.infoMenu a:hover {
+  color: #8e0000;
+}
+
+.menusub{
+  cursor: pointer;
+
+}
+
+.methode{
+  align-self: center;
+  font-size: 20px;
+  margin: 50px 0px 0px 0px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.samenvattingpics{
+  border-radius: 15px;
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+}
+
+#open-up {
+  margin-top: 10px;
+  margin-left: 15%;
+  margin-right: 15%;
+  height: auto;
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
+  text-align: center;
+}
+
+#open-upHead{
+  background-image: url("../images/openuppic.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 400px;
+  width: 100%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+#open-upTekst{
+  padding: 15px;
+}
+
+#inspiratie {
+  margin-top: 10px;
+  margin-left: 15%;
+  margin-right: 15%;
+  height: auto;
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
+  text-align: center;
+}
+
+#inspiratieHead{
+  background-image: url("../images/inspiratiepic.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 400px;
+  width: 100%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+#inspiratieTekst{
+  padding: 15px;
+}
+
+#activiteiten {
+  margin-top: 10px;
+  margin-left: 15%;
+  margin-right: 15%;
+  height: auto;
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
+  text-align: center;
+}
+
+#activiteitenHead{
+  background-image: url("../images/activiteitenpic.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 400px;
+  width: 100%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+#activiteitenTekst{
+  padding: 15px;
+}
+
+#coaching {
+  margin-top: 10px;
+  margin-left: 15%;
+  margin-right: 15%;
+  height: auto;
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 15px;
+  text-align: center;
+}
+
+#coachingHead{
+  background-image: url("../images/coachingpic.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 400px;
+  width: 100%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+#coachingTekst{
+  padding: 15px;
+}
+
+/* Feedback */
+
+#feedback{
+  align-self: flex-end;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #49beb7;
+  border-radius: 0px 0px 0px 5px;
+  padding: 5px;
+  margin: 0px;
+  margin-top: -80px;
+  width: 13px;
+}
+
+#feedback p{
+  font-size: 14px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  margin: 0px;
+  color: #FFF;
+}
+
+/* IOS popup */
+
+#ios-popup{
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  position: sticky;
+  bottom: 0;
+  z-index: 4;
+  background-color: #49beb7;
+  border-radius: 0px 0px 0px 5px;
+  padding: 5px;
+  margin: 0px;
+  width: 100%;
+}
+
+#ios-popup-title{
+  font-size: 18px;
+  color: white;
+}
+
+#button-div{
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+#ios-popup-instruction{
+  display: none;
+  flex-direction: column;
+  align-items: center;
+}
+
+#ios-popup-instruction p{
+  color: white;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Toolbar mobile */
+
+.toolbar-mobile{
+  display: none;
+  justify-content: space-evenly;
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  background-color: white;
+  border-radius: 0px 0px 0px 5px;
+  padding: 5px;
+  margin: 0px;
+  width: 100%;
+  border-top: 1px solid #b3b3b3;
+}
+
+.toolbar-mobile img{
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+
+#toolbar-inspration-options{
+  display: none;
+}
+
+#toolbar-inspration-options p{
+  font-size: 14px;
+  border: 1px solid #b3b3b3;
+  border-radius: 3px;
+  padding: 5px;
+  margin: 0px;
+}
+
+.description-menu-icons-toolbar-mobile{
+  font-size: 12px;
+  margin: 0px;
+}
+
+.toolbar-mobile-inner-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#list-mobile-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Succes */
+
+#register-notice{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px 200px;
+}
+
+#register-notice img{
+  height: 400px;
+}
+
+#succes-main-section{
+  margin: 50px 100px;
+}
+
+#succes-header-img-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#succes-header-img-div img{
+  height: 200px;
+}
+
+#admin-photo-img-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#admin-photo-img-div img{
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#admin-photo-img-div h3{
+  cursor: pointer;
+}
+
+#admin-photo-img-div p{
+  cursor: pointer;
+}
+
+/* footer */
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #122b46;
+  color: #fff;
+  margin-top: auto;
+  justify-self: flex-end;
+  width: 100%;
+}
+
+.footer p{
+  color: #FFF;
+}
+
+.footer div{
+  margin: 0px 40px 0px 40px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  display: flex;
+  align-items: center;
+}
+
+.footer img{
+  cursor: pointer;
+}
+
+.footer h6{
+  color: #FFF;
+}
+
+#slogan-footer{
+  color: #FFF;
+}
+
+/* page title */
+
+.page-title{
+  margin-top: 50px;
+}
+
+.sub-title{
+  margin: -30px 50px 50px 50px;
+  font-size: 23px;
+  color: #122b46;
+}
+
+/* layout pages */
+
+.section-1{
+  display: flex;
+  margin-left: 80px;
+  margin-right: 80px;
+  align-items: center;
+}
+
+.section-2{
+  display: flex;
+  margin-left: 80px;
+  margin-right: 80px;
+  align-items: center;
+}
+.section-3{
+  display: flex;
+  margin-left: 80px;
+  margin-right: 80px;
+  align-items: center;
+}
+
+/* inlog page */
+
+.inlogVM{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin: 20px 0px 220px 0px;
+
+}
+#registerform{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.button-inlog{
+  align-items: baseline;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 18px;
+  background-color: #fff;
+  border: 1px #122b46 solid;
+  border-radius: 8px;
+  cursor: pointer; 
+}
+
+.button-inlog:hover {
+  border: 2px #8e0000 solid;
+}
+
+/* form input */
+
+input {
+  padding: 10px 10px 10px 10px;
+  border-radius: 10px;
+  margin: 5px;
+  border: 1px solid #122b46;
+  color: #122b46;
+  width: 200px;
+  font-size: 16px;
+}
+
+input:focus, input:hover {
+  border: 1,5px solid #f5f5f5;
+}
+
+#check1{
+color: #122b46;
+font-size: 20px;
+margin: 0px 0px 30px 0px;
+}
+
+#check2{
+  color: #122b46;
+  font-size: 20px;
+  margin: 0px 0px 30px 0px;
+  }
+
+  textarea {
+    font-size: 16px;
+    padding: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    max-width: 90%;
+  }
+
+/* Menu Auth */
+
+#mijnAccount{
+  color: #8e0000;
+}
+
+.ask-vitaminds{
+  margin-top: -30px;
+}
+
+/* learning icon */
+.tooltip-inspiration-icon{
+  font-size: 12px;
+  margin-top: 0px;
+}
+
+#inspiration-icon{
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+}
+
+
+
+
+/* Mobile */
+
+@media only screen and (max-width: 938px){
+
+  #mobile-menu{
+    display: flex;
+    flex-direction: column;
+  }
+
+  #menu-mobile-visible-layer{
+    display: flex;
+    padding: 10px;
+    margin-top: 20px;
+  }
+
+  #mobile-menu-outer-div{
+    display: none;
+    justify-content: center;
+  }
+
+  #profile-picture-mobile{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-right: 35%;
+  }
+
+  #auth-menu-mobile{
+    margin-top: 0px;
+    margin-right: auto;
+  }
+
+  #mobile-hamburger-menu{
+    margin-right: auto;
+  }
+
+  #button-login-mobile{
+    margin-right: 22%;
+  }
+
+  .main-menu-mobile{
+    margin-right: auto;
+    text-align: center;
+  }
+
+  .main-menu-mobile a{
+    font-size: 16px;
+    color: #122b46;
+  }
+
+  #auth-menu{
+    display: none;
+  }
+
+  .main-menu {
+    font-size: 16px;
+  }
+
+  #slash{
+    display: none;
+  }
+
+  h2 {
+    font-size: 20px;
+}
+
+  .login-logout a {
+    font-size: 14px;
+  }
+
+  .header-image{
+    background-image: url("../images/avontuur3.jpg");
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .header-title {
+    font-size: 50px;
+}
+
+  #logo-menu{
+    z-index: -1;
+  }
+
+  #aanmeldCH{
+    display: none;
+  }
+
+  #navigation-menu{
+    display: none;
+  }
+
+  .welkom2{
+    height: auto;
+  }
+
+  .welkom2 h2{
+    margin: 20px 0px 0px 0px;
+  }
+
+  .button-algemeen{
+    margin-bottom: 20px;
+  }
+
+  .infoMenu li{
+    padding: 15px;
+  }
+
+  ul.infoMenu {
+    padding: 0px;
+  }
+
+  .footer {
+    display: none;
+  }
+
+  #open-up{
+    margin-left: 5px;
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #inspiratie{
+    margin-left: 5px;
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #coaching{
+    margin-left: 5px;
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #omgeving {
+    align-items: left;
+  }
+
+  .subtitel {
+    margin: 60px 10px 60px 10px;
+  }
+
+  #goal-legend-outer-div {
+    height: auto;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #goal-legend-outer-div p {
+    margin: 5px;
+  }
+
+  #legend-select {
+    width: 60%;
+  }
+
+  #minimize-legend {
+    margin: 5px 5px 5px auto !important;
+    align-self: flex-end;
+  }
+
+  #dynamic-title-div {
+    display: none;
+  }
+
+  .header-image h2{
+    margin-bottom: 230px;
+  }
+
+  #dynamic-call-to-action {
+    width: 80%;
+  }
+
+  #dynamic-title-dots{
+    display: none;
+  }
+
+  #background {
+    width: 90%;
+    margin-top: 0px;
+  }
+
+  #omgeving li {
+    font-size: 20px;
+  }
+
+  .infoMenu a {
+    font-size: 16px;
+  }
+
+  .header-image {
+    height: auto;
+  }
+
+  #begin h2{
+    font-size: 20px;
+    color: #122b46;
+    margin: 15px;
+  }
+
+  #goal-bar-inner-div{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+  }
+
+  #background {
+    background-image: url(../images/mobile-hero.png);
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .header-image{
+    background-image: none;
+  }
+
+  #register-notice{
+    margin: 0px 50px;
+  }
+
+  #register-notice img {
+    height: auto;
+    width: 100%;
+  }
+
+#admin-photo-img-div img {
+  height: 60px;
+  width: 60px;
+  }
+
+.section-1 {
+  display: flex;
+  margin-left: 20px;
+  margin-right: 20px;
+  align-items: center;
+}
+} 

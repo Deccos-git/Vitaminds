@@ -15,35 +15,35 @@ const titel12 = titel11.split("?fb")
 const titel = titel12[0]
 
 // Groups overview page
-const practicegroupDOM = document.getElementById("practicegroups")
+// const practicegroupDOM = document.getElementById("practicegroups")
 const themegroupDOM = document.getElementById("themegroups")
 const coachGroupDOM = document.getElementById("coachgroups")
 
-const practicegroupTab = document.getElementById("practicegroup-tab")
+// const practicegroupTab = document.getElementById("practicegroup-tab")
 const themegroupTab = document.getElementById("themegroup-tab")
 const coachgroupTab = document.getElementById("coachgroup-tab")
 
-if(practicegroupTab != null){
-    practicegroupTab.addEventListener("click", () => {
-        practicegroupDOM.style.display = "flex"
-        themegroupDOM.style.display = "none"
-        coachGroupDOM.style.display = "none"
-        practicegroupTab.style.backgroundColor = "#122b46"
-        practicegroupTab.style.color = "white"
-        themegroupTab.style.backgroundColor = "white"
-        themegroupTab.style.color = "#122b46"
-        coachgroupTab.style.backgroundColor = "white"
-        coachgroupTab.style.color = "#122b46"
-    });
-};
+// if(practicegroupTab != null){
+//     practicegroupTab.addEventListener("click", () => {
+//         practicegroupDOM.style.display = "flex"
+//         themegroupDOM.style.display = "none"
+//         coachGroupDOM.style.display = "none"
+//         practicegroupTab.style.backgroundColor = "#122b46"
+//         practicegroupTab.style.color = "white"
+//         themegroupTab.style.backgroundColor = "white"
+//         themegroupTab.style.color = "#122b46"
+//         coachgroupTab.style.backgroundColor = "white"
+//         coachgroupTab.style.color = "#122b46"
+//     });
+// };
 
 if(themegroupTab != null){
     themegroupTab.addEventListener("click", () => {
-        practicegroupDOM.style.display = "none"
+        // practicegroupDOM.style.display = "none"
         themegroupDOM.style.display = "flex"
         coachGroupDOM.style.display = "none"
-        practicegroupTab.style.backgroundColor = "white"
-        practicegroupTab.style.color = "#122b46"
+        // practicegroupTab.style.backgroundColor = "white"
+        // practicegroupTab.style.color = "#122b46"
         themegroupTab.style.backgroundColor = "#122b46"
         themegroupTab.style.color = "white"
         coachgroupTab.style.backgroundColor = "white"
@@ -53,11 +53,11 @@ if(themegroupTab != null){
 
 if(coachgroupTab != null){
     coachgroupTab.addEventListener("click", () => {
-        practicegroupDOM.style.display = "none"
+        // practicegroupDOM.style.display = "none"
         themegroupDOM.style.display = "none"
         coachGroupDOM.style.display = "flex"
-        practicegroupTab.style.backgroundColor = "white"
-        practicegroupTab.style.color = "#122b46"
+        // practicegroupTab.style.backgroundColor = "white"
+        // practicegroupTab.style.color = "#122b46"
         themegroupTab.style.backgroundColor = "white"
         themegroupTab.style.color = "#122b46"
         coachgroupTab.style.backgroundColor = "#122b46"
@@ -83,6 +83,36 @@ function groupLandingH1(roomName, roomNameClean, groupType){
             groupLandingTitle.innerText = roomNameClean
         };
     };
+};
+
+function groupLandingCreatorInformation(creator, typeGroup){
+    const creatorDiv = document.getElementById("creator-information-div")
+
+    const creatorName = document.createElement("h2")
+    const creatorProfilePicture = document.createElement("img")
+
+    db.collection("Vitaminders").where("Gebruikersnaam", "==", creator)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const gebruikersnaamClean = doc.data().GebruikersnaamClean
+            const profilePicture = doc.data().Profielfoto
+
+            creatorName.innerText = gebruikersnaamClean
+            creatorProfilePicture.src = profilePicture
+
+            creatorDiv.addEventListener("click", () => {
+                window.open("../Vitaminders/" + [creator] + ".html", "_self");
+            })
+
+            if(typeGroup != "Group"){
+
+            creatorDiv.appendChild(creatorName)
+            creatorDiv.appendChild(creatorProfilePicture)
+
+            };
+        });
+    });
 };
 
 function becomeMemberOfGroup(buttonLanding,  groupLandingPageOuterDiv,){
@@ -120,16 +150,18 @@ function becomeMemberOfGroup(buttonLanding,  groupLandingPageOuterDiv,){
                 });
             } else {
 
+                const buttonDiv = document.getElementById("button-div-landing")
+
                 const notice = document.createElement("p")
                 notice.setAttribute("class", "notice-group-visitor")
 
-            notice.innerText = "Maak een Digimind aan om lid te worden van een groep"
+            notice.innerHTML = "Maak een <u>Digimind</u> aan om lid te worden van een groep"
             notice.addEventListener("click", () => {
-                window.open("Register.html", "_self")
+                window.open("../Register.html", "_self")
             })
 
             buttonDiv.appendChild(notice)
-            buttonDiv.removeChild(button)
+            buttonDiv.removeChild(buttonLanding)
 
                 };
             });
@@ -209,9 +241,12 @@ function openGroup(roomName, buttonName){
             const roomClean = doc1.data().RoomClean
             const type1 = doc1.data().Type
             const room1 = doc1.data().Room
+            const creator = doc1.data().Creater
 
 
             groupLandingH1(room1, roomClean, type1)
+
+            groupLandingCreatorInformation(creator, type1)
 
             groupFactsLanding(members, messages)
     

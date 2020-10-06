@@ -292,6 +292,21 @@
     margin-bottom: 50px;
 }
 
+#creator-information-div{
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+
+#creator-information-div img{
+    height: 60px;
+    Width: 60px;
+    border-radius: 50%;
+}
+
+#button-div-landing{
+    margin-bottom: 40px;
+}
+
 
 @media only screen and (max-width: 938px){
 

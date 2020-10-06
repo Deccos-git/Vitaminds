@@ -20,99 +20,6 @@ window.onbeforeunload = function(){
     return 'Weet je zeker dat je alles hebt opgeslagen?';
   };
 
-// WORKSHOP OVERVIEW PAGE
-
-    // Name auth in create workshop
-    const authHeader = document.getElementById("titleSub-workshop")
-    const createWorkshopOuterDiv = document.getElementById("create-your-workshop")
-
-    if(createWorkshopOuterDiv != undefined && authHeader != undefined){
-
-    auth.onAuthStateChanged(User =>{
-        if(User){
-        db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
-
-            const userType = doc.data().Usertype
-            const nameClean = doc.data().GebruikersnaamClean
-
-            if(userType == "Coach"){
-                createWorkshopOuterDiv.style.display = "flex"
-                authHeader.innerText = `${nameClean},`
-            };
-
-        });
-        };
-    });
-};
-
-// Workshops loaded from database
-
-db.collection("Workshops").where("Status", "==", "Public").get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-
-        const title = doc.data().WorkshopTitle
-        const coach = doc.data().Coach
-        const headerImg = doc.data().BannerImage
-        const workshopPrice = doc.data().Price
-
-        db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
-            querySnapshot.forEach(doc1 => {
-
-                const nameClean = doc1.data().GebruikersnaamClean
-                const profilePic = doc1.data().Profielfoto
-
-                const DOM = document.getElementById("workshops-outer-div")
-
-                const innerDiv = document.createElement("div")
-                    innerDiv.setAttribute("class", "workshop-section")
-                const header = document.createElement("div")
-                    header.setAttribute("class", "workshop-header")
-                const img = document.createElement("img")
-                    img.setAttribute("class", "header-workshop")
-                const coachPicDiv = document.createElement("div")
-                    coachPicDiv.setAttribute("class", "coach-pic-div-workshop")
-                const coachPic = document.createElement("img")
-                const titleH3 = document.createElement("h3")
-                const priceP = document.createElement("p")
-                const buttonDiv = document.createElement("div")
-                const button = document.createElement("button")
-                    button.setAttribute("class", "button-algemeen")
-                    button.setAttribute("onclick", "openWorkshop(this)")
-
-                img.src = headerImg
-                coachPic.src = profilePic
-                titleH3.innerText = title
-                priceP.innerText = `Prijs: ${workshopPrice} euro`
-                button.innerText = "Bekijk"
-
-                if(DOM != null){
-
-                DOM.appendChild(innerDiv)
-                innerDiv.appendChild(header)
-                header.appendChild(img)
-                innerDiv.appendChild(coachPicDiv)
-                coachPicDiv.appendChild(coachPic)
-                innerDiv.appendChild(titleH3)
-                innerDiv.appendChild(priceP)
-                innerDiv.appendChild(buttonDiv)
-                buttonDiv.appendChild(button)
-
-                };
-            })
-        });
-    })
-});
-
-// Open workshops after onclick
-
-function openWorkshop(elem){
-
-    divTitle = elem.parentElement.previousElementSibling.previousElementSibling.innerText
-
-    window.open("../Workshops/" + divTitle + ".html", "_self")
-
-};
-
 // TAKE A WORKSHOP
 
     //Edit workshop hidden for non-owner
@@ -202,8 +109,6 @@ function appendGoal(){
 
                                     if(goal == workshopGoal){
 
-                                        console.log(goal)
-
                                     db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", auth)
                                     .where("Goal", "==", goal).get().then(querySnapshot => {
                                         querySnapshot.forEach(doc2 => {
@@ -291,8 +196,6 @@ function createGoalAndStartWorkshop(){
                             });
                             
                         hideGoalDivAfterChoose()
-
-                        console.log("Test")
 
                         saveSet(workshopGoal, personalGoalTitle)
                         });
@@ -431,6 +334,24 @@ function addWorkshopDataToEditWorkshopButton(titleWorkshop, coachWorkshop){
 
     editWorkshop.setAttribute("data-title", titleWorkshop)
     editWorkshop.setAttribute("data-coach", coachWorkshop)
+};
+
+function openDigimindAfterCloseWorkshopButton(){
+
+    closeWorkshopButton.addEventListener("click", () => {
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+          const userRef = db.collection("Vitaminders").doc(User.uid);
+          userRef.get().then(function(doc) {
+    
+                const auth = doc.data().Gebruikersnaam
+
+                window.open(`../Vitaminders/${auth}`)
+                });
+            };
+        });
+    });
 };
 
 // Append workshopgoal to authgoal question in DOM
@@ -805,23 +726,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const closeWorkshopButton = document.createElement("button")
                 closeWorkshopButton.innerText = "Afsluiten"
 
-                function openDigimindAfterCloseWorkshopButton(){
-
-                    closeWorkshopButton.addEventListener("click", () => {
-
-                    auth.onAuthStateChanged(User =>{
-                        if(User){
-                          const userRef = db.collection("Vitaminders").doc(User.uid);
-                          userRef.get().then(function(doc) {
-                    
-                                const auth = doc.data().Gebruikersnaam
-            
-                                window.open(`../Vitaminders/${auth}`)
-                                });
-                            };
-                        });
-                    });
-                };
+                // openDigimindAfterCloseWorkshopButton()
 
                 // Load steps when clicked in DOM
                 const closingTitleH3 = document.createElement("h3")
@@ -866,7 +771,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                             db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                         const auth = doc.data().GebruikersnaamClean
         
-                                        stepOneCTATitle.innerText = `${auth}, ${stepOneCTA}`
+                                        stepOneCTATitle.innerHTML = `${auth}, ${stepOneCTA}`
         
                                 });
                             }; 
@@ -921,7 +826,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                             db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                         const auth = doc.data().GebruikersnaamClean
         
-                                        stepTwoCTATitle.innerText = `${auth}, ${stepTwoCTA}`
+                                        stepTwoCTATitle.innerHTML = `${auth}, ${stepTwoCTA}`
                                 });
                             }; 
                         });
@@ -1033,7 +938,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                 db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                             const auth = doc.data().GebruikersnaamClean
             
-                                            stepThreeCTATitle.innerText = `${auth}, ${stepThreeCTA}`
+                                            stepThreeCTATitle.innerHTML = `${auth}, ${stepThreeCTA}`
             
                                     });
                                 }; 
@@ -1148,7 +1053,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                                 const auth = doc.data().GebruikersnaamClean
                 
-                                                stepFourCTATitle.innerText = `${auth}, ${stepFourCTA}`
+                                                stepFourCTATitle.innerHTML = `${auth}, ${stepFourCTA}`
                 
                                         });
                                     }; 
@@ -1263,7 +1168,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                                 const auth = doc.data().GebruikersnaamClean
                 
-                                                stepFiveCTATitle.innerText = `${auth}, ${stepFiveCTA}`
+                                                stepFiveCTATitle.innerHTML = `${auth}, ${stepFiveCTA}`
                 
                                         });
                                     }; 
@@ -1378,7 +1283,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                         db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                                     const auth = doc.data().GebruikersnaamClean
                     
-                                                    stepSixCTATitle.innerText = `${auth}, ${stepSixCTA}`
+                                                    stepSixCTATitle.innerHTML = `${auth}, ${stepSixCTA}`
                     
                                             });
                                         }; 
@@ -1496,7 +1401,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                         db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                                     const auth = doc.data().GebruikersnaamClean
                     
-                                                    stepSevenCTATitle.innerText = `${auth}, ${stepSevenCTA}`
+                                                    stepSevenCTATitle.innerHTML = `${auth}, ${stepSevenCTA}`
                     
                                             });
                                         }; 
@@ -1616,7 +1521,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                         db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                                     const auth = doc.data().GebruikersnaamClean
                     
-                                                    stepEightCTATitle.innerText = `${auth}, ${stepEightCTA}`
+                                                    stepEightCTATitle.innerHTML = `${auth}, ${stepEightCTA}`
                     
                                             });
                                         }; 
@@ -2195,6 +2100,7 @@ function clearLocalStorage(){
                 const title = doc.data().WorkshopTitle
                 const headerImg = doc.data().BannerImage
                 const workshopGoals = doc.data().WorkshopGoals
+                const workshopPrice = doc.data().Price
                 const stepOnePreview = doc.data().StepOnePreview
                 const stepOneTitle = doc.data().StepOneTitle
                 const stepOneExplainer = doc.data().StepOneExplainer
@@ -2274,6 +2180,11 @@ function clearLocalStorage(){
                     }
                 })
 
+                // Load workshop price
+                const priceDOM = document.getElementById("workshop-price")
+
+                priceDOM.value = workshopPrice
+
                 // Load step content
 
                 function loadSteps(dbTitle,buttonID,DOMtitleID, editorA, editorB, editorC, setContentA, setContentB, setContentC, innerDiv ){
@@ -2351,6 +2262,7 @@ let bannerImage = ""
 
 !function uploadBanner(){
     const uploadImageButton = document.getElementById("upload-banner")
+    const selectedBannerImage = document.getElementById("selected-header-img")
 
     if (uploadImageButton != null){
     uploadImageButton.addEventListener("click", () => {
@@ -2388,6 +2300,7 @@ let bannerImage = ""
         bannerImage = downloadURL
         uploadImageButton.innerText = "Geupload"
         console.log(downloadURL)
+        selectedBannerImage.src = downloadURL
                     });                                                
                 });
             });
@@ -2564,9 +2477,10 @@ function saveWorkshop(){
 
 // Update input
 function updateWorkshop(){
-    const workshopTitle = document.getElementById("workshop-title").value
+    const workshopTitle = document.getElementById("workshop-title")
     const workshopGoals = tinyMCE.get('editor1').getContent()
     const stepOnePreview = tinyMCE.get('editor2').getContent()
+    const selectedBannerImg = document.getElementById("selected-header-img")
 
         // Workshop goal
         const workshopGoalSelect = document.getElementById("select-goel-workshop")
@@ -2574,8 +2488,13 @@ function updateWorkshop(){
         const select = workshopGoalSelect.options
         const workshopGoal = select[select.selectedIndex].innerHTML
 
+        //Banner image
+        const bannerImageSource = selectedBannerImg.src
+
         // Price
-        const workshopPrice = document.getElementById("workshop-price").value
+        const workshopPrice = document.getElementById("workshop-price")
+
+        console.log(workshopPrice.value)
 
        // Step one
        const stepOneTitle =  document.getElementById("step-one-title").value
@@ -2642,14 +2561,14 @@ function updateWorkshop(){
         const closingEightTitle = document.getElementById("closing-title-input-8").value
         const closingEightText = tinyMCE.get('editor-closing-8').getContent()
 
-    db.collection("Workshops").where("WorkshopTitle", "==", workshopTitle).get().then(querySnapshot => {
+    db.collection("Workshops").where("WorkshopTitle", "==", workshopTitle.value).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
             db.collection("Workshops").doc(doc.id).update({
                 Goal: workshopGoal,
-                Price: workshopPrice,
-                WorkshopTitle: workshopTitle,
-                BannerImage: bannerImage,
+                Price: workshopPrice.value,
+                WorkshopTitle: workshopTitle.value,
+                BannerImage: bannerImageSource,
                 WorkshopGoals: workshopGoals,
                 StepOnePreview: stepOnePreview,
                 StepOneTitle: stepOneTitle,
