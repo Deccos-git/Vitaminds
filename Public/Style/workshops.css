@@ -65,6 +65,86 @@
     font-weight: bold;
 }
 
+#workshop-price{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Landing */
+
+#workshop-landing-page{
+    padding: 0px 0px 0px 0px;
+    display: flex; /* Hidden by default */
+    flex-direction: column;
+    position: fixed; /* Stay in place */
+    z-index: 4; /* Sit on top */
+    top: 0;
+    width: 100%;
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+}
+
+#creator-information-div{
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+
+#creator-information-div img{
+    height: 60px;
+    Width: 60px;
+    border-radius: 50%;
+}
+
+#button-workshop-landing{
+    margin-bottom: 50px;
+}
+
+#workshop-description{
+    margin: 20px 100px;
+}
+
+#workshop-agreement{
+    padding: 0px 0px 0px 0px;
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    position: fixed; /* Stay in place */
+    z-index: 4; /* Sit on top */
+    top: 0;
+    width: 100%;
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    align-items: center;
+    text-align: center;
+    background-color: #fff;
+}
+
+#workshop-agreement-banner{
+    height: 200px;
+}
+
+#questions-workshop-agreement{
+    cursor: pointer;
+}
+
+.group-auth-img{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    border: 5px solid white;
+}
+
+#questions-workshop-agreement p{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#visitWorkshop{
+    margin-bottom: 50px;
+}
+
 /* Individual workshop page */
 
 #workshop-section{
@@ -207,6 +287,15 @@
 .step-explainer-p{
     margin: 0px 100px;
     text-align: left;
+}
+
+.step-explainer-p img{
+    height: auto;
+    width: 100%;
+}
+
+iframe{
+    width: 100%;
 }
 
 .stepCTATitle{
@@ -566,6 +655,13 @@
     text-align: center;
 }
 
+#step-nine-inner-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
 textarea{
     width: 80%;
 }
@@ -658,6 +754,14 @@ textarea{
 
     .closing-text-p {
         margin: 0px 20px;
+    }
+
+    h1{
+        font-size: 30px;
+    }
+
+    #workshop-description{
+        margin: 20px 20px;
     }
 
 }

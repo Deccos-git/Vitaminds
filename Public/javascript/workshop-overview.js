@@ -39,6 +39,7 @@
                         querySnapshot.forEach(doc1 => {
             
                             const nameClean = doc1.data().GebruikersnaamClean
+                            const name = doc1.data().Gebruikersnaam
                             const profilePic = doc1.data().Profielfoto
             
                             const DOM = document.getElementById("workshops-outer-div")
@@ -56,6 +57,7 @@
                             const coachPic = document.createElement("img")
                             const titleH3 = document.createElement("h3")
                             const priceP = document.createElement("p")
+                                priceP.setAttribute("id", "workshop-price")
                             const buttonDiv = document.createElement("div")
                             const button = document.createElement("button")
                                 button.setAttribute("class", "button-algemeen")
@@ -65,11 +67,17 @@
                             coachPic.src = profilePic
                             titleH3.innerText = title
                             priceP.innerText = `Prijs: ${workshopPrice} euro`
-                            button.innerText = "Bekijk"
+                            button.innerText = "Meer informatie"
                             draftStatus.innerText = "Niet gepubliceerd"
                             draftStatus.style.color = "#cf6e13"
             
                             if(DOM != null){
+
+                                db.collection("Vitaminders").doc(User.uid).get().then(function(doc2) {
+
+                                const auth = doc2.data().Gebruikersnaam
+
+                                if(name === auth){
             
                             DOM.appendChild(innerDiv)
                             innerDiv.appendChild(header)
@@ -81,7 +89,8 @@
                             innerDiv.appendChild(priceP)
                             innerDiv.appendChild(buttonDiv)
                             buttonDiv.appendChild(button)
-            
+                                    };
+                                });
                             };
                         })
                     });
@@ -120,6 +129,7 @@ db.collection("Workshops").where("Status", "==", "Public").get().then(querySnaps
                 const coachPic = document.createElement("img")
                 const titleH3 = document.createElement("h3")
                 const priceP = document.createElement("p")
+                    priceP.setAttribute("id", "workshop-price")
                 const buttonDiv = document.createElement("div")
                 const button = document.createElement("button")
                     button.setAttribute("class", "button-algemeen")
@@ -129,7 +139,7 @@ db.collection("Workshops").where("Status", "==", "Public").get().then(querySnaps
                 coachPic.src = profilePic
                 titleH3.innerText = title
                 priceP.innerText = `Prijs: ${workshopPrice} euro`
-                button.innerText = "Bekijk"
+                button.innerText = "Meer informatie"
 
                 if(DOM != null){
 

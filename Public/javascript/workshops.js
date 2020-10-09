@@ -20,6 +20,210 @@ window.onbeforeunload = function(){
     return 'Weet je zeker dat je alles hebt opgeslagen?';
   };
 
+// WORKSHOP LANDING
+
+const workshopLandingPageOuterDiv = document.getElementById("workshop-landing-page")
+const workshopLandingTitle = document.getElementById("workshop-landing-title")
+const buttonWorkshopLanding = document.getElementById("button-workshop-landing")
+const workshopDescription = document.getElementById("workshop-description")
+const workshopFactsUl = document.getElementById("workshop-facts")
+const agreementSection = document.getElementById("workshop-agreement")
+
+function workshopLandingH1(workshopName){
+
+    if(workshopLandingTitle != null){
+
+            workshopLandingTitle.innerText = workshopName
+
+    };
+};
+
+function groupLandingCreatorInformation(creator){
+    const creatorDiv = document.getElementById("creator-information-div")
+
+    const creatorName = document.createElement("h2")
+    const creatorProfilePicture = document.createElement("img")
+
+    db.collection("Vitaminders").where("Gebruikersnaam", "==", creator)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const gebruikersnaamClean = doc.data().GebruikersnaamClean
+            const profilePicture = doc.data().Profielfoto
+
+            creatorName.innerText = gebruikersnaamClean
+            creatorProfilePicture.src = profilePicture
+
+            creatorDiv.addEventListener("click", () => {
+                window.open("../Vitaminders/" + [creator] + ".html", "_self");
+            })
+
+            creatorDiv.appendChild(creatorName)
+            creatorDiv.appendChild(creatorProfilePicture)
+        });
+    });
+};
+
+function arrayOfWorkshopTakers(buttonLanding){
+    if(buttonLanding != null){
+    buttonLanding.addEventListener("click", () => {
+           // Add auth to list of members
+
+           auth.onAuthStateChanged(User =>{
+            if(User){
+              const userRef = db.collection("Vitaminders").doc(User.uid);
+              userRef.get().then(function(doc) {
+        
+                    const auth = doc.data().Gebruikersnaam
+
+        db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+
+                // Store members in database
+        
+                db.collection("Workshops").doc(doc1.id).update({
+                    Takers: firebase.firestore.FieldValue.arrayUnion(auth)
+                }).then(() => {
+                        agreementSection.style.display = "flex"
+                        workshopLandingPageOuterDiv.style.display = "none"
+                            });
+                        });
+                    });
+                });
+            } else {
+
+                const buttonDiv = document.getElementById("button-div-landing")
+
+                const notice = document.createElement("p")
+                notice.setAttribute("class", "notice-group-visitor")
+
+            notice.innerHTML = "Maak een <u>Digimind</u> aan om lid te worden van een groep"
+            notice.addEventListener("click", () => {
+                window.open("../Register.html", "_self")
+            })
+
+            buttonDiv.appendChild(notice)
+            buttonDiv.removeChild(buttonLanding)
+
+                };
+            });
+        });
+    };
+};
+
+function workshopFacts(priceOfWorkshop){
+
+    const workshopPrice = document.createElement("li")
+
+    workshopPrice.innerText = `Prijs: €${priceOfWorkshop}`
+
+    workshopFactsUl.appendChild(workshopPrice)
+};
+
+function workshopAgreementTitle(){
+
+    const agreementTitle = document.getElementById("workshop-member-agreement-title")
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+    
+            const auth = doc.data().GebruikersnaamClean
+    
+            agreementTitle.innerText = `Welkom bij mijn workshop, ${auth}`
+    
+            });
+        };
+    });
+};
+
+function agreementButton(){
+    const agreementButtonDOM = document.getElementById("visitWorkshop")
+
+    agreementButtonDOM.addEventListener("click", () => {
+
+        agreementSection.style.display = "none"
+    });
+};
+
+function workshopAgreementQuestion(coachName){
+    const questionsSection = document.getElementById("questions-workshop-agreement")
+
+    db.collection("Vitaminders").where("Gebruikersnaam", "==", coachName)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                    const nameClean = doc.data().GebruikersnaamClean
+                    const profilePic = doc.data().Profielfoto
+                    const name = doc.data().Gebruikersnaam
+
+                    const authImg = document.createElement("img")
+                        authImg.setAttribute("class", "group-auth-img")
+                    const authName = document.createElement("p")
+            
+            authImg.src = profilePic
+            authName.innerText = nameClean
+
+            questionsSection.appendChild(authImg)
+            questionsSection.appendChild(authName)
+
+            questionsSection.addEventListener("click", () => {
+                window.open("../Vitaminders/" + name + ".html", "_self");
+            });
+        });
+    });
+};
+
+function hideLandingIfAuthIsArrayMember(array){
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+    
+            const auth = doc.data().Gebruikersnaam
+
+            console.log(array)
+            console.log(auth)
+
+            if (array.includes(auth)){
+                workshopLandingPageOuterDiv.style.display = "none"
+            }
+
+            });
+        };
+    });
+};
+
+!function workshopQuery(){
+
+    db.collection("Workshops").where("WorkshopTitle", "==", titel)
+        .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const workshopTitle = doc.data().WorkshopTitle
+            const summary = doc.data().WorkshopGoals
+            const creator = doc.data().Coach
+            const price = doc.data().Price
+            const takersArray = doc.data().Takers
+
+            workshopLandingH1(workshopTitle)
+            groupLandingCreatorInformation(creator)
+            arrayOfWorkshopTakers(buttonWorkshopLanding)
+            workshopFacts(price)
+            workshopAgreementTitle()
+            workshopAgreementQuestion(creator)
+            agreementButton()
+            hideLandingIfAuthIsArrayMember(takersArray)
+
+            workshopDescription.innerHTML = summary
+
+        });
+    });
+}();
+
+
+
 // TAKE A WORKSHOP
 
     //Edit workshop hidden for non-owner
@@ -72,6 +276,7 @@ window.onbeforeunload = function(){
         StepSixInput: "",
         StepSevenInput: "",
         StepEightInput: "",
+        StepNineInput: "",
         ClosingInput: "",
         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                 });
@@ -114,8 +319,6 @@ function appendGoal(){
                                         querySnapshot.forEach(doc2 => {
 
                                             const levensvraag = doc2.data().Levensvraag
-
-                                            console.log(levensvraag)
 
                                             // If more than one
                                             levensvraagArray.push(levensvraag)
@@ -370,6 +573,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
         const stepSixTitle = doc.data().StepSixTitle
         const stepSevenTitle = doc.data().StepSevenTitle
         const stepEightTitle = doc.data().StepEightTitle
+        const stepNineTitle = doc.data().StepNineTitle
         const stepOneIntroduction = doc.data().StepOnePreview
         const stepTwoIntroduction = doc.data().StepTwoPreview
         const stepThreeIntroduction = doc.data().StepThreePreview
@@ -378,6 +582,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
         const stepSixIntroduction = doc.data().StepSixPreview
         const stepSevenIntroduction = doc.data().StepSevenPreview
         const stepEightIntroduction = doc.data().StepEightPreview
+        const stepNineIntroduction = doc.data().StepNinePreview
         const stepOneExplainer = doc.data().StepOneExplainer
         const stepTwoExplainer = doc.data().StepTwoExplainer
         const stepThreeExplainer = doc.data().StepThreeExplainer
@@ -386,6 +591,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
         const stepSixExplainer = doc.data().StepSixExplainer
         const stepSevenExplainer = doc.data().StepSevenExplainer
         const stepEightExplainer = doc.data().StepEightExplainer
+        const stepNineExplainer = doc.data().StepNineExplainer
         const stepOneCTA = doc.data().StepOneCTA
         const stepTwoCTA = doc.data().StepTwoCTA
         const stepThreeCTA = doc.data().StepThreeCTA
@@ -394,6 +600,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
         const stepSixCTA = doc.data().StepSixCTA
         const stepSevenCTA = doc.data().StepSevenCTA
         const stepEightCTA = doc.data().StepEightCTA
+        const stepNineCTA = doc.data().StepNineCTA
         const closingOneText = doc.data().ClosingOneText 
         const closingOneTitle = doc.data().ClosingOneTitle
         const closingTwoText = doc.data().ClosingTwoText 
@@ -410,6 +617,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
         const closingSevenTitle = doc.data().ClosingSevenTitle
         const closingEightText = doc.data().ClosingEightText 
         const closingEightTitle = doc.data().ClosingEightTitle
+        const closingNineText = doc.data().ClosingNineText 
+        const closingNineTitle = doc.data().ClosingNineTitle
         const workshopGoal = doc.data().Goal
 
         const DOM = document.getElementById("workshop-inner-div")
@@ -474,6 +683,11 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const stepEightTitleP = document.createElement("p")
                 const stepEightCheck = document.createElement("div")
                     stepEightCheck.setAttribute("class", "step-check-div")
+                const stepNinePreviewDiv = document.createElement("div")
+                    stepNinePreviewDiv.setAttribute("class", "step-preview-inner-div")
+                const stepNineTitleP = document.createElement("p")
+                const stepNineCheck = document.createElement("div")
+                    stepNineCheck.setAttribute("class", "step-check-div")
 
                 const stepOneIntroductionDiv = document.createElement("div")
                     stepOneIntroductionDiv.setAttribute("class", "step-introduction-div")
@@ -557,6 +771,12 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     toolbarEightCount.setAttribute("class", "toolbar-count")
                 const toolbarEightCheck = document.createElement("div")
                     toolbarEightCheck.setAttribute("id", "toolbar-check")
+                const toolbarNineDiv = document.createElement("div")
+                    toolbarNineDiv.setAttribute("class","toolbar-inner-div")
+                const toolbarNineCount = document.createElement("p")
+                    toolbarNineCount.setAttribute("class", "toolbar-count")
+                const toolbarNineCheck = document.createElement("div")
+                    toolbarNineCheck.setAttribute("id", "toolbar-check")
                 const saveButtonDiv = document.createElement("div")
                 const saveOneButton = document.createElement("button")
                     saveOneButton.setAttribute("id", "save-one-button")
@@ -573,16 +793,19 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const saveFiveButton = document.createElement("button")
                     saveFiveButton.setAttribute("id", "save-five-button")
                     saveFiveButton.setAttribute("onclick", "saveFive()")
-                    const saveSixButton = document.createElement("button")
+                const saveSixButton = document.createElement("button")
                     saveSixButton.setAttribute("id", "save-six-button")
                     saveSixButton.setAttribute("onclick", "saveSix()")
-                    const saveSevenButton = document.createElement("button")
+                const saveSevenButton = document.createElement("button")
                     saveSevenButton.setAttribute("id", "save-seven-button")
                     saveSevenButton.setAttribute("onclick", "saveSeven()")
-                    const saveEightButton = document.createElement("button")
+                const saveEightButton = document.createElement("button")
                     saveEightButton.setAttribute("id", "save-eigth-button")
                     saveEightButton.setAttribute("onclick", "saveEight()")
-                    const closingButton = document.createElement("button")
+                const saveNineButton = document.createElement("button")
+                    saveNineButton.setAttribute("id", "save-nine-button")
+                    saveNineButton.setAttribute("onclick", "saveNine()")
+                const closingButton = document.createElement("button")
                     closingButton.setAttribute("id", "closing-button")
 
                     saveButtonDiv.appendChild(saveOneButton)
@@ -593,6 +816,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     saveButtonDiv.appendChild(saveSixButton)
                     saveButtonDiv.appendChild(saveSevenButton)
                     saveButtonDiv.appendChild(saveEightButton)
+                    saveButtonDiv.appendChild(saveNineButton)
                     saveButtonDiv.appendChild(closingButton)
 
                     saveOneButton.innerText = "Opslaan"
@@ -603,6 +827,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     saveSixButton.innerText = "Opslaan"
                     saveSevenButton.innerText = "Opslaan"
                     saveEightButton.innerText = "Opslaan"
+                    saveNineButton.innerText = "Opslaan"
                     closingButton.innerText = "Opslaan"
 
                     saveOneButton.style.display = "none"
@@ -613,6 +838,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     saveSixButton.style.display = "none"
                     saveSevenButton.style.display = "none"
                     saveEightButton.style.display = "none"
+                    saveNineButton.style.display = "none"
                     closingButton.style.display = "none"
 
                     
@@ -624,6 +850,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     toolbarCountInnerText(toolbarSixCount, "6")
                     toolbarCountInnerText(toolbarSevenCount, "7")
                     toolbarCountInnerText(toolbarEightCount, "8")
+                    toolbarCountInnerText(toolbarNineCount, "9")
 
                
                 appendToolbar(stepOneTitle, toolbarOneDiv, toolbarOneCheck, toolbarOneCount, toolbarOuterDiv)
@@ -634,6 +861,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 appendToolbar(stepSixTitle, toolbarSixDiv, toolbarSixCheck, toolbarSixCount, toolbarOuterDiv)
                 appendToolbar(stepSevenTitle, toolbarSevenDiv, toolbarSevenCheck, toolbarSevenCount, toolbarOuterDiv)
                 appendToolbar(stepEightTitle, toolbarEightDiv, toolbarEightCheck, toolbarEightCount, toolbarOuterDiv)
+                appendToolbar(stepNineTitle, toolbarNineDiv, toolbarNineCheck, toolbarNineCount, toolbarOuterDiv)
 
                 //Save button
                 toolbarOuterDiv.appendChild(saveButtonDiv)
@@ -688,6 +916,11 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const stepEightIntroductionButton = document.createElement("button")
                     stepEightIntroductionButton.setAttribute("class", "button-algemeen")
                     stepEightIntroductionButton.setAttribute("id", "step-eight-button")
+                const stepNineIntroductionTitle = document.createElement("h3")
+                const stepNineIntroductionP = document.createElement("p")
+                const stepNineIntroductionButton = document.createElement("button")
+                        stepNineIntroductionButton.setAttribute("class", "button-algemeen")
+                        stepNineIntroductionButton.setAttribute("id", "step-nine-button")
                 const closingIntroductionDiv = document.createElement("div")
                     closingIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const closingIntroductionTitle = document.createElement("h3")
@@ -708,11 +941,12 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 stepOverview(stepSixTitle, stepSixTitleP, `Stap 6: ${stepSixTitle}`, stepSixPreviewDiv, stepSixCheck, stepsOverviewWorkshop)
                 stepOverview(stepSevenTitle, stepSevenTitleP, `Stap 7: ${stepSevenTitle}`, stepSevenPreviewDiv, stepSevenCheck, stepsOverviewWorkshop)
                 stepOverview(stepEightTitle, stepEightTitleP, `Stap 8: ${stepEightTitle}`, stepEightPreviewDiv, stepEightCheck, stepsOverviewWorkshop)
+                stepOverview(stepNineTitle, stepNineTitleP, `Stap 9: ${stepNineTitle}`, stepNinePreviewDiv, stepNineCheck, stepsOverviewWorkshop)
 
                 // Step one introduction
                 if(stepOneTitle != ""){
                     stepOneIntroductionTitle.innerText = "Zet de eerste stap"
-                    stepOneIntroductionP.innerText = stepOneIntroduction
+                    stepOneIntroductionP.innerHTML = stepOneIntroduction
                     stepOneIntroductionButton.innerText = "Zet de eerste stap"
                     DOM.appendChild(stepOneIntroductionTitle)
                     DOM.appendChild(stepOneIntroductionDiv)
@@ -1484,8 +1718,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                             };
                         });
 
-                         // Load step eight
-                         stepEightIntroductionButton.addEventListener("click", () => {
+                        // Load step eighht
+                        stepEightIntroductionButton.addEventListener("click", () => {
                             if(stepEightTitle != ""){
 
                                 saveSeven()
@@ -1512,7 +1746,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                         stepEightInput.setAttribute("placeholder", "Wat heb je geleerd?")
                                         stepEightInput.setAttribute("id", "step-eight-input")
             
-                                    stepEightTitleH2.innerHTML = stepEightTitle
+                                    stepEightTitleH2.innerText = stepEightTitle
                                     stepEightExplainerP.innerHTML = stepEightExplainer
             
                                     auth.onAuthStateChanged(User =>{
@@ -1530,13 +1764,13 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     appendStepToDom(DOM, stepEightOuterDiv, stepEightTitleH2, stepEightExplainerP, stepEightCTATitle, stepEightCTAP, stepEightInput)
 
             
-                                    closingIntroductionTitle.innerText = "Afronden"
-                                    closingIntroductionP.innerHTML = stepEightIntroduction
-                                    closingIntroductionButton.innerText = "Afronden"
-                                    DOM.appendChild(closingIntroductionTitle)
-                                    DOM.appendChild(closingIntroductionDiv)
-                                    closingIntroductionDiv.appendChild(closingIntroductionP)
-                                    closingIntroductionDiv.appendChild(closingIntroductionButton)
+                                    stepNineIntroductionTitle.innerText = "Volgende stap"
+                                    stepNineIntroductionP.innerHTML = stepNineIntroduction
+                                    stepNineIntroductionButton.innerText = "Volgende stap"
+                                    DOM.appendChild(stepNineIntroductionTitle)
+                                    DOM.appendChild(stepNineIntroductionDiv)
+                                    stepNineIntroductionDiv.appendChild(stepNineIntroductionP)
+                                    stepNineIntroductionDiv.appendChild(stepNineIntroductionButton)
                                
                             } else {
                                 toolbarSevenCount.innerText = "V"
@@ -1572,6 +1806,128 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                             // Save closing
 
                                             closingButton.addEventListener("click", ()  => {
+                                                                        
+                                                const closingInput = document.getElementById("closing-input").value
+                                                const stepOneInput = document.getElementById("step-one-input").value
+                                                const stepTwoInput = document.getElementById("step-two-input").value
+                                                const stepThreeInput = document.getElementById("step-three-input").value
+                                                const stepFourInput = document.getElementById("step-four-input").value
+                                                const stepFiveInput = document.getElementById("step-five-input").value
+                                                const stepSixInput = document.getElementById("step-six-input").value
+                                                const stepSevenInput = document.getElementById("step-seven-input").value
+                                            
+                                                db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+                                                    querySnapshot.forEach(doc => {
+                                            
+                                                        auth.onAuthStateChanged(User =>{
+                                                            if (User){
+                                                
+                                            db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+                                                ClosingInput: closingInput,
+                                                StepOneInput: stepOneInput,
+                                                StepTwoInput: stepTwoInput,
+                                                StepThreeInput: stepThreeInput,
+                                                StepFourInput: stepFourInput,
+                                                StepFiveInput: stepFiveInput,
+                                                StepSixInput: stepSixInput,
+                                                StepSevenInput: stepSevenInput,
+                                                    });
+                                                };
+                                            });
+                                        });
+                                    });
+                                });
+                            };
+                        });
+
+                         // Load step nine
+                         stepNineIntroductionButton.addEventListener("click", () => {
+                            if(stepNineTitle != ""){
+
+                                saveSeven()
+                               
+                                    toolbarEightCount.innerText = "V"
+                                    toolbarEightCheck.style.backgroundColor = "white"
+                                    toolbarEightCount.style.color = "#008e8e"
+
+                                    saveNineButton.style.display = "block"
+                                    saveEightButton.style.display = "none"
+            
+                                    const stepNineOuterDiv = document.createElement("div")
+                                        stepNineOuterDiv.setAttribute("class", "step-outer-div")
+                                    const stepNineTitleH2 = document.createElement("h2")
+                                        stepNineTitleH2.setAttribute("class", "step-title-h2")
+                                    const stepNineExplainerP = document.createElement("p")
+                                        stepNineExplainerP.setAttribute("class", "step-explainer-p")
+                                    const stepNineCTATitle = document.createElement("h3")
+                                        stepNineCTATitle.setAttribute("class", "stepCTATitle")
+                                    const stepNineCTAP = document.createElement("p")
+                                    const stepNineInput = document.createElement("textarea")
+                                        stepNineInput.setAttribute("rows", "10")
+                                        stepNineInput.setAttribute("cols", "30")
+                                        stepNineInput.setAttribute("placeholder", "Wat heb je geleerd?")
+                                        stepNineInput.setAttribute("id", "step-nine-input")
+            
+                                    stepNineTitleH2.innerHTML = stepNineTitle
+                                    stepNineExplainerP.innerHTML = stepNineExplainer
+            
+                                    auth.onAuthStateChanged(User =>{
+                                        if (User){
+                                    
+                                        db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                                                    const auth = doc.data().GebruikersnaamClean
+                    
+                                                    stepNineCTATitle.innerHTML = `${auth}, ${stepNineCTA}`
+                    
+                                            });
+                                        }; 
+                                    });
+                                   
+                                    appendStepToDom(DOM, stepNineOuterDiv, stepNineTitleH2, stepNineExplainerP, stepNineCTATitle, stepNineCTAP, stepNineInput)
+
+            
+                                    closingIntroductionTitle.innerText = "Afronden"
+                                    closingIntroductionP.innerHTML = stepNineIntroduction
+                                    closingIntroductionButton.innerText = "Afronden"
+                                    DOM.appendChild(closingIntroductionTitle)
+                                    DOM.appendChild(closingIntroductionDiv)
+                                    closingIntroductionDiv.appendChild(closingIntroductionP)
+                                    closingIntroductionDiv.appendChild(closingIntroductionButton)
+                               
+                            } else {
+                                toolbarEightCount.innerText = "V"
+                                toolbarEightCheck.style.backgroundColor = "white"
+                                toolbarEightCount.style.color = "#008e8e"
+    
+                                closingDiv.style.display = "flex"
+
+                                closingButton.style.display = "block"
+                                stepEightButton.style.display = "none"
+                               
+                                closingTitleH3.innerText = closingEightTitle
+                                closingTextP.innerHTML = closingEightText
+    
+                                auth.onAuthStateChanged(User =>{
+                                    if (User){
+                                
+                                    db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                                                const auth = doc.data().GebruikersnaamClean
+                
+                                                closingInputTitle.innerText = `Wat vond je van de workshop, ${auth}?`
+                                        });
+                                    }; 
+                                });
+                                
+    
+                                DOM.appendChild(closingDiv)
+                                closingDiv.appendChild(closingTitleH3)
+                                closingDiv.appendChild(closingTextP)
+                                closingDiv.appendChild(closingInputTitle)
+                                closingDiv.appendChild(closingInput)
+
+                                            // Save closing
+
+                                            closingButton.addEventListener("click", ()  => {
                                                                                     
                                                 const closingInput = document.getElementById("closing-input").value
                                                 const stepOneInput = document.getElementById("step-one-input").value
@@ -1582,6 +1938,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                                 const stepSixInput = document.getElementById("step-six-input").value
                                                 const stepSevenInput = document.getElementById("step-seven-input").value
                                                 const stepEightInput = document.getElementById("step-eight-input").value
+                                                const stepNineInput = document.getElementById("step-eight-input").value
 
                                                 db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
                                                     querySnapshot.forEach(doc => {
@@ -1599,6 +1956,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                                 StepSixInput: stepSixInput,
                                                 StepSevenInput: stepSevenInput,
                                                 StepEightInput: stepEightInput,
+                                                StepNineInput: stepNineInput,
                                                     });
                                                 };
                                             });
@@ -1610,19 +1968,19 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 
                         closingIntroductionButton.addEventListener("click", () => {
 
-                            const saveEightButonDOM = document.getElementById("save-eigth-button")
+                            const saveNineButonDOM = document.getElementById("save-nine-button")
 
-                            toolbarEightCount.innerText = "V"
-                            toolbarEightCheck.style.backgroundColor = "white"
-                            toolbarEightCount.style.color = "#008e8e"
+                            toolbarNineCount.innerText = "V"
+                            toolbarNineCheck.style.backgroundColor = "white"
+                            toolbarNineCount.style.color = "#008e8e"
 
                             closingDiv.style.display = "flex"
 
                             closingButton.style.display = "block"
-                            saveEightButonDOM.style.display = "none"
+                            saveNineButonDOM.style.display = "none"
                             
-                            closingTitleH3.innerText = closingEightTitle
-                            closingTextP.innerHTML = closingEightText
+                            closingTitleH3.innerText = closingNineTitle
+                            closingTextP.innerHTML = closingNineText
 
                             auth.onAuthStateChanged(User =>{
                                 if (User){
@@ -1655,6 +2013,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                             const stepSixInput = document.getElementById("step-six-input").value
                                             const stepSevenInput = document.getElementById("step-seven-input").value
                                             const stepEightInput = document.getElementById("step-eight-input").value
+                                            const stepNineInput = document.getElementById("step-nine-input").value
                                         
                                             db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
                                                 querySnapshot.forEach(doc => {
@@ -1672,6 +2031,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                             StepSixInput: stepSixInput,
                                             StepSevenInput: stepSevenInput,
                                             StepEightInput: stepEightInput,
+                                            StepNineInput: stepNineInput,
                                                 });
                                             };
                                         });
@@ -1695,6 +2055,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                 const stepSixInput = doc.data().StepSixInput
                                 const stepSevenInput = doc.data().StepSevenInput
                                 const stepEightInput = doc.data().StepEightInput
+                                const stepNineInput = doc.data().StepNineInput
                                 const closingInput = doc.data().ClosingInput
 
                                 const stepOneButton = document.getElementById("step-one-button")
@@ -1823,6 +2184,21 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                 toolbarEightCount.innerText = "V"
                                 toolbarEightCheck.style.backgroundColor = "white"
                                 toolbarEightCount.style.color = "#008e8e"
+                                };
+
+                                const stepNineButton = document.getElementById("step-nine-button")
+
+                                if(stepNineInput != ""){
+
+                                    stepNineButton.click()
+
+                                const stepNineInputDOM = document.getElementById("step-nine-input")
+
+                                stepNineInputDOM.innerHTML = stepNineInput
+
+                                toolbarNineCount.innerText = "V"
+                                toolbarNineCheck.style.backgroundColor = "white"
+                                toolbarNineCount.style.color = "#008e8e"
                                 };
 
                                 const closingButton = document.getElementById("closing-button")
@@ -2054,6 +2430,41 @@ function saveEight(){
     });
 };
 
+function saveNine(){
+    
+    const stepNineInput = document.getElementById("step-Nine-input").value
+    const stepOneInput = document.getElementById("step-one-input").value
+    const stepTwoInput = document.getElementById("step-two-input").value
+    const stepThreeInput = document.getElementById("step-three-input").value
+    const stepFourInput = document.getElementById("step-four-input").value
+    const stepFiveInput = document.getElementById("step-five-input").value
+    const stepSixInput = document.getElementById("step-six-input").value
+    const stepSevenInput = document.getElementById("step-seven-input").value
+    const stepEightInput = document.getElementById("step-eight-input").value
+
+    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            auth.onAuthStateChanged(User =>{
+                if (User){
+    
+        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+            StepNineInput: stepNineInput,
+            StepOneInput: stepOneInput,
+            StepTwoInput: stepTwoInput,
+            StepThreeInput: stepThreeInput,
+            StepFourInput: stepFourInput,
+            StepFiveInput: stepFiveInput,
+            StepSixInput: stepSixInput,
+            StepSevenInput: stepSevenInput,
+            StepEightInput: stepEightInput,
+                    });
+                };
+            });
+        });
+    });
+};
+
 
 
 // EDIT WORKSHOP
@@ -2087,6 +2498,15 @@ function clearLocalStorage(){
     };
 }();
 
+function hideSaveButtonShowUpdateButton(){
+    // Save/update
+    const saveWorkshopButton = document.getElementById("saveWorkshop")
+    const updateWorkshopButton = document.getElementById("updateWorkshop")
+
+    saveWorkshopButton.style.display = "none"
+    updateWorkshopButton.style.display = "flex"
+}
+
 !function fillCreateWorkshopIfLocaleStorageIsSet(){ 
 
     if(titleFromStorage != undefined && coachFromStorage != undefined){
@@ -2096,6 +2516,7 @@ function clearLocalStorage(){
             querySnapshot.forEach(doc => {
 
                 clearLocalStorage()
+                hideSaveButtonShowUpdateButton()
         
                 const title = doc.data().WorkshopTitle
                 const headerImg = doc.data().BannerImage
@@ -2133,6 +2554,10 @@ function clearLocalStorage(){
                 const stepEightTitle = doc.data().StepEightTitle
                 const stepEightExplainer = doc.data().StepEightExplainer
                 const stepEightCTA = doc.data().StepEightCTA
+                const stepNinePreview = doc.data().StepNinePreview
+                const stepNineTitle = doc.data().StepNineTitle
+                const stepNineExplainer = doc.data().StepNineExplainer
+                const stepNineCTA = doc.data().StepNineCTA
                 const closingOneText = doc.data().ClosingOneText 
                 const closingOneTitle = doc.data().ClosingOneTitle
                 const closingTwoText = doc.data().ClosingTwoText 
@@ -2149,6 +2574,8 @@ function clearLocalStorage(){
                 const closingSevenTitle = doc.data().ClosingSevenTitle
                 const closingEightText = doc.data().ClosingEightText 
                 const closingEightTitle = doc.data().ClosingEightTitle
+                const closingNineText = doc.data().ClosingNineText 
+                const closingNineTitle = doc.data().ClosingNineTitle
                 const workshopGoal = doc.data().Goal
 
                 // Load workshop title
@@ -2217,6 +2644,7 @@ function clearLocalStorage(){
                 loadSteps(stepSixTitle, "button-step-six", "step-six-title", 'editor-preview-step-six', 'editor13', 'editor14', stepSixPreview, stepSixExplainer, stepSixCTA, "step-six-inner-div" )
                 loadSteps(stepSevenTitle, "button-step-seven", "step-seven-title", 'editor-preview-step-seven', 'editor15', 'editor16', stepSevenPreview, stepSevenExplainer, stepSevenCTA, "step-seven-inner-div" )
                 loadSteps(stepEightTitle, "button-step-eight", "step-eight-title", 'editor-preview-step-eight', 'editor17', 'editor18', stepEightPreview, stepEightExplainer, stepEightCTA, "step-eight-inner-div" )
+                loadSteps(stepNineTitle, "button-step-nine", "step-nine-title", 'editor-preview-step-nine', 'editor19', 'editor20', stepNinePreview, stepNineExplainer, stepNineCTA, "step-nine-inner-div" )
 
                 // Load closing
                 
@@ -2240,13 +2668,7 @@ function clearLocalStorage(){
                 loadClosing(closingSixTitle, closingSixText, "create-closing-6", "closing-title-input-6", "editor-closing-6")
                 loadClosing(closingSevenTitle, closingSevenText, "create-closing-7", "closing-title-input-7", "editor-closing-7")
                 loadClosing(closingEightTitle, closingEightText, "create-closing-8", "closing-title-input-8", "editor-closing-8")
-               
-                // Save/update
-                const saveWorkshopButton = document.getElementById("saveWorkshop")
-                const updateWorkshopButton = document.getElementById("updateWorkshop")
-
-                saveWorkshopButton.style.display = "none"
-                updateWorkshopButton.style.display = "flex"
+                loadClosing(closingNineTitle, closingNineText, "create-closing-9", "closing-title-input-9", "editor-closing-9")
                     
             });
         });
@@ -2374,6 +2796,12 @@ function saveWorkshop(){
      const stepEightExplainer = tinyMCE.get('editor17').getContent()
      const stepEightCTA = tinyMCE.get('editor18').getContent()
 
+     // Step nine
+     const stepNinePreview = tinyMCE.get('editor-preview-step-nine').getContent()
+     const stepNineTitle =  document.getElementById("step-nine-title").value
+     const stepNineExplainer = tinyMCE.get('editor19').getContent()
+     const stepNineCTA = tinyMCE.get('editor20').getContent()
+
      // Closing
      const closingOneTitle = document.getElementById("closing-title-input-1").value
      const closingOneText = tinyMCE.get('editor-closing-1').getContent()
@@ -2391,6 +2819,8 @@ function saveWorkshop(){
      const closingSevenText = tinyMCE.get('editor-closing-7').getContent()
      const closingEightTitle = document.getElementById("closing-title-input-8").value
      const closingEightText = tinyMCE.get('editor-closing-8').getContent()
+     const closingNineTitle = document.getElementById("closing-title-input-9").value
+     const closingNineText = tinyMCE.get('editor-closing-9').getContent()
 
     const saveWorkshopButton = document.getElementById("saveWorkshop")
     const updateWorkshopButton = document.getElementById("updateWorkshop")
@@ -2446,6 +2876,10 @@ function saveWorkshop(){
         StepEightTitle: stepEightTitle,
         StepEightExplainer: stepEightExplainer,
         StepEightCTA: stepEightCTA,
+        StepNinePreview: stepNinePreview,
+        StepNineTitle: stepNineTitle,
+        StepNineExplainer: stepNineExplainer,
+        StepNineCTA: stepNineCTA,
         ClosingOneTitle: closingOneTitle,
         ClosingOneText: closingOneText,
         ClosingTwoTitle: closingTwoTitle,
@@ -2462,6 +2896,8 @@ function saveWorkshop(){
         ClosingSevenText: closingSevenText,
         ClosingEightTitle: closingEightTitle,
         ClosingEightText: closingEightText,
+        ClosingNineTitle: closingNineTitle,
+        ClosingNineText: closingNineText,
                         });
                     });
                 };
@@ -2543,6 +2979,12 @@ function updateWorkshop(){
         const stepEightExplainer = tinyMCE.get('editor17').getContent()
         const stepEightCTA = tinyMCE.get('editor18').getContent()
 
+        // Step nine
+        const stepNinePreview = tinyMCE.get('editor-preview-step-nine').getContent()
+        const stepNineTitle =  document.getElementById("step-nine-title").value
+        const stepNineExplainer = tinyMCE.get('editor19').getContent()
+        const stepNineCTA = tinyMCE.get('editor20').getContent()
+
         // Closing
         const closingOneTitle = document.getElementById("closing-title-input-1").value
         const closingOneText = tinyMCE.get('editor-closing-1').getContent()
@@ -2560,6 +3002,8 @@ function updateWorkshop(){
         const closingSevenText = tinyMCE.get('editor-closing-7').getContent()
         const closingEightTitle = document.getElementById("closing-title-input-8").value
         const closingEightText = tinyMCE.get('editor-closing-8').getContent()
+        const closingNineTitle = document.getElementById("closing-title-input-9").value
+        const closingNineText = tinyMCE.get('editor-closing-9').getContent()
 
     db.collection("Workshops").where("WorkshopTitle", "==", workshopTitle.value).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -2602,6 +3046,10 @@ function updateWorkshop(){
                 StepEightTitle: stepEightTitle,
                 StepEightExplainer: stepEightExplainer,
                 StepEightCTA: stepEightCTA,
+                StepNinePreview: stepNinePreview,
+                StepNineTitle: stepNineTitle,
+                StepNineExplainer: stepNineExplainer,
+                StepNineCTA: stepNineCTA,
                 ClosingOneTitle: closingOneTitle,
                 ClosingOneText: closingOneText,
                 ClosingTwoTitle: closingTwoTitle,
@@ -2618,6 +3066,8 @@ function updateWorkshop(){
                 ClosingSevenText: closingSevenText,
                 ClosingEightTitle: closingEightTitle,
                 ClosingEightText: closingEightText,
+                ClosingNineTitle: closingNineTitle,
+                ClosingNineText: closingNineText,
                     });   
                 })
             });
@@ -2644,9 +3094,11 @@ function publishWorkshop(){
     db.collection("Workshops").where("WorkshopTitle", "==", workshopTitle).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
-            db.collection("Workshops").doc(doc.id).update({
-                Status: "Public"
-            })
+
+            console.log(workshopTitle)
+            // db.collection("Workshops").doc(doc.id).update({
+            //     Status: "Public"
+            // })
         })
     });
 
@@ -2702,6 +3154,7 @@ createStep("step-five-inner-div", "button-step-five")
 createStep("step-six-inner-div", "button-step-six")
 createStep("step-seven-inner-div", "button-step-seven")
 createStep("step-eight-inner-div", "button-step-eight")
+createStep("step-nine-inner-div", "button-step-nine")
 
 // Create closing
 
@@ -2927,6 +3380,34 @@ function deleteStep8(ele){
     StepEightTitle: "",
     StepEightExplainer: "",
     StepEightCTA: "",
+                            });
+                        });
+                    });
+                });
+            // }).then(() => {
+            //     location.reload()
+            });
+        };
+    });
+};
+
+function deleteStep9(ele){
+
+    auth.onAuthStateChanged(User =>{
+        if (User){
+
+        db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
+                    const coachNaam = doc.data().Gebruikersnaam;
+
+    globalTitle.forEach(title => {
+
+    db.collection("Workshops").where("WorkshopTitle", "==", title).where("Coach", "==", coachNaam).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+   db.collection("Workshops").doc(doc.id).update({
+    StepNineTitle: "",
+    StepNineExplainer: "",
+    StepNineCTA: "",
                             });
                         });
                     });
