@@ -168,3 +168,25 @@ function openWorkshop(elem){
     window.open("../Workshops/" + divTitle + ".html", "_self")
 
 };
+
+//Hide make a workshop if no coach/visitor
+
+!function hideMakeAWorkshop(){
+
+    const makeAworkshopDiv = document.getElementById("create-your-workshop")
+        auth.onAuthStateChanged(User =>{
+        if(User){
+          const userRef = db.collection("Vitaminders").doc(User.uid);
+          userRef.get().then(function(doc) {
+    
+                const type = doc.data().Usertype
+
+                console.log(type)
+
+                if(type === "Coach"){
+                    makeAworkshopDiv.style.display = "flex"
+                };
+            });
+        };
+    });
+}();

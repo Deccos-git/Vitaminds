@@ -826,19 +826,30 @@ function dashboardFunction(){
 
                                         const authGoal = doc3.data().AuthGoal
                                         const workshopTitle = doc3.data().Workshop
+                                        const timestamp = doc3.data().Timestamp
 
-                                        const workshopType = document.createElement("h3")
-                                 
                                         const workshopTitleH2 = document.createElement("h2")
                                         const workshopDiv = document.createElement("div")
                                                 workshopDiv.setAttribute("class", "workshop-div")
+                                        const metaDiv = document.createElement("div")
+                                                metaDiv.setAttribute("id", "workshop-meta-div")
+                                        const timeP = document.createElement("p")
+                                        const workshopType = document.createElement("p")
 
                                         workshopTitleH2.innerText = workshopTitle
                                         workshopType.innerText = "Workshop"
+                                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                                        timeP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
 
+                                        workshopTitleH2.addEventListener("click", () => {
+                                                window.open("../Workshops/" + workshopTitle + ".html", "_self")
+                                        })
+                                        
                                         innerDiv.appendChild(workshopDiv)
-                                        workshopDiv.appendChild(workshopType)
                                         workshopDiv.appendChild(workshopTitleH2)
+                                        workshopDiv.appendChild(metaDiv)
+                                        metaDiv.appendChild(workshopType)
+                                        metaDiv.appendChild(timeP)
 
                                 });
                         });

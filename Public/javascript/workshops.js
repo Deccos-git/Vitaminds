@@ -20,6 +20,25 @@ window.onbeforeunload = function(){
     return 'Weet je zeker dat je alles hebt opgeslagen?';
   };
 
+// UPDATE META TAGS
+function workshopMetaTags(descriptionWorkshop, titleWorkshop, bannerWorkshop){
+const keywords = document.getElementById("meta-keywords")
+const pageTitle = document.getElementById("page-title")
+const description = document.getElementById("meta-description")
+const facebookURL = document.getElementById("facebook-url")
+const facebookTitle = document.getElementById("facebook-title")
+const facebookDescription = document.getElementById("facebook-description")
+const facebookImage = document.getElementById("facebook-img")
+
+keywords.content = titleWorkshop
+description.content = descriptionWorkshop
+facebookURL.content = window.location.href
+facebookTitle.content = titleWorkshop
+pageTitle.innerText = titleWorkshop
+facebookDescription.content = descriptionWorkshop
+facebookImage.content = bannerWorkshop
+};
+
 // WORKSHOP LANDING
 
 const workshopLandingPageOuterDiv = document.getElementById("workshop-landing-page")
@@ -97,7 +116,7 @@ function arrayOfWorkshopTakers(buttonLanding){
                 const notice = document.createElement("p")
                 notice.setAttribute("class", "notice-group-visitor")
 
-            notice.innerHTML = "Maak een <u>Digimind</u> aan om lid te worden van een groep"
+            notice.innerHTML = "Maak een <u>Digimind</u> aan om een workshop te doen."
             notice.addEventListener("click", () => {
                 window.open("../Register.html", "_self")
             })
@@ -204,8 +223,11 @@ function hideLandingIfAuthIsArrayMember(array){
             const workshopTitle = doc.data().WorkshopTitle
             const summary = doc.data().WorkshopGoals
             const creator = doc.data().Coach
+            const bannerImage = doc.data().BannerImage
             const price = doc.data().Price
             const takersArray = doc.data().Takers
+
+            workshopMetaTags(summary, workshopTitle, bannerImage)
 
             workshopLandingH1(workshopTitle)
             groupLandingCreatorInformation(creator)
@@ -870,6 +892,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const stepTwoIntroductionDiv = document.createElement("div")
                     stepTwoIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const stepTwoIntroductionTitle = document.createElement("h3")
+                    stepTwoIntroductionTitle.setAttribute("class", "stepIntroductionTitle")
                 const stepTwoIntroductionP = document.createElement("p")
                 const stepTwoIntroductionButton = document.createElement("button")
                     stepTwoIntroductionButton.setAttribute("class", "button-algemeen")
@@ -877,6 +900,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const stepThreeIntroductionDiv = document.createElement("div")
                     stepThreeIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const stepThreeIntroductionTitle = document.createElement("h3")
+                    stepThreeIntroductionTitle.setAttribute("class", "stepIntroductionTitle")
                 const stepThreeIntroductionP = document.createElement("p")
                 const stepThreeIntroductionButton = document.createElement("button")
                     stepThreeIntroductionButton.setAttribute("class", "button-algemeen")
@@ -884,6 +908,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const stepFourIntroductionDiv = document.createElement("div")
                     stepFourIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const stepFourIntroductionTitle = document.createElement("h3")
+                    stepFourIntroductionTitle.setAttribute("class", "stepIntroductionTitle")
                 const stepFourIntroductionP = document.createElement("p")
                 const stepFourIntroductionButton = document.createElement("button")
                     stepFourIntroductionButton.setAttribute("class", "button-algemeen")
@@ -891,6 +916,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const stepFiveIntroductionDiv = document.createElement("div")
                     stepFiveIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const stepFiveIntroductionTitle = document.createElement("h3")
+                    stepFiveIntroductionTitle.setAttribute("class", "stepIntroductionTitle")
                 const stepFiveIntroductionP = document.createElement("p")
                 const stepFiveIntroductionButton = document.createElement("button")
                     stepFiveIntroductionButton.setAttribute("class", "button-algemeen")
@@ -898,6 +924,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const stepSixIntroductionDiv = document.createElement("div")
                     stepSixIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const stepSixIntroductionTitle = document.createElement("h3")
+                    stepSixIntroductionTitle.setAttribute("class", "stepIntroductionTitle")
                 const stepSixIntroductionP = document.createElement("p")
                 const stepSixIntroductionButton = document.createElement("button")
                     stepSixIntroductionButton.setAttribute("class", "button-algemeen")
@@ -905,6 +932,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const stepSevenIntroductionDiv = document.createElement("div")
                     stepSevenIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const stepSevenIntroductionTitle = document.createElement("h3")
+                    stepSevenIntroductionTitle.setAttribute("class", "stepIntroductionTitle")
                 const stepSevenIntroductionP = document.createElement("p")
                 const stepSevenIntroductionButton = document.createElement("button")
                     stepSevenIntroductionButton.setAttribute("class", "button-algemeen")
@@ -912,11 +940,15 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const stepEightIntroductionDiv = document.createElement("div")
                     stepEightIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const stepEightIntroductionTitle = document.createElement("h3")
+                    stepEightIntroductionTitle.setAttribute("class", "stepIntroductionTitle")
                 const stepEightIntroductionP = document.createElement("p")
                 const stepEightIntroductionButton = document.createElement("button")
                     stepEightIntroductionButton.setAttribute("class", "button-algemeen")
                     stepEightIntroductionButton.setAttribute("id", "step-eight-button")
+                const stepNineIntroductionDiv = document.createElement("div")
+                    stepNineIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const stepNineIntroductionTitle = document.createElement("h3")
+                    stepNineIntroductionTitle.setAttribute("class", "stepIntroductionTitle")
                 const stepNineIntroductionP = document.createElement("p")
                 const stepNineIntroductionButton = document.createElement("button")
                         stepNineIntroductionButton.setAttribute("class", "button-algemeen")
@@ -924,6 +956,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 const closingIntroductionDiv = document.createElement("div")
                     closingIntroductionDiv.setAttribute("class", "step-introduction-div")
                 const closingIntroductionTitle = document.createElement("h3")
+                    closingIntroductionTitle.setAttribute("class", "stepIntroductionTitle")
                 const closingIntroductionP = document.createElement("p")
                 const closingIntroductionButton = document.createElement("button")
                     closingIntroductionButton.setAttribute("class", "button-algemeen")
@@ -1020,6 +1053,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                         DOM.appendChild(stepTwoIntroductionDiv)
                         stepTwoIntroductionDiv.appendChild(stepTwoIntroductionP)
                         stepTwoIntroductionDiv.appendChild(stepTwoIntroductionButton)
+
+                        stepOneExplainerP.scrollIntoView()
                     })
                 };
 
@@ -1075,6 +1110,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                         DOM.appendChild(stepThreeIntroductionDiv)
                         stepThreeIntroductionDiv.appendChild(stepThreeIntroductionP)
                         stepThreeIntroductionDiv.appendChild(stepThreeIntroductionButton)
+
+                        stepTwoExplainerP.scrollIntoView()
                     
                 } else {
                     const stepOneButton = document.getElementById("step-one-button")
@@ -1112,6 +1149,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     // Save closing
 
                     closingButton.addEventListener("click", ()  => {
+
+                        closingInput.scrollIntoView()
     
                             const closingInput = document.getElementById("closing-input").value
                             const stepOneInput = document.getElementById("step-one-input").value
@@ -1188,6 +1227,9 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                             DOM.appendChild(stepFourIntroductionDiv)
                             stepFourIntroductionDiv.appendChild(stepFourIntroductionP)
                             stepFourIntroductionDiv.appendChild(stepFourIntroductionButton)
+
+                            stepThreeExplainerP.scrollIntoView()
+
                             } else {
 
                                 const stepTwoButton = document.getElementById("step-two-button")
@@ -1225,6 +1267,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                                 // Save closing
 
                                                 closingButton.addEventListener("click", ()  => {
+
+                                                    closingInput.scrollIntoView()
                                 
                                                     const closingInput = document.getElementById("closing-input").value
                                                     const stepOneInput = document.getElementById("step-one-input").value
@@ -1303,6 +1347,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                 DOM.appendChild(stepFiveIntroductionDiv)
                                 stepFiveIntroductionDiv.appendChild(stepFiveIntroductionP)
                                 stepFiveIntroductionDiv.appendChild(stepFiveIntroductionButton)
+
+                                stepFourExplainerP.scrollIntoView()
                            
                         } else {
                             toolbarThreeCount.innerText = "V"
@@ -1339,6 +1385,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                            // Save closing
 
                                            closingButton.addEventListener("click", ()  => {
+
+                                            closingInput.scrollIntoView()
                                 
                                             const closingInput = document.getElementById("closing-input").value
                                             const stepOneInput = document.getElementById("step-one-input").value
@@ -1417,6 +1465,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                 DOM.appendChild(stepSixIntroductionDiv)
                                 stepSixIntroductionDiv.appendChild(stepSixIntroductionP)
                                 stepSixIntroductionDiv.appendChild(stepSixIntroductionButton)
+
+                                stepFiveExplainerP.scrollIntoView()
                            
                         } else {
                             toolbarFourCount.innerText = "V"
@@ -1533,6 +1583,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     DOM.appendChild(stepSevenIntroductionDiv)
                                     stepSevenIntroductionDiv.appendChild(stepSevenIntroductionP)
                                     stepSevenIntroductionDiv.appendChild(stepSevenIntroductionButton)
+
+                                    stepSixExplainerP.scrollIntoView()
                                
                             } else {
                                 toolbarFiveCount.innerText = "V"
@@ -1651,6 +1703,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     DOM.appendChild(stepEightIntroductionDiv)
                                     stepEightIntroductionDiv.appendChild(stepEightIntroductionP)
                                     stepEightIntroductionDiv.appendChild(stepEightIntroductionButton)
+
+                                    stepSevenExplainerP.scrollIntoView()
                                
                             } else {
                                 toolbarSixCount.innerText = "V"
@@ -1771,6 +1825,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     DOM.appendChild(stepNineIntroductionDiv)
                                     stepNineIntroductionDiv.appendChild(stepNineIntroductionP)
                                     stepNineIntroductionDiv.appendChild(stepNineIntroductionButton)
+
+                                    stepEightExplainerP.scrollIntoView()
                                
                             } else {
                                 toolbarSevenCount.innerText = "V"
@@ -2222,184 +2278,249 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 });
 
 // Save 
+
+function savedNotice(DOMbutton){
+
+    const saveButton = document.getElementById(DOMbutton)
+
+    saveButton.innerText = "Opgeslagen"
+
+};
+
+
 function saveOne(){
     
     const stepOneInput = document.getElementById("step-one-input").value
 
-    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+    savedNotice("save-one-button")
 
-            auth.onAuthStateChanged(User =>{
-                if (User){
+    auth.onAuthStateChanged(User =>{
+        if (User){
+
+            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
+                    const auth = doc.data().Gebruikersnaam
+
+                    db.collectionGroup("Workshops").where("Gebruikersnaam", "==", auth)
+                    .where("Workshop", "==", titel).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
     
-        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+            db.collection("Vitaminders").doc(doc.id).collection("Workshops").doc(doc1.id).update({
             StepOneInput: stepOneInput,
-                    });
-                };
-            });
         });
     });
+});
+});
+};
+});
 };
 
 function saveTwo(){
     
-    const stepTwoInput = document.getElementById("step-two-input").value
     const stepOneInput = document.getElementById("step-one-input").value
-
-    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            auth.onAuthStateChanged(User =>{
-                if (User){
+    const stepTwoInput = document.getElementById("step-two-input").value
     
-        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
-            StepTwoInput: stepTwoInput,
+    savedNotice("save-two-button")
+
+    auth.onAuthStateChanged(User =>{
+        if (User){
+
+            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
+                    const auth = doc.data().Gebruikersnaam
+
+                    db.collectionGroup("Workshops").where("Gebruikersnaam", "==", auth)
+                    .where("Workshop", "==", titel).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
+    
+            db.collection("Vitaminders").doc(doc.id).collection("Workshops").doc(doc1.id).update({
             StepOneInput: stepOneInput,
-                    });
-                };
-            });
+            StepTwoInput: stepTwoInput,
         });
     });
+});
+});
+};
+});
 };
 
 function saveThree(){
     
-    const stepThreeInput = document.getElementById("step-three-input").value
     const stepOneInput = document.getElementById("step-one-input").value
     const stepTwoInput = document.getElementById("step-two-input").value
+    const stepThreeInput = document.getElementById("step-three-input").value
 
-    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+    savedNotice("save-three-button")
 
-            auth.onAuthStateChanged(User =>{
-                if (User){
+    auth.onAuthStateChanged(User =>{
+        if (User){
+
+            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
+                    const auth = doc.data().Gebruikersnaam
+
+                    db.collectionGroup("Workshops").where("Gebruikersnaam", "==", auth)
+                    .where("Workshop", "==", titel).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
     
-        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
-            StepThreeInput: stepThreeInput,
+            db.collection("Vitaminders").doc(doc.id).collection("Workshops").doc(doc1.id).update({
             StepOneInput: stepOneInput,
             StepTwoInput: stepTwoInput,
-                    });
-                };
-            });
+            StepThreeInput: stepThreeInput,
         });
     });
+});
+});
+};
+});
 };
 
 function saveFour(){
     
-    const stepFourInput = document.getElementById("step-four-input").value
     const stepOneInput = document.getElementById("step-one-input").value
     const stepTwoInput = document.getElementById("step-two-input").value
     const stepThreeInput = document.getElementById("step-three-input").value
+    const stepFourInput = document.getElementById("step-four-input").value
 
-    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+    savedNotice("save-four-button")
 
-            auth.onAuthStateChanged(User =>{
-                if (User){
+    auth.onAuthStateChanged(User =>{
+        if (User){
+
+            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
+                    const auth = doc.data().Gebruikersnaam
+
+                    db.collectionGroup("Workshops").where("Gebruikersnaam", "==", auth)
+                    .where("Workshop", "==", titel).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
     
-        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
-            StepFourInput: stepFourInput,
+            db.collection("Vitaminders").doc(doc.id).collection("Workshops").doc(doc1.id).update({
             StepOneInput: stepOneInput,
             StepTwoInput: stepTwoInput,
             StepThreeInput: stepThreeInput,
-                    });
-                };
-            });
+            StepFourInput: stepFourInput,
         });
     });
+});
+});
+};
+});
 };
 
 function saveFive(){
     
-    const stepFiveInput = document.getElementById("step-five-input").value
     const stepOneInput = document.getElementById("step-one-input").value
     const stepTwoInput = document.getElementById("step-two-input").value
     const stepThreeInput = document.getElementById("step-three-input").value
     const stepFourInput = document.getElementById("step-four-input").value
+    const stepFiveInput = document.getElementById("step-five-input").value
 
-    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+    savedNotice("save-five-button")
 
-            auth.onAuthStateChanged(User =>{
-                if (User){
+    auth.onAuthStateChanged(User =>{
+        if (User){
+
+            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
+                    const auth = doc.data().Gebruikersnaam
+
+                    db.collectionGroup("Workshops").where("Gebruikersnaam", "==", auth)
+                    .where("Workshop", "==", titel).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
     
-        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
-            StepFiveInput: stepFiveInput,
+            db.collection("Vitaminders").doc(doc.id).collection("Workshops").doc(doc1.id).update({
             StepOneInput: stepOneInput,
             StepTwoInput: stepTwoInput,
             StepThreeInput: stepThreeInput,
             StepFourInput: stepFourInput,
-                    });
-                };
-            });
+            StepFiveInput: stepFiveInput,
         });
     });
+});
+});
+};
+});
 };
 
 function saveSix(){
     
-    const stepSixInput = document.getElementById("step-six-input").value
     const stepOneInput = document.getElementById("step-one-input").value
     const stepTwoInput = document.getElementById("step-two-input").value
     const stepThreeInput = document.getElementById("step-three-input").value
     const stepFourInput = document.getElementById("step-four-input").value
     const stepFiveInput = document.getElementById("step-five-input").value
+    const stepSixInput = document.getElementById("step-six-input").value
 
-    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+    savedNotice("save-six-button")
 
-            auth.onAuthStateChanged(User =>{
-                if (User){
+    auth.onAuthStateChanged(User =>{
+        if (User){
+
+            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
+                    const auth = doc.data().Gebruikersnaam
+
+                    db.collectionGroup("Workshops").where("Gebruikersnaam", "==", auth)
+                    .where("Workshop", "==", titel).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
     
-        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
-            StepSixInput: stepSixInput,
+            db.collection("Vitaminders").doc(doc.id).collection("Workshops").doc(doc1.id).update({
             StepOneInput: stepOneInput,
             StepTwoInput: stepTwoInput,
             StepThreeInput: stepThreeInput,
             StepFourInput: stepFourInput,
             StepFiveInput: stepFiveInput,
-                    });
-                };
-            });
+            StepSixInput: stepSixInput,
         });
     });
+});
+});
+};
+});
 };
 
 function saveSeven(){
     
-    const stepSevenInput = document.getElementById("step-seven-input").value
     const stepOneInput = document.getElementById("step-one-input").value
     const stepTwoInput = document.getElementById("step-two-input").value
     const stepThreeInput = document.getElementById("step-three-input").value
     const stepFourInput = document.getElementById("step-four-input").value
     const stepFiveInput = document.getElementById("step-five-input").value
     const stepSixInput = document.getElementById("step-six-input").value
+    const stepSevenInput = document.getElementById("step-seven-input").value
 
-    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+    savedNotice("save-seven-button")
 
-            auth.onAuthStateChanged(User =>{
-                if (User){
+    auth.onAuthStateChanged(User =>{
+        if (User){
+
+            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
+                    const auth = doc.data().Gebruikersnaam
+
+                    db.collectionGroup("Workshops").where("Gebruikersnaam", "==", auth)
+                    .where("Workshop", "==", titel).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
     
-        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
-            StepSevenInput: stepSevenInput,
+            db.collection("Vitaminders").doc(doc.id).collection("Workshops").doc(doc1.id).update({
             StepOneInput: stepOneInput,
             StepTwoInput: stepTwoInput,
             StepThreeInput: stepThreeInput,
             StepFourInput: stepFourInput,
             StepFiveInput: stepFiveInput,
             StepSixInput: stepSixInput,
-                    });
-                };
-            });
+            StepSevenInput: stepSevenInput,
         });
     });
+});
+});
+};
+});
 };
 
 function saveEight(){
     
-    const stepEightInput = document.getElementById("step-eight-input").value
     const stepOneInput = document.getElementById("step-one-input").value
     const stepTwoInput = document.getElementById("step-two-input").value
     const stepThreeInput = document.getElementById("step-three-input").value
@@ -2407,15 +2528,22 @@ function saveEight(){
     const stepFiveInput = document.getElementById("step-five-input").value
     const stepSixInput = document.getElementById("step-six-input").value
     const stepSevenInput = document.getElementById("step-seven-input").value
+    const stepEightInput = document.getElementById("step-eight-input").value
 
-    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+    savedNotice("save-eight-button")
 
-            auth.onAuthStateChanged(User =>{
-                if (User){
+    auth.onAuthStateChanged(User =>{
+        if (User){
+
+            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
+                    const auth = doc.data().Gebruikersnaam
+
+                    db.collectionGroup("Workshops").where("Gebruikersnaam", "==", auth)
+                    .where("Workshop", "==", titel).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
     
-        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
-            StepEightInput: stepEightInput,
+            db.collection("Vitaminders").doc(doc.id).collection("Workshops").doc(doc1.id).update({
             StepOneInput: stepOneInput,
             StepTwoInput: stepTwoInput,
             StepThreeInput: stepThreeInput,
@@ -2423,10 +2551,12 @@ function saveEight(){
             StepFiveInput: stepFiveInput,
             StepSixInput: stepSixInput,
             StepSevenInput: stepSevenInput,
+            StepEightInput: stepEightInput,
+                        });
                     });
-                };
+                });
             });
-        });
+        };
     });
 };
 
@@ -2442,13 +2572,20 @@ function saveNine(){
     const stepSevenInput = document.getElementById("step-seven-input").value
     const stepEightInput = document.getElementById("step-eight-input").value
 
-    db.collectionGroup("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+    savedNotice("save-nine-button")
 
-            auth.onAuthStateChanged(User =>{
-                if (User){
+    auth.onAuthStateChanged(User =>{
+        if (User){
+
+            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
+                    const auth = doc.data().Gebruikersnaam
+
+                    db.collectionGroup("Workshops").where("Gebruikersnaam", "==", auth)
+                    .where("Workshop", "==", titel).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
     
-        db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc(doc.id).update({
+            db.collection("Vitaminders").doc(doc.id).collection("Workshops").doc(doc1.id).update({
             StepNineInput: stepNineInput,
             StepOneInput: stepOneInput,
             StepTwoInput: stepTwoInput,
@@ -2458,11 +2595,12 @@ function saveNine(){
             StepSixInput: stepSixInput,
             StepSevenInput: stepSevenInput,
             StepEightInput: stepEightInput,
-                    });
-                };
-            });
         });
     });
+});
+});
+};
+});
 };
 
 

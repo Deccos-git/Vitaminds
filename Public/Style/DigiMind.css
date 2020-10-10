@@ -868,6 +868,21 @@
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
+#workshop-meta-div{
+    display: flex;
+    justify-content: space-evenly;
+    border-top: 1px dotted #8e969e;
+}
+
+#workshop-meta-div p{
+    font-size: 14px;
+    color: #122b46;
+}
+
+.workshop-div h2{
+    cursor: pointer;
+}
+
 /* About info */
 
 #contact-inner-div{
@@ -1898,6 +1913,10 @@
     }
 
     #nieuweO input {
+        width: 100%;
+    }
+
+    .workshop-div {
         width: 100%;
     }
 

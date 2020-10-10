@@ -70,6 +70,10 @@
     font-weight: bold;
 }
 
+#create-your-workshop{
+    display: none;
+}
+
 /* Landing */
 
 #workshop-landing-page{
@@ -143,6 +147,12 @@
 
 #visitWorkshop{
     margin-bottom: 50px;
+}
+
+.notice-group-visitor{
+    font-size: 16px;
+    font-weight: bold;
+    color: #cf6e13;
 }
 
 /* Individual workshop page */

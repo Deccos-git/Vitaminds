@@ -30,6 +30,28 @@ function flagOpenUpPost(flag){
     });
 };
 
+function addSourceOfInspiration(articleType, titleSource, sourceDOM){
+
+    if(titleSource != undefined){
+
+        db.collection(articleType).where("Insights", "array-contains", titleSource)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                const article = doc.data().Levensvraag
+                const thema = doc.data().Thema
+
+                if(article != undefined){
+                    sourceDOM.innerHTML = `In artikel: <a href="../Artikelen/${article}.html">${article}</a>`
+                } else if (thema != undefined){
+                    sourceDOM.innerHTML = `In artikel: <a href="../Artikelen/${thema}.html">${thema}</a>`
+                }
+
+            });
+        });
+    };
+};
+
 
         db.collectionGroup("Levenslessen").where("Status", "==", "Approved").orderBy("Timestamp", "desc").get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
@@ -43,6 +65,7 @@ function flagOpenUpPost(flag){
                 const levensvraag = doc.data().Levensvraag
                 const backgroundImage = doc.data().BackgroundImage
                 const likes = doc.data().Inspirerend
+                const source = doc.data().Source
 
                 const outerBronDiv = document.createElement("div")
                     outerBronDiv.setAttribute("class", "outer-bron-div")
@@ -56,6 +79,8 @@ function flagOpenUpPost(flag){
                 const bronDiv = document.createElement("div")
                     bronDiv.setAttribute("class", "bron-div-detail") 
                 const titelH3 = document.createElement("h3")
+                const sourceP = document.createElement("p")
+                    sourceP.setAttribute("id", "source-of-inspiration")
                 const lesDiv = document.createElement("div") 
                     lesDiv.setAttribute("class", "les-div")
                 const lessen = document.createElement("p")
@@ -88,6 +113,7 @@ function flagOpenUpPost(flag){
                     bronDiv.appendChild(metaUserDiv)
                     bronDiv.appendChild(editIcon)
                     bronDiv.appendChild(titelH3)
+                    bronDiv.appendChild(sourceP)
                     bronDiv.appendChild(lesDiv)
                     bronDiv.appendChild(lessen)
                     bronDiv.appendChild(timestampMeta)
@@ -316,6 +342,9 @@ function flagOpenUpPost(flag){
                 
                 // Titel
                 if(type === "Coach-inzicht"){
+
+                    addSourceOfInspiration("Levensvragen", source, sourceP)
+                    addSourceOfInspiration("Themas", source, sourceP)
 
                     db.collection("Vitaminders").where("Gebruikersnaam", "==", inspirator).get().then(querySnapshot => {
                         querySnapshot.forEach(doc3 => {

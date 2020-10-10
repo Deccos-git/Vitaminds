@@ -541,6 +541,12 @@
     cursor: pointer;
 }
 
+#source-of-inspiration{
+    margin-top: -10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
 @media only screen and (max-width: 938px){
 
     #openup-overview{
