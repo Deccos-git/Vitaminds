@@ -140,9 +140,11 @@ const loadMoreButton24 = document.createElement("button")
     loadMoreButton24.setAttribute("class", "button-algemeen")
     loadMoreButton24.setAttribute("id", "button-pagination24")
 
-    function paginateGoalArticles(numberOfArticles){
+    // function paginateGoalArticles(numberOfArticles){
 
-db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").limit(numberOfArticles).get().then(querySnapshot => {
+db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds")
+// .limit(numberOfArticles)
+.get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
         const title = doc.data().Levensvraag
@@ -150,25 +152,24 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").limit(numberO
         const insights = doc.data().Insights
         const goal = doc.data().Levensvraag
 
-        // Hidding articles with no insights for visitor  non-coach
-        if (insights.length == 0){
-        auth.onAuthStateChanged(User =>{
-            if (!User){
-                outerSection.style.display = "none"
-                    }
-                })
-            };
+        console.log(insights)
 
          // Hidding articles with no insights for non-coach
             if (insights.length == 0){
                 auth.onAuthStateChanged(User =>{
+                    if(User){
                 db.collection("Vitaminders").doc(User.uid).get().then(doc => {
                     const usertype = doc.data().Usertype
+
+                    console.log(usertype)
     
                     if(usertype != "Coach"){
                         outerSection.style.display = "none"
                     }
                 })
+            } else {
+                outerSection.style.display = "none"
+            }
             })
         };
      
@@ -260,20 +261,20 @@ const DOMgoalArray = Array.from(DOMgoal)
         });
     };
 });
-};
+// };
 
-function paginateEventListeners(button, numberOfGoalArticlesQuery){
+// function paginateEventListeners(button, numberOfGoalArticlesQuery){
 
-    button.addEventListener("click", () => {
-        paginateGoalArticles(numberOfGoalArticlesQuery)
-    });
-};
+//     button.addEventListener("click", () => {
+//         paginateGoalArticles(numberOfGoalArticlesQuery)
+//     });
+// };
 
-!function allPaginationEventsGoalArticles(){ 
-paginateGoalArticles(8)
-paginateEventListeners(loadMoreButton16, 16)
-paginateEventListeners(loadMoreButton24, 24)
-}();
+// !function allPaginationEventsGoalArticles(){ 
+// paginateGoalArticles(18)
+// paginateEventListeners(loadMoreButton16, 16)
+// paginateEventListeners(loadMoreButton24, 24)
+// }();
 
 
 // Theme overview page

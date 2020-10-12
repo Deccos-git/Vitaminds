@@ -367,7 +367,7 @@ function addSourceOfInspiration(articleType, titleSource, sourceDOM){
                         querySnapshot.forEach(doc2 => {
 
                             const levensvraagClean = doc2.data().LevensvraagClean
-                    titelH3.innerHTML = `Check in bij <i> ${levensvraagClean}</i>`
+                    titelH3.innerHTML = `Check in bij doel <i> ${levensvraagClean}</i>`
 
                         })
                     });

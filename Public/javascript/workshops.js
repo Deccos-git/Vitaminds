@@ -39,6 +39,19 @@ facebookDescription.content = descriptionWorkshop
 facebookImage.content = bannerWorkshop
 };
 
+db.collection("Workshops").where("WorkshopTitle", "==", titel)
+.get().then(querySnapshot => {
+querySnapshot.forEach(doc => {
+
+    const workshopTitle = doc.data().WorkshopTitle
+    const summary = doc.data().WorkshopGoals
+    const bannerImage = doc.data().BannerImage
+    
+    workshopMetaTags(summary, workshopTitle, bannerImage)
+
+    });
+});
+
 // WORKSHOP LANDING
 
 const workshopLandingPageOuterDiv = document.getElementById("workshop-landing-page")
@@ -47,6 +60,21 @@ const buttonWorkshopLanding = document.getElementById("button-workshop-landing")
 const workshopDescription = document.getElementById("workshop-description")
 const workshopFactsUl = document.getElementById("workshop-facts")
 const agreementSection = document.getElementById("workshop-agreement")
+
+db.collection("Workshops")
+.where("WorkshopTitle", "==", titel)
+.get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const workshopTitle = doc.data().WorkshopTitle
+        const summary = doc.data().WorkshopGoals
+        const bannerImage = doc.data().BannerImage
+
+        workshopMetaTags(summary, workshopTitle, bannerImage)
+
+    });
+});
+
 
 function workshopLandingH1(workshopName){
 
@@ -202,9 +230,6 @@ function hideLandingIfAuthIsArrayMember(array){
     
             const auth = doc.data().Gebruikersnaam
 
-            console.log(array)
-            console.log(auth)
-
             if (array.includes(auth)){
                 workshopLandingPageOuterDiv.style.display = "none"
             }
@@ -226,9 +251,7 @@ function hideLandingIfAuthIsArrayMember(array){
             const bannerImage = doc.data().BannerImage
             const price = doc.data().Price
             const takersArray = doc.data().Takers
-
-            workshopMetaTags(summary, workshopTitle, bannerImage)
-
+            
             workshopLandingH1(workshopTitle)
             groupLandingCreatorInformation(creator)
             arrayOfWorkshopTakers(buttonWorkshopLanding)

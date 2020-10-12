@@ -65,6 +65,57 @@ if(coachgroupTab != null){
     });
 };
 
+function groupMetaTags(descriptionGroup, titleGroup, bannerGroup){
+    const keywords = document.getElementById("meta-keywords")
+    const pageTitle = document.getElementById("page-title")
+    const description = document.getElementById("meta-description")
+    const facebookURL = document.getElementById("facebook-url")
+    const facebookTitle = document.getElementById("facebook-title")
+    const facebookDescription = document.getElementById("facebook-description")
+    const facebookImage = document.getElementById("facebook-img")
+    
+    keywords.content = titleGroup
+    description.content = descriptionGroup
+    facebookURL.content = window.location.href
+    facebookTitle.content = titleGroup
+    pageTitle.innerText = titleGroup
+    facebookDescription.content = descriptionGroup
+    facebookImage.content = bannerGroup
+    };
+    
+    db.collection("Chats").where("Room", "==", titel)
+    .get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const groupTitleClean = doc.data().RoomClean
+        const groupTitle = doc.data().Room
+        const descriptionCoachGroup = doc.data().Description
+        const coverPhotoCoachgroup = doc.data().CoverPhoto
+
+        const type = doc.data().Type
+
+        if(type === "Group"){
+        db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+    
+                const descriptionGroup = doc1.data().Summary
+                const bannerImage = doc1.data().HeaderImage
+        
+        
+        groupMetaTags(descriptionGroup, groupTitle, bannerImage)
+
+                });
+            });
+        } else if (type === "Coachgroup"){
+
+            console.log(groupTitleClean)
+
+            groupMetaTags(descriptionCoachGroup, groupTitleClean, coverPhotoCoachgroup)
+
+        }
+    });
+});
+
 // Group landing
 
 const groupLandingPageOuterDiv = document.getElementById("group-landing-page")
@@ -85,13 +136,15 @@ function groupLandingH1(roomName, roomNameClean, groupType){
     };
 };
 
-function groupLandingCreatorInformation(creator, typeGroup){
+function groupLandingCreatorInformation(creatorCoach, typeGroup){
     const creatorDiv = document.getElementById("creator-information-div")
 
     const creatorName = document.createElement("h2")
     const creatorProfilePicture = document.createElement("img")
 
-    db.collection("Vitaminders").where("Gebruikersnaam", "==", creator)
+    if(creatorCoach != undefined){
+
+    db.collection("Vitaminders").where("Gebruikersnaam", "==", creatorCoach)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
@@ -102,7 +155,7 @@ function groupLandingCreatorInformation(creator, typeGroup){
             creatorProfilePicture.src = profilePicture
 
             creatorDiv.addEventListener("click", () => {
-                window.open("../Vitaminders/" + [creator] + ".html", "_self");
+                window.open("../Vitaminders/" + [creatorCoach] + ".html", "_self");
             })
 
             if(typeGroup != "Group"){
@@ -110,9 +163,10 @@ function groupLandingCreatorInformation(creator, typeGroup){
             creatorDiv.appendChild(creatorName)
             creatorDiv.appendChild(creatorProfilePicture)
 
-            };
+                };
+            });
         });
-    });
+    };
 };
 
 function becomeMemberOfGroup(buttonLanding,  groupLandingPageOuterDiv,){

@@ -327,6 +327,39 @@ const naam10 = naam9.replace('%20',' ')
 const naam11 = naam10.replace('%20',' ')
 const naam = naam11.replace('%20',' ')
 
+// UPDATE META TAGS
+function digimindMetaTags(coachDescription, coach, profilePic){
+        const keywords = document.getElementById("meta-keywords")
+        const pageTitle = document.getElementById("page-title")
+        const description = document.getElementById("meta-description")
+        const facebookURL = document.getElementById("facebook-url")
+        const facebookTitle = document.getElementById("facebook-title")
+        const facebookDescription = document.getElementById("facebook-description")
+        const facebookImage = document.getElementById("facebook-img")
+        
+        keywords.content = coach + "," + coachDescription
+        description.content = coachDescription
+        facebookURL.content = window.location.href
+        facebookTitle.content = `Digmind van ${coach}`
+        pageTitle.innerText = `Digmind van ${coach}`
+        facebookDescription.content = coachDescription
+        facebookImage.content = profilePic
+        };
+
+        db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
+    .get()
+    .then(function(querySnapshot) {
+    querySnapshot.forEach(function(doc) {
+
+        const coachName = doc.data().GebruikersnaamClean
+        const profilePicture = doc.data().Profielfoto
+        const coachingStyle = doc.data().Coachingstyle
+
+        digimindMetaTags(coachingStyle, coachName, profilePicture)
+
+        });
+});
+
 //Hide for non-coach Digimind
 db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
     .get()
