@@ -735,7 +735,8 @@ ul{
 }
 
 .header-image h2{
-  color: #122b46 ;
+  color: #122b46;
+  letter-spacing: 0.5px;
 }
 
 .header-image h3{
@@ -809,7 +810,8 @@ ul{
 }
 
 #begin h2{
-  margin: 0px 100px 50px 100px;
+  margin: 100px 100px 100px 100px;
+  letter-spacing: 0.5px;
 }
 
 .DigiMind{
@@ -1624,6 +1626,7 @@ margin: 0px 0px 30px 0px;
 
   .header-image h2{
     margin-bottom: 230px;
+    letter-spacing: 0.5px;
   }
 
   #dynamic-call-to-action {
@@ -1655,6 +1658,7 @@ margin: 0px 0px 30px 0px;
     font-size: 20px;
     color: #122b46;
     margin: 15px;
+    letter-spacing: 0.5px;
   }
 
   #goal-bar-inner-div{

@@ -1030,9 +1030,28 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     closingInput.setAttribute("placeholder", "Wat vond je van de workshop?")
                     closingInput.setAttribute("id", "closing-input")
 
+                    auth.onAuthStateChanged(User =>{
+                        if (User){
+                
+                            db.collection("Vitaminders").doc(User.uid).collection("Workshops").where("Workshop", "==", titel).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc => {
+
+                                    const stepOneInputAuth = doc.data().StepOneInput
+                                    const stepTwoInputAuth = doc.data().StepTwoInput
+                                    const stepThreeInputAuth = doc.data().StepThreeInput
+                                    const stepFourInputAuth = doc.data().StepFourInput
+                                    const stepFiveInputAuth = doc.data().StepFiveInput
+                                    const stepSixInputAuth = doc.data().StepSixInput
+                                    const stepSevenInputAuth = doc.data().StepSevenInput
+                                    const stepEightInputAuth = doc.data().StepEightInput
+                                    const stepNineInputAuth = doc.data().StepNineInput
+                                    const closingInputAuth = doc.data().ClosingInput
+
                 // Load step one
                 if(stepOneTitle != ""){
                     stepOneIntroductionButton.addEventListener("click", () => {  
+
+                        console.log(stepOneInputAuth)
 
                         toolbarOuterDiv.style.display = "flex"
                         saveOneButton.style.display = "block"
@@ -1055,13 +1074,19 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                         stepOneTitleH2.innerHTML = stepOneTitle
                         stepOneExplainerP.innerHTML = stepOneExplainer
 
+                        stepOneInput.value = stepOneInputAuth
+
                         auth.onAuthStateChanged(User =>{
                             if (User){
                         
                             db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                         const auth = doc.data().GebruikersnaamClean
         
-                                        stepOneCTATitle.innerHTML = `${auth}, ${stepOneCTA}`
+                                        if(stepOneCTA != ""){
+                                            stepOneCTATitle.innerHTML = `${auth}, ${stepOneCTA}`
+                                            } else {
+                                                stepOneCTATitle.innerHTML = `${auth}, wat heb je geleerd?`
+                                            }
         
                                 });
                             }; 
@@ -1112,13 +1137,19 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                         stepTwoTitleH2.innerHTML = stepTwoTitle
                         stepTwoExplainerP.innerHTML = stepTwoExplainer
 
+                        stepTwoInput.value = stepTwoInputAuth
+
                         auth.onAuthStateChanged(User =>{
                             if (User){
                         
                             db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                         const auth = doc.data().GebruikersnaamClean
         
-                                        stepTwoCTATitle.innerHTML = `${auth}, ${stepTwoCTA}`
+                                        if(stepTwoCTA != ""){
+                                            stepTwoCTATitle.innerHTML = `${auth}, ${stepTwoCTA}`
+                                            } else {
+                                                stepTwoCTATitle.innerHTML = `${auth}, wat heb je geleerd?`
+                                            }
                                 });
                             }; 
                         });
@@ -1227,6 +1258,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
     
                             stepThreeTitleH2.innerHTML = stepThreeTitle
                             stepThreeExplainerP.innerHTML = stepThreeExplainer
+
+                            stepThreeInput.value = stepThreeInputAuth
     
                             auth.onAuthStateChanged(User =>{
                                 if (User){
@@ -1234,7 +1267,11 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                 db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                             const auth = doc.data().GebruikersnaamClean
             
-                                            stepThreeCTATitle.innerHTML = `${auth}, ${stepThreeCTA}`
+                                            if(stepThreeCTA != ""){
+                                                stepThreeCTATitle.innerHTML = `${auth}, ${stepThreeCTA}`
+                                                } else {
+                                                    stepThreeCTATitle.innerHTML = `${auth}, wat heb je geleerd?`
+                                                }
             
                                     });
                                 }; 
@@ -1347,6 +1384,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
         
                                 stepFourTitleH2.innerText = stepFourTitle
                                 stepFourExplainerP.innerHTML = stepFourExplainer
+
+                                stepFourInput.value = stepFourInputAuth
         
                                 auth.onAuthStateChanged(User =>{
                                     if (User){
@@ -1354,7 +1393,11 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                                 const auth = doc.data().GebruikersnaamClean
                 
-                                                stepFourCTATitle.innerHTML = `${auth}, ${stepFourCTA}`
+                                                if(stepFourCTA != ""){
+                                                    stepFourCTATitle.innerHTML = `${auth}, ${stepFourCTA}`
+                                                    } else {
+                                                        stepFourCTATitle.innerHTML = `${auth}, wat heb je geleerd?`
+                                                    }
                 
                                         });
                                     }; 
@@ -1466,6 +1509,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
         
                                 stepFiveTitleH2.innerText = stepFiveTitle
                                 stepFiveExplainerP.innerHTML = stepFiveExplainer
+
+                                stepFiveInput.value = stepFiveInputAuth
         
                                 auth.onAuthStateChanged(User =>{
                                     if (User){
@@ -1473,7 +1518,11 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                                 const auth = doc.data().GebruikersnaamClean
                 
-                                                stepFiveCTATitle.innerHTML = `${auth}, ${stepFiveCTA}`
+                                                if(stepFiveCTA != ""){
+                                                    stepFiveCTATitle.innerHTML = `${auth}, ${stepFiveCTA}`
+                                                    } else {
+                                                        stepFiveCTATitle.innerHTML = `${auth}, wat heb je geleerd?`
+                                                    }
                 
                                         });
                                     }; 
@@ -1583,6 +1632,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
             
                                     stepSixTitleH2.innerText = stepSixTitle
                                     stepSixExplainerP.innerHTML = stepSixExplainer
+
+                                    stepSixInput.value = stepSixInputAuth
             
                                     auth.onAuthStateChanged(User =>{
                                         if (User){
@@ -1590,7 +1641,11 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                         db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                                     const auth = doc.data().GebruikersnaamClean
                     
-                                                    stepSixCTATitle.innerHTML = `${auth}, ${stepSixCTA}`
+                                                    if(stepSixCTA != ""){
+                                                        stepSixCTATitle.innerHTML = `${auth}, ${stepSixCTA}`
+                                                        } else {
+                                                            stepSixCTATitle.innerHTML = `${auth}, wat heb je geleerd?`
+                                                        }
                     
                                             });
                                         }; 
@@ -1703,6 +1758,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
             
                                     stepSevenTitleH2.innerText = stepSevenTitle
                                     stepSevenExplainerP.innerHTML = stepSevenExplainer
+
+                                    stepSevenInput.value = stepSevenInputAuth
             
                                     auth.onAuthStateChanged(User =>{
                                         if (User){
@@ -1710,7 +1767,11 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                         db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                                     const auth = doc.data().GebruikersnaamClean
                     
-                                                    stepSevenCTATitle.innerHTML = `${auth}, ${stepSevenCTA}`
+                                                    if(stepSevenCTA != ""){
+                                                        stepSevenCTATitle.innerHTML = `${auth}, ${stepSevenCTA}`
+                                                        } else {
+                                                            stepSevenCTATitle.innerHTML = `${auth}, wat heb je geleerd?`
+                                                        }
                     
                                             });
                                         }; 
@@ -1825,6 +1886,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
             
                                     stepEightTitleH2.innerText = stepEightTitle
                                     stepEightExplainerP.innerHTML = stepEightExplainer
+
+                                    stepEightInput.value = stepEightInputAuth
             
                                     auth.onAuthStateChanged(User =>{
                                         if (User){
@@ -1832,7 +1895,11 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                         db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                                     const auth = doc.data().GebruikersnaamClean
                     
-                                                    stepEightCTATitle.innerHTML = `${auth}, ${stepEightCTA}`
+                                                    if(stepEightCTA != ""){
+                                                        stepEightCTATitle.innerHTML = `${auth}, ${stepEightCTA}`
+                                                        } else {
+                                                            stepEightCTATitle.innerHTML = `${auth}, wat heb je geleerd?`
+                                                        }
                     
                                             });
                                         }; 
@@ -1949,14 +2016,20 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
             
                                     stepNineTitleH2.innerHTML = stepNineTitle
                                     stepNineExplainerP.innerHTML = stepNineExplainer
+
+                                    stepNineInput.value = stepNineInputAuth
             
                                     auth.onAuthStateChanged(User =>{
                                         if (User){
                                     
                                         db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
                                                     const auth = doc.data().GebruikersnaamClean
-                    
+
+                                                    if(stepNineCTA != ""){
                                                     stepNineCTATitle.innerHTML = `${auth}, ${stepNineCTA}`
+                                                    } else {
+                                                        stepNineCTATitle.innerHTML = `${auth}, wat heb je geleerd?`
+                                                    }
                     
                                             });
                                         }; 
@@ -2044,6 +2117,10 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                 });
                             };
                         });
+                    });
+                });
+            };
+        });
 
                         closingIntroductionButton.addEventListener("click", () => {
 

@@ -123,6 +123,7 @@ const groupLandingTitle = document.getElementById("group-landing-title")
 const buttonGroupLanding = document.getElementById("button-group-landing")
 const groupDescription = document.getElementById("group-description")
 const groupFactsUl = document.getElementById("group-facts")
+const bannerDiv = document.getElementById("banner-div")
 
 function groupLandingH1(roomName, roomNameClean, groupType){
 
@@ -180,17 +181,50 @@ function becomeMemberOfGroup(buttonLanding,  groupLandingPageOuterDiv,){
               userRef.get().then(function(doc) {
         
                     const auth = doc.data().Gebruikersnaam
+                    const authClean = doc.data().GebruikersnaamClean
 
         db.collection("Chats").where("Room", "==", titel).get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
 
                 const type = doc1.data().Type
+                const creator = doc1.data().Creater
+                const roomClean = doc1.data().RoomClean
 
                 // Store members in database
         
                 db.collection("Chats").doc(doc1.id).update({
                     Members: firebase.firestore.FieldValue.arrayUnion(auth)
                 }).then(() => {
+                    // Send Email
+
+                    db.collection("Vitaminders").where("Gebruikersnaam", "==", creator)
+                    .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc2 => {
+
+                            const email = doc2.data().Email
+                            const naam = doc2.data().GebruikersnaamClean
+
+                            console.log(email)
+
+                    db.collection("Mail").doc().set({
+                        to: email,
+                        cc: "info@vitaminds.nu",
+                  message: {
+                  subject: `Je coachgroep heeft een nieuw lid.`,
+                  html: `Hallo ${naam}, </br></br>
+                        ${authClean} is lid geworden van je coachgroep ${roomClean} op Vitaminds! <br><br>
+                        
+                        Vergeet niet om ${authClean} een maandelijkse factuur te sturen.<br><br>
+                  
+                        Vriendelijke groet, </br></br>
+                        Het Vitaminds Team </br></br>
+                        <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                  Gebruikersnaam: naam,
+                  Emailadres: email,
+                  Type: "New coachgroep member"
+                  }        
+                  })  
+                  .then(() => {
 
                     if(type === "Group" || type === "Practicegroup" ){
                     // Hide landing
@@ -199,6 +233,10 @@ function becomeMemberOfGroup(buttonLanding,  groupLandingPageOuterDiv,){
                         window.open(`../coachgroup-agreement.html`, "_self");
                     }
                             });
+                });
+            });
+                })
+              
                         });
                     });
                 });
@@ -209,7 +247,7 @@ function becomeMemberOfGroup(buttonLanding,  groupLandingPageOuterDiv,){
                 const notice = document.createElement("p")
                 notice.setAttribute("class", "notice-group-visitor")
 
-            notice.innerHTML = "Maak een <u>Digimind</u> aan om lid te worden van een groep"
+            notice.innerHTML = "Maak een gratis <u>Digimind</u> aan om lid te worden van een groep"
             notice.addEventListener("click", () => {
                 window.open("../Register.html", "_self")
             })
@@ -253,20 +291,38 @@ function groupDescriptionLanding(roomName, groupDescription){
     });
 };
 
-function groupFactsLanding(memberCount, messageCount){
+function groupFactsLanding(memberCount, messageCount, exerciseCount, montlyFee, maximumMembersCount){
 
     const numberOfMembersLi = document.createElement("li")
+    const maximumMembers = document.createElement("li")
     const numberOfMessagesLi = document.createElement("li")
+    const numberOfExercises = document.createElement("li")
+    const costsPerMonth = document.createElement("p")
 
     numberOfMembersLi.innerText = `Aantal leden: ${memberCount.length}`
+    maximumMembers.innerText = `Maximum aantal leden: ${maximumMembersCount}`
     numberOfMessagesLi.innerText = `Aantal berichten: ${messageCount}`
+    numberOfExercises.innerText = `Aantal oefeningen per maand: ${exerciseCount}`
+    costsPerMonth.innerText = `Kosten per maand: ${montlyFee} euro`
 
     if(groupFactsUl != null){
 
+    groupFactsUl.appendChild(numberOfExercises)
     groupFactsUl.appendChild(numberOfMembersLi)
+    groupFactsUl.appendChild(maximumMembers)
     groupFactsUl.appendChild(numberOfMessagesLi)
+    groupFactsUl.appendChild(costsPerMonth)
     };
 };
+
+function groupLandingBanner(imagePhoto){
+
+    const bannerImg = document.createElement("img")
+
+    bannerImg.src = imagePhoto
+
+    bannerDiv.appendChild(bannerImg)
+}
 
 function noticeVisitor(buttonDiv, button){
     const notice = document.createElement("p")
@@ -296,17 +352,23 @@ function openGroup(roomName, buttonName){
             const type1 = doc1.data().Type
             const room1 = doc1.data().Room
             const creator = doc1.data().Creater
+            const bannerImage = doc1.data().CoverPhoto
+            const exercises = doc1.data().AmountExersices
+            const price = doc1.data().Costs
+            const maxMembers = doc1.data().NumberParticipants
 
 
             groupLandingH1(room1, roomClean, type1)
 
             groupLandingCreatorInformation(creator, type1)
 
-            groupFactsLanding(members, messages)
+            groupFactsLanding(members, messages, exercises, price, maxMembers)
     
             hideLandingIfAuthIsMember(members, groupLandingPageOuterDiv)
     
             groupDescriptionLanding(room1, groupDescription)
+
+            groupLandingBanner(bannerImage)
     
             becomeMemberOfGroup(buttonGroupLanding,  groupLandingPageOuterDiv)
 
@@ -325,6 +387,7 @@ function openGroup(roomName, buttonName){
 
             const type = doc.data().Type
             const room = doc.data().Room
+            const members = doc.data().Members
 
             const outerSection = document.createElement("section")
             outerSection.setAttribute("class", "theme-groups-section")
@@ -354,6 +417,8 @@ function openGroup(roomName, buttonName){
         titleH2.innerHTML = title
         headerImg.src = headerImage
         leaveGroup.innerText = "Groep verlaten"
+
+        hideLeaveGroupButtonIfAuthIsNotMember(members, leaveGroup)
 
         openGroup(room, button)
 
@@ -532,6 +597,9 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
 
             openGroup(title, groupButton)
 
+            hideLeaveGroupButtonIfAuthIsNotMember(members, leaveGroup)
+
+
             // hideLandingIfAuthIsMember(members)
 
 
@@ -649,6 +717,23 @@ function hideCoachgroupBuilderForNoneCoach(){
 }; 
 hideCoachgroupBuilderForNoneCoach()
 
+function hideLeaveGroupButtonIfAuthIsNotMember(membersOfGroup, leaveGroupButton){
+
+    auth.onAuthStateChanged(User =>{
+        if (User){
+    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
+        const auth = doc.data().Gebruikersnaam
+
+        if(membersOfGroup.includes(auth)){
+            leaveGroupButton.style.display = "block"
+        }
+
+            });
+        };
+    });
+};
+
 // Load practicegroups from database to overview
 
 db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnapshot => {
@@ -730,6 +815,8 @@ db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnap
             costsP.innerText = `Kosten: gratis`
             leaveGroup.innerText = "Groep verlaten"
 
+            hideLeaveGroupButtonIfAuthIsNotMember(members, leaveGroup)
+
             DOM.appendChild(groupInnerDiv)
             groupInnerDiv.appendChild(groupHeader)
             groupHeader.appendChild(groupCoverPhoto)
@@ -806,6 +893,7 @@ function saveNewMemberToGroup(a){
 
     const groupButton = document.getElementById("group-button")
     const groupButtonDiv = document.getElementById("group-button-div")
+    const leaveGroupButton = document.getElementById("leave-group-button")
 
     groupButton.innerText = "Laden..."
 

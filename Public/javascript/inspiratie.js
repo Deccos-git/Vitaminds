@@ -543,6 +543,7 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
         db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
                 const gebruikersnaamClean = doc1.data().GebruikersnaamClean
+                const nameID = doc1.data().Gebruikersnaam
                 const photo = doc1.data().Profielfoto
 
                 outerDiv = document.createElement("div")
@@ -693,6 +694,7 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
                 // Insights title
                 auth.onAuthStateChanged(User =>{
                     db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
                             const naam = doc.data().GebruikersnaamClean
 
                             const sectionTitle = document.getElementById("insight-title")
@@ -708,7 +710,7 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
                 })
 
                 metaPhoto.src = photo
-                metaName.innerHTML = gebruikersnaamClean
+                metaName.innerHTML = `<a href="../Vitaminders/${nameID}.html">${gebruikersnaamClean}</a>`
                 textTitle.innerHTML = titelInsight
                 textBody.innerHTML = body
                 readMore.innerHTML = "Lees meer"

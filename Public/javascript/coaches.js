@@ -59,16 +59,12 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         
             nieuweH3.addEventListener('click', (e) => {
                 window.open("Vitaminders/" + [naam], "_self");
-            })
-
-            link.addEventListener('click', (e) => {
-                window.open("Vitaminders/" + [naam], "_self");
-            }) 
+            });
 
             // Exclude Gijs from list of coaches
             if(naam == "fbKlPnWobJh0ldPROWQRYGCezhv2Gijs van Beusekom"){
                 nieuweDiv.style.display = "none"
-            }
+            };
             
 
             //De coach-eigenschappen in de nieuwe HTML-elementen zetten
@@ -76,8 +72,8 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
         stijlCH.innerHTML = stijl;  
         locatieCH.innerHTML = locatie 
         omschrijvingCH.innerHTML ='"' + omschrijving + '"'
-        link.innerHTML = "Bekijk profiel"
         readMore.innerHTML = "Lees meer"
+        link.innerHTML = `<a href="Vitaminders/${naam}.html">Bekijk profiel</a>`
 
             //De HTML-elementen vastmaken aan de DOM
         overview.appendChild(nieuweDiv)

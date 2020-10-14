@@ -270,6 +270,7 @@ auth.onAuthStateChanged(User =>{
     const logOutMobile = document.getElementById("log-out-mobile")
 
     logOutMobile.style.display = "none"
+    notificationsTotalPAuthMenu.style.display = "none"
     };
   });
 }; constructAuthMenu()

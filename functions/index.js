@@ -79,13 +79,6 @@ app.get('/Vitaminders/:id',function(req,res)
     res.sendFile('digimind.html', { root: __dirname });
 });
 
-//Openup aanmaken op basis van URL
-
-app.get('/Open/:id',function(req,res)
-{
-    res.sendFile('open.html', { root: __dirname });
-});
-
 app.get('/Kenniscentrum-coaching/:id',function(req,res)
 {
     res.sendFile('Kennis.html', { root: __dirname });
@@ -142,6 +135,35 @@ db.collection("Practice").where("Practice", "==", "Check-in").get().then(querySn
 }).catch((err) => {
     console.log(err)
 })
+
+// Redirects
+
+app.get('/agenda/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/leden/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/locatie/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/author/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/artikelen/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+
 
 exports.app = functions.https.onRequest(app);
 
