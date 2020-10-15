@@ -412,10 +412,10 @@ function openGroup(roomName, buttonName){
         querySnapshot.forEach(doc1 => {
 
             const title = doc1.data().Levensvraag
-            const headerImage = doc1.data().HeaderImage
+            const headerImageSmall = doc1.data().HeaderImageSmall
 
         titleH2.innerHTML = title
-        headerImg.src = headerImage
+        headerImg.src = headerImageSmall
         leaveGroup.innerText = "Groep verlaten"
 
         hideLeaveGroupButtonIfAuthIsNotMember(members, leaveGroup)
@@ -593,7 +593,7 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
 
             groupCoverPhoto.src = coverPhoto
             groupTitleH2.innerText = titleClean
-            descriptionP.innerText = description
+            // descriptionP.innerText = description
 
             openGroup(title, groupButton)
 
@@ -736,122 +736,122 @@ function hideLeaveGroupButtonIfAuthIsNotMember(membersOfGroup, leaveGroupButton)
 
 // Load practicegroups from database to overview
 
-db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
+// db.collection("Chats").where("Type", "==", "Practicegroup").get().then(querySnapshot => {
+//     querySnapshot.forEach(doc => {
 
-        const title = doc.data().Room
-        const titleClean = doc.data().RoomClean
-        const auth = doc.data().Creater
-        const description = doc.data().Description
-        const numberParticipants = doc.data().NumberParticipants
-        const startNumber = doc.data().StartNumber
-        const coverPhoto = doc.data().CoverPhoto
-        const members = doc.data().Members
-        const type = doc.data().Type
-        const messages = doc.data().Messages
+//         const title = doc.data().Room
+//         const titleClean = doc.data().RoomClean
+//         const auth = doc.data().Creater
+//         const description = doc.data().Description
+//         const numberParticipants = doc.data().NumberParticipants
+//         const startNumber = doc.data().StartNumber
+//         const coverPhoto = doc.data().CoverPhoto
+//         const members = doc.data().Members
+//         const type = doc.data().Type
+//         const messages = doc.data().Messages
 
-        const DOM = document.getElementById("practicegroups")
+//         const DOM = document.getElementById("practicegroups")
 
-        const groupInnerDiv = document.createElement("div")
-            groupInnerDiv.setAttribute("class", "theme-groups-section")
-        const groupHeader = document.createElement("div")
-            groupHeader.setAttribute("class", "theme-groups-header")
-        const groupCoverPhoto = document.createElement("img")
-            groupCoverPhoto.setAttribute("class", "header-image-groups")
-        const authDiv = document.createElement("div")
-            authDiv.setAttribute("class", "group-auth-div")
-        const authImg = document.createElement("img")
-            authImg.setAttribute("class", "group-auth-img")
-        const authName = document.createElement("p")
-        const metaDiv = document.createElement("div")
-            metaDiv.setAttribute("class", "group-meta-div")
-        const numberParticipantsP = document.createElement("p")
-        const memberCount = document.createElement("p")
-        const startNumberP = document.createElement("p")
-        const costsP = document.createElement("p")
-        const bottomDiv = document.createElement("div")
-            bottomDiv.setAttribute("class", "bottom-div")
-        const groupTitleH2 = document.createElement("h2")
-            groupTitleH2.setAttribute("class", "titelTekst")
-        const descriptionP = document.createElement("p")
-        const buttonDiv = document.createElement("div")
-            buttonDiv.setAttribute("id", "group-button-div")
-        const PracticegroupButton = document.createElement("button")
-            PracticegroupButton.setAttribute("class", "button-algemeen-card")
-            PracticegroupButton.setAttribute("id", "group-button")
-            PracticegroupButton.setAttribute("data-room", title)
-        const leaveGroup = document.createElement("p")
-            leaveGroup.setAttribute("class", "leave-group-button")
+//         const groupInnerDiv = document.createElement("div")
+//             groupInnerDiv.setAttribute("class", "theme-groups-section")
+//         const groupHeader = document.createElement("div")
+//             groupHeader.setAttribute("class", "theme-groups-header")
+//         const groupCoverPhoto = document.createElement("img")
+//             groupCoverPhoto.setAttribute("class", "header-image-groups")
+//         const authDiv = document.createElement("div")
+//             authDiv.setAttribute("class", "group-auth-div")
+//         const authImg = document.createElement("img")
+//             authImg.setAttribute("class", "group-auth-img")
+//         const authName = document.createElement("p")
+//         const metaDiv = document.createElement("div")
+//             metaDiv.setAttribute("class", "group-meta-div")
+//         const numberParticipantsP = document.createElement("p")
+//         const memberCount = document.createElement("p")
+//         const startNumberP = document.createElement("p")
+//         const costsP = document.createElement("p")
+//         const bottomDiv = document.createElement("div")
+//             bottomDiv.setAttribute("class", "bottom-div")
+//         const groupTitleH2 = document.createElement("h2")
+//             groupTitleH2.setAttribute("class", "titelTekst")
+//         const descriptionP = document.createElement("p")
+//         const buttonDiv = document.createElement("div")
+//             buttonDiv.setAttribute("id", "group-button-div")
+//         const PracticegroupButton = document.createElement("button")
+//             PracticegroupButton.setAttribute("class", "button-algemeen-card")
+//             PracticegroupButton.setAttribute("id", "group-button")
+//             PracticegroupButton.setAttribute("data-room", title)
+//         const leaveGroup = document.createElement("p")
+//             leaveGroup.setAttribute("class", "leave-group-button")
 
-            groupCoverPhoto.src = coverPhoto
-            groupTitleH2.innerText = titleClean
-            descriptionP.innerText = description
+//             groupCoverPhoto.src = coverPhoto
+//             groupTitleH2.innerText = titleClean
+//             descriptionP.innerText = description
 
-            PracticegroupButton.innerText = "Deelnemen"
+//             PracticegroupButton.innerText = "Deelnemen"
 
-            openGroup(title, PracticegroupButton)
+//             openGroup(title, PracticegroupButton)
 
-            db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
+//             db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
+//                 querySnapshot.forEach(doc1 => {
 
-                    const nameClean = doc1.data().GebruikersnaamClean
-                    const profilePic = doc1.data().Profielfoto
+//                     const nameClean = doc1.data().GebruikersnaamClean
+//                     const profilePic = doc1.data().Profielfoto
             
-            authImg.src = profilePic
-            authName.innerText = nameClean
+//             authImg.src = profilePic
+//             authName.innerText = nameClean
 
-            authDiv.appendChild(authImg)
-            authDiv.appendChild(authName)
+//             authDiv.appendChild(authImg)
+//             authDiv.appendChild(authName)
 
-            authDiv.addEventListener("click", () => {
-                window.open("../Vitaminders/" + auth + ".html", "_self");
-                    });
-                });
-            });
+//             authDiv.addEventListener("click", () => {
+//                 window.open("../Vitaminders/" + auth + ".html", "_self");
+//                     });
+//                 });
+//             });
 
-            numberParticipantsP.innerText = `Max. leden: ${numberParticipants}`
-            memberCount.innerText = `Huidig aantal leden: ${members.length}`
-            startNumberP.innerText = `Oefengroep begint bij: ${startNumber} leden`
-            costsP.innerText = `Kosten: gratis`
-            leaveGroup.innerText = "Groep verlaten"
+//             numberParticipantsP.innerText = `Max. leden: ${numberParticipants}`
+//             memberCount.innerText = `Huidig aantal leden: ${members.length}`
+//             startNumberP.innerText = `Oefengroep begint bij: ${startNumber} leden`
+//             costsP.innerText = `Kosten: gratis`
+//             leaveGroup.innerText = "Groep verlaten"
 
-            hideLeaveGroupButtonIfAuthIsNotMember(members, leaveGroup)
+//             hideLeaveGroupButtonIfAuthIsNotMember(members, leaveGroup)
 
-            DOM.appendChild(groupInnerDiv)
-            groupInnerDiv.appendChild(groupHeader)
-            groupHeader.appendChild(groupCoverPhoto)
-            groupInnerDiv.appendChild(authDiv)
-            groupInnerDiv.appendChild(bottomDiv)
-            bottomDiv.appendChild(groupTitleH2)
-            bottomDiv.appendChild(descriptionP)
-            groupInnerDiv.appendChild(metaDiv)
-            metaDiv.appendChild(numberParticipantsP)
-            metaDiv.appendChild(startNumberP)
-            metaDiv.appendChild(memberCount)
-            metaDiv.appendChild(costsP)
-            groupInnerDiv.appendChild(buttonDiv)
-            buttonDiv.appendChild(PracticegroupButton)
+//             DOM.appendChild(groupInnerDiv)
+//             groupInnerDiv.appendChild(groupHeader)
+//             groupHeader.appendChild(groupCoverPhoto)
+//             groupInnerDiv.appendChild(authDiv)
+//             groupInnerDiv.appendChild(bottomDiv)
+//             bottomDiv.appendChild(groupTitleH2)
+//             bottomDiv.appendChild(descriptionP)
+//             groupInnerDiv.appendChild(metaDiv)
+//             metaDiv.appendChild(numberParticipantsP)
+//             metaDiv.appendChild(startNumberP)
+//             metaDiv.appendChild(memberCount)
+//             metaDiv.appendChild(costsP)
+//             groupInnerDiv.appendChild(buttonDiv)
+//             buttonDiv.appendChild(PracticegroupButton)
 
-            if(members.includes(auth)){
-            buttonDiv.appendChild(leaveGroup)
-            };
-
-
-            // Group is full message
-            groupIsFull(members.length, PracticegroupButton, numberParticipants)
+//             if(members.includes(auth)){
+//             buttonDiv.appendChild(leaveGroup)
+//             };
 
 
-            //Already a member of the group
-            alreadyMember(members, PracticegroupButton)
+//             // Group is full message
+//             groupIsFull(members.length, PracticegroupButton, numberParticipants)
 
-            //Leave group
-            leaveGroup.addEventListener("click", () => {
 
-                leaveTheGroup(title)
+//             //Already a member of the group
+//             alreadyMember(members, PracticegroupButton)
 
-            });
-    });
-});
+//             //Leave group
+//             leaveGroup.addEventListener("click", () => {
+
+//                 leaveTheGroup(title)
+
+//             });
+//     });
+// });
 
 const NewChatsCountArray = []
 

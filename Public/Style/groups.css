@@ -28,6 +28,7 @@
 
 #coachgroup-builder-div{
     display: none;
+    height: 350px;
 }
 
 .groups-outer-div{
@@ -70,6 +71,10 @@
     flex-direction: column;
     align-items: center;
     z-index: 1;
+}
+
+.titelTekst{
+    padding: 20px;
 }
 
 .group-auth-div{

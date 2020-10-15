@@ -158,10 +158,26 @@ app.get('/author/*',function(req,res)
     res.sendFile('/index-redirect.html', { root: __dirname });
 });
 
-app.get('/artikelen/*',function(req,res)
+app.get('/home/*',function(req,res)
 {
     res.sendFile('/index-redirect.html', { root: __dirname });
 });
+
+app.get('/product/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/news-feed/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/coaches-2/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
 
 
 

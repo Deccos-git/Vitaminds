@@ -149,6 +149,7 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds")
 
         const title = doc.data().Levensvraag
         const headerImage = doc.data().HeaderImage
+        const headerImageSmall = doc.data().HeaderImageSmall
         const insights = doc.data().Insights
         const goal = doc.data().Levensvraag
 
@@ -212,7 +213,7 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds")
         }
 
         titleH2.innerHTML = title
-        headerImg.src = headerImage
+        headerImg.src = headerImageSmall
         buttonDiv.innerHTML = `<a href="../Artikelen/${title}.html">Bekijk</a>`
 
         if(DOMarticle == null){
@@ -284,6 +285,7 @@ db.collection("Themas").where("Eigenaar", "==", "Vitaminds").get().then(querySna
     querySnapshot.forEach(doc => {
         const titel = doc.data().Thema
         const img = doc.data().HeaderImage
+        const headerImageSmall = doc.data().HeaderImageSmall
         const insights = doc.data().Insights
         const levensvragen = doc.data().Levensvragen
 
@@ -323,7 +325,7 @@ db.collection("Themas").where("Eigenaar", "==", "Vitaminds").get().then(querySna
         const button = document.createElement("button")
             button.setAttribute("class", "button-algemeen")
 
-        header.style.backgroundImage = `url("${img}")`
+        header.style.backgroundImage = `url("${headerImageSmall}")`
 
         // Dynamic title
         const count = insights.length
