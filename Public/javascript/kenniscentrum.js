@@ -24,7 +24,8 @@ db.collection("Kenniscentrum").where("Eigenaar", "==", "Vitaminds").get().then(q
 
         headerImg.src = headerImage
         titleH2.innerHTML = title
-        buttonDiv.innerHTML = "Bekijk"
+        buttonDiv.innerHTML = `<a href="../Kenniscentrum-coaching/${title}.html">Bekijk</a>`
+
 
         if(DOMarticle == null){
             console.log("null")
@@ -38,16 +39,7 @@ db.collection("Kenniscentrum").where("Eigenaar", "==", "Vitaminds").get().then(q
         outerSection.appendChild(buttonDiv)
         }
     })
-})
-
-// Kenniscentrum artikelen openen na onclick in overview
-function seeArticle(elem){
-
-    const title = elem.previousElementSibling.firstElementChild.innerHTML
-
-    window.open("../Kenniscentrum-coaching/" + title + ".html", "_self")
-
-};
+});
 
 // Register view count on article load
 window.addEventListener("load", () => {
@@ -173,8 +165,6 @@ titel = titel10.replace('%20',' ')
             const body = doc.data().Body
             const coach = doc.data().Auteur
             const thema = doc.data().Thema
-
-            console.log(body)
     
             db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
                 querySnapshot.forEach(doc1 => {
@@ -210,7 +200,7 @@ titel = titel10.replace('%20',' ')
                     const editIcon = document.createElement("img")
                         editIcon.setAttribute("src", "../images/edit-icon.png")
                         editIcon.setAttribute("class", "edit-icon-insights")
-                        editIcon.setAttribute("onclick", "editIconInsights(this)")
+                        editIcon.setAttribute("onclick", "editIconKennis(this)")
                         editIcon.setAttribute("data-title", titelInsight)
     
                     // Insights title
@@ -243,8 +233,6 @@ titel = titel10.replace('%20',' ')
     
     
                          // Max height of insight
-                    console.log(textDiv.outerHeight)
-    
     
                     DOM.appendChild(outerDiv)
                     outerDiv.appendChild(metaDiv)
@@ -281,21 +269,18 @@ titel = titel10.replace('%20',' ')
                        auth.onAuthStateChanged(User =>{
                         db.collection("Vitaminders").doc(User.uid).get().then(doc => {
                                 const auth = doc.data().Gebruikersnaam
-    
-                                console.log(auth)
-                                console.log(coachData)
                         
-                    if(coachData != auth){
-    
-                        editIcon.style.display = "none"
-    
-                    }
-                                })
-                            })
-                })
-            })
-        })
-    })
+                            if(coachData != auth){
+            
+                                editIcon.style.display = "none"
+            
+                            };
+                        });
+                    });
+                });
+            });
+        });
+    });
 });
 
 // Saving coach insights to database
@@ -355,7 +340,6 @@ db.collection("Insights").where("KenniscentrumArtikel", "==", titel).get().then(
 
                 const profielFoto = doc1.data().Profielfoto
                 const gebruikersnaam = doc1.data().Gebruikersnaam
-        
 
         const innerDiv = document.createElement("div")
         innerDiv.setAttribute("class", "paragraph-list-inner-div")
@@ -397,3 +381,57 @@ db.collection("Insights").where("KenniscentrumArtikel", "==", titel).get().then(
         })
     })
 });
+
+// Edit coach insight
+
+function editIconKennis(elem){
+
+    const titelInsight = elem.dataset.title
+     const newInsightTitle = elem.nextElementSibling
+    const newBody = elem.nextElementSibling.nextElementSibling
+
+    newInsightTitle.setAttribute("contenteditable", "true")
+        newInsightTitle.style.border = "1px dotted #122b46"
+
+    newBody.setAttribute("contenteditable", "true")
+        newBody.style.border = "1px dotted #122b46"
+
+    const saveInsightDiv = document.createElement("div")
+        saveInsightDiv.setAttribute("class", "save-div")
+    const saveInsightP = document.createElement("p")
+
+        saveInsightDiv.appendChild(saveInsightP)
+
+        elem.parentElement.appendChild(saveInsightDiv)
+
+        saveInsightP.innerHTML = "Opslaan"
+
+        saveInsightP.addEventListener("click", () => {   
+
+    auth.onAuthStateChanged(User =>{
+        if (User){
+
+        db.collection("Vitaminders").doc(User.uid)
+                .get().then(function(doc){
+                    const coachNaam = doc.data().Gebruikersnaam;
+
+                db.collection("Insights")
+                .where("Titel", "==", titelInsight)
+                .where("Auteur", "==", coachNaam)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc1 => {
+
+                            db.collection("Insights").doc(doc1.id).update({
+                                KenniscentrumArtikel: newInsightTitle.innerHTML,
+                                Body: newBody.innerHTML
+                            })
+                            .then(() => {
+                                saveInsightP.innerHTML = "Opgeslagen"
+                            })
+                        });
+                    });
+                });
+            };
+        });
+    });        
+};

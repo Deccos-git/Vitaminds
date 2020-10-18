@@ -248,6 +248,9 @@
 
 .save-div p{
     cursor: pointer;
+    color: #0c6665;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .delete-div{
