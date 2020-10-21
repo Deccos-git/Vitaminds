@@ -558,7 +558,7 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
                 const metaName = document.createElement("p")
                 const textDiv = document.createElement("div")
                     textDiv.setAttribute("class", "text-div-insights")
-                const textTitle = document.createElement("h2")
+                const textTitle = document.createElement("h3")
                 const textBody = document.createElement("p")
                 const readMoreDiv = document.createElement("div")
                     readMoreDiv.setAttribute("class", "read-more-div")
@@ -929,6 +929,36 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
 
 // Saving coach insights to database
 
+// Open new insights with onclick on textarea
+
+const textareaInisghts = document.getElementById("insights-CTA")
+const insightsParagraphIdeas = document.getElementById("insights-theme-ideas")
+const newPost = document.getElementById("nieuwepost")
+
+!function openNewInsight(){
+
+    textareaInisghts.addEventListener("click", () => {
+
+        insightsParagraphIdeas.style.display = "flex"
+        newPost.style.display = "flex"
+        textareaInisghts.style.display = "none"
+
+    });
+}(); 
+
+!function personalizeCTAtoWriteInsight(){
+    auth.onAuthStateChanged(User =>{
+        db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
+                const naam = doc.data().GebruikersnaamClean
+
+                textareaInisghts.placeholder = `Voeg een inzicht toe, ${naam}`
+
+        });
+    });
+}();
+
+
 function nieuwepostsubmit(){
         auth.onAuthStateChanged(User =>{
             if (User){
@@ -1236,7 +1266,7 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                 const metaName = document.createElement("p")
                 const textDiv = document.createElement("div")
                     textDiv.setAttribute("class", "text-div-insights")
-                const textTitle = document.createElement("h2")
+                const textTitle = document.createElement("h3")
                 const textBody = document.createElement("p")
                 const readMoreDiv = document.createElement("div")
                     readMoreDiv.setAttribute("class", "read-more-div")

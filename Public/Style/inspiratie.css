@@ -337,7 +337,7 @@
 }
 
 #insights-theme-ideas{
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     text-align: center;
@@ -361,7 +361,9 @@
     color: #122b46;
     margin: -60px 200px 50px 200px;
     border-radius: 5px;
-    position: relative;
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
     background-color: white;
     padding: 10px 30px 10px 30px;
     box-shadow: 0 -1px 0px 0 rgba(0,0,0,.2), 0 -1px 1px 0 rgba(0,0,0,.14), 0 -2px 1px 0px rgba(0,0,0,.12);
@@ -434,10 +436,10 @@
 }
 
 #coach-input{
-    margin: 0px 100px 0px 100px;
+    margin: 100px 100px 100px 100px;
     display: flex;
     flex-direction: column;
-    align-content: center;
+    align-items: center;
 }
 
 #hidden-title-div{
@@ -469,11 +471,11 @@
     border: 1px solid #f7f7f7;
 }
 
-.insights-outer-div h2{
+.insights-outer-div h3{
     text-align: center;
     align-self: center;
     color: #122b46;
-    font-size: 20px;
+    font-size: 23px;
 }
 
 .insights-outer-div p{
@@ -748,11 +750,17 @@
     color: #122b46;
     margin: -130px 200px 50px 200px;
     border-radius: 5px;
-    position: relative;
     background-color: white;
     min-height: 110px;
     padding: 10px 30px 10px 30px;
     box-shadow: 0 -1px 0px 0 rgba(0,0,0,.2), 0 -1px 1px 0 rgba(0,0,0,.14), 0 -2px 1px 0px rgba(0,0,0,.12);
+}
+
+#subtitel-theme-article-h2{
+    color: #122b46;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
 }
 
 #subtitel-theme-article-div h2{
@@ -1023,8 +1031,21 @@
 
 /* nieuwe post */
 
+#insights-CTA{
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+#insights-CTA::placeholder{
+    font-size: 20px;
+}
+
+#insights-CTA:hover{
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
 #nieuwepost{
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     margin: 10px 10px 100px 10px;

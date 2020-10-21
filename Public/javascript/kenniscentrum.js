@@ -81,6 +81,10 @@ titel = titel10.replace('%20',' ')
     const titelHead = document.getElementsByTagName("title")
     const metaKeywords = document.getElementById("meta-keywords")
     const metaDescription = document.getElementById("meta-description")
+    const facebookUrl = document.getElementById("facebook-url")
+    const facebookTitle = document.getElementById("facebook-title")
+    const facebookDescription = document.getElementById("facebook-description")
+    const facebookImg = document.getElementById("facebook-img")
     const headerDiv = document.getElementById("levensvraag-artikel-main-image")
     const headerImg = document.createElement("img")
     
@@ -151,11 +155,15 @@ titel = titel10.replace('%20',' ')
     
             metaKeywords.content = keywords
             metaDescription.content = summaryArticle
+            facebookDescription.content = summaryArticle
+            facebookImg.content = headerImage
+            facebookTitle. content = titel
+            facebookUrl. content = window.location.href
     
         })
     }).then(() => {   
     
-        // Loading Insight levensvraag articles
+        // Loading articles
     
     const DOM = document.getElementById("coach-insights")
     
@@ -422,7 +430,7 @@ function editIconKennis(elem){
                     querySnapshot.forEach(doc1 => {
 
                             db.collection("Insights").doc(doc1.id).update({
-                                KenniscentrumArtikel: newInsightTitle.innerHTML,
+                                Titel: newInsightTitle.innerHTML,
                                 Body: newBody.innerHTML
                             })
                             .then(() => {
