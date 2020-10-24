@@ -1,3 +1,164 @@
+#for-coach-banner{
+    background-image: url("../images/avontuur-verbonden-voelen-hero-pilot.png");
+  height: 650px;
+  width: 100%;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#for-coach-banner-title{
+    color: #FFF;
+    font-size: 35px;
+    text-align: center;
+    margin-top: 0px;
+    margin-top: 100px;
+}
+
+#subtitle{
+    margin: -130px 100px 50px 100px;
+    letter-spacing: 0.5px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 30px;
+}
+
+.section-title{
+    font-size: 40px;
+    text-align: center;
+    color: #49beb7;
+}
+
+#link-vitaminds{
+    color: #8e0000;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: 'Libre Baskerville', serif;
+    margin-left: 5px;
+    text-decoration: none;
+}
+
+#features-2{
+    background-image: url("../images/welkomTwee3.jpg");
+    height: 600px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#facts{
+    margin: 100px 200px 100px 200px;
+}
+
+#facts li{
+    font-weight: 800;
+}
+
+#impact-CTA{
+    margin: 0px 200px 50px 200px;
+    font-size: 30px;
+    color: #0c6665;
+    font-weight: bold;
+    text-align: center;
+}
+
+.coach-menu-main-p{
+    margin-left: auto;
+    color: #49beb7;
+    font-size: 16px;
+    border: #49beb7 1px solid;
+    border-radius: 15px;
+    text-decoration: none !important;
+    font-weight: bold;
+    padding: 5px;
+   }
+
+.coach-card{
+    height: 500px;
+    width: 350px;
+    border-radius: 0px 0px 15px 15px;
+    margin: 20px;
+    padding-bottom: 20px;
+    align-items: center;
+    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.coach-card p{
+    text-align: center;
+}
+
+.coach-card h4{
+    text-align: center;
+    font-size: 26px;
+}
+
+.card-section{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#coach-card-banner-intervisie{
+    background-image: url(../images/hero-II.jpg);
+    background-size: 400px 200px;
+    height: 200px;
+    width: 100%;
+    margin: 0px;
+}
+
+#coach-card-banner-samenwerken{
+    background-image: url(../images/hero-II.jpg);
+    background-size: 400px 200px;
+    height: 200px;
+    width: 100%;
+    margin: 0px;
+}
+
+#coach-card-banner-professionalisering{
+    background-image: url(../images/hero-II.jpg);
+    background-size: 400px 200px;
+    height: 200px;
+    width: 100%;
+    margin: 0px;
+}
+
+#coach-card-banner-inspireren{
+    background-image: url(../images/hero-II.jpg);
+    background-size: 400px 200px;
+    height: 200px;
+    width: 100%;
+    margin: 0px;
+}
+
+#coach-card-banner-workshops{
+    background-image: url(../images/hero-II.jpg);
+    background-size: 400px 200px;
+    height: 200px;
+    width: 100%;
+    margin: 0px;
+}
+
+#coach-card-banner-coachgroepen{
+    background-image: url(../images/hero-II.jpg);
+    background-size: 400px 200px;
+    height: 200px;
+    width: 100%;
+    margin: 0px;
+}
+
 
 .coach-information{
     display: flex;

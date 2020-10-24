@@ -84,6 +84,11 @@ app.get('/Kenniscentrum-coaching/:id',function(req,res)
     res.sendFile('Kennis.html', { root: __dirname });
 });
 
+app.get('/Intervisions/:id',function(req,res)
+{
+    res.sendFile('Intervision.html', { root: __dirname });
+});
+
 // Tool sheduling
 
 db.collection("Practice").where("Practice", "==", "Check-in").get().then(querySnapshot => {

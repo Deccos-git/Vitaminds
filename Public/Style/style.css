@@ -159,7 +159,6 @@ ul{
 }
 
 #auth-menu{
-  width: 25%;
   margin: 10px 105px 15px 15px;
   display: flex;
   justify-content: flex-end;
@@ -205,6 +204,7 @@ ul{
 .main-menu a {
   text-decoration: none;
   display: block;
+  font-weight: 800;
 }
 
 .main-menu a:hover {
@@ -248,10 +248,9 @@ ul{
   margin-left: 10px;
   text-align: center;
 }
-.coach-menu-main-p-mobile{
- margin: 5px 0px 0px 0px;
- color: #8e0000;
- font-size: 14px;
+
+#menu-items{
+  margin-left: 30px;
 }
 
 #aanmeldCH-mobile{
@@ -682,7 +681,7 @@ ul{
 
 .header-image{
   background-image: url("../images/Hero-III.jpg");
-  height: 900px;
+  height: 650px;
   width: 100%;
   background-attachment: fixed;
   background-repeat: no-repeat;
@@ -810,8 +809,11 @@ ul{
 }
 
 #begin h2{
-  margin: 100px 100px 100px 100px;
+  margin: -130px 100px 100px 100px;
   letter-spacing: 0.5px;
+  background-color: white;
+  border-radius: 5px;
+  padding: 30px;
 }
 
 .DigiMind{
@@ -928,12 +930,18 @@ ul{
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  height: 800px;
+  height: 750px;
 }
 
 .welkom2 h1{
   color: #122b46;
   margin: 50px 0px 0px 0px;
+}
+
+#welkom-sub-sub-titel{
+  background: none !important;
+  margin: 150px 0px 0px 0px !important;
+  
 }
 
 .welkom2 h2{
@@ -947,6 +955,7 @@ ul{
   align-items: center;
   color: #122b46;
   font-size: 30px;
+  margin: 0px 0px 50px 0px;
 }
 
 #omgeving li{

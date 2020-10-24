@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="Style/style.css">
     <link rel="stylesheet" href="Style/intervisie.css">
+    <link rel="stylesheet" href="Style/voor-coach.css">
     <link rel="shortcut icon" href="images/Favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -24,44 +25,39 @@
     <a href="tickets.html"> <p>Feedback</p></a>
   </div>
 
-       <!-- Mobile-menu -->
-       <nav id="mobile-menu"> 
-        <div id="menu-mobile-visible-layer">
-          <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
-          <div class="main-menu-mobile"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
-        </div>
-        <div id="mobile-menu-outer-div">
-          <div id="mobile-menu-inner-div">
-                <div id="profile-picture-mobile"></div>
-                <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
-            <div class="main-menu-mobile"><a href="openup.html">Open up</a></div>
-            <div class="main-menu-mobile"><a href="groups.html">Groepen</a></div> 
-            <div class="main-menu-mobile"><a href="workshops.html">Workshops</a></div>
-            <div class="main-menu-mobile"><a href="inspiratie.html">Inspiratie</a></div>
-            <!-- <div class="main-menu-mobile"><a href="tools.html">Tools</a></div> -->
-            <div class="main-menu-mobile"><a href="coaches.html">Coaches</a></div>
-            <div class="coach-menu-outer-div-mobile"><p id="aanmeldCH-mobile">Voor coaches</p>
-              <div id="coach-menu-main-mobile">
-                <div><a href="voor-coach.html"><p class="coach-menu-main-p-mobile">Aanmelden als coach</p></a></div>
-                <div><a href="kenniscentrum.html"><p class="coach-menu-main-p-mobile">Kenniscentrum coaching</p></a></div>
-              </div>
-            </div>  
-            <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+      <!-- Mobile-menu -->
+  <nav id="mobile-menu"> 
+    <div id="menu-mobile-visible-layer">
+      <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+      <div class="main-menu-mobile"><a href="/voor-coaches.html"><img id="logo-menu-for-coaches" src="images/logo-coaches.png" alt="Vitaminds voor coaches logo" width="150px"></a></div>
+    </div>
+    <div id="mobile-menu-outer-div">
+      <div id="mobile-menu-inner-div">
+            <div id="profile-picture-mobile"></div>
+            <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
+            <div class="main-menu-mobile"><a href="interventie.html">Interventie</a></div>
+            <div class="main-menu-mobile"><a href="samenwerken.html">Samenwerken</a></div> 
+            <div class="main-menu-mobile"><a href="kenniscentrum.html">Kenniscentrum</a></div>
+        <div class="coach-menu-outer-div-mobile"><p id="aanmeldCH-mobile">Voor coaches</p>
+          <div id="coach-menu-main-mobile">
+            <div><a href="voor-coaches.html"><p class="coach-menu-main-p-mobile">Aanmelden als coach</p></a></div>
+            <div><a href="kenniscentrum.html"><p class="coach-menu-main-p-mobile">Kenniscentrum coaching</p></a></div>
           </div>
-        </nav>
+        </div>  
+        <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+      </div>
+    </nav>
 
    <!-- menu --> 
    <nav id="menu">
     <div id="navigation-menu">
-      <div class="main-menu"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
-      <div class="main-menu"><a href="openup.html">Open up</a></div>
-      <div class="main-menu"><a href="groups.html">Groepen</a></div> 
-      <div class="main-menu"><a href="workshops.html">Workshops</a></div>
-      <div class="main-menu"><a href="inspiratie.html">Inspiratie</a></div>
-      <!-- <div class="main-menu"><a href="tools.html">Tools</a></div> -->
-      <!-- <li class="main-menu"><a href="evenementen.html">Evenementen</a></li> -->
-      <div class="main-menu"><a href="coaches.html">Coaches</a></div>
-      <!-- <li class="main-menu"><a href="privacy.html">Privacy</a></li> -->
+      <div class="main-menu"><a href="/voor-coaches.html"><img id="logo-menu-for-coaches" src="images/logo-coaches.png" alt="Vitaminds voor coaches logo" width="150px"></a></div>
+      <div id="menu-items">
+        <div class="main-menu"><a href="intervisie.html">Intervisie</a></div>
+        <div class="main-menu"><a href="samenwerken.html">Samenwerken</a></div> 
+        <div class="main-menu"><a href="kenniscentrum.html">Kenniscentrum</a></div>
+      </div>
+      <a href="aanmelden-coach.html" class="coach-menu-main-p">Aanmelden</a>
     </div>
     <div id="auth-menu">
       <div id="auth-DOM"></div>
@@ -69,18 +65,29 @@
       </div>
       <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
       <div id="slash" class = "login-logout"><a>|</a></div>
-      <div class="coach-menu-outer-div"><p id="aanmeldCH"><a href="voor-coach.html">Voor coaches</a></p>
-        <div id="coach-menu-main">
-          <div><a href="voor-coach.html"><p class="coach-menu-main-p">Aanmelden als coach</p></a></div>
-          <div><a href="kenniscentrum.html"><p class="coach-menu-main-p">Kenniscentrum coaching</p></a></div>
-        </div>
-      </div> 
+      <a href="index.html" id="link-vitaminds">Vitaminds</a>
     </div>
   </nav>
   
   <h1>Intervisie</h1>
 
-  <section id="casus-overview"></section>
+  <section id="casus-overview">
+
+    <textarea name="" id="new-casus" cols="50" rows="2"></textarea>
+
+    <div id="create-casus">
+      <h2 id="new-casus-title">Geef je casus een titel</h2>
+      <input type="text" id="new-casus-title-input" placeholder="Casus titel">
+      <h2>Omschrijf je casus</h2>
+      <textarea name="" id="new-casus-description" cols="70" rows="10" placeholder="Casus omschrijving"></textarea>
+      <div>
+        <button id="submit-casus" class="button-algemeen">Casus indienen</button>
+      </div>
+    </div>
+
+    <div id="casus-outer-div"></div>
+
+  </section>
 
  <!-- Toolbar mobile -->
  <div class="toolbar-mobile">
