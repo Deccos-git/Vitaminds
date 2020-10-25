@@ -1,6 +1,3 @@
-<!DOCTYPE html>
-<html lang="nl">
-
 <head>
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +12,7 @@
   <title property="og:title"></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../Style/style.css">
-  <link rel="stylesheet" href="../Style/intervisie.css">
+  <link rel="stylesheet" href="../Style/cooperations.css">
   <link rel="shortcut icon" href="../images/Favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -96,23 +93,24 @@
     </div>
   </nav>
 
-<section id="intervision-outer-div">
-
-</section>
-
-<section id="give-reaction-outers-div">
-    <h3 id="reactions-title"></h3>
-    <textarea name="" id="reactions-textarea" cols="80" rows="5" placeholder="Geef je inzicht"></textarea>
-    <button class="button-algemeen" id="give-reaction-button">Reageer</button>
-</section>
-
-<section id="reactions-outer-div">
-    <h2>Reacties</h2>
-</section>
   
 
- <!-- Toolbar mobile -->
- <div class="toolbar-mobile">
+<section id="question-outer-div">
+  <h1 id="cooperate-title"></h1>
+  <img id="cooperate-banner">
+  <p id="cooperate-desciption"></p>
+</section>
+
+<section id="give-reaction">
+  <h3 id="give-reaction-title"></h3>
+  <textarea name="" id="give-reaction-input" cols="30" rows="10"></textarea>
+  <button class="button-algemeen" id="give-reaction-button">Reageer</button>
+</section>
+
+<section id="reactions-outer-div"></section>
+
+<!-- Toolbar mobile -->
+<div class="toolbar-mobile">
   <div class="toolbar-mobile-inner-div">
     <img src="../images/home-icon.png" alt="" id="toolbar-home">
     <p class="description-menu-icons-toolbar-mobile">Open up</p>
@@ -153,8 +151,9 @@
 
 
       <script type="text/javascript" src="../javascript/firebase.js"></script>
-      <script type="text/javascript" src="../javascript/intervisie.js"></script>
+      <script type="text/javascript" src="../javascript/cooperations.js"></script>
       <script type="text/javascript" src="../javascript/auth.js"></script>
+      <script type="text/javascript" src="../javascript/edit-profile.js"></script>
       <script type="text/javascript" src="../javascript/index.js"></script>
     </body>
   </html>

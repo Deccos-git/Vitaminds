@@ -17,7 +17,11 @@ const createCasus = document.getElementById("create-casus")
 
                 const coachClean = doc.data().GebruikersnaamClean
 
+                if(newCasusCTA != null){
+
                 newCasusCTA.placeholder = `Dien een nieuwe casus in, ${coachClean}`
+
+                };
 
         });
     });
@@ -25,16 +29,21 @@ const createCasus = document.getElementById("create-casus")
 
 !function newCasusTextArea(){
 
-    newCasusCTA.addEventListener("click", () => {
+    if(createCasus != null){
 
-        createCasus.style.display = "flex"
-        newCasusCTA.style.display = "none"
+        newCasusCTA.addEventListener("click", () => {
 
-    })
+            createCasus.style.display = "flex"
+            newCasusCTA.style.display = "none"
+
+        });
+    };
 
 }();
 
 function saveNewCasus(){
+
+    saveCasusButton.innerText = "Casus ingediend"
 
     auth.onAuthStateChanged(User =>{
         userRef = db.collection("Vitaminders").doc(User.uid)
@@ -50,6 +59,8 @@ function saveNewCasus(){
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                 Owner: "Vitaminds",
                 Title: nexCasusTitle.value,
+                ID: idClean,
+                CasusTitleID: idClean + nexCasusTitle.value,
                 Description: newCasusDespription.value
             });
         });
@@ -58,10 +69,13 @@ function saveNewCasus(){
 
 !function submitNewCasus(){
 
-    saveCasusButton.addEventListener("click", () => {
-        console.log("test")
-        saveNewCasus()
-    });
+    if(saveCasusButton != null){
+
+        saveCasusButton.addEventListener("click", () => {
+ 
+            saveNewCasus()
+        });
+    };
 }();
 
 // Casus overview
@@ -77,6 +91,7 @@ db.collection("Intervisie")
         const coachClean = doc.data().CoachClean
         const coach = doc.data().Coach
         const description = doc.data().Description
+        const titelID = doc.data().CasusTitleID
 
         const casusInnerDiv = document.createElement("div")
             casusInnerDiv.setAttribute("class", "casus-inner-div")
@@ -89,7 +104,7 @@ db.collection("Intervisie")
             casusButton.setAttribute("class", "button-algemeen")
             casusButton.setAttribute("id", "casus-button")
             casusButton.setAttribute("data-coach", coach)
-            casusButton.setAttribute("data-title", titel)
+            casusButton.setAttribute("data-title", titelID)
 
         casusTitleh3.innerText = titel
         descriptionP.innerText = description
@@ -133,11 +148,10 @@ function openCasusDetails(casusButtonDOM){
 
     casusButtonDOM.addEventListener("click", () => {
 
-        const casusTitle = casusButtonDOM.dataset.title
+        const casusTitleID = casusButtonDOM.dataset.title
 
-        window.open("../Intervisions/" + [casusTitle], "_self");
-    })
-
+        window.open("../Intervisions/" + [casusTitleID], "_self");
+    });
 };
 
 // Casus detail page
@@ -158,4 +172,148 @@ const titel11 = titel10.replace('%20',' ')
 const titel12 = titel11.split("?fb")
 const titel = titel12[0]
 
+const intervisionOuterDiv = document.getElementById("intervision-outer-div")
+
+db.collection("Intervisie")
+.where("CasusTitleID", "==", titel)
+.get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+        const titel = doc.data().Title
+        const coachClean = doc.data().CoachClean
+        const coach = doc.data().Coach
+        const description = doc.data().Description
+
+        const casusInnerDiv = document.createElement("div")
+            casusInnerDiv.setAttribute("class", "casus-inner-div-detail")
+        const casusTitleh3 = document.createElement("h3")
+        const bannerDiv = document.createElement("div")
+            bannerDiv.setAttribute("id", "casus-banner-div")
+        const descriptionP = document.createElement("p")
+
+        casusTitleh3.innerText = titel
+        descriptionP.innerText = description
+
+            db.collection("Vitaminders")
+            .where("Gebruikersnaam", "==", coach)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+        
+                    const profilePic = doc.data().Profielfoto
+        
+                    const coachDiv = document.createElement("div")
+                        coachDiv.setAttribute("class", ("casus-coach-div"))
+                    const coachPic = document.createElement("img")
+                    const coachName = document.createElement("p")
+                        coachName.setAttribute("class", "casus-coachname")
+        
+                    coachPic.src = profilePic
+                    coachName.innerText = coachClean
+        
+                    intervisionOuterDiv.appendChild(casusInnerDiv)
+                    casusInnerDiv.appendChild(coachDiv)
+                    coachDiv.appendChild(coachPic)
+                    coachDiv.appendChild(coachName)
+
+                    casusInnerDiv.appendChild(casusTitleh3)
+                    casusInnerDiv.appendChild(bannerDiv)
+                    casusInnerDiv.appendChild(descriptionP)
+
+            });
+        });   
+    });
+});
+
+// Reactions
+
+function saveReaction(reactorName){
+
+    const reactButton = document.getElementById("give-reaction-button")
+    const reaction = document.getElementById("reactions-textarea")
+
+    reactButton.addEventListener("click", () => {
+
+        reactButton.innerText = "Opgeslagen"
+
+        db.collection("Intervisie")
+        .where("CasusTitleID", "==", titel)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                db.collection("Intervisie").doc(doc.id)
+                .collection("Reactions").doc().set({
+                    CasusTitle: titel,
+                    Reactor: reactorName,
+                    Reaction: reaction.value,
+                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                    Owner: "Vitaminds",
+                });
+            });
+        });
+    });
+};
+
+!function giveReaction(){
+
+const reactionTitle = document.getElementById("reactions-title")
+
+    auth.onAuthStateChanged(User =>{
+        userRef = db.collection("Vitaminders").doc(User.uid)
+        userRef.get()
+        .then(doc => {
+
+                const coach = doc.data().Gebruikersnaam
+                const coachClean = doc.data().GebruikersnaamClean
+
+                reactionTitle.innerText = `Hoe kijk jij hiernaar, ${coachClean}`
+
+                saveReaction(coach)
+
+        });
+    });
+}();
+
+// Load reactions to DOM
+
+const reactionsOuterDiv = document.getElementById("reactions-outer-div")
+
 console.log(titel)
+
+db.collectionGroup("Reactions").where("CasusTitle", "==", titel)
+.get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const reactor = doc.data().Reactor
+        const reaction = doc.data().Reaction
+
+        const reactionInnerDiv = document.createElement("div")
+            reactionInnerDiv.setAttribute("class", "reaction-inner-div")
+        const reactionP = document.createElement("p")
+
+        reactionP.innerHTML = reaction
+
+            db.collection("Vitaminders")
+            .where("Gebruikersnaam", "==", reactor)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+        
+                    const profilePic = doc1.data().Profielfoto
+                    const userNameClean = doc1.data().GebruikersnaamClean
+        
+                    const coachDiv = document.createElement("div")
+                        coachDiv.setAttribute("class", ("casus-coach-div-reaction"))
+                    const coachPic = document.createElement("img")
+                    const coachName = document.createElement("p")
+                        coachName.setAttribute("class", "casus-coachname")
+        
+                    coachPic.src = profilePic
+                    coachName.innerText = userNameClean
+
+                    reactionsOuterDiv.appendChild(reactionInnerDiv)
+                    reactionInnerDiv.appendChild(coachDiv)
+                    coachDiv.appendChild(coachPic)
+                    coachDiv.appendChild(coachName)
+                    reactionInnerDiv.appendChild(reactionP)
+                });
+            });
+    });
+});

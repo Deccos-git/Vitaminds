@@ -833,7 +833,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                     saveThreeButton.setAttribute("id", "save-three-button")
                     saveThreeButton.setAttribute("onclick", "saveThree()")
                 const saveFourButton = document.createElement("button")
-                    saveFourButton.setAttribute("id", "save-two-button")
+                    saveFourButton.setAttribute("id", "save-four-button")
                     saveFourButton.setAttribute("onclick", "saveFour()")
                 const saveFiveButton = document.createElement("button")
                     saveFiveButton.setAttribute("id", "save-five-button")
@@ -1417,6 +1417,9 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                 stepFourExplainerP.scrollIntoView()
                            
                         } else {
+
+                            const stepThreeButton = document.getElementById("step-three-button")
+
                             toolbarThreeCount.innerText = "V"
                             toolbarThreeCheck.style.backgroundColor = "white"
                             toolbarThreeCount.style.color = "#008e8e"
@@ -1425,7 +1428,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 
                             closingButton.style.display = "block"
 
-                            saveThreeButton.style.display = "none"
+                            stepThreeButton.style.display = "none"
                            
                             closingTitleH3.innerText = closingThreeTitle
                             closingTextP.innerHTML = closingThreeText
@@ -1541,6 +1544,9 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                 stepFiveExplainerP.scrollIntoView()
                            
                         } else {
+
+                            const stepFourButton = document.getElementById("step-four-button")
+
                             toolbarFourCount.innerText = "V"
                             toolbarFourCheck.style.backgroundColor = "white"
                             toolbarFourCount.style.color = "#008e8e"
@@ -1665,6 +1671,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     stepSixExplainerP.scrollIntoView()
                                
                             } else {
+                                const stepFiveButton = document.getElementById("step-five-button")
+
                                 toolbarFiveCount.innerText = "V"
                                 toolbarFiveCheck.style.backgroundColor = "white"
                                 toolbarFiveCount.style.color = "#008e8e"
@@ -1791,6 +1799,9 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     stepSevenExplainerP.scrollIntoView()
                                
                             } else {
+
+                                const stepSixButton = document.getElementById("step-six-button")
+
                                 toolbarSixCount.innerText = "V"
                                 toolbarSixCheck.style.backgroundColor = "white"
                                 toolbarSixCount.style.color = "#008e8e"
@@ -1856,7 +1867,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                             };
                         });
 
-                        // Load step eighht
+                        // Load step eight
                         stepEightIntroductionButton.addEventListener("click", () => {
                             if(stepEightTitle != ""){
 
@@ -1919,6 +1930,9 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     stepEightExplainerP.scrollIntoView()
                                
                             } else {
+
+                                const stepSevenButton = document.getElementById("step-seven-button")
+
                                 toolbarSevenCount.innerText = "V"
                                 toolbarSevenCheck.style.backgroundColor = "white"
                                 toolbarSevenCount.style.color = "#008e8e"
@@ -1927,6 +1941,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 
                                 closingButton.style.display = "block"
                                 stepSevenButton.style.display = "none"
+                                saveEightButton.style.display = "none"
                                
                                 closingTitleH3.innerText = closingSevenTitle
                                 closingTextP.innerHTML = closingSevenText
@@ -1990,7 +2005,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                          stepNineIntroductionButton.addEventListener("click", () => {
                             if(stepNineTitle != ""){
 
-                                saveSeven()
+                                saveEight()
                                
                                     toolbarEightCount.innerText = "V"
                                     toolbarEightCheck.style.backgroundColor = "white"
@@ -2047,6 +2062,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     closingIntroductionDiv.appendChild(closingIntroductionButton)
                                
                             } else {
+                                const stepEightButton = document.getElementById("step-eight-button")
+
                                 toolbarEightCount.innerText = "V"
                                 toolbarEightCheck.style.backgroundColor = "white"
                                 toolbarEightCount.style.color = "#008e8e"

@@ -1,12 +1,25 @@
 <!DOCTYPE html>
 <html lang="nl">
-<head>
+
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-159826016-1');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="Kenniscentrum coaching">
+    <meta name="description" content="Alles over coaching">
+    <Title> Vitaminds - Kenniscentrum coaching</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Style/style.css">
-    <link rel="stylesheet" href="Style/intervisie.css">
-    <link rel="stylesheet" href="Style/voor-coach.css">
+    <link rel="stylesheet" href="Style/cooperations.css">
     <link rel="shortcut icon" href="images/Favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -16,16 +29,16 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
     <script>src="https://www.gstatic.com/firebasejs/6.5.0/firebase-analytics.js"</script>
     <script src="https://js.stripe.com/v3/"></script>
-    <title>Intervisie voor coaches</title>
-</head>
-<body>
+  </head>
 
-   <!-- Feedback -->
+  <body>
+
+    <!-- Feedback -->
    <div id="feedback">
     <a href="tickets.html"> <p>Feedback</p></a>
   </div>
-
-      <!-- Mobile-menu -->
+  
+             <!-- Mobile-menu -->
   <nav id="mobile-menu"> 
     <div id="menu-mobile-visible-layer">
       <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
@@ -69,28 +82,12 @@
     </div>
   </nav>
   
-  <h1>Intervisie</h1>
+<h1>Samenwerken</h1>
 
-  <section id="casus-overview">
+<main id="cooperations-artikel-outer-div"></main> 
 
-    <textarea name="" id="new-casus" cols="50" rows="2"></textarea>
-
-    <div id="create-casus">
-      <h2 id="new-casus-title">Geef je casus een titel</h2>
-      <input type="text" id="new-casus-title-input" placeholder="Casus titel">
-      <h2>Omschrijf je casus</h2>
-      <textarea name="" id="new-casus-description" cols="70" rows="10" placeholder="Casus omschrijving"></textarea>
-      <div>
-        <button id="submit-casus" class="button-algemeen">Casus indienen</button>
-      </div>
-    </div>
-
-    <div id="casus-outer-div"></div>
-
-  </section>
-
- <!-- Toolbar mobile -->
- <div class="toolbar-mobile">
+<!-- Toolbar mobile -->
+<div class="toolbar-mobile">
   <div class="toolbar-mobile-inner-div">
     <img src="images/home-icon.png" alt="" id="toolbar-home">
     <p class="description-menu-icons-toolbar-mobile">Open up</p>
@@ -115,24 +112,24 @@
   </div>  
 </div>
 
+<!-- footer -->
+<footer class="footer">
+  <div>
+   <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+  </div>
+  <div>
+    <h3 id="slogan-footer">Het sociale network voor imperfecte mensen</h3>
+  </div>
+  <div>
+   <a href="https://www.facebook.com/VitamindsNederland/"><img src="images/Logo-facebook.png" alt="" width="25px"></a>
+   <a href="https://www.instagram.com/vitaminds.nu/"><img src="images/logo-insta.png" alt="" width="40px"></a>
+  </div>
+</footer>
 
-      <!-- footer -->
-      <footer class="footer">
-        <div>
-         <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
-        </div>
-        <div>
-          <h3 id="slogan-footer">Het sociale network voor imperfecte mensen</h3>
-        </div>
-        <div>
-         <a href="https://www.facebook.com/VitamindsNederland/"><img src="images/Logo-facebook.png" alt="" width="25px"></a>
-         <a href="https://www.instagram.com/vitaminds.nu/"><img src="images/logo-insta.png" alt="" width="40px"></a>
-        </div>
-      </footer>
-      
-          <script type="text/javascript" src="javascript/firebase.js"></script>
-          <script type="text/javascript" src="javascript/auth.js"></script>
-          <script type="text/javascript" src="javascript/index.js"></script>
-          <script type="text/javascript" src="javascript/intervisie.js"></script>
-</body>
-</html>
+      <script type="text/javascript" src="javascript/firebase.js"></script>
+      <script type="text/javascript" src="javascript/auth.js"></script>
+      <script type="text/javascript" src="javascript/index.js"></script>
+      <script type="text/javascript" src="javascript/cooperations.js"></script>
+    </body>
+  </html>
+  

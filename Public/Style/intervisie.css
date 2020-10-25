@@ -79,3 +79,46 @@
 #casus-button{
     margin: 0px 0px 30px 0px;
 }
+
+.casus-inner-div-detail{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    border-radius: 2px;
+    padding: 20px 20px 0px 20px;
+}
+
+#give-reaction-outers-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid  #b3b3b3;
+    border-bottom: 1px solid  #b3b3b3;
+}
+
+#give-reaction-button{
+    margin: 20px 0px 20px 0px;
+}
+
+.reaction-inner-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    margin: 20px 200px 20px 200px;
+}
+
+.casus-coach-div-reaction{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin-left: 40px;
+}
+
+.casus-coach-div-reaction img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
