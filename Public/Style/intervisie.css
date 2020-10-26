@@ -48,6 +48,11 @@
     padding: 20px 20px 0px 20px;
 }
 
+.casus-inner-div p{
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
 .casus-coach-div{
     display: flex;
     justify-content: flex-start;
@@ -75,6 +80,17 @@
     background-position: center;
     background-size: cover;
 }
+
+.coach-menu-main-p{
+    margin-left: auto;
+    color: #49beb7;
+    font-size: 16px;
+    border: #49beb7 1px solid;
+    border-radius: 15px;
+    text-decoration: none !important;
+    font-weight: bold;
+    padding: 5px;
+   }
 
 #casus-button{
     margin: 0px 0px 30px 0px;
@@ -121,4 +137,27 @@
     width: 50px;
     border-radius: 50%;
     margin-right: 10px;
+}
+
+@media only screen and (max-width: 938px){
+
+    textarea {
+        max-width: 60%;
+    }
+
+    #create-casus input {
+        width: 60%;
+    }
+
+    .casus-inner-div {
+        margin: 30px 20px 30px 20px;
+    }
+
+    #give-reaction-outers-div {
+        padding: 0px 20px 0px 20px;
+    }
+
+    .reaction-inner-div {
+        margin: 20px 20px 20px 20px;
+    }
 }

@@ -88,28 +88,85 @@ db.collection("Cooperations").where("Question", "==", titel)
     });
 }();
 
-function saveNewReaction(){
+!function saveNewReaction(){
 
-    saveCasusButton.innerText = "Casus ingediend"
+    const reactionButton = document.getElementById("give-reaction-button")
+    const reaction = document.getElementById("give-reaction-input")
 
-    auth.onAuthStateChanged(User =>{
-        userRef = db.collection("Vitaminders").doc(User.uid)
-        userRef.get()
-        .then(doc => {
+    reactionButton.addEventListener("click", () => {
+
+    reactionButton.innerText = "Opgeslagen"
+
+        auth.onAuthStateChanged(User =>{
+            userRef = db.collection("Vitaminders").doc(User.uid)
+            userRef.get()
+            .then(doc => {
 
                 const coach = doc.data().Gebruikersnaam
-                const coachClean = doc.data().GebruikersnaamClean
 
-            db.collection("Intervisie").doc().set({
-                Coach: coach,
-                CoachClean: coachClean,
-                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                Owner: "Vitaminds",
-                Title: nexCasusTitle.value,
-                ID: idClean,
-                CasusTitleID: idClean + nexCasusTitle.value,
-                Description: newCasusDespription.value
+                db.collection("Cooperations")
+                .where("Question", "==", titel)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+        
+                        db.collection("Cooperations").doc(doc.id)
+                        .collection("ReactionsCooperations").doc().set({
+                            Question: titel,
+                            Reactor: coach,
+                            Reaction: reaction.value,
+                            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                            Owner: "Vitaminds",
+                        });
+                    });
+                });
             });
         });
     });
-};
+}();
+
+!function loadReactionsToDOM(){
+
+    const reactionsOuterDiv = document.getElementById("reactions-outer-div")
+
+    console.log(titel)
+
+db.collectionGroup("ReactionsCooperations").where("Question", "==", titel)
+.get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const reactor = doc.data().Reactor
+        const reaction = doc.data().Reaction
+
+        const reactionInnerDiv = document.createElement("div")
+            reactionInnerDiv.setAttribute("class", "reaction-inner-div")
+        const reactionP = document.createElement("p")
+
+        reactionP.innerHTML = reaction
+
+            db.collection("Vitaminders")
+            .where("Gebruikersnaam", "==", reactor)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+        
+                    const profilePic = doc1.data().Profielfoto
+                    const userNameClean = doc1.data().GebruikersnaamClean
+        
+                    const coachDiv = document.createElement("div")
+                        coachDiv.setAttribute("class", ("cooperations-coach-div-reaction"))
+                    const coachPic = document.createElement("img")
+                    const coachName = document.createElement("p")
+                        coachName.setAttribute("class", "cooperations-coachname")
+        
+                    coachPic.src = profilePic
+                    coachName.innerText = userNameClean
+
+                    reactionsOuterDiv.appendChild(reactionInnerDiv)
+                    reactionInnerDiv.appendChild(coachDiv)
+                    coachDiv.appendChild(coachPic)
+                    coachDiv.appendChild(coachName)
+                    reactionInnerDiv.appendChild(reactionP)
+                });
+            });
+        });
+    });
+}();

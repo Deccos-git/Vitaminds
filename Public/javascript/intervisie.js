@@ -264,7 +264,7 @@ const reactionTitle = document.getElementById("reactions-title")
                 const coach = doc.data().Gebruikersnaam
                 const coachClean = doc.data().GebruikersnaamClean
 
-                reactionTitle.innerText = `Hoe kijk jij hiernaar, ${coachClean}`
+                reactionTitle.innerText = `Hoe kijk jij hiernaar, ${coachClean}?`
 
                 saveReaction(coach)
 

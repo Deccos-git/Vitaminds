@@ -159,7 +159,7 @@ ul{
 }
 
 #auth-menu{
-  margin: 10px 105px 15px 15px;
+  margin: 10px 10px 15px 15px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -253,26 +253,14 @@ ul{
   margin-left: 30px;
 }
 
-#aanmeldCH-mobile{
-  z-index: 1;
-  text-align: center;
-  margin: 5px 0px 0px 0px;
-  color: #8e0000;
+#aanmeldCH-mobile {
+  margin: 5px 0px 0px 5px;
+  color: #49beb7;
   font-size: 16px;
-}
-
-#aanmeldCH-mobile a{
+  font-family: 'Libre Baskerville', serif;
+  margin-left: 5px;
   text-decoration: none;
-  color: #8e0000;
-  font-size: 16px;
-}
-
-#aanmeldCH-mobile a:active{
-  color: #8e0000;
-}
-
-#aanmeldCH-mobile a:visited{
-  color: #8e0000;
+  text-align: center;
 }
 
 .login-logout{
@@ -985,7 +973,7 @@ ul{
 .subtitelTwee{
   color: #122b46;
   margin: 60px 0px 0px 0px;
-  padding: 80px 0px 0px 0px;
+  padding: 0px 20px 0px 20px;
 }
 
 .infoMenu{
@@ -1629,26 +1617,9 @@ margin: 0px 0px 30px 0px;
     align-self: flex-end;
   }
 
-  #dynamic-title-div {
-    display: none;
-  }
-
   .header-image h2{
     margin-bottom: 230px;
     letter-spacing: 0.5px;
-  }
-
-  #dynamic-call-to-action {
-    width: 80%;
-  }
-
-  #dynamic-title-dots{
-    display: none;
-  }
-
-  #background {
-    width: 90%;
-    margin-top: 0px;
   }
 
   #omgeving li {
@@ -1664,7 +1635,7 @@ margin: 0px 0px 30px 0px;
   }
 
   #begin h2{
-    font-size: 20px;
+    font-size: 30px;
     color: #122b46;
     margin: 15px;
     letter-spacing: 0.5px;
@@ -1680,6 +1651,9 @@ margin: 0px 0px 30px 0px;
     background-image: url(../images/mobile-hero.png);
     background-position: center;
     background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    margin-top: 0px;
   }
 
   .header-image{
@@ -1705,5 +1679,10 @@ margin: 0px 0px 30px 0px;
   margin-left: 20px;
   margin-right: 20px;
   align-items: center;
+}
+
+#welkom-sub-sub-titel {
+  background: none !important;
+  margin: 0px 0px 0px 0px !important;
 }
 } 

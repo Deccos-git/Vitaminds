@@ -441,3 +441,70 @@
     flex-direction: column;
     align-items: center;
 }
+
+.coach-menu-main-p{
+    margin-left: auto;
+    color: #49beb7;
+    font-size: 16px;
+    border: #49beb7 1px solid;
+    border-radius: 15px;
+    text-decoration: none !important;
+    font-weight: bold;
+    padding: 5px;
+}
+
+   #link-vitaminds{
+    color: #8e0000;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: 'Libre Baskerville', serif;
+    margin-left: 5px;
+    text-decoration: none;
+}
+
+@media only screen and (max-width: 938px){
+
+    .kenniscentrum-artikel-section {
+        width: 100%;
+        margin: 30px 20px 20px 20px;
+    }
+
+    #title-article-div {
+        margin: 0px 20px 0px 20px;
+        box-shadow: none;
+    }
+
+    #summary-article {
+        margin: 0px 20px 50px 20px;
+        box-shadow: none;
+        font-size: 18px;
+    }
+
+    .insights-outer-div {
+        flex-direction: column;
+        margin: 10px 20px 5px 20px;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    }
+
+    .meta-div-insights {
+        border-right: 1px solid #f7f7f7;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        padding: 10px;
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    #nieuwepost input {
+        width: 100%;
+    }
+
+    .text-div-insights {
+        padding: 0px;
+    }
+    
+    #coach-input {
+        margin: 0px 20px 0px 20px;
+    }
+}
