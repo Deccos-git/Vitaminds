@@ -77,8 +77,10 @@
     margin: 30px 15px 30px 15px;
 }
 
-.locatie-div{
+.locatie-div {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     margin: auto 0px 50px 0px;
 }
 

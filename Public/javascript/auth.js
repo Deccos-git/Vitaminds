@@ -145,10 +145,12 @@ hamburgerMenu.addEventListener("click", () => {
 const coachMenuDOM = document.getElementById("aanmeldCH-mobile")
 const coachMenuMobile = document.getElementById("coach-menu-main-mobile")
 
+if(coachMenuDOM != null){
 
   coachMenuDOM.addEventListener("click", () => {
     coachMenuMobile.style.display = "flex"
-  })
+  });
+};
 
 
 // Ingelogd in mobile-menu

@@ -150,9 +150,65 @@ function openCasusDetails(casusButtonDOM){
 
         const casusTitleID = casusButtonDOM.dataset.title
 
-        window.open("../Intervisions/" + [casusTitleID], "_self");
+        auth.onAuthStateChanged(User =>{
+            if(User){
+                userRef = db.collection("Vitaminders").doc(User.uid)
+                userRef.get()
+                .then(doc => {
+
+                    const userType = doc.data().Usertype
+                    const naamClean = doc.data().GebruikersnaamClean
+
+                    if(userType === "Coach"){
+
+            window.open("../Intervisions/" + [casusTitleID], "_self");
+
+                    } else {
+
+                        casusButtonDOM.innerHTML = `${naamClean}, maak een <a href="/aanmelden-coach.html">coachprofiel</a> aan om mee te praten`
+                        casusButtonDOM.style.border = "none"
+                        casusButtonDOM.style.color = "#cf6e13"
+                    }
+
+                });
+            } else {
+                notice.innerHTML = `Maak een <a href="/aanmelden-coach.html">coachprofiel</a> aan om mee te praten`
+
+                casusButtonDOM.innerHTML = `Maak een <a href="/aanmelden-coach.html">coachprofiel</a> aan om mee te praten`
+                casusButtonDOM.style.border = "none"
+                casusButtonDOM.style.color = "#cf6e13"
+            }
+        });
     });
 };
+
+!function hideTextAreaForNonCoach(){
+
+    const textarea = document.getElementById("new-casus")
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+            userRef = db.collection("Vitaminders").doc(User.uid)
+            userRef.get()
+            .then(doc => {
+
+                const userType = doc.data().Usertype
+
+                if(userType === "Coach"){
+
+                    textarea.style.display = "block"
+
+                } else {
+                    
+                    textarea.style.display = "none"
+                }
+
+            });
+        } else {
+            textarea.style.display = "none"
+        }
+    });
+}();
 
 // Casus detail page
 

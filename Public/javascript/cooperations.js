@@ -4,7 +4,34 @@ function openCooperation(buttonDOM, cooperationTitle){
 
     buttonDOM.addEventListener("click", () => {
 
-        window.open("../Cooperation/" + [cooperationTitle], "_self");
+        auth.onAuthStateChanged(User =>{
+            if(User){
+                userRef = db.collection("Vitaminders").doc(User.uid)
+                userRef.get()
+                .then(doc => {
+
+                    const userType = doc.data().Usertype
+                    const naamClean = doc.data().GebruikersnaamClean
+
+                    if(userType === "Coach"){
+
+                        window.open("../Cooperation/" + [cooperationTitle], "_self");
+
+                    } else {
+                       
+                        buttonDOM.innerHTML = `${naamClean}, maak een <a href="/aanmelden-coach.html">coachprofiel</a> aan om mee te praten`
+                        buttonDOM.style.border = "none"
+                        buttonDOM.style.color = "#cf6e13"
+                    }
+
+                });
+            } else {
+
+                buttonDOM.innerHTML = `Maak een <a href="/aanmelden-coach.html">coachprofiel</a> aan om mee te praten`
+                buttonDOM.style.border = "none"
+                buttonDOM.style.color = "#cf6e13"
+            }
+        });
     });
 };
 
