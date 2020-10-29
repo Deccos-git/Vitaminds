@@ -188,6 +188,11 @@ app.get('/coaches-2/*',function(req,res)
     res.sendFile('/index-redirect.html', { root: __dirname });
 });
 
+app.get('/voor-coach.html',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
 
 
 

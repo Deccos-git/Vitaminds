@@ -61,10 +61,10 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
                 window.open("Vitaminders/" + [naam], "_self");
             });
 
-            // Exclude Gijs from list of coaches
-            // if(naam == "fbKlPnWobJh0ldPROWQRYGCezhv2Gijs van Beusekom"){
-            //     nieuweDiv.style.display = "none"
-            // };
+            // Exclude from list of coaches
+            if(naam == "115tuwbtujsSelam"){
+                nieuweDiv.style.display = "none"
+            };
             
 
             //De coach-eigenschappen in de nieuwe HTML-elementen zetten

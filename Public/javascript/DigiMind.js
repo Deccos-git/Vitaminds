@@ -1,4 +1,3 @@
-
 // Dashboard
 const dashboard = document.getElementById("dashboard-section")
 
@@ -311,7 +310,6 @@ ontwikkelingTab.style.color = "white"
         active(intervisieTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,favInspiratieTab, ontwikkelingTab)
         active(ontwikkelingTab, intervisieTab,dagelijksLevenTab,mijnBijdragenTab,contactTab,mijnCoachingTab,dashboardTab,levenslessenTab,levenvragenTab,favCoachesTab,favInspiratieTab)
 
-
   // Naam uit URL halen
 const naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
 const naam1 = naamhtml.replace('.html', '')
@@ -326,6 +324,29 @@ const naam9 = naam8.replace('%20',' ')
 const naam10 = naam9.replace('%20',' ')
 const naam11 = naam10.replace('%20',' ')
 const naam = naam11.replace('%20',' ')
+
+// Open contact page id coachprofile
+
+!function openContactPageIFCoachprofile(){
+
+        const conactTab = document.getElementById("contact-tab")
+
+        db.collection('Vitaminders')
+        .where('Gebruikersnaam', '==', naam )
+        .get()
+        .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+
+                const userType = doc.data().Usertype
+
+                        if(userType === "Coach"){
+
+                                contactTab.click();
+                        };
+
+                });
+        });
+}();
 
 // UPDATE META TAGS
 function digimindMetaTags(coachDescription, coach, profilePic){
@@ -934,8 +955,6 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
         const username = document.getElementsByClassName('welkom')[0];
         const usertype = document.getElementsByClassName('usertype')[0];
         const profielfoto = document.getElementById("profielfoto");
-        
-         
 
         if(profilePic == undefined){
                 profielfoto.style.backgroundImage ="url('../images/dummy-profile-photo.jpeg')"
@@ -954,12 +973,82 @@ db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
   })
 
 // Loading coach info
+
+function saveIntroduction(documentID){
+
+        const introductionButton = document.getElementById("introduction-button")
+
+        introductionButton.addEventListener("click", () => {
+
+                const introductionInput = tinyMCE.get('tiny-mce').getContent()
+
+                introductionButton.innerText = "Opgeslagen"
+
+                db.collection("Vitaminders").doc(documentID).update({
+                        Introduction: introductionInput
+                });
+        });
+};
+
+function loadIntroductionToDOM(docu){
+
+        const introductionDOM = document.getElementById("introduction")
+
+        const introduction = docu.data().Introduction
+
+        const introductionP = document.createElement("p")
+                introductionP.setAttribute("id", "introduction-text")
+
+        introductionP.innerHTML = introduction
+
+        introductionDOM.appendChild(introductionP)
+
+        if(introduction === undefined){
+                introductionDOM.style.display = "none"
+        }
+
+}
+
+function hideIntroductionInputForNoneAuth(introductionText){
+        const introductionInput = document.getElementById("introduction-input-div")
+        const editIcon = document.getElementById("edit-coach-introduction-icon")
+
+        console.log(introductionText)
+
+        auth.onAuthStateChanged(User =>{
+                if (User){
+    
+                        db.collection("Vitaminders").doc(User.uid).
+                        get().then(function(doc1){
+
+                                const auth = doc1.data().Gebruikersnaam;
+
+                                if(auth != naam){
+                                        editIcon.style.display = "none"
+                                };
+
+                                if(auth === naam && introductionText === undefined){
+                                        introductionInput.style.display = "flex"
+                                        editIcon.style.display = "none"
+                                };
+
+                        });
+                } else {
+                        editIcon.style.display = "none" 
+                }
+        });
+
+};
+
+
+
 db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
                 const gebruikersnaam = doc.data().Gebruikersnaam
                 const nameClean = doc.data().GebruikersnaamClean
                 const email = doc.data().Email
+                const introduction = doc.data().Introduction
 
                 // Contact info
                 const usertype = doc.data().Usertype
@@ -979,6 +1068,11 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 const years = doc.data().YearsExperience
                 const experience = doc.data().Experience
                 const education = doc.data().Education
+
+                // Introduction
+                saveIntroduction(doc.id)
+                loadIntroductionToDOM(doc)
+                hideIntroductionInputForNoneAuth(introduction)
 
                 // Chat 
                 const chatButton = document.getElementById("chat-button")

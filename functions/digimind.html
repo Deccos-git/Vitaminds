@@ -36,11 +36,10 @@
     <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
       tinymce.init({
-        width: 720,
-        height: 800,
+        height: 500,
         selector: '#tiny-mce',
-        toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image',
-        plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists',
+        toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media',
+      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media',
         toolbar_mode: 'floating',
         plugin_preview_width: 720,
         forced_root_block : false,
@@ -264,9 +263,20 @@
   <div id="coach-contact">
     <div id="contact-inner-div">
     </div>
+    <div id="introduction-inner-div">
+      <div id="introduction-input-div">
+        <h2>Stel jezelf voor</h2>
+        <div id="tiny-mce"></div>
+        <button class="button-algemeen" id="introduction-button">Opslaan</button>
+      </div>
+      <div id="introduction">
+        <img id="edit-coach-introduction-icon" src="../images/edit-icon.png" alt="coach introduction aanpassen">
+        <h2 id="welcome-title">Welkom op mijn profiel</h2>
+      </div>
+    </div>
     <div id="chat-button-contact">
       <img src="../images/menu-contact.png" alt="">
-      <h3>Start gesprek</h3>
+      <h3>Stel mij een vraag</h3>
     </div>
   </div>
 
@@ -319,9 +329,6 @@
     <h2>Schrijf een artikel</h2>
     
     <div id="nieuwepost">
-          <input id="nieuwposttitel" type="text" placeholder="Jouw inspirerende titel...">
-          <div id="hidden-ID"></div>
-          <div id="tiny-mce"></div>
 
         <!-- <h3>Jouw tekst</h3>
         <div id="texteditor">

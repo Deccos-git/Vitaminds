@@ -70,6 +70,11 @@
     margin: 20px 200px 20px 200px;
 }
 
+.reaction-inner-div p{
+    padding: 10px;
+    font-size: 18px;
+}
+
 .cooperations-coach-div-reaction {
     display: flex;
     justify-content: flex-start;

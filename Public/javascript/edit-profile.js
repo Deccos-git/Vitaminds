@@ -454,6 +454,30 @@ function editContact(elem){
         })
 }
 
+// Coach introduction
+
+const editIntroduction = document.getElementById("edit-coach-introduction-icon")
+const welcomeTitle = document.getElementById("welcome-title")
+
+editIntroduction.addEventListener("click", () => {
+
+        const introductionText = document.getElementById("introduction-text")
+
+        introductionText.style.display = "none"
+
+        const editorDiv = document.getElementById("introduction-input-div")
+
+        editorDiv.style.display = "flex"
+
+        editIntroduction.style.display = "none"
+        welcomeTitle.style.display = "none"
+
+        const tinyEditor = tinyMCE.get('tiny-mce')
+        
+        tinyEditor.setContent(introductionText.innerHTML)
+
+});
+
 //Coach summary
 
 function editShort(elem){

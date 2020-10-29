@@ -139,8 +139,8 @@ hamburgerMenu.addEventListener("click", () => {
         mobileMenu.style.display = "none"
         else {
         mobileMenu.style.display = "flex"    
-        }
-})
+        };
+});
 
 const coachMenuDOM = document.getElementById("aanmeldCH-mobile")
 const coachMenuMobile = document.getElementById("coach-menu-main-mobile")

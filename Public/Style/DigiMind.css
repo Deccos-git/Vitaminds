@@ -890,10 +890,26 @@
     background-color: #FFF;
     padding: 15px;
     width: auto;
-    margin: 0px;
-    border-radius: 2px;
+    margin: 20px;
+    border-radius: 5px;
     justify-content: space-evenly;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+#introduction-input-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+#introduction{
+    margin-top: 20px;
+    padding: 30px;
+}
+
+#edit-coach-introduction-icon{
+    cursor: pointer;
+    margin-bottom: -60px;
 }
 
 #short-inner-div{
@@ -1918,6 +1934,20 @@
 
     .workshop-div {
         width: 100%;
+    }
+
+    .tox-tinymce {
+        border: 1px solid #ccc;
+        border-radius: 0;
+        box-shadow: none;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        font-family: 'Nunito Sans', sans-serif;
+        overflow: hidden;
+        position: relative;
+        visibility: inherit!important;
+        width: 300px;
     }
 
 }
