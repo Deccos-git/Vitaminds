@@ -1,6 +1,6 @@
 // Naam uit URL halen
-const naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
-const naam1 = naamhtml.replace('.html', '')
+const naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
+const naam1 = naamhtml.replace('.html', '')
 const naam2 = naam1.replace('%20',' ')
 const naam3 = naam2.replace('%20',' ')
 const naam4 = naam3.replace('%20',' ')
@@ -17,21 +17,20 @@ const naam = naam11.replace('%20',' ')
 
 const videoIcon = document.getElementById("video-icon")
 
-videoIcon.addEventListener("click", () => {
+if(videoIcon != null){
 
-    const p = new SimplePeer({
-        initiator: location.hash === '#1',
-        trickle: false
-      })
+    videoIcon.addEventListener("click", () => {
 
-      p.on('error', err => console.log('error', err))
-});
+        window.open("../videochat.html" , "_self");
+
+    });
+};
 
 // Title 
-db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
-    .get()
-    .then(querySnapshot => {
-    querySnapshot.forEach(doc => {
+db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
+    .get()
+    .then(querySnapshot => {
+    querySnapshot.forEach(doc => {
 
     const user1 = doc.data().GebruikersnaamClean
 
@@ -210,7 +209,8 @@ function saveAuthToReadlist(docID, authName, userName){
 
         if(messages != 0){
     
-    const messageRef = docRef.collection("Messages").get()
+    const messageRef = docRef.collection("Messages")
+    messageRef.get()
     .then(querySnapshot => {
     querySnapshot.forEach(doc2 => {
 

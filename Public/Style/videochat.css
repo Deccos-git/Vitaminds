@@ -1,0 +1,14 @@
+#videos{
+    display: flex;
+    margin: 20px;
+}
+
+#localVideo{
+    border-radius: 10px;
+    margin: 20px;
+}
+
+#remoteVideo{
+    border-radius: 10px;
+    margin: 20px;
+}
