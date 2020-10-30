@@ -13,6 +13,20 @@ const naam10 = naam9.replace('%20',' ')
 const naam11 = naam10.replace('%20',' ')
 const naam = naam11.replace('%20',' ')
 
+// Video chat
+
+const videoIcon = document.getElementById("video-icon")
+
+videoIcon.addEventListener("click", () => {
+
+    const p = new SimplePeer({
+        initiator: location.hash === '#1',
+        trickle: false
+      })
+
+      p.on('error', err => console.log('error', err))
+});
+
 // Title 
 db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
     .get()
@@ -727,3 +741,4 @@ if (buttonAddLearning != null){
     });  
 };
 }; addLearning()
+
