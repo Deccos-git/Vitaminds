@@ -47,6 +47,8 @@ function init() {
   document.querySelector('#video-stop-icon').addEventListener('click', hangUp);
   document.querySelector('#createBtn').addEventListener('click', createRoom);
   document.querySelector('#joinBtn').addEventListener('click', joinRoom);
+  document.querySelector('#learning-video-chat').addEventListener('click', displasyLearningDiv);
+
   roomDialog = document.querySelector('#room-dialog');
 }
 
@@ -95,6 +97,9 @@ async function createRoom() {
   // Code for creating a room above
 
   // Code for inviting other to room below
+    const chatDiv = document.getElementById("chat-screen")
+    chatDiv.scrollIntoView()
+    
     const message = document.getElementById("chat-input").value 
 
     auth.onAuthStateChanged(User =>{
@@ -323,6 +328,18 @@ function registerPeerConnectionListeners() {
     console.log(
         `ICE connection state change: ${peerConnection.iceConnectionState}`);
   });
+}
+
+//Display learning div
+
+function displasyLearningDiv(){
+
+  const learningDiv = document.getElementById("add-learning-div")
+
+  learningDiv.style.display = "flex"
+
+  learningDiv.scrollIntoView()
+
 }
 
 init();
