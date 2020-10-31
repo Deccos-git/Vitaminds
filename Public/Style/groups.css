@@ -127,6 +127,10 @@
     display: none;
 }
 
+.coachgroup-builder-input-div{
+    display: flex;
+}
+
 
 /* Individual group page */
 
@@ -250,6 +254,12 @@
 
 #create-coachgroup-goal-select{
     width: auto;
+}
+
+#foto-upload-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 

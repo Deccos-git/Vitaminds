@@ -120,14 +120,23 @@
     <div id="foto-upload-div">
         <input id="foto-upload" type="file">
         <p id="progress-bar"></p>
-        <button id="upload-cover-photo-coachgroup">Upload</button>
+        <button class="button-reverse" id="upload-cover-photo-coachgroup">Upload</button>
     </div>
 
     <h3>Wat kunnen mensen leren in jouw coachgroep?</h3>
     <textarea id="coachgroup-description" name="" cols="30" rows="10"></textarea>
 
-    <h3>Hoevaak per maand plaats je nieuwe oefeningen?</h3>
-    <input id="coachgroup-number-exercises" type="number" placeholder="Aantal oefeningen per maand">
+    <h3>Op welke dag en tijdstip komt de groep samen?</h3>
+    <div class="coachgroup-builder-input-div">
+      <p>Iedere</p>
+      <input id="coachgroup-data-gatherings" type="text" placeholder="Datum & tijdstip bijeenkomsten">
+    </div>
+
+    <h3>Hoelang duren je wekelijkse groepsessies?</h3>
+    <div class="coachgroup-builder-input-div">
+      <input id="coachgroup-lenght-sessions" type="number" placeholder="Duur van bijeenkomsten">
+      <p>minuten</p>
+    </div>
 
     <h3>Hoeveel mensen kunnen maximaal deelnemen aan je coachgroep?</h3>
     <input id="coachgroup-number-participants" type="number" placeholder="Maximaal aantaal deelnemers">

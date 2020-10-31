@@ -598,6 +598,16 @@ ul{
   cursor: pointer;
  }
 
+ .button-reverse {
+  background-color: #008e8e;
+  border: 1px #008e8e solid;
+  border-radius: 10px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+ }
+
  .button-algemeen a{
    color: #008e8e;
  }

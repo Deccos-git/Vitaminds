@@ -291,23 +291,26 @@ function groupDescriptionLanding(roomName, groupDescription){
     });
 };
 
-function groupFactsLanding(memberCount, messageCount, exerciseCount, montlyFee, maximumMembersCount){
+function groupFactsLanding(memberCount, messageCount, dates, lenghtOfSession, montlyFee, maximumMembersCount){
 
     const numberOfMembersLi = document.createElement("li")
     const maximumMembers = document.createElement("li")
     const numberOfMessagesLi = document.createElement("li")
-    const numberOfExercises = document.createElement("li")
+    const data = document.createElement("li")
+    const sessionLenght = document.createElement("li")
     const costsPerMonth = document.createElement("p")
 
     numberOfMembersLi.innerText = `Aantal leden: ${memberCount.length}`
     maximumMembers.innerText = `Maximum aantal leden: ${maximumMembersCount}`
     numberOfMessagesLi.innerText = `Aantal berichten: ${messageCount}`
-    numberOfExercises.innerText = `Aantal oefeningen per maand: ${exerciseCount}`
+    data.innerText = `Moment waarop groep bijeenkomt: ${dates}`
+    sessionLenght.innerText = `De bijeenkomsten duren: ${lenghtOfSession} minuten`
     costsPerMonth.innerText = `Kosten per maand: ${montlyFee} euro`
 
     if(groupFactsUl != null){
 
-    groupFactsUl.appendChild(numberOfExercises)
+    groupFactsUl.appendChild(data)
+    groupFactsUl.appendChild(sessionLenght)
     groupFactsUl.appendChild(numberOfMembersLi)
     groupFactsUl.appendChild(maximumMembers)
     groupFactsUl.appendChild(numberOfMessagesLi)
@@ -353,16 +356,17 @@ function openGroup(roomName, buttonName){
             const room1 = doc1.data().Room
             const creator = doc1.data().Creater
             const bannerImage = doc1.data().CoverPhoto
-            const exercises = doc1.data().AmountExersices
             const price = doc1.data().Costs
             const maxMembers = doc1.data().NumberParticipants
+            const data = doc1.data().Data
+            const sessionLenght = doc1.data().SessionLenght
 
 
             groupLandingH1(room1, roomClean, type1)
 
             groupLandingCreatorInformation(creator, type1)
 
-            groupFactsLanding(members, messages, exercises, price, maxMembers)
+            groupFactsLanding(members, messages, data, sessionLenght, price, maxMembers)
     
             hideLandingIfAuthIsMember(members, groupLandingPageOuterDiv)
     
@@ -554,7 +558,8 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
         const coverPhoto = doc.data().CoverPhoto
         const costs = doc.data().Costs
         const members = doc.data().Members
-        const exersices = doc.data().AmountExersices
+        const data = doc.data().Data
+        const sessionLenght =doc.data().SessionLenght
         const type = doc.data().Type
 
         const DOM = document.getElementById("coachgroups")
@@ -575,7 +580,8 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
         const numberParticipantsP = document.createElement("p")
         const memberCount = document.createElement("p")
         const startNumberP = document.createElement("p")
-        const exersicesP = document.createElement("p")
+        const dataP = document.createElement("p")
+        const sessionLenghtP = document.createElement("p")
         const costsP = document.createElement("p")
         const bottomDiv = document.createElement("div")
             bottomDiv.setAttribute("class", "bottom-div")
@@ -630,16 +636,17 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
                 });
             });
 
-            numberParticipantsP.innerText = `Max. leden: ${numberParticipants}`
-            memberCount.innerText = `Huidig aantal leden: ${members.length}`
-            costsP.innerText = `Kosten per week: ${costs} euro`
-            startNumberP.innerText = `Coachgroep begint bij: ${startNumber} leden`
-            exersicesP.innerText = `Aantal oefeningen per maand: ${exersices}`
-            leaveGroup.innerText = "Groep verlaten"
+            numberParticipantsP.innerHTML = `<b>Max. leden:</b> ${numberParticipants}`
+            memberCount.innerHTML = `<b>Huidig aantal leden:</b> ${members.length}`
+            costsP.innerHTML = `<b>Kosten per week:</b> ${costs} euro`
+            startNumberP.innerHTML = `<b>Coachgroep begint bij:</b> ${startNumber} leden`
+            dataP.innerHTML = `<b>Moment waarop groep bijeenkomt:</b> Iedere ${data}`
+            sessionLenghtP.innerHTML = `<b>De bijeenkomsten duren:</b> ${sessionLenght} minuten`
+            leaveGroup.innerHTML = "Groep verlaten"
 
             // coachgroup agreement
 
-            coachgroupAgreementTitle(`${description}. Ik plaats ${exersices} keer per maand een nieuwe oefening.`)
+            coachgroupAgreementTitle(`${description}. We komen iedere ${data} bij elkaar. De bijeenkomsten duren ${sessionLenght} minuten.`)
 
             db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
                 querySnapshot.forEach(doc1 => {
@@ -662,7 +669,8 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
             bottomDiv.appendChild(groupTitleH2)
             bottomDiv.appendChild(descriptionP)
             groupInnerDiv.appendChild(metaDiv)
-            metaDiv.appendChild(exersicesP)
+            metaDiv.appendChild(dataP)
+            metaDiv.appendChild(sessionLenghtP)
             metaDiv.appendChild(numberParticipantsP)
             metaDiv.appendChild(startNumberP)
             metaDiv.appendChild(memberCount)
@@ -1576,7 +1584,8 @@ function saveCoachgroup(){
     const numberParticipants = document.getElementById("coachgroup-number-participants").value
     const costs = document.getElementById("coachgroup-costs").value
     const startNumber = document.getElementById("coachgroup-start-number").value
-    const exercises = document.getElementById("coachgroup-number-exercises").value
+    const data = document.getElementById("coachgroup-data-gatherings").value
+    const sessionLenght = document.getElementById("coachgroup-lenght-sessions").value
 
     // Group goal
     const groupGoalSelect = document.getElementById("create-coachgroup-goal-select")
@@ -1595,7 +1604,8 @@ function saveCoachgroup(){
         StartNumber: startNumber,
         Members: firebase.firestore.FieldValue.arrayUnion(auth),
         Goal: option,
-        AmountExersices: exercises,
+        Data: data,
+        SessionLenght: sessionLenght,
         Messages: 0,
         Type: "Coachgroup", 
         CoverPhoto: coverPhoto
