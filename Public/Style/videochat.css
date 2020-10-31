@@ -12,3 +12,9 @@
     border-radius: 10px;
     margin: 20px;
 }
+
+#videochat-outer-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}

@@ -13,18 +13,6 @@ const naam10 = naam9.replace('%20',' ')
 const naam11 = naam10.replace('%20',' ')
 const naam = naam11.replace('%20',' ')
 
-// Video chat
-
-const videoIcon = document.getElementById("video-icon")
-
-if(videoIcon != null){
-
-    videoIcon.addEventListener("click", () => {
-
-        window.open("../videochat.html" , "_self");
-
-    });
-};
 
 // Title 
 db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )

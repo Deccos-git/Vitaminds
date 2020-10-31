@@ -1,5 +1,9 @@
+const videoDOM = document.getElementById("videos")
 
-mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
+const remoteVideo = document.createElement("video")
+  remoteVideo.setAttribute("autoplay", "true")
+  remoteVideo.setAttribute("playsinline", "true")
+  remoteVideo.setAttribute("id", "remoteVideo")
 
 const configuration = {
   iceServers: [
@@ -20,7 +24,7 @@ let roomDialog = null;
 let roomId = null;
 
 function init() {
-  document.querySelector('#cameraBtn').addEventListener('click', openUserMedia);
+  document.querySelector('#video-div').addEventListener('click', openUserMedia);
   document.querySelector('#hangupBtn').addEventListener('click', hangUp);
   document.querySelector('#createBtn').addEventListener('click', createRoom);
   document.querySelector('#joinBtn').addEventListener('click', joinRoom);
@@ -132,6 +136,8 @@ async function joinRoomById(roomId) {
     registerPeerConnectionListeners();
     localStream.getTracks().forEach(track => {
       peerConnection.addTrack(track, localStream);
+
+      videoDOM.appendChild(remoteVideo)
     });
 
     // Code for collecting ICE candidates below
@@ -151,6 +157,8 @@ async function joinRoomById(roomId) {
       event.streams[0].getTracks().forEach(track => {
         console.log('Add a track to the remoteStream:', track);
         remoteStream.addTrack(track);
+
+        videoDOM.appendChild(remoteVideo)
       });
     });
 
@@ -186,18 +194,23 @@ async function joinRoomById(roomId) {
 }
 
 async function openUserMedia(e) {
+
+  const videochatOuterDiv = document.getElementById("videochat-outer-div")
+    videochatOuterDiv.style.display = "flex"
+    videochatOuterDiv.scrollIntoView()
+
   const stream = await navigator.mediaDevices.getUserMedia(
       {video: true, audio: true});
   document.querySelector('#localVideo').srcObject = stream;
   localStream = stream;
   remoteStream = new MediaStream();
-  document.querySelector('#remoteVideo').srcObject = remoteStream;
+
+  remoteVideo.srcObject = remoteStream;
 
   console.log('Stream:', document.querySelector('#localVideo').srcObject);
-  document.querySelector('#cameraBtn').disabled = true;
   document.querySelector('#joinBtn').disabled = false;
   document.querySelector('#createBtn').disabled = false;
-  document.querySelector('#hangupBtn').disabled = false;
+  document.querySelector('#hangupBtn').disabled = true;
 }
 
 async function hangUp(e) {

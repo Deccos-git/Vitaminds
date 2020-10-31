@@ -121,6 +121,27 @@
     <p id="notice-learning-added">Je levensles is opgeslagen</p>
   </div>
 
+  <section id="videochat-outer-div">
+    <div id="buttons">
+      <button class="mdc-button mdc-button--raised" disabled id="createBtn">
+          <span class="mdc-button__label">Start een videochat</span>
+      </button>
+      <button class="mdc-button mdc-button--raised" disabled id="joinBtn">
+          <span class="mdc-button__label">Deelnemen aan videochat</span>
+      </button>
+      <button class="mdc-button mdc-button--raised" disabled id="hangupBtn">
+          <span class="mdc-button__label">Verbinding verbreken</span>
+      </button>
+  </div>
+  <div>
+      <span id="currentRoom"></span>
+  </div>
+  <div id="videos">
+      <video id="localVideo" muted autoplay playsinline></video>
+      <!-- <video id="remoteVideo" autoplay playsinline></video> -->
+  </div>
+</section>
+
 <!-- Toolbar mobile -->
 <div class="toolbar-mobile">
   <div class="toolbar-mobile-inner-div">
@@ -164,6 +185,7 @@
 
       <script type="text/javascript" src="../javascript/firebase.js"></script>
       <script type="text/javascript" src="../javascript/chat.js"></script>
+      <script type="text/javascript" src="../javascript/videochat.js"></script>
       <script type="text/javascript" src="../javascript/auth.js"></script>
       <script type="text/javascript" src="../javascript/index.js"></script>
     </body>
