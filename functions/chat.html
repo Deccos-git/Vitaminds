@@ -106,6 +106,7 @@
     </div>
     <div id="video-div">
       <img id="video-icon" src="../images/video-icon.png" alt="start een video gesprek">
+      <img id="video-stop-icon" src="../images/stop-video-icon.png" alt="">
     </div>
     <input id="chat-input" type="text">
     <img id="send-icon" src="../images/send-icon.png" alt="">
@@ -129,16 +130,26 @@
       <button class="mdc-button mdc-button--raised" disabled id="joinBtn">
           <span class="mdc-button__label">Deelnemen aan videochat</span>
       </button>
-      <button class="mdc-button mdc-button--raised" disabled id="hangupBtn">
+      <!-- <button class="mdc-button mdc-button--raised" disabled id="hangupBtn">
           <span class="mdc-button__label">Verbinding verbreken</span>
-      </button>
+      </button> -->
   </div>
-  <div>
-      <span id="currentRoom"></span>
+
+  <div id="room-dialog">
+    <h2 id="my-dialog-title">Deelnemen aan videogesprek</h2>
+    <div id="my-dialog-content">
+      <p>Vul de toegangscode in:</p>
+            <input type="text" id="room-id" placeholder="Toegangscode">
+    </div>
+    <footer id="join-room-footer">
+        <button type="button" id="cancel-room-join">Annuleren</button>
+        <button type="button" id="room-join">Deelnemen</button>
+    </footer>
   </div>
+
   <div id="videos">
       <video id="localVideo" muted autoplay playsinline></video>
-      <!-- <video id="remoteVideo" autoplay playsinline></video> -->
+      <video id="remoteVideo" autoplay playsinline></video>
   </div>
 </section>
 

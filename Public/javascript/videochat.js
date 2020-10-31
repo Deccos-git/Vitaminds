@@ -1,9 +1,28 @@
-const videoDOM = document.getElementById("videos")
+// Naam uit URL halen
+!function getNameFromUrl(){
+const naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
+const naam1 = naamhtml.replace('.html', '')
+const naam2 = naam1.replace('%20',' ')
+const naam3 = naam2.replace('%20',' ')
+const naam4 = naam3.replace('%20',' ')
+const naam5 = naam4.replace('%20',' ')
+const naam6 = naam5.replace('%20',' ')
+const naam7 = naam6.replace('%20',' ')
+const naam8 = naam7.replace('%20',' ')
+const naam9 = naam8.replace('%20',' ')
+const naam10 = naam9.replace('%20',' ')
+const naam11 = naam10.replace('%20',' ')
+const naam = naam11.replace('%20',' ')
 
-const remoteVideo = document.createElement("video")
-  remoteVideo.setAttribute("autoplay", "true")
-  remoteVideo.setAttribute("playsinline", "true")
-  remoteVideo.setAttribute("id", "remoteVideo")
+window.chatName = naam
+}();
+
+// const videoDOM = document.getElementById("videos")
+
+// const remoteVideo = document.createElement("video")
+//   remoteVideo.setAttribute("autoplay", "true")
+//   remoteVideo.setAttribute("playsinline", "true")
+//   remoteVideo.setAttribute("id", "remoteVideo")
 
 const configuration = {
   iceServers: [
@@ -24,11 +43,11 @@ let roomDialog = null;
 let roomId = null;
 
 function init() {
-  document.querySelector('#video-div').addEventListener('click', openUserMedia);
-  document.querySelector('#hangupBtn').addEventListener('click', hangUp);
+  document.querySelector('#video-icon').addEventListener('click', openUserMedia);
+  document.querySelector('#video-stop-icon').addEventListener('click', hangUp);
   document.querySelector('#createBtn').addEventListener('click', createRoom);
   document.querySelector('#joinBtn').addEventListener('click', joinRoom);
-  roomDialog = new mdc.dialog.MDCDialog(document.querySelector('#room-dialog'));
+  roomDialog = document.querySelector('#room-dialog');
 }
 
 async function createRoom() {
@@ -73,9 +92,46 @@ async function createRoom() {
   await roomRef.set(roomWithOffer);
   roomId = roomRef.id;
   console.log(`New room created with SDP offer. Room ID: ${roomRef.id}`);
-  document.querySelector(
-      '#currentRoom').innerText = `Current room is ${roomRef.id} - You are the caller!`;
   // Code for creating a room above
+
+  // Code for inviting other to room below
+    const message = document.getElementById("chat-input").value 
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+          const userRef = db.collection("Vitaminders").doc(User.uid);
+          userRef.get().then(function(doc) {
+    
+                const auth = doc.data().Gebruikersnaam
+
+    const roomName = auth<chatName ? auth+'_'+chatName : chatName+'_'+auth;
+
+db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+
+    db.collection("Chats").doc(doc.id).collection("Messages").doc().set({
+        Auth: auth,
+        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+        Message: `Toegangcode voor videogesprek: ${roomId}`,
+        Read: [], 
+        Room: roomName,
+        Status: "New"
+        }).then(() => {
+            db.collection("Chats").doc(doc.id).update({
+                Messages: firebase.firestore.FieldValue.increment(1)
+                            }).then (() => {
+                                const input = document.getElementById("chat-input")
+
+                                input.value = ""
+                            })
+                        });  
+                    });
+                });
+            });
+        };
+    });
+
 
   peerConnection.addEventListener('track', event => {
     console.log('Got remote track:', event.streams[0]);
@@ -113,15 +169,13 @@ function joinRoom() {
   document.querySelector('#createBtn').disabled = true;
   document.querySelector('#joinBtn').disabled = true;
 
-  document.querySelector('#confirmJoinBtn').
+  document.querySelector('#room-join').
       addEventListener('click', async () => {
         roomId = document.querySelector('#room-id').value;
         console.log('Join room: ', roomId);
-        document.querySelector(
-            '#currentRoom').innerText = `Current room is ${roomId} - You are the callee!`;
         await joinRoomById(roomId);
       }, {once: true});
-  roomDialog.open();
+  roomDialog.style.display = "flex";
 }
 
 async function joinRoomById(roomId) {
@@ -136,8 +190,6 @@ async function joinRoomById(roomId) {
     registerPeerConnectionListeners();
     localStream.getTracks().forEach(track => {
       peerConnection.addTrack(track, localStream);
-
-      videoDOM.appendChild(remoteVideo)
     });
 
     // Code for collecting ICE candidates below
@@ -151,14 +203,11 @@ async function joinRoomById(roomId) {
       calleeCandidatesCollection.add(event.candidate.toJSON());
     });
     // Code for collecting ICE candidates above
-
     peerConnection.addEventListener('track', event => {
       console.log('Got remote track:', event.streams[0]);
       event.streams[0].getTracks().forEach(track => {
         console.log('Add a track to the remoteStream:', track);
         remoteStream.addTrack(track);
-
-        videoDOM.appendChild(remoteVideo)
       });
     });
 
@@ -199,18 +248,25 @@ async function openUserMedia(e) {
     videochatOuterDiv.style.display = "flex"
     videochatOuterDiv.scrollIntoView()
 
+  const videoIconStart = document.getElementById("video-icon")
+  const videoStopIcon = document.getElementById("video-stop-icon")
+
+  const videoIconDiv = document.getElementById("video-div")
+    videoIconDiv.removeChild(videoIconStart)
+    videoStopIcon.style.display = "block"
+
+
   const stream = await navigator.mediaDevices.getUserMedia(
       {video: true, audio: true});
   document.querySelector('#localVideo').srcObject = stream;
   localStream = stream;
   remoteStream = new MediaStream();
 
-  remoteVideo.srcObject = remoteStream;
+  document.querySelector('#remoteVideo').srcObject = remoteStream;
 
   console.log('Stream:', document.querySelector('#localVideo').srcObject);
   document.querySelector('#joinBtn').disabled = false;
   document.querySelector('#createBtn').disabled = false;
-  document.querySelector('#hangupBtn').disabled = true;
 }
 
 async function hangUp(e) {
@@ -227,13 +283,9 @@ async function hangUp(e) {
     peerConnection.close();
   }
 
-  document.querySelector('#localVideo').srcObject = null;
-  document.querySelector('#remoteVideo').srcObject = null;
-  document.querySelector('#cameraBtn').disabled = false;
-  document.querySelector('#joinBtn').disabled = true;
-  document.querySelector('#createBtn').disabled = true;
-  document.querySelector('#hangupBtn').disabled = true;
-  document.querySelector('#currentRoom').innerText = '';
+  const videoDiv = document.getElementById("video-div")
+
+  videoDiv.style.display = "none"
 
   // Delete room on hangup
   if (roomId) {
