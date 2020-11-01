@@ -132,7 +132,7 @@ auth.onAuthStateChanged(User =>{
 
                         senderName.innerText = messageNameClean
 
-                        messageP.innerText = authMessage
+                        messageP.innerHTML = authMessage
 
                         messageP.style.alignSelf = "flex-end"
                         senderName.style.color = colour
@@ -143,7 +143,7 @@ auth.onAuthStateChanged(User =>{
 
                         senderName.innerText = messageNameClean
 
-                        messageP.innerText = authMessage
+                        messageP.innerHTML = authMessage
 
                         messageP.style.alignSelf = "flex-start"
                         senderName.style.color = colour

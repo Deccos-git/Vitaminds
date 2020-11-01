@@ -100,7 +100,7 @@ async function createRoom() {
     const chatDiv = document.getElementById("chat-screen")
     chatDiv.scrollIntoView()
     
-    const message = document.getElementById("chat-input").value 
+    const message = `Bij deze nodig ik je uit voor een videogesprek. De toegangcode om deel te nemen aan het videogesrpek is: ${roomId}`
 
     auth.onAuthStateChanged(User =>{
         if(User){
@@ -118,7 +118,7 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
     db.collection("Chats").doc(doc.id).collection("Messages").doc().set({
         Auth: auth,
         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-        Message: `Toegangcode voor videogesprek: ${roomId}`,
+        Message: message,
         Read: [], 
         Room: roomName,
         Status: "New"

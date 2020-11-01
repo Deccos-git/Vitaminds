@@ -16,6 +16,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../Style/style.css">
   <link rel="stylesheet" href="../Style/groups.css">
+  <link rel="stylesheet" href="../Style/videochat.css">
   <link rel="shortcut icon" href="../images/Favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -117,6 +118,10 @@
     <div class="inspiration-icon-div">
       <img id="inspiration-icon" class="inspiration-icons" src="../images/inspiration-icon-2.png" alt="">
     </div>
+    <div id="video-div">
+      <img id="video-icon" src="../images/video-icon.png" alt="start een video gesprek">
+      <img id="video-stop-icon" src="../images/stop-video-icon.png" alt="">
+    </div>
     <input id="chat-input" type="text">
     <img id="send-icon-group" src="../images/send-icon.png" alt="">
   </div>
@@ -130,6 +135,35 @@
     </div>
     <p id="notice-learning-added">Je levensles is opgeslagen</p>
   </div>
+
+  <section id="videochat-outer-div">
+    <div id="buttons">
+      <button class="button-algemeen" disabled id="createBtn">
+          <span>Start een videochat</span>
+      </button>
+      <button class="button-algemeen" disabled id="joinBtn">
+          <span>Deelnemen aan videochat</span>
+      </button>
+  </div>
+
+  <div id="room-dialog">
+    <h2 id="my-dialog-title">Deelnemen aan videogesprek</h2>
+    <div id="my-dialog-content">
+      <p>Vul de toegangscode in:</p>
+            <input type="text" id="room-id" placeholder="Toegangscode">
+    </div>
+    <footer id="join-room-footer">
+        <button type="button" id="cancel-room-join">Annuleren</button>
+        <button type="button" id="room-join">Deelnemen</button>
+    </footer>
+  </div>
+
+  <div id="videos">
+      <video id="localVideo" muted autoplay playsinline></video>
+      <!-- <video id="remoteVideo" autoplay playsinline></video> -->
+  </div>
+
+  <button class="button-algemeen" id="learning-video-chat">Heb je iets geleerd over jezelf?</button>
 
 <!-- Toolbar mobile -->
 <div class="toolbar-mobile">
@@ -177,6 +211,7 @@
       <script type="text/javascript" src="../javascript/groups.js"></script>
       <script type="text/javascript" src="../javascript/auth.js"></script>
       <script type="text/javascript" src="../javascript/index.js"></script>
+      <script type="text/javascript" src="../javascript/videochat-groups.js"></script>
     </body>
   </html>
   

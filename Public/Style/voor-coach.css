@@ -99,6 +99,7 @@
 
 .coach-card p{
     text-align: center;
+    font-size: 20px;
 }
 
 .coach-card h4{
@@ -112,12 +113,23 @@
     justify-content: space-evenly;
 }
 
+.button-cards {
+    background-color: white;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #008e8e;
+    cursor: pointer;
+   }
+
 #coach-card-banner-intervisie{
     background-image: url(../images/hero-II.jpg);
     background-size: 400px 200px;
     height: 200px;
     width: 100%;
     margin: 0px;
+    min-height: 200px;
 }
 
 #coach-card-banner-samenwerken{
@@ -126,6 +138,7 @@
     height: 200px;
     width: 100%;
     margin: 0px;
+    min-height: 200px;
 }
 
 #coach-card-banner-professionalisering{
@@ -134,6 +147,16 @@
     height: 200px;
     width: 100%;
     margin: 0px;
+    min-height: 200px;
+}
+
+#coach-card-banner-reach{
+    background-image: url(../images/avontuur42-250.jpg);
+    background-size: 400px 200px;
+    height: 200px;
+    width: 100%;
+    margin: 0px;
+    min-height: 200px;
 }
 
 #coach-card-banner-inspireren{
@@ -142,6 +165,7 @@
     height: 200px;
     width: 100%;
     margin: 0px;
+    min-height: 200px;
 }
 
 #coach-card-banner-workshops{
@@ -150,6 +174,7 @@
     height: 200px;
     width: 100%;
     margin: 0px;
+    min-height: 200px;
 }
 
 #coach-card-banner-coachgroepen{
@@ -158,6 +183,16 @@
     height: 200px;
     width: 100%;
     margin: 0px;
+    min-height: 200px;
+}
+
+#coach-card-banner-eenopeen{
+    background-image: url(../images/avontuur43-250.jpg);
+    background-size: 400px 200px;
+    height: 200px;
+    width: 100%;
+    margin: 0px;
+    min-height: 200px;
 }
 
 
