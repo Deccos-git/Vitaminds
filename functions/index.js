@@ -354,6 +354,16 @@ app.get('/locatie-edanz/*',function(req,res)
     res.sendFile('/index-redirect.html', { root: __dirname });
 });
 
+app.get('/organisator/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/dagbesteding/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
 
 
 exports.app = functions.https.onRequest(app);

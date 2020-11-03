@@ -26,6 +26,24 @@
 }
 
 /* Overzicht pagina */
+    
+
+#inspiratie-filter-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#inspiratie-filter-select{
+    width: 200px;
+    font-size: 20px;
+}
+
+#inspiratie-filter-div p{
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
 
 #alle{
     display: flex;

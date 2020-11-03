@@ -115,6 +115,23 @@
 <h1>Inspiratie</h1>
 <h2 class="sub-title">Lees, kijk en luister een leven waar je blij van wordt</h2>
 
+<div id="inspiratie-filter-div">
+  <p>Waar ben je in geïntereseerd?</p>
+  <select id="inspiratie-filter-select" onchange="getDomain(this)">
+    <option id="Alles", value="Alles">Alles</option>
+    <option id="Basisvaardigheden", value="Basisvaardigheden">Basisvaardigheden</option>
+    <option id="Gedachten", value="Gedachten">Gedachten</option>
+    <option id="Gevoelens & Emoties", value="Gevoelens & Emoties">Gevoelens en Emoties</option>
+    <option id="Lichaam & Geest", value="Lichaam & Geest">Lichaam en Geest</option>
+    <option id="Ik", value="Ik">Ik</option>
+    <option id="Relaties", value="Relaties">Relaties</option>
+    <option id="Sociaal", value="Sociaal">Sociaal</option>
+    <option id="Opvoeden", value="Opvoeden">Opvoeden</option>
+    <option id="Betekenisvol-leven", value="Betekenisvol leven">Betekenisvol leven</option>
+    <option id="Koers-bepalen", value="Koers bepalen">Koers bepalen</option>
+  </select>
+</div>
+
 <!--Goals-->
 
 <main id="levensvraag-artikel-ouyter-div">
@@ -125,19 +142,12 @@
     </div>
     <div>
       <h5 class="title-sub" id="titleSub-proposal"></h5>
-      <h2 class="titelTekst">doe een voorstel voor een doel</h2>
+      <h2 class="titelTekst">doe een voorstel voor een artikel</h2>
     </div>
     <button class="button-algemeen"><a href="/Inspiratie/proposal.html">Go</a></button>
   </div>
-  
-</main>
 
-<!--Buildingblocks-->
-
-<section id="theme-article-outer-div">
-
-
-<!-- Most grateful place -->
+  <!-- Most grateful place -->
 <div class="levensvraag-artikel-section">
   <div class="levensvraag-artikel-header">
     <img class="header-image-article" src="images/avontuur16.jpg" alt="artikel over dankbaarheid">
@@ -148,8 +158,12 @@
   </div>
   <button class="button-algemeen"><a href="/Inspiratie/meest-dankbare-plek.html">Bekijk</a></button>
 </div>
+  
+</main>
 
+<!--Buildingblocks-->
 
+<!-- <section id="theme-article-outer-div"> -->
 
 </section>
 
