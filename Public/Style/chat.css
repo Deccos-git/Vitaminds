@@ -22,6 +22,22 @@
     cursor: pointer;
 }
 
+.message-options{
+    font-size: 14px;
+    margin: 0px;
+    cursor: pointer;
+    margin-top: -30px;
+    color: #49beb7;
+}
+
+.send-chat-as-mail{
+    font-size: 14px;
+    margin: 0px;
+    display: none;
+    cursor: pointer;
+    color: #49beb7;
+}
+
 #chat-screen{
     min-height: 350px;
     border-top: 1px solid rgba(0,0,0,.2);

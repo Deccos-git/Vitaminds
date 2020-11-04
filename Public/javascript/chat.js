@@ -91,6 +91,163 @@ function emptyScreenByOnsnapshot(){
     });
 };
 
+function messageOptions(message, chatMessage, chatRoom, authChatter){
+     const options = document.createElement("p")
+        options.setAttribute("class", "message-options")
+     options.innerText = "..."
+
+     const sendAsMail = document.createElement("p")
+        sendAsMail.setAttribute("class", "send-chat-as-mail")
+        sendAsMail.setAttribute("data-message", chatMessage)
+        sendAsMail.setAttribute("data-room", chatRoom)
+        sendAsMail.setAttribute("data-auth", authChatter)
+        sendAsMail.setAttribute("onclick", "sendChatAsMail(this)")
+     sendAsMail.innerText = "Verstuur bericht als email"
+
+     message.appendChild(options)
+     options.appendChild(sendAsMail)
+
+     options.addEventListener("click", () => {
+            sendAsMail.style.display = "block" 
+     });
+};
+
+function sendChatAsMail(elem){
+    const message = elem.dataset.message
+    const room = elem.dataset.room
+    const coach = elem.dataset.auth
+
+    console.log(coach)
+
+    elem.innerText = "Verstuurd"
+
+    db.collection("Vitaminders").where("GebruikersnaamClean", "==", coach)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc2 => {
+
+                const SenderNameClean = doc2.data().GebruikersnaamClean
+
+    db.collection("Chats")
+    .where("Room", "==", room).get()
+    .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const members = doc.data().Members
+            const type = doc.data().Type
+
+            members.forEach(member => {
+
+                console.log(type)
+
+                if(type === "Chat"){
+
+            db.collection("Vitaminders").where("Gebruikersnaam", "==", member)
+                    .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
+
+                            const email = doc1.data().Email
+                            const naamMember = doc1.data().GebruikersnaamClean
+
+                            console.log(email)
+
+                            db.collection("Mail").doc().set({
+                                to: email,
+                                cc: "info@vitaminds.nu",
+                        message: {
+                        subject: `Je hebt een nieuw chatbericht ontvangen van ${SenderNameClean}`,
+                        html: `Hallo ${naamMember}, </br></br>
+                                ${SenderNameClean} heeft je een bericht gestuurd in jullie chat: <br><br>
+
+                                ${message}<br><br>
+                                
+                                Ga naar jullie <a href="www.vitaminds.nu/Chats/${naam}.html">chat</a> om op het bericht te reageren.<br><br>
+                                P.s. Om privacyredenen kun je chat alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
+                        
+                                Vriendelijke groet, </br></br>
+                                Het Vitaminds Team </br></br>
+                                <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                        Gebruikersnaam: naam,
+                        Emailadres: email,
+                        Type: "New coachmessage in chat"
+                        }        
+                        });  
+                    });
+                });
+            } else if (type === "Group"){
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", member)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc2 => {
+
+                        const email = doc2.data().Email
+                        const naam = doc2.data().GebruikersnaamClean
+
+                        console.log(email)
+
+                      
+                        db.collection("Mail").doc().set({
+                            to: email,
+                            cc: "info@vitaminds.nu",
+                    message: {
+                    subject: `Je hebt een nieuw chatbericht ontvangen van ${SenderNameClean} in je Groep ${naam}`,
+                    html: `Hallo ${naam}, </br></br>
+                            ${SenderNameClean} heeft je een bericht gestuurd in de Groep ${naam} : <br><br>
+
+                            ${message}<br><br>
+                            
+                            Ga naar je <a href="www.vitaminds.nu/Chats/${naam}.html">Groep</a> om op het bericht te reageren.<br><br>
+                            P.s. Om privacyredenen kun je groep alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
+                    
+                            Vriendelijke groet, </br></br>
+                            Het Vitaminds Team </br></br>
+                            <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                    Gebruikersnaam: naam,
+                    Emailadres: email,
+                    Type: "New coachmessage in chat"
+                    }        
+                    }); 
+                });
+            });
+            } else if (type === "Coachgroup"){
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", member)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc2 => {
+
+                        const email = doc2.data().Email
+                        const naam = doc2.data().GebruikersnaamClean
+
+                        console.log(email)
+
+                        db.collection("Mail").doc().set({
+                            to: email,
+                            cc: "info@vitaminds.nu",
+                    message: {
+                    subject: `Je hebt een nieuw coachbericht ontvangen van ${SenderNameClean} in je Coachgroep ${naam}`,
+                    html: `Hallo ${naam}, </br></br>
+                            ${SenderNameClean} heeft je een bericht gestuurd in de Coachgroep ${naam} : <br><br>
+
+                            ${message}<br><br>
+                            
+                            Ga naar je <a href="www.vitaminds.nu/Chats/${naam}.html">Coachgroep</a> om op het bericht te reageren.<br><br>
+                            P.s. Om privacyredenen kun je coachgroep alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
+                    
+                            Vriendelijke groet, </br></br>
+                            Het Vitaminds Team </br></br>
+                            <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                    Gebruikersnaam: naam,
+                    Emailadres: email,
+                    Type: "New coachmessage in chat"
+                    }        
+                    });  
+                });
+            });
+            }
+            });
+        });
+    });
+});
+});
+};
+
     // Database query
 auth.onAuthStateChanged(User =>{
     if(User){
@@ -138,6 +295,8 @@ auth.onAuthStateChanged(User =>{
                         senderName.style.color = colour
                         senderName.style.fontWeight = "bold"
                         senderName.style.alignSelf = "flex-end"
+
+                        messageOptions(messageP, authMessage, roomName, messageNameClean)
 
                     } else {
 
