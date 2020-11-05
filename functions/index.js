@@ -364,7 +364,20 @@ app.get('/dagbesteding/*',function(req,res)
     res.sendFile('/index-redirect.html', { root: __dirname });
 });
 
+app.get('/wanneer-leid-je-een-betekenisvol-leven/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
 
+app.get('/jouw-gezamenlijke-menselijkheid/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/de-kleine-geneugten-van-het-bewuste-leven/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
 
 exports.app = functions.https.onRequest(app);
 

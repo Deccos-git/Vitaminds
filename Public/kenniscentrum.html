@@ -27,8 +27,6 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
-    <script>src="https://www.gstatic.com/firebasejs/6.5.0/firebase-analytics.js"</script>
-    <script src="https://js.stripe.com/v3/"></script>
   </head>
 
   <body>
@@ -83,6 +81,16 @@
 <button class="button-menu" onclick="filterMenu(this)">Filter</button> -->
 
 <h1>Kenniscentrum coaching</h1>
+
+<div id="kenniscentrum-filter-div">
+  <p>Waar ben je in geïntereseerd?</p>
+  <select id="kenniscentrum-filter-select" onchange="getDomain(this)">
+    <option id="Alles", value="Alles">Alles</option>
+    <option id="Coaching-op-Vitaminds", value="Coaching op Vitaminds">Coaching op Vitaminds</option>
+    <option id="Coaching-en-ondernemen", value="Gedachten">Coaching en ondernemen</option>
+    <option id="Het-coach-vak", value="Het coach vak">Het coach vak</option>
+  </select>
+</div>
 
 <main id="kenniscentrum-artikel-outer-div"></main> 
 

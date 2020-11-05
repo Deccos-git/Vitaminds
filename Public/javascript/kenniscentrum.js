@@ -1,5 +1,9 @@
 // Coachvragen overview
 
+//Filter 
+
+function loadAllArticles(){
+
 DOMarticle = document.getElementById("kenniscentrum-artikel-outer-div")
 
 db.collection("Kenniscentrum").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
@@ -40,6 +44,67 @@ db.collection("Kenniscentrum").where("Eigenaar", "==", "Vitaminds").get().then(q
         }
     })
 });
+
+};
+
+loadAllArticles()
+
+function getDomain(){
+
+    const selectDomain = document.getElementById("kenniscentrum-filter-select")
+    
+        const option = selectDomain.options
+        const selected = option[option.selectedIndex].innerHTML
+    
+    DOMarticle = document.getElementById("kenniscentrum-artikel-outer-div")
+    
+    DOMarticle.innerHTML = ""
+    
+    if(selected === "Alles"){
+        loadAllArticles();
+    };
+
+    db.collection("Kenniscentrum").where("Domein", "==", selected).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+    
+            const title = doc.data().Coachvraag
+            const headerImage = doc.data().HeaderImage
+        
+            const outerSection = document.createElement("section")
+                outerSection.setAttribute("class", "kenniscentrum-artikel-section")
+                outerSection.setAttribute("data-title", title)
+            const headerDiv = document.createElement("div")
+                headerDiv.setAttribute("class", "kenniscentrum-artikel-header")
+            const headerImg = document.createElement("img")
+                headerImg.setAttribute("class", "header-image-article")
+            const titleDiv = document.createElement("div")
+            const titleH2 = document.createElement("h2")
+                titleH2.setAttribute("class", "titelTekst")
+            const buttonDiv = document.createElement("button")
+                buttonDiv.setAttribute("class", "button-algemeen-card")
+                buttonDiv.setAttribute("onclick", "seeArticle(this)")
+    
+            headerImg.src = headerImage
+            titleH2.innerHTML = title
+            buttonDiv.innerHTML = `<a href="../Kenniscentrum-coaching/${title}.html">Bekijk</a>`
+    
+    
+            if(DOMarticle == null){
+                console.log("null")
+            } else {
+    
+            DOMarticle.appendChild(outerSection)
+            outerSection.appendChild(headerDiv)
+            headerDiv.appendChild(headerImg)
+            outerSection.appendChild(titleDiv)
+            titleDiv.appendChild(titleH2)
+            outerSection.appendChild(buttonDiv)
+            }
+        })
+    });
+
+};
+    
 
 // Register view count on article load
 window.addEventListener("load", () => {
@@ -215,25 +280,21 @@ titel = titel10.replace('%20',' ')
                     auth.onAuthStateChanged(User =>{
                         db.collection("Vitaminders").doc(User.uid).get().then(doc => {
                                 const auth = doc.data().GebruikersnaamClean
+                                const gebruikersnaam = doc.data().Gebruikersnaam
     
                                 const sectionTitle = document.getElementById("insight-title")
                                 sectionTitle.innerHTML = `${auth}, <br> geef je professionele inzicht over: <br> ${titel}`
-                        })
-                    })
+                   
     
                     metaPhoto.src = photo
-                    metaName.innerHTML = gebruikersnaamClean
-                    visitProfile.innerHTML = "Bekijk profiel"
+                    metaName.innerHTML = `<a href="../Vitaminders/${gebruikersnaam}.html">${auth}</a>`
                     textTitle.innerHTML = titelInsight
                     textBody.innerHTML = body
                     inspirationalH3.innerHTML = "Inspirerend"
                     inspirationalImg.src = "../images/menu-karakter.png"
                     bedankt.innerHTML = `<u>${gebruikersnaamClean}</u> zegt: Bedankt!`
-    
-                    metaDiv.addEventListener("click", () => {
-                        window.open("../Vitaminders/" + coach + ".html", "_self");
-                    })
-    
+                });
+            });
     
                     // Loader
                     const loader = document.getElementById("loader")

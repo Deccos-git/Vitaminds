@@ -129,6 +129,8 @@ window.addEventListener("load", () => {
     };
 }();
 
+//Filter 
+
 function loadAllArticles(){
 
 DOMarticle = document.getElementById("levensvraag-artikel-ouyter-div")
@@ -218,10 +220,6 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds")
 };
 
 loadAllArticles()
-
-
-
-//Filter 
 
 function getDomain(){
 
