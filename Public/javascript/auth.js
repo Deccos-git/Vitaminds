@@ -483,7 +483,11 @@ function inlogVM(){
       });
       };
     });
-  });
+  }).catch(err => {
+
+    alert("Er heeft zich een fout voor gedaan: " + err)
+
+  })
 };
   
 //Log out

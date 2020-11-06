@@ -549,9 +549,9 @@ function newMessageInOverview(docID, authName, chatsDivDOM, newMessage){
 
 function groupsOverviewTitle(groupType, titleURL, titleURLClean, chatDOM, photoDOM, groupDOM){
     if(groupType === "Group"){
-    chatDOM.innerText = titleURL
-    photoDOM.src = "images/groups-icon.jpg"
-    groupDOM.innerText = "Themagroep"
+        chatDOM.innerText = titleURL
+        photoDOM.src = "images/groups-icon.jpg"
+        groupDOM.innerText = "Themagroep"
     } else if (groupType === "Practicegroup"){
         chatDOM.innerText = titleURLClean
         photoDOM.src = "images/practicegroup-icon.png"
@@ -560,7 +560,11 @@ function groupsOverviewTitle(groupType, titleURL, titleURLClean, chatDOM, photoD
         chatDOM.innerText = titleURLClean
         photoDOM.src = "images/coachgroup-icon.png"
         groupDOM.innerText = "Coachgroep"
-    }; 
+    } else if(groupType === "GroupForCoaches"){
+        chatDOM.innerText = titleURLClean
+        photoDOM.src = "images/groups-icon.jpg"
+        groupDOM.innerText = "Groep voor coaches"
+        }
 }; 
 
 function updateReadList(docID, authName, titleURL){
@@ -705,7 +709,7 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
                     };
 
                 // GROUPS
-                } else if(type === "Group" || type === "Practicegroup" || type === "Coachgroup"){
+                } else if(type === "Group" || type === "GroupForCoaches" || type === "Coachgroup"){
                 
                   if (members.includes(auth)){
                 

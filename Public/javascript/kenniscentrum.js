@@ -459,6 +459,13 @@ function editIconKennis(elem){
      const newInsightTitle = elem.nextElementSibling
     const newBody = elem.nextElementSibling.nextElementSibling
 
+    // const tiny = document.getElementById("tiny-mce")
+
+    // console.log(tiny)
+
+    // tinyMCE.get('tiny-mce').setContent(newBody)
+    // tiny.scrollIntoView()
+
     newInsightTitle.setAttribute("contenteditable", "true")
         newInsightTitle.style.border = "1px dotted #122b46"
 

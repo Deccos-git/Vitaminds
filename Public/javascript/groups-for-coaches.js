@@ -14,57 +14,6 @@ const titel11 = titel10.replace('%20',' ')
 const titel12 = titel11.split("?fb")
 const titel = titel12[0]
 
-// Groups overview page
-// const practicegroupDOM = document.getElementById("practicegroups")
-const themegroupDOM = document.getElementById("themegroups")
-const coachGroupDOM = document.getElementById("coachgroups")
-
-// const practicegroupTab = document.getElementById("practicegroup-tab")
-const themegroupTab = document.getElementById("themegroup-tab")
-const coachgroupTab = document.getElementById("coachgroup-tab")
-
-// if(practicegroupTab != null){
-//     practicegroupTab.addEventListener("click", () => {
-//         practicegroupDOM.style.display = "flex"
-//         themegroupDOM.style.display = "none"
-//         coachGroupDOM.style.display = "none"
-//         practicegroupTab.style.backgroundColor = "#122b46"
-//         practicegroupTab.style.color = "white"
-//         themegroupTab.style.backgroundColor = "white"
-//         themegroupTab.style.color = "#122b46"
-//         coachgroupTab.style.backgroundColor = "white"
-//         coachgroupTab.style.color = "#122b46"
-//     });
-// };
-
-if(themegroupTab != null){
-    themegroupTab.addEventListener("click", () => {
-        // practicegroupDOM.style.display = "none"
-        themegroupDOM.style.display = "flex"
-        coachGroupDOM.style.display = "none"
-        // practicegroupTab.style.backgroundColor = "white"
-        // practicegroupTab.style.color = "#122b46"
-        themegroupTab.style.backgroundColor = "#122b46"
-        themegroupTab.style.color = "white"
-        coachgroupTab.style.backgroundColor = "white"
-        coachgroupTab.style.color = "#122b46"
-    });
-};
-
-if(coachgroupTab != null){
-    coachgroupTab.addEventListener("click", () => {
-        // practicegroupDOM.style.display = "none"
-        themegroupDOM.style.display = "none"
-        coachGroupDOM.style.display = "flex"
-        // practicegroupTab.style.backgroundColor = "white"
-        // practicegroupTab.style.color = "#122b46"
-        themegroupTab.style.backgroundColor = "white"
-        themegroupTab.style.color = "#122b46"
-        coachgroupTab.style.backgroundColor = "#122b46"
-        coachgroupTab.style.color = "white"
-    });
-};
-
 function groupMetaTags(descriptionGroup, titleGroup, bannerGroup){
     const keywords = document.getElementById("meta-keywords")
     const pageTitle = document.getElementById("page-title")
@@ -94,7 +43,7 @@ function groupMetaTags(descriptionGroup, titleGroup, bannerGroup){
 
         const type = doc.data().Type
 
-        if(type === "Group"){
+        if(type === "GroupForCoaches"){
         db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
     
@@ -106,13 +55,7 @@ function groupMetaTags(descriptionGroup, titleGroup, bannerGroup){
 
                 });
             });
-        } else if (type === "Coachgroup"){
-
-            console.log(groupTitleClean)
-
-            groupMetaTags(descriptionCoachGroup, groupTitleClean, coverPhotoCoachgroup)
-
-        }
+        };
     });
 });
 
@@ -305,7 +248,7 @@ function groupFactsLanding(memberCount, messageCount, dates, lenghtOfSession, mo
     numberOfMessagesLi.innerText = `Aantal berichten: ${messageCount}`
     data.innerText = `Moment waarop groep bijeenkomt: ${dates}`
     sessionLenght.innerText = `De bijeenkomsten duren: ${lenghtOfSession} minuten`
-    costsPerMonth.innerText = `Kosten per sessie: ${montlyFee} euro`
+    costsPerMonth.innerText = `Kosten per maand: ${montlyFee} euro`
 
     if(groupFactsUl != null){
 
@@ -380,112 +323,7 @@ function openGroup(roomName, buttonName){
     });
 }();
 
-    // Theme groups overview
-
-    const DOMthemeView = document.getElementById("themegroups")
-
-    db.collection("Chats")
-    .where("Type", "==", "Group")
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            const type = doc.data().Type
-            const room = doc.data().Room
-            const members = doc.data().Members
-
-            const outerSection = document.createElement("section")
-            outerSection.setAttribute("class", "theme-groups-section")
-        const headerDiv = document.createElement("div")
-            headerDiv.setAttribute("class", "theme-groups-header")
-        const headerImg = document.createElement("img")
-            headerImg.setAttribute("class", "header-image-groups")
-        const titleDiv = document.createElement("div")
-            titleDiv.setAttribute("class", "title-div-themegroups")
-        const titleH2 = document.createElement("h2")
-            titleH2.setAttribute("class", "titelTekst")
-        const subTitle = document.createElement("h5")
-        const buttonDiv = document.createElement("div")
-            buttonDiv.setAttribute("id", "button-div-theme-group")
-        const button = document.createElement("button")
-            button.setAttribute("class", "button-algemeen-card")
-            button.setAttribute("id", "button-theme-group")
-        const leaveGroup = document.createElement("p")
-            leaveGroup.setAttribute("class", "leave-group-button")
-        
-    db.collection("Levensvragen").where("Levensvraag", "==", room).get().then(querySnapshot => {
-        querySnapshot.forEach(doc1 => {
-
-            const title = doc1.data().Levensvraag
-            const headerImageSmall = doc1.data().HeaderImageSmall
-
-        titleH2.innerHTML = title
-        headerImg.src = headerImageSmall
-        leaveGroup.innerText = "Groep verlaten"
-
-        hideLeaveGroupButtonIfAuthIsNotMember(members, leaveGroup)
-
-        openGroup(room, button)
-
-        auth.onAuthStateChanged(User =>{
-            if(User){
-              const userRef = db.collection("Vitaminders").doc(User.uid);
-              userRef.get().then(function(doc) {
-        
-                    const auth = doc.data().Gebruikersnaam
-
-        db.collection("Chats").where("Room", "==", title).get().then(querySnapshot => {
-            querySnapshot.forEach(doc1 => {
-
-                const members = doc1.data().Members
-
-                // Display number of members in the title
-
-                const numberOfMembers = members.length
-
-                if(numberOfMembers === 1){
-                    subTitle.innerText = `${numberOfMembers} mens praat over`
-                } else {
-                    subTitle.innerText = `${numberOfMembers} mensen praten over`
-                };
-
-                //Already a member of the group
-                alreadyMember(members, button)
-
-                 //Leave group
-                leaveGroup.addEventListener("click", () => {
-
-                leaveTheGroup(title)
-
-                });
-
-            if(members.includes(auth)){
-                buttonDiv.appendChild(leaveGroup)
-                };
-
-                        });
-                    });
-                });
-            };
-        });
-
-        if(DOMthemeView != null){
-
-        DOMthemeView.appendChild(outerSection)
-        outerSection.appendChild(headerDiv)
-        headerDiv.appendChild(headerImg)
-        outerSection.appendChild(titleDiv)
-        titleDiv.appendChild(subTitle)
-        titleDiv.appendChild(titleH2)
-        outerSection.appendChild(buttonDiv)
-        buttonDiv.appendChild(button)
-
-        };
-
-            });
-        });
-    });
-});
-
+  
 // Load coachgroups from database to overview
 
     const agreementButton = document.getElementById("visitCoachgroup")
@@ -546,7 +384,7 @@ function coachgroupAgreementTitle(welkomMessage){
         };
     }
 
-db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapshot => {
+db.collection("Chats").where("Type", "==", "GroupForCoaches").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
         const title = doc.data().Room
@@ -562,7 +400,7 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
         const sessionLenght =doc.data().SessionLenght
         const type = doc.data().Type
 
-        const DOM = document.getElementById("coachgroups")
+        const DOM = document.getElementById("groups-for-coaches")
 
         const groupInnerDiv = document.createElement("div")
             groupInnerDiv.setAttribute("class", "theme-groups-section")
@@ -1766,7 +1604,6 @@ function saveCoachgroup(){
         Members: firebase.firestore.FieldValue.arrayUnion(auth),
         Goal: option,
         Data: data,
-        Online: [],
         SessionLenght: sessionLenght,
         Messages: 0,
         Type: "Coachgroup", 
