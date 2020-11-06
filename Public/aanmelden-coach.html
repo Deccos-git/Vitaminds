@@ -33,61 +33,36 @@
     <a href="tickets.html"> <p>Feedback</p></a>
   </div>
   
- <!-- Mobile-menu -->
- <nav id="mobile-menu"> 
-  <div id="menu-mobile-visible-layer">
-    <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
-    <div class="main-menu-mobile"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
-  </div>
-  <div id="mobile-menu-outer-div">
-    <div id="mobile-menu-inner-div">
-      <ul id="list-mobile-menu">
-        <li>
-          <div id="profile-picture-mobile"></div>
-        </li>
-        <li>
-          <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
-        </li>
-        <li>
-          <div class="main-menu-mobile"><a href="openup.html">Open up</a></div>
-        </li>
-        <li>
-          <div class="main-menu-mobile"><a href="groups.html">Groepen</a></div> 
-        </li>
-        <li>
-          <div class="main-menu-mobile"><a href="workshops.html">Workshops</a></div>
-        </li>
-        <li>
-          <div class="main-menu-mobile"><a href="inspiratie.html">Inspiratie</a></div>
-        </li>
-        <!-- <li> -->
-          <!-- <div class="main-menu-mobile"><a href="tools.html">Tools</a></div> -->
-        <!-- </li> -->
-        <li>
-          <div class="main-menu-mobile"><a href="coaches.html">Coaches</a></div>
-        </li>
-        <li>
-          <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
-        </li>
-        <li>
-          <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
-        </li> 
-      </ul>
+  <!-- Mobile-menu -->
+  <nav id="mobile-menu"> 
+    <div id="menu-mobile-visible-layer">
+      <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+      <div class="main-menu-mobile"><a href="/voor-coaches.html"><img id="logo-menu-for-coaches" src="images/logo-coaches.png" alt="Vitaminds voor coaches logo" width="150px"></a></div>
     </div>
-  </nav>
+    <div id="mobile-menu-outer-div">
+      <div id="mobile-menu-inner-div">
+            <div id="profile-picture-mobile"></div>
+            <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
+            <div class="main-menu-mobile"><a href="intervisie.html">Intervisie</a></div>
+            <div class="main-menu-mobile"><a href="cooperations.html">Samenwerken</a></div> 
+            <div class="main-menu-mobile"><a href="kenniscentrum.html">Kenniscentrum</a></div>
+            <div class="main-menu-mobile"><a href="groups-for-coaches.html">Groepen</a></div>
+            <a href="../index.html" id="link-vitaminds">Vitaminds</a>
+        <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+      </div>
+    </nav>
 
    <!-- menu --> 
    <nav id="menu">
     <div id="navigation-menu">
-      <div class="main-menu"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
-      <div class="main-menu"><a href="openup.html">Open up</a></div>
-      <div class="main-menu"><a href="groups.html">Groepen</a></div> 
-      <div class="main-menu"><a href="workshops.html">Workshops</a></div>
-      <div class="main-menu"><a href="inspiratie.html">Inspiratie</a></div>
-      <!-- <div class="main-menu"><a href="tools.html">Tools</a></div> -->
-      <!-- <li class="main-menu"><a href="evenementen.html">Evenementen</a></li> -->
-      <div class="main-menu"><a href="coaches.html">Coaches</a></div>
-      <!-- <li class="main-menu"><a href="privacy.html">Privacy</a></li> -->
+      <div class="main-menu"><a href="/voor-coaches.html"><img id="logo-menu-for-coaches" src="images/logo-coaches.png" alt="Vitaminds voor coaches logo" width="150px"></a></div>
+      <div id="menu-items">
+        <div class="main-menu"><a href="intervisie.html">Intervisie</a></div>
+        <div class="main-menu"><a href="cooperations.html">Samenwerken</a></div> 
+        <div class="main-menu"><a href="kenniscentrum.html">Kenniscentrum</a></div>
+        <div class="main-menu "><a href="groups-for-coaches.html">Groepen</a></div>
+      </div>
+      <a href="aanmelden-coach.html" class="coach-menu-main-p">Aanmelden</a>
     </div>
     <div id="auth-menu">
       <div id="auth-DOM"></div>
@@ -95,68 +70,51 @@
       </div>
       <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
       <div id="slash" class = "login-logout"><a>|</a></div>
-      <div id="info-menu">
-        <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
-      </div>
+      <a href="index.html" id="link-vitaminds">Vitaminds</a>
     </div>
   </nav>
   
-  <h1>Aanmelden</h1>
+  <h1 id="title-register-coach">Meld je aan voor je Vitaminds abbonement</h1>
+  <div id="banner-register-coach"></div>
   
+      <h2 id="subtitle-register-coach">Vitaminds is de alles-in-één oplossing voor online coaching.
+        Een online community waar coaches hun krachten bundelen voor een wereld zonder psychisch lijden</h2>
+
   <div class="coach-information">
     <div class="coach-information-text">
-      <h2>Bundel je kracht voor een wereld met minder leed</h2>
+        <h3>Online coaching</h3>
       <ul>
-        <li>Je persoonlijke profiel op Vitaminds</li>
-        <li>Link naar je eigen website</li>
+        <li>Bereik je doelgroep</li>
+        <li>Inspireer je doelgroep</li>
+        <li>creëer laagdrempelige workshops</li>
+        <li>Bied groepscoaching via online Vitaminds Coachgroepen</li>
+        <li>Coach je clienten in een beveiligde online omgeving met een combinatie van chat, email & video.</li>
       </ul>
       <a href="#choice-subscription"><button class="button-standard" >Bekijk abonnement</button></a>
-    </div>
-    <div class="coach-information-image">
-      <img src="images/undraw_mobile_web_2g8b (1).png" alt="" width="500px">
     </div>
   </div>
 
   <div class="coach-information">
-    <div class="coach-information-image">
-      <img src="images/undraw_meet_the_team_e5b7 (1).png" alt="" width="500px">
-    </div>
     <div class="coach-information-text">
-      <h2>Laat jezelf zien als coach aan potentiele clienten</h2>
+      <h3>Impact</h3>
       <ul>
-        <li>Leid potentiele clienten actief naar je profiel</li>
-        <li>Deel je professionele inzichten met de bezoekers van Vitaminds</li>
+        <li>Samen zorgen we voor meer preventie en minder psychisch lijden</li>
       </ul>
       <a href="#choice-subscription"><button class="button-standard">Bekijk abonnement</button></a>
     </div>
 
     <div class="coach-information">
       <div class="coach-information-text">
-        <h2>Coach online via Vitaminds</h2>
+        <h2>Groei als coach en ondernemer</h2>
         <ul>
-          <li>Organiseer coachgroepen, creëer online workshops en bied een combinatie van één-op-één chat en videobellen</li>
-          <li>Verdien inkomsten rechtsreeks via de website</li>
+          <li>Intervisie</li>
+          <li>Samen werken aan ons platform</li>
+          <li>Kenniscentrum</li>
         </ul>
         <a href="#choice-subscription"><button class="button-standard">Bekijk abonnement</button></a>
       </div>
-      <div class="coach-information-image">
-        <img src="images/undraw_meet_the_team_e5b7 (1).png" alt="" width="500px">
-      </div>
     
   </div>
-  <div class="coach-information">
-    <div class="coach-information-image">
-      <img src="images/undraw_sentiment_analysis_jp6w (1).png" alt="" width="500px">
-    </div>
-    <div class="coach-information-text">
-      <h2>Help mensen op weg met je profesionele inzichten</h2>
-      <ul>
-        <li>Geef potentiele clienten een voorpoefje van je coachingstijl</li>
-        <li>Deel je inzicht op levensvragen die passen bij jouw coachingstijl</li>
-      </ul>
-      <a href="#choice-subscription"><button class="button-standard">Bekijk abonnement</button></a>
-    </div>
-
   </div>
 
   <section id="minimale-eisen">

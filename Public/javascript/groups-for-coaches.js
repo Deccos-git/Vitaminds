@@ -476,7 +476,7 @@ db.collection("Chats").where("Type", "==", "GroupForCoaches").get().then(querySn
 
             numberParticipantsP.innerHTML = `<b>Max. leden:</b> ${numberParticipants}`
             memberCount.innerHTML = `<b>Huidig aantal leden:</b> ${members.length}`
-            costsP.innerHTML = `<b>Kosten per sessie:</b> ${costs} euro`
+            costsP.innerHTML = `<b>Kosten per sessie:</b> ${costs} euro <br> (Gratis voor Vitaminds coaches)`
             startNumberP.innerHTML = `<b>Coachgroep begint bij:</b> ${startNumber} leden`
             dataP.innerHTML = `<b>Moment waarop groep bijeenkomt:</b> Iedere ${data}`
             sessionLenghtP.innerHTML = `<b>De bijeenkomsten duren:</b> ${sessionLenght} minuten`

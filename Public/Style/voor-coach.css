@@ -1,5 +1,5 @@
 #for-coach-banner{
-    background-image: url("../images/avontuur-verbonden-voelen-hero-pilot.png");
+    background-image: url("../images/banner-aanmelden-coach.jpg");
   height: 650px;
   width: 100%;
   background-attachment: fixed;
@@ -13,11 +13,12 @@
 }
 
 #for-coach-banner-title{
-    color: #FFF;
+    color: #19aeac;
     font-size: 35px;
     text-align: center;
     margin-top: 0px;
     margin-top: 100px;
+    text-shadow: 1px 1px lightgrey;
 }
 
 #subtitle{
@@ -213,6 +214,14 @@
     margin: 30px;
 }
 
+.coach-information-text h3{
+    margin-top: 50px;
+    font-family: 'Libre Baskerville', serif;
+    font-size: 30px;
+    text-align: center;
+    color: #0c6665;
+}
+
 .checked-sellingpoint{
     display: flex;
     align-items: center;
@@ -227,6 +236,46 @@
     flex-direction: column;
     align-items: center;
     background-color: rgb(245, 245, 245);
+    width: 100%;
+}
+
+#banner-register-coach{
+    background-image: url("../images/banner-aanmelden-coach.jpg");
+    height: 600px;
+    width: 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#subtitle-register-coach{
+    color: #122b46;
+    margin: -70px 200px 50px 200px;
+    border-radius: 5px;
+    position: relative;
+    background-color: white;
+    padding: 10px 30px 10px 30px;
+    box-shadow: 0 -1px 0px 0 rgba(0,0,0,.2), 0 -1px 1px 0 rgba(0,0,0,.14), 0 -2px 1px 0px rgba(0,0,0,.12);
+    font-size: 25px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* #title-register-coach{
+    margin: 0px 200px -110px 200px;
+    background-color: white;
+    border-radius: 5px;
+    position: relative;
+    box-shadow: 0 1px 0px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px 0px rgba(0,0,0,.12);
+} */
+
+.coach-information-image img{
     width: 100%;
 }
 
@@ -268,7 +317,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0px 100px 100px 100px;
+    margin: 80px 100px 100px 100px;
     padding: 30px;
     box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
     border-radius: 15px;
@@ -372,6 +421,33 @@
 }
 
 @media only screen and (max-width: 938px){
+
+#for-coach-banner{
+    background-image: url("../images/banner-aanmelden-coach.jpg");
+    height: 650px;
+    width: 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#subtitle-register-coach {
+    color: #122b46;
+    margin: 0px;
+    border-radius: 5px;
+    position: relative;
+    background-color: white;
+    padding: 10px 30px 10px 30px;
+    box-shadow: none;
+    font-size: 25px;
+    text-align: center;
+    font-weight: bold;
+}
 
 #minimale-eisen{
     margin: 0px 0px 100px 0px;

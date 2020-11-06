@@ -62,7 +62,7 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
             });
 
             // Exclude from list of coaches
-            if(naam == "115tuwbtujsSelam"){
+            if(naam == "115tuwbtujsSelam" || naam == "fbKlPnWobJh0ldPROWQRYGCezhv2Gijs van Beusekom" ){
                 nieuweDiv.style.display = "none"
             };
             

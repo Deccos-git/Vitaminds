@@ -118,7 +118,7 @@
 }
 
 #contact h4, p{
-    color: #0c6665;
+    color: #122b46;
 }
 
 #contact h4{
@@ -991,10 +991,14 @@
 }
 
 #chat-button-contact{
-    margin-top: 50px;
+    margin-bottom: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#welcome-title{
+    margin-bottom: 60px;
 }
 
 #chat-button-contact h3{
