@@ -75,7 +75,7 @@
 
 .titelTekst{
     padding: 20px;
-    margin: 0px 0px 0px 0px;
+    margin: 30px 0px 0px 0px;
 }
 
 .group-auth-div{
@@ -96,6 +96,10 @@
     border-radius: 50%;
     margin-top: -50px;
     border: 5px solid white;
+}
+
+.group-meta-div{
+    margin-bottom: 20px;
 }
 
 .group-meta-div p{
@@ -317,7 +321,7 @@
 }
 
 #group-description{
-    margin: -150px 5% 50px 5%;
+    margin: 0px 5% 50px 5%;
     font-size: 30px;
     background: white;
     border-radius: 5px;

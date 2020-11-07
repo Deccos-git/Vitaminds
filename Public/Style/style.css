@@ -283,6 +283,12 @@ ul{
   cursor: pointer;
 }
 
+#login-register-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .login-logout button:hover {
   border: 2px #FFF solid;
 }
@@ -301,8 +307,20 @@ ul{
 }
 
 .login-logout a{
-  font-size: 18px;
+  font-size: 16px;
 }
+
+#button-register{
+ margin: 5px 0px;
+ width: 110px;
+}
+
+#button-login{
+  width: 110px;
+  margin: 0px 0px;
+ }
+
+
 
 #log-out-mobile {
   color: #008e8e;

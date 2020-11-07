@@ -118,15 +118,18 @@ function updateOnlineStatusFromPagesLeave(){
 // Inlog/uitlog verbergen
 const loginDOM = document.getElementById("button-login")
 const logoutDOM = document.getElementById("button-logout")
+const registerButton = document.getElementById("button-register")
+const registerButtonCoach = document.getElementById("button-register-coach")
 
-
-  auth.onAuthStateChanged(User =>{
-      if(User){
-        loginDOM.style.display = "none"
-      } else {
-        logoutDOM.style.display = "none"
-      };
-  });
+auth.onAuthStateChanged(User =>{
+    if(User){
+      loginDOM.style.display = "none"
+      registerButton.style.display = "none"
+      registerButtonCoach.style.display = "none"
+    } else {
+      logoutDOM.style.display = "none"
+    };
+});
 
 
 // Mobile menu

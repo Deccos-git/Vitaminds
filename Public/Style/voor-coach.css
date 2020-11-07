@@ -198,19 +198,9 @@
     min-height: 200px;
 }
 
-
-.coach-information{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
 .coach-information-text{
     display: flex;
     flex-direction: column;
-    align-items: center;
-    flex-wrap: wrap;
     margin: 30px;
 }
 
@@ -240,7 +230,7 @@
 }
 
 #banner-register-coach{
-    background-image: url("../images/banner-aanmelden-coach.jpg");
+    background-image: url("../images/Register-coach-medium1.jpg");
     height: 600px;
     width: 100%;
     background-attachment: fixed;
@@ -252,6 +242,63 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.details-list{
+    list-style-image: url('/images/UL-icon.png');
+    margin-right: 5px;
+}
+
+.details-list li{
+    margin-left: 5px;
+}
+
+.details-div{
+    display: flex;
+    margin-left: 30px;
+}
+
+.button-div{
+    display: flex;
+    justify-content: center;
+}
+
+#online-image{
+    background-image: url("../images/Register-coach-small1.jpg");
+    height: 200px;
+    min-width: 250px;
+    border-radius: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#impact-image{
+    background-image: url("../images/Register-coach-small4.jpg");
+    height: 200px;
+    min-width: 250px;
+    border-radius: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#grow-image{
+    background-image: url("../images/Register-coach-small5.jpg");
+    height: 200px;
+    min-width: 250px;
+    border-radius: 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#title-register-coach{
+    color: #49beb7;
+    font-family: 'Libre Baskerville', serif !important;
+    font-size: 42px;
+    text-align: center;
+    padding: 20px;
 }
 
 #subtitle-register-coach{
@@ -461,6 +508,7 @@
 #register-div {
     margin: 50px 0px 100px 0px;
     padding: 30px;
+    width: 80%;
 }
 
 .check-code input {
@@ -485,6 +533,11 @@
     color: #0c6665;
     font-weight: bold;
     text-align: center;
+}
+
+.details-div {
+    flex-direction: column;
+    margin-left: 0px;
 }
 
 }

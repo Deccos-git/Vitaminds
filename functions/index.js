@@ -146,76 +146,76 @@ db.collection("Practice").where("Practice", "==", "Check-in").get().then(querySn
     console.log(err)
 })
 
-// Coachgroup sheduling
+// // Coachgroup sheduling
 
-db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
+// db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapshot => {
+//     querySnapshot.forEach(doc => {
 
-        const members = doc.data().Members
-        const room = doc.data().RoomClean
-        const coach = doc.data().Creater
-        const data = doc.data().data
-        const sessionLength = doc.data().SessionLenght
+//         const members = doc.data().Members
+//         const room = doc.data().RoomClean
+//         const coach = doc.data().Creater
+//         const data = doc.data().data
+//         const sessionLength = doc.data().SessionLenght
         
-        members.forEach(member => {
+//         members.forEach(member => {
 
-        db.collection("Vitaminders")
-        .where("Gebruikersnaam", "==", member)
-        .get()
-        .then(querySnapshot => {
-            querySnapshot.forEach(doc1 => {
+//         db.collection("Vitaminders")
+//         .where("Gebruikersnaam", "==", member)
+//         .get()
+//         .then(querySnapshot => {
+//             querySnapshot.forEach(doc1 => {
 
-                const email = doc1.data().Email
-                const gebruikersnaamClean = doc1.data().GebruikersnaamClean
+//                 const email = doc1.data().Email
+//                 const gebruikersnaamClean = doc1.data().GebruikersnaamClean
 
-                db.collection("Vitaminders")
-                .where("Gebruikersnaam", "==", coach)
-                .get()
-                .then(querySnapshot => {
-                querySnapshot.forEach(doc2 => {
+//                 db.collection("Vitaminders")
+//                 .where("Gebruikersnaam", "==", coach)
+//                 .get()
+//                 .then(querySnapshot => {
+//                 querySnapshot.forEach(doc2 => {
 
-                    const coachClean = doc2.data().GebruikersnaamClean
+//                     const coachClean = doc2.data().GebruikersnaamClean
 
-                cron.schedule(" 0 8 * * 6", () => {
+//                 cron.schedule(" 0 8 * * 6", () => {
 
-                db.collection("Mail").doc().set({
-                    to: email,
-                    cc: "info@vitaminds.nu",
-                message: {
-                subject: `Herinnering voor je coachgroep bijeenkomst`,
-                html: `Hallo, ${gebruikersnaamClean}</br></br>
-                    Bij deze ontvang je van ons even een herinnering over de bijeenkomst van je coachgroep ${room}
-                    van coach ${coachClean} <br><br>
-                    Je coachgroep komt bij elkaar op<br>
-                    <b>${data}</b><br><br>
+//                 db.collection("Mail").doc().set({
+//                     to: email,
+//                     cc: "info@vitaminds.nu",
+//                 message: {
+//                 subject: `Herinnering voor je coachgroep bijeenkomst`,
+//                 html: `Hallo, ${gebruikersnaamClean}</br></br>
+//                     Bij deze ontvang je van ons even een herinnering over de bijeenkomst van je coachgroep ${room}
+//                     van coach ${coachClean} <br><br>
+//                     Je coachgroep komt bij elkaar op<br>
+//                     <b>${data}</b><br><br>
 
-                    De bijeenkomst duurt <br>
-                    <b>${sessionLength} minuten</b><br><br>
+//                     De bijeenkomst duurt <br>
+//                     <b>${sessionLength} minuten</b><br><br>
 
-                    Namens ${coachClean}: tot ${data} <br><br> 
+//                     Namens ${coachClean}: tot ${data} <br><br> 
                 
-                    Vriendelijke groet, </br></br>
-                    Het Vitaminds Team </br></br>
-                    <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-                Type: "Vitaminders",
-                gebruikersnaam: member
-                }      
-                }).catch((err) => {
-                    console.log(err)
-                });
-            });
-        });
-    });
+//                     Vriendelijke groet, </br></br>
+//                     Het Vitaminds Team </br></br>
+//                     <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+//                 Type: "Vitaminders",
+//                 gebruikersnaam: member
+//                 }      
+//                 }).catch((err) => {
+//                     console.log(err)
+//                 });
+//             });
+//         });
+//     });
 
-            });
-        }).catch((err) => {
-            console.log(err)
-        });
-    });
-    });
-}).catch((err) => {
-    console.log(err)
-});
+//             });
+//         }).catch((err) => {
+//             console.log(err)
+//         });
+//     });
+//     });
+// }).catch((err) => {
+//     console.log(err)
+// });
 
 // Redirects
 
