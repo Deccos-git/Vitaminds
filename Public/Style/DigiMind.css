@@ -623,6 +623,10 @@
 
 /* Profiel */
 
+#introduction-text iframe{
+    width: 100%;
+}
+
 #digimind-dasboard-outer-div{
     display: flex;
     flex-direction: column;

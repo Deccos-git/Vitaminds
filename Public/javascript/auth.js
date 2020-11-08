@@ -132,6 +132,7 @@ auth.onAuthStateChanged(User =>{
 });
 
 
+
 // Mobile menu
 const hamburgerMenu = document.getElementById("mobile-hamburger-menu")
 const mobileMenu = document.getElementById("mobile-menu-outer-div")
@@ -447,6 +448,8 @@ function close(elem){
 const voorCoachDOM = document.getElementById("aanmeldCH")
 const coachMenu = document.getElementById("coach-menu-main")
 
+if(coachMenu != null){
+
 if(coachMenu.style.display = "none"){
   voorCoachDOM.addEventListener("mouseover", () => {
     coachMenu.style.display = "flex"
@@ -456,6 +459,7 @@ if(coachMenu.style.display = "none"){
     coachMenu.style.display = "none"
   })
 }
+};
 
 //Inlog
 function inlogVM(){
@@ -792,7 +796,10 @@ const adminContactMe = document.createElement("p")
 
 const welkomAuth = document.getElementById("welkom-auth")
 
+if(welkomAuth != null){
+
 auth.onAuthStateChanged(User =>{
+  if(User){
   const userRef = db.collection("Vitaminders").doc(User.uid);
     userRef.get().then(function(doc) {
       if (doc.exists) {
@@ -826,10 +833,14 @@ auth.onAuthStateChanged(User =>{
       })
     }
   })
+};
 });
+};
 
   // Opmerkingen in DOM zetten
   const DOMreact = document.getElementById("tips-trucs")
+
+  if(DOMreact != null){
 
   db.collection("Tickets").where("Type", "==", "Feedback-general").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
@@ -861,6 +872,7 @@ auth.onAuthStateChanged(User =>{
       reactDiv.appendChild(verwerktP)
     })
   })
+};
 
 
 

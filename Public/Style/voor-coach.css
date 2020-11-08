@@ -511,6 +511,12 @@
     width: 80%;
 }
 
+#monthly-cancelation{
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 0px;
+}
+
 .check-code input {
     width: 20px !important;
 }

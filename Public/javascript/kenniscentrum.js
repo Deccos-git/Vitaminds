@@ -170,13 +170,15 @@ titel = titel10.replace('%20',' ')
             headerDiv.appendChild(headerImg)
     
             auth.onAuthStateChanged(User =>{
+                if(User){
                 db.collection("Vitaminders").doc(User.uid).get().then(doc => {
                         const naam = doc.data().GebruikersnaamClean
     
                         insightsTitle.innerHTML = `${naam},<br> geef je professionele inzicht over:<br> ${titleArticle}`
     
                 })
-            })
+            }
+            });
     
             // Edit summary
             const editDiv = document.createElement("div")
@@ -192,6 +194,7 @@ titel = titel10.replace('%20',' ')
     
             //Non admin
             auth.onAuthStateChanged(User =>{
+                if(User){
                 db.collection("Vitaminders").doc(User.uid).get().then(doc => {
                         const admin = doc.data().Admin
     
@@ -200,7 +203,8 @@ titel = titel10.replace('%20',' ')
                     }
                 
             })
-        })
+        }
+        });
     
             // Visitor
             auth.onAuthStateChanged(User =>{
@@ -234,15 +238,19 @@ titel = titel10.replace('%20',' ')
     
     db.collection("Insights").where("KenniscentrumArtikel", "==", titel).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
+
             const titelInsight = doc.data().Titel
             const body = doc.data().Body
             const coach = doc.data().Auteur
-            const thema = doc.data().Thema
+
+            console.log(titelInsight)
     
             db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
                 querySnapshot.forEach(doc1 => {
                     const gebruikersnaamClean = doc1.data().GebruikersnaamClean
                     const photo = doc1.data().Profielfoto
+
+                    console.log(gebruikersnaamClean)
     
                     outerDiv = document.createElement("div")
                         outerDiv.setAttribute("class", "insights-outer-div")
@@ -276,29 +284,14 @@ titel = titel10.replace('%20',' ')
                         editIcon.setAttribute("onclick", "editIconKennis(this)")
                         editIcon.setAttribute("data-title", titelInsight)
     
-                    // Insights title
-                    auth.onAuthStateChanged(User =>{
-                        db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                                const auth = doc.data().GebruikersnaamClean
-                                const gebruikersnaam = doc.data().Gebruikersnaam
-    
-                                const sectionTitle = document.getElementById("insight-title")
-                                sectionTitle.innerHTML = `${auth}, <br> geef je professionele inzicht over: <br> ${titel}`
-                   
-    
-                    metaPhoto.src = photo
-                    metaName.innerHTML = `<a href="../Vitaminders/${gebruikersnaam}.html">${auth}</a>`
-                    textTitle.innerHTML = titelInsight
-                    textBody.innerHTML = body
-                    inspirationalH3.innerHTML = "Inspirerend"
-                    inspirationalImg.src = "../images/menu-karakter.png"
-                    bedankt.innerHTML = `<u>${gebruikersnaamClean}</u> zegt: Bedankt!`
-                });
-            });
-    
                     // Loader
                     const loader = document.getElementById("loader")
                         loader.style.display = "none"
+
+                        textTitle.innerHTML = titelInsight
+                        textBody.innerHTML = body
+                        metaPhoto.src = photo
+                        metaName.innerHTML = `<a href="../Vitaminders/${coach}.html">${gebruikersnaamClean}</a>`
     
     
                          // Max height of insight
@@ -317,6 +310,24 @@ titel = titel10.replace('%20',' ')
                     inspirationalDiv.appendChild(inspirationalH3)
                     inspirationalDiv.appendChild(inspirationalImg)
                     inspirationalDiv.appendChild(bedankt)
+
+                      // Insights title
+                      auth.onAuthStateChanged(User =>{
+                        if(User){
+                        db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                                const auth = doc.data().GebruikersnaamClean
+                                const gebruikersnaam = doc.data().Gebruikersnaam
+    
+                                const sectionTitle = document.getElementById("insight-title")
+                                sectionTitle.innerHTML = `${auth}, <br> geef je professionele inzicht over: <br> ${titel}`
+                   
+                    inspirationalH3.innerHTML = "Inspirerend"
+                    inspirationalImg.src = "../images/menu-karakter.png"
+                    bedankt.innerHTML = `<u>${gebruikersnaamClean}</u> zegt: Bedankt!`
+                });
+            };
+            });
+    
     
                     // User role
                         // Visitor
@@ -336,6 +347,7 @@ titel = titel10.replace('%20',' ')
                        const coachData = outerDiv.dataset.coach
                        
                        auth.onAuthStateChanged(User =>{
+                           if(User){
                         db.collection("Vitaminders").doc(User.uid).get().then(doc => {
                                 const auth = doc.data().Gebruikersnaam
                         
@@ -345,7 +357,10 @@ titel = titel10.replace('%20',' ')
             
                             };
                         });
+                    };
                     });
+
+
                 });
             });
         });
@@ -353,6 +368,26 @@ titel = titel10.replace('%20',' ')
 });
 
 // Saving coach insights to database
+
+!function hideInputForNoneAdmin(){
+    const coachInput = document.getElementById("coach-input")
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                const auth = doc.data().Gebruikersnaam
+        
+            if(auth != "fbKlPnWobJh0ldPROWQRYGCezhv2Gijs van Beusekom"){
+
+                coachInput.style.display = "none"
+
+            };
+        });
+    } else {
+        coachInput.style.display = "none"
+    }
+    });
+}();
 
 function nieuwepostsubmit(){
     auth.onAuthStateChanged(User =>{
