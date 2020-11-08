@@ -379,5 +379,15 @@ app.get('/de-kleine-geneugten-van-het-bewuste-leven/*',function(req,res)
     res.sendFile('/index-redirect.html', { root: __dirname });
 });
 
+app.get('/wat-heb-je-aan-positiviteit/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/mijn-account/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
 exports.app = functions.https.onRequest(app);
 
