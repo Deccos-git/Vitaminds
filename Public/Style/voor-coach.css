@@ -1,11 +1,14 @@
 #for-coach-banner{
-    background-image: url("/images/banner-aanmelden-coach.jpg");
+    background-image: url(/images/voor-coaches-banner.jpg);
   height: 650px;
   width: 100%;
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   margin-bottom: 30px;
   display: flex;
   flex-direction: column;
@@ -13,12 +16,11 @@
 }
 
 #for-coach-banner-title{
-    color: #0c6665;
+    color: white;
     font-size: 35px;
     text-align: center;
     margin-top: 0px;
-    margin-top: 100px;
-    text-shadow: 1px 1px lightgrey;
+    margin-top: 0px;
 }
 
 #subtitle{
@@ -79,6 +81,7 @@
 
 #call-to-action-div p{
     font-size: 20px;
+    color: white;
 } 
 
 #impact-CTA{
@@ -257,7 +260,7 @@
 }
 
 #banner-register-coach{
-    background-image: url("/images/Register-coach-medium1.jpg");
+    background-image: url(/images/Register-coach-medium1.jpg);
     height: 600px;
     width: 100%;
     background-attachment: fixed;
@@ -272,7 +275,7 @@
 }
 
 .details-list{
-    list-style-image: url('/images/UL-icon.png');
+    list-style-image: url(/images/UL-icon.png);
     margin-right: 5px;
     font-family: 'Nunito Sans', sans-serif;
     font-size: 20px;
@@ -295,7 +298,7 @@
 }
 
 #online-image{
-    background-image: url("/images/Register-coach-small1.jpg");
+    background-image: url(/images/Register-coach-small1.jpg);
     height: 200px;
     min-width: 250px;
     border-radius: 5px;
@@ -305,7 +308,7 @@
 }
 
 #impact-image{
-    background-image: url("/images/Register-coach-small4.jpg");
+    background-image: url(/images/Register-coach-small4.jpg);
     height: 200px;
     min-width: 250px;
     border-radius: 5px;
@@ -315,7 +318,7 @@
 }
 
 #grow-image{
-    background-image: url("/images/Register-coach-small5.jpg");
+    background-image: url(/images/Register-coach-small5.jpg);
     height: 200px;
     min-width: 250px;
     border-radius: 5px;
@@ -499,13 +502,16 @@
 @media only screen and (max-width: 938px){
 
 #for-coach-banner{
-    background-image: url("/images/banner-aanmelden-coach.jpg");
+    background-image: url(/images/voor-coaches-banner.jpg);
     height: 650px;
     width: 100%;
-    background-attachment: fixed;
+    background-attachment: scroll;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
@@ -573,6 +579,11 @@
 .details-div {
     flex-direction: column;
     margin-left: 0px;
+}
+
+#banner-register-coach{
+    background-image: url(/images/Register-coach-medium1.jpg);
+    background-attachment: scroll;
 }
 
 }

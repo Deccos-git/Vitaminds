@@ -626,7 +626,7 @@ async function registerCoach(){
   const city = document.getElementById("register-city").value;
   const targetgroup = document.getElementById("register-targetgroup").value;
   const why = document.getElementById("register-why").value;
-  const online = document.getElementsByClassName("input-radio-online")
+  // const online = document.getElementsByClassName("input-radio-online")
   const phone = document.getElementById("register-phone").value;
   const website = document.getElementById("register-website").value;
   const costs = document.getElementById("register-costs").value;
@@ -657,7 +657,7 @@ async function registerCoach(){
       Website: website,                 
       Coachingstyle: method,
       City: city,
-      Online: "Ja",
+      // Online: "Ja",
       Color: colour,
       Why: why,
       Targetgroup: targetgroup,
@@ -669,43 +669,7 @@ async function registerCoach(){
       ID: cred.user.uid,
       Levensvragen: []
     })
-//     .then(() => {
-//       // the method CollectionReference.add returns a DocumentReference instance
-//    // which you have to receive inside the "then" call:
-//    auth.onAuthStateChanged(User =>{
-//     if(User){
-//       const userRef = db.collection("Vitaminders").doc(User.uid);
-//       userRef.get().then(function(doc) {
-//    db.collection('customers').doc(doc.id).collection('checkout_sessions')
-//    .add({
-//      price: 'price_1HLXnVFIim4HzRlUQQXl50Z1',
-//      success_url: "https://vitaminds.nu/succes.html",
-//      cancel_url: "https://vitaminds.nu/voor-coach.html",
-//      tax_rates: ['txr_1HLYPxFIim4HzRlUFAvMv9ti'],
-//      payment_method_types: ['sepa_debit']
-//    })
-//    .then(docRef => {
-//      // Wait for the CheckoutSession to get attached by the extension
-//      docRef.onSnapshot((snap) => {
-   
-//        const { sessionId } = snap.data();
-
-//        console.log(sessionId)
-//        if (sessionId) {
-//          // We have a session, let's redirect to Checkout
-//          // Init Stripe
-//          const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
-//          stripe.redirectToCheckout({ sessionId });
-//        }
-//      });
-//    });
-//   });
-// };
-//    });
-//    });
-  })
-
-  .then(() => {
+ .then(() => {
     db.collection("Mail").doc().set({
       to: [email],
       cc: "info@vitaminds.nu",
@@ -728,7 +692,11 @@ Type: "Coach"
           
 });
 
+ })
+
 window.open("succes.html", "_self");
+        }).catch((err) => {
+          alert(err)
         })
       }
     })

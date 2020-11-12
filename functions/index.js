@@ -279,6 +279,11 @@ app.get('/activity/*',function(req,res)
     res.sendFile('/index-redirect.html', { root: __dirname });
 });
 
+app.get('/activiteiten/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
 app.get('/comments/*',function(req,res)
 {
     res.sendFile('/index-redirect.html', { root: __dirname });
@@ -385,6 +390,11 @@ app.get('/wat-heb-je-aan-positiviteit/*',function(req,res)
 });
 
 app.get('/mijn-account/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/pages/*',function(req,res)
 {
     res.sendFile('/index-redirect.html', { root: __dirname });
 });
