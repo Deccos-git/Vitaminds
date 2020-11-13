@@ -535,7 +535,7 @@ if(button != null){
   let userName = ""
 
   if (lastName != ""){
-    userName = firstName +""+ lastName
+    userName = firstName +" "+ lastName
   } else {
     userName = firstName
   };
@@ -692,9 +692,13 @@ Type: "Coach"
           
 });
 
- })
+ }) 
+ .then(() => {
+  setTimeout(() => 
+  { window.open("succes.html", "_self"); 
+}, 3000);
+  })
 
-window.open("succes.html", "_self");
         }).catch((err) => {
           alert(err)
         })

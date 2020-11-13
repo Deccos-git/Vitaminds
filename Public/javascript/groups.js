@@ -692,6 +692,8 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
     });
 });
 
+
+// GroupsForCoaches
 db.collection("Chats").where("Type", "==", "GroupForCoaches").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
@@ -836,6 +838,73 @@ db.collection("Chats").where("Type", "==", "GroupForCoaches").get().then(querySn
             });
     });
 });
+
+// GroupsForCooperation
+db.collection("Chats").where("Type", "==", "CoachCooperate").get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const title = doc.data().Room
+        const description = doc.data().Description
+        const numberParticipants = doc.data().NumberParticipants
+        const coverPhoto = doc.data().CoverPhoto
+        const members = doc.data().Members
+        const type = doc.data().Type
+
+        const DOM = document.getElementById("groups-for-cooperation")
+
+        const groupInnerDiv = document.createElement("div")
+            groupInnerDiv.setAttribute("class", "theme-groups-section")
+        const groupHeader = document.createElement("div")
+            groupHeader.setAttribute("class", "theme-groups-header")
+        const groupCoverPhoto = document.createElement("img")
+            groupCoverPhoto.setAttribute("class", "header-image-groups")
+        const authDiv = document.createElement("div")
+            authDiv.setAttribute("class", "group-auth-div")
+        const authImg = document.createElement("img")
+            authImg.setAttribute("class", "group-auth-img")
+        const authName = document.createElement("p")
+        const metaDiv = document.createElement("div")
+            metaDiv.setAttribute("class", "group-meta-div")
+        const numberParticipantsP = document.createElement("p")
+        const memberCount = document.createElement("p")
+        const bottomDiv = document.createElement("div")
+            bottomDiv.setAttribute("class", "bottom-div")
+        const groupTitleH2 = document.createElement("h2")
+            groupTitleH2.setAttribute("class", "titelTekst")
+        const descriptionP = document.createElement("p")
+        const buttonDiv = document.createElement("div")
+            buttonDiv.setAttribute("id", "group-button-div")
+        const groupButton = document.createElement("button")
+            groupButton.setAttribute("class", "button-algemeen-card")
+            groupButton.setAttribute("id", "group-button")
+            groupButton.setAttribute("data-room", title)
+
+            groupCoverPhoto.src = coverPhoto
+            groupTitleH2.innerText = title
+            descriptionP.innerText = description
+
+            groupButton.innerText = "Bekijk"
+
+            groupButton.addEventListener("click", () => {
+
+                window.open("../Group/" + [title], "_self");
+            })
+
+            DOM.appendChild(groupInnerDiv)
+            groupInnerDiv.appendChild(groupHeader)
+            groupHeader.appendChild(groupCoverPhoto)
+            groupInnerDiv.appendChild(authDiv)
+            groupInnerDiv.appendChild(bottomDiv)
+            bottomDiv.appendChild(groupTitleH2)
+            bottomDiv.appendChild(descriptionP)
+            groupInnerDiv.appendChild(metaDiv)
+            metaDiv.appendChild(memberCount)
+            groupInnerDiv.appendChild(buttonDiv)
+            buttonDiv.appendChild(groupButton)
+
+    });
+});
+
 
 
 function hideCoachgroupBuilderForNoneCoach(){
@@ -1797,57 +1866,4 @@ function saveCoachgroup(){
 };
 
 
-function savePracticegroup(){
-
-    auth.onAuthStateChanged(User =>{
-        if(User){
-        const userRef = db.collection("Vitaminders").doc(User.uid);
-        userRef.get().then(function(doc) {
-    
-            const auth = doc.data().Gebruikersnaam
-    
-    const title = document.getElementById("coachgroup-title").value
-    const description = document.getElementById("coachgroup-description").value
-    const numberParticipants = document.getElementById("coachgroup-number-participants").value
-    const startNumber = document.getElementById("coachgroup-start-number").value
-
-    //group goal
-    const groupGoalSelect = document.getElementById("create-practicegroup-goal-select")
-
-    const select = groupGoalSelect.options
-    const option = select[select.selectedIndex].innerHTML
-
-
-   db.collection("Chats").doc().set({
-        Eigenaar: "Vitaminds",
-        Room: idClean + title,
-        RoomClean: title,
-        Creater: auth,
-        Description: description,
-        NumberParticipants: numberParticipants,
-        StartNumber: startNumber,
-        Goal: option,
-        Members: firebase.firestore.FieldValue.arrayUnion(auth),
-        Messages: 0,
-        Type: "Practicegroup", 
-        CoverPhoto: coverPhoto
-                }).then(() => {
-                    const notice = document.createElement("p")
-
-                        notice.innerText = "Je groep is aangemaakt!"
-
-                        const buttonPracticeGroup = document.getElementById("button-practicegroup")
-
-                        buttonPracticeGroup.appendChild(notice)
-
-                        notice.style.cursor = "pointer"
-
-                        notice.addEventListener("click", () => {
-                            window.open(`../Group/${idClean + title}.html`, "_self");
-                        });
-                })
-            });
-        };
-    });
-};
-
+// F

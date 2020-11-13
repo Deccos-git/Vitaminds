@@ -565,6 +565,11 @@ function groupsOverviewTitle(groupType, titleURL, titleURLClean, chatDOM, photoD
         photoDOM.src = "images/groups-icon.jpg"
         groupDOM.innerText = "Groep voor coaches"
         }
+    else if(groupType === "CoachesCooperate"){
+        chatDOM.innerText = titleURL
+        photoDOM.src = "images/groups-icon.jpg"
+        groupDOM.innerText = "Vitaminds coaches huiskamer"
+        }
 }; 
 
 function updateReadList(docID, authName, titleURL){

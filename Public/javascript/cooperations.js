@@ -65,26 +65,26 @@ db.collection("Cooperations").where("Eigenaar", "==", "Vitaminds")
 });
 
 // Fetching title from url
-const titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
-const titel1 = titelhtml.replace('.html', '')
-const titel2 = titel1.replace('%20',' ')
-const titel3 = titel2.replace('%20',' ')
-const titel4 = titel3.replace('%20',' ')
-const titel5 = titel4.replace('%20',' ')
-const titel6 = titel4.replace('%20',' ')
-const titel7 = titel6.replace('%20',' ')
-const titel8 = titel7.replace('%20',' ')
-const titel9 = titel8.replace('%20',' ')
-const titel10 = titel9.replace('%20',' ')
-const titel11 = titel10.replace('%20',' ')
-const titel12 = titel11.split("?fb")
-const titel = titel12[0]
+const cooptitelhtml = window.location.href.replace(/^.*[\\\/]/, '')
+const cooptitel1 = cooptitelhtml.replace('.html', '')
+const cooptitel2 = cooptitel1.replace('%20',' ')
+const cooptitel3 = cooptitel2.replace('%20',' ')
+const cooptitel4 = cooptitel3.replace('%20',' ')
+const cooptitel5 = cooptitel4.replace('%20',' ')
+const cooptitel6 = cooptitel4.replace('%20',' ')
+const cooptitel7 = cooptitel6.replace('%20',' ')
+const cooptitel8 = cooptitel7.replace('%20',' ')
+const cooptitel9 = cooptitel8.replace('%20',' ')
+const cooptitel10 = cooptitel9.replace('%20',' ')
+const cooptitel11 = cooptitel10.replace('%20',' ')
+const cooptitel12 = cooptitel11.split("?fb")
+const cooptitel = cooptitel12[0]
 
 const cooperationTitle = document.getElementById("cooperate-title")
 const cooperationBanner = document.getElementById("cooperate-banner")
 const cooperationDescription = document.getElementById("cooperate-desciption")
 
-db.collection("Cooperations").where("Question", "==", titel)
+db.collection("Cooperations").where("Question", "==", cooptitel)
 .get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
@@ -132,13 +132,13 @@ db.collection("Cooperations").where("Question", "==", titel)
                 const coach = doc.data().Gebruikersnaam
 
                 db.collection("Cooperations")
-                .where("Question", "==", titel)
+                .where("Question", "==", cooptitel)
                 .get().then(querySnapshot => {
                     querySnapshot.forEach(doc => {
         
                         db.collection("Cooperations").doc(doc.id)
                         .collection("ReactionsCooperations").doc().set({
-                            Question: titel,
+                            Question: cooptitel,
                             Reactor: coach,
                             Reaction: reaction.value,
                             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -155,9 +155,7 @@ db.collection("Cooperations").where("Question", "==", titel)
 
     const reactionsOuterDiv = document.getElementById("reactions-outer-div")
 
-    console.log(titel)
-
-db.collectionGroup("ReactionsCooperations").where("Question", "==", titel)
+db.collectionGroup("ReactionsCooperations").where("Question", "==", cooptitel)
 .get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 

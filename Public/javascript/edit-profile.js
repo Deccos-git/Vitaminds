@@ -386,11 +386,14 @@ function editReactions(elem){
 
 function editContact(elem){
 
-        const bel = elem.parentElement.nextSibling.nextSibling.firstElementChild.nextSibling
-        const belDiv =  elem.parentElement.nextSibling.nextSibling
-        const websiteDiv = elem.parentElement.nextSibling.nextSibling.nextSibling
+        const belDiv =  elem.parentElement.nextSibling
+        const bel = elem.parentElement.nextSibling.firstElementChild.nextSibling
+        const websiteDiv = elem.parentElement.nextSibling.nextSibling
         const website = websiteDiv.firstElementChild.nextSibling
-        const websiteLink = website.firstElementChild
+        
+        const websiteClean = website.innerHTML.split('"')
+
+        console.log(websiteClean)
 
         // Format for website notice
         const noticeP = document.createElement("p")
@@ -415,12 +418,6 @@ function editContact(elem){
         website.style.color = "#49beb7"
         }
 
-        
-        // if(websiteLink == null){
-        //         console.log("Error")
-        // } else {
-        // websiteLink.setAttribute("contenteditable", "true")
-        // }
         website.setAttribute("contenteditable", "true")
         website.style.border= "1px dotted #d4d4d4"
 

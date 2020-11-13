@@ -1178,6 +1178,7 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 const phoneData = document.createElement("h6")
                 const websiteDiv = document.createElement("div")
                         websiteDiv.setAttribute("class", "item-div")
+                        websiteDiv.setAttribute("id", "website-div")
                 const websiteDOM = document.createElement("p")
                 const websiteData = document.createElement("h6")
                 
@@ -1272,7 +1273,8 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 }
         } 
         dataUndefined(phoneNumber, phoneDiv, phoneData, phoneNumber, phoneDOM, "Bel")
-        dataUndefined(website, websiteDiv, websiteData, `<a href="http://${website}" target="_blank">${website}</a>`, websiteDOM, "Website"  )
+        dataUndefined(website, websiteDiv, websiteData, `<a href='https://${website}'>${website}</a>`, websiteDOM, "Website"  )
+
 
                 // About info
         dataUndefined(city, cityDiv, cityData, city, cityDOM, `Stad of dorp`)
@@ -2278,7 +2280,7 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                                                 cc: "info@vitaminds.nu",
                                             message: {
                                             subject: `Nieuwe volger op Vitaminds`,
-                                            html: `Hallo, ${gebruikersnaamClean}</br></br>
+                                            html: `Hallo ${gebruikersnaamClean},</br></br>
                                                 
                                                 ${gebruikersnaamCleanFollower} volgt jouw nu op Vitaminds.</br></br>
                                             

@@ -79,20 +79,30 @@ app.get('/Vitaminders/:id',function(req,res)
     res.sendFile('digimind.html', { root: __dirname });
 });
 
+//Kenniscentrum
 app.get('/Kenniscentrum-coaching/:id',function(req,res)
 {
     res.sendFile('Kennis.html', { root: __dirname });
 });
 
+// Intervisie
 app.get('/Intervisions/:id',function(req,res)
 {
     res.sendFile('Intervision.html', { root: __dirname });
 });
 
+// Cooperation
 app.get('/Cooperation/:id',function(req,res)
 {
     res.sendFile('cooperate.html', { root: __dirname });
 });
+
+// Events
+app.get('/eventpage/:id',function(req,res)
+{
+    res.sendFile('event.html', { root: __dirname });
+});
+
 
 // Tool sheduling
 
@@ -394,7 +404,7 @@ app.get('/mijn-account/*',function(req,res)
     res.sendFile('/index-redirect.html', { root: __dirname });
 });
 
-app.get('/pages/*',function(req,res)
+app.get('/bedankt/*',function(req,res)
 {
     res.sendFile('/index-redirect.html', { root: __dirname });
 });

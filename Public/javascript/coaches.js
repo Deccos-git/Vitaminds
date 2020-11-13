@@ -58,7 +58,7 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach")
             };
         
             nieuweH3.addEventListener('click', (e) => {
-                window.open("Vitaminders/" + [naam], "_self");
+                window.open(`https://${website}`, "_self");
             });
 
             // Exclude from list of coaches

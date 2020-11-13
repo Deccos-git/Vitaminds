@@ -1334,6 +1334,7 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                 const inspirationIcon = document.createElement("img")
                     inspirationIcon.setAttribute("class", "inspiration-icons")
                     inspirationIcon.setAttribute("id", "inspiration-icon")
+                const inspirationIconDescription = document.createElement("p")
                 const toevoegenLevenslesOuterDiv = document.createElement("div")
                     toevoegenLevenslesOuterDiv.setAttribute("id", "toevoegen-levensles-outer-div")
                 const toevoegenLevenslesSelectDiv = document.createElement("div")
@@ -1371,6 +1372,7 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                     editIcon.setAttribute("data-coach", coach)
                     
                 inspirationIcon.src = "../images/inspiration-icon-2.png"
+                inspirationIconDescription.innerText = "Heb je iets over jezelf geleerd?"
                 inspirationIconDiv.addEventListener("click", (e) => {
                     toevoegenLevenslesOuterDiv.style.display = "flex"
                     inspirationIcon.style.display = "none"
@@ -1587,6 +1589,7 @@ db.collection("Insights").where("ThemeArtikel", "==", titel).where("Paragraph", 
                 inspirationalDiv.appendChild(inspirationalImg)
                 socialDiv.appendChild(inspirationIconDiv)
                 inspirationIconDiv.appendChild(inspirationIcon)
+                inspirationIconDiv.appendChild(inspirationIconDescription)
                 socialDiv.appendChild(toevoegenLevenslesOuterDiv)
                 toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesSelectDiv)
                 toevoegenLevenslesSelectDiv.appendChild(toevoegenLevensles)

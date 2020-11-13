@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta id="meta-keywords" name="keywords">
+    <meta id="meta-description" property="og:description" name="description">
+    <meta id="facebook-url" property="og:url"/>
+    <meta property="og:type"  content="article"/>
+    <meta id="facebook-title" property="og:title"/>
+    <meta id="facebook-description" property="og:description"/>
+    <meta id="facebook-img" property="og:image">
+  <title id="page-title" property="og:title"></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../Style/style.css">
+  <link rel="stylesheet" href="../Style/workshops.css">
+  <link rel="shortcut icon" href="../images/Favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  <!-- Tiny MCE -->
+  <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
+    tinymce.init({
+      height: 400,
+      selector: '#tiny-mce',
+      toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media',
+      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media',
+      toolbar_mode: 'floating',
+      plugin_preview_width: 720,
+      forced_root_block : false,
+      paste_preprocess: function(plugin, args) {
+        console.log(args.content);
+        args.content += ' preprocess';
+      }
+    });
+  </script>
+  <!-- End Tiny MCE -->
+</head>
+
+<body>
+  
+   <!-- Feedback -->
+   <div id="feedback">
+    <a href="../tickets.html"> <p>Feedback</p></a>
+  </div>
+
+  <nav id="mobile-menu"> 
+    <div id="menu-mobile-visible-layer">
+      <img id="mobile-hamburger-menu" src="../images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+      <div class="main-menu-mobile"><a href="../index.html"><img id="logo-menu" src="../images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+    </div>
+    <div id="mobile-menu-outer-div">
+      <div id="mobile-menu-inner-div">
+            <div id="profile-picture-mobile"></div>
+            <div id="button-login-mobile" class="login-logout"><button><a href="../inlog.html">Log in</a></button></div>
+        <div class="main-menu-mobile"><a href="../openup.html">Open up</a></div>
+        <div class="main-menu-mobile"><a href="../groups.html">Groepen</a></div> 
+        <div class="main-menu-mobile"><a href="../workshops.html">Workshops</a></div>
+        <div class="main-menu-mobile"><a href="../inspiratie.html">Inspiratie</a></div>
+        <!-- <div class="main-menu-mobile"><a href="../tools.html">Tools</a></div> -->
+        <div class="main-menu-mobile"><a href="../coaches.html">Coaches</a></div>
+        <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a> 
+        <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+      </div>
+    </nav>
+  
+    <!-- menu --> 
+    <nav id="menu">
+      <div id="navigation-menu">
+        <div class="main-menu"><a href="../index.html"><img id="logo-menu" src="../images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+        <div class="main-menu"><a href="../openup.html">Open up</a></div>
+        <div class="main-menu"><a href="../groups.html">Groepen</a></div> 
+        <div class="main-menu"><a href="../workshops.html">Workshops</a></div>
+        <div class="main-menu"><a href="../inspiratie.html">Inspiratie</a></div>
+        <!-- <div class="main-menu"><a href="../tools.html">Tools</a></div> -->
+        <!-- <li class="main-menu"><a href="../evenementen.html">Evenementen</a></li> -->
+        <div class="main-menu"><a href="../coaches.html">Coaches</a></div>
+        <!-- <li class="main-menu"><a href="privacy.html"../>Privacy</a></li> -->
+      </div>
+      <div id="auth-menu">
+        <div id="auth-DOM"></div>
+        <div id="profile-picture">
+        </div>
+        <div id="button-login" class = "login-logout"><button><a href="../inlog.html">Log in</a></button></div>
+        <div id="slash" class = "login-logout"><a>|</a></div>
+        <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
+      </div>
+    </nav>
+
+<!-- Workshop -->
+
+<div id="workshop-landing-page">
+  <a href="../workshops.html"><img src="../images/close-icon.png" alt="modal afsluiten"></a> 
+  <div id="creator-information-div"></div>
+  <h1 id="workshop-landing-title"></h1>
+  <p id="workshop-description"></p>
+  <ul id="workshop-facts"></ul>
+  <div id="button-div-landing">
+    <button class="button-algemeen" id="button-workshop-landing">Workshop starten</button>
+  </div>
+</div>
+
+<div id="workshop-agreement">
+  <h2 id="workshop-member-agreement-title"></h2>
+      <img id="workshop-agreement-banner" src="/images/register-notice.png" alt="Workshop gaat beginnen.">
+      <h3>Wat kun je verwachten?</h3>
+      <p>Je hebt nu voor altijd toegang tot deze workshop. Je kunt hem dus lekker op je eigen tempo maken. 
+          Vergeet niet je antwoorden op te slaan ;)</p>
+        <h3>Je betaling</h3>
+        <p>Ik neem binnenkort contact met je op over de betaling 
+          via het mailadres waarmee je je aanmeld bij Vitaminds.
+        </p>
+        <h3>Vragen</h3>
+        <p> Voor vragen kun je mij altijd even een berichtje sturen.</p>
+        <div id="questions-workshop-agreement"></div>  
+        <div>
+            <button class="button-algemeen" id="visitWorkshop">Oke</button>
+        </div>
+</div>
+
+<section id="workshop-section">
+  <div id="header-div">
+    <h1 id="workshop-title"></h1>
+    <div id="edit-workshop-div">
+      <img src="../images/edit-icon.png" alt="edit-workshop">
+      <h2 id="edit-workshop">Je workshop aanpassen</h2>
+    </div>
+    <p id="coach-welcome"></p>
+    <div id="coach-introduction" onclick="askMe()">
+      <img id="coach-pic" alt="">
+      <p>Stel me een vraag</p>
+    </div>
+      <div id="workshop-goal-check">
+        <h3>Jouw doel</h3>
+        <div id="workshop-goal-check-inner-div"></div>
+        <div id="set-new-goal-div">
+          <p>Doel</p>
+          <p id="workshop-goal-title"></p>
+          <p>Geef je doel een persoonlijke titel</p>
+          <input id="personal-goal-title" type="text" placeholder="Titel">
+          <p>Geef je doel een korte omschrijving</p>
+          <textarea name="" id="goal-summary" cols="30" rows="10" placeholder="Omschrijving van je doel"></textarea>
+          <div>
+            <button onclick="createGoalAndStartWorkshop()">Start de workshop</button>
+          </div>
+        </div>
+      </div>
+      <div id="workshop-inner-div">
+      <div id="workshop-header-image"></div>
+      <div id="workshop-summary-div">
+        <h3>Wat kun je bij deze workshop leren?</h3>
+        <p id="workshop-summary"></p>
+      </div>
+      <div id="steps-overview">
+        <h3>Wat gaan we doen?</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="tool-bar-div"></div>
+
+ <!-- Toolbar mobile -->
+ <div class="toolbar-mobile">
+  <div class="toolbar-mobile-inner-div">
+    <img src="../images/home-icon.png" alt="" id="toolbar-home">
+    <p class="description-menu-icons-toolbar-mobile">Home</p>
+  </div>
+  <div class="toolbar-mobile-inner-div" id="toolbar-inner-div-chats-groups">
+    <img src="../images/send-icon.png" alt="" id="toolbar-chats-groups">
+    <p class="description-menu-icons-toolbar-mobile">Chats & groepen</p>
+  </div>
+  <div class="toolbar-mobile-inner-div">
+    <div id="toolbar-inspiration-div" class="toolbar-mobile-inner-div">
+      <div id="toolbar-inspration-options">
+        <p id="toolbar-inspiration-public">Publiek</p>
+        <p id="toolbar-inspiration-private">Prive</p>
+      </div>
+      <img src="../images/inspiration-icon-2.png" alt="" id="toolbar-inspiration">
+      <p class="description-menu-icons-toolbar-mobile">Nieuw inzicht</p>
+    </div>
+  </div>
+  <div class="toolbar-mobile-inner-div">
+    <img src="../images/menu-dashboard.png" alt="" id="toolbar-digimind">
+    <p class="description-menu-icons-toolbar-mobile">Mijn Digimind</p>
+  </div>  
+</div>
+
+
+<!-- footer -->
+<footer class="footer">
+  <div>
+   <a href="https://www.vitaminds.nu"><img src="../images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+  </div>
+  <div>
+    <h3 id="slogan-footer">Het sociale netwerk voor imperfecte mensen</h3>
+  </div>
+  <div>
+   <a href="https://www.facebook.com/VitamindsNederland/"><img src="../images/Logo-facebook.png" alt="" width="40px"></a>
+   <a href="https://www.youtube.com/channel/UC44W6GvZnKZqBw7hdH5OU0A"><img src="../images/Logo-youtube.png" alt="" width="40px"></a>
+  </div>
+</footer>
+
+
+      <script type="text/javascript" src="../javascript/firebase.js"></script>
+      <script type="text/javascript" src="../javascript/auth.js"></script>
+      <script type="text/javascript" src="../javascript/edit-profile.js"></script>
+      <script type="text/javascript" src="../javascript/workshops.js"></script>
+      <script type="text/javascript" src="../javascript/index.js"></script>
+    </body>
+  </html>
+  
