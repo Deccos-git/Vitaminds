@@ -1013,8 +1013,6 @@ function hideIntroductionInputForNoneAuth(introductionText){
         const introductionInput = document.getElementById("introduction-input-div")
         const editIcon = document.getElementById("edit-coach-introduction-icon")
 
-        console.log(introductionText)
-
         auth.onAuthStateChanged(User =>{
                 if (User){
     
@@ -1476,9 +1474,7 @@ db.collection("Insights").where("Auteur", "==", naam).get().then(querySnapshot =
                 innerDiv.appendChild(metaDiv)
                 metaDiv.appendChild(timestampMeta)
                 metaDiv.appendChild(source)
-
-
-        })
+        });
 });
 
 
@@ -1493,8 +1489,7 @@ db.collectionGroup('Levensvragen').where("Gebruikersnaam", "==", naam).get().the
             const goal = doc.data().Goal
 
             const levensvraagID = doc.data().Levensvraag
-            const levensvraag = levensvraagID.replace(ID, "")
-            
+            const levensvraag = levensvraagID.replace(ID, "")  
     
             const DOM = document.getElementById("overzichtLevensvragen")
     
@@ -2286,7 +2281,7 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                                             
                                                 Vriendelijke groet, </br></br>
                                                 Het Vitaminds Team </br></br>
-                                                <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                                                <img src="../images/logo.png" width="100px" alt="Logo Vitaminds">`,
                                             Gebruikersnaam: gebruikersnaam
                                             }
                                                     
@@ -2317,7 +2312,7 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                                 }); 
 
                                 const button = document.getElementById("follow-button-digimind")
-                                button.innerHTML = "ONTVOLGD"
+                                button.innerHTML = "Ontvolgd"
                         }
                 })
         };

@@ -447,6 +447,27 @@ const paragrphListInsightsLevensvraag = document.getElementById("paragraph-list-
 const selectParagraphCoachInsightLevensvraag = document.createElement("select")
     selectParagraphCoachInsightLevensvraag.setAttribute("id", "select-paragraph-coach-insight-levensvraag")
 
+function appendLifelessonsToInsight(titleInsight){
+    db.collectionGroup("Levenslesson").where("Source", "==", titleInsight)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const lesson = doc.data().Levensles
+            const learner = doc.data().Gebruikersnaam
+            const date = doc.data().Timestamp
+
+            const lessonDiv = document.createElement("div")
+            const lessonP = document.createElement("p")
+            const learnerDiv = document.createElement("div")
+            const learnerName = document.createElement("p")
+            const learnerPhoto = document.createElement("img")
+
+            lessonP.innerText = lesson
+
+            lessonDiv.appendChild(lessonP)
+        });
+    });
+}
 
 db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
@@ -626,6 +647,8 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
                 const inspirationIcon = document.createElement("img")
                     inspirationIcon.setAttribute("class", "inspiration-icons")
                     inspirationIcon.setAttribute("id", "inspiration-icon")
+                const inspirationIconDescription = document.createElement("p")  
+                    inspirationIconDescription.setAttribute("id", "inspiration-icon-description")
                 const toevoegenLevenslesOuterDiv = document.createElement("div")
                     toevoegenLevenslesOuterDiv.setAttribute("id", "toevoegen-levensles-outer-div")
                 const toevoegenLevenslesSelectDiv = document.createElement("div")
@@ -666,9 +689,11 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
                     editIcon.setAttribute("data-coach", coach)
 
                     inspirationIcon.src = "../images/inspiration-icon-2.png"
+                    inspirationIconDescription.innerText = "Heb je iets over jezelf geleerd?"
                     inspirationIconDiv.addEventListener("click", (e) => {
                         toevoegenLevenslesOuterDiv.style.display = "flex"
                         inspirationIcon.style.display = "none"
+                        inspirationIconDescription.style.display = "none"
                     })
 
                     toevoegenLevensles.innerText = "Heb je iets geleerd over:"
@@ -887,6 +912,7 @@ db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragr
                 inspirationalDiv.appendChild(inspirationalImg)
                 socialDiv.appendChild(inspirationIconDiv)
                 inspirationIconDiv.appendChild(inspirationIcon)
+                inspirationIconDiv.appendChild(inspirationIconDescription)
                 socialDiv.appendChild(toevoegenLevenslesOuterDiv)
                 toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesSelectDiv)
                 toevoegenLevenslesSelectDiv.appendChild(toevoegenLevensles)

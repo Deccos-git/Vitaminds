@@ -523,6 +523,18 @@
     width: 100%;
 }
 
+.inspiration-icon-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#inspiration-icon-description{
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .read-more-div{
     display: flex;
     justify-content: center;

@@ -133,7 +133,14 @@ titel7 = titel6.replace('%20',' ')
 titel8 = titel7.replace('%20',' ')
 titel9 = titel8.replace('%20',' ')
 titel10 = titel9.replace('%20',' ')
-titel = titel10.replace('%20',' ')
+titel11 = titel10.replace('%20',' ')
+titel12 = titel11.replace('%20',' ')
+titel13 = titel12.replace('%20',' ')
+titel14 = titel13.replace('%20',' ')
+titel15 = titel14.replace('%20',' ')
+titel = titel14.replace('%20',' ')
+
+console.log(titel)
 
 
 // Levensvraag artikelen detailpagina

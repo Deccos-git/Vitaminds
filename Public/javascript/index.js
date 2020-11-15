@@ -273,3 +273,201 @@ const toolbarInspirationPrivate = document.getElementById("toolbar-inspiration-p
                         };
                 });
         }
+
+// Show followed coaches wall for auth
+
+//Favorieten Coaches
+function favCoach(authNaam){
+        const favCoachDOM = document.getElementById("coach-overview")
+        
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", authNaam).get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+        
+                        const followers = doc.data().FavCoaches
+        
+                        if (followers == undefined || followers.length == 0){
+                                instructionDiv.style.display = "flex"
+                        } else {
+        
+                        followers.forEach(coach => {
+                                db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
+                                        querySnapshot.forEach(doc1 => {
+        
+                                                const profilePicture = doc1.data().Profielfoto
+                                                const coachName = doc1.data().GebruikersnaamClean
+        
+                                                const fotoDiv = document.createElement("div")
+                                                        fotoDiv.setAttribute("class", "favCoachDiv")
+                                                const fotoImg = document.createElement("img")
+                                                const name = document.createElement("p")
+        
+                                                
+
+                                                if(profilePicture == undefined){
+                                                        fotoImg.style.backgroundImage ="url('/images/dummy-profile-photo.jpeg')"
+                                                    } else {
+                                                        fotoImg.src = profilePicture
+                                                    };
+
+                                                name.innerHTML = coachName
+        
+                                                fotoDiv.addEventListener("click", () => {
+                                                        window.open("../Vitaminders/" + coach + ".html", "_self")
+                                                })
+        
+                                                favCoachDOM.appendChild(fotoDiv)
+                                                fotoDiv.appendChild(fotoImg)
+                                                fotoDiv.appendChild(name)
+        
+                                                })
+                                        })
+                                })
+                        };
+                })
+        });
+   }; 
+
+        function dashboardFunction(authNaam){
+
+                const dashboardDOM = document.getElementById("coach-updates")
+        
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", authNaam).get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+                
+                                const followers = doc.data().FavCoaches
+        
+                                const instructionDiv = document.createElement("div")
+                                        instructionDiv.setAttribute("id", "instruction-div")
+                                const instructionImg = document.createElement("img")
+                                const instructionH4 = document.createElement("h4")
+                                const instructionP = document.createElement("p")
+        
+                                // No following yet
+                                auth.onAuthStateChanged(User =>{
+                                          const userRef = db.collection("Vitaminders").doc(User.uid);
+                                          userRef.get().then(function(doc) {
+                                             const auth = doc.data().Gebruikersnaam;
+
+                                if(auth == authNaam){
+        
+                                if (followers == undefined || followers.length == 0){
+                                        console.log("auth")
+                                        instructionDiv.style.display = "flex"
+                                
+        
+                                                instructionH4.innerHTML = "Je volgt nog geen coaches"
+                                                instructionP.innerHTML = `De nieuwste updates van jouw favoriete coaches komen hier te staan <br><br>
+                                                                        Vind bijvoorbeeld <a href="/inspiratie.html"> hier</a> coaches om te volgen`
+                                                instructionImg.src = "/images/coach-row-dummy.jpeg"
+                                                };
+                                        };
+                                        })
+                                });
+        
+                                dashboardDOM.appendChild(instructionDiv)
+                                instructionDiv.appendChild(instructionH4)
+                                instructionDiv.appendChild(instructionImg)
+                                instructionDiv.appendChild(instructionP)
+        
+                                if(followers != undefined){
+                
+                                followers.forEach(coach => {
+                                        db.collection("Insights").orderBy("Timestamp", "desc").where("Auteur", "==", coach).get().then(querySnapshot => {
+                                                querySnapshot.forEach(doc1 => {
+        
+                                                        const titelInsight = doc1.data().Titel
+                                                        const coach = doc1.data().Auteur
+                                                        const levensvraagArtikel = doc1.data().LevensvraagArtikel
+                                                        const themeArtikel = doc1.data().ThemeArtikel
+                                                        const type = doc1.data().Type
+                                                        const date = doc1.data().Timestamp
+        
+                                                        db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
+                                                                querySnapshot.forEach(doc2 => {
+                                                                    const gebruikersnaamClean = doc2.data().GebruikersnaamClean
+                                                                    const photo = doc2.data().Profielfoto
+
+                                                                    metaPhoto.src = photo
+                                                                    metaName.innerHTML = gebruikersnaamClean
+                                                                })
+                                                        })
+                                                        
+                                                        const outerDiv = document.createElement("div")
+                                                        outerDiv.setAttribute("class", "insights-outer-div")
+                                                        outerDiv.setAttribute("data-coach", coach)
+                                                        const metaDiv = document.createElement("div")
+                                                        metaDiv.setAttribute("class", "meta-div-insights")
+                                                        const metaPhoto = document.createElement("img")
+                                                        metaPhoto.setAttribute("class", "meta-photo")
+                                                        const metaName = document.createElement("p")
+                                                        const textDiv = document.createElement("div")
+                                                        textDiv.setAttribute("class", "text-div-insights")
+                                                        const textTitle = document.createElement("h2") 
+                                                        const timeStamp = document.createElement("p")
+                                                        timeStamp.setAttribute("class", "coach-wall-timestamp")
+        
+                                                       
+                                                        textTitle.innerHTML = titelInsight
+                                                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                                                        timeStamp.innerHTML = date.toDate().toLocaleDateString("nl-NL", options);
+                                                       
+                                                        // Hide kenniscentrum insights
+        
+                                                        if(type == "Insight-kenniscentrum"){
+                                                                outerDiv.style.display = "none"
+                                                        }
+        
+                                                        function windowOpen(a,b){
+                                                        if(a != undefined){
+        
+                                                        textDiv.addEventListener("click", () => {
+                                                                window.open( b + a + ".html", "_self");
+                                                                })
+                                                                }
+                                                        }; 
+                                                        
+                                                        windowOpen(levensvraagArtikel, "../Artikelen/")
+                                                        windowOpen(themeArtikel, "../Theme-articles/")
+        
+                                                        metaDiv.addEventListener("click", () => {
+                                                                window.open("../Vitaminders/" + coach + ".html", "_self");
+                                                        });
+        
+                                                        
+        
+                                                        dashboardDOM.appendChild(outerDiv)
+                                                        outerDiv.appendChild(metaDiv)
+                                                        metaDiv.appendChild(metaPhoto)
+                                                        metaDiv.appendChild(metaName)
+                                                        outerDiv.appendChild(textDiv)
+                                                        textDiv.appendChild(textTitle)
+                                                        outerDiv.appendChild(timeStamp)
+                                                        
+                                                                        
+                                                                  
+                                                        })
+                                                })
+                                        })
+                                };
+                        })
+                })
+        }; 
+
+auth.onAuthStateChanged(User =>{
+        if(User){
+                db.collection("Vitaminders").doc(User.uid).get().then(doc =>{
+
+                        const auth = doc.data().Gebruikersnaam
+
+                const noAuthDiv = document.getElementById("no-auth-div")
+                const authDiv = document.getElementById("auth-div")
+
+                noAuthDiv.style.display = "none"
+                authDiv.style.display = "block"
+
+                favCoach(auth);
+                dashboardFunction(auth)
+
+                });  
+        };
+});

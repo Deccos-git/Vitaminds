@@ -1169,6 +1169,73 @@ ul{
   color: #FFF;
 }
 
+/* Coach wall */
+
+.meta-photo{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+#coach-updates{
+  margin: 0px 100px 100px 100px;
+}
+
+.text-div-insights h2{
+  text-align: left;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.insights-outer-div{
+  border-radius: 3px;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+  padding: 10px;
+  margin: 5px;
+}
+
+.meta-div-insights{
+  cursor: pointer;
+}
+
+.meta-div-insights p{
+  font-size: 18px;
+}
+
+.coach-wall-timestamp{
+  font-size: 14px;
+}
+
+#instruction-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 3px;
+}
+
+#coach-overview{
+  display: flex;
+  justify-content: space-evenly;
+  margin: 80px 0px -30px 0px;
+  flex-wrap: wrap;
+}
+
+.favCoachDiv{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.favCoachDiv img{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.favCoachDiv p{
+font-size: 14px;
+}
+
 /* IOS popup */
 
 #ios-popup{
@@ -1716,4 +1783,9 @@ margin: 0px 0px 30px 0px;
   background: none !important;
   margin: 0px 0px 0px 0px !important;
 }
+
+#coach-updates {
+  margin: 0px 10px 100px 10px;
+}
+
 } 

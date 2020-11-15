@@ -484,7 +484,7 @@ function inlogVM(){
             if (doc.exists) {
               naam = doc.data().Gebruikersnaam;
 
-              window.open("../Vitaminders/" + naam + ".html", "_self");
+              window.open("/index.html", "_self");
           };
         });
       });

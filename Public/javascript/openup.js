@@ -53,6 +53,78 @@ function addSourceOfInspiration(articleType, titleSource, sourceDOM){
 };
 
 
+function hideFollowIconForCoachSelf(coachNaam){
+        auth.onAuthStateChanged(User =>{
+            if(User){
+        db.collection("Vitaminders").doc(User.uid).get().then(doc =>{
+
+                        // Hide follow for auth on his own profile
+                        const auth = doc.data().Gebruikersnaam
+
+                        const followButton = document.getElementsByClassName("follow-div")
+
+                        followButtonArray = Array.from(followButton)
+
+                        followButtonArray.forEach(button => {
+
+                            if(auth == coachNaam){
+                                button.style.display = "none" 
+                            };
+                        }); 
+                });
+        };
+    });
+};
+
+function followCoach(naamCoach){
+        
+    auth.onAuthStateChanged(User =>{
+        if(User){
+                db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                        const gebruikersnaamCleanFollower = doc.data().GebruikersnaamClean
+
+                        console.log("tets")
+                
+                db.collection("Vitaminders").doc(User.uid).update({
+                FavCoaches: firebase.firestore.FieldValue.arrayUnion(naamCoach)
+                }).then(() => {
+
+                        db.collection("Vitaminders").where("Gebruikersnaam", "==", naamCoach).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc1 => {
+
+                                        const email = doc1.data().Email
+                                        const gebruikersnaamClean = doc1.data().GebruikersnaamClean
+                                        const gebruikersnaam = doc1.data().Gebruikersnaam
+                         
+
+                        // db.collection("Mail").doc().set({
+                        //         to: email,
+                        //         cc: "info@vitaminds.nu",
+                        //     message: {
+                        //     subject: `Nieuwe volger op Vitaminds`,
+                        //     html: `Hallo ${gebruikersnaamClean},</br></br>
+                                
+                        //         ${gebruikersnaamCleanFollower} volgt jouw nu op Vitaminds.</br></br>
+                            
+                        //         Vriendelijke groet, </br></br>
+                        //         Het Vitaminds Team </br></br>
+                        //         <img src="../images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                        //     Gebruikersnaam: gebruikersnaam
+                        //     }
+                                    
+                        //     }).catch((err) => {
+                        //         console.log(err)
+                        //     })
+                                })
+                        })
+                });
+        });
+        };
+})
+
+}
+
+
         db.collectionGroup("Levenslessen").where("Status", "==", "Approved").orderBy("Timestamp", "desc").get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
 
@@ -75,6 +147,9 @@ function addSourceOfInspiration(articleType, titleSource, sourceDOM){
                 const metaUserPhoto = document.createElement("img")
                 const metaUserName = document.createElement("p")
                     metaUserName.setAttribute("id", "meta-user-name")
+                const followDiv = document.createElement("div")
+                    followDiv.setAttribute("class", "follow-div")
+                const followIcon = document.createElement("img")
                 const nameCompareDiv = document.createElement("div")
                 const bronDiv = document.createElement("div")
                     bronDiv.setAttribute("class", "bron-div-detail") 
@@ -143,6 +218,7 @@ function addSourceOfInspiration(articleType, titleSource, sourceDOM){
 
                             const userClean = doc4.data().GebruikersnaamClean
                             const userPhoto = doc4.data().Profielfoto
+                            const userType = doc4.data().Usertype
 
                             if(userPhoto == undefined){
                                 metaUserPhoto.src = "images/dummy-profile-photo.jpeg"
@@ -159,12 +235,24 @@ function addSourceOfInspiration(articleType, titleSource, sourceDOM){
                     metaUserName.addEventListener("click", () => {
                         window.open("../Vitaminders/" + [gebruikersnaam] + ".html", "_self");
                             });
-                        });
-                    });
+
+                    // hideFollowIconForCoachSelf(gebruikersnaam)
+
+                    // followIcon.addEventListener("click", followCoach(gebruikersnaam))
 
                     metaUserDiv.appendChild(metaUserPhoto)
                     metaUserDiv.appendChild(nameCompareDiv)
                     nameCompareDiv.appendChild(metaUserName)
+
+                    // if(userType == "Coach"){
+                    // metaUserDiv.appendChild(followDiv)
+                    // followDiv.appendChild(followIcon)
+                    // };
+
+                });
+            });
+
+                    followIcon.src = "/images/follow-icon.png"
 
                     // Like counter
                     if(likes > 0){

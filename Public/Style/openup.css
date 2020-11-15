@@ -478,6 +478,20 @@
     align-items: center;
 }
 
+.follow-div img{
+    height: 20px;
+    width: 20px;
+    border-radius: 0px;
+    margin: 0px 0px -5px 10px;
+}
+
+.follow-div img:hover{
+    height: 22px;
+    width: 22px;
+    border-radius: 0px;
+    margin: 0px 0px -5px 10px;
+}
+
 #toevoegen-levensles-div p{
     margin: 5px;
 }

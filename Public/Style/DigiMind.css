@@ -968,6 +968,7 @@
 
 .item-div h6{
     margin: 0px 10px;
+    min-width: 40px;
 }
 
 .undefined-placeholder{
