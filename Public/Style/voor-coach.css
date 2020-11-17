@@ -103,6 +103,10 @@
     padding: 5px;
    }
 
+#button-impact{
+    margin-bottom: 20px;
+}
+
 .coach-card{
     height: 520px;
     width: 350px;

@@ -1171,6 +1171,10 @@ ul{
 
 /* Coach wall */
 
+#auth-div{
+  display: none;
+}
+
 .meta-photo{
   height: 50px;
   width: 50px;
@@ -1734,9 +1738,9 @@ margin: 0px 0px 30px 0px;
   #begin h2{
     font-size: 30px;
     color: #122b46;
-    margin: 15px;
+    margin: 0px 10px 10px 10px;
     letter-spacing: 0.5px;
-    margin-top: -80px;
+    font-size: 25px;
   }
 
   #goal-bar-inner-div{
