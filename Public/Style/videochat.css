@@ -1,6 +1,7 @@
 #videos{
     display: flex;
     margin: 20px;
+    flex-wrap: wrap;
 }
 
 #localVideo{
@@ -38,4 +39,15 @@
     font-size: 18px;
     color: white;
     cursor: pointer;
+}
+
+@media only screen and (max-width: 938px){
+
+    #remoteVideo {
+        width: 100%;
+    }
+
+    #localVideo {
+        width: 100%;
+    }
 }

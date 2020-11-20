@@ -249,15 +249,11 @@ console.log(titel)
             const titelInsight = doc.data().Titel
             const body = doc.data().Body
             const coach = doc.data().Auteur
-
-            console.log(titelInsight)
     
             db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
                 querySnapshot.forEach(doc1 => {
                     const gebruikersnaamClean = doc1.data().GebruikersnaamClean
                     const photo = doc1.data().Profielfoto
-
-                    console.log(gebruikersnaamClean)
     
                     outerDiv = document.createElement("div")
                         outerDiv.setAttribute("class", "insights-outer-div")

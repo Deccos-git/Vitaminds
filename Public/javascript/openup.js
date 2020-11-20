@@ -125,7 +125,8 @@ function followCoach(naamCoach){
 }
 
 
-        db.collectionGroup("Levenslessen").where("Status", "==", "Approved").orderBy("Timestamp", "desc").get().then(querySnapshot => {
+        db.collectionGroup("Levenslessen").where("Status", "==", "Approved").orderBy("Timestamp", "desc")
+        .get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
 
                 const les = doc.data().Levensles
@@ -327,25 +328,25 @@ function followCoach(naamCoach){
                                         });
                                 
                                 // Mail naar reciever
-                                db.collection("Mail").doc().set({
-                                    to: email,
-                                    cc: "info@vitaminds.nu",
-                              message: {
-                              subject: `Je update heeft een like ontvangen op Vitaminds! `,
-                              html: `Hallo ${naam}, </br></br>
-                                    Je update <i>${les}</i> heeft een like ontvangen op Vitaminds! <br><br>
+                            //     db.collection("Mail").doc().set({
+                            //         to: email,
+                            //         cc: "info@vitaminds.nu",
+                            //   message: {
+                            //   subject: `Je update heeft een like ontvangen op Vitaminds! `,
+                            //   html: `Hallo ${naam}, </br></br>
+                            //         Je update <i>${les}</i> heeft een like ontvangen op Vitaminds! <br><br>
                                     
-                                    Ga naar <a href="https://vitaminds.nu"> Vitaminds </a> om je like te bekijken.<br><br>
+                            //         Ga naar <a href="https://vitaminds.nu"> Vitaminds </a> om je like te bekijken.<br><br>
                               
-                                    Vriendelijke groet, </br></br>
-                                    Het Vitaminds Team </br></br>
-                                    <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-                              Gebruikersnaam: naam,
-                              Emailadres: email,
-                              Type: "Love"
-                              }
+                            //         Vriendelijke groet, </br></br>
+                            //         Het Vitaminds Team </br></br>
+                            //         <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                            //   Gebruikersnaam: naam,
+                            //   Emailadres: email,
+                            //   Type: "Love"
+                            //   }
                                         
-                              })
+                            //   })
                                     });
                                 });
                             });
@@ -603,6 +604,8 @@ function followCoach(naamCoach){
     const option = checkInSelect.options
     const selected = option[option.selectedIndex].innerHTML
 
+    checkInShareButton.innerText = "Gedeeld"
+
         //Upload photo
         const selectedFile = document.getElementById('foto-upload-check-in').files[0];
         const progressBar = document.getElementById("progress-bar")
@@ -747,10 +750,6 @@ function followCoach(naamCoach){
                                         });
 
                     }
-
-                    const sharedNotification = document.getElementById("shared-notification")
-
-                    sharedNotification.style.display = "block"
                 });
             });
     } else {

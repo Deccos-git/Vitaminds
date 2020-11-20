@@ -101,17 +101,35 @@
          </nav>
      
   
-    <h1>Events</h1>
+    <h1>Nieuw event maken</h1>
 
-    <div id="events-overview">
+    <div id="new-event-outer-div">
 
-    <div id="make-new-event">
-      <div id="new-event-banner"></div>
-      <h2>Nieuw event maken</h2>
-      <a href="/make-new-event.html"><button id="new-event-button" class="button-algemeen">Begin</button></a>
+        <h2>Geef je event een titel</h2>
+        <input id="title-input" type="text" placeholder="Titel event">
+
+        <h2>Waar vindt je event plaats?</h2>
+        <p>Selecteer je keuze</p>
+        <select name="" id="online-live-select" onchange="getLocation(this)">
+            <option value="online">Online</option>
+            <option value="fysiek">Fysieke locatie</option>
+        </select>
+        <input id="location-event" type="text" placeholder="Locatie event">
+
+        <h2>Omschrijf je event</h2>
+        <textarea name="" id="textarea-description" cols="40" rows="10" placeholder="Omschrijving event"></textarea>
+
+        <h2>Wanneer vindt het event plaats?</h2>
+        <input id="date-event" type="date">
+
+        <h2>Wat is het maximaal aan deelnemers?</h2>
+        <input id="max-participants" type="text" placeholder="Maximale deelnemersaantal">
+
+        <h2>Wat kost je event?</h2>
+        <div id="price-input"><p>Euro</p><input id="price-event" type="number"></div>
+        
+        <button class="button-algemeen" id="button-save-new-event">Opslaan</button>
     </div>
-
-  </div>
 
 
 
@@ -158,7 +176,6 @@
     </footer>
   
       <script type="text/javascript" src="javascript/firebase.js"></script>
-      <script type="text/javascript" src="javascript/assets.js"></script>
       <script type="text/javascript" src="javascript/auth.js"></script>
       <script type="text/javascript" src="javascript/index.js"></script>
       <script type="text/javascript" src="javascript/events.js"></script>

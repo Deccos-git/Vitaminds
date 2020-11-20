@@ -439,5 +439,24 @@ app.get('/onderwerpen/*',function(req,res)
     res.sendFile('/index-redirect.html', { root: __dirname });
 });
 
+app.get('/academy/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/community/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/levenskunst/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/volwassenen-2/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
 exports.app = functions.https.onRequest(app);
 
