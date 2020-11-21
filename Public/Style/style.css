@@ -864,16 +864,13 @@ ul{
   overflow: hidden;
 }
 
-.karakter p{
-  margin: 70px 10px;
-}
-
 #karakterHead{
   background-image: url("../images/hero-II.jpg");
   background-size: 400px 200px;
   height: 200px;
   width: 100%;
   margin: 0px;
+  min-height: 200px;
 }
 
 .ervaring{
@@ -894,6 +891,7 @@ ul{
   height: 200px;
   width: 100%;
   margin: 0px;
+  min-height: 200px;
 }
 
 .groei{
@@ -918,6 +916,7 @@ ul{
   height: 200px;
   width: 100%;
   margin: 0px;
+  min-height: 200px;
 }
 
 #pers{

@@ -607,6 +607,20 @@ function registerNoticeOK(){
 }
 
 //Register CH
+
+    // Open make an coach account with CTA button
+
+    const makeCoachAccoutnButton = document.getElementById("become-member-button")
+    const coachRegisterForm = document.getElementById("coach-register-form")
+
+    makeCoachAccoutnButton.addEventListener("click", () => {
+
+    coachRegisterForm.style.display = "flex"
+
+    coachRegisterForm.scrollIntoView()
+
+    })
+  
 async function registerCoach(){
 
   const button = document.getElementById("register-button-coach")

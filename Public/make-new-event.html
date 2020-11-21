@@ -108,6 +108,13 @@
         <h2>Geef je event een titel</h2>
         <input id="title-input" type="text" placeholder="Titel event">
 
+        <h3>Selecteer een banner plaatje</h3>
+          <div>
+            <img id="selected-header-img" src="/images/no-image-event-placeholder.png">
+          </div>
+          <input id="foto-upload-new-event" type="file">
+          <button id="upload-banner">Upload</button>
+
         <h2>Waar vindt je event plaats?</h2>
         <p>Selecteer je keuze</p>
         <select name="" id="online-live-select" onchange="getLocation(this)">
@@ -120,7 +127,11 @@
         <textarea name="" id="textarea-description" cols="40" rows="10" placeholder="Omschrijving event"></textarea>
 
         <h2>Wanneer vindt het event plaats?</h2>
-        <input id="date-event" type="date">
+        <div id=price-input>
+          <input id="date-day" type="number" placeholder="Dag">
+          <input id="date-month" type="number" placeholder="Maand">
+          <input id="date-year" type="number" placeholder="Jaar">
+        </div>
 
         <h2>Wat is het maximaal aan deelnemers?</h2>
         <input id="max-participants" type="text" placeholder="Maximale deelnemersaantal">
