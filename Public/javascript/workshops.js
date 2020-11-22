@@ -1051,7 +1051,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                 if(stepOneTitle != ""){
                     stepOneIntroductionButton.addEventListener("click", () => {  
 
-                        console.log(stepOneInputAuth)
+                        console.log("tets")
 
                         toolbarOuterDiv.style.display = "flex"
                         saveOneButton.style.display = "block"

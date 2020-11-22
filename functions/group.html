@@ -18,6 +18,8 @@
   <link rel="stylesheet" href="../Style/groups.css">
   <link rel="stylesheet" href="../Style/videochat.css">
   <link rel="shortcut icon" href="../images/Favicon.ico">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700&display=swap" rel="stylesheet">
@@ -117,10 +119,10 @@
     <div class="inspiration-icon-div">
       <img id="inspiration-icon" class="inspiration-icons" src="../images/inspiration-icon-2.png" alt="">
     </div>
-    <!-- <div id="video-div">
+    <div id="video-div">
       <img id="video-icon" src="../images/video-icon.png" alt="start een video gesprek">
       <img id="video-stop-icon" src="../images/stop-video-icon.png" alt="">
-    </div> -->
+    </div> 
     <input id="chat-input" type="text">
     <img id="send-icon-group" src="../images/send-icon.png" alt="">
   </div>
@@ -135,7 +137,7 @@
     <p id="notice-learning-added">Je levensles is opgeslagen</p>
   </div>
 
-  <section id="videochat-outer-div">
+  <!-- <section id="videochat-outer-div">
     <div id="buttons">
       <button class="button-algemeen" disabled id="createBtn">
           <span>Start een videochat</span>
@@ -143,7 +145,7 @@
       <button class="button-algemeen" disabled id="joinBtn">
           <span>Deelnemen aan videochat</span>
       </button>
-  </div>
+  </div> -->
 
   <div id="room-dialog">
     <h2 id="my-dialog-title">Deelnemen aan videogesprek</h2>
@@ -159,7 +161,8 @@
 
   <div id="videos">
       <video id="localVideo" muted autoplay playsinline></video>
-      <!-- <video id="remoteVideo" autoplay playsinline></video> -->
+      <video id="remoteVideo" autoplay playsinline></video>
+      <video id="remoteVideo" autoplay playsinline></video>
   </div>
 
   <button class="button-algemeen" id="learning-video-chat">Heb je iets geleerd over jezelf?</button>
