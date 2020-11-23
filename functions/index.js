@@ -458,5 +458,10 @@ app.get('/volwassenen-2/*',function(req,res)
 {
     res.sendFile('/index-redirect.html', { root: __dirname });
 });
+
+app.get('/tag/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
 exports.app = functions.https.onRequest(app);
 

@@ -156,6 +156,7 @@ db.collection("Events").where("Owner", "==", "Vitaminds")
         const titleEvent = document.createElement("h2")
         const buttonEvent = document.createElement("button")
             buttonEvent.setAttribute("class", "button-algemeen")
+            buttonEvent.setAttribute("id", "button-event-overview")
 
         dateEvent.innerText = date
         titleEvent.innerText = title
@@ -190,11 +191,54 @@ db.collection("Events").where("Owner", "==", "Vitaminds")
     });
 });
 
+// Show "make new event" if auth is coach
+
+const makeNewEvent = document.getElementById("make-new-event")
+
+auth.onAuthStateChanged(User =>{
+    if(User){
+      const userRef = db.collection("Vitaminders").doc(User.uid);
+      userRef.get().then(function(doc) {
+
+        const userType = doc.data().Usertype
+
+        if(userType === "Coach"){
+            makeNewEvent.style.display = "flex"
+        }
+
+      });
+    };
+});
+
 // Events detail page
+
+function registerNoticeWhenNoAccount(registerEventButton, DOM){
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+          
+        } else {
+
+            registerEventButton.addEventListener("click", () => {
+
+                registerEventButton.style.display = "none"
+
+                const registerNotice = document.createElement("p")
+
+                registerNotice.innerHTML = `Maak een gratis <a href="../Register.html">Digimind</a> aan om je aanmelden voor dit event`
+
+                DOM.appendChild(registerNotice)
+            });
+        } ;
+    });
+
+
+
+}
 
 const eventOverview = document.getElementById("event-overview")
 
-function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateOfEvent, locationOfEvent, priceOfEvent){
+function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateOfEvent, locationOfEvent, priceOfEvent, emailCoach){
 
     registerEventButton.addEventListener("click", () => {
 
@@ -216,9 +260,13 @@ function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateO
                 }).then(() => {
 
                     if(locationOfEvent === "Fysieke locatie"){
+
+                        console.log("fysieke locatie")
+
                         db.collection("Mail").doc().set({
                             to: [email],
-                            cc: "info@vitaminds.nu",
+                            cc: [emailCoach],
+                            bcc: "info@vitaminds.nu",
                       message: {
                       subject: `Aangemeld voor ${titleEvent}`,
                       html: `Hallo ${naamClean}, </br></br>
@@ -231,16 +279,20 @@ function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateO
                             
                             Vriendelijke groet, </br></br>
                             ${organiserEvent} </br></br>
-                            <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                            <img src="/images/logo.png" width="100px" alt="Logo Vitaminds">`,
                       Gebruikersnaam: naamClean,
                       Emailadres: email,
-                      Type: "Coach"
+                      Type: "Event"
                       }
                                     });
                                 } else {
+
+                                    console.log("online")
+
                                     db.collection("Mail").doc().set({
                                         to: [email],
-                                        cc: "info@vitaminds.nu",
+                                        cc: [emailCoach],
+                                        bcc: "info@vitaminds.nu",
                                   message: {
                                   subject: `Aangemeld voor ${titleEvent}`,
                                   html: `Hallo ${naamClean}, </br></br>
@@ -255,13 +307,13 @@ function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateO
 
                                         Vriendelijke groet, </br></br>
                                         ${organiserEvent} </br></br>
-                                        <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                                        <img src="/images/logo.png" width="100px" alt="Logo Vitaminds">`,
                                   Gebruikersnaam: naamClean,
                                   Emailadres: email,
-                                  Type: "Coach"
+                                  Type: "Event"
                                   }
-                                                });
-                                            };
+                                    });
+                                };
                             });
                         });
                     };
@@ -306,9 +358,12 @@ db.collection("Events").where("Title", "==", titel)
         const maxParticipantsEvent = document.createElement("p")
         const currentParticipants = document.createElement("p")
         const priceEvent = document.createElement("p")
+        const buttonDiv = document.createElement("div")
         const buttonEvent = document.createElement("button")
             buttonEvent.setAttribute("class", "button-algemeen")
             buttonEvent.setAttribute("id", "register-event-button")
+
+        registerNoticeWhenNoAccount(buttonEvent, buttonDiv)
 
         dateEvent.innerText = date
         titleEvent.innerText = title
@@ -329,8 +384,6 @@ db.collection("Events").where("Title", "==", titel)
         currentParticipants.innerHTML = `<b>Huidige aantal deelnemers:</b> ${participants.length}`
         priceEvent.innerHTML = `<b>Prijs:</b> €${price}`
 
-        registerForEvent(buttonEvent, title, organiserClean, date, online, `€${price}`)
-
         db.collection("Vitaminders")
         .where("Gebruikersnaam", "==", organizer)
         .get().then(querySnapshot => {
@@ -341,6 +394,9 @@ db.collection("Events").where("Title", "==", titel)
 
                 organiserEventPhoto.src = photo
                 organiserEventP.innerText = gebruikersnaamClean
+
+                
+        registerForEvent(buttonEvent, title, organiserClean, date, online, `€${price}`, email)
 
             });
         });
@@ -359,7 +415,8 @@ db.collection("Events").where("Title", "==", titel)
         metaDiv.appendChild(maxParticipantsEvent)
         metaDiv.appendChild(currentParticipants)
         metaDiv.appendChild(priceEvent)
-        outerDiv.appendChild(buttonEvent)
+        metaDiv.appendChild(buttonDiv)
+        buttonDiv.appendChild(buttonEvent)
         
     });
 });

@@ -1419,7 +1419,7 @@ function shareNewCasus(){
         })
 }
 
-// My insights
+// My contributions
 
         // Insights
 
@@ -1428,7 +1428,12 @@ const DOMcontributions = document.getElementById("my-contributions-outer-div")
 const innerDivInspiration = document.createElement("div")
         innerDivInspiration.setAttribute("class", "inspiration-inner-div")
 
+        const sectionTitle = document.createElement("h2")
+
+              sectionTitle.innerText = "Artikelen"
+
         DOMcontributions.appendChild(innerDivInspiration)
+        innerDivInspiration.appendChild(sectionTitle)
 
         // Lifequestions article insights
 db.collection("Insights").where("Auteur", "==", naam).get().then(querySnapshot => {

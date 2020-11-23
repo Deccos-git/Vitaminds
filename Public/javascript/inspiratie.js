@@ -453,14 +453,9 @@ function appendLifelessonsToInsight(titleInsight){
         querySnapshot.forEach(doc => {
 
             const lesson = doc.data().Levensles
-            const learner = doc.data().Gebruikersnaam
-            const date = doc.data().Timestamp
 
             const lessonDiv = document.createElement("div")
             const lessonP = document.createElement("p")
-            const learnerDiv = document.createElement("div")
-            const learnerName = document.createElement("p")
-            const learnerPhoto = document.createElement("img")
 
             lessonP.innerText = lesson
 
@@ -477,6 +472,7 @@ db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(query
         const summaryArticle = doc.data().Summary
         const keywords = doc.data().Keywords
         const headerImage = doc.data().HeaderImage
+        const insights = doc.data().Insights
 
         title.innerHTML = titleArticle
         summary.innerHTML = summaryArticle
@@ -562,18 +558,28 @@ db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(query
             }
         });
 
-       // Pagetitle & meta's & facebook crawl
+       // Pagetitle, meta's & facebook crawl
 
         const titelHeadArray = Array.from(titelHead)
 
         titelHeadArray.forEach(tit => {
-            tit.innerHTML = titleArticle
+            if(insights.length === 1){
+                tit.innerHTML = insights.length + " coach over " + titleArticle.toLowerCase()
+            } else {
+                tit.innerHTML = insights.length + " coaches over " + titleArticle.toLowerCase()
+            }
+             console.log(tit)
         });
 
         metaKeywords.content = keywords
         metaDescription.content = summaryArticle
         facebookUrl.content = window.location.href
-        facebookTitle.content = titleArticle
+
+        if(insights.length === 1){
+            facebookTitle.content = insights.length + " coach over " + titleArticle.toLowerCase()
+        } else {
+            facebookTitle.content = insights.length + " coaches over " + titleArticle.toLowerCase()
+        }
         facebookDescription.content = summaryArticle
         facebookImg.content = headerImage
 
