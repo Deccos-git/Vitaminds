@@ -3351,9 +3351,9 @@ function publishWorkshop(){
 
 
             console.log(workshopTitle)
-            // db.collection("Workshops").doc(doc.id).update({
-            //     Status: "Public"
-            // })
+            db.collection("Workshops").doc(doc.id).update({
+                Status: "Public"
+            })
         })
     });
 

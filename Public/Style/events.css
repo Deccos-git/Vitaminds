@@ -91,6 +91,10 @@
     margin-bottom: 20px;
 }
 
+#event-description{
+    margin: 20px 10% 20px 10%;
+}
+
 .event-outer-div h2{
     margin-top: 10px;
 }
