@@ -1168,114 +1168,47 @@ ul{
   color: #FFF;
 }
 
-/* Coach wall */
+/* Work on your goals */
 
 #auth-div{
   display: none;
+  flex-direction: column;
+  align-items: center;
 }
 
-.meta-photo{
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
+#auth-div select{
+  width: auto;
 }
 
-#coach-updates{
-  margin: 0px 100px 100px 100px;
-}
-
-.text-div-insights h2{
-  text-align: left;
-  font-size: 25px;
-  cursor: pointer;
-}
-
-.insights-outer-div{
-  border-radius: 3px;
+.levensvraag-artikel-section{
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
-  padding: 10px;
-  margin: 5px;
-}
-
-.meta-div-insights{
-  cursor: pointer;
-}
-
-.meta-div-insights p{
-  font-size: 18px;
-}
-
-.coach-wall-timestamp{
-  font-size: 14px;
-}
-
-#instruction-div{
   display: flex;
   flex-direction: column;
+  width: 250px;
+  height: auto;
+  margin: 30px 10px 20px 10px;
+  padding-bottom: 20px;
   align-items: center;
-  border-radius: 3px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background-color: #FFF;
 }
 
-#coach-overview{
+.section{
   display: flex;
-  justify-content: space-evenly;
-  margin: 80px 0px -30px 0px;
   flex-wrap: wrap;
-}
-
-.favCoachDiv{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.favCoachDiv img{
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-}
-
-.favCoachDiv p{
-font-size: 14px;
-}
-
-/* IOS popup */
-
-#ios-popup{
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  position: sticky;
-  bottom: 0;
-  z-index: 4;
-  background-color: #49beb7;
-  border-radius: 0px 0px 0px 5px;
-  padding: 5px;
-  margin: 0px;
-  width: 100%;
-}
-
-#ios-popup-title{
-  font-size: 18px;
-  color: white;
-}
-
-#button-div{
-  margin-bottom: 30px;
-  display: flex;
   justify-content: center;
 }
 
-#ios-popup-instruction{
-  display: none;
-  flex-direction: column;
-  align-items: center;
+.titleSub{
+  text-align: center;
 }
 
-#ios-popup-instruction p{
-  color: white;
-  font-size: 18px;
-  text-align: center;
+.levensvraag-artikel-header{
+  display: flex;
+  justify-content: center;
 }
 
 /* Toolbar mobile */

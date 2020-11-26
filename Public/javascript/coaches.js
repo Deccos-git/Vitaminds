@@ -1,7 +1,7 @@
 
 // Coaches inladen in overzicht
 
-db.collection("Vitaminders").where("Usertype", "==", "Coach")
+db.collection("Vitaminders").where("Usertype", "==", "Coach").where("Status", "==", "Approved")
     .get()
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
