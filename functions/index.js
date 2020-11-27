@@ -156,6 +156,51 @@ db.collection("Practice").where("Practice", "==", "Check-in").get().then(querySn
     console.log(err)
 })
 
+// Tool sheduling
+
+db.collection("Vitaminders")
+.where("Usertype", "==", "Coach")
+.where("Usertype", "==", "Vitaminder")
+.get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const gebruikersnaamClean = doc.data().GebruikersnaamClean
+        const gebruikersnaam = doc.data().Gebruikersnaam
+        const email = doc.data().Email
+
+                cron.schedule("00 09 1,15 * *", () => {
+
+                db.collection("Mail").doc().set({
+                    to: email,
+                    cc: "info@vitaminds.nu",
+                message: {
+                subject: `Hoe gaat het met je, ${gebruikersnaamClean}`,
+                html: `Hallo, ${gebruikersnaamClean}</br></br>
+                    Je bent lid geworden van Vitaminds om je geluk in eigen handen te nemen. <br>
+                    Deze twee-wekelijkse mail is bedoeld om je te helpen om je geluk een onderdeel te maken van je dagelijks.<br><br>
+
+                    Wat is op dit moment je geluksniveau? <br><br>
+
+                    <a href="https://vitaminds.nu/Vitaminders/${gebruikersnaam}"> 
+                        <img src="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/geluksschaal-plaatje-small.png?alt=media&token=5edf44ed-b2dc-46d2-ad7d-7a6215ef80b6" alt="Geluksschaal"> 
+                    </a></br></br>
+                
+                    Vriendelijke groet, </br></br>
+                    Het Vitaminds Team </br></br>
+                    <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                Type: "Vitaminders",
+                gebruikersnaam: gebruikersnaam
+                }
+                        
+                }).catch((err) => {
+                    console.log(err)
+                })
+            });
+    })
+}).catch((err) => {
+    console.log(err)
+});
+
 // // Coachgroup sheduling
 
 // db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapshot => {
@@ -460,6 +505,21 @@ app.get('/volwassenen-2/*',function(req,res)
 });
 
 app.get('/tag/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/werken/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/bewegen/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
+app.get('/voeding/*',function(req,res)
 {
     res.sendFile('/index-redirect.html', { root: __dirname });
 });

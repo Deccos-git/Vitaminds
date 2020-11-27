@@ -27,6 +27,7 @@
     <link rel="shortcut icon" href="../images/Favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
@@ -140,6 +141,25 @@
         <h5 id="bijdragepunten"></h5>
     </div> 
   </section>
+
+  <div id="happiness-chart-outer-div">
+    <div id="title-div">
+      <h2>Je geluksniveau</h2>
+      <div id="private-div">
+        <img id="private-notice" src="../images/private.png" alt="geluksgrafiek is prive">
+        <p id="private-notice-text">Geluksgrafiek is privé</p>
+      </div>
+    </div>
+    <canvas id="hapiness-chart"></canvas>
+    <p>Hoe hoog is je geluksmoment vandaag?</p>
+    <div id="happiness-scale">
+      <img class="hapiness-scale-img" src="../images/hapiness-scale/heel-laag.png" alt="">
+      <img class="hapiness-scale-img" src="../images/hapiness-scale/laag.png" alt="">
+      <img class="hapiness-scale-img" src="../images/hapiness-scale/neutral.png" alt="">
+      <img class="hapiness-scale-img" src="../images/hapiness-scale/hoog.png" alt="">
+      <img class="hapiness-scale-img" src="../images/hapiness-scale/heel hoog.png" alt="">
+    </div>
+  </div>
 
     <div id="info-bar">
       <!-- Intervisie -->

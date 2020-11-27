@@ -428,6 +428,47 @@
     cursor: pointer;
 }
 
+/* Hapiness scale */
+
+#happiness-chart-outer-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.hapiness-scale-img{
+    height: 70px;
+    cursor: pointer;
+}
+
+#hapiness-chart{
+    height: 200px !important;
+    width: 100% !important;
+}
+
+#title-div{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#private-notice{
+    height: 20px;
+}
+
+#private-div{
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#private-notice-text{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0px;
+    display: none;
+}
 /* Edit profile */
 
 #notice-website-format{
@@ -1784,6 +1825,7 @@
     #contact-inner-div{
         width: 80%;
         margin: 5px;
+        flex-direction: column;
     }
 
     .item-div {

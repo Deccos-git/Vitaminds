@@ -289,8 +289,8 @@ auth.onAuthStateChanged(User =>{
 
                         const gebruikersnaam = doc.data().Gebruikersnaam
 
-                        noAuthDiv.style.display = "none"
-                        authDiv.style.display = "flex"
+                        // noAuthDiv.style.display = "none"
+                        // authDiv.style.display = "flex"
 
         db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", gebruikersnaam).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {

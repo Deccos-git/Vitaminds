@@ -381,6 +381,145 @@ function digimindMetaTags(coachDescription, coach, profilePic){
         });
 });
 
+// Hapiness scale
+
+const privateNotice = document.getElementById("private-notice")
+const privateNoticeText = document.getElementById("private-notice-text")
+
+privateNotice.addEventListener("mouseover", () => {
+        privateNoticeText.style.display = "block"
+});
+
+privateNotice.addEventListener("mouseout", () => {
+        privateNoticeText.style.display = "none"
+});
+
+const veryLow = document.getElementsByClassName("hapiness-scale-img")
+
+veryLow[0].addEventListener("mouseover", () => {
+        veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+        veryLow[1].src = "../images/hapiness-scale/laag.png"
+        veryLow[2].src = "../images/hapiness-scale/neutral.png"
+        veryLow[3].src = "../images/hapiness-scale/hoog.png"
+        veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
+});
+
+veryLow[1].addEventListener("mouseover", () => {
+        veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+        veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
+        veryLow[2].src = "../images/hapiness-scale/neutral.png"
+        veryLow[3].src = "../images/hapiness-scale/hoog.png"
+        veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
+});
+
+veryLow[2].addEventListener("mouseover", () => {
+        veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+        veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
+        veryLow[2].src = "../images/hapiness-scale/neutral-hover.png"
+        veryLow[3].src = "../images/hapiness-scale/hoog.png"
+        veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
+});
+
+veryLow[3].addEventListener("mouseover", () => {
+        veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+        veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
+        veryLow[2].src = "../images/hapiness-scale/neutral-hover.png"
+        veryLow[3].src = "../images/hapiness-scale/hoog-hover.png"
+        veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
+});
+
+veryLow[4].addEventListener("mouseover", () => {
+        veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+        veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
+        veryLow[2].src = "../images/hapiness-scale/neutral-hover.png"
+        veryLow[3].src = "../images/hapiness-scale/hoog-hover.png"
+        veryLow[4].src = "../images/hapiness-scale/heel hoog-hover.png"
+});
+
+function saveHapiness(heightOfHapiness){
+        veryLow[heightOfHapiness].addEventListener("click", () => { 
+
+                auth.onAuthStateChanged(User =>{
+                        if (User){
+                            db.collection("Vitaminders").doc(User.uid)
+                                .collection("HapinessScale").doc()
+                                        .set({
+                                                Height: heightOfHapiness,
+                                                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                        }).then(() => {
+                                                location.reload()
+                                        })
+                        };
+                });
+        });
+};
+
+        saveHapiness(0)
+        saveHapiness(1)
+        saveHapiness(2)
+        saveHapiness(3)
+        saveHapiness(4)
+
+const hapinessChart = document.getElementById('hapiness-chart').getContext('2d');
+function hapinessChartAxis(dates, heightOfHapiness){
+
+const myChart = new Chart(hapinessChart, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: 'Geluksniveau',
+                data: heightOfHapiness,
+                backgroundColor: [
+                        "#49beb7"
+                ],
+                borderColor: [
+                        "#122b46"
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+};
+
+const dateArray = []
+const heightArray = []
+
+auth.onAuthStateChanged(User =>{
+        if (User){
+            db.collection("Vitaminders").doc(User.uid)
+            .collection("HapinessScale")
+            .orderBy("Timestamp", "asc")
+            .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+
+                        const height = doc.data().Height
+                        const date = doc.data().Timestamp
+
+                        const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+                        const dateLocale = date.toDate().toLocaleDateString("nl-NL", options);
+
+                        dateArray.push(dateLocale) 
+                        heightArray.push(height)
+
+                        hapinessChartAxis(dateArray, heightArray)
+
+                    });
+            });
+        };
+});
+
+
+
 //Hide for non-coach Digimind
 db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
     .get()
@@ -485,6 +624,7 @@ auth.onAuthStateChanged(User =>{
                 const notifications = document.getElementById("profile-notifications")
                 const activeDiv = document.getElementsByClassName("active-div")
                 const changePhoto = document.getElementById("profile-picture-outer-div")
+                const hapinessChart = document.getElementById("happiness-chart-outer-div")
         
                 if(naam != coachNaam){
                        
@@ -500,7 +640,13 @@ auth.onAuthStateChanged(User =>{
                 if(toolsMenu != undefined){
                 toolsMenu.style.display = "none"
                         }
-                }      
+                } 
+                
+                if(naam === coachNaam){
+                        hapinessChart.style.display = "flex"
+                }
+                
+                
         })
     }
 });
