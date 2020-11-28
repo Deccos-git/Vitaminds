@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-159826016-1');
+</script>
+
+    <Title>Nazorgprotocol</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Style/style.css">
+    <link rel="stylesheet" href="Style/kwaliteit.css">
+    <link rel="shortcut icon" href="images/Favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  </head>
+
+  <body> 
+
+   <!-- Feedback -->
+   <div id="feedback">
+    <a href="tickets.html"> <p>Feedback</p></a>
+  </div>
+
+         <!-- Mobile-menu -->
+    <nav id="mobile-menu"> 
+      <div id="menu-mobile-visible-layer">
+        <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+        <div class="main-menu-mobile"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+      </div>
+      <div id="mobile-menu-outer-div">
+        <div id="mobile-menu-inner-div">
+          <ul id="list-mobile-menu">
+            <li>
+              <div id="profile-picture-mobile"></div>
+            </li>
+            <li>
+              <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="openup.html">Open up</a></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="groups.html">Groepen</a></div> 
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="workshops.html">Workshops</a></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="inspiratie.html">Inspiratie</a></div>
+            </li>
+            <!-- <li> -->
+              <!-- <div class="main-menu-mobile"><a href="tools.html">Tools</a></div> -->
+            <!-- </li> -->
+            <li>
+              <div class="main-menu-mobile"><a href="coaches.html">Coaches</a></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="events.html">Events</a></div>
+            </li>
+            <li>
+              <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
+            </li>
+            <li>
+              <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+            </li> 
+          </ul>
+        </div>
+      </nav>
+    
+       <!-- menu --> 
+       <nav id="menu">
+        <div id="navigation-menu">
+          <div class="main-menu"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+          <div class="main-menu"><a href="openup.html">Open up</a></div>
+          <div class="main-menu"><a href="groups.html">Groepen</a></div> 
+          <div class="main-menu"><a href="workshops.html">Workshops</a></div>
+          <div class="main-menu"><a href="inspiratie.html">Inspiratie</a></div>
+          <!-- <div class="main-menu"><a href="tools.html">Tools</a></div> -->
+          <div class="main-menu"><a href="coaches.html">Coaches</a></div>
+          <div class="main-menu"><a href="events.html">Events</a></div>
+        </div>
+        <div id="auth-menu">
+          <div id="auth-DOM"></div>
+          <div id="profile-picture">
+          </div>
+          <div id="login-register-div">
+            <div id="button-register" class = "login-logout"><button><a href="Register.html">Aanmelden</a></button></div>
+            <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
+          </div>
+          <div id="slash" class = "login-logout"><a>|</a></div>
+          <div id="info-menu">
+            <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
+          </div>
+        </div>
+      </nav>
+  
+      <h1>Nazorgprotocol</h1>
+
+      <img src="/images/nazorgprotocol-banner.jpg" alt="kwaliteit Vitaminds">
+
+      <div id="quality-outer-div">
+          <p id="quality-introduction">Wanneer er een één-op-één behandeling heeft 
+              plaatsgevonden via het platform of in de praktijk van coach 
+              (de cliënt heeft via het platform contact gezocht met de coach) 
+              houdt de coach zich aan een gestructureerd nazorgprotocol.
+        </p>
+
+        <p>Vraag de cliënt hoe het met hem gaat op de volgende momenten:
+        </p>
+
+        <ul>
+            <li>1 week na het einde van de behandeling</li>
+            <li>1 maand na het einde van de behandeling</li>
+            <li>3 maanden na het einde van de behandeling</li>
+        </ul>
+
+        <p><a href="/kwaliteit.html">Bekijk het kwaliteitssyteem</a></p>
+        <p><a href="/doorverwijsprotocol.html">Bekijk het doorverwijsprotocol</a></p>
+        
+      </div>
+
+      <!-- Toolbar mobile -->
+      <div class="toolbar-mobile">
+        <div class="toolbar-mobile-inner-div">
+          <img src="images/home-icon.png" alt="" id="toolbar-home">
+          <p class="description-menu-icons-toolbar-mobile">Open up</p>
+        </div>
+        <div class="toolbar-mobile-inner-div" id="toolbar-inner-div-chats-groups">
+          <img src="images/send-icon.png" alt="" id="toolbar-chats-groups">
+          <p class="description-menu-icons-toolbar-mobile">Chats & groepen</p>
+        </div>
+        <div class="toolbar-mobile-inner-div">
+          <div id="toolbar-inspiration-div" class="toolbar-mobile-inner-div">
+            <div id="toolbar-inspration-options">
+              <p id="toolbar-inspiration-public">Publiek</p>
+              <p id="toolbar-inspiration-private">Prive</p>
+            </div>
+            <img src="images/inspiration-icon-2.png" alt="" id="toolbar-inspiration">
+            <p class="description-menu-icons-toolbar-mobile">Nieuw inzicht</p>
+          </div>
+        </div>
+        <div class="toolbar-mobile-inner-div">
+          <img src="images/menu-dashboard.png" alt="" id="toolbar-digimind">
+          <p class="description-menu-icons-toolbar-mobile">Mijn Digimind</p>
+        </div>  
+      </div>
+
+      <!-- footer -->
+      <footer class="footer">
+        <div id="top-layer">
+          <div>
+          <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+          </div>
+          <div>
+            <h3 id="slogan-footer">Maak geluk een onderdeel van je dagelijks leven</h3>
+          </div>
+          <div>
+          <a href="https://www.facebook.com/Vitaminds.nu"><img src="images/Logo-facebook.png" alt="" width="25px"></a>
+          <a href="https://www.instagram.com/vitaminds.nu"><img src="images/logo-insta.png" alt="" width="50px"></a>
+          </div>
+        </div>
+        <div id="contact-layer">
+          <div class="adress-div">
+            <img class="icon-contact-layer" src="/images/adres-icon.png" alt="Vitaminds adres">
+            <p>Beijumerweg 24</p>
+            <p>9737AD</p> 
+            <p>Groningen</p>
+          </div>
+          <div class="adress-div">
+            <img class="icon-contact-layer" src="/images/email-icon.png" alt="Vitaminds emailadres">
+            <p> info@vitaminds.nu</p>
+          </div>
+          <div class="adress-div">
+            <img class="icon-contact-layer" src="/images/telephone-icon.png" alt="Vitaminds phonenumber">
+            <p>+316 244 098 43</p>
+          </div>
+        </div>
+      </footer>
+      
+          <script type="text/javascript" src="javascript/firebase.js"></script>
+          <script type="text/javascript" src="javascript/auth.js"></script>
+          <script type="text/javascript" src="javascript/index.js"></script>
+        </body>
+</html>

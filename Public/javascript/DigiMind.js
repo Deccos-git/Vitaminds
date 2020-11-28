@@ -446,6 +446,7 @@ function saveHapiness(heightOfHapiness){
                                         .set({
                                                 Height: heightOfHapiness,
                                                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                                Eigenaar: "Vitaminds"
                                         }).then(() => {
                                                 location.reload()
                                         })
@@ -471,7 +472,7 @@ const myChart = new Chart(hapinessChart, {
                 label: 'Geluksniveau',
                 data: heightOfHapiness,
                 backgroundColor: [
-                        "#49beb7"
+                        "rgba(75, 190, 182, 0.32)"
                 ],
                 borderColor: [
                         "#122b46"
@@ -480,10 +481,19 @@ const myChart = new Chart(hapinessChart, {
             }]
         },
         options: {
+                legend: {
+                        display: false
+                },           
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        userCallback: function(label, index, labels) {
+                                // when the floored value is the same as the value we have a whole number
+                                if (Math.floor(label) === label) {
+                                    return label;
+                                }
+                        }
                     }
                 }]
             }

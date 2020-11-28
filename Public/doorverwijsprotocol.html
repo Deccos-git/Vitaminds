@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-159826016-1');
+</script>
+
+    <Title>Doorverwijsprotocol</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Style/style.css">
+    <link rel="stylesheet" href="Style/kwaliteit.css">
+    <link rel="shortcut icon" href="images/Favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  </head>
+
+  <body> 
+
+   <!-- Feedback -->
+   <div id="feedback">
+    <a href="tickets.html"> <p>Feedback</p></a>
+  </div>
+
+         <!-- Mobile-menu -->
+    <nav id="mobile-menu"> 
+      <div id="menu-mobile-visible-layer">
+        <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+        <div class="main-menu-mobile"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+      </div>
+      <div id="mobile-menu-outer-div">
+        <div id="mobile-menu-inner-div">
+          <ul id="list-mobile-menu">
+            <li>
+              <div id="profile-picture-mobile"></div>
+            </li>
+            <li>
+              <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="openup.html">Open up</a></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="groups.html">Groepen</a></div> 
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="workshops.html">Workshops</a></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="inspiratie.html">Inspiratie</a></div>
+            </li>
+            <!-- <li> -->
+              <!-- <div class="main-menu-mobile"><a href="tools.html">Tools</a></div> -->
+            <!-- </li> -->
+            <li>
+              <div class="main-menu-mobile"><a href="coaches.html">Coaches</a></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="events.html">Events</a></div>
+            </li>
+            <li>
+              <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
+            </li>
+            <li>
+              <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+            </li> 
+          </ul>
+        </div>
+      </nav>
+    
+       <!-- menu --> 
+       <nav id="menu">
+        <div id="navigation-menu">
+          <div class="main-menu"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+          <div class="main-menu"><a href="openup.html">Open up</a></div>
+          <div class="main-menu"><a href="groups.html">Groepen</a></div> 
+          <div class="main-menu"><a href="workshops.html">Workshops</a></div>
+          <div class="main-menu"><a href="inspiratie.html">Inspiratie</a></div>
+          <!-- <div class="main-menu"><a href="tools.html">Tools</a></div> -->
+          <div class="main-menu"><a href="coaches.html">Coaches</a></div>
+          <div class="main-menu"><a href="events.html">Events</a></div>
+        </div>
+        <div id="auth-menu">
+          <div id="auth-DOM"></div>
+          <div id="profile-picture">
+          </div>
+          <div id="login-register-div">
+            <div id="button-register" class = "login-logout"><button><a href="Register.html">Aanmelden</a></button></div>
+            <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
+          </div>
+          <div id="slash" class = "login-logout"><a>|</a></div>
+          <div id="info-menu">
+            <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
+          </div>
+        </div>
+      </nav>
+
+      <h1>Doorverwijsprotocol</h1>
+
+      <img src="/images/doorverwijsprotocol-banner.jpg" alt="kwaliteit Vitaminds">
+  
+      <div id="quality-outer-div">
+        <p id="quality-introduction">Verwijs door naar de GGZ als je één of meerdere van de onderstaande vragen met "ja" beantwoord:
+      </p>
+
+      <ol>
+          <li>Vermoed je dat er sprake is van een DSM stoornis?
+              <ol style="list-style-type: lower-alpha; padding-bottom: 0;">
+                  <li style="margin-left:2em">Volg de DSM beslisdiagram van <a href="https://www.dsm-5.nl/dsm5_online">DSM online.</a></li>
+              </ol>
+          </li>
+          <li>Vermoed je geen DSM stoornis, maar is de ernst van de klachten <i>matig</i> tot <i>ernstig</i>?
+              <ol style="list-style-type: lower-alpha; padding-bottom: 0;">
+                  <li style="margin-left:2em"><i>Subklinisch</i>: je herkent klachten, maar deze klachten zijn niet voldoende 
+                      om DSM stoornis vast te stellen. 
+                      Je merkt dat de klachten die er zijn wel zorgen voor een 
+                      belemmering in het dagelijks functioneren en de cliënt loopt langere tijd met de klachten rond. 
+                  </li>
+                  <li style="margin-left:2em"><i>Licht</i>: de cliënt heeft relatief weinig klachten, 
+                      maar wel genoeg om te spreken van een DSM stoornis. 
+                      De klachten zorgen voor een lichte belemmering van zijn of haar 
+                      dagelijks functioneren. 
+                  </li>
+                  <li style="margin-left:2em"><i>Matig</i>: de cliënt heeft symptomen die behoren tot een 
+                      DSM stoornis en daarnaast heeft de cliënt nog aanvullende klachten. 
+                      De klachten van de cliënt zijn duidelijk een belemmering voor het dagelijks functioneren.
+                  </li>
+                  <li style="margin-left:2em"><i>Ernstig</i>: er is sprake van een DSM stoornis en de 
+                      cliënt kan zijn dagelijks functioneren niet voortzetten 
+                      (uitval op werk, beëindiging van relaties).
+                  </li>
+              </ol>
+          </li>
+          <li>Loopt de cliënt een <i>matig</i> tot <i>hoog</i> risico op ernstige 
+              zelfverwaarlozing of verwaarlozing van naasten (bijvoorbeeld kinderen), 
+              decompensatie*, suïcide, (huiselijk) geweld, kindermishandeling of automutilatie?
+                  <ol style="list-style-type: lower-alpha; padding-bottom: 0;">
+                      <li style="margin-left:2em"><i>Laag</i>: de cliënt heeft last van klachten/symptomen, 
+                          maar je vermoedt geen risico op ernstige zelfverwaarlozing of 
+                          verwaarlozing van naasten (bijvoorbeeld kinderen), decompensatie*, suïcide, 
+                          (huiselijk) geweld, kindermishandeling of automutilatie.
+                      </li>
+                      <li style="margin-left:2em"><i>Matig</i>: er zijn duidelijke klachten/symptomen en de 
+                          cliënt lijkt geen beschermende factoren te hebben zoals: adequate coping, 
+                          werk of een andere structurele daginvulling en een steunsysteem waarop men terug 
+                          kan vallen voor toezicht, zorg of praktische en emotionele steun.
+                      </li>
+                      <li style="margin-left:2em"><i>Hoog</i>: er zijn duidelijke aanwijzingen of je hebt 
+                          een sterke intuïtie dat er een hoog risico is op ernstige 
+                          zelfverwaarlozing of verwaarlozing van naasten (bijvoorbeeld kinderen), 
+                          decompensatie*, suïcide, (huiselijk) geweld, kindermishandeling of automutilatie.
+                      </li>
+                  </ol>
+          </li>
+          <li>Is de complexiteit (comorbiditeit** of problematiek in de persoonlijkheid, 
+              zwakzinnigheid, somatische factoren, psychosociale of omgevingsproblemen) 
+              van de klachten <i>hoog</i>?
+                  <ol style="list-style-type: lower-alpha; padding-bottom: 0;">
+                      <li style="margin-left:2em"><i>Afwezig</i>: er lijkt sprake van een enkelvoudig beeld.
+                      </li>
+                      <li style="margin-left:2em"><i>Laag</i>: er is sprake van comorbiditeit**,
+                           of problemen op het gebied van persoonlijkheid, zwakzinnigheid, 
+                           somatische klachten, psychosociale of omgevingsfactoren, 
+                           maar deze hebben geen negatieve invloed op de behandeling.
+                      </li>
+                      <li style="margin-left:2em"><i>Hoog</i>: de cliënt heeft naast de klachten waarvoor hij 
+                          jou heeft benaderd een ingewikkelde comorbiditeit of interfererende problemen 
+                          op het gebied van persoonlijkheid, zwakzinnigheid, somatische klachten, 
+                          psychosociale of omgevingsfactoren. De cliënt heeft meer baat bij een 
+                          multidisciplinaire behandeling in een gespecialiseerde setting.
+                     </li>
+                  </ol>
+          </li>
+          <li>Is er sprake van aanhoudende klachten waarbij eerdere interventies 
+              geen effect hebben gehad?
+          </li>
+          <li>Blijft de cliënt terugkeren met dezelfde klachten?
+          </li>
+          <li>Is er sprake van chronische problematiek die niet crisisgevoelig is?
+          </li>
+          <li>Is er sprake van chronische problematiek die daarnaast ook crisisgevoelig is?
+          </li>
+          <li>Is er sprake van instabiele chronische problematiek?
+          </li>
+      </ol>
+
+      <p>
+          <b>*Decompensatie</b> Bij psychische decompensatie is een mens niet meer in staat om 
+          'normaal' te kunnen functioneren. Men slaagt er niet meer in om te compenseren. 
+          Dit komt doordat de draaglast waaraan een persoon onderhevig is, 
+          buiten proportie is toegenomen ten opzichte van zijn draagkracht. 
+          Decompensatie kan optreden na een hevige periode van stress, 
+          maar ook na een trauma of een ingrijpende levensgebeurtenis. 
+          Dit kan zich weerspiegelen in een burn-out, depressie, angststoornis of psychose. 
+          Hoe snel iemand iemand decompenseert hangt af van verschillende factoren.<br>
+          <a href="https://mens-en-samenleving.infonu.nl/psychologie/177649-psychische-decompensatie-uit-balans-zijn.html">Bekijk bron</a>
+      </p>
+
+      <p><b>**Comorbiditeit </b>Comorbiditeit is het tegelijkertijd hebben van twee of meer 
+          stoornissen of aandoeningen bij een patiënt. 
+          Dit gebeurt in het algemeen met het gelijktijdig hebben van lichamelijke,
+           geestelijke en vaak de daaropvolgende sociale problemen bij een persoon.<br>
+           <a href="https://nl.wikipedia.org/wiki/Comorbiditeit">Bekijk bron</a>
+
+      </p>
+
+      <p>Dit doorverwijsprotocol is gebaseerd op het doorverwijsmodel van <a href="https://www.praktijksteun.nl/doorverwijsmodel">Praktijksteun.nl</a></p>
+
+      <p><a href="/kwaliteit.html">Bekijk het kwaliteitssyteem</a></p>
+      <p><a href="/nazorgprotocol.html">Bekijk het nazorgprotocol</a></p>
+      
+    </div>
+
+      <!-- Toolbar mobile -->
+      <div class="toolbar-mobile">
+        <div class="toolbar-mobile-inner-div">
+          <img src="images/home-icon.png" alt="" id="toolbar-home">
+          <p class="description-menu-icons-toolbar-mobile">Open up</p>
+        </div>
+        <div class="toolbar-mobile-inner-div" id="toolbar-inner-div-chats-groups">
+          <img src="images/send-icon.png" alt="" id="toolbar-chats-groups">
+          <p class="description-menu-icons-toolbar-mobile">Chats & groepen</p>
+        </div>
+        <div class="toolbar-mobile-inner-div">
+          <div id="toolbar-inspiration-div" class="toolbar-mobile-inner-div">
+            <div id="toolbar-inspration-options">
+              <p id="toolbar-inspiration-public">Publiek</p>
+              <p id="toolbar-inspiration-private">Prive</p>
+            </div>
+            <img src="images/inspiration-icon-2.png" alt="" id="toolbar-inspiration">
+            <p class="description-menu-icons-toolbar-mobile">Nieuw inzicht</p>
+          </div>
+        </div>
+        <div class="toolbar-mobile-inner-div">
+          <img src="images/menu-dashboard.png" alt="" id="toolbar-digimind">
+          <p class="description-menu-icons-toolbar-mobile">Mijn Digimind</p>
+        </div>  
+      </div>
+
+      <!-- footer -->
+      <footer class="footer">
+        <div id="top-layer">
+          <div>
+          <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+          </div>
+          <div>
+            <h3 id="slogan-footer">Maak geluk een onderdeel van je dagelijks leven</h3>
+          </div>
+          <div>
+          <a href="https://www.facebook.com/Vitaminds.nu"><img src="images/Logo-facebook.png" alt="" width="25px"></a>
+          <a href="https://www.instagram.com/vitaminds.nu"><img src="images/logo-insta.png" alt="" width="50px"></a>
+          </div>
+        </div>
+        <div id="contact-layer">
+          <div class="adress-div">
+            <img class="icon-contact-layer" src="/images/adres-icon.png" alt="Vitaminds adres">
+            <p>Beijumerweg 24</p>
+            <p>9737AD</p> 
+            <p>Groningen</p>
+          </div>
+          <div class="adress-div">
+            <img class="icon-contact-layer" src="/images/email-icon.png" alt="Vitaminds emailadres">
+            <p> info@vitaminds.nu</p>
+          </div>
+          <div class="adress-div">
+            <img class="icon-contact-layer" src="/images/telephone-icon.png" alt="Vitaminds phonenumber">
+            <p>+316 244 098 43</p>
+          </div>
+        </div>
+      </footer>
+      
+          <script type="text/javascript" src="javascript/firebase.js"></script>
+          <script type="text/javascript" src="javascript/auth.js"></script>
+          <script type="text/javascript" src="javascript/index.js"></script>
+        </body>
+</html>
