@@ -349,10 +349,11 @@ function updateOnlineStatus(docID, authName){
 function saveAuthToReadlist(docID, authName, userName){
     const docRef = db.collection("Chats")
     .doc(docID)
-
     docRef.get().then(doc3 => {
 
         const messages = doc3.data().Messages
+
+        console.log(messages)
 
         if(messages != 0){
     
@@ -364,21 +365,28 @@ function saveAuthToReadlist(docID, authName, userName){
         const status = doc2.data().Status
         const sender = doc2.data().Auth
 
-        if(status === "New" && sender != authName){
+        if(status === "New"){
+
+        if(sender != authName){
 
             messageRef.doc(doc2.id).update({
 
             Read: firebase.firestore.FieldValue.arrayUnion(authName)
 
                  }).then(() => {
+                     console.log("New message and added to readlist")
                     window.open(`../Chats/${userName}.html`, "_self");
                 });
             } else {
+                console.log("New message but not added to readlist")
                 window.open(`../Chats/${userName}.html`, "_self");
             };
+        };
         });
     });
 } else {
+
+    console.log("No new message and not added to readlist")
     window.open(`../Chats/${userName}.html`, "_self");
 };
 });
@@ -387,29 +395,31 @@ function saveAuthToReadlist(docID, authName, userName){
 function updateNewStatusOfMessageChat(authName){
     db.collection("Chats")
     .where("Members", "array-contains", authName)
+    .where("Type", "==", "Chat")
     .get().then(querySnapshot => {
      querySnapshot.forEach(doc2 => {
 
-            const type = doc2.data().Type
+            const members = doc2.data().Members
 
-            if(type === "Chat"){
-
-               const docRef = db.collection("Chats").doc(doc2.id).collection("Messages")
-                docRef.where("Read", "array-contains", authName)
-                .where("Status", "==", "New")
+              const docRef = db.collection("Chats").doc(doc2.id).collection("Messages")
+              docRef.where("Status", "==", "New")
                 .get().then(querySnapshot => {
                     querySnapshot.forEach(doc3 => {
 
                 const sender = doc3.data().Auth
+                const readList = doc3.data().Read
+
+                if(readList.includes(authName)){
 
                     if(sender != authName){
+
                         docRef.doc(doc3.id).update({
                             Status: "Read"
                             });
                         };
+                    };
                     });
                 });
-            };
         });
     });
 };
@@ -422,22 +432,26 @@ function updateNewStatusOfMessageGroup(authName){
 
          const type = doc2.data().Type
 
-         if(type === "Group" || type === "Practicegroup" || type === "Coachgroup"){
+         if(type === "Group" || type === "GroupForCoaches" || type === "Coachgroup"){
 
      const docRef = db.collection("Chats").doc(doc2.id).collection("Messages")
-     docRef.where("Read", "array-contains", authName)
-     .where("Status", "==", "New")
+     docRef.where("Status", "==", "New")
      .get().then(querySnapshot => {
          querySnapshot.forEach(doc3 => {
 
              const members = doc3.data().Members
              const readlist = doc3.data().Read
 
+             const readList = doc3.data().Read
+
+             if(readList.includes(authName)){
+
                  if(members.lenght === readlist.lenght){
                      docRef.doc(doc3.id).update({
                          Status: "Read"
                          });
                      };
+                    };
                  });
              });
          };

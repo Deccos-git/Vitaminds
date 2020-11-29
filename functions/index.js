@@ -523,5 +523,11 @@ app.get('/voeding/*',function(req,res)
 {
     res.sendFile('/index-redirect.html', { root: __dirname });
 });
+
+app.get('/platform/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
+
 exports.app = functions.https.onRequest(app);
 
