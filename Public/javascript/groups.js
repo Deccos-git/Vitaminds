@@ -259,19 +259,6 @@ function hideLandingIfAuthIsMember(membersArray, groupLandingPageOuterDiv){
     });
 }; 
 
-function groupDescriptionLanding(roomName, groupDescription){
-
-    db.collection("Levensvragen").where("Levensvraag", "==", roomName).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            const description = doc.data().Summary
-
-            groupDescription.innerHTML = description
-
-        });
-    });
-};
-
 function groupFactsLanding(memberCount, messageCount, montlyFee, maximumMembersCount, groupType){
 
     const numberOfMembersLi = document.createElement("li")
@@ -296,6 +283,12 @@ function groupFactsLanding(memberCount, messageCount, montlyFee, maximumMembersC
     groupFactsUl.appendChild(numberOfMessagesLi)
     };
 };
+
+function groupDescriptionLanding(descriptionOfGroup){
+    
+
+    groupDescription.innerText = descriptionOfGroup
+}
 
 function groupLandingBanner(imagePhoto){
 
@@ -350,6 +343,11 @@ function hideLandingModal(typeGroup){
             const bannerImage = doc1.data().CoverPhoto
             const price = doc1.data().Costs
             const maxMembers = doc1.data().NumberParticipants
+            const groupDescription = doc1.data().Description
+
+            console.log(titel)
+
+            console.log(groupDescription)
 
             groupLandingH1(room1, roomClean, type1)
 
@@ -359,7 +357,7 @@ function hideLandingModal(typeGroup){
     
             hideLandingIfAuthIsMember(members, groupLandingPageOuterDiv)
     
-            groupDescriptionLanding(room1, groupDescription)
+            groupDescriptionLanding(groupDescription)
 
             hideLandingModal(type1)
 
@@ -378,109 +376,109 @@ function hideLandingModal(typeGroup){
 
     // Theme groups overview
 
-    const DOMthemeView = document.getElementById("themegroups")
+//     const DOMthemeView = document.getElementById("themegroups")
 
-    db.collection("Chats")
-    .where("Type", "==", "Group")
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+//     db.collection("Chats")
+//     .where("Type", "==", "Group")
+//     .get().then(querySnapshot => {
+//         querySnapshot.forEach(doc => {
 
-            const type = doc.data().Type
-            const room = doc.data().Room
-            const members = doc.data().Members
+//             const type = doc.data().Type
+//             const room = doc.data().Room
+//             const members = doc.data().Members
 
-            const outerSection = document.createElement("section")
-            outerSection.setAttribute("class", "theme-groups-section")
-        const headerDiv = document.createElement("div")
-            headerDiv.setAttribute("class", "theme-groups-header")
-        const headerImg = document.createElement("img")
-            headerImg.setAttribute("class", "header-image-groups")
-        const titleDiv = document.createElement("div")
-            titleDiv.setAttribute("class", "title-div-themegroups")
-        const titleH2 = document.createElement("h2")
-            titleH2.setAttribute("class", "titelTekst")
-        const subTitle = document.createElement("h5")
-        const buttonDiv = document.createElement("div")
-            buttonDiv.setAttribute("id", "button-div-theme-group")
-        const button = document.createElement("button")
-            button.setAttribute("class", "button-algemeen-card")
-            button.setAttribute("id", "button-theme-group")
-        const leaveGroup = document.createElement("p")
-            leaveGroup.setAttribute("class", "leave-group-button")
+//             const outerSection = document.createElement("section")
+//             outerSection.setAttribute("class", "theme-groups-section")
+//         const headerDiv = document.createElement("div")
+//             headerDiv.setAttribute("class", "theme-groups-header")
+//         const headerImg = document.createElement("img")
+//             headerImg.setAttribute("class", "header-image-groups")
+//         const titleDiv = document.createElement("div")
+//             titleDiv.setAttribute("class", "title-div-themegroups")
+//         const titleH2 = document.createElement("h2")
+//             titleH2.setAttribute("class", "titelTekst")
+//         const subTitle = document.createElement("h5")
+//         const buttonDiv = document.createElement("div")
+//             buttonDiv.setAttribute("id", "button-div-theme-group")
+//         const button = document.createElement("button")
+//             button.setAttribute("class", "button-algemeen-card")
+//             button.setAttribute("id", "button-theme-group")
+//         const leaveGroup = document.createElement("p")
+//             leaveGroup.setAttribute("class", "leave-group-button")
         
-    db.collection("Levensvragen").where("Levensvraag", "==", room).get().then(querySnapshot => {
-        querySnapshot.forEach(doc1 => {
+//     db.collection("Levensvragen").where("Levensvraag", "==", room).get().then(querySnapshot => {
+//         querySnapshot.forEach(doc1 => {
 
-            const title = doc1.data().Levensvraag
-            const headerImageSmall = doc1.data().HeaderImageSmall
+//             const title = doc1.data().Levensvraag
+//             const headerImageSmall = doc1.data().HeaderImageSmall
 
-        titleH2.innerHTML = title
-        headerImg.src = headerImageSmall
-        leaveGroup.innerText = "Groep verlaten"
+//         titleH2.innerHTML = title
+//         headerImg.src = headerImageSmall
+//         leaveGroup.innerText = "Groep verlaten"
 
-        hideLeaveGroupButtonIfAuthIsNotMember(members, leaveGroup)
+//         hideLeaveGroupButtonIfAuthIsNotMember(members, leaveGroup)
 
-        openGroup(room, button)
+//         openGroup(room, button)
 
-        auth.onAuthStateChanged(User =>{
-            if(User){
-              const userRef = db.collection("Vitaminders").doc(User.uid);
-              userRef.get().then(function(doc) {
+//         auth.onAuthStateChanged(User =>{
+//             if(User){
+//               const userRef = db.collection("Vitaminders").doc(User.uid);
+//               userRef.get().then(function(doc) {
         
-                    const auth = doc.data().Gebruikersnaam
+//                     const auth = doc.data().Gebruikersnaam
 
-        db.collection("Chats").where("Room", "==", title).get().then(querySnapshot => {
-            querySnapshot.forEach(doc1 => {
+//         db.collection("Chats").where("Room", "==", title).get().then(querySnapshot => {
+//             querySnapshot.forEach(doc1 => {
 
-                const members = doc1.data().Members
+//                 const members = doc1.data().Members
 
-                // Display number of members in the title
+//                 // Display number of members in the title
 
-                const numberOfMembers = members.length
+//                 const numberOfMembers = members.length
 
-                if(numberOfMembers === 1){
-                    subTitle.innerText = `${numberOfMembers} mens praat over`
-                } else {
-                    subTitle.innerText = `${numberOfMembers} mensen praten over`
-                };
+//                 if(numberOfMembers === 1){
+//                     subTitle.innerText = `${numberOfMembers} mens praat over`
+//                 } else {
+//                     subTitle.innerText = `${numberOfMembers} mensen praten over`
+//                 };
 
-                //Already a member of the group
-                alreadyMember(members, button)
+//                 //Already a member of the group
+//                 alreadyMember(members, button)
 
-                 //Leave group
-                leaveGroup.addEventListener("click", () => {
+//                  //Leave group
+//                 leaveGroup.addEventListener("click", () => {
 
-                leaveTheGroup(title)
+//                 leaveTheGroup(title)
 
-                });
+//                 });
 
-            if(members.includes(auth)){
-                buttonDiv.appendChild(leaveGroup)
-                };
+//             if(members.includes(auth)){
+//                 buttonDiv.appendChild(leaveGroup)
+//                 };
 
-                        });
-                    });
-                });
-            };
-        });
+//                         });
+//                     });
+//                 });
+//             };
+//         });
 
-        if(DOMthemeView != null){
+//         if(DOMthemeView != null){
 
-        DOMthemeView.appendChild(outerSection)
-        outerSection.appendChild(headerDiv)
-        headerDiv.appendChild(headerImg)
-        outerSection.appendChild(titleDiv)
-        titleDiv.appendChild(subTitle)
-        titleDiv.appendChild(titleH2)
-        outerSection.appendChild(buttonDiv)
-        buttonDiv.appendChild(button)
+//         DOMthemeView.appendChild(outerSection)
+//         outerSection.appendChild(headerDiv)
+//         headerDiv.appendChild(headerImg)
+//         outerSection.appendChild(titleDiv)
+//         titleDiv.appendChild(subTitle)
+//         titleDiv.appendChild(titleH2)
+//         outerSection.appendChild(buttonDiv)
+//         buttonDiv.appendChild(button)
 
-        };
+//         };
 
-            });
-        });
-    });
-});
+//             });
+//         });
+//     });
+// });
 
 // Load coachgroups from database to overview
 
@@ -595,18 +593,12 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
 
             groupCoverPhoto.src = coverPhoto
             groupTitleH2.innerText = titleClean
-            // descriptionP.innerText = description
 
             openGroup(title, groupButton)
 
             hideLeaveGroupButtonIfAuthIsNotMember(members, leaveGroup)
 
-            // hideLandingIfAuthIsMember(members)
-
-            if(groupDescription != null){
-
-                groupDescription.innerHTML = description
-            };
+            // hideLandingIfAuthIsMember(members)  
 
             openCoachGroupAfterAgreement(title)
 
@@ -655,6 +647,8 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
 
             becomeMemberOfGroup(buttonGroupLanding, title, type)
 
+            if(DOM != null){
+
             DOM.appendChild(groupInnerDiv)
             groupInnerDiv.appendChild(groupHeader)
             groupHeader.appendChild(groupCoverPhoto)
@@ -671,6 +665,8 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
             metaDiv.appendChild(costsP)
             groupInnerDiv.appendChild(buttonDiv)
             buttonDiv.appendChild(groupButton)
+
+            };
 
             if(members.includes(auth)){
                 buttonDiv.appendChild(leaveGroup)
@@ -706,11 +702,12 @@ db.collection("Chats").where("Type", "==", "GroupForCoaches").get().then(querySn
         const coverPhoto = doc.data().CoverPhoto
         const costs = doc.data().Costs
         const members = doc.data().Members
-        const data = doc.data().Data
-        const sessionLenght =doc.data().SessionLenght
         const type = doc.data().Type
 
+
         const DOM = document.getElementById("groups-for-coaches")
+
+        console.log(DOM)
 
         const groupInnerDiv = document.createElement("div")
             groupInnerDiv.setAttribute("class", "theme-groups-section")
@@ -747,18 +744,12 @@ db.collection("Chats").where("Type", "==", "GroupForCoaches").get().then(querySn
 
             groupCoverPhoto.src = coverPhoto
             groupTitleH2.innerText = titleClean
-            // descriptionP.innerText = description
 
             openGroup(title, groupButton)
 
             hideLeaveGroupButtonIfAuthIsNotMember(members, leaveGroup)
 
             // hideLandingIfAuthIsMember(members)
-
-            if(groupDescription != null){
-
-                groupDescription.innerHTML = description
-            };
 
             openCoachGroupAfterAgreement(title)
 

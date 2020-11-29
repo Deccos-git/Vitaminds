@@ -374,19 +374,15 @@ function saveAuthToReadlist(docID, authName, userName){
             Read: firebase.firestore.FieldValue.arrayUnion(authName)
 
                  }).then(() => {
-                     console.log("New message and added to readlist")
                     window.open(`../Chats/${userName}.html`, "_self");
                 });
             } else {
-                console.log("New message but not added to readlist")
                 window.open(`../Chats/${userName}.html`, "_self");
             };
         };
         });
     });
 } else {
-
-    console.log("No new message and not added to readlist")
     window.open(`../Chats/${userName}.html`, "_self");
 };
 });

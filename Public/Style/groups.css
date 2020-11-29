@@ -37,6 +37,12 @@
     justify-content: center;
 }
 
+.groups-for-coach-outer-div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 #minimum-likes-notice{
     display: none;
     margin: 15px;
