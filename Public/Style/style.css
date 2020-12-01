@@ -408,7 +408,7 @@ ul{
 }
 
 #profile-name a{
-  font-size: 14px;
+  font-size: 16px;
   color: #122b46;
   justify-self: center;
 }
@@ -485,7 +485,7 @@ ul{
 
 .notification-div-menu h3{
   margin: 0px;
-  font-size: 18px;
+  font-size: 16px;
   color: #8e0000;
 }
 
@@ -552,6 +552,7 @@ ul{
 
 #auth-profile a{
   text-decoration: none !important;
+  font-size: 16px;
 }
 
 #chats-groups-div-auth-menu{

@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 // const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
-// const stripe = require('stripe')('sk_test_licm1PHJnZ26zQHj8OGkBV1Z00CgJf2SX8');
+const stripe = require('stripe')('sk_test_licm1PHJnZ26zQHj8OGkBV1Z00CgJf2SX8');
 const cron = require('node-cron');
 
 var firebaseConfig = {
@@ -30,7 +30,7 @@ app.use(require('prerender-node').set('prerenderToken', 'Ab0cCom4i1KuazJ2YhDA'))
 // const urlencodedParser = bodyParser.urlencoded({extended: true});
 
 // Subscriptions aanmaken op basis van URL
-app.get('/subscrition/:id',function(req,res)
+app.get('/subscription/:id',function(req,res)
 {
     res.sendFile('subscriptions.html', { root: __dirname });
 });
@@ -103,6 +103,34 @@ app.get('/eventpage/:id',function(req,res)
     res.sendFile('event.html', { root: __dirname });
 });
 
+// Stripe products
+
+    // 5 euro
+app.post('/create-checkout-session-five', async (req, res) => {
+    const session = await stripe.checkout.sessions.create({
+        customer_email: 'customer@example.com',
+      payment_method_types: ['card', 'ideal'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'eur',
+            product_data: {
+              name: 'Gelukstegoed',
+            },
+            unit_amount: 500,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: 'https://vitaminds.nu/succes.html',
+      cancel_url: 'https://vitaminds.nu/subscription',
+    });
+  
+    res.json({ id: session.id });
+  });
+  
+
 
 // Tool sheduling
 
@@ -128,11 +156,8 @@ db.collection("Practice").where("Practice", "==", "Check-in").get().then(querySn
                 html: `Hallo, ${gebruikersnaamClean}</br></br>
                     Geluk zit hem in kleine dagelijkse gewoontes. <br>
                     Met de Vitaminds Tools maken we onze persoonlijke ontwikkeling een onderdeel van onze dagelijkse gewoontes.<br><br>
-
                     Bij deze ontvang jij je <i>Check in</i> notificatie voor je doel: <br><br>
-
                     -${levensvraag}<br><br>  
-
                     Ga naar <a href="https://vitaminds.nu/inlog.html"> Vitaminds </a>, log in en Check in!<br><br> 
                 
                     Vriendelijke groet, </br></br>
@@ -178,9 +203,7 @@ db.collection("Vitaminders")
                 html: `Hallo, ${gebruikersnaamClean}</br></br>
                     Je bent lid geworden van Vitaminds om je geluk in eigen handen te nemen. <br>
                     Deze twee-wekelijkse mail is bedoeld om je te helpen om je geluk een onderdeel te maken van je dagelijks.<br><br>
-
                     Wat is op dit moment je geluksniveau? <br><br>
-
                     <a href="https://vitaminds.nu/Vitaminders/${gebruikersnaam}"> 
                         <img src="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/geluksschaal-plaatje-small.png?alt=media&token=5edf44ed-b2dc-46d2-ad7d-7a6215ef80b6" alt="Geluksschaal"> 
                     </a></br></br>

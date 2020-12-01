@@ -2635,7 +2635,7 @@ function subscriptionPage(){
                         docRef.get().then(function(doc){
                             const auth = doc.data().Gebruikersnaam;
 
-        window.open("../subscrition/" + auth, "_self")
+        window.open("../subscription/" + auth, "_self")
 
                         });
                 };

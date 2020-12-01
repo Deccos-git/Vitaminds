@@ -1397,7 +1397,7 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
                                });  
                            });
                        });
-                   } else if (type === "Group"){
+                   } else if (type === "Group" || type === "GroupForCoaches" || type === "CoachCooperate"){
                        db.collection("Vitaminders").where("Gebruikersnaam", "==", member)
                        .get().then(querySnapshot => {
                            querySnapshot.forEach(doc2 => {

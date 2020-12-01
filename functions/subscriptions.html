@@ -18,6 +18,7 @@
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
   <!-- Tiny MCE -->
   <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
@@ -89,7 +90,24 @@
     </nav>
   
 
-<h1>Abonnementen</h1>
+<h1>Betalingen</h1>
+
+<h2>Gelukstegoed</h2>
+
+<div id="gelukstegoed-outer-div">
+  <div class="gelukstegoed-card">
+    <img class="gelukstegoed-img" src="../images/gelukstegoed5.jpg" alt="gelukstegoed 5 euro">
+    <h3>5 euro</h3>
+    <button class="button-algemeen" id="checkout-button-five">Kopen</button>
+  </div>
+</div>
+
+
+
+<!-- <p></p>
+<button id="checkout-button">Ophogen</button> -->
+
+
 
 
 
@@ -155,7 +173,7 @@
       <script type="text/javascript" src="../javascript/firebase.js"></script>
       <script type="text/javascript" src="../javascript/auth.js"></script>
       <script type="text/javascript" src="../javascript/index.js"></script>
-      <script type="text/javascript" src="../javascript/subscriptions.js"></script>
+      <script type="text/javascript" src="../javascript/stripe.js"></script>
     </body>
   </html>
   
