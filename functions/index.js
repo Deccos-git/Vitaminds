@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const express = require('express');
 const app = express();
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
 const stripe = require('stripe')('sk_test_licm1PHJnZ26zQHj8OGkBV1Z00CgJf2SX8');
 const cron = require('node-cron');
@@ -24,10 +24,92 @@ admin.initializeApp(firebaseConfig);
 // Prerender
 app.use(require('prerender-node').set('prerenderToken', 'Ab0cCom4i1KuazJ2YhDA'));
 
-// Bodyparser Middleware
-// app.use(bodyParser.json())
-// app.use(bodyParser.urlencoded({extended: false}))
-// const urlencodedParser = bodyParser.urlencoded({extended: true});
+// Stripe
+const endpointSecret = "whsec_YS59bdkyVZrr3v9SInNkbqzWmNEBVGHa"
+
+// only use the raw bodyParser for webhooks
+app.use((req, res, next) => {
+    if (req.originalUrl === '/webhook') {
+      next();
+    } else {
+      bodyParser.json()(req, res, next);
+    }
+  });
+
+  app.post('/webhook', (req, res) => {
+    let sig = req.headers["stripe-signature"];
+
+    console.log(sig)
+
+    try {
+        let event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
+
+        db.collection("Payments").doc().set({
+            Event: event
+        }).then(() => {
+            res.send('Testing Stripe webhooks!').end()
+        })
+
+        // Do something with event
+        console.log(req.bodyRaw)
+        console.log(event);
+       
+    }
+    catch (err) {
+        console.log(err);
+        res.status(400).end()
+    }
+});
+
+app.post('/create-session', async (req, res) => {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['ideal', 'card'],
+      line_items: [
+        {
+          price_data: {
+            currency: 'eur',
+            product_data: {
+              name: 'Gelukstegoed',
+            },
+            unit_amount: 500,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: 'payment',
+      success_url: 'https://www.vitaminds.nu/succes.html',
+      cancel_url: 'https://www.vitaminds.nu/subscription',
+    });
+  
+    res.json({ id: session.id });
+
+    
+
+  });
+  
+//   app.post('/webhook', bodyParser.raw({type: 'application/json'}), (request, response) => {
+//     const payload = request.body;
+//     const sig = request.headers['stripe-signature'];
+  
+//     let event;
+  
+//     try {
+//       event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
+//     } catch (err) {
+//       return response.status(400).send(`Webhook Error: ${err.message}`);
+//     }
+  
+//     // Handle the checkout.session.completed event
+//     if (event.type === 'checkout.session.completed') {
+//       const session = event.data.object;
+  
+//       // Fulfill the purchase...
+//       fulfillOrder(session);
+//     }
+  
+//     response.status(200);
+//   });
+
 
 // Subscriptions aanmaken op basis van URL
 app.get('/subscription/:id',function(req,res)
@@ -102,34 +184,6 @@ app.get('/eventpage/:id',function(req,res)
 {
     res.sendFile('event.html', { root: __dirname });
 });
-
-// Stripe products
-
-    // 5 euro
-app.post('/create-checkout-session-five', async (req, res) => {
-    const session = await stripe.checkout.sessions.create({
-        customer_email: 'customer@example.com',
-      payment_method_types: ['card', 'ideal'],
-      line_items: [
-        {
-          price_data: {
-            currency: 'eur',
-            product_data: {
-              name: 'Gelukstegoed',
-            },
-            unit_amount: 500,
-          },
-          quantity: 1,
-        },
-      ],
-      mode: 'payment',
-      success_url: 'https://vitaminds.nu/succes.html',
-      cancel_url: 'https://vitaminds.nu/subscription',
-    });
-  
-    res.json({ id: session.id });
-  });
-  
 
 
 // Tool sheduling
@@ -464,7 +518,12 @@ app.get('/de-kleine-geneugten-van-het-bewuste-leven/*',function(req,res)
 
 app.get('/wat-heb-je-aan-positiviteit/*',function(req,res)
 {
-    res.sendFile('/index-redirect.html', { root: __dirname });
+    res.redirect('https://vitaminds.nu/Artikelen/Positiviteit.html');
+});
+
+app.get('/hoeveel-positiviteit-is-goed-voor-je/*',function(req,res)
+{
+    res.redirect('https://vitaminds.nu/Artikelen/Positiviteit.html');
 });
 
 app.get('/mijn-account/*',function(req,res)
@@ -552,5 +611,11 @@ app.get('/platform/*',function(req,res)
     res.sendFile('/index-redirect.html', { root: __dirname });
 });
 
-exports.app = functions.https.onRequest(app);
+app.get('/verbonden-leven-met-anderen-en-jezelf/*',function(req,res)
+{
+    res.sendFile('/index-redirect.html', { root: __dirname });
+});
 
+
+
+exports.app = functions.https.onRequest(app);

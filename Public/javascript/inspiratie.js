@@ -59,19 +59,9 @@ window.addEventListener("load", () => {
 
             db.collection("Levensvragen").doc(doc.id).update({
                 Views: firebase.firestore.FieldValue.increment(1)
-            })  
-        })
-    })
-
-    // Theme articles
-    db.collection("Themas").where("Thema", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            db.collection("Themas").doc(doc.id).update({
-                Views: firebase.firestore.FieldValue.increment(1)
-            })  
-        })
-    })
+            }); 
+        });
+    });
 });
 
 // Levensvraag article overview pagina
@@ -130,6 +120,44 @@ window.addEventListener("load", () => {
 }();
 
 //Filter 
+
+    // Get domain from localstorage
+!function getDomainFromLocalstorage(){
+
+    const selectDomain = document.getElementById("inspiratie-filter-select")
+
+    const domainFromStorage = localStorage.getItem("Domain")
+
+    if (domainFromStorage === null){
+        loadAllArticles();
+    };
+
+    console.log(domainFromStorage)
+
+    // const option = selectDomain.options
+    //     const selected = option[option.selectedIndex].innerHTML
+if(selectDomain != null){
+    const options = selectDomain.options
+
+
+    const optionsArray = Array.from(options)
+
+    optionsArray.forEach(option => {
+
+        if (option.innerText === domainFromStorage){
+            option.selected = domainFromStorage
+
+            const selected = option.innerText
+
+            DOMarticle = document.getElementById("levensvraag-artikel-ouyter-div")
+
+            DOMarticle.innerHTML = ""
+
+            loadSelectedArticles(selected)
+        };
+    });
+};
+}();
 
 function loadAllArticles(){
 
@@ -219,8 +247,6 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds")
 });
 };
 
-loadAllArticles()
-
 function getDomain(){
 
 const selectDomain = document.getElementById("inspiratie-filter-select")
@@ -236,90 +262,94 @@ if(selected === "Alles"){
     loadAllArticles();
 };
 
-db.collection("Levensvragen").where("Domein", "==", selected)
-.get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
+loadSelectedArticles(selected)
 
-        const title = doc.data().Levensvraag
-        const headerImage = doc.data().HeaderImage
-        const headerImageSmall = doc.data().HeaderImageSmall
-        const insights = doc.data().Insights
-        const goal = doc.data().Levensvraag
-
-         // Hidding articles with no insights for non-coach
-            if (insights.length == 0){
-                auth.onAuthStateChanged(User =>{
-                    if(User){
-                db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                    const usertype = doc.data().Usertype
-
-                    console.log(usertype)
-    
-                    if(usertype != "Coach"){
-                        outerSection.style.display = "none"
-                    }
-                })
-            } else {
-                outerSection.style.display = "none"
-            }
-            })
-        };
-     
-        const outerSection = document.createElement("section")
-            outerSection.setAttribute("class", "levensvraag-artikel-section")
-            outerSection.setAttribute("data-title", title)
-            outerSection.setAttribute("data-goal", goal)
-        const headerDiv = document.createElement("div")
-            headerDiv.setAttribute("class", "levensvraag-artikel-header")
-        const headerImg = document.createElement("img")
-            headerImg.setAttribute("class", "header-image-article")
-        const titleDiv = document.createElement("div")
-        const titleSub = document.createElement("h5")
-            titleSub.setAttribute("class", "titleSub")
-        const titleH2 = document.createElement("h2")
-            titleH2.setAttribute("class", "titelTekst")
-        const buttonDiv = document.createElement("button")
-            buttonDiv.setAttribute("class", "button-algemeen-card")
-            buttonDiv.setAttribute("onclick", "seeArticle(this)")
-
-        // Dynamic title
-        const count = insights.length
-
-        titleSub.innerHTML = `${count} coaches over`
-
-        if(count == 1){
-        titleSub.innerHTML = `${count} coach over`
-        }
-
-        // Exemption on dynamic title
-        if(title == "Zelfliefde"){
-            titleSub.innerHTML = `${count} tips voor meer`
-
-            if(count == 1){
-            titleSub.innerHTML = `${count} tip voor meer`
-        }
-        }
-
-        titleH2.innerHTML = title
-        headerImg.src = headerImageSmall
-        buttonDiv.innerHTML = `<a href="../Artikelen/${title}.html">Bekijk</a>`
-
-        if(DOMarticle == null){
-            console.log("null")
-        } else {
-
-        DOMarticle.appendChild(outerSection)
-        outerSection.appendChild(headerDiv)
-        headerDiv.appendChild(headerImg)
-        outerSection.appendChild(titleDiv)
-        titleDiv.appendChild(titleSub)
-        titleDiv.appendChild(titleH2)
-        outerSection.appendChild(buttonDiv)
-        };
-    });
-});
 };
 
+function loadSelectedArticles(selectedArticle){
+    db.collection("Levensvragen").where("Domein", "==", selectedArticle)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+    
+            const title = doc.data().Levensvraag
+            const headerImage = doc.data().HeaderImage
+            const headerImageSmall = doc.data().HeaderImageSmall
+            const insights = doc.data().Insights
+            const goal = doc.data().Levensvraag
+    
+             // Hidding articles with no insights for non-coach
+                if (insights.length == 0){
+                    auth.onAuthStateChanged(User =>{
+                        if(User){
+                    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                        const usertype = doc.data().Usertype
+    
+                        console.log(usertype)
+        
+                        if(usertype != "Coach"){
+                            outerSection.style.display = "none"
+                        }
+                    })
+                } else {
+                    outerSection.style.display = "none"
+                }
+                })
+            };
+         
+            const outerSection = document.createElement("section")
+                outerSection.setAttribute("class", "levensvraag-artikel-section")
+                outerSection.setAttribute("data-title", title)
+                outerSection.setAttribute("data-goal", goal)
+            const headerDiv = document.createElement("div")
+                headerDiv.setAttribute("class", "levensvraag-artikel-header")
+            const headerImg = document.createElement("img")
+                headerImg.setAttribute("class", "header-image-article")
+            const titleDiv = document.createElement("div")
+            const titleSub = document.createElement("h5")
+                titleSub.setAttribute("class", "titleSub")
+            const titleH2 = document.createElement("h2")
+                titleH2.setAttribute("class", "titelTekst")
+            const buttonDiv = document.createElement("button")
+                buttonDiv.setAttribute("class", "button-algemeen-card")
+                buttonDiv.setAttribute("onclick", "seeArticle(this)")
+    
+            // Dynamic title
+            const count = insights.length
+    
+            titleSub.innerHTML = `${count} coaches over`
+    
+            if(count == 1){
+            titleSub.innerHTML = `${count} coach over`
+            }
+    
+            // Exemption on dynamic title
+            if(title == "Zelfliefde"){
+                titleSub.innerHTML = `${count} tips voor meer`
+    
+                if(count == 1){
+                titleSub.innerHTML = `${count} tip voor meer`
+            }
+            }
+    
+            titleH2.innerHTML = title
+            headerImg.src = headerImageSmall
+            buttonDiv.innerHTML = `<a href="../Artikelen/${title}.html">Bekijk</a>`
+    
+            if(DOMarticle == null){
+                console.log("null")
+            } else {
+    
+            DOMarticle.appendChild(outerSection)
+            outerSection.appendChild(headerDiv)
+            headerDiv.appendChild(headerImg)
+            outerSection.appendChild(titleDiv)
+            titleDiv.appendChild(titleSub)
+            titleDiv.appendChild(titleH2)
+            outerSection.appendChild(buttonDiv)
+            };
+        });
+    });
+    };
 
 
 // Theme overview page

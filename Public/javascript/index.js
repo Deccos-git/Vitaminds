@@ -41,34 +41,37 @@ if(openen != null || insp != null || coach != null){
         };
 };
 
-// Dynamic call to action
+// Filter
 
-// const dynamicH2 = document.getElementById("dynamic-call-to-action")
-// const dynamicH2Dots = document.getElementById("dynamic-title-dots")
+function setDomainToStorage(){
 
-// if(dynamicH2 != null && dynamicH2Dots != null){
+        const selectDomain = document.getElementById("domain-select")
 
-// function goalExample(a,b){
+        const option = selectDomain.options
+        const selected = option[option.selectedIndex].innerHTML
 
-//         setTimeout(() => {
-//                 dynamicH2.innerHTML = a
-//                 dynamicH2Dots.innerHTML = ""
-//                 },b)
-// };
+        localStorage.setItem("Domain", selected)
+};
 
-// goalExample("Posiviteit", 0)
-// goalExample("Geluk", 3000)
-// goalExample("Je eigen leven leven", 6000)
-// goalExample("Los laten", 9000)
-// goalExample("Je eigen keuzes maken", 12000)
-// goalExample("Weten wat je wilt", 15000)
-// goalExample("Rust in je hoofd", 18000)
-// goalExample("Waar wil jij je op focussen?", 21000)
-// setTimeout(() => {
-//         const CTAsubHeader = document.getElementById("call-to-action-sub-header")
-//         CTAsubHeader.style.display = "none"
-// },21000)
-// };
+function directToPage(){
+
+        const selectDomain = document.getElementById("type-select")
+
+        const option = selectDomain.options
+        const selected = option[option.selectedIndex].innerHTML
+
+        if(selected === "Artikelen"){
+                window.open("/inspiratie.html", '_self');
+        } else if (selected === "Workshops"){
+                window.open("/workshops.html", '_self');
+        } else if (selected === "Coachgroepen"){
+                window.open("/groups.html", '_self');
+        } else if (selected === "Coaches"){
+                window.open("/coaches.html, '_self'");
+        } else if (selected === "Events"){
+                window.open("/events.html", '_self');
+        };
+};
 
 
 // Main header CTA
