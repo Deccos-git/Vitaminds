@@ -1,91 +1,3 @@
-// Create an instance of the Stripe object with your publishable API key
-const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
-
-const checkoutButtonFive = document.getElementById("checkout-button-five");
-const checkoutButtonTen = document.getElementById("checkout-button-ten");
-const checkoutButtonFiveteen = document.getElementById("checkout-button-fifty");
-const checkoutButtonTwenty = document.getElementById("checkout-button-twenty");
-const checkoutButtonTwentyfive = document.getElementById("checkout-button-twentyfive");
-const checkoutButtonThirty = document.getElementById("checkout-button-thirty");
-const checkoutButtonThirtyfive = document.getElementById("checkout-button-thirtyfive");
-const checkoutButtonFourty = document.getElementById("checkout-button-fourty");
-const checkoutButtonFifty = document.getElementById("checkout-button-fifty");
-const checkoutButtonSixty = document.getElementById("checkout-button-sixty");
-const checkoutButtonSeventy = document.getElementById("checkout-button-seventy");
-const checkoutButtonEighty = document.getElementById("checkout-button-eighty");
-const checkoutButtonNinety = document.getElementById("checkout-button-ninety");
-const checkoutButtonHundred = document.getElementById("checkout-button-hundred");
-const checkoutButtonHundredfifty = document.getElementById("checkout-button-hundredfifty");
-const checkoutButtonTwohundred = document.getElementById("checkout-button-twohundred");
-
-function createSession(sessionNumber, buttonProduct){
-
-  buttonProduct.addEventListener("click", function () {
-
-    buttonProduct.innerText = "Laden"
-
-  fetch(sessionNumber, {
-    method: "POST",
-  })
-    .then(function (response) {
-      return response.json();
-    })
-    .then(function (session) {
-
-      auth.onAuthStateChanged(User =>{
-        if (User){
-           const userRef = db.collection("Vitaminders").doc(User.uid)
-           userRef.get().then(doc => {
-
-            const gebruikersnaam = doc.data().Gebruikersnaam
-            const email = doc.data().Email
-           
-            db.collection("PaymentUser").doc().set({
-              SessionId: session.id,
-              UserName: gebruikersnaam,
-              Email: email,
-              Status: "Not approved"
-            })
-            
-          }).then(() => {
-            stripe.redirectToCheckout({
-              sessionId: session.id
-             }); 
-          })
-          };
-        });    
-    })
-    .then(function (result) {
-      // If redirectToCheckout fails due to a browser or network
-      // error, you should display the localized error message to your
-      // customer using error.message.
-      if (result.error) {
-        alert(result.error.message);
-      }
-    })
-    .catch(function (error) {
-      console.error("Error:", error);
-    });
-  });
-};
-
-createSession("/create-session-five", checkoutButtonFive)
-createSession("/create-session-ten", checkoutButtonTen)
-createSession("/create-session-fiveteen", checkoutButtonFiveteen)
-createSession("/create-session-twenty", checkoutButtonTwenty)
-createSession("/create-session-twentyfive", checkoutButtonTwentyfive)
-createSession("/create-session-thirty", checkoutButtonThirty)
-createSession("/create-session-thirtyfive", checkoutButtonThirtyfive)
-createSession("/create-session-fourty", checkoutButtonFourty)
-createSession("/create-session-fifty", checkoutButtonFifty)
-createSession("/create-session-sixty", checkoutButtonSixty)
-createSession("/create-session-seventy", checkoutButtonSeventy)
-createSession("/create-session-eighty", checkoutButtonEighty)
-createSession("/create-session-ninety", checkoutButtonNinety)
-createSession("/create-session-hundred", checkoutButtonHundred)
-createSession("/create-session-hundredfifty", checkoutButtonHundredfifty)
-createSession("/create-session-twohundred", checkoutButtonTwohundred)
-
 // Update gelukstegoed
 
 !function updateGelukstegoed(){
@@ -144,7 +56,7 @@ createSession("/create-session-twohundred", checkoutButtonTwohundred)
 
   // Buy workhop
 
-  const buttonWorkshopLanding = document.getElementById("button-workshop-landing")
+  const buttonWorkshopLandingStripe = document.getElementById("button-workshop-landing")
 
 function reduceGelukstegoed(){
 
@@ -219,7 +131,7 @@ auth.onAuthStateChanged(User =>{
 });  
 
 buttonDiv.appendChild(notice)
-buttonDiv.removeChild(buttonWorkshopLanding)
+buttonDiv.removeChild(buttonWorkshopLandingStripe)
 }; 
 
 function arrayOfWorkshopTakers(){
@@ -251,9 +163,99 @@ function arrayOfWorkshopTakers(){
 };
 
 
-if(buttonWorkshopLanding != null){
-  buttonWorkshopLanding.addEventListener("click", () => {
+if(buttonWorkshopLandingStripe != null){
+  buttonWorkshopLandingStripe.addEventListener("click", () => {
 
       reduceGelukstegoed()
   });
 };
+
+// Create an instance of the Stripe object with your publishable API key
+const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
+
+const checkoutButtonFive = document.getElementById("checkout-button-five");
+const checkoutButtonTen = document.getElementById("checkout-button-ten");
+const checkoutButtonFiveteen = document.getElementById("checkout-button-fiveteen");
+const checkoutButtonTwenty = document.getElementById("checkout-button-twenty");
+const checkoutButtonTwentyfive = document.getElementById("checkout-button-twentyfive");
+const checkoutButtonThirty = document.getElementById("checkout-button-thirty");
+const checkoutButtonThirtyfive = document.getElementById("checkout-button-thirtyfive");
+const checkoutButtonFourty = document.getElementById("checkout-button-fourty");
+const checkoutButtonFifty = document.getElementById("checkout-button-fifty");
+const checkoutButtonSixty = document.getElementById("checkout-button-sixty");
+const checkoutButtonSeventy = document.getElementById("checkout-button-seventy");
+const checkoutButtonEighty = document.getElementById("checkout-button-eighty");
+const checkoutButtonNinety = document.getElementById("checkout-button-ninety");
+const checkoutButtonHundred = document.getElementById("checkout-button-hundred");
+const checkoutButtonHundredfifty = document.getElementById("checkout-button-hundredfifty");
+const checkoutButtonTwohundred = document.getElementById("checkout-button-twohundred");
+
+function createSession(sessionNumber, buttonProduct){
+
+  if(buttonProduct =! null){
+  buttonProduct.addEventListener("click", function () {
+
+    buttonProduct.innerText = "Laden"
+
+  fetch(sessionNumber, {
+    method: "POST",
+  })
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (session) {
+
+      auth.onAuthStateChanged(User =>{
+        if (User){
+           const userRef = db.collection("Vitaminders").doc(User.uid)
+           userRef.get().then(doc => {
+
+            const gebruikersnaam = doc.data().Gebruikersnaam
+            const email = doc.data().Email
+           
+            db.collection("PaymentUser").doc().set({
+              SessionId: session.id,
+              UserName: gebruikersnaam,
+              Email: email,
+              Status: "Not approved"
+            })
+            
+          }).then(() => {
+            stripe.redirectToCheckout({
+              sessionId: session.id
+             }); 
+          })
+          };
+        });    
+    })
+    .then(function (result) {
+      // If redirectToCheckout fails due to a browser or network
+      // error, you should display the localized error message to your
+      // customer using error.message.
+      if (result.error) {
+        alert(result.error.message);
+      }
+    })
+    .catch(function (error) {
+      console.error("Error:", error);
+    });
+  });
+};
+};
+
+createSession("/create-session-five", checkoutButtonFive)
+createSession("/create-session-ten", checkoutButtonTen)
+createSession("/create-session-fiveteen", checkoutButtonFiveteen)
+createSession("/create-session-twenty", checkoutButtonTwenty)
+createSession("/create-session-twentyfive", checkoutButtonTwentyfive)
+createSession("/create-session-thirty", checkoutButtonThirty)
+createSession("/create-session-thirtyfive", checkoutButtonThirtyfive)
+createSession("/create-session-fourty", checkoutButtonFourty)
+createSession("/create-session-fifty", checkoutButtonFifty)
+createSession("/create-session-sixty", checkoutButtonSixty)
+createSession("/create-session-seventy", checkoutButtonSeventy)
+createSession("/create-session-eighty", checkoutButtonEighty)
+createSession("/create-session-ninety", checkoutButtonNinety)
+createSession("/create-session-hundred", checkoutButtonHundred)
+createSession("/create-session-hundredfifty", checkoutButtonHundredfifty)
+createSession("/create-session-twohundred", checkoutButtonTwohundred)
