@@ -997,13 +997,12 @@
 
 .item-div{
     display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .item-div p{
     justify-self: flex-start;
-    margin: 0px 10px;
+    margin: 15px 10px 0px 10px; 
     font-size: 16px;
 }
 

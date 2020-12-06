@@ -44,10 +44,10 @@ app.use((req, res, next) => {
     try {
         let event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
 
-        db.collection("Payments").doc().set({
+        db.collection("PaymentSuccess").doc().set({
             Event: event
         }).then(() => {
-            res.send('Testing Stripe webhooks!').end()
+            res.send('Status 200').end()
         })
 
         // Do something with event
@@ -61,7 +61,8 @@ app.use((req, res, next) => {
     }
 });
 
-app.post('/create-session', async (req, res) => {
+function createSession(sessionNumber, amount){
+app.post(sessionNumber, async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['ideal', 'card'],
       line_items: [
@@ -71,7 +72,7 @@ app.post('/create-session', async (req, res) => {
             product_data: {
               name: 'Gelukstegoed',
             },
-            unit_amount: 500,
+            unit_amount: amount,
           },
           quantity: 1,
         },
@@ -82,35 +83,27 @@ app.post('/create-session', async (req, res) => {
     });
   
     res.json({ id: session.id });
-
-    
-
   });
-  
-//   app.post('/webhook', bodyParser.raw({type: 'application/json'}), (request, response) => {
-//     const payload = request.body;
-//     const sig = request.headers['stripe-signature'];
-  
-//     let event;
-  
-//     try {
-//       event = stripe.webhooks.constructEvent(payload, sig, endpointSecret);
-//     } catch (err) {
-//       return response.status(400).send(`Webhook Error: ${err.message}`);
-//     }
-  
-//     // Handle the checkout.session.completed event
-//     if (event.type === 'checkout.session.completed') {
-//       const session = event.data.object;
-  
-//       // Fulfill the purchase...
-//       fulfillOrder(session);
-//     }
-  
-//     response.status(200);
-//   });
+};
 
+createSession('/create-session-five', 500)
+createSession("/create-session-ten", 1000)
+createSession("/create-session-fiveteen", 1500)
+createSession("/create-session-twenty", 2000)
+createSession("/create-session-twentyfive", 2500)
+createSession("/create-session-thirty", 3000)
+createSession("/create-session-thirtyfive", 3500)
+createSession("/create-session-fourty", 4000)
+createSession("/create-session-fifty", 50000)
+createSession("/create-session-sixty", 6000)
+createSession("/create-session-seventy", 7000)
+createSession("/create-session-eighty", 8000)
+createSession("/create-session-ninety", 9000)
+createSession("/create-session-hundred", 10000)
+createSession("/create-session-hundredfifty", 15000)
+createSession("/create-session-twohundred", 20000)
 
+  
 // Subscriptions aanmaken op basis van URL
 app.get('/subscription/:id',function(req,res)
 {

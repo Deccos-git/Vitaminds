@@ -111,53 +111,6 @@ function groupLandingCreatorInformation(creator){
     });
 };
 
-function arrayOfWorkshopTakers(buttonLanding){
-    if(buttonLanding != null){
-    buttonLanding.addEventListener("click", () => {
-           // Add auth to list of members
-
-           auth.onAuthStateChanged(User =>{
-            if(User){
-              const userRef = db.collection("Vitaminders").doc(User.uid);
-              userRef.get().then(function(doc) {
-        
-                    const auth = doc.data().Gebruikersnaam
-
-        db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
-            querySnapshot.forEach(doc1 => {
-
-                // Store members in database
-        
-                db.collection("Workshops").doc(doc1.id).update({
-                    Takers: firebase.firestore.FieldValue.arrayUnion(auth)
-                }).then(() => {
-                        agreementSection.style.display = "flex"
-                        workshopLandingPageOuterDiv.style.display = "none"
-                            });
-                        });
-                    });
-                });
-            } else {
-
-                const buttonDiv = document.getElementById("button-div-landing")
-
-                const notice = document.createElement("p")
-                notice.setAttribute("class", "notice-group-visitor")
-
-            notice.innerHTML = "Maak een <u>Digimind</u> aan om een workshop te doen."
-            notice.addEventListener("click", () => {
-                window.open("../Register.html", "_self")
-            })
-
-            buttonDiv.appendChild(notice)
-            buttonDiv.removeChild(buttonLanding)
-
-                };
-            });
-        });
-    };
-};
-
 function workshopFacts(priceOfWorkshop){
 
     const workshopPrice = document.createElement("li")
@@ -254,7 +207,6 @@ function hideLandingIfAuthIsArrayMember(array){
             
             workshopLandingH1(workshopTitle)
             groupLandingCreatorInformation(creator)
-            arrayOfWorkshopTakers(buttonWorkshopLanding)
             workshopFacts(price)
             workshopAgreementTitle()
             workshopAgreementQuestion(creator)
