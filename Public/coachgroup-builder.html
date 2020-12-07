@@ -129,15 +129,18 @@
     <h3>Wat kunnen mensen leren in jouw coachgroep?</h3>
     <textarea id="coachgroup-description" name="" cols="30" rows="10"></textarea>
 
-    <h3>Hoeveel mensen kunnen maximaal deelnemen aan je coachgroep?</h3>
-    <input id="coachgroup-number-participants" type="number" placeholder="Maximaal aantaal deelnemers">
+    <h3>Hoeveel mensen kunnen er deelnemen aan je coachgroep?</h3>
+    <input id="coachgroup-number-participants" type="number" placeholder="Aantal deelnemers">
 
-    <h3>Wat kost jouw coachgroep per persoon per maand?</h3>
+    <h3>Hoeveel euro kost jouw coachgroep per persoon?</h3>
     <p id="vitaminds-cut-notice">Let op: bij verkoop van je workshop gaat 10% naar Vitaminds. Neem dat mee in je prijs.</p>
-    <input id="coachgroup-costs" type="text" placeholder="Prijs per deelnemer per maand">
+    <div id="price-input-div">
+      <input id="coachgroup-costs" type="number" placeholder="Prijs per deelnemer">
+      <p>euro</p>
+    </div>
 
-    <h3>Bij hoeveel deelnemers kan je coachgroep van start?</h3>
-    <input id="coachgroup-start-number" type="number" placeholder="Minimum aantal deelnemers">
+    <h3>Hoeveel maanden duurt je coachgroep?</h3>
+    <input id="coachgroup-length" type="number" placeholder="Aantal maanden">
 
     <div id="save-bar-coachgroup-builder">
         <button onclick="saveCoachgroup()" id="button-coachgroup" class="button-algemeen-card">Opslaan</button>

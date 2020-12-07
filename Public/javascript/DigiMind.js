@@ -2444,7 +2444,7 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                                             
                                                 Vriendelijke groet, </br></br>
                                                 Het Vitaminds Team </br></br>
-                                                <img src="../images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                                                <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
                                             Gebruikersnaam: gebruikersnaam
                                             }
                                                     

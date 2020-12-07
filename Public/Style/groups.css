@@ -49,6 +49,10 @@
     color: #cf6e13;
 }
 
+#price-input-div{
+    display: flex;
+}
+
 #minimum-likes-notice{
     display: none;
     margin: 15px;

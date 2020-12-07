@@ -39,8 +39,6 @@ app.use((req, res, next) => {
   app.post('/webhook', (req, res) => {
     let sig = req.headers["stripe-signature"];
 
-    console.log(sig)
-
     try {
         let event = stripe.webhooks.constructEvent(req.rawBody, sig, endpointSecret);
 
@@ -48,17 +46,12 @@ app.use((req, res, next) => {
             Event: event
         }).then(() => {
             res.send('Status 200').end()
-        })
-
-        // Do something with event
-        console.log(req.bodyRaw)
-        console.log(event);
-       
+        });
     }
     catch (err) {
         console.log(err);
         res.status(400).end()
-    }
+    };
 });
 
 function createSession(sessionNumber, amount){
@@ -103,7 +96,6 @@ createSession("/create-session-hundred", 10000)
 createSession("/create-session-hundredfifty", 15000)
 createSession("/create-session-twohundred", 20000)
 
-  
 // Subscriptions aanmaken op basis van URL
 app.get('/analyse/:id',function(req,res)
 {

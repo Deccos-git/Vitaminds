@@ -102,36 +102,30 @@ auth.onAuthStateChanged(User =>{
                   .collection("Gelukstegoed").doc().set({
                       Type: "Minus",
                       Amount: Number(price),
-                      Product: `Workshop: ${titel}`,
+                      Product: `Workshop: <br> ${titel}`,
                       SessionID: idClean,
                       Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
-                  }).then(() => {
-                      arrayOfWorkshopTakers()
-                  })
+                  });
               };
           });
-          console.log(newAmount)
          } else if (newAmount < 0){
-          console.log(newAmount)
           notice.innerHTML = "Je gelukstegoed is te laag om deze workshop te kunnen doen. Klik <u>hier</u> om je gelukstegoed op te hogen."
           notice.addEventListener("click", () => {
               window.open("../gelukstegoed.html", "_self")
-          })
-          
-         }
+          });
+         };
       });
   });
   });
-} else {
-  notice.innerHTML = "Maak een <u>Digimind</u> aan om een workshop te doen."
-  notice.addEventListener("click", () => {
-      window.open("../Register.html", "_self")
-  })
-}
+  } else {
+    notice.innerHTML = "Maak een <u>Digimind</u> aan om een workshop te doen."
+    notice.addEventListener("click", () => {
+        window.open("../Register.html", "_self")
+    });
+  };
 });  
 
 buttonDiv.appendChild(notice)
-buttonDiv.removeChild(buttonWorkshopLandingStripe)
 }; 
 
 function arrayOfWorkshopTakers(){
@@ -162,6 +156,7 @@ function arrayOfWorkshopTakers(){
                         const netPrice = price/100*90 
                         const vitamindsPrice = price/100*10
 
+                        // Earning to coach
                         db.collection("Vitaminders").doc(doc1.id).collection("Earnings").doc().set({
                           Earning: netPrice,
                           Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -170,6 +165,8 @@ function arrayOfWorkshopTakers(){
                           Billed: "No"
                         })
                         .then(() => {
+
+                          // Earning to Vitaminds
                           db.collection("Revenue").doc().set({
                             Earning: vitamindsPrice,
                             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -180,6 +177,8 @@ function arrayOfWorkshopTakers(){
                           })
                         })
                         .then(() => {
+
+                          // Close landing
                           agreementSection.style.display = "flex"
                           workshopLandingPageOuterDiv.style.display = "none"
                         });
@@ -193,15 +192,152 @@ function arrayOfWorkshopTakers(){
   });
 };
 
-
+// Button query
 if(buttonWorkshopLandingStripe != null){
   buttonWorkshopLandingStripe.addEventListener("click", () => {
 
     buttonWorkshopLandingStripe.innerText = "Laden.."
 
       reduceGelukstegoed()
+      arrayOfWorkshopTakers()
   });
 };
+
+// Buy coachgroup
+
+const buyCoachgroupButton = document.getElementById("button-group-landing")
+
+function reduceGelukstegoedCoachgroup(){
+
+  const amountArray = []
+
+  const buttonDiv = document.getElementById("button-div-landing")
+  const notice = document.createElement("p")
+  notice.setAttribute("class", "notice-group-visitor")
+
+auth.onAuthStateChanged(User =>{
+  if(User){
+  db.collection("Vitaminders").doc(User.uid)
+  .collection("Gelukstegoed").get().then(querySnapshot =>{
+      querySnapshot.forEach(doc =>{ 
+
+          let amount = doc.data().Amount
+          const type = doc.data().Type
+
+          if(type === "Minus"){
+              amount *= -1
+
+          amountArray.push(amount)
+
+          } else if (type === "Plus"){
+
+              amountArray.push(amount)
+          };
+      });
+  }).then(() => {
+      db.collection("Chats").where("Type", "==", "Coachgroep")
+      .where("Room", "==", titel)
+      .get().then(querySnapshot => {
+          querySnapshot.forEach(doc1 => {
+
+              const price = doc1.data().Costs
+
+          const sum = amountArray.reduce((pv, cv) => pv + cv, 0);
+
+         newAmount = sum - price
+
+         if(newAmount >= 0){
+          auth.onAuthStateChanged(User =>{
+              if(User){
+                  db.collection("Vitaminders").doc(User.uid)
+                  .collection("Gelukstegoed").doc().set({
+                      Type: "Minus",
+                      Amount: Number(price),
+                      Product: `Coachgroep: ${titel}`,
+                      SessionID: idClean,
+                      Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
+                  });
+              };
+          });
+         } else if (newAmount < 0){
+          notice.innerHTML = "Je gelukstegoed is te laag om aan deze coachgroep mee te kunnen doen. Klik <u>hier</u> om je gelukstegoed op te hogen."
+          notice.addEventListener("click", () => {
+              window.open("../gelukstegoed.html", "_self")
+          });
+         };
+      });
+  });
+  });
+  };
+}); 
+}; 
+
+function arrayOfCoachgroupSignUps(){
+
+  db.collection("Chats").where("Room", "==", titel)
+  .get().then(querySnapshot => {
+  querySnapshot.forEach(doc1 => {
+
+  const price = doc1.data().Costs
+  const coach = doc1.data().Creator
+
+  auth.onAuthStateChanged(User =>{
+      if(User){
+      db.collection("Vitaminders").doc(User.uid)
+      .get().then(doc =>{ 
+
+              const auth = doc.data().Gebruikersnaam
+
+              db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get()
+              .then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                        const netPrice = price/100*90 
+                        const vitamindsPrice = price/100*10
+
+                        // Earning to coach
+                        db.collection("Vitaminders").doc(doc1.id).collection("Earnings").doc().set({
+                          Earning: netPrice,
+                          Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                          Source: `Coachgroep <br> ${titel}`,
+                          Buyer: auth,
+                          Billed: "No"
+                        })
+                        .then(() => {
+
+                          // Earning to Vitaminds
+                          db.collection("Revenue").doc().set({
+                            Earning: vitamindsPrice,
+                            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                            Source: `Coachgroep <br> ${titel}`,
+                            Buyer: auth,
+                            Billed: "No",
+                            Coach: coach
+                          });
+                        });
+                      });
+                  });
+              });
+              };
+          });
+      });
+  });
+  buttonDiv.appendChild(notice)
+}; 
+
+// Button query
+if(buyCoachgroupButton != null){
+  buyCoachgroupButton.addEventListener("click", () => {
+
+    buyCoachgroupButton.innerText = "Laden.."
+
+      reduceGelukstegoedCoachgroup()
+      arrayOfCoachgroepTakers()
+  });
+};
+
+
+
 
 // Create an instance of the Stripe object with your publishable API key
 const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
@@ -223,9 +359,25 @@ const checkoutButtonHundred = document.getElementById("checkout-button-hundred")
 const checkoutButtonHundredfifty = document.getElementById("checkout-button-hundredfifty");
 const checkoutButtonTwohundred = document.getElementById("checkout-button-twohundred");
 
+createSession("/create-session-five", checkoutButtonFive)
+createSession("/create-session-ten", checkoutButtonTen)
+createSession("/create-session-fiveteen", checkoutButtonFiveteen)
+createSession("/create-session-twenty", checkoutButtonTwenty)
+createSession("/create-session-twentyfive", checkoutButtonTwentyfive)
+createSession("/create-session-thirty", checkoutButtonThirty)
+createSession("/create-session-thirtyfive", checkoutButtonThirtyfive)
+createSession("/create-session-fourty", checkoutButtonFourty)
+createSession("/create-session-fifty", checkoutButtonFifty)
+createSession("/create-session-sixty", checkoutButtonSixty)
+createSession("/create-session-seventy", checkoutButtonSeventy)
+createSession("/create-session-eighty", checkoutButtonEighty)
+createSession("/create-session-ninety", checkoutButtonNinety)
+createSession("/create-session-hundred", checkoutButtonHundred)
+createSession("/create-session-hundredfifty", checkoutButtonHundredfifty)
+createSession("/create-session-twohundred", checkoutButtonTwohundred)
+
 function createSession(sessionNumber, buttonProduct){
 
-  if(buttonProduct =! null){
   buttonProduct.addEventListener("click", function () {
 
     buttonProduct.innerText = "Laden"
@@ -274,21 +426,4 @@ function createSession(sessionNumber, buttonProduct){
     });
   });
 };
-};
 
-createSession("/create-session-five", checkoutButtonFive)
-createSession("/create-session-ten", checkoutButtonTen)
-createSession("/create-session-fiveteen", checkoutButtonFiveteen)
-createSession("/create-session-twenty", checkoutButtonTwenty)
-createSession("/create-session-twentyfive", checkoutButtonTwentyfive)
-createSession("/create-session-thirty", checkoutButtonThirty)
-createSession("/create-session-thirtyfive", checkoutButtonThirtyfive)
-createSession("/create-session-fourty", checkoutButtonFourty)
-createSession("/create-session-fifty", checkoutButtonFifty)
-createSession("/create-session-sixty", checkoutButtonSixty)
-createSession("/create-session-seventy", checkoutButtonSeventy)
-createSession("/create-session-eighty", checkoutButtonEighty)
-createSession("/create-session-ninety", checkoutButtonNinety)
-createSession("/create-session-hundred", checkoutButtonHundred)
-createSession("/create-session-hundredfifty", checkoutButtonHundredfifty)
-createSession("/create-session-twohundred", checkoutButtonTwohundred)

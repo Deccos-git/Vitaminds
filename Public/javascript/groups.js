@@ -188,13 +188,9 @@ function becomeMemberOfGroup(buttonLanding,  groupLandingPageOuterDiv,){
                         to: email,
                         cc: "info@vitaminds.nu",
                   message: {
-                  subject: `Je coachgroep heeft een nieuw lid.`,
+                  subject: `Je coachgroep heeft een nieuwe aanmelding.`,
                   html: `Hallo ${naam}, </br></br>
-                        ${authClean} is lid geworden van je coachgroep ${roomClean} op Vitaminds! <br><br>
-                        
-                        Vergeet niet om ${authClean} een maandelijkse factuur te sturen.<br><br>
-
-                        Het emailadres van ${authClean} is ${email}. </br></br>
+                        ${authClean} heeft zich aangemeld voor je coachgroep ${roomClean} op Vitaminds! <br><br>
                   
                         Vriendelijke groet, </br></br>
                         Het Vitaminds Team </br></br>
@@ -228,7 +224,7 @@ function becomeMemberOfGroup(buttonLanding,  groupLandingPageOuterDiv,){
                 const notice = document.createElement("p")
                 notice.setAttribute("class", "notice-group-visitor")
 
-            notice.innerHTML = "Maak een gratis <u>Digimind</u> aan om lid te worden van een groep"
+            notice.innerHTML = "Maak een gratis <u>Digimind</u> aan om je aan te melden voor deze groep"
             notice.addEventListener("click", () => {
                 window.open("../Register.html", "_self")
             })
@@ -259,28 +255,25 @@ function hideLandingIfAuthIsMember(membersArray, groupLandingPageOuterDiv){
     });
 }; 
 
-function groupFactsLanding(memberCount, messageCount, montlyFee, maximumMembersCount, groupType){
+function groupFactsLanding(memberCount, totalCosts, maximumMembersCount, groupType, durationTime){
 
     const numberOfMembersLi = document.createElement("li")
     const maximumMembers = document.createElement("li")
-    const numberOfMessagesLi = document.createElement("li")
-    const costsPerMonth = document.createElement("li")
-
-    numberOfMembersLi.innerText = `Aantal leden: ${memberCount.length}`
-    numberOfMessagesLi.innerText = `Aantal berichten: ${messageCount}`
+    const costs = document.createElement("li")
+    const duration = document.createElement("li")
 
     if(groupType != "Group"){
-        costsPerMonth.innerText = `Kosten per maand: ${montlyFee} euro`
-        maximumMembers.innerText = `Maximum aantal leden: ${maximumMembersCount}`
+        numberOfMembersLi.innerHTML = `<b>Aantal aanmeldingen:</b> ${memberCount.length}`
+        costs.innerHTML = `<b>Kosten:</b> ${totalCosts} euro`
+        maximumMembers.innerHTML = `<b>Aantal deelnemers:</b> ${maximumMembersCount}`
+        duration.innerHTML = `<b>Duur van coachgroep:</b> ${durationTime} maanden`
+
         groupFactsUl.appendChild(maximumMembers)
-        groupFactsUl.appendChild(costsPerMonth)
-    }
-
-
-    if(groupFactsUl != null){
-
-    groupFactsUl.appendChild(numberOfMembersLi)
-    groupFactsUl.appendChild(numberOfMessagesLi)
+        if(groupFactsUl != null){
+            groupFactsUl.appendChild(numberOfMembersLi)
+            };
+        groupFactsUl.appendChild(duration)
+        groupFactsUl.appendChild(costs)
     };
 };
 
@@ -303,7 +296,7 @@ function noticeVisitor(buttonDiv, button){
     const notice = document.createElement("p")
         notice.setAttribute("class", "notice-group-visitor")
 
-    notice.innerText = "Maak een Digimind aan om deel te nemen in een groep"
+    notice.innerText = "Maak een Digimind aan om je aan te melden voor deze groep"
     notice.addEventListener("click", () => {
         window.open("Register.html", "_self")
     })
@@ -344,16 +337,13 @@ function hideLandingModal(typeGroup){
             const price = doc1.data().Costs
             const maxMembers = doc1.data().NumberParticipants
             const groupDescription = doc1.data().Description
-
-            console.log(titel)
-
-            console.log(groupDescription)
+            const duration = doc1.data().GroupLength
 
             groupLandingH1(room1, roomClean, type1)
 
             groupLandingCreatorInformation(creator, type1)
 
-            groupFactsLanding(members, messages, price, maxMembers, type1)
+            groupFactsLanding(members, price, maxMembers, type1, duration)
     
             hideLandingIfAuthIsMember(members, groupLandingPageOuterDiv)
     
@@ -484,9 +474,8 @@ function hideLandingModal(typeGroup){
 
     const agreementButton = document.getElementById("visitCoachgroup")
 
-function coachgroupAgreementTitle(welkomMessage){
+function coachgroupAgreementTitle(){
     const title = document.getElementById("coachgroup-member-agreement-title")
-    const goalAndAmountExercises = document.getElementById("goal-coachgroup")
     
     if (title != null){
     
@@ -498,7 +487,6 @@ function coachgroupAgreementTitle(welkomMessage){
             const auth = doc.data().GebruikersnaamClean
     
     title.innerText = `Welkom bij mijn coachgroep, ${auth}`
-    goalAndAmountExercises.innerText = welkomMessage
     
                     });
                 };
@@ -548,13 +536,11 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
         const auth = doc.data().Creater
         const description = doc.data().Description
         const numberParticipants = doc.data().NumberParticipants
-        const startNumber = doc.data().StartNumber
         const coverPhoto = doc.data().CoverPhoto
         const costs = doc.data().Costs
         const members = doc.data().Members
-        const data = doc.data().Data
-        const sessionLenght =doc.data().SessionLenght
         const type = doc.data().Type
+        const duration = doc.data().GroupLength
 
         const DOM = document.getElementById("coachgroups")
 
@@ -575,7 +561,7 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
         const memberCount = document.createElement("p")
         const startNumberP = document.createElement("p")
         const dataP = document.createElement("p")
-        const sessionLenghtP = document.createElement("p")
+        const groupLenghtP = document.createElement("p")
         const costsP = document.createElement("p")
         const bottomDiv = document.createElement("div")
             bottomDiv.setAttribute("class", "bottom-div")
@@ -622,18 +608,13 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
                 });
             });
 
-            numberParticipantsP.innerHTML = `<b>Max. leden:</b> ${numberParticipants}`
-            memberCount.innerHTML = `<b>Huidig aantal leden:</b> ${members.length}`
-            costsP.innerHTML = `<b>Kosten per sessie:</b> ${costs} euro`
-            startNumberP.innerHTML = `<b>Coachgroep begint bij:</b> ${startNumber} leden`
-            dataP.innerHTML = `<b>Moment waarop groep bijeenkomt:</b> Iedere ${data}`
-            sessionLenghtP.innerHTML = `<b>De bijeenkomsten duren:</b> ${sessionLenght} minuten`
-            leaveGroup.innerHTML = "Groep verlaten"
+            numberParticipantsP.innerHTML = `<b>Aantal deelnemers:</b> ${numberParticipants}`
+            memberCount.innerHTML = `<b>Aantal aanmeldingen:</b> ${members.length}`
+            groupLenghtP.innerHTML = `<b>Duur van de coachgroep:</b> ${duration} maanden`
+            costsP.innerHTML = `<b>Kosten:</b> ${costs} euro`
+            leaveGroup.innerHTML = "Aanmelding annuleren"
 
-            // coachgroup agreement
-
-            coachgroupAgreementTitle(`${description} Ik stuur je iedere week een nieuwe opdracht.`)
-
+            // Coachgroup agreement
             db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
                 querySnapshot.forEach(doc1 => {
 
@@ -658,10 +639,10 @@ db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapsho
             bottomDiv.appendChild(descriptionP)
             groupInnerDiv.appendChild(metaDiv)
             metaDiv.appendChild(dataP)
-            metaDiv.appendChild(sessionLenghtP)
             metaDiv.appendChild(numberParticipantsP)
             metaDiv.appendChild(startNumberP)
             metaDiv.appendChild(memberCount)
+            metaDiv.appendChild(groupLenghtP)
             metaDiv.appendChild(costsP)
             groupInnerDiv.appendChild(buttonDiv)
             buttonDiv.appendChild(groupButton)
@@ -777,11 +758,11 @@ db.collection("Chats").where("Type", "==", "GroupForCoaches").get().then(querySn
             memberCount.innerHTML = `<b>Huidig aantal leden:</b> ${members.length}`
             costsP.innerHTML = `<b>Kosten per maand:</b> ${costs} euro <br> Gratis voor Vitaminds coaches`
             startNumberP.innerHTML = `<b>Coachgroep begint bij:</b> ${startNumber} leden`
-            leaveGroup.innerHTML = "Groep verlaten"
+            leaveGroup.innerHTML = "Aanmelding annuleren"
 
             // coachgroup agreement
 
-            coachgroupAgreementTitle(`${description} Ik stuur je iedere week een nieuwe opdracht.`)
+            coachgroupAgreementTitle()
 
             db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
                 querySnapshot.forEach(doc1 => {
@@ -1021,7 +1002,7 @@ function memberPracticeGroups(elem){
     
             const auth = doc.data().Gebruikersnaam
      if(a.includes(auth)){
-            b.innerText = "Je bent lid"
+            b.innerText = "Je bent aangemeld"
             b.setAttribute("onclick", "null()")
 
                 };
@@ -1035,8 +1016,8 @@ function leaveTheGroup(roomTitle){
     const button = document.getElementById("group-button")
     const buttonThemeGroup = document.getElementById("button-theme-group")
 
-    button.innerText = "Groep is verlaten"
-    buttonThemeGroup.innerText = "Groep is verlaten"
+    button.innerText = "Aanmelding is geannuleerd"
+    buttonThemeGroup.innerText = "Aanmelding is geannuleerd"
 
     auth.onAuthStateChanged(User =>{
         if(User){
@@ -1637,9 +1618,9 @@ function startCoachgroupBuilder(){
     window.open("coachgroup-builder.html", "_self");
 }
 
-function startPracticegroupBuilder(){
-    window.open("practicegroup-builder.html", "_self");
-}
+// function startPracticegroupBuilder(){
+//     window.open("practicegroup-builder.html", "_self");
+// }
 
 // Group goal
 
@@ -1809,9 +1790,7 @@ function saveCoachgroup(){
     const description = document.getElementById("coachgroup-description").value
     const numberParticipants = document.getElementById("coachgroup-number-participants").value
     const costs = document.getElementById("coachgroup-costs").value
-    const startNumber = document.getElementById("coachgroup-start-number").value
-    const data = document.getElementById("coachgroup-data-gatherings").value
-    const sessionLenght = document.getElementById("coachgroup-lenght-sessions").value
+    const groupLength = document.getElementById("coachgroup-length").value
 
     // Group goal
     const groupGoalSelect = document.getElementById("create-coachgroup-goal-select")
@@ -1827,13 +1806,10 @@ function saveCoachgroup(){
         Description: description,
         NumberParticipants: numberParticipants,
         Costs: costs,
-        StartNumber: startNumber,
+        GroupLength: groupLength,
         Members: firebase.firestore.FieldValue.arrayUnion(auth),
         Goal: option,
-        Data: data,
         Online: [],
-        SessionLenght: sessionLenght,
-        Messages: 0,
         Type: "Coachgroup", 
         CoverPhoto: coverPhoto
                 }).then(() => {
@@ -1857,4 +1833,4 @@ function saveCoachgroup(){
 };
 
 
-// F
+
