@@ -105,6 +105,12 @@ createSession("/create-session-twohundred", 20000)
 
   
 // Subscriptions aanmaken op basis van URL
+app.get('/analyse/:id',function(req,res)
+{
+    res.sendFile('analytics.html', { root: __dirname });
+});
+
+// Subscriptions aanmaken op basis van URL
 app.get('/subscription/:id',function(req,res)
 {
     res.sendFile('subscriptions.html', { root: __dirname });

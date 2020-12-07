@@ -480,6 +480,12 @@ iframe{
     display: flex;
 }
 
+#vitaminds-cut-notice{
+    font-size: 14px;
+    font-weight: bold;
+    color: #cf6e13;
+}
+
 #create-workshop-section input{
     width: 60%;
 }

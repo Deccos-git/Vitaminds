@@ -563,15 +563,14 @@ auth.onAuthStateChanged(User =>{
 
                         const usertype = doc.data().Usertype
                         const intervisieMenu = document.getElementById("intervisie-tab")
-                        const intervisieBar = document.getElementById("profile-notifications-intervisie")
+                        const analytics = document.getElementById("profile-analytics")
 
                         if(usertype != "Coach"){
                                 intervisieMenu.style.display = "none"  
-                                intervisieBar.style.display = "none"   
-                        }
-
-                })
-        }
+                                analytics.style.display = "none" 
+                        };
+                });
+        };
 });
 
 
@@ -588,10 +587,7 @@ auth.onAuthStateChanged(User =>{
                 const notifications = document.getElementById("profile-notifications")
                 const activeDiv = document.getElementsByClassName("active-div")
                 const changePhoto = document.getElementById("profile-picture-outer-div")
-                const intervisieMenu = document.getElementById("intervisie-tab")
-                const themeOverview = document.getElementById("profile-notifications-theme-overview")
-                const intervisieBar = document.getElementById("profile-notifications-intervisie")
-             
+                const infoBar = document.getElementById("info-bar")
                     const activeDivArray = Array.from(activeDiv)
                     activeDivArray.forEach(active => {
                         active.style.display = "none"
@@ -600,9 +596,7 @@ auth.onAuthStateChanged(User =>{
                     changePhoto.style.display = "none"
                     nieuweKarakterTocht.style.display = "none"
                     notifications.style.display = "none"
-                    intervisieMenu.style.display = "none"
-                    themeOverview.style.display = "none"
-                    intervisieBar.style.display = "none"     
+                    infoBar.style.display = "none"  
         }
 });
 
@@ -640,6 +634,7 @@ auth.onAuthStateChanged(User =>{
                 const activeDiv = document.getElementsByClassName("active-div")
                 const changePhoto = document.getElementById("profile-picture-outer-div")
                 const hapinessChart = document.getElementById("happiness-chart-outer-div")
+                const infoBar = document.getElementById("info-bar")
         
                 if(naam != coachNaam){
                        
@@ -660,6 +655,8 @@ auth.onAuthStateChanged(User =>{
                 if(naam === coachNaam){
                         hapinessChart.style.display = "flex"
                 }
+
+                infoBar.style.display = "none"  
                 
                 
         })
@@ -2574,7 +2571,8 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
 
 const activeGoalsDiv = document.getElementById("activated-goals")
 
-db.collectionGroup("Levensvragen").where("Levenslessen", "array-contains", "Tool geactiveerd: Check in").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+db.collectionGroup("Levensvragen").where("Levenslessen", "array-contains", "Tool geactiveerd: Check in")
+.where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
                         querySnapshot.forEach(doc => {
 
                                 const levensvragen = doc.data().LevensvraagClean
@@ -2643,6 +2641,36 @@ function subscriptionPage(){
         window.open("../subscription/" + auth, "_self")
 
                         });
+                };
+        });
+};
+
+// Analytics
+function analyticsPage(){
+
+        auth.onAuthStateChanged(User =>{
+                if (User){
+                    let docRef = db.collection("Vitaminders").doc(User.uid);
+                        docRef.get().then(function(doc){
+                            const auth = doc.data().Gebruikersnaam;
+
+        window.open("../analyse/" + auth, "_self")
+
+                        });
+                };
+        });
+};
+
+// Profile clicks
+
+window.onload = () => {
+
+        auth.onAuthStateChanged(User =>{
+                if (User){
+                        db.collection("Vitaminders").doc(User.uid)
+                        .update({
+                                ProfileViews: firebase.firestore.FieldValue.increment(1)
+                        })
                 };
         });
 };

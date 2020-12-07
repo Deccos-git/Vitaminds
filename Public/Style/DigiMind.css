@@ -319,6 +319,19 @@
     cursor: pointer;
 }
 
+#profile-analytics{
+    display: flex;
+    justify-content: flex-end;
+    margin: 5px 15px 0px 15px;
+}
+
+#profile-analytics p{
+    font-size: 14px;
+    color: #122b46;
+    cursor: pointer;
+}
+
+
 #notifications-profile-icon{
     margin: 16px 5px 0px 0px;
     cursor: pointer;

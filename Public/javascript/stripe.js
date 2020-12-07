@@ -141,6 +141,7 @@ function arrayOfWorkshopTakers(){
   querySnapshot.forEach(doc1 => {
 
   const price = doc1.data().Price
+  const coach = doc1.data().Coach
 
   auth.onAuthStateChanged(User =>{
       if(User){
@@ -151,11 +152,41 @@ function arrayOfWorkshopTakers(){
 
               db.collection("Workshops").doc(doc1.id).update({
                   Takers: firebase.firestore.FieldValue.arrayUnion(auth)
-              }).then(() => {
-                      agreementSection.style.display = "flex"
-                      workshopLandingPageOuterDiv.style.display = "none"
+              })
+              .then(() => {
+
+              db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get()
+              .then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                        const netPrice = price/100*90 
+                        const vitamindsPrice = price/100*10
+
+                        db.collection("Vitaminders").doc(doc1.id).collection("Earnings").doc().set({
+                          Earning: netPrice,
+                          Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                          Source: `Workshop <br> ${titel}`,
+                          Buyer: auth,
+                          Billed: "No"
+                        })
+                        .then(() => {
+                          db.collection("Revenue").doc().set({
+                            Earning: vitamindsPrice,
+                            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                            Source: `Workshop <br> ${titel}`,
+                            Buyer: auth,
+                            Billed: "No",
+                            Coach: coach
+                          })
+                        })
+                        .then(() => {
+                          agreementSection.style.display = "flex"
+                          workshopLandingPageOuterDiv.style.display = "none"
+                        });
                       });
                   });
+                });
+              });
               };
           });
       });
@@ -165,6 +196,8 @@ function arrayOfWorkshopTakers(){
 
 if(buttonWorkshopLandingStripe != null){
   buttonWorkshopLandingStripe.addEventListener("click", () => {
+
+    buttonWorkshopLandingStripe.innerText = "Laden.."
 
       reduceGelukstegoed()
   });

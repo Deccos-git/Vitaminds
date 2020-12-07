@@ -165,8 +165,19 @@ function openWorkshop(elem){
 
     divTitle = elem.parentElement.previousElementSibling.previousElementSibling.innerText
 
-    window.open("../Workshops/" + divTitle + ".html", "_self")
+    db.collection("Workshops").where("Status", "==", "Public")
+    .where("WorkshopTitle", "==", divTitle)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
 
+            db.collection("Workshops").doc(doc.id).update({
+                Views: firebase.firestore.FieldValue.increment(1)
+            })
+            .then(() => {
+                window.open("../Workshops/" + divTitle + ".html", "_self")
+            });
+        });
+    });
 };
 
 //Hide make a workshop if no coach/visitor

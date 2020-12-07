@@ -12,7 +12,6 @@ function overviewOfPlusMinus(timestampAction, productTitel, productPrice){
     const productTitle = document.createElement("p")
     const price = document.createElement("p")
 
-
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     date.innerHTML = timestampAction.toDate().toLocaleDateString("nl-NL", options);
     productTitle.innerText = productTitel
