@@ -58,21 +58,6 @@
     cursor: pointer;
 }
 
-#register-notice{
-    padding: 0px 0px 0px 0px;
-    display: none; /* Hidden by default */
-    flex-direction: column;
-    position: fixed; /* Stay in place */
-    z-index: 4; /* Sit on top */
-    top: 0;
-    width: 100%;
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    align-items: center;
-    text-align: center;
-    background-color: #fff;
-}
-
 #register-notice img{
     height: 300px;
 }
@@ -98,6 +83,14 @@
 #link-coach-account p{
     font-size: 13px;
     margin: 5px;
+}
+
+#succes-questions img{
+    height: 50px;
+}
+
+#succes-questions h3{
+    font-size: 18px;
 }
 
 @media only screen and (max-width: 938px){

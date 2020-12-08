@@ -96,7 +96,7 @@ createSession("/create-session-hundred", 10000)
 createSession("/create-session-hundredfifty", 15000)
 createSession("/create-session-twohundred", 20000)
 
-// Subscriptions aanmaken op basis van URL
+// Analytics aanmaken op basis van URL
 app.get('/analyse/:id',function(req,res)
 {
     res.sendFile('analytics.html', { root: __dirname });
@@ -111,7 +111,7 @@ app.get('/subscription/:id',function(req,res)
 // Group aanmaken op basis van URL
 app.get('/Group/:id',function(req,res)
 {
-    res.sendFile('group.html', { root: __dirname });
+    res.sendFile('coachgroup.html', { root: __dirname });
 });
 
 // Chat aanmaken op basis van URL

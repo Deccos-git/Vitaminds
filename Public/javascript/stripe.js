@@ -105,7 +105,10 @@ auth.onAuthStateChanged(User =>{
                       Product: `Workshop: <br> ${titel}`,
                       SessionID: idClean,
                       Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
-                  });
+                  })
+                  .then(() => {
+                    arrayOfWorkshopTakers()
+                  })
               };
           });
          } else if (newAmount < 0){
@@ -179,7 +182,6 @@ function arrayOfWorkshopTakers(){
                         .then(() => {
 
                           // Close landing
-                          agreementSection.style.display = "flex"
                           workshopLandingPageOuterDiv.style.display = "none"
                         });
                       });
@@ -199,19 +201,95 @@ if(buttonWorkshopLandingStripe != null){
     buttonWorkshopLandingStripe.innerText = "Laden.."
 
       reduceGelukstegoed()
-      arrayOfWorkshopTakers()
   });
 };
 
 // Buy coachgroup
+const buyCoachgroupButton = document.getElementById("button-div-landing")
 
-const buyCoachgroupButton = document.getElementById("button-group-landing")
+function storeMemberInDatabase(docId){
+  auth.onAuthStateChanged(User =>{
+    if(User){
+    db.collection("Vitaminders").doc(User.uid).get()
+    .then(doc => {
+
+      const auth = doc.data().Gebruikersnaam
+
+      db.collection("Coachgroups").doc(docId).update({
+        Members: firebase.firestore.FieldValue.arrayUnion(auth)
+      });
+    });
+  };
+});
+};
+
+function sendEmailbyNewMember(){
+  auth.onAuthStateChanged(User =>{
+    if(User){
+      const userRef = db.collection("Vitaminders").doc(User.uid);
+      userRef.get().then(function(doc) {
+
+            const auth = doc.data().Gebruikersnaam
+            const authClean = doc.data().GebruikersnaamClean
+
+db.collection("Coachgroups").where("Room", "==", titel).get().then(querySnapshot => {
+    querySnapshot.forEach(doc1 => {
+
+        const type = doc1.data().Type
+        const creator = doc1.data().Creater
+        const roomClean = doc1.data().RoomClean
+
+            // Send Email
+            db.collection("Vitaminders").where("Gebruikersnaam", "==", creator)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc2 => {
+
+                    const email = doc2.data().Email
+                    const naam = doc2.data().GebruikersnaamClean
+
+            db.collection("Mail").doc().set({
+                to: email,
+                cc: "info@vitaminds.nu",
+          message: {
+          subject: `Je coachgroep heeft een nieuwe aanmelding.`,
+          html: `Hallo ${naam}, </br></br>
+                ${authClean} heeft zich aangemeld voor je coachgroep ${roomClean} op Vitaminds! <br><br>
+          
+                Vriendelijke groet, </br></br>
+                Het Vitaminds Team </br></br>
+                <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+          Gebruikersnaam: naam,
+          Emailadres: email,
+          Type: "New coachgroep member"
+          }        
+          })  
+        });
+    });
+                });
+            });
+        });
+    } else {
+
+        const buttonDiv = document.getElementById("button-div-landing")
+
+        const notice = document.createElement("p")
+        notice.setAttribute("class", "notice-group-visitor")
+
+    notice.innerHTML = "Maak een gratis <u>Digimind</u> aan om je aan te melden voor deze groep"
+    notice.addEventListener("click", () => {
+        window.open("../Register.html", "_self")
+    });
+
+    buttonDiv.appendChild(notice)
+
+        };
+    });
+}
 
 function reduceGelukstegoedCoachgroup(){
 
   const amountArray = []
 
-  const buttonDiv = document.getElementById("button-div-landing")
   const notice = document.createElement("p")
   notice.setAttribute("class", "notice-group-visitor")
 
@@ -224,6 +302,8 @@ auth.onAuthStateChanged(User =>{
           let amount = doc.data().Amount
           const type = doc.data().Type
 
+          console.log(amount)
+
           if(type === "Minus"){
               amount *= -1
 
@@ -233,9 +313,15 @@ auth.onAuthStateChanged(User =>{
 
               amountArray.push(amount)
           };
+
+          console.log(amountArray)
       });
   }).then(() => {
-      db.collection("Chats").where("Type", "==", "Coachgroep")
+
+    const agreementModal = document.getElementById("coachgroup-agreement")
+    const landingModal = document.getElementById("group-landing-page")
+
+      db.collection("Coachgroups")
       .where("Room", "==", titel)
       .get().then(querySnapshot => {
           querySnapshot.forEach(doc1 => {
@@ -245,6 +331,8 @@ auth.onAuthStateChanged(User =>{
           const sum = amountArray.reduce((pv, cv) => pv + cv, 0);
 
          newAmount = sum - price
+
+         console.log(newAmount)
 
          if(newAmount >= 0){
           auth.onAuthStateChanged(User =>{
@@ -256,7 +344,14 @@ auth.onAuthStateChanged(User =>{
                       Product: `Coachgroep: ${titel}`,
                       SessionID: idClean,
                       Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
-                  });
+                  })
+                  .then(() => {
+                    agreementModal.style.display = "flex"
+                    landingModal.style.display = "none"
+                    arrayOfCoachgroupSignUps()
+                    storeMemberInDatabase(doc1.id)
+                    sendEmailbyNewMember()
+                  })
               };
           });
          } else if (newAmount < 0){
@@ -268,18 +363,24 @@ auth.onAuthStateChanged(User =>{
       });
   });
   });
-  };
+  } else {
+    buyCoachgroupButton.innerText = "Maak een Digimind aan om je aan te melden voor deze groep"
+    buyCoachgroupButton.addEventListener("click", () => {
+        window.open("../Register.html", "_self")
+    })
+  }
 }); 
+buyCoachgroupButton.appendChild(notice)
 }; 
 
 function arrayOfCoachgroupSignUps(){
 
-  db.collection("Chats").where("Room", "==", titel)
+  db.collection("Coachgroups").where("Room", "==", titel)
   .get().then(querySnapshot => {
   querySnapshot.forEach(doc1 => {
 
   const price = doc1.data().Costs
-  const coach = doc1.data().Creator
+  const coach = doc1.data().Creater
 
   auth.onAuthStateChanged(User =>{
       if(User){
@@ -294,6 +395,8 @@ function arrayOfCoachgroupSignUps(){
 
                         const netPrice = price/100*90 
                         const vitamindsPrice = price/100*10
+
+                        console.log(vitamindsPrice)
 
                         // Earning to coach
                         db.collection("Vitaminders").doc(doc1.id).collection("Earnings").doc().set({
@@ -322,7 +425,6 @@ function arrayOfCoachgroupSignUps(){
           });
       });
   });
-  buttonDiv.appendChild(notice)
 }; 
 
 // Button query
@@ -332,7 +434,6 @@ if(buyCoachgroupButton != null){
     buyCoachgroupButton.innerText = "Laden.."
 
       reduceGelukstegoedCoachgroup()
-      arrayOfCoachgroepTakers()
   });
 };
 

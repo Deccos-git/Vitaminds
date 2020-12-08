@@ -556,31 +556,7 @@ function newMessageInOverview(docID, authName, chatsDivDOM, newMessage){
     })
 });
 };
-
-function groupsOverviewTitle(groupType, titleURL, titleURLClean, chatDOM, photoDOM, groupDOM){
-    if(groupType === "Group"){
-        chatDOM.innerText = titleURL
-        photoDOM.src = "images/groups-icon.jpg"
-        groupDOM.innerText = "Themagroep"
-    } else if (groupType === "Practicegroup"){
-        chatDOM.innerText = titleURLClean
-        photoDOM.src = "images/practicegroup-icon.png"
-        groupDOM.innerText = "Oefengroep"
-    } else if ( groupType === "Coachgroup"){
-        chatDOM.innerText = titleURLClean
-        photoDOM.src = "images/coachgroup-icon.png"
-        groupDOM.innerText = "Coachgroep"
-    } else if(groupType === "GroupForCoaches"){
-        chatDOM.innerText = titleURLClean
-        photoDOM.src = "images/groups-icon.jpg"
-        groupDOM.innerText = "Groep voor coaches"
-        }
-    else if(groupType === "CoachesCooperate"){
-        chatDOM.innerText = titleURL
-        photoDOM.src = "images/groups-icon.jpg"
-        groupDOM.innerText = "Vitaminds coaches huiskamer"
-        }
-}; 
+ 
 
 function updateReadList(docID, authName, titleURL){
     const chatRef = db.collection("Chats")

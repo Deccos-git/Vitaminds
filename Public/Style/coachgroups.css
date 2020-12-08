@@ -53,6 +53,26 @@
     display: flex;
 }
 
+#coachgroup-agreement{
+    padding: 0px 0px 0px 0px;
+    position: fixed; /* Stay in place */
+    z-index: 4; /* Sit on top */
+    top: 0;
+    width: 100%;
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    text-align: center;
+    background-color: #fff;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+}
+
+#button-div-landing{
+    cursor: pointer;
+}
+
 #minimum-likes-notice{
     display: none;
     margin: 15px;

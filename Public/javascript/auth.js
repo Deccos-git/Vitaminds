@@ -521,6 +521,8 @@ const button = document.getElementById("register-button")
 if(button != null){
 
     button.addEventListener("click", () => {
+
+      const notice = document.getElementById("register-notice")
   
   const email = document.getElementById('register-email').value;
   const passwordVM = document.getElementById('register-wachtwoord').value;
@@ -566,6 +568,14 @@ if(button != null){
       Levensvragen: [],
       Profielfoto: "https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/dummy-profile-photo.jpeg?alt=media&token=229cf7eb-b7df-4815-9b33-ebcdc614bd25"
   }).then(() => {
+    db.collection('Vitaminders').doc(cred.user.uid).collection("Gelukstegoed").doc().set({
+      Amount: 0,
+      PaymentId: "none",
+      Product: "Account created",
+      Type: "Plus",
+      Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
+    })
+  .then(() => {
     db.collection("Mail").doc().set({
       to: [email],
       cc: "info@vitaminds.nu",
@@ -585,9 +595,9 @@ Type: "Vitaminders"
 }        
 });
   })
+})
 .then(() => {
-            const notice = document.getElementById("register-notice")
-            notice.style.display = "block"
+            notice.style.display = "flex"
         })
     }).catch((err) => {
       alert(err)
@@ -604,7 +614,7 @@ function registerNoticeOK(){
   }).catch(function(error) {
     console.log(error)
   })
-}
+};
 
 //Register CH
 
@@ -621,9 +631,10 @@ function registerNoticeOK(){
 
     })
   
-async function registerCoach(){
+function registerCoach(){
 
   const button = document.getElementById("register-button-coach")
+  const successModal = document.getElementById("success-modal")
   
   if(button != null){
   button.addEventListener("click", () => {
@@ -683,6 +694,14 @@ async function registerCoach(){
       ID: cred.user.uid,
       Levensvragen: []
     })
+    .then(() => {
+      db.collection('Vitaminders').doc(cred.user.uid).collection("Gelukstegoed").doc().set({
+        Amount: 0,
+        PaymentId: "none",
+        Product: "Account created",
+        Type: "Plus",
+        Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
+      })
  .then(() => {
     db.collection("Mail").doc().set({
       to: [email],
@@ -705,14 +724,13 @@ Type: "Coach"
 }
           
 });
-
- }) 
+ });
+ })
  .then(() => {
-  setTimeout(() => 
-  { window.open("succes.html", "_self"); 
-}, 3000);
-  })
 
+  successModal.style.display = "flex"
+    
+  });
         }).catch((err) => {
           alert(err)
         })
@@ -733,7 +751,7 @@ if(code.style.display = "none"){
 
 
 // Succes pagina
-async function getAdminUsernameAndProfilePicture(){
+!function getAdminUsernameAndProfilePicture(){
 
   const succesQuestion = document.getElementById("succes-questions")
   
@@ -745,7 +763,7 @@ const photoImg = document.createElement("img")
 const adminName = document.createElement("h3")
 const adminContactMe = document.createElement("p")
 
- await db.collection("Vitaminders")
+ db.collection("Vitaminders")
 .where("GebruikersnaamClean", "==", "Gijs van Beusekom")
 .get()
 .then(querySnapshot => {
@@ -775,7 +793,15 @@ const adminContactMe = document.createElement("p")
     photoDiv.appendChild(photoImg)
     photoDiv.appendChild(adminName)
   };
-}; getAdminUsernameAndProfilePicture()
+}();
+
+function successNoticeOK(){
+  firebase.auth().signOut().then(function() {
+    window.location.href = "/index.html"
+  }).catch(function(error) {
+    console.log(error)
+  })
+}
 
 
 // Tickets
