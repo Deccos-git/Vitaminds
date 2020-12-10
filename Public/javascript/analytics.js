@@ -196,3 +196,30 @@
             });
         };
     });
+
+
+// Admin
+
+!function flaggedAnalytics(){
+    const flaggedCard = document.getElementById("analytics-card-flagged")
+    const ul = document.createElement("ul")
+
+    db.collectionGroup("Levenslessen")
+    .where("Status", "==", "Under review")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const username = doc.data().Gebruikersnaam
+
+            console.log(username)
+
+            const li = document.createElement("li")
+
+            li.innerText = username
+
+            flaggedCard.appendChild(ul)
+            ul.appendChild(li)
+
+        });
+    });
+}();

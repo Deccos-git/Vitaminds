@@ -513,21 +513,25 @@ db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(query
         //Paragraphs in article summary
         paragraphs.forEach(paragraph => {
 
-            const p = document.createElement("p")
-                p.setAttribute("class", "menu-paragraph-item")
+            const menuItem = document.createElement("p")
+                menuItem.setAttribute("class", "menu-paragraph-item")
 
-            p.innerHTML = paragraph
+            menuItem.innerHTML = paragraph
 
-            paragraphListLevensvraag.appendChild(p)
+            paragraphListLevensvraag.appendChild(menuItem)
 
-            const pTitle = p.innerText
+            const menuItemTitle = menuItem.innerText
 
-            p.style.display = "none"
+            console.log(menuItemTitle)
 
-            db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragraph", "==", pTitle).orderBy("Timestamp", "asc").get().then(querySnapshot => {
+            menuItem.style.display = "none"
+
+            db.collection("Insights").where("LevensvraagArtikel", "==", titel)
+            .where("Paragraph", "==", menuItemTitle).orderBy("Timestamp", "asc")
+            .get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
             
-                    p.style.display = "block"
+                    menuItem.style.display = "block"
                 })
             });
         });

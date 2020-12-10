@@ -322,7 +322,7 @@ auth.onAuthStateChanged(User =>{
     };
 });
 
-// Get chats and groups of auth
+// Get chats of auth
 
         // Chat functions
 function getProfilePicOfChat(pic, picDOMobject){
@@ -333,9 +333,8 @@ function getProfilePicOfChat(pic, picDOMobject){
     };
 };
 
-function setInnerTextOfDOMobjects(chat, grouptype, user, typeOfGroup){
+function setInnerTextOfDOMobjects(chat, user){
     chat.innerText = user
-    grouptype.innerText = typeOfGroup
   };
 
 function updateOnlineStatus(docID, authName){
@@ -629,11 +628,7 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
 
         const type = doc1.data().Type
         const title = doc1.data().Room
-        const titleClean = doc1.data().RoomClean
-        const members = doc1.data().Members
-        const creator = doc1.data().Creater
         const online = doc1.data().Online
-        const messages = doc1.data().Messages
 
         const chatsDiv = document.createElement("div")
             chatsDiv.setAttribute("class", "chats-div")
@@ -643,10 +638,7 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
         const photoImg = document.createElement("img")
         const groupType = document.createElement("p")
             groupType.setAttribute("class", "grouptype-description")
-
-        // CHATS
-        if(type === "Chat"){
-
+            
         const userArray = title.split("_")
 
         if(userArray.includes(auth)){
@@ -697,47 +689,7 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
                                 });
                             };    
                         });
-                    };
-
-                // GROUPS
-                } else if(type === "Group" || type === "GroupForCoaches" || type === "Coachgroup"){
-                
-                  if (members.includes(auth)){
-                
-                    groupsOverviewTitle(type, title, titleClean, chatsP, photoImg, groupType)  
-                                    
-                    // Open group
-                    chatsDiv.addEventListener("click", () => {
-
-                        updateOnlineStatus(doc1.id, auth)
-                    
-                        updateReadList(doc1.id, auth, title)
-
-                    });
-
-                    // Update new status of message if all members have read the message
-                    
-                    updateNewStatusOfMessageGroup(auth)
-
-                    // Update status of message based on online/offline in room
-                    updateOnlineStatusFromPagesLeaveGroup(auth)
-
-                    // Update status of message based on online/offline in room
-                    updateReadStatusBasedOnOnline(online, auth, doc1.id)
-
-                DOMchats.appendChild(chatsDiv)
-                chatsDiv.appendChild(photoDiv)
-                photoDiv.appendChild(photoImg)
-                photoDiv.appendChild(groupType)
-                chatsDiv.appendChild(chatsP)
-
-                    // New messages
-                    const newMessagesPGroups = document.createElement("p")
-                        newMessagesPGroups.setAttribute("class", "new-message-count-chats")
-                        
-                    newMessageInOverview(doc1.id, auth, chatsDiv, newMessagesPGroups) 
-                    };                
-                };
+                    };              
             });
         });
       });

@@ -259,17 +259,13 @@
     margin: 15px;
 }
 
-#coach-subscriptions{
+#coach-subscriptions {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: url(/images/bannerCTA.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    color: white;
+    background-color: whitesmoke;
     width: 100%;
-    margin-bottom: 100px;
+    padding-bottom: 100px;
 }
 
 #banner-register-coach{
@@ -384,8 +380,17 @@
 
 .subscription-colom h4{
     align-self: center;
-    font-size: 20px;
-    color: white;
+    font-size: 24px;
+    color: #cf6e13;
+    margin: 0px;
+}
+
+.become-member-button{
+    margin-top: 30px;
+}
+
+.feautures-div li{
+    list-style-image: url('/images/UL-icon.png');
 }
 
 #monthly-cancelation{
@@ -502,16 +507,20 @@
     margin: 50px 0px 0px 0px;
 }
 
-#price-div{
+.price-div{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#price-div h6{
-    margin-top: 0px;
+.price-div h6{
+    margin: 10px 0px 0px 0px;
     color: #cf6e13;
     font-size: 18px;
+}
+
+.subscription-outer-div{
+    margin-top: 60px;
 }
 
 #choice-subscription{

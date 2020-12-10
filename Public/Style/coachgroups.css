@@ -28,7 +28,40 @@
 
 #coachgroup-builder-div{
     display: none;
-    height: 350px;
+    height: 400px;
+}
+
+#upgrade-notice{
+    cursor: pointer;
+}
+
+.feautures-div li{
+    list-style-image: url('/images/UL-icon.png');
+}
+
+.subscription-outer-div h2{
+    margin: 50px 0px 30px 0px;
+}
+
+#monthly-cancelation{
+    font-size: 16px;
+    margin-bottom: 35px;
+}
+
+#price-div-premium h4{
+    margin-bottom: 0px;
+    font-size: 18px;
+}
+
+#price-div-premium h6{
+    margin: 10px 10px;
+}
+
+#price-div-premium{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
 }
 
 .groups-outer-div{
@@ -170,6 +203,20 @@
 
 .coachgroup-builder-input-div{
     display: flex;
+}
+
+#upgrade-account-modal{
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    align-items: center;
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: white; /* Fallback color */
 }
 
 

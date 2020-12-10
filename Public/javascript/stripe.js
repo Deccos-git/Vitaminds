@@ -62,7 +62,7 @@ function reduceGelukstegoed(){
 
   const amountArray = []
 
-  const buttonDiv = document.getElementById("button-div-landing")
+  const buttonDivLanding = document.getElementById("button-div-landing")
   const notice = document.createElement("p")
   notice.setAttribute("class", "notice-group-visitor")
 
@@ -74,6 +74,8 @@ auth.onAuthStateChanged(User =>{
 
           let amount = doc.data().Amount
           const type = doc.data().Type
+
+          console.log(amount)
 
           if(type === "Minus"){
               amount *= -1
@@ -95,6 +97,8 @@ auth.onAuthStateChanged(User =>{
 
          newAmount = sum - price
 
+         console.log(newAmount)
+
          if(newAmount >= 0){
           auth.onAuthStateChanged(User =>{
               if(User){
@@ -112,10 +116,13 @@ auth.onAuthStateChanged(User =>{
               };
           });
          } else if (newAmount < 0){
+
+          console.log("No money")
           notice.innerHTML = "Je gelukstegoed is te laag om deze workshop te kunnen doen. Klik <u>hier</u> om je gelukstegoed op te hogen."
           notice.addEventListener("click", () => {
               window.open("../gelukstegoed.html", "_self")
           });
+          buttonDivLanding.appendChild(notice)
          };
       });
   });
@@ -125,10 +132,11 @@ auth.onAuthStateChanged(User =>{
     notice.addEventListener("click", () => {
         window.open("../Register.html", "_self")
     });
+    buttonDivLanding.appendChild(notice)
   };
 });  
 
-buttonDiv.appendChild(notice)
+
 }; 
 
 function arrayOfWorkshopTakers(){

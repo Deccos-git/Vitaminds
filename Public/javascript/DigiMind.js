@@ -810,94 +810,114 @@ function dashboardFunction(){
         })
 }; dashboardFunction()
 
-        // Ontwikkeling 
-        function ontwikkelingen(){
-                // Levensvragen ontwikkeling
+// Ontwikkeling 
 
-                DOMdashboard = document.getElementById("digimind-ontwikkeling-outer-div")
+// Filter levensvragen
+function setGoalsInFilter(goals){
+        const filterOfGoals = document.getElementById("goal-filter-select")
 
-                     // Instructions if no levensvragen
+                        const option = document.createElement("option")
 
-                const instructionDiv = document.createElement("div")
-                        instructionDiv.setAttribute("id", "instruction-div-ontwikkeling")
-                const instructionImg = document.createElement("img")
-                const instructionH4 = document.createElement("h4")
-                const instructionP = document.createElement("p")
+                        option.innerText = goals
 
-                instructionH4.innerHTML = "Het avontuur in je eigen karakter wacht nog op je"
-                instructionP.innerHTML = `<u>Stel een doel</u> en begin je avontuur.`
-                                        
+                        filterOfGoals.appendChild(option)
+};
 
-                instructionP.addEventListener("click", () => {
-                        const levensvragenTab = document.getElementById("levenvragen-tab")
-                        levensvragenTab.click()
-                });
-
-                instructionP.style.cursor = "pointer"
-
-                instructionImg.src = "../images/menu-doelen.png"
-
-                DOMdashboard.appendChild(instructionDiv)
-                instructionDiv.appendChild(instructionH4)
-                instructionDiv.appendChild(instructionImg)
-                instructionDiv.appendChild(instructionP)
-
-
-                db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
-                        querySnapshot.forEach(doc =>{
-
-                                instructionDiv.style.display = "none"
+function filterGoal(){
         
-                                const ID = doc.data().ID
-                                const levensvraagID = doc.data().Levensvraag
-                                const levensvragen = levensvraagID.replace(ID, "")
-                                const openbaar = doc.data().Openbaar
-                                const description = doc.data().Omschrijving
-                                const goal = doc.data().Goal
+}
 
-                                const innerDiv = document.createElement("div")
-                                        innerDiv.setAttribute("class", "digimind-ontwikkeling-inner-div")
-                                const goalDiv = document.createElement("div")
-                                        goalDiv.setAttribute("class", "goal-div")
-                                const goalP = document.createElement("p")
-                                const levensvraagTitle = document.createElement("h2")
-                                const descriptionP = document.createElement("p")
-                                const privateDiv = document.createElement("div")
-                                        privateDiv.setAttribute("class", "private-div")
-                                const private = document.createElement("div")
-                                const privateTooltip = document.createElement("p")
-                                        privateTooltip.setAttribute("class", "private-tooltip")
 
-                                goalP.innerHTML = goal
-                                levensvraagTitle.innerHTML = levensvragen
-                                descriptionP.innerHTML = description
+function ontwikkelingen(){
+        // Levensvragen ontwikkeling
 
-                                // Private or public
-                                if(openbaar == "Nee"){
-                                private.innerHTML = '<img class="edit-icon" src="../images/private.png" alt="doel is prive" width="20px"> '
-                                private.addEventListener("mouseover", () => {
-                                        privateTooltip.innerHTML = "Prive"
-                                        privateTooltip.style.display = "block"
-                                })
+        DOMdashboard = document.getElementById("digimind-ontwikkeling-outer-div")
+
+                // Instructions if no levensvragen
+
+        const instructionDiv = document.createElement("div")
+                instructionDiv.setAttribute("id", "instruction-div-ontwikkeling")
+        const instructionImg = document.createElement("img")
+        const instructionH4 = document.createElement("h4")
+        const instructionP = document.createElement("p")
+
+        instructionH4.innerHTML = "Het avontuur in je eigen karakter wacht nog op je"
+        instructionP.innerHTML = `<u>Stel een doel</u> en begin je avontuur.`
                                 
-                                                // Private goals hidden for non auth
-                                                auth.onAuthStateChanged(User =>{
-                                                        const userRef = db.collection("Vitaminders").doc(User.uid);
-                                                        userRef.get().then(function(doc) {
 
-                                                                const auth = doc.data().Gebruikersnaam
+        instructionP.addEventListener("click", () => {
+                const levensvragenTab = document.getElementById("levenvragen-tab")
+                levensvragenTab.click()
+        });
 
-                                                                if(auth != naam){
-                                                                        innerDiv.style.display = "none"
-                                                                }
-                                                        })
+        instructionP.style.cursor = "pointer"
+
+        instructionImg.src = "../images/menu-doelen.png"
+
+        DOMdashboard.appendChild(instructionDiv)
+        instructionDiv.appendChild(instructionH4)
+        instructionDiv.appendChild(instructionImg)
+        instructionDiv.appendChild(instructionP)
+
+
+        db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot =>{
+                querySnapshot.forEach(doc =>{
+
+                        instructionDiv.style.display = "none"
+
+                        const ID = doc.data().ID
+                        const levensvraagID = doc.data().Levensvraag
+                        const levensvragen = levensvraagID.replace(ID, "")
+                        const openbaar = doc.data().Openbaar
+                        const description = doc.data().Omschrijving
+                        const goal = doc.data().Goal
+
+                        const innerDiv = document.createElement("div")
+                                innerDiv.setAttribute("class", "digimind-ontwikkeling-inner-div")
+                        const goalDiv = document.createElement("div")
+                                goalDiv.setAttribute("class", "goal-div")
+                        const goalP = document.createElement("p")
+                        const levensvraagTitle = document.createElement("h2")
+                        const descriptionP = document.createElement("p")
+                        const privateDiv = document.createElement("div")
+                                privateDiv.setAttribute("class", "private-div")
+                        const private = document.createElement("div")
+                        const privateTooltip = document.createElement("p")
+                                privateTooltip.setAttribute("class", "private-tooltip")
+
+                        goalP.innerHTML = goal
+                        levensvraagTitle.innerHTML = levensvragen
+                        descriptionP.innerHTML = description
+
+                        //Filter
+                        setGoalsInFilter(levensvragen)
+
+                        // Private or public
+                        if(openbaar == "Nee"){
+                        private.innerHTML = '<img class="edit-icon" src="../images/private.png" alt="doel is prive" width="20px"> '
+                        private.addEventListener("mouseover", () => {
+                                privateTooltip.innerHTML = "Prive"
+                                privateTooltip.style.display = "block"
+                        })
+                        
+                                        // Private goals hidden for non auth
+                                        auth.onAuthStateChanged(User =>{
+                                                const userRef = db.collection("Vitaminders").doc(User.uid);
+                                                userRef.get().then(function(doc) {
+
+                                                        const auth = doc.data().Gebruikersnaam
+
+                                                        if(auth != naam){
+                                                                innerDiv.style.display = "none"
+                                                        }
+                                                })
+                                        });
+                                                // Check in hidden for visitor
+                                        auth.onAuthStateChanged(User =>{
+                                        if(!User){
+                                                innerDiv.style.display = "none"
+                                                        }                      
                                                 });
-                                                        // Check in hidden for visitor
-                                                auth.onAuthStateChanged(User =>{
-                                                if(!User){
-                                                        innerDiv.style.display = "none"
-                                                                }                      
-                                                        });
 
                                 } else if(openbaar == "Ja"){
                                 private.innerHTML = '<img class="edit-icon" src="../images/public.png" alt="doel is openbaar" width="20px"> '

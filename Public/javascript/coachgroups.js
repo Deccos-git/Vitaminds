@@ -676,7 +676,7 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
 
     // Save message to database
 
-    const DOMchatScreenChat = document.getElementById("chat-screen")
+    const DOMchatScreenGroupChat = document.getElementById("chat-screen")
 
     function saveMessage(){
         const message = document.getElementById("chat-input").value 
@@ -718,12 +718,12 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
             };
         });
     };
-    const send = document.getElementById("send-icon-group")
+    const sendGroupChat = document.getElementById("send-icon-group")
 
-    if(send != null){
+    if(sendGroupChat != null){
 
-    send.addEventListener("click", saveMessage, false)
-    send.addEventListener("submit", saveMessage, false)
+        sendGroupChat.addEventListener("click", saveMessage, false)
+        sendGroupChat.addEventListener("submit", saveMessage, false)
 
     };
 
@@ -740,11 +740,11 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
             const chatDivsArrayUser = Array.from(chatDivsUser)
         
             chatDivsArrayUser.forEach(chatUser => {
-                DOMchatScreenChat.removeChild(chatUser)
+                DOMchatScreenGroupChat.removeChild(chatUser)
             });
         };
 
-        function messageOptions(message, chatMessage, chatRoom, authChatter){
+        function messageOptions(sender, chatMessage, chatRoom, authChatter){
             const options = document.createElement("p")
                options.setAttribute("class", "message-options")
             options.innerText = "..."
@@ -757,7 +757,7 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
                sendAsMail.setAttribute("onclick", "sendChatAsMail(this)")
             sendAsMail.innerText = "Verstuur bericht als email"
        
-            message.appendChild(options)
+            sender.appendChild(options)
             options.appendChild(sendAsMail)
        
             options.addEventListener("click", () => {
@@ -891,7 +891,7 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
 
                             if(admin.includes(sender)){
 
-                            messageOptions(messageP, authMessage, roomName, messageNameClean)
+                            messageOptions(senderName, authMessage, roomName, messageNameClean)
                             };
     
                         } else {
@@ -921,7 +921,7 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
     };
 });
 
-// Chats and groups overview AND notifications
+// Groups of auth AND notifications
 
 function getProfilePicOfChat(pic, picDOMobject){
     if(pic == undefined){
@@ -960,7 +960,6 @@ function updateReadList(docID, authName, titleURL){
         querySnapshot.forEach(doc6 => {
 
             const status = doc6.data().Status
-            const messages = doc6.data().Messages
 
             if(status === "New"){
 
@@ -1061,15 +1060,11 @@ function updateReadStatusBasedOnOnline(onlineArray, authName, docID){
     };
 };
 
-function newMessageInOverview(docID, authName, chatsDivDOM, newMessage){
+function newMessageInOverview(docID, chatsDivDOM, newMessage){
 
     const docRef = db.collection("Coachgroups").doc(docID) 
 
     const newMessageCount = []
-
-    docRef.get().then(doc => {
-
-        const type = doc.data().Type
 
     docRef.collection("Messages")
     .where("Status", "==", "New")
@@ -1088,15 +1083,21 @@ function newMessageInOverview(docID, authName, chatsDivDOM, newMessage){
         if(newMessageCount.length != 0){
         chatsDivDOM.appendChild(newMessage)
         };
-    })
-});
+    });
+};
+
+function groupsOverviewTitle(title, group, photo, typeDescription){
+
+    group.innerText = title
+    photo.src = "/images/groups-icon.jpg"
+    typeDescription.innerText = "Coachgroup"
 };
 
 
         // Database query
-const DOMchats = document.getElementById("overview-chats")
+const DOMGroupChats = document.getElementById("overview-groups")
 
-if (DOMchats != null){
+if (DOMGroupChats != null){
 
 auth.onAuthStateChanged(User =>{
     if(User){
@@ -1105,7 +1106,7 @@ auth.onAuthStateChanged(User =>{
 
         const auth = doc.data().Gebruikersnaam
 
-db.collection("Coachgroups").where("Eigenaar", "==", "Vitaminds").where("Members", "array-contains", auth).get().then(querySnapshot => {
+db.collection("Coachgroups").where("Members", "array-contains", auth).get().then(querySnapshot => {
     querySnapshot.forEach(doc1 => {
 
         const type = doc1.data().Type
@@ -1126,8 +1127,9 @@ db.collection("Coachgroups").where("Eigenaar", "==", "Vitaminds").where("Members
             groupType.setAttribute("class", "grouptype-description")
                 
                   if (members.includes(auth)){
-                
-                    groupsOverviewTitle(type, title, titleClean, chatsP, photoImg, groupType)  
+
+
+                    groupsOverviewTitle(titleClean, chatsP, photoImg, groupType)
                                     
                     // Open group
                     chatsDiv.addEventListener("click", () => {
@@ -1148,7 +1150,7 @@ db.collection("Coachgroups").where("Eigenaar", "==", "Vitaminds").where("Members
                     // Update status of message based on online/offline in room
                     updateReadStatusBasedOnOnline(online, auth, doc1.id)
 
-                DOMchats.appendChild(chatsDiv)
+                DOMGroupChats.appendChild(chatsDiv)
                 chatsDiv.appendChild(photoDiv)
                 photoDiv.appendChild(photoImg)
                 photoDiv.appendChild(groupType)
@@ -1158,7 +1160,7 @@ db.collection("Coachgroups").where("Eigenaar", "==", "Vitaminds").where("Members
                     const newMessagesPGroups = document.createElement("p")
                         newMessagesPGroups.setAttribute("class", "new-message-count-chats")
                         
-                    newMessageInOverview(doc1.id, auth, chatsDiv, newMessagesPGroups) 
+                    newMessageInOverview(doc1.id, chatsDiv, newMessagesPGroups) 
                     };                
             });
         });
@@ -1169,8 +1171,104 @@ db.collection("Coachgroups").where("Eigenaar", "==", "Vitaminds").where("Members
 
 // Coachgroup builder
 function startCoachgroupBuilder(){
-    window.open("coachgroup-builder.html", "_self");
-}
+
+        const createCoachgroupButton = document.getElementById("create-coachgroep")
+        const noticeP = document.createElement("p")
+            noticeP.setAttribute("id", "upgrade-notice")
+        const bottomDiv = document.getElementById("bottom-div-create-coachgroup")
+
+        auth.onAuthStateChanged(User =>{
+            if(User){
+            const userRef = db.collection("Vitaminders").doc(User.uid);
+            userRef.get().then(function(doc) {
+
+                const coachType = doc.data().SubscriptionType
+
+                if(coachType === "Premium"){
+                    console.log("Premium")
+                    window.open("coachgroup-builder.html", "_self");
+                } else if (coachType === "Basic"){
+                    console.log("Basic")
+                    createCoachgroupButton.style.display = "none"
+                    noticeP.innerHTML = '<u>Upgrade</u> naar een Premium account om een coachgroep te maken'
+                    bottomDiv.appendChild(noticeP)
+
+                    upgradeModal(noticeP)
+                };
+            });
+        };
+    }); 
+};
+
+function upgradeModal(notice){
+
+    const upgradeModal = document.getElementById("upgrade-account-modal")
+
+    notice.addEventListener("click", () => {
+
+        upgradeModal.style.display = "flex"
+    });
+};
+
+!function upgradeMessage(){
+
+    const title = document.getElementById("welcome-message-upgrade")
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+
+            const name = doc.data().GebruikersnaamClean
+
+            title.innerHTML = `Wat leuk dat je wilt updragen naar een Premium abonnement, ${name}!`
+
+            });
+        };
+    });
+}();
+
+!function sendUpgradeRequest(){
+    const requestButton = document.getElementById("upgrade-button")
+
+    requestButton.addEventListener("click", () => {
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+
+            const email = doc.data().Email
+            const nameClean = doc.data().GebruikersnaamClean
+
+                db.collection("Mail").doc().set({
+                    to: [email],
+                    cc: "info@vitaminds.nu",
+                    message: {
+                    subject: `Nieuw chatverzoek op Vitaminds`,
+                    html: `Hallo ${nameClean}, </br></br>
+                            Wat leuk dat je een Premium-account hebt aangevraagd!<br><br> 
+                            
+                            We gaan je account direct upgraden. Je ontvangt een mailtje zodra je account is ge-upgrade.</br></br>
+
+                            Vriendelijke groet, </br></br>
+                            Het Vitaminds Team </br></br>
+                            <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                    Gebruikersnaam: nameClean,
+                    Emailadres: email,
+                    Type: "Upgrade request"
+                    }        
+                    })
+            .then(() => {
+
+                requestButton.innerText = "Je upgrade is aangevraagd!"
+
+            })
+            });
+        };
+    });
+});
+}();
 
 // Group goal
 const groupGoalSelect = document.getElementById("create-practicegroup-goal-select")
