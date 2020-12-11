@@ -11,11 +11,12 @@
     <meta property="og:type"  content="article"/>
     <meta id="facebook-title" property="og:title"/>
     <meta id="facebook-description" property="og:description"/>
-    <meta id="facebook-img" property="og:image"/>
-  <title property="og:title"></title>
+    <meta id="facebook-img" property="og:image">
+    <title id="page-title" property="og:title"></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../Style/style.css">
-  <link rel="stylesheet" href="../Style/inspiratie.css">
+  <link rel="stylesheet" href="../Style/groups-for-coaches.css">
+  <link rel="stylesheet" href="../Style/videochat.css">
   <link rel="shortcut icon" href="../images/Favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -24,6 +25,7 @@
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  <script src="https://js.stripe.com/v3/"></script>
   <!-- Tiny MCE -->
   <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
@@ -94,86 +96,99 @@
       </div>
     </nav>
 
-<!-- Artikel -->
-  <div id="title-article-div">
-    <h1 id="title-article"></h1>
-  </div>
-  <div id="levensvraag-artikel-main-image"></div>
-  <section class="levensvraag-artikel-main-information">
-    <div id="summary-outer-div">
-      <div id="summary-inner-div">
-          <p id="summary-article">
-          </p>
-      </div>
-      <div id="paragraph-list">
-        <h3>Inhoud</h3>
+    <div id="group-landing-page">
+      <a id="hide-landing-modal"><img src="../images/close-icon.png" alt="modal afsluiten"></a> 
+      <div id="creator-information-div"></div>
+      <h1 id="group-landing-title"></h1>
+      <div id="banner-div"></div>
+      <p id="group-description"></p>
+      <ul id="group-facts"></ul>
+      <div id="button-div-landing">
+        <button class="button-algemeen" id="button-group-landing">Aanmelden</button>
       </div>
     </div>
-  </section>
 
-  <section id="coach-input">
-    <textarea id="insights-CTA" cols="50" rows="2"></textarea>
-      <div id="insights-theme-ideas">
-        <p> <a href="https://www.youtube.com/watch?v=bL2dHvBZj4U">Bekijk tutorial video</a> </p>
-        <p>Kies eerst een sub-onderwerp</p>
-        <div id="paragraph-list-insights"></div>
-        <a href="../thema-lijst.html"><p id="coach-suggestions">Jouw suggestie</p></a> 
+    <section id="coachgroup-agreement" class="page-title">
+      <div id="register-notice">
+        <h2 id="coachgroup-member-agreement-title"></h2>
+        <img src="/images/coachgroup-landing.png" alt="Coachgroup abonnement is aangemaakt.">
+        <h3>Wat kun je verwachten?</h3>
+        <p>
+          Zodra de groep vol is gaan we beginnen. Ik laat je dat direct via de mail weten.
+           Als we zijn begonnen stuur ik je wekelijks een nieuwe oefening.
+          Je kan de oefening op je eigen tijd doen. 
+            Ik raad je wel aan om niet teveel achter te lopen, 
+            omdat veel van het leren ook gebeurd in de gesprekken die we met elkaar hebben in de groep.</p>
+          <h3>Vragen</h3>
+          Voor vragen kun je mij altijd even een berichtje sturen.
+          <div id="questions-coachgroup-agreement"></div>  
+          <div>
+              <button class="button-algemeen" id="visitCoachgroup">Open coachgroep</button>
+          </div>
       </div>
-    <div id="nieuwepost">
-        <input id="nieuwposttitel" type="text" placeholder="Geef je inzicht een titel...">
-        <h6 id="insights-tip"><i>Tip:</i> Probeer je inzichten persoonlijk te maken. Geef mensen zo mogelijk een inzicht in je eigen proces van persoonlijke ontwikkeling m.b.t. dit onderwerp</h6>
-        <div id="tiny-mce"></div>
-        <button onclick = "nieuwepostsubmit(this)" class="button-algemeen">Delen</button>
-   </div> 
-  </section>
-
-  <section id="coach-insights">
-    <div id="loader">
-      <img src="../images/loader.gif" alt="loading">
-    </div>
-  </section>
-
-  <div class="meer-inspiratie">
-    <h3>Meer inspiratie</h3>
-    <main id="levensvraag-artikel-ouyter-div">
-      <section id="theme-article-outer-div"></section>
-   </main> 
-  </div>
-
-  <div id="upgrade-account-modal">
-    <img id="exit-modal" src="../images/close-icon.png" alt="modal afsluiten"> 
-    <h1 id="welcome-message-upgrade"></h1>
+    </section>
   
-    <div class="subscription-outer-div">
-      <h2>Premium lidmaatschap</h2>
-      <div class="feautures-div">
-        <ul>
-          <li>Coachprofiel in overzicht met coaches</li>
-          <li>Link naar je website op je profiel</li>
-          <li>Telefoonnummer op je profiel</li>
-          <li>Bekijk hoe vaak je profiel, website en online producten zijn bekeken</li>
-          <li>Ontvang chatberichten van potentiele clienten</li>
-          <li>Meedoen aan intervisiesessies met andere coaches</li>
-          <li>Gratis meedoen aan coachgroepen voor coaches</li>
-          <li>Schrijf mee aan de artikelen</li>
-          <li>Maak betaalde workshops</li>
-          <li>Organiseer betaalde coachgroepen</li>
-          <li>Organisser betaalde events</li>
-          <li>Bied je clienten online één-op-één coaching</li>
-        </ul>
-      </div>
+
+  <h1 id="group-title"></h1>
+  <div id="list-of-members">
+    <div id="list-of-members-inner-div"></div>
+  </div>
+  <div id="chat-screen"></div>
+
+  <div id="input-div">
+    <div class="inspiration-icon-div">
+      <img id="inspiration-icon" class="inspiration-icons" src="../images/inspiration-icon-2.png" alt="">
     </div>
-  
-    <div class="price-div" id="price-div-premium">
-      <h4><s> €25 </s>per maand (excl. BTW)</h4>
-      <h6>Nu tijdelijk €12,50 per maand!</h6>
-      <p id="monthly-cancelation">Geen contract - altijd maandelijks opzegbaar</p>
-      <button class="button-algemeen" id="upgrade-button">Upgrade naar een premium account</button>
-    </div>
+    <div id="video-div">
+      <img id="video-icon" src="../images/video-icon.png" alt="start een video gesprek">
+      <img id="video-stop-icon" src="../images/stop-video-icon.png" alt="">
+    </div> 
+    <input id="chat-input" type="text">
+    <img id="send-icon-group" src="../images/send-icon.png" alt="">
   </div>
 
- <!-- Toolbar mobile -->
- <div class="toolbar-mobile">
+  <div id="add-learning-div">
+    <h3 id="add-learning-h3">Heb je iets geleerd over:</h3>
+    <select name="" id="select-goals"></select>
+    <textarea name="" id="input-learning" cols="30" rows="10"></textarea>
+    <div id="add-learning-button-div">
+      <button class="button-algemeen" id="button-add-learning">Opslaan</button>
+    </div>
+    <p id="notice-learning-added">Je levensles is opgeslagen</p>
+  </div>
+
+  <!-- <section id="videochat-outer-div">
+    <div id="buttons">
+      <button class="button-algemeen" disabled id="createBtn">
+          <span>Start een videochat</span>
+      </button>
+      <button class="button-algemeen" disabled id="joinBtn">
+          <span>Deelnemen aan videochat</span>
+      </button>
+  </div> -->
+
+  <div id="room-dialog">
+    <h2 id="my-dialog-title">Deelnemen aan videogesprek</h2>
+    <div id="my-dialog-content">
+      <p>Vul de toegangscode in:</p>
+            <input type="text" id="room-id" placeholder="Toegangscode">
+    </div>
+    <footer id="join-room-footer">
+        <button type="button" id="cancel-room-join">Annuleren</button>
+        <button type="button" id="room-join">Deelnemen</button>
+    </footer>
+  </div>
+
+  <div id="videos">
+      <video id="localVideo" muted autoplay playsinline></video>
+      <video id="remoteVideo" autoplay playsinline></video>
+      <video id="remoteVideo" autoplay playsinline></video>
+  </div>
+
+  <button class="button-algemeen" id="learning-video-chat">Heb je iets geleerd over jezelf?</button>
+
+<!-- Toolbar mobile -->
+<div class="toolbar-mobile">
   <div class="toolbar-mobile-inner-div">
     <img src="../images/home-icon.png" alt="" id="toolbar-home">
     <p class="description-menu-icons-toolbar-mobile">Open up</p>
@@ -197,6 +212,7 @@
     <p class="description-menu-icons-toolbar-mobile">Mijn Digimind</p>
   </div>  
 </div>
+
 
 <!-- footer -->
 <footer class="footer">
@@ -230,12 +246,12 @@
   </div>
 </footer>
 
-
       <script type="text/javascript" src="../javascript/firebase.js"></script>
-      <script type="text/javascript" src="../javascript/inspiratie.js"></script>
+      <script type="text/javascript" src="../javascript/groupsForCoaches.js"></script>
       <script type="text/javascript" src="../javascript/auth.js"></script>
       <script type="text/javascript" src="../javascript/index.js"></script>
-      <script type="text/javascript" src="../javascript/edit-profile.js"></script>
+      <script type="text/javascript" src="../javascript/stripe.js"></script>
+      <script type="text/javascript" src="../javascript/videochat-groups.js"></script>
     </body>
   </html>
   

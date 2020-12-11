@@ -1065,6 +1065,7 @@
 #insights-CTA{
     cursor: pointer;
     border-radius: 3px;
+    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
 }
 
 #insights-CTA::placeholder{
@@ -1145,6 +1146,49 @@
 #texteditor button:hover{
     background-color: #25384d
  }
+
+ #upgrade-notice{
+    cursor: pointer;
+}
+
+#upgrade-account-modal{
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    align-items: center;
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: white; /* Fallback color */
+}
+
+.feautures-div li{
+    list-style-image: url('/images/UL-icon.png');
+}
+
+#price-div-premium h4{
+    margin-bottom: 0px;
+    font-size: 22px;
+}
+
+#price-div-premium h6{
+    margin: 10px 10px;
+}
+
+#price-div-premium{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
+}
+
+#exit-modal{
+    cursor: pointer;
+    margin-top: 5px;
+}
 
  /*LearningsOutput*/
 

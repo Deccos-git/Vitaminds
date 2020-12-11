@@ -114,6 +114,12 @@ app.get('/Group/:id',function(req,res)
     res.sendFile('coachgroup.html', { root: __dirname });
 });
 
+// Groups for coaches aanmaken op basis van URL
+app.get('/groups-coaches/:id',function(req,res)
+{
+    res.sendFile('group-coaches.html', { root: __dirname });
+});
+
 // Chat aanmaken op basis van URL
 app.get('/Chats/:id',function(req,res)
 {

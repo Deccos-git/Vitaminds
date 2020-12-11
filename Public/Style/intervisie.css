@@ -15,6 +15,49 @@
     padding: 20px 20px 0px 20px;
 }
 
+#upgrade-notice{
+    cursor: pointer;
+}
+
+#upgrade-account-modal{
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    align-items: center;
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: white; /* Fallback color */
+}
+
+.feautures-div li{
+    list-style-image: url('/images/UL-icon.png');
+}
+
+#price-div-premium h4{
+    margin-bottom: 0px;
+    font-size: 22px;
+}
+
+#price-div-premium h6{
+    margin: 10px 10px;
+}
+
+#price-div-premium{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
+}
+
+#exit-modal{
+    cursor: pointer;
+    margin-top: 5px;
+}
+
 #create-casus input{
     width: 70%;
 }

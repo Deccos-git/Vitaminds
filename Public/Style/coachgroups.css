@@ -64,6 +64,11 @@
     padding-bottom: 50px;
 }
 
+#exit-modal{
+    cursor: pointer;
+    margin-top: 5px;
+}
+
 .groups-outer-div{
     display: none;
     flex-wrap: wrap;

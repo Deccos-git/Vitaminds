@@ -281,7 +281,7 @@ function upgradeModal(notice){
                     to: [email],
                     cc: "info@vitaminds.nu",
                     message: {
-                    subject: `Nieuw chatverzoek op Vitaminds`,
+                    subject: `Upgrade naar Premium Vitaminds account`,
                     html: `Hallo ${nameClean}, </br></br>
                             Wat leuk dat je een Premium-account hebt aangevraagd!<br><br> 
                             

@@ -1049,12 +1049,119 @@ const newPost = document.getElementById("nieuwepost")
 
     textareaInisghts.addEventListener("click", () => {
 
-        insightsParagraphIdeas.style.display = "flex"
-        newPost.style.display = "flex"
-        textareaInisghts.style.display = "none"
+        const noticeP = document.createElement("p")
+            noticeP.setAttribute("id", "upgrade-notice")
+        const inputDiv = document.getElementById("coach-input")
+    
+        auth.onAuthStateChanged(User =>{
+            if(User){
+            const userRef = db.collection("Vitaminders").doc(User.uid);
+            userRef.get().then(function(doc) {
+    
+                const coachType = doc.data().SubscriptionType
+    
+                if(coachType === "Premium"){
+                    console.log("Premium")
 
+                    insightsParagraphIdeas.style.display = "flex"
+                    newPost.style.display = "flex"
+                    textareaInisghts.style.display = "none"
+                } else if (coachType === "Basic"){
+                    console.log("Basic")
+
+                    textareaInisghts.style.display = "none"
+                    noticeP.innerHTML = '<u>Upgrade</u> naar een Premium account om aan de artikelen bij te dragen.'
+                    inputDiv.appendChild(noticeP)
+    
+                    upgradeModal(noticeP)
+                };
+            });
+        };
+    }); 
     });
 }(); 
+
+function upgradeModal(notice){
+
+    const upgradeModal = document.getElementById("upgrade-account-modal")
+
+    notice.addEventListener("click", () => {
+
+        upgradeModal.style.display = "flex"
+    });
+};
+
+!function upgradeMessage(){
+
+    const title = document.getElementById("welcome-message-upgrade")
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+
+            const name = doc.data().GebruikersnaamClean
+
+            title.innerHTML = `Wat leuk dat je wilt updragen naar een Premium abonnement, ${name}!`
+
+            });
+        };
+    });
+}();
+
+!function sendUpgradeRequest(){
+    const requestButton = document.getElementById("upgrade-button")
+
+    requestButton.addEventListener("click", () => {
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+
+            const email = doc.data().Email
+            const nameClean = doc.data().GebruikersnaamClean
+
+                db.collection("Mail").doc().set({
+                    to: [email],
+                    cc: "info@vitaminds.nu",
+                    message: {
+                    subject: `Upgrade naar Premium Vitaminds account`,
+                    html: `Hallo ${nameClean}, </br></br>
+                            Wat leuk dat je een Premium-account hebt aangevraagd!<br><br> 
+                            
+                            We gaan je account direct upgraden. Je ontvangt een mailtje zodra je account is ge-upgrade.</br></br>
+
+                            Vriendelijke groet, </br></br>
+                            Het Vitaminds Team </br></br>
+                            <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                    Gebruikersnaam: nameClean,
+                    Emailadres: email,
+                    Type: "Upgrade request"
+                    }        
+                    })
+            .then(() => {
+
+                requestButton.innerText = "Je upgrade is aangevraagd!"
+
+            })
+            });
+        };
+    });
+});
+}();
+
+!function exitModalUpgrade(){
+
+     const exitModal = document.getElementById("exit-modal")
+     const upgradeModal = document.getElementById("upgrade-account-modal")
+
+     exitModal.addEventListener("click", () => {
+
+        upgradeModal.style.display = "none"
+
+     });
+}();
 
 !function personalizeCTAtoWriteInsight(){
     auth.onAuthStateChanged(User =>{

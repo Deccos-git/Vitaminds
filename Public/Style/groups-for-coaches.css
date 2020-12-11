@@ -1,0 +1,106 @@
+#upgrade-notice{
+    cursor: pointer;
+}
+
+#upgrade-account-modal{
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    align-items: center;
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: white; /* Fallback color */
+}
+
+.feautures-div li{
+    list-style-image: url('/images/UL-icon.png');
+}
+
+#price-div-premium h4{
+    margin-bottom: 0px;
+    font-size: 22px;
+}
+
+#price-div-premium h6{
+    margin: 10px 10px;
+}
+
+#price-div-premium{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 50px;
+}
+
+#exit-modal{
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.theme-groups-section{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: auto;
+    margin: 30px 10px 20px 10px;
+    padding-bottom: 20px;
+    align-items: center;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: #FFF;
+}
+
+.theme-groups-header img{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 200px;
+    width: 250px;
+    margin: 0px 0px -30px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1;
+}
+
+#groups-for-coaches{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.group-auth-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.group-auth-div p{
+    font-size: 16px;
+}
+
+.group-auth-img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.group-meta-div{
+    padding: 10px 20px;
+}
+
+.group-meta-div p{
+    font-size: 18px;
+}
+
+.leave-group-button{
+    font-size: 16px;
+    cursor: pointer;
+}
