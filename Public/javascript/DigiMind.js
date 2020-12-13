@@ -890,7 +890,7 @@ function ontwikkelingen(){
                         descriptionP.innerHTML = description
 
                         //Filter
-                        setGoalsInFilter(levensvragen)
+                        // setGoalsInFilter(levensvragen)
 
                         // Private or public
                         if(openbaar == "Nee"){
@@ -1215,6 +1215,126 @@ function hideIntroductionInputForNoneAuth(introductionText){
         });
 
 };
+
+// Domains
+
+// !function hideEditIconDomains(){
+
+//         const editDomainsButton = document.getElementById("edit-domains")
+
+//         auth.onAuthStateChanged(User =>{
+//                 const docRef = db.collection("Vitaminders").doc(User.uid)
+//                 docRef.get().then(doc => {
+
+//                         const name = doc.data().Gebruikersnaam
+
+//                         if(name === naam){
+
+//                                 editDomainsButton.style.display = "block"
+
+//                         };
+//                 });
+//         });
+// }();
+        
+
+// !function editDomains(){
+//         const editDomainsButton = document.getElementById("edit-domains")
+//         const editDomainList = document.getElementById("domain-select")
+//         const domainInput = document.getElementsByClassName("domain-input")
+//         const saveButton = document.getElementById("save-outer-div")
+//         const listOfDomains = document.getElementById("list-of-domains")
+       
+
+//         editDomainsButton.addEventListener("click", () => {
+
+//                 editDomainList.style.display = "block"
+//                 listOfDomains.style.display = "none"
+
+//                 preSelectDomainsFromDatabase(domainInput)
+
+//                 saveButton.style.display = "block"
+
+//         });
+// }();
+
+// function preSelectDomainsFromDatabase(domainInputs){
+
+//         const domainInputArray = Array.from(domainInputs)
+
+//         domainInputArray.forEach(domain => {
+
+//                 auth.onAuthStateChanged(User =>{
+//                         const docRef = db.collection("Vitaminders").doc(User.uid)
+//                         docRef.get().then(doc => {
+//                                 const domainsDB = doc.data().Domains
+
+//                                 if(domainsDB != undefined){
+                
+//                                         domainsDB.forEach(domainDB => {
+//                                                 if(domainDB === domain.id){
+//                                                         domain.checked = true
+//                                                 };
+//                                         });
+//                                 };
+
+//                                 saveDomainsToDB(docRef)
+//                         });
+//                 });
+//         });
+// };
+
+// function saveDomainsToDB(docReference){
+//         const domainInput = document.getElementsByClassName("domain-input")
+//         const saveButton = document.getElementById("save-div-button")
+
+//         const domainInputArray = Array.from(domainInput)
+
+//         domainInputArray.forEach(domain => {
+
+//                 saveButton.addEventListener("click", () => {
+
+//                         saveButton.innerText = "Opgeslagen"
+
+//                         const selectedDomain = domain.checked
+
+//                         if(selectedDomain === true){
+//                                const selectedValue = domain.value
+
+//                                docReference.update({
+//                                        Domains: firebase.firestore.FieldValue.arrayUnion(selectedValue)
+//                                });
+//                         };
+//                 });
+//         });
+// };
+
+// !function displayDomains(){
+
+//         const listOfDomains = document.getElementById("list-of-domains")
+
+//         db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+//                 .get().then(querySnapshot => {
+//                         querySnapshot.forEach(doc => {
+
+//                         const domainsDB = doc.data().Domains
+
+//                         if(domainsDB != undefined){
+
+//                                 domainsDB.forEach(domain => {
+
+//                                         const domainP = document.createElement("p")
+
+//                                         domainP.innerText = domain
+
+//                                         listOfDomains.appendChild(domainP)
+
+//                                 });
+//                         };
+//                 });
+//         });
+
+// }();
 
 
 

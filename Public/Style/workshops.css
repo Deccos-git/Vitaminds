@@ -589,6 +589,13 @@ iframe{
     background-color: white; /* Fallback color */
 }
 
+#tutorial-div{
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .select-header{
     margin-top: 20px;
 }

@@ -2,10 +2,11 @@
 
 #welkomWrapper{
     display: flex;
-    background-image: url("../images/avontuur2.jpg");
+    background-image: url("../images/avontuur28.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+    background-attachment: fixed;
     height: 300px;
     width: 100%;
     margin: 0px 0px 0px 0px;
@@ -165,6 +166,41 @@
     text-transform: uppercase;
     margin-top: 40px;
   }
+
+  #domain-select{
+      display: none;
+  }
+
+  #save-outer-div{
+      display: none;
+  }
+
+  #list-of-domains p{
+    justify-self: flex-start;
+    margin: 15px 10px 0px 10px;
+    font-size: 16px;
+  }
+
+  #edit-domains{
+      display: none;
+  }
+
+  #save-outer-div{
+      margin-top: 50px;
+  }
+
+  #domain-select input{
+      width: auto;
+  }
+
+  #domain-select label{
+    font-size: 16px;
+    color: #122b46;
+}
+
+.edit-icon{
+    cursor: pointer;
+}
 
   #foto-upload{
       color: #FFF;
@@ -989,6 +1025,15 @@
 }
 
 #experience-inner-div{
+    background-color: #FFF;
+    padding: 15px;
+    width: 100%;
+    margin: 30px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+#domains-inner-div{
     background-color: #FFF;
     padding: 15px;
     width: 100%;

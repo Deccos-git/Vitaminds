@@ -223,3 +223,153 @@
         });
     });
 }();
+
+!function numberOfCoaches(){
+
+    const basicCoachesArray = []
+    const premiumCoachesArray = []
+
+    const numberOfBasicCoaches = document.getElementById("basic-coaches")
+    const neumberOfPremiumCoaches = document.getElementById("premium-coaches")
+
+    const basicCoachesP = document.createElement("p")
+    const premiumCoachesP = document.createElement("p")
+
+    db.collection("Vitaminders").where("Usertype", "==", "Coach")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const subscriptionType = doc.data().SubscriptionType
+
+            if (subscriptionType === "Basic"){
+                basicCoachesArray.push(subscriptionType)
+            } else if (subscriptionType === "Premium"){
+                premiumCoachesArray.push(subscriptionType)
+            };
+        });
+    }).then(() => {
+
+        basicCoachesP.innerText = basicCoachesArray.length
+        premiumCoachesP.innerText = premiumCoachesArray.length
+
+        numberOfBasicCoaches.appendChild(basicCoachesP)
+        neumberOfPremiumCoaches.appendChild(premiumCoachesP)
+    });
+}();
+
+!function numberOfVitaminders(){
+
+    const vitamindersArray = []
+
+    const numberOfVitaminders = document.getElementById("vitaminders")
+
+    const vitamindersP = document.createElement("p")
+
+    db.collection("Vitaminders").where("Usertype", "==", "Vitaminder")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+                vitamindersArray.push(doc)
+
+        });
+    }).then(() => {
+
+        vitamindersP.innerText = vitamindersArray.length
+
+        numberOfVitaminders.appendChild(vitamindersP)
+    });
+
+}();
+
+!function numberOfWorkshops(){
+
+    const workshopsArray = []
+
+    const numberOfWorkshops = document.getElementById("workshops")
+
+    const workshopsP = document.createElement("p")
+
+    db.collection("Workshops").where("Eigenaar", "==", "Vitaminds")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+                workshopsArray.push(doc)
+
+        });
+    }).then(() => {
+
+        workshopsP.innerText = workshopsArray.length
+
+        numberOfWorkshops.appendChild(workshopsP)
+    });
+
+}();
+
+!function numberOfInsights(){
+
+    const insightsArray = []
+
+    const numberOfInsights = document.getElementById("insights")
+
+    const insightsP = document.createElement("p")
+
+    db.collection("Insights").where("Type", "==", "Insight-levensvraag")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+                insightsArray.push(doc)
+        });
+    }).then(() => {
+
+        insightsP.innerText = insightsArray.length
+
+        numberOfInsights.appendChild(insightsP)
+    });
+
+}();
+
+!function numberOCoachgroups(){
+
+    const coachgroupsArray = []
+
+    const numberOfCoachgroups = document.getElementById("coachgroups")
+
+    const coachgroupsP = document.createElement("p")
+
+    db.collection("Coachgroups").where("Eigenaar", "==", "Vitaminds")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+                coachgroupsArray.push(doc)
+        });
+    }).then(() => {
+
+        coachgroupsP.innerText = coachgroupsArray.length
+
+        numberOfCoachgroups.appendChild(coachgroupsP)
+    });
+
+}();
+
+!function numberOEvents(){
+
+    const eventsArray = []
+
+    const numberOfEvents = document.getElementById("events")
+
+    const eventsP = document.createElement("p")
+
+    db.collection("Events").where("Owner", "==", "Vitaminds")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+                eventsArray.push(doc)
+        });
+    }).then(() => {
+
+        eventsP.innerText = eventsArray.length
+
+        numberOfEvents.appendChild(eventsP)
+    });
+
+}();

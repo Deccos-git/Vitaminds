@@ -261,7 +261,7 @@ function leaveTheGroup(roomTitle){
 };
 
 function openGroup(roomName, buttonName){
-    buttonName.innerHTML = `<a href="../group/${roomName}.html">Meer informatie</a>`
+    buttonName.innerHTML = `<a href="../groups-coaches/${roomName}.html">Meer informatie</a>`
 
 };
 
@@ -374,7 +374,7 @@ function hideLandingModal(){
 };
 
 !function fillLandingWithGroupData(){
-    db.collection("Coachgroups").where("Room", "==", titel).get().then(querySnapshot => {
+    db.collection("GroupsForCoaches").where("Room", "==", titel).get().then(querySnapshot => {
         querySnapshot.forEach(doc1 => {
 
             const members = doc1.data().Members
@@ -496,7 +496,7 @@ function openCoachGroupAfterAgreement(titleRoom){
 
     const roomName = titel
 
-db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnapshot => {
+db.collection("GroupsForCoaches").where("Room", "==", roomName).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
             const members = doc.data().Members
@@ -556,7 +556,7 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
     };
     
         // Load goals of auth in select
-        db.collection("Coachgroup").where("Room", "==", titel).get().then(querySnapshot => {
+        db.collection("GroupsForCoaches").where("Room", "==", titel).get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
 
                 const goal = doc.data().Goal
@@ -663,12 +663,12 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
 
         const roomName = titel
 
-    db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnapshot => {
+    db.collection("GroupsForCoaches").where("Room", "==", roomName).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
             const members = doc.data().Members
 
-        db.collection("Coachgroups").doc(doc.id).collection("Messages").doc().set({
+        db.collection("GroupsForCoaches").doc(doc.id).collection("Messages").doc().set({
             Auth: auth,
             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
             Message: message,
@@ -677,7 +677,7 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
             Read: [],
             Status: "New"
             }).then(() => {
-                db.collection("Coachgroups").doc(doc.id).update({
+                db.collection("GroupsForCoaches").doc(doc.id).update({
                     Messages: firebase.firestore.FieldValue.increment(1)
                                 }).then(() => {
                                     const input = document.getElementById("chat-input")
@@ -753,7 +753,7 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
        
                        const SenderNameClean = doc2.data().GebruikersnaamClean
        
-           db.collection("Coachgroups")
+           db.collection("GroupsForCoaches")
            .where("Room", "==", room).get()
            .then(querySnapshot => {
                querySnapshot.forEach(doc => {
@@ -815,7 +815,7 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
 
                 const roomName = titel
 
-                db.collection("Coachgroups")
+                db.collection("GroupsForCoaches")
                 .where("Room", "==", roomName)
                 .get().then(querySnapshot => {
                     querySnapshot.forEach(doc3 => {
@@ -894,7 +894,7 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
     };
 });
 
-// Groups of auth AND notifications
+// GroupsForCoaches of auth AND notifications
 
 function getProfilePicOfChat(pic, picDOMobject){
     if(pic == undefined){
@@ -910,7 +910,7 @@ function setInnerTextOfDOMobjects(chat, grouptype, user, typeOfGroup){
   };
 
 function updateOnlineStatus(docID, authName){
-    db.collection("Coachgroups")
+    db.collection("GroupsForCoaches")
     .doc(docID)
     .update({
         Online: firebase.firestore.FieldValue.arrayUnion(authName)
@@ -918,7 +918,7 @@ function updateOnlineStatus(docID, authName){
 };
 
 function updateReadList(docID, authName, titleURL){
-    const chatRef = db.collection("Coachgroups")
+    const chatRef = db.collection("GroupsForCoaches")
     .doc(docID)
 
     chatRef.get().then(doc2 => {
@@ -952,30 +952,31 @@ function updateReadList(docID, authName, titleURL){
         })
         .then(() => {
 
-            window.open(`../Group/${titleURL}.html`, "_self");
+            window.open(`../group-coaches/${titleURL}.html`, "_self");
         });
     } else {
-        window.open(`../Group/${titleURL}.html`, "_self");
+        window.open(`../group-coaches/${titleURL}.html`, "_self");
     };   
         });
     } else {
-        window.open(`../Group/${titleURL}.html`, "_self");
+        window.open(`../group-coaches/${titleURL}.html`, "_self");
     };
                 });
             });
         } else {
-            window.open(`../Group/${titleURL}.html`, "_self");
+            window.open(`../group-coaches/${titleURL}.html`, "_self");
         }
     });
 }; 
 
 function updateNewStatusOfMessageGroup(authName){
-    db.collection("Coachgroups")
+    db.collection("GrouspForCoaches")
     .where("Members", "array-contains", authName)
     .get().then(querySnapshot => {
      querySnapshot.forEach(doc2 => {
 
-     const docRef = db.collection("Coachgroups").doc(doc2.id).collection("Messages")
+     const docRef = db.collection("GrouspForCoaches")
+     .doc(doc2.id).collection("Messages")
      docRef.where("Status", "==", "New")
      .get().then(querySnapshot => {
          querySnapshot.forEach(doc3 => {
@@ -1003,13 +1004,13 @@ function updateOnlineStatusFromPagesLeaveGroup(authName){
 
     const pageLeaves = localStorage.getItem("leftPages")
 
-    db.collection("Coachgroups")
+    db.collection("GrouspForCoaches")
     .where("Members", "array-contains", authName)
     .where("Room", "==", pageLeaves)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc10 => {
 
-    db.collection("Coachgroups").doc(doc10.id).update({
+    db.collection("GrouspForCoaches").doc(doc10.id).update({
         Online: firebase.firestore.FieldValue.arrayRemove(authName)
 
             });
@@ -1019,7 +1020,7 @@ function updateOnlineStatusFromPagesLeaveGroup(authName){
 
 function updateReadStatusBasedOnOnline(onlineArray, authName, docID){
     if(onlineArray.includes(authName)){
-       const docRefOnline = db.collection("Coachgroups").doc(docID)
+       const docRefOnline = db.collection("GrouspForCoaches").doc(docID)
        docRefOnline.collection("Messages").where("Status", "==", "New")
        .get().then(querySnapshot => {
            querySnapshot.forEach(
@@ -1035,7 +1036,7 @@ function updateReadStatusBasedOnOnline(onlineArray, authName, docID){
 
 function newMessageInOverview(docID, chatsDivDOM, newMessage){
 
-    const docRef = db.collection("Coachgroups").doc(docID) 
+    const docRef = db.collection("GrouspForCoaches").doc(docID) 
 
     const newMessageCount = []
 
@@ -1079,7 +1080,8 @@ auth.onAuthStateChanged(User =>{
 
         const auth = doc.data().Gebruikersnaam
 
-db.collection("Coachgroups").where("Members", "array-contains", auth).get().then(querySnapshot => {
+db.collection("GrouspForCoaches").where("Members", "array-contains", auth)
+.get().then(querySnapshot => {
     querySnapshot.forEach(doc1 => {
 
         const type = doc1.data().Type
@@ -1243,214 +1245,6 @@ function upgradeModal(notice){
 });
 }();
 
-// Group goal
-const groupGoalSelect = document.getElementById("create-practicegroup-goal-select")
-
-if(groupGoalSelect != null){
-
-db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
-    querySnapshot.forEach(doc=> {
-            const doel = doc.data().Levensvraag
-
-            const option = document.createElement("option")
-
-            option.innerHTML = doel
-
-            groupGoalSelect.appendChild(option)
-        });
-    });
-};
-
-const coachgroupGoalSelect = document.getElementById("create-coachgroup-goal-select")
-
-if(coachgroupGoalSelect != null){
-
-db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
-    querySnapshot.forEach(doc=> {
-            const doel = doc.data().Levensvraag
-
-            const option = document.createElement("option")
-
-            option.innerHTML = doel
-
-            coachgroupGoalSelect.appendChild(option)
-        });
-    });
-};
-
-// Title
-
-function groupTitle(a,b){
-
-const coachGroupTitle = document.getElementById(a)
-
-if (coachGroupTitle != null){
-
-const authRef = auth.onAuthStateChanged(User =>{
-    if(User){
-    const userRef = db.collection("Vitaminders").doc(User.uid);
-    userRef.get().then(function(doc) {
-
-        const auth = doc.data().GebruikersnaamClean
-        const usertype = doc.data().Usertype
-
-        coachGroupTitle.innerText = `Wat leuk dat je een ${b} gaat starten, ${auth}`
-
-                });
-            };
-        });
-    };
-}   groupTitle("coachgroup-builder-title", "coachgroep")
-    groupTitle("practicegroup-builder-title", "oefengroep")
-
-    // Save to database
-    const uploadCoverPhotoButton = document.getElementById("upload-cover-photo-coachgroup")
-
-    if(uploadCoverPhotoButton != null){
-
-    uploadCoverPhotoButton.addEventListener("click", () => {
-        const selectedFile = document.getElementById('foto-upload').files[0];
-        const progressBar = document.getElementById("progress-bar")
-
-        uploadCoverPhotoButton.innerText = "Uploaden..."
-        
-        const storageRef = firebase.storage().ref("/GroupCoverPhotos/" + selectedFile.name);
-        
-           const uploadTask = storageRef.put(selectedFile)
-           uploadTask.then(() => {
-            // Register three observers:
-            // 1. 'state_changed' observer, called any time the state changes
-            // 2. Error observer, called on failure
-            // 3. Completion observer, called on successful completion
-            uploadTask.on('state_changed', function(snapshot){
-            // Observe state change events such as progress, pause, and resume
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            progressBar.innerHTML = ` ${progress} %`;
-            switch (snapshot.state) {
-              case firebase.storage.TaskState.PAUSED: // or 'paused'
-                console.log('Upload is paused');
-                break;
-              case firebase.storage.TaskState.RUNNING: // or 'running'
-                console.log('Upload is running');
-                break;
-            }
-          }, function(error) {
-            // Handle unsuccessful uploads
-          }, function() {
-            // Handle successful uploads on complete
-            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-              console.log('File available at', downloadURL);
-              uploadCoverPhotoButton.innerText = "Geupload"
-              window.coverPhoto = downloadURL
-
-                });
-            });
-        });
-    });
-};
-
-    const uploadCoverPhotoButtonPracticegroup = document.getElementById("upload-cover-photo-practicegroup")
-
-    if (uploadCoverPhotoButtonPracticegroup != null){
-    uploadCoverPhotoButtonPracticegroup.addEventListener("click", () => {
-        const selectedFile = document.getElementById('foto-upload').files[0];
-        const progressBar = document.getElementById("progress-bar")
-
-        uploadCoverPhotoButtonPracticegroup.innerText = "Uploaden..."
-        
-        const storageRef = firebase.storage().ref("/GroupCoverPhotos/" + selectedFile.name);
-        
-           const uploadTask = storageRef.put(selectedFile)
-           uploadTask.then(() => {
-            // Register three observers:
-            // 1. 'state_changed' observer, called any time the state changes
-            // 2. Error observer, called on failure
-            // 3. Completion observer, called on successful completion
-            uploadTask.on('state_changed', function(snapshot){
-            // Observe state change events such as progress, pause, and resume
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            progressBar.innerHTML = ` ${progress} %`;
-            switch (snapshot.state) {
-              case firebase.storage.TaskState.PAUSED: // or 'paused'
-                console.log('Upload is paused');
-                break;
-              case firebase.storage.TaskState.RUNNING: // or 'running'
-                console.log('Upload is running');
-                break;
-            }
-          }, function(error) {
-            // Handle unsuccessful uploads
-          }, function() {
-            // Handle successful uploads on complete
-            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-              console.log('File available at', downloadURL);
-              uploadCoverPhotoButtonPracticegroup.innerText = "Geupload"
-              window.coverPhoto = downloadURL
-
-                });
-            });
-        });
-    });
-};
-
-function saveCoachgroup(){
-
-    auth.onAuthStateChanged(User =>{
-        if(User){
-        const userRef = db.collection("Vitaminders").doc(User.uid);
-        userRef.get().then(function(doc) {
-    
-            const auth = doc.data().Gebruikersnaam
-    
-    const title = document.getElementById("coachgroup-title").value
-    const description = document.getElementById("coachgroup-description").value
-    const numberParticipants = document.getElementById("coachgroup-number-participants").value
-    const costs = document.getElementById("coachgroup-costs").value
-    const groupLength = document.getElementById("coachgroup-length").value
-
-    // Group goal
-    const groupGoalSelect = document.getElementById("create-coachgroup-goal-select")
-
-    const select = groupGoalSelect.options
-    const option = select[select.selectedIndex].innerHTML
-
-   db.collection("Chats").doc().set({
-        Eigenaar: "Vitaminds",
-        Room: idClean + title,
-        RoomClean: title,
-        Creater: auth,
-        Description: description,
-        NumberParticipants: numberParticipants,
-        Costs: costs,
-        GroupLength: groupLength,
-        Members: firebase.firestore.FieldValue.arrayUnion(auth),
-        Goal: option,
-        Online: [],
-        Type: "Coachgroup", 
-        CoverPhoto: coverPhoto
-                }).then(() => {
-                        const notice = document.createElement("p")
-
-                        notice.innerText = "Je groep is aangemaakt!"
-
-                        const buttonCoachGroup = document.getElementById("button-coachgroup")
-
-                        buttonCoachGroup.appendChild(notice)
-
-                        notice.style.cursor = "pointer"
-
-                        notice.addEventListener("click", () => {
-                            window.open(`../Group/${idClean + title}.html`, "_self");
-                        });
-                });
-            });
-        };
-    });
-};
 
 
 

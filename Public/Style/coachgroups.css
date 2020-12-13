@@ -69,6 +69,13 @@
     margin-top: 5px;
 }
 
+#tutorial-div{
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .groups-outer-div{
     display: none;
     flex-wrap: wrap;

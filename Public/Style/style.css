@@ -1377,10 +1377,14 @@ ul{
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 20px;
+  padding-bottom: 20px;
 }
 
 #contact-layer p{
   font-size: 16px;
+  margin: 3px;
+  font-weight: bold;
+  letter-spacing: .8px;
 }
 
 .adress-div{
@@ -1391,6 +1395,7 @@ ul{
 
 .icon-contact-layer{
   width: 30px;
+  margin-bottom: 10px;
 }
 
 /* page title */

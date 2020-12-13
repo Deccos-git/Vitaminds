@@ -28,7 +28,8 @@
   <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
     tinymce.init({
-      height: 400,
+      height: 600,
+      width: "auto",
       selector: '#tiny-mce',
       toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media',
       plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media',
@@ -114,14 +115,17 @@
   <section id="coach-input">
     <textarea id="insights-CTA" cols="50" rows="2"></textarea>
       <div id="insights-theme-ideas">
-        <p> <a href="https://www.youtube.com/watch?v=bL2dHvBZj4U">Bekijk tutorial video</a> </p>
+        <div id="tutorial-div">
+          <p>Tutorial</p>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/bL2dHvBZj4U" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
         <p>Kies eerst een sub-onderwerp</p>
         <div id="paragraph-list-insights"></div>
         <a href="../thema-lijst.html"><p id="coach-suggestions">Jouw suggestie</p></a> 
       </div>
     <div id="nieuwepost">
         <input id="nieuwposttitel" type="text" placeholder="Geef je inzicht een titel...">
-        <h6 id="insights-tip"><i>Tip:</i> Probeer je inzichten persoonlijk te maken. Geef mensen zo mogelijk een inzicht in je eigen proces van persoonlijke ontwikkeling m.b.t. dit onderwerp</h6>
+        <a id="article-tips" href="../Kenniscentrum-coaching/Een%20artikel%20schrijven%20als%20coach%20(20%20tips).html" target="_blank">Tips voor het schrijven van een artikel</a>
         <div id="tiny-mce"></div>
         <button onclick = "nieuwepostsubmit(this)" class="button-algemeen">Delen</button>
    </div> 
