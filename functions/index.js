@@ -96,6 +96,58 @@ createSession("/create-session-hundred", 10000)
 createSession("/create-session-hundredfifty", 15000)
 createSession("/create-session-twohundred", 20000)
 
+// Complete coachprofile reminders
+
+!function completeCoachprofile(){
+
+    db.collection("Vitaminders").where("Usertype", "==", "Coach")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const domains = doc.data().Domains
+            const gebruikersnaam = doc.data().Gebruikersnaam
+
+            db.collection("Vitaminders").where("Gebruikersnaam", "==", gebruikersnaam)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    const email = doc.data().Email
+                    const gebruikersnaamClean = doc.data().GebruikersnaamClean
+
+                    cron.schedule("00 14 15 * *", () => {
+
+                        db.collection("Mail").doc().set({
+                            to: email,
+                            cc: "info@vitaminds.nu",
+                        message: {
+                        subject: `Maak je coachprofiel compleet`,
+                        html: `Hallo, ${gebruikersnaamClean}</br></br>
+                            Om goed gevonden te worden op Vitaminds is het belangrijk om je coachprofiel zo veel mogelijk compleet te maken. <br>
+                            Je ontvant deze mail omdat onze code heeft ontdenkt dat je je profiel nog niet helemaal hebt ingevuld.<br>
+                            Dat kan zijn omdat je iets hebt vergeten om in te vullen of omdat we iets nieuws hebben toegevoegd.
+                            <br><br>
+                            Incompleet profiel onderdeel: Domeinen<br>
+                            Wanneer je domeinen zijn ingevuld kun je daarop gevonden worden op de website.<br><br>
+
+                            Klik <a href="https://vitaminds.nu/Vitaminders/${gebruikersnaam}"> hier</a> om je coachprofiel compleet te maken.<br><br> 
+                        
+                            Vriendelijke groet, </br></br>
+                            Het Vitaminds Team </br></br>
+                            <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                        Type: "Vitaminders",
+                        gebruikersnaam: gebruikersnaam
+                        }
+                                
+                        }).catch((err) => {
+                            console.log(err)
+                        })
+                    });
+                });
+            });
+        });
+    });
+}();
+
 // Analytics aanmaken op basis van URL
 app.get('/analyse/:id',function(req,res)
 {
@@ -185,7 +237,8 @@ app.get('/eventpage/:id',function(req,res)
 
 // Tool sheduling
 
-db.collection("Practice").where("Practice", "==", "Check-in").get().then(querySnapshot => {
+db.collection("Practice").where("Practice", "==", "Check-in")
+.get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
         const levensvraag = doc.data().Levensvraag
@@ -234,120 +287,48 @@ db.collection("Practice").where("Practice", "==", "Check-in").get().then(querySn
 
 // Tool sheduling
 
-db.collection("Vitaminders")
-.where("Usertype", "==", "Coach")
-.where("Usertype", "==", "Vitaminder")
-.get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-
-        const gebruikersnaamClean = doc.data().GebruikersnaamClean
-        const gebruikersnaam = doc.data().Gebruikersnaam
-        const email = doc.data().Email
-
-                cron.schedule("00 09 1,15 * *", () => {
-
-                db.collection("Mail").doc().set({
-                    to: email,
-                    cc: "info@vitaminds.nu",
-                message: {
-                subject: `Hoe gaat het met je, ${gebruikersnaamClean}`,
-                html: `Hallo, ${gebruikersnaamClean}</br></br>
-                    Je bent lid geworden van Vitaminds om je geluk in eigen handen te nemen. <br>
-                    Deze twee-wekelijkse mail is bedoeld om je te helpen om je geluk een onderdeel te maken van je dagelijks.<br><br>
-                    Wat is op dit moment je geluksniveau? <br><br>
-                    <a href="https://vitaminds.nu/Vitaminders/${gebruikersnaam}"> 
-                        <img src="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/geluksschaal-plaatje-small.png?alt=media&token=5edf44ed-b2dc-46d2-ad7d-7a6215ef80b6" alt="Geluksschaal"> 
-                    </a></br></br>
-                
-                    Vriendelijke groet, </br></br>
-                    Het Vitaminds Team </br></br>
-                    <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-                Type: "Vitaminders",
-                gebruikersnaam: gebruikersnaam
-                }
-                        
-                }).catch((err) => {
-                    console.log(err)
-                })
-            });
-    })
-}).catch((err) => {
-    console.log(err)
-});
-
-// // Coachgroup sheduling
-
-// db.collection("Chats").where("Type", "==", "Coachgroup").get().then(querySnapshot => {
+// db.collection("Vitaminders")
+// .where("Usertype", "==", "Coach")
+// .where("Usertype", "==", "Vitaminder")
+// .get().then(querySnapshot => {
 //     querySnapshot.forEach(doc => {
 
-//         const members = doc.data().Members
-//         const room = doc.data().RoomClean
-//         const coach = doc.data().Creater
-//         const data = doc.data().data
-//         const sessionLength = doc.data().SessionLenght
-        
-//         members.forEach(member => {
+//         const gebruikersnaamClean = doc.data().GebruikersnaamClean
+//         const gebruikersnaam = doc.data().Gebruikersnaam
+//         const email = doc.data().Email
 
-//         db.collection("Vitaminders")
-//         .where("Gebruikersnaam", "==", member)
-//         .get()
-//         .then(querySnapshot => {
-//             querySnapshot.forEach(doc1 => {
-
-//                 const email = doc1.data().Email
-//                 const gebruikersnaamClean = doc1.data().GebruikersnaamClean
-
-//                 db.collection("Vitaminders")
-//                 .where("Gebruikersnaam", "==", coach)
-//                 .get()
-//                 .then(querySnapshot => {
-//                 querySnapshot.forEach(doc2 => {
-
-//                     const coachClean = doc2.data().GebruikersnaamClean
-
-//                 cron.schedule(" 0 8 * * 6", () => {
+//                 cron.schedule("00 09 1,15 * *", () => {
 
 //                 db.collection("Mail").doc().set({
 //                     to: email,
 //                     cc: "info@vitaminds.nu",
 //                 message: {
-//                 subject: `Herinnering voor je coachgroep bijeenkomst`,
+//                 subject: `Hoe gaat het met je, ${gebruikersnaamClean}`,
 //                 html: `Hallo, ${gebruikersnaamClean}</br></br>
-//                     Bij deze ontvang je van ons even een herinnering over de bijeenkomst van je coachgroep ${room}
-//                     van coach ${coachClean} <br><br>
-//                     Je coachgroep komt bij elkaar op<br>
-//                     <b>${data}</b><br><br>
-
-//                     De bijeenkomst duurt <br>
-//                     <b>${sessionLength} minuten</b><br><br>
-
-//                     Namens ${coachClean}: tot ${data} <br><br> 
+//                     Je bent lid geworden van Vitaminds om je geluk in eigen handen te nemen. <br>
+//                     Deze twee-wekelijkse mail is bedoeld om je te helpen om je geluk een onderdeel te maken van je dagelijks.<br><br>
+//                     Wat is op dit moment je geluksniveau? <br><br>
+//                     <a href="https://vitaminds.nu/Vitaminders/${gebruikersnaam}"> 
+//                         <img src="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/geluksschaal-plaatje-small.png?alt=media&token=5edf44ed-b2dc-46d2-ad7d-7a6215ef80b6" alt="Geluksschaal"> 
+//                     </a></br></br>
                 
 //                     Vriendelijke groet, </br></br>
 //                     Het Vitaminds Team </br></br>
 //                     <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
 //                 Type: "Vitaminders",
-//                 gebruikersnaam: member
-//                 }      
+//                 gebruikersnaam: gebruikersnaam
+//                 }
+                        
 //                 }).catch((err) => {
 //                     console.log(err)
-//                 });
+//                 })
 //             });
-//         });
-//     });
-
-//             });
-//         }).catch((err) => {
-//             console.log(err)
-//         });
-//     });
-//     });
+//     })
 // }).catch((err) => {
 //     console.log(err)
 // });
 
 // Redirects
-
 app.get('/agenda/*',function(req,res)
 {
     res.sendFile('/index-redirect.html', { root: __dirname });

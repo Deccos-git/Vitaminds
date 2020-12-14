@@ -1224,123 +1224,122 @@ function hideIntroductionInputForNoneAuth(introductionText){
 
 // Domains
 
-// !function hideEditIconDomains(){
+!function hideEditIconDomains(){
 
-//         const editDomainsButton = document.getElementById("edit-domains")
+        const editDomainsButton = document.getElementById("edit-domains")
 
-//         auth.onAuthStateChanged(User =>{
-//                 const docRef = db.collection("Vitaminders").doc(User.uid)
-//                 docRef.get().then(doc => {
+        auth.onAuthStateChanged(User =>{
+                const docRef = db.collection("Vitaminders").doc(User.uid)
+                docRef.get().then(doc => {
 
-//                         const name = doc.data().Gebruikersnaam
+                        const name = doc.data().Gebruikersnaam
 
-//                         if(name === naam){
+                        if(name === naam){
 
-//                                 editDomainsButton.style.display = "block"
+                                editDomainsButton.style.display = "block"
 
-//                         };
-//                 });
-//         });
-// }();
+                        };
+                });
+        });
+}();
         
 
-// !function editDomains(){
-//         const editDomainsButton = document.getElementById("edit-domains")
-//         const editDomainList = document.getElementById("domain-select")
-//         const domainInput = document.getElementsByClassName("domain-input")
-//         const saveButton = document.getElementById("save-outer-div")
-//         const listOfDomains = document.getElementById("list-of-domains")
+!function editDomains(){
+        const editDomainsButton = document.getElementById("edit-domains")
+        const editDomainList = document.getElementById("domain-select")
+        const domainInput = document.getElementsByClassName("domain-input")
+        const saveButton = document.getElementById("save-outer-div")
+        const listOfDomains = document.getElementById("list-of-domains")
        
 
-//         editDomainsButton.addEventListener("click", () => {
+        editDomainsButton.addEventListener("click", () => {
 
-//                 editDomainList.style.display = "block"
-//                 listOfDomains.style.display = "none"
+                editDomainList.style.display = "block"
+                listOfDomains.style.display = "none"
 
-//                 preSelectDomainsFromDatabase(domainInput)
+                preSelectDomainsFromDatabase(domainInput)
 
-//                 saveButton.style.display = "block"
+                saveButton.style.display = "block"
 
-//         });
-// }();
+        });
+}();
 
-// function preSelectDomainsFromDatabase(domainInputs){
+function preSelectDomainsFromDatabase(domainInputs){
 
-//         const domainInputArray = Array.from(domainInputs)
+        const domainInputArray = Array.from(domainInputs)
 
-//         domainInputArray.forEach(domain => {
+        domainInputArray.forEach(domain => {
 
-//                 auth.onAuthStateChanged(User =>{
-//                         const docRef = db.collection("Vitaminders").doc(User.uid)
-//                         docRef.get().then(doc => {
-//                                 const domainsDB = doc.data().Domains
+                auth.onAuthStateChanged(User =>{
+                        const docRef = db.collection("Vitaminders").doc(User.uid)
+                        docRef.get().then(doc => {
+                                const domainsDB = doc.data().Domains
 
-//                                 if(domainsDB != undefined){
+                                if(domainsDB != undefined){
                 
-//                                         domainsDB.forEach(domainDB => {
-//                                                 if(domainDB === domain.id){
-//                                                         domain.checked = true
-//                                                 };
-//                                         });
-//                                 };
+                                        domainsDB.forEach(domainDB => {
+                                                if(domainDB === domain.id){
+                                                        domain.checked = true
+                                                };
+                                        });
+                                };
 
-//                                 saveDomainsToDB(docRef)
-//                         });
-//                 });
-//         });
-// };
+                                saveDomainsToDB(docRef)
+                        });
+                });
+        });
+};
 
-// function saveDomainsToDB(docReference){
-//         const domainInput = document.getElementsByClassName("domain-input")
-//         const saveButton = document.getElementById("save-div-button")
+function saveDomainsToDB(docReference){
+        const domainInput = document.getElementsByClassName("domain-input")
+        const saveButton = document.getElementById("save-div-button")
 
-//         const domainInputArray = Array.from(domainInput)
+        const domainInputArray = Array.from(domainInput)
 
-//         domainInputArray.forEach(domain => {
+        domainInputArray.forEach(domain => {
 
-//                 saveButton.addEventListener("click", () => {
+                saveButton.addEventListener("click", () => {
 
-//                         saveButton.innerText = "Opgeslagen"
+                        saveButton.innerText = "Opgeslagen"
 
-//                         const selectedDomain = domain.checked
+                        const selectedDomain = domain.checked
 
-//                         if(selectedDomain === true){
-//                                const selectedValue = domain.value
+                        if(selectedDomain === true){
+                               const selectedValue = domain.value
 
-//                                docReference.update({
-//                                        Domains: firebase.firestore.FieldValue.arrayUnion(selectedValue)
-//                                });
-//                         };
-//                 });
-//         });
-// };
+                               docReference.update({
+                                       Domains: firebase.firestore.FieldValue.arrayUnion(selectedValue)
+                               });
+                        };
+                });
+        });
+};
 
-// !function displayDomains(){
+!function displayDomains(){
 
-//         const listOfDomains = document.getElementById("list-of-domains")
+        const listOfDomains = document.getElementById("list-of-domains")
 
-//         db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
-//                 .get().then(querySnapshot => {
-//                         querySnapshot.forEach(doc => {
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
 
-//                         const domainsDB = doc.data().Domains
+                        const domainsDB = doc.data().Domains
 
-//                         if(domainsDB != undefined){
+                        if(domainsDB != undefined){
 
-//                                 domainsDB.forEach(domain => {
+                                domainsDB.forEach(domain => {
 
-//                                         const domainP = document.createElement("p")
+                                        const domainP = document.createElement("p")
 
-//                                         domainP.innerText = domain
+                                        domainP.innerText = domain
 
-//                                         listOfDomains.appendChild(domainP)
+                                        listOfDomains.appendChild(domainP)
 
-//                                 });
-//                         };
-//                 });
-//         });
-
-// }();
+                                });
+                        };
+                });
+        });
+}();
 
 
 
