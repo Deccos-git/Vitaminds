@@ -72,8 +72,7 @@
 
 #groups-for-coaches{
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
 }
 
 .group-auth-div{
@@ -148,4 +147,128 @@
 
 #button-div-landing{
     margin-bottom: 40px;
+}
+
+#premium-price{
+    font-size: 14px;
+    margin-top: -15px;
+    cursor: pointer;
+}
+
+#input-div{
+    display: flex;
+    align-items: center;
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    margin: 0px;
+    width: 100%;
+}
+
+#chat-input{
+    width: 100%;
+    border: 1px solid rgba(0,0,0,.2);
+}
+
+#send-icon-group{
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+}
+
+.message-options{
+    font-size: 14px;
+    margin: 0px;
+    cursor: pointer;
+    margin-top: -30px;
+    color: #49beb7;
+}
+
+.send-chat-as-mail{
+    font-size: 14px;
+    margin: 0px;
+    display: none;
+    cursor: pointer;
+    color: #49beb7;
+}
+
+#chat-screen{
+    min-height: 350px;
+    border-top: 1px solid rgba(0,0,0,.2);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0px;
+}
+
+.group-member-photo{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 5px;
+    cursor: pointer;
+}
+
+#list-of-members{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-top: 1px solid rgba(0,0,0,.2);
+}
+
+#list-of-members-inner-div{
+    display: flex;
+}
+
+.bottom-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.bottom-div p{
+    margin-top: 0px;
+    font-size: 18px;
+    padding: 0px 15px;
+}
+
+.auth-message-p{
+    display: flex;
+    flex-direction: column-reverse;
+    border: 1px solid rgba(0,0,0,.2);
+    padding: 5px;
+    border-radius: 15px;
+    font-size: 16px;
+    margin: 2px;
+    max-width: 50%;
+}
+
+.sender-name-message{
+    font-size: 11px;
+    margin-top: 0px;
+    text-align: right;
+}
+
+#add-learning-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+#add-learning-div select{
+    width: auto;
+}
+
+#add-learning-div button{
+    margin-top: 20px;
+}
+
+#notice-learning-added{
+    color: #cf6e13;
+    font-size: 14px;
+    display: none;
+}
+
+#button-add-learning{
+    margin-bottom: 30px;
 }

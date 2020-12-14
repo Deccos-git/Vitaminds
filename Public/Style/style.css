@@ -825,6 +825,10 @@ ul{
   margin: 60px 100px 60px 100px;
 }
 
+#description{
+  color: #122b46;
+}
+
 #begin h2{
   margin: -130px 100px 100px 100px;
   letter-spacing: 0.5px;
@@ -942,15 +946,16 @@ ul{
 }
 
 .welkom2{
-  background-image: url("../images/welkomTwee3.jpg");
+  background-image: url(../images/avontuur57.jpg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   height: 750px;
+  padding: 50px;
 }
 
 .welkom2 h1{
-  color: #122b46;
+  color: white;
   margin: 50px 0px 0px 0px;
 }
 
@@ -961,7 +966,7 @@ ul{
 }
 
 .welkom2 h2{
-  color: #0c6665;
+  color: white;
   margin: 100px 200px 10px 200px;
 }
 
@@ -974,13 +979,17 @@ ul{
   margin: 0px 0px 50px 0px;
 }
 
+#omgeving ul{
+  color: white;
+}
+
 #omgeving li{
   list-style: none;
 }
 
 #omgeving li:before {
   content: "\2022";
-  color: #0c6665;
+  color: white;
   font-weight: bold;
   display: inline-block;
   width: 30px;
@@ -1716,7 +1725,6 @@ margin: 0px 0px 30px 0px;
 
   #begin h2{
     font-size: 30px;
-    color: #122b46;
     margin: 0px 10px 10px 10px;
     letter-spacing: 0.5px;
     font-size: 25px;

@@ -897,9 +897,15 @@
 }
 
 .insights-outer-div h2{
-    text-align: center;
+    text-align: left;
     align-self: center;
     font-size: 18px;
+}
+
+#insight-timestamp{
+    font-size: 14px;
+    margin-top: 34px;
+    font-weight: 600;
 }
 
 .insights-outer-div p{

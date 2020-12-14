@@ -108,6 +108,11 @@
 
 #workshop-description{
     margin: 20px 100px;
+    text-align: left;
+}
+
+#workshop-facts li{
+    list-style: none;
 }
 
 #workshop-agreement{

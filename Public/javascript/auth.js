@@ -22,6 +22,8 @@ const id = Math.random()
 const idAlpha = id.toString(36)
 const idClean = idAlpha.replace("0.", "")
 
+console.log(idClean)
+
 // Random color
 function getRandomColor() {
   var letters = '0123456789ABCDEF';

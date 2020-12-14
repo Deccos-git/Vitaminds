@@ -746,6 +746,7 @@ function dashboardFunction(){
                                                 const levensvraagArtikel = doc1.data().LevensvraagArtikel
                                                 const themeArtikel = doc1.data().ThemeArtikel
                                                 const type = doc1.data().Type
+                                                const timestamp = doc1.data().Timestamp
 
                                                 db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
                                                         querySnapshot.forEach(doc2 => {
@@ -753,20 +754,24 @@ function dashboardFunction(){
                                                             const photo = doc2.data().Profielfoto
                                                 
                                                 const outerDiv = document.createElement("div")
-                                                outerDiv.setAttribute("class", "insights-outer-div")
-                                                outerDiv.setAttribute("data-coach", coach)
+                                                        outerDiv.setAttribute("class", "insights-outer-div")
+                                                        outerDiv.setAttribute("data-coach", coach)
                                                 const metaDiv = document.createElement("div")
-                                                metaDiv.setAttribute("class", "meta-div-insights")
+                                                        metaDiv.setAttribute("class", "meta-div-insights")
                                                 const metaPhoto = document.createElement("img")
-                                                metaPhoto.setAttribute("class", "meta-photo")
+                                                        metaPhoto.setAttribute("class", "meta-photo")
                                                 const metaName = document.createElement("p")
                                                 const textDiv = document.createElement("div")
-                                                textDiv.setAttribute("class", "text-div-insights")
+                                                        textDiv.setAttribute("class", "text-div-insights")
                                                 const textTitle = document.createElement("h2") 
+                                                const date = document.createElement("p")
+                                                        date.setAttribute("id", "insight-timestamp")
 
                                                 metaPhoto.src = photo
                                                 metaName.innerHTML = gebruikersnaamClean
                                                 textTitle.innerHTML = titelInsight
+                                                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                                                date.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
                                                
                                                 // Hide kenniscentrum insights
 
@@ -798,6 +803,7 @@ function dashboardFunction(){
                                                 metaDiv.appendChild(metaName)
                                                 outerDiv.appendChild(textDiv)
                                                 textDiv.appendChild(textTitle)
+                                                textTitle.appendChild(date)
                                                 
                                                                 
                                                                 })

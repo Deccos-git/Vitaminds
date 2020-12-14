@@ -134,11 +134,11 @@
     font-size: 20px;
 }
 
+#cooperate-banner{
+    width: 100%;
+}
+
 @media only screen and (max-width: 938px){
-    
-    #cooperate-banner{
-        width: 100%;
-    }
 
     #cooperate-desciption {
         margin: 30px 20px 30px 20px;

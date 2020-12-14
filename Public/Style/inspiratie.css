@@ -250,6 +250,7 @@
     color: #122b46;
     font-size: 25px;
     margin: 0px 20px 30px 20px;
+    word-break: break-word;
 }
 
 #tools-section{

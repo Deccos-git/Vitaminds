@@ -83,6 +83,10 @@
     padding: 30px;
 }
 
+#call-to-action-div h3{
+    color: white;
+} 
+
 #call-to-action-div p{
     font-size: 20px;
     color: white;

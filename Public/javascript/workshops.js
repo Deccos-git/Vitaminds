@@ -115,7 +115,7 @@ function workshopFacts(priceOfWorkshop){
 
     const workshopPrice = document.createElement("li")
 
-    workshopPrice.innerText = `Prijs: €${priceOfWorkshop}`
+    workshopPrice.innerHTML = `<b>Prijs:</b> €${priceOfWorkshop}`
 
     workshopFactsUl.appendChild(workshopPrice)
 };
