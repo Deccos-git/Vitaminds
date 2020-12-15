@@ -9,6 +9,8 @@
     const optionsArray = Array.from(options)
 
         optionsArray.forEach(option => {
+
+
         
         db.collection("Levensvragen").where("Domein", "==", option.innerHTML)
         .get()
@@ -32,18 +34,20 @@
             
                                 const goal = doc1.data().LevensvraagClean
 
-                                console.log(goal)
+                               
                         
                                 if(option.innerHTML === domain){
+
+                                    console.log(domain, goal)
+
+                                    console.log(goal)
 
                                     const goalOption = document.createElement("option")
                                         goalOption.setAttribute("id", "goal-option")
 
                                     goalOption.innerText = ` (Jouw doel: ${goal})`
 
-                                    console.log(goalOption)
-
-                                    option.appendChild(goalOption)
+                                    // option.appendChild(goalOption)
                                 };
                             });
                         });

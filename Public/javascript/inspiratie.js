@@ -160,7 +160,7 @@ window.addEventListener("load", () => {
 
                                     goalOption.innerText = ` (Jouw doel: ${goal})`
 
-                                    option.appendChild(goalOption)
+                                    // option.appendChild(goalOption)
                                 };
                             });
                         });
