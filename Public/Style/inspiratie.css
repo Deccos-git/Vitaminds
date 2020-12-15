@@ -20,6 +20,14 @@
     cursor: pointer;
 }
 
+#lifelessons-outer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+}
+
 #bijschrijven{
     border-bottom: #122b46 2px solid;
     padding: 15px;
@@ -35,7 +43,7 @@
 }
 
 #inspiratie-filter-select{
-    width: 200px;
+    width: auto;
     font-size: 20px;
 }
 
@@ -1341,6 +1349,10 @@
 
     .bodyTekst{
         padding-left: 15px;
+    }
+
+    #inspiratie-filter-select{
+        width: 100%;
     }
 
     .artikel{

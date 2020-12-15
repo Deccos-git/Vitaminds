@@ -14,6 +14,25 @@
     font-size: 18px;
 }
 
+#coaches-filter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#coaches-filter p{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#goal-option{
+    font-size: 16px;
+}
+
+#coaches-filter-select{
+    width: auto;
+}
+
 #filters{
     display: flex;
     justify-content: space-evenly;
@@ -173,4 +192,10 @@
     align-items: center;
 }
 
+@media only screen and (max-width: 938px){
 
+    #coaches-filter-select {
+        width: 100%;
+    }
+    
+}
