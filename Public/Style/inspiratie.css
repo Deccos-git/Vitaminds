@@ -20,12 +20,53 @@
     cursor: pointer;
 }
 
-#lifelessons-outer-div{
+.inner-div{
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 30px;
-    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+#auth-div-lifelessons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+#auth-div-lifelessons img{
+    height: 50px;
+    border-radius: 50%;
+}
+
+#auth-div-lifelessons p{
+    font-size: 14px;
+}
+
+#meta-div p{
+    font-size: 14px;
+}
+
+#levensvraag-artikel-ouyter-div{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#lifelesson-p{
+    font-size: 18px;
+}
+
+#lifelessons-outer-div h3{
+    text-align: center;
+}
+
+#lifelessons-outer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
 }
 
 #bijschrijven{
@@ -312,13 +353,7 @@
     display: none !important;
 }
 
-#levensvraag-artikel-ouyter-div{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-#levensvraag-artikel-ouyter-div{
+#more-inspiration{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;

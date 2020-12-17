@@ -694,6 +694,20 @@ ul{
   align-self: center;
 }
 
+#button-free-account{
+  background-color: #122B46;
+  border-radius: 20px;
+  border: 0px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  margin-top: auto;
+  width: 150px;
+  align-self: center;
+
+}
+
 /* header*/
 
 .header-image{
@@ -710,28 +724,6 @@ ul{
   align-items: center;;
 }
 
-.header-image a:link{
-  text-decoration: none;;
-  color: #fff;
-}
-
-.header-image a:visited{
-  text-decoration: none;;
-  color: #fff;
-}
-
-.header-title{
-  color: #FFF;
-  font-family: 'Libre Baskerville', serif;
-  font-size: 70px;
-  text-align: center;
-}
-
-.header {
-  width: 100%;
-  z-index: 1;
-}
-
 #background{
   display: flex;
   flex-direction: column;
@@ -741,262 +733,88 @@ ul{
   text-align: center;
 }
 
-.header-image h1{  
-  padding-top: 0px;
-  padding-right: 0px;
-  padding-bottom: 0px;
-  padding-left: 0px;
-  margin-bottom: 0px;
-  color: #8e0000;
-}
 
 .header-image h2{
   color: #122b46;
   letter-spacing: 0.5px;
+  margin-top: 120px;
+  font-size: 40px;
 }
 
-.header-image h3{
-  color: #fff;
-}
-
-.subheader{
-  color: #FFF;
-  font-size: 25px;
-  text-align: center;
-  margin-top: 0px;
-}
-
-#vertelMeMeer a{
-  color: #122b46;
-}
-
-#dynamic-title-div{
-  display: flex;
-  justify-content: center;
-}
-
-#dynamic-title-div p{
-  color: white;
-  align-self: center;
-  margin-left: 10px;
-  font-size: 28px;
-}
-
-#dynamic-call-to-action{
-  margin-bottom: 50px;
-}
-
-#main-header-select{
-  margin: 0px 0px 50px 0px;
-  border-radius: 5px;
-  color: #747474;
-  font-size: 16px;
-}
-
-#input-header{
-  padding: 10px 10px 10px 10px;
-  border-radius: 10px;
-  margin: 5px;
-  border: 1px solid #122b46;
-  color: #122b46;
-  width: auto;
-  font-size: 14px;
-}
-
-#input-cta-landing{
-  width: 100%;
-  margin: 20px 0px;
-  border: 0px;
-  font-size: 16px;
-  border-radius: 5px;
-}
-
-#goal-examples-cta-landing{
-  color: white;
-}
 
 /*DigiMind welkom */
 
-.welkom{
-  margin-bottom: 50px;
+.section-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 100px;
 }
 
-.subtitel{
-  margin: 60px 100px 60px 100px;
+.section-div h3{
+  margin-top: 100px;
 }
 
 #description{
   color: #122b46;
-}
-
-#begin h2{
-  margin: -130px 100px 100px 100px;
+  margin: 20px 50px 50px 50px;
   letter-spacing: 0.5px;
-  background-color: white;
-  border-radius: 5px;
   padding: 30px;
 }
 
-.DigiMind{
+#digimind-inner-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#coaches-inner-div{
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
 }
 
-.DigiMind section{
-  height: 500px;
-  width: 350px;
-  border-radius: 0px 0px 15px 15px;
-  margin: 20px;
-  padding-bottom: 20px;
-  align-items: center;
-  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+#coaches-section{
+  background-color: #80E9FF0D;
 }
 
-.DigiMind div h3{
-  text-align: center;
-  color: #fff;
-  font-size: 20px;
-  text-transform: uppercase;
-  margin-top: 40px;
+#digimind-section{
+  background-color: #80E9FF0D;
 }
 
-.karakter{
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  text-align: center;
-  overflow: hidden;
+#coaches-text-div{
+  width: 45%;
+  margin: 5%;
 }
 
-#karakterHead{
-  background-image: url("../images/hero-II.jpg");
-  background-size: 400px 200px;
-  height: 200px;
-  width: 100%;
-  margin: 0px;
-  min-height: 200px;
+#image-coaches-div img{
+  width: 110%;
 }
 
-.ervaring{
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  text-align: center;
-  overflow: hidden;
-}
-
-.ervaring p{
-  margin-bottom: 70px;
-}
-
-#ervaringHead{
-  background-image: url("../images/welkomOntwikkeling.jpg");
-  background-size: 400px 200px;
-  height: 200px;
-  width: 100%;
-  margin: 0px;
-  min-height: 200px;
-}
-
-.groei{
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  text-align: center;
-  overflow: hidden;
-}
-
-.groei p{
-  margin-bottom: 70px;
-}
-
-.explainer-p{
-  padding: 0px 20px;
-}
-
-#groeiHead{
-  background-image: url("../images/welkomGroei.jpg");
-  background-size: 400px 200px;
-  height: 200px;
-  width: 100%;
-  margin: 0px;
-  min-height: 200px;
-}
-
-#pers{
-  color: #122b46;
-  background-color: #fff;
-  margin: 30px 30px 0px 15px;
-  width: 80%;
-}
-
-#ont{
-  color: #122b46;
-  background-color: #fff;
-  margin: 30px 30px 0px 15px;
-  width: 80%;
-}
-
-#erv{
-  background-color: #fff;
-  margin: 30px 30px 0px 15px;
-  width: 80%;
-  color: #122b46;
-}
-
-.welkom2{
-  background-image: url(../images/avontuur57.jpg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  height: 750px;
-  padding: 50px;
-}
-
-.welkom2 h1{
-  color: white;
-  margin: 50px 0px 0px 0px;
-}
-
-#welkom-sub-sub-titel{
-  background: none !important;
-  margin: 150px 0px 0px 0px !important;
-  
-}
-
-.welkom2 h2{
-  color: white;
-  margin: 100px 200px 10px 200px;
-}
-
-#omgeving{
+#digimind-text-div{
+  width: 45%;
+  margin: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #122b46;
-  font-size: 30px;
-  margin: 0px 0px 50px 0px;
 }
 
-#omgeving ul{
-  color: white;
+#digimind-text-div p{
+  margin-bottom: 50px;
 }
 
-#omgeving li{
-  list-style: none;
+#coaches-text-div p{
+  font-size: 25px;
 }
 
-#omgeving li:before {
-  content: "\2022";
-  color: white;
-  font-weight: bold;
-  display: inline-block;
-  width: 30px;
-  margin-left: -10px;
+#feautures-inner-div{
+  display: flex;
+  justify-content: center;
 }
 
-
+#digimind-image-div img{
+  margin-top: 50px;
+  width: 500px;
+}
 /* main informatie styling */
 
 .container{
@@ -1709,6 +1527,7 @@ margin: 0px 0px 30px 0px;
   .header-image h2{
     margin-bottom: 0px;
     letter-spacing: 0.5px;
+    margin-top: -100px;
   }
 
   #omgeving li {
@@ -1782,6 +1601,47 @@ margin: 0px 0px 30px 0px;
 
 #coach-updates {
   margin: 0px 10px 100px 10px;
+}
+
+#digimind-image-div img {
+  width: auto;
+}
+
+#description {
+  margin: 5px 5px 50px 5px;
+  padding: 20px;
+  font-size: 20px;
+}
+
+.section-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 50px;
+}
+
+#coaches-text-div p {
+  font-size: 18px;
+}
+
+#image-coaches-div img {
+  width: 100%;
+}
+
+#feautures-img{
+  width: 80%;
+}
+
+.section-div h3 {
+  margin: 100px 30px 20px 30px;
+}
+
+#digimind-text-div {
+  width: 100%;
+}
+
+#digimind-text-div p{
+  padding: 0px 30px;
 }
 
 } 

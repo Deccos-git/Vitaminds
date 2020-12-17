@@ -165,7 +165,7 @@ function openWorkshop(elem){
 
     divTitle = elem.parentElement.previousElementSibling.previousElementSibling.innerText
 
-    db.collection("Workshops").where("Status", "==", "Public")
+    db.collection("Workshops")
     .where("WorkshopTitle", "==", divTitle)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {

@@ -1,73 +1,30 @@
-var openen = document.getElementById("open-up");
-var insp = document.getElementById("inspiratie");
-// var act = document.getElementById("activiteiten");
-var coach = document.getElementById("coaching");
 
-if(openen != null || insp != null || coach != null){
-
-        window.onload = function(){
-                openen.style.display = "block";
-                insp.style.display = "none";
-                // act.style.display = "none";
-                coach.style.display = "none";   
-        };
-
-        function openup(){
-                openen.style.display = "block";
-                insp.style.display = "none";
-                // act.style.display = "none";
-                coach.style.display = "none";
-        };
-
-        function inspiratie(){
-                insp.style.display = "block";
-                openen.style.display = "none";
-                // act.style.display = "none";
-                coach.style.display = "none";
-        };
-
-        // function activiteiten(){
-        //         act.style.display = "block";
-        //         openen.style.display = "none";
-        //         insp.style.display = "none";
-        //         coach.style.display = "none";
-        // }
-
-        function coaching(){
-                coach.style.display = "block";
-                openen.style.display = "none";
-                insp.style.display = "none";
-                // act.style.display = "none";
-        };
-};
 
 // Filter
 
-function setDomainToStorage(){
+// function setDomainToStorage(){
 
-        const selectDomain = document.getElementById("domain-select")
+//         const selectDomain = document.getElementById("domain-select")
 
-        const option = selectDomain.options
-        const selected = option[option.selectedIndex].innerHTML
+//         const option = selectDomain.options
+//         const selected = option[option.selectedIndex].innerHTML
 
-        localStorage.setItem("Domain", selected)
-};
+//         localStorage.setItem("Domain", selected)
+// };
 
-function directToPage(){
+function getType(){
 
-        const selectDomain = document.getElementById("type-select")
+        const selectDomain = document.getElementById("feaures-select")
 
         const option = selectDomain.options
         const selected = option[option.selectedIndex].innerHTML
 
         if(selected === "Artikelen"){
-                window.open("/inspiratie.html", '_self');
+                window.open("/artikelen.html", '_self');
         } else if (selected === "Workshops"){
                 window.open("/workshops.html", '_self');
         } else if (selected === "Coachgroepen"){
                 window.open("/groups.html", '_self');
-        } else if (selected === "Coaches"){
-                window.open("/coaches.html, '_self'");
         } else if (selected === "Events"){
                 window.open("/events.html", '_self');
         };

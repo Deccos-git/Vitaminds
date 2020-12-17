@@ -73,7 +73,9 @@ function getDomain(){
 
     loadCoachesOnFilteredDomain(selectedClean[0])
 
-    if(selectedClean === "Alles"){
+    console.log(selectedClean[0])
+
+    if(selectedClean[0] === "Alles"){
         showAllCoaches()
     }
 };
@@ -196,7 +198,7 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach").where("Status", "=
         const overview = document.getElementById("overview");
         const loader = document.getElementById("loader")
        
-            loader.style.display = "none"
+            // loader.style.display = "none"
 
             //De coach-eigenschappen
         const naam = doc.data().Gebruikersnaam;

@@ -234,6 +234,11 @@ function hideLandingIfAuthIsArrayMember(array){
             .then(doc => {
 
                 const auth = doc.data().Gebruikersnaam
+                const admin = doc.data().Admin
+
+                if (admin === "Yes"){
+                    editWorkshopDiv.style.display = "flex"
+                }
 
                 db.collection("Workshops").where("WorkshopTitle", "==", titel).where("Coach", "==", auth)
                 .get().then(querySnapshot => {
@@ -2718,11 +2723,13 @@ function hideSaveButtonShowUpdateButton(){
 
     if(titleFromStorage != undefined && coachFromStorage != undefined){
 
+        setTimeout(() => {
+
         db.collection("Workshops").where("WorkshopTitle", "==", titleFromStorage)
         .where("Coach", "==", coachFromStorage).get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
 
-                clearLocalStorage()
+                // clearLocalStorage()
                 hideSaveButtonShowUpdateButton()
         
                 const title = doc.data().WorkshopTitle
@@ -2784,6 +2791,10 @@ function hideSaveButtonShowUpdateButton(){
                 const closingNineText = doc.data().ClosingNineText 
                 const closingNineTitle = doc.data().ClosingNineTitle
                 const workshopGoal = doc.data().Goal
+
+                console.log(workshopGoals)
+                console.log(workshopGoal)
+                console.log( tinyMCE.get('editor1'))
 
                 // Load workshop title
                 const workshopTitleDOM = document.getElementById("workshop-title")
@@ -2879,6 +2890,7 @@ function hideSaveButtonShowUpdateButton(){
                     
             });
         });
+    }, 2000);
     };
 }();
 
