@@ -70,6 +70,32 @@ main{
     cursor: pointer;
 }
 
+/* Hapiness chart */
+
+#canvas-div{
+    margin: 50px 0px;
+    width: 600px;
+    height: 300px;
+}
+
+#hapiness-explainer-section{
+    margin: 0px 50px 50px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#hapiness-tool-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#tool-notice-hapiness-scale{
+    display: none;
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 938px){
 
     #check-in-header {

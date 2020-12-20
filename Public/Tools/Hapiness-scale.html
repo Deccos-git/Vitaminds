@@ -18,6 +18,7 @@
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
   <!-- Tiny MCE -->
   <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
@@ -84,34 +85,37 @@
         </div>
         <div id="button-login" class = "login-logout"><button><a href="../inlog.html">Log in</a></button></div>
         <div id="slash" class = "login-logout"><a>|</a></div>
-        <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
+        <a href="../voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
       </div>
     </nav>
 
-<section>
-  <header id="check-in-header">
-    <div>
-    <h1>Check in</h1>
-    <p>Deze tool helpt je om actief bezig te blijven met je doelen. Ontvang wekelijks een herinnering in de mail om een update te plaatsen voor een doel of meerdere doelen uit je Digimind</p>
+    <h1>Geluksschaal</h1>
+
+<section id="hapiness-tool-section">
+    <div id="happiness-chart-outer-div">
+        <div id="title-div">
+            <h2>Geluksgrafiek van alle Vitaminders</h2>
+        </div>
     </div>
-    <img src="../images/tools-check-in.png" alt="">
-  </header>
-  <main>
+    <div id="canvas-div">
+        <canvas id="hapiness-chart-combined"></canvas>
+    </div>
+</section>
+
+<section id="hapiness-explainer-section">
     <h2>Wat heb je aan deze tool?</h2>
-    <p>In de drukte van het dagelijks leven is het gemakkelijk om je doelen uit het oog te verliezen. Dat geldt voor alle doelen en zeker ook voor doelen op het gebied van persoonljke ontwikkkeling.<br><br> 
-      Deze tool helpt je om de doelen die je kiest een onderdeel te houden van je dagelijks leven.</p>
+    <p>Met deze tool kun je bijhouden hoe je geluksniveau zich gedurende de dagen, weken en jaren ontwikkelt. Je krijgt steeds meer inzicht in wat jouw geluk beinvloed.</p>
     <h2>Hoe werkt het?</h2>
     <ul>
-      <li>Installeer de tool in je Digimind</li>
-      <li>Je vind de tool in je Digimind menu onder Tools</li>
-      <li>Kies een van je doelen</li>
-      <li>Je ontvangt wekelijks een email-notificatie op de jou gekozen gekozen frequentie</li>
-      <li>Klik op de link in de email-notificatie en omschrijf hoe het nu met je gaat (met betrekking tot je doel)</li>
+        <li>Installeer de tool in je Digimind</li>
+        <li>Je vind de tool in je Digimind menu onder Tools</li>
+        <li>Je ontvangt wekelijks een email-notificatie</li>
+        <li>Klik op de link in de email-notificatie</li>
+        <li>Selecteer je huidige geluksniveau</li>
     </ul>
-  
-    <button class="button-algemeen" id="checkin-button">Tool is geïnstalleerd</button>
-    <h6 class="tool-redirect">Je vindt deze tool in je <u>Digimind</u> onder Tools</h6>
-  </main>
+
+    <button class="button-algemeen" id="hapiness-button">Installeren</button>
+    <h6 id="tool-notice-hapiness-scale"></h6>
 </section>
 
 <!-- footer -->

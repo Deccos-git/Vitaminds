@@ -1,5 +1,5 @@
 #for-coach-banner{
-  background-image: url(/images/voor-coaches-banner.jpg);
+  background-image: url(/images/headerimg.jpeg);
   height: 650px;
   width: 100%;
   background-attachment: fixed;
@@ -15,20 +15,59 @@
   align-items: center;
 }
 
+.outer-section{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 100px;
+}
+
+#community-section{
+    background-color: #80E9FF0D;
+}
+
+.text-div{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5%;
+}
+
+.image-div img{
+    padding-top: 50px;
+}
+
+#platform-img{
+    width: 80%
+}
+
+#community-img{
+    width: 120%;
+}
+
 #for-coach-banner-title{
     color: white;
     font-size: 35px;
     text-align: center;
-    margin-top: 0px;
-    margin-top: 0px;
+    margin-top: 65px;
 }
 
 #subtitle{
-    margin: -130px 100px 50px 100px;
+    margin: 0px 100px 50px 100px;
     letter-spacing: 0.5px;
     background-color: white;
     border-radius: 5px;
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#subtitle-subtitle{
+    font-size: 28px;
+    color: #0c6665;
+    margin-top: -60px;
+    text-align: center;
 }
 
 .section-title{
@@ -37,13 +76,75 @@
     color: #0c6665;
 }
 
+.voor-coaches-button{
+    background-color: #122B46;
+    border-radius: 20px;
+    border: 0px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    margin-top: 30px;
+    width: 150px;
+    align-self: center;
+}
+
+#coachtools-text-div{
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+#coachtools-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #80E9FF0D;
+}
+
+.coachtools-img{
+    border-radius: 30%;
+    width: 100px;
+}
+
+.coachtool-detail-div{
+    margin: 0px 0px;
+    width: 45%;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.coachtool-inner-div{
+    display: flex;
+    margin: 0px 100px;
+}
+
+.coachtool-link{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.coachtool-detail-div h4{
+    font-size: 22px;
+    font-weight: bold;
+    color: #122B46;
+}
+
 #link-vitaminds{
     color: #8e0000;
     cursor: pointer;
     font-size: 18px;
     font-family: 'Libre Baskerville', serif;
-    margin-left: 5px;
+    margin: 15px 0px 0px 5px;
     text-decoration: none;
+}
+
+#inputCTA-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #features-2{
@@ -85,6 +186,7 @@
 
 #call-to-action-div h3{
     color: white;
+    text-align: center;
 } 
 
 #call-to-action-div p{
@@ -385,8 +487,8 @@
 .subscription-colom h4{
     align-self: center;
     font-size: 24px;
-    color: #cf6e13;
-    margin: 0px;
+    color: #49beb7;
+    margin: 10px;
 }
 
 .become-member-button{
@@ -427,6 +529,15 @@
     padding: 30px;
     box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
     border-radius: 15px;
+}
+
+
+#minimale-eisen h3, li, h4{
+    font-size: 20px;
+}
+
+#minimale-eisen h4{
+    font-size: 16px;
 }
 
 .check-code input{
@@ -518,8 +629,8 @@
 }
 
 .price-div h6{
-    margin: 10px 0px 0px 0px;
-    color: #cf6e13;
+    margin: 10px 0px;
+    color: #49beb7;
     font-size: 18px;
 }
 
@@ -550,7 +661,7 @@
 @media only screen and (max-width: 938px){
 
 #for-coach-banner{
-    background-image: url(/images/voor-coaches-banner.jpg);
+    background-image: url(/images/headerimg.jpeg);
     height: 650px;
     width: 100%;
     background-attachment: scroll;
@@ -605,11 +716,15 @@
 }
 
 #subtitle {
-    margin: -130px 20px 50px 20px;
+    margin: -130px 20px 30px 20px;
     letter-spacing: 0.5px;
     background-color: white;
     border-radius: 5px;
     padding: 30px;
+}
+
+#ogo-voor-particulieren{
+    width: 150px;
 }
 
 #facts {
@@ -632,6 +747,76 @@
 #banner-register-coach{
     background-image: url(/images/Register-coach-medium1.jpg);
     background-attachment: scroll;
+}
+
+#for-coach-banner-title {
+    font-size: 30px;
+}
+
+#impact-description {
+    margin: 30px 30px 30px 30px;
+}
+
+#subtitle h2{
+    font-size: 22px;
+}
+
+.coachtool-inner-div {
+    flex-direction: column;
+    margin: 0px 10px;
+}
+
+.coachtool-detail-div {
+    width: auto;
+    padding: 10%;
+    align-items: flex-start;
+    margin-top: -50px;
+}
+
+#subtitle-subtitle {
+    font-size: 22px;
+}
+
+.text-div p{
+    font-size: 18px;
+}
+
+.coachtool-detail-div p{
+    font-size: 18px;
+}
+
+#community-img {
+    width: 80%;
+    margin-left: 15px;
+}
+
+.text-div {
+    width: 80%;
+}
+
+.image-div img{
+    margin-top: 170px;
+}
+
+#coachtool-bottom-button{
+    align-items: center;
+}
+
+#title-register-coach {
+    margin-bottom: -100px;
+    z-index: 2;
+}
+
+.outer-section {
+    padding-bottom: 30px;
+}
+
+#coachtools-text-div {
+    margin-bottom: 0px;
+}
+
+.coachtool-detail-div h4 {
+    margin-bottom: 0px;
 }
 
 }

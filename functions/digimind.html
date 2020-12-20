@@ -141,26 +141,7 @@
         <h5 id="bijdragepunten"></h5>
     </div> 
   </section>
-
-  <!-- <div id="happiness-chart-outer-div">
-    <div id="title-div">
-      <h2>Je geluksgrafiek</h2>
-      <div id="private-div">
-        <img id="private-notice" src="../images/private.png" alt="geluksgrafiek is prive">
-        <p id="private-notice-text">Geluksgrafiek is privé</p>
-      </div>
-    </div>
-    <p>Hoe hoog is je geluksgevoel vandaag?</p>
-    <div id="happiness-scale">
-      <img class="hapiness-scale-img" src="../images/hapiness-scale/heel-laag.png" alt="">
-      <img class="hapiness-scale-img" src="../images/hapiness-scale/laag.png" alt="">
-      <img class="hapiness-scale-img" src="../images/hapiness-scale/neutral.png" alt="">
-      <img class="hapiness-scale-img" src="../images/hapiness-scale/hoog.png" alt="">
-      <img class="hapiness-scale-img" src="../images/hapiness-scale/heel hoog.png" alt="">
-    </div>
-  </div>
-    <canvas id="hapiness-chart"></canvas> -->
-
+  
     <div id="info-bar">
       <!-- Gelukstegoed  -->
       <div onclick="subscriptionPage()" id="profile-notifications">
@@ -470,28 +451,45 @@
 
         <!-- Tools -->
   <section id="tools">
-    <div id="tool-outer-div">
+
+    <div class="tool-outer-div" id="check-in-section">
       <h2>Check in</h2>
-      <img src="../images/tools-check-in.png" alt="">
-      <p>Blijf actief met je doelen bezig door regelmatig stil te staan bij hoe het gaat met je doel. Met deze tool ontvang je wekelijks met een email-notificatie om je hierbij te ondersteunen</p>
-      <a href="../Tools/Check-in.html">Meer info</a>
-      <div id="tool-settings">
-        <h3>Selecteer je doel</h3>
-        <select name="" id="check-in-select-goals"></select>
-        <!-- <h3>Selecteer frequentie</h3>
-        <select name="" id="check-in-select-frequence">
-          <option value="dagelijks">Dagelijks</option>
-          <option value="wekeliks">Wekelijks</option>
-          <option value="maandelijks">Maandelijks</option>
-        </select> -->
-      </div>
-      <div id="activate-div">
-        <button onclick="activateCheckIn()" id="tool-button-digimind">Activeer</button>
-      </div>
-      <p id="activate-notice"></p>
-      <div id="activated-goals">
+      <a class="more-info" href="../Tools/Check-in.html">Meer info</a>
+      <div id="tool-inner-div">
+        <div id="tool-settings-div">
+          <div id="tool-settings">
+            <h3>Selecteer je doel</h3>
+            <select name="" id="check-in-select-goals"></select>
+          </div>
+          <div id="activate-div">
+            <button onclick="activateCheckIn()" id="tool-button-digimind">Activeer</button>
+          </div>
+          <p id="activate-notice"></p>
+        </div>
+        <div id="activated-goals">
+        </div>
       </div>
     </div>
+
+    <div class="tool-outer-div" id="happiness-scale-section">
+      <h2>Geluksschaal</h2>
+      <a class="more-info" href="../Tools/Hapiness-scale.html">Meer info</a>
+      <div id="tool-inner-div">
+        <div id="happiness-chart-outer-div">
+          <canvas id="hapiness-chart"></canvas>
+          <p>Hoe hoog is je geluksmoment vandaag?</p>
+          <div id="happiness-scale">
+            <img class="hapiness-scale-img" src="../images/hapiness-scale/heel-laag.png" alt="">
+            <img class="hapiness-scale-img" src="../images/hapiness-scale/laag.png" alt="">
+            <img class="hapiness-scale-img" src="../images/hapiness-scale/neutral.png" alt="">
+            <img class="hapiness-scale-img" src="../images/hapiness-scale/hoog.png" alt="">
+            <img class="hapiness-scale-img" src="../images/hapiness-scale/heel hoog.png" alt="">
+          </div>
+        </div>
+      </div>
+      <p class="de-install-button" id="un-install-happiness-scale">De-installeren</p>
+    </div>
+
   </section>
     </main>
   </div>   

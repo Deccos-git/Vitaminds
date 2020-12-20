@@ -1666,16 +1666,19 @@
 }
 
 /* Tools */
-#tools{
-    display: none;
-}
 
-#tool-outer-div{
+#tools{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#happiness-scale-section{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
     margin: 15px;
-    width: 300px;
     height: max-content;
     padding: 15px;
     background-color: #FFF;
@@ -1683,13 +1686,42 @@
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
 }
 
+#check-in-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 15px;
+    height: max-content;
+    padding: 15px;
+    background-color: #FFF;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+.more-info{
+    font-size: 14px;
+}
+
+#tool-settings {
+    border-right: 1px dotted #122b46;
+}
+
+#tool-inner-div{
+    display: flex;
+    justify-content: center;
+}
+
 #tool-outer-div a{
     font-size: 14px;
 }
 
-#tool-outer-div img{
-    width: 50%;
-    height: 100px;
+#tool-settings-div{
+    text-align: center;
+}
+
+#activated-goals{
+    text-align: center;
 }
 
 #tool-button-digimind{
@@ -1702,10 +1734,11 @@
     cursor: pointer;
 }
 
-#tool-settings{
-    border-top: 1px dotted #122b46;
-    border-bottom: 1px dotted #122b46;
-    margin: 20px 20px;
+.de-install-button{
+    margin-top: 20px;
+    font-size: 14px;
+    color: red;
+    cursor: pointer;
 }
 
 #activate-div{

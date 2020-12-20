@@ -87,7 +87,7 @@ createSession("/create-session-twentyfive", 2500)
 createSession("/create-session-thirty", 3000)
 createSession("/create-session-thirtyfive", 3500)
 createSession("/create-session-fourty", 4000)
-createSession("/create-session-fifty", 50000)
+createSession("/create-session-fifty", 5000)
 createSession("/create-session-sixty", 6000)
 createSession("/create-session-seventy", 7000)
 createSession("/create-session-eighty", 8000)
@@ -237,7 +237,7 @@ app.get('/eventpage/:id',function(req,res)
 
 // Tool sheduling
 
-db.collection("Practice").where("Practice", "==", "Check-in")
+db.collection("Tools").where("Tool", "==", "Check-in")
 .get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
@@ -287,46 +287,63 @@ db.collection("Practice").where("Practice", "==", "Check-in")
 
 // Tool sheduling
 
-// db.collection("Vitaminders")
-// .where("Usertype", "==", "Coach")
-// .where("Usertype", "==", "Vitaminder")
-// .get().then(querySnapshot => {
-//     querySnapshot.forEach(doc => {
+db.collection("Tools").where("Tool", "==", "HapinessChart")
+.get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
 
-//         const gebruikersnaamClean = doc.data().GebruikersnaamClean
-//         const gebruikersnaam = doc.data().Gebruikersnaam
-//         const email = doc.data().Email
+        const installs = doc.data().Installs
 
-//                 cron.schedule("00 09 1,15 * *", () => {
+        installs.forEach(install => {
 
-//                 db.collection("Mail").doc().set({
-//                     to: email,
-//                     cc: "info@vitaminds.nu",
-//                 message: {
-//                 subject: `Hoe gaat het met je, ${gebruikersnaamClean}`,
-//                 html: `Hallo, ${gebruikersnaamClean}</br></br>
-//                     Je bent lid geworden van Vitaminds om je geluk in eigen handen te nemen. <br>
-//                     Deze twee-wekelijkse mail is bedoeld om je te helpen om je geluk een onderdeel te maken van je dagelijks.<br><br>
-//                     Wat is op dit moment je geluksniveau? <br><br>
-//                     <a href="https://vitaminds.nu/Vitaminders/${gebruikersnaam}"> 
-//                         <img src="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/geluksschaal-plaatje-small.png?alt=media&token=5edf44ed-b2dc-46d2-ad7d-7a6215ef80b6" alt="Geluksschaal"> 
-//                     </a></br></br>
-                
-//                     Vriendelijke groet, </br></br>
-//                     Het Vitaminds Team </br></br>
-//                     <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-//                 Type: "Vitaminders",
-//                 gebruikersnaam: gebruikersnaam
-//                 }
-                        
-//                 }).catch((err) => {
-//                     console.log(err)
-//                 })
-//             });
-//     })
-// }).catch((err) => {
-//     console.log(err)
-// });
+            db.collection("Vitaminders").where("Gebruikersnaam", "==", install)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+    
+                    const email = doc1.data().Email
+                    const gebruikersnaamClean = doc1.data().GebruikersnaamClean
+
+                    console.log(email)
+    
+                    cron.schedule(" 0 8 * * 6", () => {
+    
+                    db.collection("Mail").doc().set({
+                        to: email,
+                        cc: "info@vitaminds.nu",
+                    message: {
+                    subject: `Hallo ${gebruikersnaamClean}, hoe gaat het nu met je?`,
+                    html: `Hallo, ${gebruikersnaamClean}</br></br>
+                        Geluk zit hem in kleine dagelijkse gewoontes. <br>
+                        Met de Vitaminds Tools maken we onze persoonlijke ontwikkeling een onderdeel van onze dagelijkse gewoontes.<br><br>
+                        Bij deze ontvang jij je <i>Geluksschaal</i> email.<br><br>
+                      
+                        - Log in bij je account.<br>
+                        - Ga naar je profiel.<br>
+                        - Klik op de Tools tab. <br>
+                        - Vul je huidige geluksniveau in. <br><br>
+                    
+                        Vriendelijke groet, </br></br>
+                        Het Vitaminds Team </br></br>
+                        <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                    Type: "Vitaminders",
+                    gebruikersnaam: gebruikersnaam
+                    }
+                            
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+                });
+    
+                })
+            }).catch((err) => {
+                console.log(err)
+            })
+
+        })
+    })
+}).catch((err) => {
+    console.log(err)
+})
+
 
 // Redirects
 app.get('/agenda/*',function(req,res)

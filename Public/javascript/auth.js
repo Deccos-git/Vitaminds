@@ -341,7 +341,7 @@ auth.onAuthStateChanged(User =>{
                     const giverID = doc3.data().ID
                     const giverClean = giver.replace(giverID, "")
       
-                    notificationsP.innerHTML = `Je hebt 1 nieuw <i>inspiratiepunt</i> ontvangen van ${giverClean} `
+                    notificationsP.innerHTML = `Je hebt 1 nieuw <i>inspiratiepunt</i> ontvangen.`
                       });
                     });
     

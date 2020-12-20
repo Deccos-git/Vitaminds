@@ -381,160 +381,6 @@ function digimindMetaTags(coachDescription, coach, profilePic){
         });
 });
 
-// Hapiness scale
-
-// const privateNotice = document.getElementById("private-notice")
-// const privateNoticeText = document.getElementById("private-notice-text")
-
-// if(privateNotice != null){
-
-//         privateNotice.addEventListener("mouseover", () => {
-//                 privateNoticeText.style.display = "block"
-//         });
-
-//         privateNotice.addEventListener("mouseout", () => {
-//                 privateNoticeText.style.display = "none"
-//         });
-
-// };
-
-// const veryLow = document.getElementsByClassName("hapiness-scale-img")
-
-//         veryLow[0].addEventListener("mouseover", () => {
-//                 veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
-//                 veryLow[1].src = "../images/hapiness-scale/laag.png"
-//                 veryLow[2].src = "../images/hapiness-scale/neutral.png"
-//                 veryLow[3].src = "../images/hapiness-scale/hoog.png"
-//                 veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
-//         });
-
-//         veryLow[1].addEventListener("mouseover", () => {
-//                 veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
-//                 veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
-//                 veryLow[2].src = "../images/hapiness-scale/neutral.png"
-//                 veryLow[3].src = "../images/hapiness-scale/hoog.png"
-//                 veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
-//         });
-
-//         veryLow[2].addEventListener("mouseover", () => {
-//                 veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
-//                 veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
-//                 veryLow[2].src = "../images/hapiness-scale/neutral-hover.png"
-//                 veryLow[3].src = "../images/hapiness-scale/hoog.png"
-//                 veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
-//         });
-
-//         veryLow[3].addEventListener("mouseover", () => {
-//                 veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
-//                 veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
-//                 veryLow[2].src = "../images/hapiness-scale/neutral-hover.png"
-//                 veryLow[3].src = "../images/hapiness-scale/hoog-hover.png"
-//                 veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
-//         });
-
-//         veryLow[4].addEventListener("mouseover", () => {
-//                 veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
-//                 veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
-//                 veryLow[2].src = "../images/hapiness-scale/neutral-hover.png"
-//                 veryLow[3].src = "../images/hapiness-scale/hoog-hover.png"
-//                 veryLow[4].src = "../images/hapiness-scale/heel hoog-hover.png"
-//         });
-
-
-// function saveHapiness(heightOfHapiness){
-//         veryLow[heightOfHapiness].addEventListener("click", () => { 
-
-//                 auth.onAuthStateChanged(User =>{
-//                         if (User){
-//                             db.collection("Vitaminders").doc(User.uid)
-//                                 .collection("HapinessScale").doc()
-//                                         .set({
-//                                                 Height: heightOfHapiness,
-//                                                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-//                                                 Eigenaar: "Vitaminds"
-//                                         }).then(() => {
-//                                                 location.reload()
-//                                         })
-//                         };
-//                 });
-//         });
-// };
-
-//         saveHapiness(0)
-//         saveHapiness(1)
-//         saveHapiness(2)
-//         saveHapiness(3)
-//         saveHapiness(4)
-
-// const hapinessChart = document.getElementById('hapiness-chart').getContext('2d');
-// function hapinessChartAxis(dates, heightOfHapiness){
-
-// const myChart = new Chart(hapinessChart, {
-//         type: 'line',
-//         data: {
-//             labels: dates,
-//             datasets: [{
-//                 label: 'Geluksniveau',
-//                 data: heightOfHapiness,
-//                 backgroundColor: [
-//                         "rgba(75, 190, 182, 0.32)"
-//                 ],
-//                 borderColor: [
-//                         "#122b46"
-//                 ],
-//                 borderWidth: 1
-//             }]
-//         },
-//         options: {
-//                 legend: {
-//                         display: false
-//                 },           
-//             scales: {
-//                 yAxes: [{
-//                     ticks: {
-//                         beginAtZero: true,
-//                         userCallback: function(label, index, labels) {
-//                                 // when the floored value is the same as the value we have a whole number
-//                                 if (Math.floor(label) === label) {
-//                                     return label;
-//                                 }
-//                         }
-//                     }
-//                 }]
-//             }
-//         }
-//     });
-// };
-
-// const dateArray = []
-// const heightArray = []
-
-// auth.onAuthStateChanged(User =>{
-//         if (User){
-//             db.collection("Vitaminders").doc(User.uid)
-//             .collection("HapinessScale")
-//             .orderBy("Timestamp", "asc")
-//             .get().then(querySnapshot => {
-//                     querySnapshot.forEach(doc => {
-
-//                         const height = doc.data().Height
-//                         const date = doc.data().Timestamp
-
-//                         const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-//                         const dateLocale = date.toDate().toLocaleDateString("nl-NL", options);
-
-//                         dateArray.push(dateLocale) 
-//                         heightArray.push(height)
-
-//                         hapinessChartAxis(dateArray, heightArray)
-
-//                     });
-//             });
-//         };
-// });
-
-
-
 //Hide for non-coach Digimind
 db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
     .get()
@@ -2653,16 +2499,10 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 const goalSelect = goalOptionDiv.options
                 const goalOption = goalSelect[goalSelect.selectedIndex].innerHTML;
 
-                // Filtered frequence
-                // const freqOptionDiv = document.getElementById("check-in-select-frequence")
-
-                // const freqSelect = freqOptionDiv.options
-                // const freqOption = freqSelect[freqSelect.selectedIndex].innerHTML;
-
-                db.collection("Practice").doc().set({
+                db.collection("Tools").doc().set({
                         Gebruikersnaam: naam,
                         Levensvraag: goalOption,
-                        Practice: "Check-in",
+                        Tool: "Check-in",
                         Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
                 }).then(() => {
                         const activateNotice = document.getElementById("activate-notice")
@@ -2711,6 +2551,63 @@ db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(quer
                 })
         })
 };
+
+!function showHappinessScaleIfInstalled(){
+
+        const happinessScaleSection = document.getElementById("happiness-scale-section")
+
+        auth.onAuthStateChanged(User =>{
+       
+                db.collection("Vitaminders").doc(User.uid)
+                .get().then(function(doc) {
+
+                        const auth = doc.data().Gebruikersnaam
+
+                        if(auth === naam){
+
+                                db.collection("Tools").where("Tool", "==", "HapinessChart")
+                                .where("Installs", "array-contains", auth)
+                                .get().then(querySnapshot => {
+                                        querySnapshot.forEach(doc1 => {
+
+                                                happinessScaleSection.style.display = "flex"
+
+                                        });
+                                });
+                        };
+                });
+        });
+}();
+
+!function unInstallHappinessScale(){
+
+        const uninstallButton = document.getElementById("un-install-happiness-scale")
+
+        uninstallButton.addEventListener("click", () => {
+
+                auth.onAuthStateChanged(User =>{
+       
+                        db.collection("Vitaminders").doc(User.uid)
+                        .get().then(function(doc) {
+
+                                const auth = doc.data().Gebruikersnaam
+
+                                db.collection("Tools").where("Tool", "==", "HapinessChart")
+                                .where("Installs", "array-contains", auth)
+                                .get().then(querySnapshot => {
+                                        querySnapshot.forEach(doc1 => {
+
+                                                db.collection("Tools").doc(doc1.id).update({
+                                                        Installs: firebase.firestore.FieldValue.arrayRemove(auth)
+                                                }).then(() => {
+                                                        uninstallButton.innerText = "Gedeinstaleerd"
+                                                })
+                                        });
+                                });
+                        });
+                });
+        });
+}();
 
 // Display activated goals
 
@@ -2774,6 +2671,145 @@ db.collectionGroup("Levensvragen").where("Levenslessen", "array-contains", "Tool
                 }
         });
         
+// Hapiness scale
+
+const veryLow = document.getElementsByClassName("hapiness-scale-img")
+
+veryLow[0].addEventListener("mouseover", () => {
+        veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+        veryLow[1].src = "../images/hapiness-scale/laag.png"
+        veryLow[2].src = "../images/hapiness-scale/neutral.png"
+        veryLow[3].src = "../images/hapiness-scale/hoog.png"
+        veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
+});
+
+veryLow[1].addEventListener("mouseover", () => {
+        veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+        veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
+        veryLow[2].src = "../images/hapiness-scale/neutral.png"
+        veryLow[3].src = "../images/hapiness-scale/hoog.png"
+        veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
+});
+
+veryLow[2].addEventListener("mouseover", () => {
+        veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+        veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
+        veryLow[2].src = "../images/hapiness-scale/neutral-hover.png"
+        veryLow[3].src = "../images/hapiness-scale/hoog.png"
+        veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
+});
+
+veryLow[3].addEventListener("mouseover", () => {
+        veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+        veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
+        veryLow[2].src = "../images/hapiness-scale/neutral-hover.png"
+        veryLow[3].src = "../images/hapiness-scale/hoog-hover.png"
+        veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
+});
+
+veryLow[4].addEventListener("mouseover", () => {
+        veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+        veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
+        veryLow[2].src = "../images/hapiness-scale/neutral-hover.png"
+        veryLow[3].src = "../images/hapiness-scale/hoog-hover.png"
+        veryLow[4].src = "../images/hapiness-scale/heel hoog-hover.png"
+});
+
+function saveHapiness(heightOfHapiness){
+        veryLow[heightOfHapiness].addEventListener("click", () => { 
+
+                auth.onAuthStateChanged(User =>{
+                        if (User){
+                            db.collection("Vitaminders").doc(User.uid)
+                                .collection("HapinessScale").doc()
+                                        .set({
+                                                Height: heightOfHapiness,
+                                                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                        }).then(() => {
+                                                location.reload()
+                                        })
+                        };
+                });
+        });
+};
+
+        saveHapiness(0)
+        saveHapiness(1)
+        saveHapiness(2)
+        saveHapiness(3)
+        saveHapiness(4)
+
+const hapinessChart = document.getElementById('hapiness-chart').getContext('2d');
+function hapinessChartAxis(dates, heightOfHapiness){
+
+const myChart = new Chart(hapinessChart, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: 'Geluksniveau',
+                data: heightOfHapiness,
+                backgroundColor: [
+                        "#49beb7"
+                ],
+                borderColor: [
+                        "#122b46"
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+                legend: {
+                        display: false
+                },   
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+};
+
+const dateArray = []
+const heightArray = []
+
+auth.onAuthStateChanged(User =>{
+        if (User){
+            db.collection("Vitaminders").doc(User.uid)
+            .get().then(doc => {
+
+                    const auth = doc.data().Gebruikersnaam
+
+                db.collection("Vitaminders").doc(User.uid)
+                .collection("HapinessScale")
+                .orderBy("Timestamp", "asc")
+                .get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                        console.log(naam, auth)
+
+                        if(auth === naam){
+
+                        const height = doc1.data().Height
+                        const date = doc1.data().Timestamp
+
+                        const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+                        const dateLocale = date.toDate().toLocaleDateString("nl-NL", options);
+
+                        dateArray.push(dateLocale) 
+                        heightArray.push(height)
+
+                        hapinessChartAxis(dateArray, heightArray)
+                        };
+                    });
+            });
+        });
+};
+});
+
 // Subscriptions
 function subscriptionPage(){
 
