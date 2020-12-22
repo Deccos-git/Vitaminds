@@ -234,6 +234,12 @@ app.get('/eventpage/:id',function(req,res)
     res.sendFile('event.html', { root: __dirname });
 });
 
+// Events for coaches
+app.get('/eventCoaches/:id',function(req,res)
+{
+    res.sendFile('eventCoach.html', { root: __dirname });
+});
+
 
 // Tool sheduling
 
