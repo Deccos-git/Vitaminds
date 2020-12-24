@@ -142,7 +142,7 @@
 
   <section id="private-section">
     <div id="menu-div">
-      <p id="my-proces" class="private-menu-active">Mijn processen</p>
+      <p id="my-proces" class="private-menu-active">Mijn trajecten</p>
       <p>Favoriete coaches</p>
       <p>Tools</p>
       <p>Analytics</p>
@@ -150,11 +150,39 @@
       <p>Gelukstegoed</p>
       <p>Admin</p>
     </div>
-    <div id="private-outer-div"></div>
+
+    <div id="menu-div-mobile">
+      <select name="" id="menu-select-mobile">
+        <option value="">Mijn trajecten</option>
+        <option value="">Favoriete coaches</option>
+        <option value="">Tools</option>
+        <option value="">Analytics</option>
+        <option value="">Notificaties</option>
+        <option value="">Gelukstegoed</option>
+        <option value="">Admin</option>
+      </select>
+    </div>
+
   </section>
 
   <div class="private-outer-div activated" id="my-proces-outer-div">
-    <h1>Mijn processen</h1>
+    <div id="start-new-proces">
+      <button id="start-new-proces-button">Begin een nieuw traject</button>
+
+      <p>Selecteer een traject</p>
+      <select id="proces-select" onchange="getProces(this)"></select>
+
+      <div id="proces-inner-div"></div>
+      <div id="proces-lessons"></div>
+      <div id="check-in-by-proces">
+        <h2>Hoe gaat het nu?</h2>
+        <textarea name="" id="" cols="30" rows="10" placeholder="Hoe gaat het nu met je?"></textarea>
+        <div>
+          <button class="button-algemeen">Opslaan</button>
+        </div>
+      </div>
+
+    </div>
   </div>
 
   <div class="private-outer-div" id="favorite-coaches-outer-div">

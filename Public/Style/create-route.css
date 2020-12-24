@@ -1,0 +1,99 @@
+.title-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.title-div img{
+    width: 200px;
+}
+
+#description-route{
+    margin: 0px 300px 50px 300px;
+}
+
+#route-goal{
+    background-color: #80E9FF0D;
+}
+
+.route-instruction{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#select-route-goal{
+    width: auto;
+}
+
+.button-route{
+    margin: 30px;
+}
+
+#public-private-description{
+    font-size: 16px;
+    margin: 10px 150px;
+}
+
+.radio-outer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.route-radio{
+    align-self: start;
+}
+
+.route-radio input{
+    width: auto;
+}
+
+.route-radio label{
+    font-size: 16px;
+}
+
+#route-next-step-visitor{
+    background-color: #80E9FF0D;
+}
+
+#register-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#register-notice p{
+    font-size: 16px;
+}
+
+.link-coach-account p{
+    font-size: 16px;
+    margin-bottom: 0px;
+}
+
+#next-step-description{
+    margin: 20px 150px;
+}
+
+#links-div{
+    margin-bottom: 50px;
+}
+
+#next-steps-overiew{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#route-next-step-visitor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#route-next-step-auth{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}

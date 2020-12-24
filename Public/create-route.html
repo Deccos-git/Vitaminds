@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-159826016-1');
+</script>
+  <Title>Start ontwikkeltraject</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#122b46">
+  <link rel="apple-touch-icon" href="images/Vitaminds-icon.png">
+  <link rel="stylesheet" href="Style/style.css">
+  <link rel="stylesheet" href="Style/create-route.css">
+  <link rel="shortcut icon" href="images/Favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+   <!-- PWA manifest -->
+   <link rel="manifest" href="manifest.json">
+   <!-- Service worker  -->
+   <!-- <script>
+     if('serviceWorker' in navigator) {
+       navigator.serviceWorker.register('sw.js')
+         .then(function() {
+               console.log('Service Worker Registered');
+         });
+     }
+   </script> -->
+  <!-- EmailJS -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.3.2/dist/email.min.js"></script>
+<script type="text/javascript">
+   (function(){
+      emailjs.init("user_Iw72D3GtRTn0KlqxereC3");
+   })();
+</script>
+</head>
+
+<body>
+
+<!-- Feedback -->
+<div id="feedback">
+  <a href="tickets.html"> <p>Feedback</p></a>
+</div>
+
+<!-- Cookie notice -->
+<div id="cookie-notice">
+  <h2>Vitaminds gebruikt cookies</h2>
+  <p>Als je verder gaat met scrollen, op een link klikt of dit bericht wegklikt ga je akkoord met ons 
+    <a href="privacy.html"> cookie en privacy beleid</a></p>
+  <div>
+    <button id="button-cookies" onclick="cookiesOK()">Ok</button>
+  </div>
+</div>
+
+    <!-- Mobile-menu -->
+    <nav id="mobile-menu"> 
+      <div id="menu-mobile-visible-layer">
+        <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+        <div class="main-menu-mobile"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+      </div>
+      <div id="mobile-menu-outer-div">
+        <div id="mobile-menu-inner-div">
+          <ul id="list-mobile-menu">
+            <li>
+              <div id="profile-picture-mobile"></div>
+            </li>
+            <li>
+              <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="openup.html">Open up</a></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="groups.html">Groepen</a></div> 
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="workshops.html">Workshops</a></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="artikelen.html">Artikelen</a></div>
+            </li>
+            <!-- <li> -->
+              <!-- <div class="main-menu-mobile"><a href="tools.html">Tools</a></div> -->
+            <!-- </li> -->
+            <li>
+              <div class="main-menu-mobile"><a href="coaches.html">Coaches</a></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="events.html">Events</a></div>
+            </li>
+            <li>
+              <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
+            </li>
+            <li>
+              <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+            </li> 
+          </ul>
+        </div>
+      </nav>
+    
+       <!-- menu --> 
+       <nav id="menu">
+        <div id="navigation-menu">
+          <div class="main-menu"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+          <div class="main-menu"><a href="openup.html">Open up</a></div>
+          <div class="main-menu"><a href="groups.html">Groepen</a></div> 
+          <div class="main-menu"><a href="workshops.html">Workshops</a></div>
+          <div class="main-menu"><a href="artikelen.html">Artikelen</a></div>
+          <!-- <div class="main-menu"><a href="tools.html">Tools</a></div> -->
+          <div class="main-menu"><a href="coaches.html">Coaches</a></div>
+          <div class="main-menu"><a href="events.html">Events</a></div>
+        </div>
+        <div id="auth-menu">
+          <div id="auth-DOM"></div>
+          <div id="profile-picture">
+          </div>
+          <div id="login-register-div">
+            <div id="button-register" class = "login-logout"><button><a href="Register.html">Aanmelden</a></button></div>
+            <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
+          </div>
+          <div id="slash" class = "login-logout"><a>|</a></div>
+          <div id="info-menu">
+            <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
+          </div>
+        </div>
+      </nav>
+
+      <h1>Start een ontwikkeltraject</h1>
+
+      <p id="description-route">Wat mooi dat je een ontwikkeltraject gaat beginnen. Hiermee heb je de eerste stap gezet richting het doel dat je wilt bereiken.</p>
+
+      <div id="route-goal" class="title-div">
+        <img src="/images/select-goal.png" alt="Selecteer een ontwikkeldoel">
+        <h2>Waar wil je naartoe?</h2>
+        <p>De eerste stap is om een doel te stellen. Daarmee geef je richting aan je ontwikkeltraject.</p>
+        <p class="route-instruction">Selecteer een ontwikkeldoel</p>
+        <select id="select-route-goal"></select>
+        <p class="route-instruction">Geef je doel een korte titel</p>
+        <input type="text" placeholder="Titel van je doel">
+        <p class="route-instruction">Omschrijf je doel</p>
+        <textarea id="" cols="30" rows="10" placeholder="Omschrijf kort je doel"></textarea>
+
+        <button id="show-step-two" class="button-algemeen button-route">Verder</button>
+      </div>
+
+      <!-- <div class="title-div" id="current-situation">
+          <img src="/images/current-situation.png" alt="Wat is je huidige situatie?">
+        <h2>Hoe gaat het nu met je?</h2>
+        <p>Om stappen te zetten in de richting van je doel is het goed te weten waar waar je nu staat.</p>
+        <p class="route-instruction">Hoe gaat het nu met je?</p>
+        <textarea id="" cols="30" rows="10" placeholder="Omschrijf kort hoe het nu met je gaat"></textarea>
+        <button id="show-step-three" class="button-algemeen button-route">Verder</button>
+      </div> -->
+
+      <div class="title-div" id="route-options">
+        <img src="/images/route-options.png" alt="Selecteer de opties die bij je passen">
+      <h2>Opties</h2>
+      <p>Selecteer je opties</p>
+      <p class="route-instruction">Ontvang een twee wekelijkse reminder</p>
+      <div class="radio-outer-div">
+        <div class="route-radio">
+            <input type="radio" id="Yes" name="reminder" value="Yes"checked>
+            <label for="Yes">Ja</label>
+        </div>
+        <div class="route-radio">
+            <input type="radio" id="No" name="reminder" value="No">
+            <label for="No">Nee</label>
+        </div>
+      </div>
+        <p class="route-instruction">Is je doel openbaar op privé?</p>
+        <p id="public-private-description">Een openbaar doel kan iedereen die de website bezoekt zien. Het is zichtbaar in je profiel en als je iets toevoegd aan je ontwikkeltraject is dit zichtbaar bij Open up. Kies deze optie als je open wilt zijn over je ontwikkelproces en als je andere wilt inspireren met je openheid. Als je kiest voor privé ben jij de enige die je ontwikkelproces en alles wat je daarover leert kan zien.</p>
+      <div class="radio-outer-div"> 
+        <div class="route-radio">
+            <input type="radio" id="Private" name="public-private" value="Private" checked>
+            <label for="Private">Privé</label>
+        </div>
+        <div class="route-radio">
+            <input type="radio" id="Public" name="public-private" value="Public">
+            <label for="Public">Openbaar</label>
+        </div>
+      </div>
+      <button id="show-step-three" class="button-algemeen button-route">Verder</button>
+    </div>
+
+    <div class="title-div" id="route-next-step-auth">
+        <h2>De eerste stap</h2>
+        <div id="next-steps-overiew"></div>
+    </div>
+
+    <div class="title-div" id="route-next-step-visitor">
+        <h2>De eerste stap</h2>
+        <p id="next-step-description">De eerste stap van je ontwikkeltraject is een ontwikkelomgeving creëren. Hier wordt je ontwikkeltraject en alles wat je hierin leert een plek gegeven.</p>
+        <div id="register-div">
+            <h2>Maak je gratis Digimind aan</h2>
+              <p class="route-instruction">Je voornaam*</p>
+              <input id="register-firstname" type="text" placeholder="Je voornaam">
+              <p class="route-instruction">Je achternaam</p>
+              <input id="register-lastname" type="text" placeholder="Je achternaam">
+              <p class="route-instruction">Je emailadres*</p>
+              <input id="register-email" type="email" placeholder="Emailadres">
+              <p class="route-instruction">Je wachtwoord*</p>
+              <input id="register-wachtwoord" type="password" placeholder="Wachtwoord">
+              <p class="route-instruction">Herhaal je wachtwoord*</p>
+              <input id="register-wachtwoord-repeat" type="password" placeholder="Herhaal je wachtwoord">
+              <button class="button-algemeen button-route" id="register-button">Opslaan</button>
+              <div id="register-notice">
+                <img src="/images/register-notice.png" alt="Vitaminds account is aangemaakt.">
+                <h2>Je ontwikkelomgeving is aangemaakt. </h2><br><br>
+                <p> Er is een email gestuurd naar je emailadres. <br>
+                  Klik op de link in je verificatie-email om in te loggen. <br><br>
+                  Heb je geen mail ontvangen? <br>
+                  Kijk in je spam-folder of stuur een mailtje naar info@vitaminds.nu <br>
+                  Geef het wel even de tijd (max. 24 uur), want soms duurt het iets langer.</p>
+                  <button onclick="registerNoticeOK()" class="button-algemeen button-route">OK</button>
+              </div>
+              <div id="links-div">
+                <div class="link-coach-account"><p>* verplicht invullen</p></div>
+                <div class="link-coach-account"><p>Ben je een coach en wil je een coach-account aanmaken? Klik dan <a href="voor-coach.html"> hier</a></p></div>
+                <div class="link-coach-account"><p>Heb je al een account en wil je inloggen? Klik dan <a href="inlog.html"> hier</a></p></div>
+                <div class="link-coach-account"><p>Bekijk ons <a href="privacy.html"> privacy beleid</a></p></div>
+              </div>
+          </div>
+    </div>
+  
+      <div class="toolbar-mobile">
+        <div class="toolbar-mobile-inner-div">
+          <img src="images/home-icon.png" alt="" id="toolbar-home">
+          <p class="description-menu-icons-toolbar-mobile">Open up</p>
+        </div>
+        <div class="toolbar-mobile-inner-div" id="toolbar-inner-div-chats-groups">
+          <img src="images/send-icon.png" alt="" id="toolbar-chats-groups">
+          <p class="description-menu-icons-toolbar-mobile">Chats & groepen</p>
+        </div>
+        <div class="toolbar-mobile-inner-div">
+          <div id="toolbar-inspiration-div" class="toolbar-mobile-inner-div">
+            <div id="toolbar-inspration-options">
+              <p id="toolbar-inspiration-public">Publiek</p>
+              <p id="toolbar-inspiration-private">Prive</p>
+            </div>
+            <img src="images/inspiration-icon-2.png" alt="" id="toolbar-inspiration">
+            <p class="description-menu-icons-toolbar-mobile">Nieuw inzicht</p>
+          </div>
+        </div>
+        <div class="toolbar-mobile-inner-div">
+          <img src="images/menu-dashboard.png" alt="" id="toolbar-digimind">
+          <p class="description-menu-icons-toolbar-mobile">Mijn Digimind</p>
+        </div>  
+      </div>
+    </div>
+
+    <!-- Toolbar mobile -->
+<div class="toolbar-mobile">
+  <div class="toolbar-mobile-inner-div">
+    <img src="images/home-icon.png" alt="" id="toolbar-home">
+    <p class="description-menu-icons-toolbar-mobile">Open up</p>
+  </div>
+  <div class="toolbar-mobile-inner-div" id="toolbar-inner-div-chats-groups">
+    <img src="images/send-icon.png" alt="" id="toolbar-chats-groups">
+    <p class="description-menu-icons-toolbar-mobile">Chats & groepen</p>
+  </div>
+  <div class="toolbar-mobile-inner-div">
+    <div id="toolbar-inspiration-div" class="toolbar-mobile-inner-div">
+      <div id="toolbar-inspration-options">
+        <p id="toolbar-inspiration-public">Publiek</p>
+        <p id="toolbar-inspiration-private">Prive</p>
+      </div>
+      <img src="images/inspiration-icon-2.png" alt="" id="toolbar-inspiration">
+      <p class="description-menu-icons-toolbar-mobile">Nieuw inzicht</p>
+    </div>
+  </div>
+  <div class="toolbar-mobile-inner-div">
+    <img src="images/menu-dashboard.png" alt="" id="toolbar-digimind">
+    <p class="description-menu-icons-toolbar-mobile">Mijn Digimind</p>
+  </div>  
+</div>
+
+<footer class="footer">
+  <div id="top-layer">
+    <div>
+    <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+    </div>
+    <div>
+      <h3 id="slogan-footer">Maak geluk een onderdeel van je dagelijks leven</h3>
+    </div>
+    <div>
+    <a href="https://www.facebook.com/Vitaminds.nu"><img src="images/Logo-facebook.png" alt="" width="25px"></a>
+    <a href="https://www.instagram.com/vitaminds.nu"><img src="images/logo-insta.png" alt="" width="50px"></a>
+    </div>
+  </div>
+  <div id="contact-layer">
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="/images/adres-icon.png" alt="Vitaminds adres">
+      <p>Beijumerweg 24</p>
+      <p>9737AD</p> 
+      <p>Groningen</p>
+    </div>
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="/images/email-icon.png" alt="Vitaminds emailadres">
+      <p> info@vitaminds.nu</p>
+    </div>
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="/images/telephone-icon.png" alt="Vitaminds phonenumber">
+      <p>+316 244 098 43</p>
+    </div>
+  </div>
+</footer>
+
+    <script type="text/javascript" src="javascript/firebase.js"></script>
+    <script type="text/javascript" src="javascript/auth.js"></script>
+    <script type="text/javascript" src="javascript/index.js"></script>
+    <script type="text/javascript" src="javascript/create-route.js"></script>
+</body>
+</html>

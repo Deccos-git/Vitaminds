@@ -35,6 +35,7 @@
     width: 210px;
     height: 210px;
     border-radius: 50%;
+    border: 1px solid #122b46;
 }
 
 #chat-button{
@@ -120,11 +121,27 @@
     display: none;
 }
 
-#private-outer-div{
+.private-outer-div{
     border-top: 3px solid #122b46;
     margin-top: 0px;
     width: 100%;
     height: auto;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+#start-new-proces-button{
+    background-color: #122B46;
+    border-radius: 20px;
+    border: 0px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    margin: 50px;
+    width: auto;
+    align-self: center;
 }
 
 #menu-div{
@@ -145,11 +162,115 @@
     border-bottom: 5px solid #122b46;
 }
 
-.private-outer-div{
+#start-new-proces{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#proces-select{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+}
+
+#check-in-by-proces{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.private-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.private-div p{
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+.digimind-proces-inner-div{
+    margin-top: 50px;
+}
+
+.levensles-div-ontwikkeling{
+    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 15px;
+    margin: 30px 5%;
+    padding: 15px;
+}
+
+.levensles-div-ontwikkeling h3{
+    font-size: 22px;
+}
+
+.ontwikkeling-levensles-meta-div{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.ontwikkeling-levensles-meta-div p{
+    font-size: 16px;
+}
+
+#menu-div-mobile{
     display: none;
 }
 
-.activated{
-    display: none;
+#menu-select-mobile{
+    width: auto;
+    width: 100%;
+    margin-top: 50px;
 }
+
+@media only screen and (max-width: 938px){
+
+    #menu-div-mobile{
+        display: block;
+    }
+
+    #menu-div{
+        display: none;
+    }
+
+    #private-public-div {
+        margin-top: 30px;
+    }
+
+    #profile-outer-div {
+        align-items: center;
+        width: 100%;
+    }
+
+    #name {
+        margin-left: 0px;
+    }
+
+    #chat-button {
+        margin-left: 0px;
+    }
+
+    #digimind-header-img {
+        background-image: url(../images/avontuur28.jpg);
+        height: 250px;
+        width: 100%;
+        background-attachment: none;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        border-bottom: 8px solid #122b46;
+    }
+
+    .digimind-proces-inner-div p{
+        margin: 0px 20px;
+    }
+
+}
+
+
 

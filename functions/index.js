@@ -617,6 +617,11 @@ app.get('/verbonden-leven-met-anderen-en-jezelf/*',function(req,res)
     res.sendFile('/index-redirect.html', { root: __dirname });
 });
 
+https://vitaminds.nu/inspiratie.html
+app.get('/inspiratie.html',function(req,res)
+{
+    res.sendFile('../artikelen.html', { root: __dirname });
+});
 
 
 exports.app = functions.https.onRequest(app);
