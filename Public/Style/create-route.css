@@ -34,7 +34,7 @@
 
 #route-options{
     background-color: #80E9FF0D;
-
+    display: none;
 }
 
 .radio-outer-div{
@@ -85,7 +85,7 @@
 }
 
 #route-next-step-visitor{
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
 }

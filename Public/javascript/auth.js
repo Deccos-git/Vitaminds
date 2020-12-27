@@ -208,6 +208,7 @@ const authName = document.createElement("h5")
 const authProfile = document.createElement("h5")
     authProfile.setAttribute("id", "auth-profile")
 const authProfileP = document.createElement("p")
+      authProfileP.setAttribute("id", "authprofile-p")
 const authPhoto = document.createElement("div")
     authPhoto.setAttribute("id", "profile-photo")
 const closeDiv = document.createElement("div")
@@ -268,7 +269,7 @@ auth.onAuthStateChanged(User =>{
 
     authPhoto.style.backgroundImage = `url('${profilePic}')`
     authName.innerHTML = `<a href = "../Vitaminders/${naamID}">${naam}</a>`
-    authProfileP.innerHTML = `<a href = "../Vitaminders/${naamID}"><img id="icon-auth-menu-digimind" src="../images/menu-dashboard.png">Mijn Digimind</a>`
+    authProfileP.innerHTML = `<a href = "../Vitaminders/${naamID}"><img id="icon-auth-menu-digimind" src="../images/menu-dashboard.png">Mijn omgeving</a>`
     authPhoto.addEventListener("click", () => {
       window.open("../Vitaminders/" + [naamID] + ".html", "_self");
     });

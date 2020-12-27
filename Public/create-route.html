@@ -147,9 +147,9 @@
         <p class="route-instruction">Selecteer een ontwikkeldoel</p>
         <select id="select-route-goal"></select>
         <p class="route-instruction">Geef je doel een korte titel</p>
-        <input type="text" placeholder="Titel van je doel">
+        <input type="text" id="goal-title" placeholder="Titel van je doel">
         <p class="route-instruction">Omschrijf je doel</p>
-        <textarea id="" cols="30" rows="10" placeholder="Omschrijf kort je doel"></textarea>
+        <textarea id="goal-description" cols="30" rows="10" placeholder="Omschrijf kort je doel"></textarea>
 
         <button id="show-step-two" class="button-algemeen button-route">Verder</button>
       </div>
@@ -190,12 +190,13 @@
             <label for="Public">Openbaar</label>
         </div>
       </div>
-      <button id="show-step-three" class="button-algemeen button-route">Verder</button>
+      <div id="save-button-div"></div>
     </div>
 
     <div class="title-div" id="route-next-step-auth">
         <img src="/images/first-steps.png" alt="Zet de eerste stap in je ontwikkeltraject">
         <h2>De eerste stap</h2>
+        <p>Alles wat je over jezelf leert kun je opslaan in je ontwikkelomgeving. Waar wil je je door laten inspireren?</p>
         <div id="next-steps-overiew">
             <div class="next-step-inner-div">
                 <img src="/images/design/articles.png" alt="artikelen">
@@ -225,7 +226,7 @@
         <h2>De eerste stap</h2>
         <p id="next-step-description">De eerste stap van je ontwikkeltraject is een ontwikkelomgeving creëren. Hier wordt je ontwikkeltraject en alles wat je hierin leert een plek gegeven.</p>
         <div id="register-div">
-            <h2>Maak je gratis Digimind aan</h2>
+            <h2>Maak je gratis ontwikkelomgeving aan</h2>
               <p class="route-instruction">Je voornaam*</p>
               <input id="register-firstname" type="text" placeholder="Je voornaam">
               <p class="route-instruction">Je achternaam</p>

@@ -1353,9 +1353,18 @@ margin: 0px 0px 30px 0px;
   cursor: pointer;
 }
 
+#cta-inspiration{
+  font-size: 16px !important;
+  font-weight: bold;
+}
+
 
 .inlog-notice{
   font-size: 14px;
+}
+
+#authprofile-p{
+  margin-left: 0px !important;
 }
 
 /* Mobile */

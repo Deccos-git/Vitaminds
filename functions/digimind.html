@@ -108,16 +108,19 @@
   <div id="profile-outer-div">
     <div id="profile-picture-div"></div>
     <p id="name"></p>
-    <button id="chat-button" class="button-algemeen" >Direct chatten</button>
+    <div id="chat-follow-div">
+      <button id="chat-button" class="button-algemeen" >Chatten</button>
+      <button id="follow-button" class="button-algemeen" >Volgen</button>
+    </div>
   </div>
   
   <div id="private-public-div">
     <div id="public-button" class="private-public-button active">
-      <img src="../images/public.png" alt="Bekijk openbaar profiel">
+      <img src="../images/design/public-lightgray.png" alt="Bekijk openbaar profiel">
       <p>Openbaar</p>
     </div>
     <div id="private-button" class="private-public-button">
-      <img src="../images/private.png" alt="Bekijk privé profiel">
+      <img src="../images/design/private-lightgray.png" alt="Bekijk privé profiel">
       <p>Privé</p>
     </div>
   </div>
@@ -133,7 +136,51 @@
       <div id="coaching-div" class="section-inner-div">
         <h2>Mijn coaching</h2>
         <div id="coaching-inner-div">
-          <h3></h3>
+          <div id="coachingstyle">
+            <h3>Coachstijl</h3>
+          </div>
+          <div id="methode">
+            <h3>Methodiek</h3>
+          </div>
+          <div id="motivation">
+            <h3>Motivatie</h3>
+          </div>
+        </div>
+      </div>
+
+      <div id="experience-div" class="section-inner-div">
+        <h2>Mijn ervaringen</h2>
+        <div id="experience-inner-div">
+          <div id="years">
+            <h3>Aantal jaren ervaring</h3>
+          </div>
+          <div id="experience">
+            <h3>Ervaringen</h3>
+          </div>
+          <div id="education">
+            <h3>Opleidingen & certificaten</h3>
+          </div>
+        </div>
+      </div>
+
+      <div id="practical-div" class="section-inner-div">
+        <h2>Praktische informatie</h2>
+        <div id="practical-inner-div">
+          <div id="location">
+            <h3>Praktijklocatie</h3>
+          </div>
+          <div id="targetgroup">
+            <h3>Doelgroep</h3>
+          </div>
+          <div id="costs">
+            <h3>Tarief</h3>
+          </div>
+          <div id="website">
+            <h3>Website</h3>
+          </div>
+          <div id="telephone">
+            <h3>Telefoonnummer</h3>
+          </div>
         </div>
       </div>
       
@@ -147,8 +194,7 @@
       <p>Tools</p>
       <p>Analytics</p>
       <p>Notificaties</p>
-      <p>Gelukstegoed</p>
-      <p>Admin</p>
+      <p>Ontwikkeltegoed</p>
     </div>
 
     <div id="menu-div-mobile">
@@ -158,35 +204,169 @@
         <option value="">Tools</option>
         <option value="">Analytics</option>
         <option value="">Notificaties</option>
-        <option value="">Gelukstegoed</option>
-        <option value="">Admin</option>
+        <option value="">Ontwikkeltegoed</option>
       </select>
     </div>
 
   </section>
 
-  <div class="private-outer-div activated" id="my-proces-outer-div">
+  <div class="private-outer-div activeSection" id="my-proces-outer-div">
     <div id="start-new-proces">
-      <button id="start-new-proces-button">Begin een nieuw traject</button>
+      <a href="../create-route.html"><button id="start-new-proces-button">Begin een nieuw traject</button></a>
 
-      <p>Selecteer een traject</p>
-      <select id="proces-select" onchange="getProces(this)"></select>
-
-      <div id="proces-inner-div"></div>
-      <div id="proces-lessons"></div>
-      <div id="check-in-by-proces">
-        <h2>Hoe gaat het nu?</h2>
-        <textarea name="" id="" cols="30" rows="10" placeholder="Hoe gaat het nu met je?"></textarea>
-        <div>
-          <button class="button-algemeen">Opslaan</button>
-        </div>
+      <div id="select-proces-div">
+        <p>Selecteer een traject</p>
+        <select id="proces-select" onchange="getProces(this)"></select>
       </div>
 
+      <div id="proces-display-outer-div">
+        <div id="proces-inner-div"></div>
+        <div id="proces-lessons"></div>
+        <div id="check-in-by-proces">
+          <h2>Hoe gaat het nu?</h2>
+          <textarea name="" id="" cols="30" rows="10" placeholder="Hoe gaat het nu met je?"></textarea>
+          <div>
+            <button class="button-algemeen">Opslaan</button>
+          </div>
+        </div>
+        <h2>Inspiratie</h2>
+        <div id="inspiration-outer-div">
+        </div>
+    </div>
     </div>
   </div>
 
   <div class="private-outer-div" id="favorite-coaches-outer-div">
-    <h1>Favoriete coaches</h1>
+    <a href="../coaches.html"><button id="start-new-proces-button">Bekijk alle coaches</button></a>
+
+    <div id="coach-select-div">
+      <p>Selecteer een coach</p>
+      <select name="" id="favorite-coaches-select" onchange="selectCoach(this)"></select>
+    </div>
+
+    <div id="favorite-coaches-div">
+      <h2>Artikelen</h2>
+    </div>
+
+  </div>
+
+  <div class="private-outer-div" id="tools-outer-div">
+    <a href="../tools.html"><button id="start-new-proces-button">Bekijk alle tools</button></a>
+    <div id="happiness-scale-div">
+      <h2>Geluksschaal</h2>
+    </div>
+    <div id="check-in-div">
+      <h2>Check in</h2>
+    </div>
+    <div id="gratefull-div">
+      <h2>Dankbaarheid in je dagelijks leven</h2>
+    </div>
+  </div>
+
+  <div class="private-outer-div" id="analytics-outer-div">
+    <div id="traction-analytics">
+      <h2>Tractie</h2>
+      <div id="traction-inner-div">
+          <div id="website-clicks" class="analytics-card">
+              <p>Klikken naar je website</p>
+          </div>
+          <div id="profile-views" class="analytics-card">
+              <p>Profiel bezoekers</p>
+          </div>
+          <div id="article-views" class="analytics-card">
+              <p>Lezers van artikelen<br> 
+                  (waar je aan hebt bijgedragen)</p>
+          </div>
+          <div id="workshop-views" class="analytics-card">
+              <p>Klikken op je workshops<br> 
+                  (meer informatie)</p>
+          </div>
+      </div>
+  </div>
+  
+  <div id="earnings-analytics">
+      <h2>Verdiensten</h2>
+      <h4>Totaal</h4>
+      <p class="numbers-analytics" id="total-earnings"></p>
+  
+      <h4>Totaal ongefactureerd</h4>
+      <p class="numbers-analytics" id="total-earnings-unbilled"></p>
+  
+      <button class="button-algemeen">Factureren</button>
+  
+      <h4>Verkopen</h4>
+      <div id="earnings-inner-div">
+  
+      </div>
+  </div>
+  
+  <div id="admin-analytics">
+      <h2>Admin</h2>
+      <div id="admin-inner-div">
+          <div id="basic-coaches" class="analytics-card">
+              <p>Aantal basic coaches</p>
+          </div>
+          <div id="premium-coaches" class="analytics-card">
+            <p>Aantal premium coaches</p>
+          </div>
+          <div id="vitaminders" class="analytics-card">
+              <p>Aantal Vitaminders</p>
+          </div>
+          <div id="insights" class="analytics-card">
+              <p>Aantal bijdragen aan artikelen</p>
+          </div>
+          <div id="workshops" class="analytics-card">
+              <p>Aantal workshops</p>
+          </div>
+          <div id="coachgroups" class="analytics-card">
+              <p>Aantal coachgroepen</p>
+          </div>
+          <div id="events" class="analytics-card">
+            <p>Aantal events</p>
+          </div>
+          <div id="analytics-card-flagged" class="analytics-card">
+              <p>Flagged Openups</p>
+          </div>
+      </div>
+  </div>
+  
+  </div>
+
+  <div class="private-outer-div" id="notifications-outer-div">
+    <div id="rewards-outer-div">
+      <div id="total-inspiration"></div>
+      <div id="trophies">
+        <img id="trophy-1" src="../images/Trophies/1-gray.png" alt="Trophy-1">
+        <img id="trophy-5" src="../images/Trophies/5-gray.png" alt="Trophy-5">
+        <img id="trophy-10" src="../images/Trophies/10-gray.png" alt="Trophy-10">
+        <img id="trophy-20" src="../images/Trophies/20-gray.png" alt="Trophy-20">
+        <img id="trophy-40" src="../images/Trophies/40-gray.png" alt="Trophy-40">
+        <img id="trophy-80" src="../images/Trophies/80-gray.png" alt="Trophy-80">
+        <img id="trophy-160" src="../images/Trophies/160-gray.png" alt="Trophy-160">
+      </div>
+    </div>
+    <div id="social-notifications-outer-div">
+      <h2>Nieuwe meldingen</h2>
+      <div id="inspiration-notifications">
+      </div>
+    </div>
+  </div>
+
+  <div class="private-outer-div" id="ontwikkeltegoed-outer-div">
+    <div id="up-to-date-gelukstegoed-div">
+      <h2>Je ontwikkeltegoed</h2>
+      <p id="up-to-date-gelukstegoed"></p>
+    
+      <a href="../gelukstegoed.html"><button class="button-algemeen">Ophogen</button></a>
+    </div>
+    <div>
+      <h2>Bij/af</h2>
+      <div id="plus-minus-div">
+    </div>
+  </div>
+
+  <div class="private-outer-div" id="admin-outer-div">
+    <h1>Admin</h1>
   </div>
   
   <!-- Toolbar mobile -->
@@ -251,7 +431,6 @@
 <script type="text/javascript" src="../javascript/firebase.js"></script>
 <script type="text/javascript" src="../javascript/auth.js"></script>
 <script type="text/javascript" src="../javascript/DigiMind.js"></script>
-<script type="text/javascript" src="../javascript/edit-profile.js"></script>
 <script type="text/javascript" src="../javascript/index.js"></script>
 </body>
     

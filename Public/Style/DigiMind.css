@@ -16,15 +16,18 @@
 #profile-outer-div{
     display: flex;
     flex-direction: column;
-    align-items: left;
-    margin-left: 0px;
-    width: max-content;
-    text-align: right;
+    text-align: center;
+    margin-right: 75%;
+}
+
+#chat-follow-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #name{
     font-weight: bold;
-    margin-left: 55px;
 }
 
 #profile-picture-div{
@@ -38,24 +41,24 @@
     border: 1px solid #122b46;
 }
 
-#chat-button{
-    margin-left: 55px;
-}
-
 /* Private public buttons */
 #private-public-div{
     display: none;
     justify-content: center;
     align-items: center;
-    margin-top: -53px;
+    margin: 30px 0px 0px 0px;
 }
 
 .active{
-    background-color:#49beb7;
+    background-color: #122b464D;
 }
 
 .active p{
     color: white;
+}
+
+.activeSection{
+    display: flex;
 }
 
 .private-public-button{
@@ -76,14 +79,15 @@
     font-size: 14px;
     padding: 5px;
     margin: 0px 0px;
+    color: lightgray;
 }
 
 #private-button{
-    border-bottom-right-radius: 5px;
+    border-radius: 5px;
 }
 
 #public-button{
-    border-bottom-left-radius: 5px;
+    border-radius: 5px;
 }
 
 .section-outer-div{
@@ -96,11 +100,12 @@
 .section-inner-div{
     height: auto;
     width: 80%;
-    border: 2px solid #122b46;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
+    margin-bottom: 50px;
     align-items: center;
+    padding: 0px 30px;
     box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -108,8 +113,18 @@
     margin-top: 50px;
 }
 
-#coaching-div{
-    display: none;
+.section-inner-div h3{
+    font-size: 20px;
+    margin-bottom: 0px;
+}
+
+#practical-inner-div{
+    width: 100%;
+}
+
+.section-inner-div p{
+    font-size: 20px;
+    margin-top: 5px;
 }
 
 #welcome-message{
@@ -129,6 +144,7 @@
     display: none;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 50px;
 }
 
 #start-new-proces-button{
@@ -142,12 +158,12 @@
     margin: 50px;
     width: auto;
     align-self: center;
+    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
 }
 
 #menu-div{
     display: flex;
     justify-content: space-between;
-    width: 100%;
     margin: 100px 50px 0px 50px;
 }
 
@@ -173,6 +189,8 @@
     flex-direction: column;
     align-items: center;
     width: auto;
+    border: 1px solid lightgray;
+    border-radius: 5px;
 }
 
 #check-in-by-proces{
@@ -194,7 +212,32 @@
 }
 
 .digimind-proces-inner-div{
-    margin-top: 50px;
+    margin: 50px 50px 50px 50px;
+}
+
+#inspiration-outer-div{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#follow-button{
+    margin: 5px 0px 0px 0px;
+}
+
+#select-proces-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #122b46;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+#proces-display-outer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .levensles-div-ontwikkeling{
@@ -226,6 +269,261 @@
     width: auto;
     width: 100%;
     margin-top: 50px;
+}
+
+#favorite-coaches-select{
+    width: auto;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+#coach-select-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #122b46;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 50px 20px 20px 30px;
+}
+
+.insights-outer-div{
+    display: flex;
+    margin: 10px 100px 5px 100px;
+    background-color: white;
+    padding: 15px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    border-radius: 2px;
+    border: 1px solid #f7f7f7;
+    width: 550px;
+}
+
+.insights-outer-div h2{
+    text-align: left;
+    align-self: center;
+    font-size: 18px;
+}
+
+#insight-timestamp{
+    font-size: 14px;
+    margin-top: 34px;
+    font-weight: 600;
+}
+
+.insights-outer-div p{
+    font-size: 18px;
+    text-align: left;
+    letter-spacing: 1px;
+}
+
+.meta-div-insights{
+    border-right: 1px solid #f7f7f7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    min-width: 150px;
+    max-width: 150px;
+    cursor: pointer;
+    justify-content: center;
+}
+
+.text-div-insights{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.meta-photo {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+}
+
+#admin-analytics{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+#traction-inner-div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#admin-inner-div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#earnings-inner-div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#earnings-analytics{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: whitesmoke;
+    margin: 30px 0px;
+}
+
+.analytics-card{
+    padding: 10px;
+    margin: 10px 10px 30px 10px;
+    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 400px;
+}
+
+.analytics-card p{
+    text-align: center;
+    font-weight: bold;
+}
+
+.analytics-card li{
+    font-size: 18px;
+}
+
+.numbers-analytics{
+    font-weight: bold;
+    border-radius: 50px;
+    padding: 10px;
+    width: 75px;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+#date-p{
+    font-size: 16px;
+}
+
+#inspiration-notifications {
+    margin: 15px;
+    width: 100%;
+    padding: 15px;
+}
+
+#inspiration-notifications h3{
+    font-size: 20px;
+}
+
+#inspiration-notifications li{
+    font-size: 17px;
+}
+
+#social-notifications-outer-div{
+    margin-top: 50px;
+}
+
+.gamefication-outer-div{
+    border-radius: 2px;
+    padding: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+.gamefication-outer-div h4 {
+    font-size: 14px;
+    color: #122b46;
+}
+
+#inner-div-gamefication {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#inner-div-gamefication p{
+   border-radius: 50%;
+   padding: 10px;
+   border: 3px solid yellow;
+   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0,0,0,.12);
+}
+
+#trophies img {
+    height: 131px;
+}
+
+#gelukstegoed-outer-div{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.gelukstegoed-card{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: auto;
+    margin: 30px 10px 20px 10px;
+    padding-bottom: 20px;
+    align-items: center;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: #FFF;
+}
+
+.gelukstegoed-img{
+    height: 200px;
+    width: 250px;
+}
+
+#up-to-date-gelukstegoed-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+#up-to-date-gelukstegoed{
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+#plus-minus-div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.plus-minus-inner-div{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.product-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #122b463a;
+    margin: 15px;
+    border-radius: 5px;
+    width: 330px;
+    height: auto;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.product-div p{
+    font-size: 16px;
+    padding: 10px;
+    font-weight: bold;
 }
 
 @media only screen and (max-width: 938px){
@@ -268,6 +566,40 @@
 
     .digimind-proces-inner-div p{
         margin: 0px 20px;
+    }
+
+    #welcome-message {
+        margin: 0px 0px;
+    }
+
+    .section-inner-div p {
+        font-size: 17px;
+    }
+
+    #select-proces-div {
+        border: 0px
+    }
+
+    .levensles-div-ontwikkeling h3 {
+        font-size: 17px;
+    }
+
+    .insights-outer-div {
+        width: auto;
+        margin: 5px;
+    }
+
+    #inspiration-notifications {
+       width: auto;
+    }
+
+    .analytics-card{
+        width: 90%;
+        margin: 10px 0px 10px 0px;
+    }
+
+    .analytics-card li{
+        font-size: 16px;
     }
 
 }

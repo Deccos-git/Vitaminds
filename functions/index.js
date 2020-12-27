@@ -148,17 +148,6 @@ createSession("/create-session-twohundred", 20000)
     });
 }();
 
-// Analytics aanmaken op basis van URL
-app.get('/analyse/:id',function(req,res)
-{
-    res.sendFile('analytics.html', { root: __dirname });
-});
-
-// Subscriptions aanmaken op basis van URL
-app.get('/subscription/:id',function(req,res)
-{
-    res.sendFile('subscriptions.html', { root: __dirname });
-});
 
 // Group aanmaken op basis van URL
 app.get('/Group/:id',function(req,res)
@@ -189,13 +178,6 @@ app.get('/Artikelen/:id',function(req,res)
 {
     res.sendFile('Artikel.html', { root: __dirname });
 });
-
-// Thema artikelen aanmaken op basis van URL
-app.get('/Theme-articles/:id',function(req,res)
-{
-    res.sendFile('theme-article.html', { root: __dirname });
-});
-
 // Thema aanmaken op basis van URL
 
 app.get('/Thema/:id',function(req,res)
