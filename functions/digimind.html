@@ -183,6 +183,12 @@
           </div>
         </div>
       </div>
+
+      <div id="traject-div" class="section-inner-div">
+        <h2>Mijn openbare trajecten</h2>
+        <div id="public-trajects"></div>
+      </div>
+
       
     </div>
   </section>
@@ -198,7 +204,7 @@
     </div>
 
     <div id="menu-div-mobile">
-      <select name="" id="menu-select-mobile">
+      <select name="" id="menu-select-mobile" onchange="getSection(this)">
         <option value="">Mijn trajecten</option>
         <option value="">Favoriete coaches</option>
         <option value="">Tools</option>
@@ -257,9 +263,6 @@
     </div>
     <div id="check-in-div">
       <h2>Check in</h2>
-    </div>
-    <div id="gratefull-div">
-      <h2>Dankbaarheid in je dagelijks leven</h2>
     </div>
   </div>
 

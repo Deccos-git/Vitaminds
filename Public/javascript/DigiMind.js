@@ -331,6 +331,171 @@ function unfollowCoach(){
         });
 };
 
+function sendMailNewChat(authUserClean){
+
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", naam)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        const email = doc.data().Email
+                        const nameClean = doc.data().GebruikersnaamClean
+                        const name = doc.data().Gebruikersnaam
+
+        db.collection("Mail").doc().set({
+                to: [email],
+                cc: "info@vitaminds.nu",
+          message: {
+          subject: `Nieuw chatverzoek op Vitaminds`,
+          html: `Hallo ${nameClean}, </br></br>
+               ${authUserClean} heeft je een chatverzoek gestuurd.<br><br> 
+                
+                Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om naar je chats te gaan.
+                Vriendelijke groet, </br></br>
+                Het Vitaminds Team </br></br>
+                <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+          Gebruikersnaam: name,
+          Emailadres: email,
+          Type: "Vitaminders"
+          }        
+          })
+          .then(() => {
+                window.open(`../Chats/${name}.html`, "_self");
+                        });
+                });
+        });
+};
+
+!function startChat(){
+        const chatButton = document.getElementById("chat-button")
+
+        chatButton.addEventListener("click", () => {
+
+        auth.onAuthStateChanged(User =>{
+                if(User){
+                const userRef = db.collection("Vitaminders").doc(User.uid);
+                userRef.get().then(function(doc) {
+
+                        const auth = doc.data().Gebruikersnaam
+
+                        const roomName = auth<naam ? auth+'_'+naam : naam+'_'+auth;
+
+                        const membersArray = [
+                                auth,
+                                naam,
+                        ]
+
+        db.collection("Chats").doc().set({
+                Room: roomName,
+                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                Type: "Chat",
+                Messages: 0,
+                Eigenaar: "Vitaminds",
+                Members: membersArray,
+                Online: []
+        }).then(() => {
+                sendMailNewChat(auth)
+        });    
+        });
+                } else {
+                        const notification = document.getElementById("chat-notification-visitor")
+
+                        notification.style.display = "block"
+                }
+                });
+        });
+}();
+
+
+!function hideChatIfAuth(){
+
+        const chatButton = document.getElementById("chat-button")
+
+        auth.onAuthStateChanged(User =>{
+                if(User){
+                const userRef = db.collection("Vitaminders").doc(User.uid);
+                userRef.get().then(function(doc) {
+
+                        const auth = doc.data().Gebruikersnaam
+                        const userTypeAuth = doc.data().Usertype
+
+                        console.log
+
+                        if(auth == naam){
+                                chatButton.style.display = "none"   
+                        }
+
+                        hideChatIfAuthIsCoachAndUserIsVitaminder(userTypeAuth)
+
+                        });
+                };
+        });
+}();
+
+function hideChatIfAuthIsCoachAndUserIsVitaminder(typeAuth){
+
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+                const userTypeUser = doc.data().Usertype
+
+                if(typeAuth == "Coach" && userTypeUser == "Vitaminder"){
+
+                        chatButton.style.display = "none"
+                        };
+                });
+        });
+};
+
+!function showPublicProcess(){
+
+        const publicProcesDiv = document.getElementById("public-trajects")
+
+        
+        db.collectionGroup("Levensvragen")
+        .where("Gebruikersnaam", "==", naam)
+        .where("Openbaar", "==", "Ja")
+        .get().then(querySnapshot =>{
+                querySnapshot.forEach(doc =>{
+
+                        const ID = doc.data().ID
+                        const levensvraagID = doc.data().Levensvraag
+                        const levensvragen = levensvraagID.replace(ID, "")
+                        const description = doc.data().Omschrijving
+                        const goal = doc.data().Goal
+
+                        addLessonsToProces(levensvraagID)
+
+                        const innerDiv = document.createElement("div")
+                                innerDiv.setAttribute("class", "digimind-proces-inner-div")
+                        const goalDiv = document.createElement("div")
+                                goalDiv.setAttribute("class", "goal-div")
+                        const goalP = document.createElement("p")
+                        const levensvraagTitle = document.createElement("h3")
+                        const descriptionP = document.createElement("p")
+                        const privateDiv = document.createElement("div")
+                                privateDiv.setAttribute("class", "private-div")
+                        const private = document.createElement("div")
+                        const privateTooltip = document.createElement("p")
+                                privateTooltip.setAttribute("class", "private-tooltip")
+
+                        goalP.innerHTML = goal
+                        levensvraagTitle.innerHTML = levensvragen
+                        descriptionP.innerHTML = description
+
+                        publicProcesDiv.appendChild(innerDiv)
+                        innerDiv.appendChild(privateDiv)
+                        privateDiv.appendChild(private)
+                        privateDiv.appendChild(privateTooltip)
+                        // innerDiv.appendChild(goalDiv)
+                        // goalDiv.appendChild(goalP)
+                        innerDiv.appendChild(levensvraagTitle)
+                        innerDiv.appendChild(descriptionP)
+                
+                });
+        });
+}();
+
 // Database Query
 !function databaseQueryPublic(){
         db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
@@ -383,6 +548,60 @@ function unfollowCoach(){
                 });
         };
 }();
+
+
+function getSection(){
+
+        const mobileMenuSelect = document.getElementById("menu-select-mobile")
+        const privateOuterDiv = document.getElementsByClassName("private-outer-div")
+
+        const option = mobileMenuSelect.options
+        const selected = option[option.selectedIndex].innerHTML
+
+        if (selected === "Mijn trajecten"){
+                privateOuterDiv[0].style.display = "flex"
+                privateOuterDiv[1].style.display = "none"
+                privateOuterDiv[2].style.display = "none"
+                privateOuterDiv[3].style.display = "none"
+                privateOuterDiv[4].style.display = "none"
+                privateOuterDiv[5].style.display = "none"
+        } else if (selected === "Favoriete coaches"){
+                privateOuterDiv[0].style.display = "none"
+                privateOuterDiv[1].style.display = "flex"
+                privateOuterDiv[2].style.display = "none"
+                privateOuterDiv[3].style.display = "none"
+                privateOuterDiv[4].style.display = "none"
+                privateOuterDiv[5].style.display = "none"
+        } else if (selected === "Tools"){
+                privateOuterDiv[0].style.display = "none"
+                privateOuterDiv[1].style.display = "none"
+                privateOuterDiv[2].style.display = "flex"
+                privateOuterDiv[3].style.display = "none"
+                privateOuterDiv[4].style.display = "none"
+                privateOuterDiv[5].style.display = "none"
+        } else if (selected === "Analytics"){
+                privateOuterDiv[0].style.display = "none"
+                privateOuterDiv[1].style.display = "none"
+                privateOuterDiv[2].style.display = "none"
+                privateOuterDiv[3].style.display = "flex"
+                privateOuterDiv[4].style.display = "none"
+                privateOuterDiv[5].style.display = "none"
+        } else if (selected === "Notificaties"){
+                privateOuterDiv[0].style.display = "none"
+                privateOuterDiv[1].style.display = "none"
+                privateOuterDiv[2].style.display = "none"
+                privateOuterDiv[3].style.display = "none"
+                privateOuterDiv[4].style.display = "flex"
+                privateOuterDiv[5].style.display = "none"
+        } else if (selected === "Ontwikkeltegoed"){
+                privateOuterDiv[0].style.display = "none"
+                privateOuterDiv[1].style.display = "none"
+                privateOuterDiv[2].style.display = "none"
+                privateOuterDiv[3].style.display = "none"
+                privateOuterDiv[4].style.display = "none"
+                privateOuterDiv[5].style.display = "flex"
+        }
+};
 
 
 !function switchSection(){
@@ -871,12 +1090,44 @@ function createCoachDOMElements(coachName, article, typeInsight, title,time){
 
 // Tools
 
+!function showHapinessToolIfInstalled(){
+
+        const happinessDiv = document.getElementById("happiness-scale-div")
+
+        db.collection("Tools")
+        .where("Tool", "==", "HapinessChart")
+        .where("Installs", "array-contains", naam)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        happinessDiv.style.display = "flex"
+
+                });
+        });
+}();
+
+!function showCheckInDiv(){
+
+        const checkInDiv = document.getElementById("check-in-div")
+
+        db.collection("Tools")
+        .where("Tool", "==", "Check-in")
+        .where("Gebruikersnaam", "==", naam)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        checkInDiv.style.display = "flex"
+
+                });
+        });
+
+}();
+
 !function queryCheckinsUser(){
         db.collection("Tools").where("Tool", "==", "Check-in")
         .where("Gebruikersnaam", "==", naam)
         .get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
-
 
                         const goal = doc.data().Levensvraag
 

@@ -388,6 +388,14 @@
     font-weight: bold;
 }
 
+#happiness-scale-div{
+    display: none;
+}
+
+#check-in-div{
+    display: none;
+}
+
 .analytics-card li{
     font-size: 18px;
 }
