@@ -10,6 +10,10 @@
     height: 150px;
 }
 
+#auth-button{
+    display: none;
+}
+
 #description-route{
     margin: 0px 300px 50px 300px;
 }

@@ -1,3 +1,18 @@
+!function changeNextStepButtonAuthVisitor(){
+
+    const authButton = document.getElementById("auth-button")
+    const visitorButton = document.getElementById("visitor-button")
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+
+            authButton.style.display = "flex"
+            visitorButton.style.display = "none"
+
+        };
+    });
+}();
+
 
 function appendGoalsToselect(goal){
 
@@ -38,13 +53,17 @@ function appendGoalsToselect(goal){
     });
 }();
 
-function setReminder(){
+function setReminderAuth(){
+
+    console.log("test")
 
     const reminderOption = document.querySelector('input[name="reminder"]:checked').value;
 
+    console.log(reminderOption)
+
     const goalTitle = document.getElementById("goal-title").value
 
-    if(reminderOption === "Ja"){
+    if(reminderOption === "Yes"){
 
         auth.onAuthStateChanged(User =>{
             db.collection("Vitaminders")
@@ -69,6 +88,8 @@ function saveInputAuth(){
         db.collection("Vitaminders")
         .doc(User.uid).get().then(doc => {
 
+            const auth = doc.data().Gebruikersnaam
+
     const select = document.getElementById("select-route-goal")
 
     const option = select.options
@@ -78,20 +99,19 @@ function saveInputAuth(){
 
     const goalDescription = document.getElementById("goal-description").value 
 
-    const privatePublicOption = document.querySelector('input[name="publuc-private"]:checked').value;
+    const privatePublicOption = document.querySelector('input[name="public-private"]:checked').value;
 
     let private = ""
 
-    if(privatePublicOption === "Prive"){
+    if(privatePublicOption === "Private"){
         private = "Ja"
-    } else if(privatePublicOption === "Openbaar") {
+    } else if(privatePublicOption === "Public") {
         private = "Nee"
     };
 
-            const auth = doc.data().Gebruikersnaam
 
             db.collection("Vitaminders")
-            .doc(doc.id).collection("Levenvragen").doc()
+            .doc(doc.id).collection("Levensvragen").doc()
             .set({
                 Eigenaar: "Vitaminds",
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -108,20 +128,25 @@ function saveInputAuth(){
     });
 };
 
-!function nextStep(){
 
-    const showNextStepsDivButton = document.getElementById("save-button-auth")
 
-    if(showNextStepsDivButton != null){
+const showNextStepsDivButton = document.getElementById("auth-button")
 
-        showNextStepsDivButton.addEventListener("click", () => {
+if(showNextStepsDivButton != null){
 
-            changeNextStepBasedOnAuthOrVisitor();
-            saveInputAuth()
-            setReminder()
-        });
-    };
-}();
+    showNextStepsDivButton.addEventListener("click", nextStepAuth)
+};
+
+function nextStepAuth(){
+
+    const nextStep = document.getElementById("route-next-step-auth")
+    nextStep.style.display = "flex"
+
+    saveInputAuth()
+    setReminderAuth()
+};
+
+// Visitor
 
 function setGelukstegoed(user){
     db.collection('Vitaminders').doc(user).collection("Gelukstegoed").doc().set({
@@ -133,13 +158,13 @@ function setGelukstegoed(user){
       });
 };
 
-function setLevensvraag(user){
+function setLevensvraag(user, selected, goalTitle, goalDescription, private){
     db.collection("Vitaminders")
     .doc(user).collection("Levenvragen").doc()
     .set({
         Eigenaar: "Vitaminds",
         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-        Gebruikersnaam: auth,
+        Gebruikersnaam: user,
         Goal: selected,
         Levenslessen: [],
         ID: idClean,
@@ -172,12 +197,13 @@ function setEmail(mail, user){
 }
 
 function setReminder(user){
-    console.log("Reminder")
     const reminderOption = document.querySelector('input[name="reminder"]:checked').value;
+
+    console.log(reminderOption)
 
     const goalTitle = document.getElementById("goal-title").value
 
-    if(reminderOption === "Ja"){
+    if(reminderOption === "Yes"){
 
         db.collection("Vitaminders")
         .doc(user).get().then(doc => {
@@ -196,16 +222,52 @@ function setReminder(user){
 
 
 
-function saveInputVisitor(){
-    const button = document.getElementById("register-button")
-    if(button != null){
-    
-        button.addEventListener("click", () => {
+!function nextStepVisitor(){
+    const visitorButton = document.getElementById("visitor-button")
+    if(visitorButton != null){
 
-            notice.style.display = "flex"
-    
-          const notice = document.getElementById("register-notice")
-      
+        visitorButton.addEventListener("click", () => {
+
+        const nextStepVisitor = document.getElementById("route-next-step-visitor")
+        nextStepVisitor.style.display = "flex"
+        });
+
+    };
+}();
+
+function showNotice(){
+
+    const notice = document.getElementById("register-notice")
+
+    notice.style.display = "flex"    
+
+};
+
+const saveVisitorToAuthButton = document.getElementById("register-button-create-route")
+
+saveVisitorToAuthButton.addEventListener("click", saveInputVisitor)
+
+function saveInputVisitor(){
+
+    const select = document.getElementById("select-route-goal")
+
+    const option = select.options
+    const selectedOption = option[option.selectedIndex].innerHTML
+
+    const newGoalTitle = document.getElementById("goal-title").value
+
+    const newGoalDescription = document.getElementById("goal-description").value 
+
+    const privatePublicOption = document.querySelector('input[name="public-private"]:checked').value;
+
+    let privateOption = ""
+
+    if(privatePublicOption === "Private"){
+        privateOption = "Ja"
+    } else if(privatePublicOption === "Public") {
+        privateOption = "Nee"
+    };
+
       const email = document.getElementById('register-email').value;
       const passwordVM = document.getElementById('register-wachtwoord').value;
       const passwordInput = document.getElementById('register-wachtwoord')
@@ -250,18 +312,19 @@ function saveInputVisitor(){
           Levensvragen: [],
           Profielfoto: "https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/dummy-profile-photo.jpeg?alt=media&token=229cf7eb-b7df-4815-9b33-ebcdc614bd25"
       }).then(() => {
-        gelukstegoed(cred.user.uid)
-        setLevensvraag(cred.user.uid)
+        setGelukstegoed(cred.user.uid)
+        setLevensvraag(cred.user.uid, selectedOption, newGoalTitle, newGoalDescription, privateOption)
         setReminder(cred.user.uid)
         setEmail(email, userName)
+    })
+    .then(() => {
+        showNotice()
     })
         }).catch((err) => {
           alert(err)
         });
         };
       };
-    });
-}
 }
 
 function registerNoticeOK(){
