@@ -104,9 +104,29 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 50px;
-    align-items: center;
+    align-items: flex-start;
     padding: 0px 30px;
     box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+}
+
+#welcome-div{
+    display: none;
+}
+
+#coaching-div{
+    display: none;
+}
+
+#experience-div{
+    display: none;
+}
+
+#practical-div{
+    display: none;
+}
+
+#traject-div{
+    display: none;
 }
 
 .section-inner-div h2{
@@ -197,6 +217,19 @@
     display: none;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 15px;
+    margin: 30px 5%;
+    padding: 15px;
+    width: -webkit-fill-available;
+}
+
+.button-digimind{
+    margin: 20px
+}
+
+.analytics-menu-item{
+    display: none;
 }
 
 .private-div{
@@ -223,15 +256,22 @@
 
 #follow-button{
     margin: 5px 0px 0px 0px;
+    display: none;
 }
 
 #select-proces-div{
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     border: 1px solid #122b46;
     border-radius: 15px;
     padding: 10px;
+}
+
+#inspiration-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
 }
 
 #proces-display-outer-div{
@@ -532,6 +572,10 @@
     font-size: 16px;
     padding: 10px;
     font-weight: bold;
+}
+
+#chat-button{
+    display: none;
 }
 
 @media only screen and (max-width: 938px){

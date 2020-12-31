@@ -118,6 +118,14 @@ function insertUserName(name){
 
 };
 
+function displayPublicSectionIfExist(dataPoint, div){
+
+        if(dataPoint != undefined){
+                div.style.display = "flex"
+        }; 
+
+}
+
 function welcomeMessage(userMessage){
 
         const welcomeMess = document.getElementById("welcome-message")
@@ -129,9 +137,7 @@ function welcomeMessage(userMessage){
 
         welcomeMess.appendChild(messageP)
 
-        if(userMessage != undefined){
-                welcomeDiv.style.display = "flex"
-        };
+        displayPublicSectionIfExist(userMessage, welcomeDiv)
 };
 
 function coachingInformation(coachStyle, coachMethode, coachMotivation){
@@ -139,40 +145,46 @@ function coachingInformation(coachStyle, coachMethode, coachMotivation){
         const styleDiv = document.getElementById("coachingstyle")
         const methodeDiv = document.getElementById("methode")
         const motivationDiv = document.getElementById("motivation")
+        const coachInformationDiv = document.getElementById("coaching-div")
 
         const styleP = document.createElement("p")
         const methodeP = document.createElement("p")
         const motivationP = document.createElement("p")
         
-        styleP.innerText = coachStyle
-        methodeP.innerText = coachMethode
-        motivationP.innerText = coachMotivation
+        styleP.innerHTML = coachStyle
+        methodeP.innerHTML = coachMethode
+        motivationP.innerHTML = coachMotivation
 
         styleDiv.appendChild(styleP)
         methodeDiv.appendChild(methodeP)
         motivationDiv.appendChild(motivationP)
 
-}
+        displayPublicSectionIfExist(coachStyle ,  coachInformationDiv)
+
+};
 
 function experienceInformation(coachYears, coachExperience, coachEducation){
 
         const yearsDiv = document.getElementById("years")
         const experienceDiv = document.getElementById("experience")
         const educationDiv = document.getElementById("education")
+        const coachExperienceDiv = document.getElementById("experience-div")
 
         const yearsP = document.createElement("p")
         const experienceP = document.createElement("p")
         const educationP = document.createElement("p")
         
-        yearsP.innerText = coachYears
-        experienceP.innerText = coachExperience
-        educationP.innerText = coachEducation
+        yearsP.innerHTML = coachYears
+        experienceP.innerHTML = coachExperience
+        educationP.innerHTML = coachEducation
 
         yearsDiv.appendChild(yearsP)
         experienceDiv.appendChild(experienceP)
         educationDiv.appendChild(educationP)
 
-}
+        displayPublicSectionIfExist(coachYears, coachExperienceDiv)
+
+};
 
 function practicalInformation(coachLocation, coachTargetgroup, coachCosts, coachWebsite, coachTelephone){
 
@@ -181,6 +193,7 @@ function practicalInformation(coachLocation, coachTargetgroup, coachCosts, coach
         const costsDiv = document.getElementById("costs")
         const websiteDiv = document.getElementById("website")
         const telephoneDiv = document.getElementById("telephone")
+        const practicalDiv = document.getElementById("practical-div")
 
         const locationP = document.createElement("p")
         const targetgroupP = document.createElement("p")
@@ -188,11 +201,11 @@ function practicalInformation(coachLocation, coachTargetgroup, coachCosts, coach
         const websiteP = document.createElement("p")
         const telephoneP = document.createElement("p")
         
-        locationP.innerText = coachLocation
-        targetgroupP.innerText = coachTargetgroup
-        costsP.innerText = coachCosts
+        locationP.innerHTML = coachLocation
+        targetgroupP.innerHTML = coachTargetgroup
+        costsP.innerHTML = coachCosts
         websiteP.innerHTML = `<a href='https://${coachWebsite}'>${coachWebsite}</a>`
-        telephoneP.innerText = coachTelephone
+        telephoneP.innerHTML = coachTelephone
 
         locationDiv.appendChild(locationP)
         targetgroupDiv.appendChild(targetgroupP)
@@ -200,7 +213,9 @@ function practicalInformation(coachLocation, coachTargetgroup, coachCosts, coach
         websiteDiv.appendChild(websiteP)
         telephoneDiv.appendChild(telephoneP)
 
-}
+        displayPublicSectionIfExist(coachCosts, practicalDiv)
+
+;}
 
 // Follow coach
 !function hideFollowButtonNonCoach(){
@@ -211,8 +226,8 @@ function practicalInformation(coachLocation, coachTargetgroup, coachCosts, coach
 
                         const usertype = doc.data().Usertype
 
-                        if(usertype != "Coach"){
-                                followButton.style.display = "none"
+                        if(usertype === "Coach"){
+                                followButton.style.display = "flex"
                         }
 
                 })
@@ -243,11 +258,12 @@ function practicalInformation(coachLocation, coachTargetgroup, coachCosts, coach
                                 followButton.innerHTML = "Ontvolgen"
                                 followButton.setAttribute("onclick", "unfollowCoach()")
 
-                        }   
-                })
-        }
+                        };   
+                });
+        };
 });
 }();
+
 // Follow coach
 
 function sendEmailNewFollower(gebruikersnaamFollower){
@@ -419,10 +435,8 @@ function sendMailNewChat(authUserClean){
                         const auth = doc.data().Gebruikersnaam
                         const userTypeAuth = doc.data().Usertype
 
-                        console.log
-
-                        if(auth == naam){
-                                chatButton.style.display = "none"   
+                        if(auth != naam){
+                                chatButton.style.display = "flex"   
                         }
 
                         hideChatIfAuthIsCoachAndUserIsVitaminder(userTypeAuth)
@@ -450,8 +464,8 @@ function hideChatIfAuthIsCoachAndUserIsVitaminder(typeAuth){
 !function showPublicProcess(){
 
         const publicProcesDiv = document.getElementById("public-trajects")
+        const trajectDiv = document.getElementById("traject-div")
 
-        
         db.collectionGroup("Levensvragen")
         .where("Gebruikersnaam", "==", naam)
         .where("Openbaar", "==", "Ja")
@@ -467,30 +481,22 @@ function hideChatIfAuthIsCoachAndUserIsVitaminder(typeAuth){
                         addLessonsToProces(levensvraagID)
 
                         const innerDiv = document.createElement("div")
-                                innerDiv.setAttribute("class", "digimind-proces-inner-div")
+                                innerDiv.setAttribute("class", "digimind-proces-inner-div-public")
                         const goalDiv = document.createElement("div")
                                 goalDiv.setAttribute("class", "goal-div")
                         const goalP = document.createElement("p")
                         const levensvraagTitle = document.createElement("h3")
                         const descriptionP = document.createElement("p")
-                        const privateDiv = document.createElement("div")
-                                privateDiv.setAttribute("class", "private-div")
-                        const private = document.createElement("div")
-                        const privateTooltip = document.createElement("p")
-                                privateTooltip.setAttribute("class", "private-tooltip")
 
                         goalP.innerHTML = goal
                         levensvraagTitle.innerHTML = levensvragen
                         descriptionP.innerHTML = description
 
                         publicProcesDiv.appendChild(innerDiv)
-                        innerDiv.appendChild(privateDiv)
-                        privateDiv.appendChild(private)
-                        privateDiv.appendChild(privateTooltip)
-                        // innerDiv.appendChild(goalDiv)
-                        // goalDiv.appendChild(goalP)
                         innerDiv.appendChild(levensvraagTitle)
                         innerDiv.appendChild(descriptionP)
+
+                        trajectDiv.style.display = "flex"
                 
                 });
         });
@@ -630,13 +636,14 @@ function menuItemswitch(menuItemCount, privateSectionCount, menu, section, hide1
                 privateSectionCount[hide4].style.display = "none"
                 privateSectionCount[hide5].style.display = "none"
 
-        })
-}
+        });
+};
 
 // My proces
 !function procesSelect(){
 
         const procesSelect = document.getElementById("proces-select")
+        const procesSelectDiv = document.getElementById("select-proces-div")
 
         const optionArray = []
 
@@ -658,6 +665,8 @@ function menuItemswitch(menuItemCount, privateSectionCount, menu, section, hide1
                 });
         }).then(() => {
                         autoLoadFirstProces(optionArray[0].innerHTML)
+                        showCheckInByProces()
+                        procesSelectDiv.style.display = "flex"
         });
 }();
 
@@ -844,9 +853,14 @@ function addLessonsToProces(selectedProces){
         });
 };
 
+function showInspirationDiv(div){
+        div.style.display = "flex"
+};
+
 function showArticles(goalAuth){
 
         const inspirationOuterDiv = document.getElementById("inspiration-outer-div")
+        const inspirationDiv = document.getElementById("inspiration-div")
 
         inspirationOuterDiv.innerHTML = ""
 
@@ -855,6 +869,8 @@ function showArticles(goalAuth){
                 querySnapshot.forEach(doc1 => {
 
                         const domain = doc1.data().Domein
+
+                        showInspirationDiv(inspirationDiv)
 
                         db.collection("Levensvragen").where("Domein", "==", domain)
                         .get().then(querySnapshot => {
@@ -1249,6 +1265,20 @@ const adminDiv = document.getElementById("admin-analytics")
  const earningsDiv = document.getElementById("earnings-analytics")
  const tractionDiv = document.getElementById("traction-analytics")
 
+ function hideAnalyticsIfNoCoach(type){
+
+        const analyticsMenuItem = document.getElementsByClassName("analytics-menu-item")
+
+        const itemArray = Array.from(analyticsMenuItem)
+
+        itemArray.forEach(item => {
+                if(type === "Coach"){
+
+                        item.style.display = "flex"
+                };
+        });
+ };
+
  function showAdminAnalyticsForAdmin(adminType){
      if(adminType === "Yes"){
          adminDiv.style.display = "flex"
@@ -1412,6 +1442,7 @@ const adminDiv = document.getElementById("admin-analytics")
                 const admin = doc.data().Admin
                 const websiteClicks = doc.data().WebsiteClicks
                 const profileViews = doc.data().ProfileViews
+                const usertype = doc.data().Usertype
 
                 if(auth === naam){
 
@@ -1421,8 +1452,9 @@ const adminDiv = document.getElementById("admin-analytics")
                     numberOfArticleViews(auth)
                     numberOfWorkshopViews(auth)
                     earnings(docRef)
+                };
 
-                }
+                hideAnalyticsIfNoCoach(usertype)
 
             });
         };
