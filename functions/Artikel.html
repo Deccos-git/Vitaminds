@@ -29,17 +29,14 @@
   <script>
     tinymce.init({
       height: 600,
-      width: "auto",
+      width: 900,
+      content_css: "/Style/style.css",
       selector: '#tiny-mce',
       toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media',
       plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media',
       toolbar_mode: 'floating',
       plugin_preview_width: 720,
       forced_root_block : false,
-      paste_preprocess: function(plugin, args) {
-        console.log(args.content);
-        args.content += ' preprocess';
-      }
     });
   </script>
   <!-- End Tiny MCE -->
@@ -97,54 +94,49 @@
 
 <!-- Artikel -->
   <div id="title-article-div">
+    <div id="follow-div">
+      <div id="author-div">
+        <img id="author-photo">
+          <p id="author-name"></p>
+      </div>
+      <!-- <p id="follow-author">Volgen</p> -->
+    </div>
     <h1 id="title-article"></h1>
   </div>
   <div id="levensvraag-artikel-main-image"></div>
   <section class="levensvraag-artikel-main-information">
-    <div id="summary-outer-div">
-      <div id="summary-inner-div">
-          <p id="summary-article">
-          </p>
-      </div>
+    <div id="paragraph-div">
       <div id="paragraph-list">
         <h3>Inhoud</h3>
       </div>
     </div>
-  </section>
-
-  <section id="coach-input">
-    <textarea id="insights-CTA" cols="50" rows="2"></textarea>
-      <div id="insights-theme-ideas">
-        <div id="tutorial-div">
-          <p>Tutorial</p>
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/bL2dHvBZj4U" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <p>Kies eerst een sub-onderwerp</p>
-        <div id="paragraph-list-insights"></div>
-        <a href="../thema-lijst.html"><p id="coach-suggestions">Jouw suggestie</p></a> 
-      </div>
-    <div id="nieuwepost">
-        <input id="nieuwposttitel" type="text" placeholder="Geef je inzicht een titel...">
-        <a id="article-tips" href="../Kenniscentrum-coaching/Een%20artikel%20schrijven%20als%20coach%20(20%20tips).html" target="_blank">Tips voor het schrijven van een artikel</a>
-        <div id="tiny-mce"></div>
-        <button onclick = "nieuwepostsubmit(this)" class="button-algemeen">Delen</button>
-   </div> 
-  </section>
-
-  <section id="coach-insights">
-    <div id="loader">
-      <img src="../images/loader.gif" alt="loading">
+    <div id="edit-div">
+      <img src="../images/edit-icon.png" alt="article aanpassen">
+    </div>
+    <div id="article-body-div"></div>
+    <div id="tiny-mce-div">
+      <div id="tiny-mce"></div>
+      <button id="button-edited-article" class="button-algemeen button-article">Opslaan</button>
     </div>
   </section>
 
+
   <div id="lifelessons-outer-div">
+    <h3>Heb je iets over jezelf geleerd?</h3>
+    <textarea name="" id="lifelesson-input" cols="30" rows="10" placeholder="Wat heb je geleerd?"></textarea>
+    <div id="select-route-div">
+      <p>Selecteer een traject om aan te koppelen</p>
+      <select name="" id="route-select"></select>
+    </div>
+    <button id="button-lifelesson" class="button-algemeen button-article">Opslaan</button>
+    <p id="notice">Start eerst een <a href="../create-route.html">ontwikkeltraject</a> zodat je je les op kan slaan</p>
 
   </div>
 
   <div class="meer-inspiratie">
-    <h3>Meer inspiratie</h3>
-    <main id="more-inspiration">
-   </main> 
+    <h3>Meer artikelen</h3>
+    <div id="more-inspiration">
+    </div> 
   </div>
 
   <div id="upgrade-account-modal">
@@ -242,7 +234,6 @@
       <script type="text/javascript" src="../javascript/inspiratie.js"></script>
       <script type="text/javascript" src="../javascript/auth.js"></script>
       <script type="text/javascript" src="../javascript/index.js"></script>
-      <script type="text/javascript" src="../javascript/edit-profile.js"></script>
     </body>
   </html>
   

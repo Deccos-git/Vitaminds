@@ -259,6 +259,10 @@
     display: none;
 }
 
+#favorite-coaches-div{
+    display: none;
+}
+
 #select-proces-div{
     display: none;
     flex-direction: column;
@@ -318,7 +322,7 @@
 }
 
 #coach-select-div{
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     border: 1px solid #122b46;

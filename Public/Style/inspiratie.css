@@ -8,6 +8,12 @@
     align-self: center;
 }
 
+.summary-li {
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+}
+
 .button-menu{
     width: 100px;
     align-self: center;
@@ -54,6 +60,25 @@
     flex-wrap: wrap;
 }
 
+.meta-user-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 4;
+    cursor: pointer;
+    margin-top: -8px;
+}
+
+.meta-user-div img{
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+}
+
+.meta-user-div p{
+  font-size: 16px;
+}
+
 #lifelesson-p{
     font-size: 18px;
 }
@@ -62,11 +87,40 @@
     text-align: center;
 }
 
+.button-article{
+    margin: 30px;
+}
+
+#route-select{
+    width: auto;
+}
+
+#select-route-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
 #lifelessons-outer-div{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 50px;
+    margin: 50px 0px;
+    background-color: #a7bdbd;
+}
+
+#notice{
+    display: none;
+    font-size: 18px;
+}
+
+#edit-div{
+    cursor: pointer;
+    display: none;
+}
+
+#tiny-mce-div{
+    display: none;
 }
 
 #bijschrijven{
@@ -291,7 +345,7 @@
 }
 
 .titleSub{
-    margin-top: 50px;
+    margin-top: 0px;
     text-align: center;
 }
 
@@ -359,6 +413,14 @@
     flex-wrap: wrap;
 }
 
+#paragraph-div{
+    background-color: #a7bdbd;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #paragraph-list h3{
     font-size: 18px;
     text-align: center;
@@ -367,11 +429,10 @@
 .paragraph-list-inner-div{
     margin: 2px;
     font-size: 16px;
-    color: #122b46;
     cursor: pointer;
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: auto;
 }
 
 .photo-div-paragraph{
@@ -408,7 +469,44 @@
 .levensvraag-artikel-main-information{
     display: flex;
     flex-direction: column;
+    align-items: center;
     margin: 0px 0px 0px 0px;
+}
+
+#follow-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#follow-author{
+    font-size: 16px;
+    color: #008e8e;
+    font-weight: bold;
+    margin-bottom: 0px;
+    border: 1px solid #008e8e;
+    border-radius: 15px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#author-div{
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#author-div img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+#author-div p{
+    font-size: 16px;
+    margin-right: 10px;
 }
 
 #title-article-div{
@@ -431,14 +529,6 @@
     box-shadow: 0 -1px 0px 0 rgba(0,0,0,.2), 0 -1px 1px 0 rgba(0,0,0,.14), 0 -2px 1px 0px rgba(0,0,0,.12);
 }
 
-#paragraph-list{
-    margin-bottom: 80px;
-    display: flex;
-    flex-direction: column;
-    margin-left: 0px;
-    width: fit-content;
-}
-
 #paragraph-list-theme{
     display: flex;
     flex-direction: column;
@@ -451,13 +541,22 @@
     border-color: #cccccc;;
 }
 
+#article-body-div{
+    margin: 80px 0px 50px 0px;
+    width: 890px;
+    font-size: 18px;
+    color: #122b46;
+}
+
 #paragraph-list{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     text-align: left;
     background-color: #a7bdbd;
-    width: 100%;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    width: fit-content;
 }
 
 #paragraph-list-theme p{
@@ -469,6 +568,7 @@
 #paragraph-list h3{
     font-size: 22px;
     color: white;
+    margin-bottom: 0px;
 }
 
 #paragraph-list p{
@@ -1419,8 +1519,6 @@
 
     .levensvraag-artikel-main-information {
         margin: 10px 10px 10px 10px;
-        flex-direction: column-reverse;
-        text-align: center;
     }
 
     .insights-outer-div {
@@ -1547,7 +1645,12 @@
         margin: 10px; 
     }
 
-    #paragraph-list p {
-        text-align: center;
+    #article-body-div {
+        width: 90%;
+    }
+
+    #article-body-div img{
+        width: 100%;
+        height: auto;
     }
 }

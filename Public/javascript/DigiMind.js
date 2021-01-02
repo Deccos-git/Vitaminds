@@ -958,6 +958,18 @@ function showArticles(goalAuth){
         });
 }
 
+function displayCoachSelectAndOverviewIfFavoriteCoaches(favoriteCoachesQuery){
+
+        const coachSelectDiv = document.getElementById("coach-select-div")
+        const overViewDiv = document.getElementById("favorite-coaches-div")
+
+        if (favoriteCoachesQuery != undefined){
+                coachSelectDiv.style.display = "flex"
+                overViewDiv.style.display = "block"
+        };
+
+};
+
 // Favorite coaches section
 !function favoriteCoachesQuery(){
         db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
@@ -965,6 +977,8 @@ function showArticles(goalAuth){
                 querySnapshot.forEach(doc => {
 
                         const favoriteCoaches = doc.data().FavCoaches
+
+                        displayCoachSelectAndOverviewIfFavoriteCoaches(favoriteCoaches)
 
                         favoriteCoaches.forEach(coach => {
 
@@ -1003,18 +1017,16 @@ function getFavoriteCoaches(naam){
 
 function loadCoach(coach){
 
-        db.collection("Insights").where("Auteur", "==", coach)
+        db.collection("Articles").where("Author", "==", coach)
         .orderBy("Timestamp", "desc")
         .get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
 
-                        const titelInsight = doc.data().Titel
-                        const coach = doc.data().Auteur
-                        const levensvraagArtikel = doc.data().LevensvraagArtikel
-                        const type = doc.data().Type
+                        const titelInsight = doc.data().Title
+                        const coach = doc.data().Author
                         const timestamp = doc.data().Timestamp
 
-                        createCoachDOMElements(coach, levensvraagArtikel, type, titelInsight, timestamp)
+                        createCoachDOMElements(coach, titelInsight, timestamp)
 
                 });
         });
@@ -1043,7 +1055,7 @@ function selectCoach(){
         });     
 };
 
-function createCoachDOMElements(coachName, article, typeInsight, title,time){
+function createCoachDOMElements(coachName, title,time){
 
         const favoriteCoachesOuterDiv = document.getElementById("favorite-coaches-div")
 
@@ -1072,17 +1084,11 @@ function createCoachDOMElements(coachName, article, typeInsight, title,time){
         textTitle.innerHTML = title
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         date.innerHTML = time.toDate().toLocaleDateString("nl-NL", options);
-       
-        // Hide kenniscentrum insights
 
-        if(typeInsight == "Insight-kenniscentrum"){
-                outerDiv.style.display = "none"
-        }
-
-        if(article != undefined){
+        if(title != undefined){
 
         textDiv.addEventListener("click", () => {
-                window.open("../Artikelen/" + article + ".html", "_self");
+                window.open("../Artikelen/" + title + ".html", "_self");
                 });
         };
 

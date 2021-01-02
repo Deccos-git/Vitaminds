@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-159826016-1');
+</script>
+  <Title>creër een artikel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#122b46">
+  <link rel="apple-touch-icon" href="images/Vitaminds-icon.png">
+  <link rel="stylesheet" href="Style/style.css">
+  <link rel="stylesheet" href="Style/create-article.css">
+  <link rel="shortcut icon" href="images/Favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  <!-- Tiny MCE -->
+  <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
+    tinymce.init({
+      height: 600,
+      width: "auto",
+      selector: '#tiny-mce',
+      toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media',
+      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media paste',
+      placeholder: "Geef je artikel de structuur: inleiding, middenstuk, samenvatting",
+      toolbar_mode: 'floating',
+      paste_as_text: true,
+      plugin_preview_width: 720,
+      forced_root_block : false,
+    });
+  </script>
+  <!-- End Tiny MCE -->
+</head>
+
+<body>
+
+<!-- Feedback -->
+<div id="feedback">
+  <a href="tickets.html"> <p>Feedback</p></a>
+</div>
+
+<!-- Cookie notice -->
+<div id="cookie-notice">
+  <h2>Vitaminds gebruikt cookies</h2>
+  <p>Als je verder gaat met scrollen, op een link klikt of dit bericht wegklikt ga je akkoord met ons 
+    <a href="privacy.html"> cookie en privacy beleid</a></p>
+  <div>
+    <button id="button-cookies" onclick="cookiesOK()">Ok</button>
+  </div>
+</div>
+
+    <!-- Mobile-menu -->
+    <nav id="mobile-menu"> 
+      <div id="menu-mobile-visible-layer">
+        <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+        <div class="main-menu-mobile"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+      </div>
+      <div id="mobile-menu-outer-div">
+        <div id="mobile-menu-inner-div">
+          <ul id="list-mobile-menu">
+            <li>
+              <div id="profile-picture-mobile"></div>
+            </li>
+            <li>
+              <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="openup.html">Open up</a></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="groups.html">Groepen</a></div> 
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="workshops.html">Workshops</a></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="artikelen.html">Artikelen</a></div>
+            </li>
+            <!-- <li> -->
+              <!-- <div class="main-menu-mobile"><a href="tools.html">Tools</a></div> -->
+            <!-- </li> -->
+            <li>
+              <div class="main-menu-mobile"><a href="coaches.html">Coaches</a></div>
+            </li>
+            <li>
+              <div class="main-menu-mobile"><a href="events.html">Events</a></div>
+            </li>
+            <li>
+              <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
+            </li>
+            <li>
+              <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+            </li> 
+          </ul>
+        </div>
+      </nav>
+    
+       <!-- menu --> 
+       <nav id="menu">
+        <div id="navigation-menu">
+          <div class="main-menu"><a href="index.html"><img id="logo-menu" src="images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+          <div class="main-menu"><a href="openup.html">Open up</a></div>
+          <div class="main-menu"><a href="groups.html">Groepen</a></div> 
+          <div class="main-menu"><a href="workshops.html">Workshops</a></div>
+          <div class="main-menu"><a href="artikelen.html">Artikelen</a></div>
+          <!-- <div class="main-menu"><a href="tools.html">Tools</a></div> -->
+          <div class="main-menu"><a href="coaches.html">Coaches</a></div>
+          <div class="main-menu"><a href="events.html">Events</a></div>
+        </div>
+        <div id="auth-menu">
+          <div id="auth-DOM"></div>
+          <div id="profile-picture">
+          </div>
+          <div id="login-register-div">
+            <div id="button-register" class = "login-logout"><button><a href="Register.html">Aanmelden</a></button></div>
+            <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
+          </div>
+          <div id="slash" class = "login-logout"><a>|</a></div>
+          <div id="info-menu">
+            <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
+          </div>
+        </div>
+      </nav>
+
+      <h1 id="route-title">Creër een artikel</h1>
+
+      <div id="welcome-div">
+        <p id="auth-welcome"></p>
+        <p>Wat leuk dat je een artikel gaat schrijven. Een artikel is een hele laagdrempelige manier om mensen te laten zien hoe jij als coach tegen verschillende relevante onderwerpen aankijkt. Het geeft je lezers de kans om te voelen of ze een klik hebben met jou als coach. Om je op weg te helpen kun je over de verschillende onderdelen van een artikel tips vinden.</p>
+
+        <div class="tips-div">
+          <div onclick="openTipsOverview(this)" id="general-tips-title" class="title-div">
+            <img src="/images/tip-icon.png" alt="tips voor het schrijven van een artikel">
+            <p>Algemene tips</p>
+            <img src="/images/down-icon.png" alt="tips voor het schrijven van een artikel">
+          </div>
+          <div id="general-tips" class="tips-overview">
+
+            <div class="tip-detail-title-div">
+              <img src="/images/dot-icon.png" alt="Opsommingsteken">
+              <p class="tip-detail-title" onclick="openTipDetails(this)">Gebruik alinea’s van max. 5 regels</p>
+            </div>
+            <p class="tip-detail">Grote alinea’s maken je tekst minder onoverzichtelijk. Mensen hebben vaak ook geen zin om lange aangesloten stukken tekst te lezen. Een korte alinea geeft je tekst ruimte en je lezer het gevoel dat hij of zij kan ademen tussen het lezen. </p>
+
+            <div class="tip-detail-title-div">
+              <img src="/images/dot-icon.png" alt="Opsommingsteken">
+              <p class="tip-detail-title" onclick="openTipDetails(this)">Wees duidelijk en to the point</p>
+            </div>
+            <p class="tip-detail">Mensen hebben een korte aandachtsspanne. Als ze op een link klikken willen ze zo snel en duidelijk mogelijk een antwoord op hun vraag hebben. Wanneer ze het gevoel hebben de draad kwijt te zijn, zijn ze maar een muisklik verwijderd van een ander artikel (de terug-knop om preciezer te zijn). </p>
+
+            <div class="tip-detail-title-div">
+              <img src="/images/dot-icon.png" alt="Opsommingsteken">
+              <p class="tip-detail-title" onclick="openTipDetails(this)">Beantwoord een vraag die bij je doelgroep leeft</p>
+            </div>
+            <p class="tip-detail">Het is verleidelijk om iets te schrijven vanuit je eigen interesse of omdat jij denkt dat het belangrijk is. Bij coaches kom ik regelmatig tegen dat ze een mooie term hebben gevonden voor hun coaching (embodiment, innerlijk kind werk, zijnscoaching, etc.). Dat is helemaal goed, alleen zal niemand op die termen zoeken. Ze kennen de termen meestal niet. Je doelgroep zal zoeken op en zich aangesproken voelen door dingen die in hun eigen directe beleefwereld past. “Hoe kan ik minder piekeren?” Hoe voel ik me meer op mijn gemak bij andere mensen?” Uiteraard verschilt het per coach wie je doelgroep is en met welke vragen die coachgroep rondloopt. Om als coach gevonden te worden via Google is het belangrijk om die vragen te achterhalen en te beantwoorden in je artikelen. </p>
+            
+            <div class="tip-detail-title-div">
+              <img src="/images/dot-icon.png" alt="Opsommingsteken">
+              <p class="tip-detail-title" onclick="openTipDetails(this)">Wees persoonlijk, eerlijk en kwetsbaar</p>
+            </div>
+            <p class="tip-detail">Als coach kan het enorm waardevol zijn als jij aan je doelgroep laat zien dat je ook een mens bent. Een mens met twijfels en onzekerheden. Dat jij ook een proces doormaakt. Aan de ene kant help je daarmee het stigma op psychische vragen doorbreken. Tegelijkertijd laat je aan je doelgroep zien dat je een open persoon bent. Iemand die ze kunnen vertrouwen. Dat is uiteindelijk namelijk het doel van marketing. Mensen kopen alleen als ze je vertrouwen. Een groter bedrijf doet dat door bijvoorbeeld professionaliteit uit te stralen. Als coach kun je dit bewerkstelligen door open te zijn. </p>
+          
+            <div class="tip-detail-title-div">
+              <img src="/images/dot-icon.png" alt="Opsommingsteken">
+              <p class="tip-detail-title" onclick="openTipDetails(this)">Geef altijd direct antwoord op je vragen</p>
+            </div>
+            <p class="tip-detail">Wanneer mensen een artikel schrijven stellen ze vaak een vraag in de titel of sub paragraaf. In dat geval is het verstandig om die vraag direct in de volgende paragraaf te beantwoorden. Dit zorgt ervoor dat de lezer zich duidelijk kan oriënteren in je stuk. Zo neem je de lezer bij de hand. Hij zal het gevoel hebben dat hij weet waar hij is in je stuk en zo voorkom je dat je lezer zich verward voelt en zich af gaat vragen of de vraag überhaupt nog beantwoord gaat worden en zo ja waar dan. Zoals gezegd hebben mensen een hele korte aandachtsspanne op het internet. Ze willen zo snel en duidelijk mogelijk een antwoord op hun vragen.  </p>
+
+            <div class="tip-detail-title-div">
+              <img src="/images/dot-icon.png" alt="Opsommingsteken">
+              <p class="tip-detail-title" onclick="openTipDetails(this)">Bedenk dat je lezer een leek is en dingen niet kan snappen die voor jou heel simpel zijn </p>
+            </div>
+            <p class="tip-detail">De mensen die je artikelen lezen zullen meestal geen expert zijn in het onderwerp waarover je schrijft. Ze lezen je artikelen vaak juist om meer over het onderwerp te weten te komen. Probeer daarom je artikelen simpel en helder te houden. Mocht je wel een ingewikkelder concept bespreken, leg het dan zo duidelijk mogelijk uit.</p>
+
+            <div class="tip-detail-title-div">
+              <img src="/images/dot-icon.png" alt="Opsommingsteken">
+              <p class="tip-detail-title" onclick="openTipDetails(this)">Vermijd vakjargon</p>
+            </div>
+            <p class="tip-detail">Het kan aanlokkelijk zijn om vaktermen te gebruiken in je artikelen. Probeer dit zo min mogelijk te doen. Iemand die een artikel leest is op zoek naar het duidelijkste antwoord op zijn vraag.</p>
+
+            <div class="tip-detail-title-div">
+              <img src="/images/dot-icon.png" alt="Opsommingsteken">
+              <p class="tip-detail-title" onclick="openTipDetails(this)">Gebruik zoveel mogelijk spreektaal (i.p.v. schrijftaal)</p>
+            </div>
+            <p class="tip-detail">Je schrijft een tekst voor je doelgroep. Je doelgroep is op zoek naar iemand die hem iets kan leren waardoor hij of zij weer verder kan. Zeker voor coaches kan het bijdragen aan het vertrouwen tussen jou en je lezers als je je menselijk opstelt. Gewone taal gebruiken kan daarbij helpen. </p>
+
+            <div class="tip-detail-title-div">
+              <img src="/images/dot-icon.png" alt="Opsommingsteken">
+              <p class="tip-detail-title" onclick="openTipDetails(this)">Maak belangrijke zinnen of woorden dik gedrukt</p>
+            </div>
+            <p class="tip-detail">Neem de lezer bij je hand in je artikel door belangrijke woorden en zinnen dik gedrukt te maken.</p>
+
+          </div>
+        </div>
+      </div>
+
+      <div id="titel-div">
+        <h2>Geef je artikel een pakkende titel</h2>
+
+        <div class="tips-div">
+          <div onclick="openTipsOverview(this)" id="general-tips-title" class="title-div">
+            <img src="/images/tip-icon.png" alt="tips voor het schrijven van een artikel">
+            <p>Tips voor een pakkende titel</p>
+            <img src="/images/down-icon.png" alt="tips voor het schrijven van een artikel">
+          </div>
+          <div id="general-tips" class="tips-overview">
+  
+            <div class="tip-detail-title-div">
+              <img src="/images/dot-icon.png" alt="Opsommingsteken">
+              <p class="tip-detail-title" onclick="openTipDetails(this)">Geef een duidelijke verwijzing naar de inhoud</p>
+            </div>
+            <p class="tip-detail">Probeer je titel zo duidelijk mogelijk te maken. Waar gaat je artikel over? Op welke vraag ga je een antwoord geven? Als mensen niet direct begrijpen wat ze van je stuk kunnen verwachten is de kans klein dat ze op je link klikken en het artikel gaan lezen om er achter te komen. Je kan best iets leuks of grappigs in je titel verwerken zolang dat de titel niet onduidelijk maakt. </p>
+  
+            <div class="tip-detail-title-div">
+              <img src="/images/dot-icon.png" alt="Opsommingsteken">
+              <p class="tip-detail-title" onclick="openTipDetails(this)">Maak de titel actief (met een werkwoord)</p>
+            </div>
+            <p class="tip-detail">Actieve titels stralen energie uit. Een actieve titel is bijvoorbeeld: ‘leer je persoonlijkheid kennen met deze oefening’ in plaats van: ‘je persoonlijkheid leren kennen met deze oefeningen’.</p>
+  
+            <div class="tip-detail-title-div">
+              <img src="/images/dot-icon.png" alt="Opsommingsteken">
+              <p class="tip-detail-title" onclick="openTipDetails(this)">Zet het jaartal in de titel</p>
+            </div>
+            <p class="tip-detail">Als je artikel over iets gaat dat verouderd kan raken (zoals bijvoorbeeld een artikel over een persoonlijkheidstest) is het handig dat je het huidige jaartal tussen haakjes achter je titel zet. Dan weet de lezer dat je artikel up to date is.</p>
+  
+            <div class="tip-detail-title-div">
+              <img src="/images/dot-icon.png" alt="Opsommingsteken">
+              <p class="tip-detail-title" onclick="openTipDetails(this)">Zet een aanduiding achteraan je titel </p>
+            </div>
+            <p class="tip-detail">Ook in de titel kun je je lezers bij de hand nemen. Geef een aanduiding over wat je lezer concreet kan verwachten van je artikel. “Met 30 handige tips.” “Met 3 inspirerende voorbeelden. “Met 2 verrassende inzichten."</p>
+  
+          </div>
+        </div>
+
+        <input id="title-input" type="text" placeholder="Jouw pakkende titel">
+      </div>
+
+      <div id="main-div">
+        <h2>Schrijf je artikel</h2>
+  
+          <div class="tips-div">
+            <div onclick="openTipsOverview(this)" id="general-tips-title" class="title-div">
+              <img src="/images/tip-icon.png" alt="tips voor het schrijven van een artikel">
+              <p>Tips voor een heldere inleiding</p>
+              <img src="/images/down-icon.png" alt="tips voor het schrijven van een artikel">
+            </div>
+            <div id="general-tips" class="tips-overview">
+    
+              <div class="tip-detail-title-div">
+                <img src="/images/dot-icon.png" alt="Opsommingsteken">
+                <p class="tip-detail-title" onclick="openTipDetails(this)">Leg de titel kort uit</p>
+              </div>
+              <p class="tip-detail">Je kunt je inleiding goed beginnen met een korte verduidelijking van je titel. Schets kort de context van je titel. Bijvoorbeeld bij een artikel over onrust: “we leven in een tijd waarin we altijd wat te doen hebben. Bij veel mensen rijst de vraag: hoe kan ik omgaan met die voortdurende onrust?”</p>
+    
+              <div class="tip-detail-title-div">
+                <img src="/images/dot-icon.png" alt="Opsommingsteken">
+                <p class="tip-detail-title" onclick="openTipDetails(this)">Geef antwoord op je de vraag in je titel</p>
+              </div>
+              <p class="tip-detail">Geef in je alinea zo snel en direct mogelijk een antwoord op je titel. Je geeft je lezers zo de geruststelling dat ze een antwoord gaan vinden op hun vraag in jouw artikel.</p>
+    
+              <div class="tip-detail-title-div">
+                <img src="/images/dot-icon.png" alt="Opsommingsteken">
+                <p class="tip-detail-title" onclick="openTipDetails(this)">Vertel wat je gaat vertellen in de rest van je artikel</p>
+              </div>
+              <p class="tip-detail">Vervolgens kun je een korte blik vooruit werpen op wat de lezer te wachten staan. Dan weet de lezer dat de rest van het artikel relevant is voor zijn vraag. </p>
+    
+              <div class="tip-detail-title-div">
+                <img src="/images/dot-icon.png" alt="Opsommingsteken">
+                <p class="tip-detail-title" onclick="openTipDetails(this)">Waarom is het belangrijk om dit te lezen? </p>
+              </div>
+              <p class="tip-detail">De inleiding is ook een goede plek om kort uit te leggen wat je artikel bijdraagt aan de lezer. Wat gaat de lezer leren en wat heeft hij of zij daaraan?</p>
+    
+            </div>
+          </div>
+
+          <div class="tips-div">
+            <div onclick="openTipsOverview(this)" id="general-tips-title" class="title-div">
+              <img src="/images/tip-icon.png" alt="tips voor het schrijven van een artikel">
+              <p>Tips voor het middenstuk</p>
+              <img src="/images/down-icon.png" alt="tips voor het schrijven van een artikel">
+            </div>
+            <div id="general-tips" class="tips-overview">
+    
+              <div class="tip-detail-title-div">
+                <img src="/images/dot-icon.png" alt="Opsommingsteken">
+                <p class="tip-detail-title" onclick="openTipDetails(this)">Bepaal een structuur</p>
+              </div>
+              <p class="tip-detail">Er zijn verschillende beproefde structuren die jouw helpen met het schrijven van je artikel en je lezers bij de hand nemen. In <a href="https://vitaminds.nu/Kenniscentrum-coaching/Je%20artikelen%20structuren%20als%20coach.html">dit artikel</a> kun je meer lezen over het structuren van een verhaal.</p>
+
+              <div class="tip-detail-title-div">
+                <img src="/images/dot-icon.png" alt="Opsommingsteken">
+                <p class="tip-detail-title" onclick="openTipDetails(this)">Gebruik voldoende tussenkopjes</p>
+              </div>
+              <p class="tip-detail">Geef de lezer de kans om zich te oriënteren in je artikel aan de hand van tussenkopjes. </p>
+    
+              <div class="tip-detail-title-div">
+                <img src="/images/dot-icon.png" alt="Opsommingsteken">
+                <p class="tip-detail-title" onclick="openTipDetails(this)">Gebruik passende plaatjes</p>
+              </div>
+              <p class="tip-detail">Voorkom dat de lezer lees moe wordt door je tekst af te wisselen met relevante plaatjes.</p>
+    
+              <div class="tip-detail-title-div">
+                <img src="/images/dot-icon.png" alt="Opsommingsteken">
+                <p class="tip-detail-title" onclick="openTipDetails(this)">Bepaal van te voren een structuur</p>
+              </div>
+              <p class="tip-detail">Er zijn verschillende structuren die je ter inspiratie kunt gebruiken. In <a href="https://vitaminds.nu/Kenniscentrum-coaching/Je%20artikelen%20structuren%20als%20coach.html">dit artikel</a> ga ik dieper in op twee handige structuren die je kan gebruiken bij het schrijven van artikelen. </p>
+    
+              <div class="tip-detail-title-div">
+                <img src="/images/dot-icon.png" alt="Opsommingsteken">
+                <p class="tip-detail-title" onclick="openTipDetails(this)">Gebruik bulletpoints of genummerde lijstjes (1. 2. 3. Of -, -, -, )</p>
+              </div>
+              <p class="tip-detail">Dit maakt je tekst overzichtelijk en het zorgt voor variatie in je tekst.</p>
+    
+            </div>
+          </div>
+
+          <div class="tips-div">
+            <div onclick="openTipsOverview(this)" id="general-tips-title" class="title-div">
+              <img src="/images/tip-icon.png" alt="tips voor het schrijven van een artikel">
+              <p>Tips voor de samenvatting</p>
+              <img src="/images/down-icon.png" alt="tips voor het schrijven van een artikel">
+            </div>
+            <div id="general-tips" class="tips-overview">
+    
+              <div class="tip-detail-title-div">
+                <img src="/images/dot-icon.png" alt="Opsommingsteken">
+                <p class="tip-detail-title" onclick="openTipDetails(this)">Geef een korte samenvatting van je artikel</p>
+              </div>
+              <p class="tip-detail">Neem de lezer nog even mee langs de belangrijkste punten uit je artikel. Dit zorgt ervoor dat je punten beter blijven hangen.</p>
+    
+            </div>
+          </div>
+
+        <div id="tiny-mce"></div>
+
+        <div id="theme-select">
+          <h3>Kies één of meerdere thema's</h3>
+          <div class="theme-input"><input name="route" type="radio" id="basisvaardigheden" value="Basisvaardigheden" /><label for="basisvaardigheden">Basisvaardigheden</label><br /></div>
+          <div class="theme-input"><input name="route" type="radio" id="basiskennis" value="Basiskennis"  /><label for="basiskennis">Basiskennis</label><br /></div>
+          <div class="theme-input"><input name="route" type="radio" id="ik" value="Ik" /><label for="ik">Ik</label><br /></div>
+          <div class="theme-input"><input name="route" type="radio" id="gedachten" value="Gedachten" /><label for="gedachten">Gedachten</label><br /></div>
+          <div class="theme-input"><input name="route" type="radio" id="gevoelens en emoties" value="Gevoelens en Emoties" /><label for="gevoelens en emoties">Gevoelens en Emoties</label><br /></div>
+          <div class="theme-input"><input name="route" type="radio" id="lichaam en geest" value="Lichaam en Geest" /><label for="lichaam en geest">Lichaam en Geest</label><br /></div>
+          <div class="theme-input"><input name="route" type="radio" id="liefde en relaties" value="Liefde en Relaties" /><label for="liefde en relaties">Liefde en Relaties</label><br /></div>
+          <div class="theme-input"><input name="route" type="radio" id="seksualiteit" value="Seksualiteit" /><label for="seksualiteit">Seksualiteit</label><br /></div>
+          <div class="theme-input"><input name="route" type="radio" id="spiritualiteit" value="Spiritualiteit" /><label for="spiritualiteit">Spiritualiteit</label><br /></div>
+          <div class="theme-input"><input name="route" type="radio" id="sociaal" value="Sociaal" /><label for="sociaal">Sociaal</label><br /></div>
+          <div class="theme-input"><input name="route" type="radio" id="opvoeden" value="Opvoeden" /><label for="opvoeden">Opvoeden</label><br /></div>
+          <div class="theme-input"><input name="route" type="radio" id="Werken en succes" value="Werken en Succes" /><label for="werken en succes">Werken en Succes</label><br /></div>
+          <div class="theme-input"><input name="route" type="radio" id="betekenisvol leven" value="Betekenisvol leven" /><label for="betekenisvol leven">Betekenisvol leven</label><br /></div>
+          <div class="theme-input"><input name="route" type="radio" id="koers bepalen" value="Koers bepalen" /><label for="koers bepalen">Koers bepalen</label><br /></div>
+        </div>
+
+        <button id="save-article-button" onclick="newArticleSubmitButton(this)" class="button-algemeen button-create-article">Opslaan</button>
+      </div>
+
+    <!-- Toolbar mobile -->
+<div class="toolbar-mobile">
+  <div class="toolbar-mobile-inner-div">
+    <img src="images/home-icon.png" alt="" id="toolbar-home">
+    <p class="description-menu-icons-toolbar-mobile">Open up</p>
+  </div>
+  <div class="toolbar-mobile-inner-div" id="toolbar-inner-div-chats-groups">
+    <img src="images/send-icon.png" alt="" id="toolbar-chats-groups">
+    <p class="description-menu-icons-toolbar-mobile">Chats & groepen</p>
+  </div>
+  <div class="toolbar-mobile-inner-div">
+    <div id="toolbar-inspiration-div" class="toolbar-mobile-inner-div">
+      <div id="toolbar-inspration-options">
+        <p id="toolbar-inspiration-public">Publiek</p>
+        <p id="toolbar-inspiration-private">Prive</p>
+      </div>
+      <img src="images/inspiration-icon-2.png" alt="" id="toolbar-inspiration">
+      <p class="description-menu-icons-toolbar-mobile">Nieuw inzicht</p>
+    </div>
+  </div>
+  <div class="toolbar-mobile-inner-div">
+    <img src="images/menu-dashboard.png" alt="" id="toolbar-digimind">
+    <p class="description-menu-icons-toolbar-mobile">Mijn Digimind</p>
+  </div>  
+</div>
+
+<footer class="footer">
+  <div id="top-layer">
+    <div>
+    <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+    </div>
+    <div>
+      <h3 id="slogan-footer">Maak geluk een onderdeel van je dagelijks leven</h3>
+    </div>
+    <div>
+    <a href="https://www.facebook.com/Vitaminds.nu"><img src="images/Logo-facebook.png" alt="" width="25px"></a>
+    <a href="https://www.instagram.com/vitaminds.nu"><img src="images/logo-insta.png" alt="" width="50px"></a>
+    </div>
+  </div>
+  <div id="contact-layer">
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="/images/adres-icon.png" alt="Vitaminds adres">
+      <p>Beijumerweg 24</p>
+      <p>9737AD</p> 
+      <p>Groningen</p>
+    </div>
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="/images/email-icon.png" alt="Vitaminds emailadres">
+      <p> info@vitaminds.nu</p>
+    </div>
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="/images/telephone-icon.png" alt="Vitaminds phonenumber">
+      <p>+316 244 098 43</p>
+    </div>
+  </div>
+</footer>
+
+    <script type="text/javascript" src="javascript/firebase.js"></script>
+    <script type="text/javascript" src="javascript/auth.js"></script>
+    <script type="text/javascript" src="javascript/index.js"></script>
+    <script type="text/javascript" src="javascript/create-article.js"></script>
+</body>
+</html>

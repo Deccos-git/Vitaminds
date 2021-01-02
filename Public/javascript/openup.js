@@ -197,7 +197,6 @@ function followCoach(naamCoach){
 
 
                     // Loader display none
-
                     const loader = document.getElementById("loader")
                         loader.style.display = "none"
 

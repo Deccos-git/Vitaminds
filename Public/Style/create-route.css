@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: 50px;
+    background-color: #a7bdbd;
 }
 
 .title-div img{
@@ -37,7 +38,7 @@
 }
 
 #route-options{
-    background-color: #80E9FF0D;
+    background-color: white;
     display: none;
 }
 

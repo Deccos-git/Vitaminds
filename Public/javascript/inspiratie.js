@@ -1,7 +1,8 @@
 
 // Fetching title from url
 const titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
-const titel1 = titelhtml.replace('.html', '')
+const titel0 = titelhtml.replace('.html', '')
+const titel1 = titel0.replace('%20',' ')
 const titel2 = titel1.replace('%20',' ')
 const titel3 = titel2.replace('%20',' ')
 const titel4 = titel3.replace('%20',' ')
@@ -15,246 +16,106 @@ const titel11 = titel10.replace('%20',' ')
 const titel12 = titel11.split("?fb")
 const titel = titel12[0]
 
-
-// User-role
-
-    // Visitor
-auth.onAuthStateChanged(User =>{
-    if (!User){
-        const coachInput = document.getElementById("coach-input")
-        const editIcon = document.getElementsByClassName("edit-icon-insights")
-
-        const editIconArray = Array.from(editIcon)
-
-        editIconArray.forEach(icon => {
-            icon.style.display = "none"
-        })
-        if(coachInput != null){
-        coachInput.style.display = "none"
-        };
-    };
-});
-
-    //Non coach
-    auth.onAuthStateChanged(User =>{
-        db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                const usertype = doc.data().Usertype
-
-                if(usertype != "Coach"){
-                    const coachInput = document.getElementById("coach-input")
-                    if(coachInput != undefined){
-                    coachInput.style.display = "none"
-                    };
-                };
-            
-        })
-    });
+console.log(titel)
 
 // Register view count on article load
 window.addEventListener("load", () => {
 
-    // Levensvragen
-    db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
+    db.collection("Articles").where("Title", "==", titel).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
-            db.collection("Levensvragen").doc(doc.id).update({
+            db.collection("Articles").doc(doc.id).update({
                 Views: firebase.firestore.FieldValue.increment(1)
             }); 
         });
     });
 });
 
-// Levensvraag article overview pagina
+// Article overview pagina
 
-    // Coach proposal
+// Coach proposal
 
-    const authHeader = document.getElementById("titleSub-proposal")
-    const goalProposalOuterDiv = document.getElementById("goal-article-section-goal-proposal")
+const authHeader = document.getElementById("titleSub-proposal")
+const goalProposalOuterDiv = document.getElementById("goal-article-section-goal-proposal")
 
-    auth.onAuthStateChanged(User =>{
-        if(User){
-        db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
+auth.onAuthStateChanged(User =>{
+    if(User){
+    db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
 
-            const userType = doc.data().Usertype
-            const nameClean = doc.data().GebruikersnaamClean
+        const userType = doc.data().Usertype
+        const nameClean = doc.data().GebruikersnaamClean
 
-            if(userType == "Coach"){
-                goalProposalOuterDiv.style.display = "flex"
-                authHeader.innerText = `${nameClean},`
-            };
-
-        });
+        if(userType == "Coach"){
+            goalProposalOuterDiv.style.display = "flex"
+            authHeader.innerText = `${nameClean},`
         };
+
     });
-
-    // Save proposal to database
-
-    const proposalButton = document.getElementById("proposal-button")
-    const proposalTitle = document.getElementById("proposal-title")
-    const proposalSummary = document.getElementById("proposal-summary")
-    
-
-    !function saveProposalToDatabase(){
-
-        if(proposalButton != null){
-        proposalButton.addEventListener("click", () => {
-
-            proposalButton.innerText = "Verstuurd!"
-
-        auth.onAuthStateChanged(User =>{
-            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                const auth = doc.data().Gebruikersnaam
-
-                console.log(proposalTitle.value)
-
-                db.collection("Tickets").doc().set({
-                    UserName: auth,
-                    Type: "Proposal",
-                    Title: proposalTitle.value,
-                    Summary: proposalSummary.value
-                    });
-                });
-            });
-        });
     };
+});
+
+!function loadAllArticlesOnPageLoad(){
+    window.addEventListener("load", loadAllArticles)
 }();
+
+function showAuthorOnPreview(coachName, photo, userName, userDiv){
+
+    db.collection("Vitaminders").where("Gebruikersnaam", "==", coachName)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const userClean = doc.data().GebruikersnaamClean
+            const userPhoto = doc.data().Profielfoto
+
+            if(userPhoto == undefined){
+                photo.src = "images/dummy-profile-photo.jpeg"
+            } else {
+            photo.src = userPhoto
+                    };
+                    
+            userName.innerHTML = userClean
+
+            userDiv.addEventListener("click", () => {
+                window.open("../Vitaminders/" + [coachName] + ".html", "_self");
+            });
+
+            photo.src = userPhoto
+            userName.innerText = userClean
+
+        });
+    });
+};
+
 
 //Filter 
-
-function loadAuthGoalsInFilter(){
-
-    const filterSelect = document.getElementById("inspiratie-filter-select")
-
-    const options = filterSelect.options
-
-    const optionsArray = Array.from(options)
-
-        optionsArray.forEach(option => {
-        
-        db.collection("Levensvragen").where("Domein", "==", option.innerHTML)
-        .get()
-        .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc2) {
-
-                const domain = doc2.data().Domein
-                const lifequestion = doc2.data().Levensvraag
-
-                auth.onAuthStateChanged(User =>{
-                    if(User){
-                        db.collection("Vitaminders").doc(User.uid)
-                        .get().then(function(doc) {
-            
-                        db.collection("Vitaminders").doc(User.uid)
-                        .collection("Levensvragen")
-                        .where("Goal", "==", lifequestion)
-                        .get()
-                        .then(function(querySnapshot) {
-                            querySnapshot.forEach(function(doc1) {
-            
-                                const goal = doc1.data().LevensvraagClean
-                        
-                                if(option.innerHTML === domain){
-
-                                    const goalOption = document.createElement("option")
-                                        goalOption.setAttribute("id", "goal-option")
-
-                                    goalOption.innerText = ` (Jouw doel: ${goal})`
-
-                                    // option.appendChild(goalOption)
-                                };
-                            });
-                        });
-                    });
-                };
-            });
-        });
-    });
-});
-};
-
-    // Get domain from localstorage
-!function getDomainFromLocalstorage(){
-
-    const selectDomain = document.getElementById("inspiratie-filter-select")
-
-    const domainFromStorage = localStorage.getItem("Domain")
-
-    if (domainFromStorage === null){
-        loadAllArticles();
-    };
-
-    console.log(domainFromStorage)
-
-    // const option = selectDomain.options
-    //     const selected = option[option.selectedIndex].innerHTML
-if(selectDomain != null){
-    const options = selectDomain.options
-
-
-    const optionsArray = Array.from(options)
-
-    optionsArray.forEach(option => {
-
-        if (option.innerText === domainFromStorage){
-            option.selected = domainFromStorage
-
-            const selected = option.innerText
-
-            const selectedClean = selected.split("<")
-
-            DOMarticle = document.getElementById("levensvraag-artikel-ouyter-div")
-
-            DOMarticle.innerHTML = ""
-
-            console.log(selectedClean[0])
-
-            loadSelectedArticles(selectedClean[0])
-        };
-    });
-};
-}();
 
 function loadAllArticles(){
 
 DOMarticle = document.getElementById("levensvraag-artikel-ouyter-div")
 
-db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds")
+db.collection("Articles").where("Owner", "==", "Vitaminds")
+.where("Status", "==", "Approved")
 .get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
-        const title = doc.data().Levensvraag
+        const title = doc.data().Title
         const headerImage = doc.data().HeaderImage
         const headerImageSmall = doc.data().HeaderImageSmall
-        const insights = doc.data().Insights
-        const goal = doc.data().Levensvraag
-
-         // Hidding articles with no insights for non-coach
-            if (insights.length == 0){
-                auth.onAuthStateChanged(User =>{
-                    if(User){
-                db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                    const usertype = doc.data().Usertype
-
-                    console.log(usertype)
-    
-                    if(usertype != "Coach"){
-                        outerSection.style.display = "none"
-                    }
-                })
-            } else {
-                outerSection.style.display = "none"
-            }
-            })
-        };
+        const domain = doc.data().Domain
+        const author = doc.data().Author
      
         const outerSection = document.createElement("section")
             outerSection.setAttribute("class", "levensvraag-artikel-section")
             outerSection.setAttribute("data-title", title)
-            outerSection.setAttribute("data-goal", goal)
         const headerDiv = document.createElement("div")
             headerDiv.setAttribute("class", "levensvraag-artikel-header")
         const headerImg = document.createElement("img")
             headerImg.setAttribute("class", "header-image-article")
+        const metaUserDiv = document.createElement("div")
+            metaUserDiv.setAttribute("class", "meta-user-div")
+        const metaUserPhoto = document.createElement("img")
+        const metaUserName = document.createElement("p")
+            metaUserName.setAttribute("id", "meta-user-name")
         const titleDiv = document.createElement("div")
         const titleSub = document.createElement("h5")
             titleSub.setAttribute("class", "titleSub")
@@ -264,23 +125,7 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds")
             buttonDiv.setAttribute("class", "button-algemeen-card")
             buttonDiv.setAttribute("onclick", "seeArticle(this)")
 
-        // Dynamic title
-        const count = insights.length
-
-        titleSub.innerHTML = `${count} coaches over`
-
-        if(count == 1){
-        titleSub.innerHTML = `${count} coach over`
-        }
-
-        // Exemption on dynamic title
-        if(title == "Zelfliefde"){
-            titleSub.innerHTML = `${count} tips voor meer`
-
-            if(count == 1){
-            titleSub.innerHTML = `${count} tip voor meer`
-        }
-        }
+        showAuthorOnPreview(author, metaUserPhoto, metaUserName, metaUserDiv)
 
         titleH2.innerHTML = title
         headerImg.src = headerImageSmall
@@ -292,6 +137,9 @@ db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds")
 
         DOMarticle.appendChild(outerSection)
         outerSection.appendChild(headerDiv)
+        outerSection.appendChild(metaUserDiv)
+        metaUserDiv.appendChild(metaUserPhoto)
+        metaUserDiv.appendChild(metaUserName)
         headerDiv.appendChild(headerImg)
         outerSection.appendChild(titleDiv)
         titleDiv.appendChild(titleSub)
@@ -324,43 +172,29 @@ loadSelectedArticles(selectedClean[0])
 };
 
 function loadSelectedArticles(selectedArticle){
-    db.collection("Levensvragen").where("Domein", "==", selectedArticle)
+    db.collection("Articles").where("Domain", "==", selectedArticle)
+    .where("Status", "==", "Approved")
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
     
-            const title = doc.data().Levensvraag
+            const title = doc.data().Title
             const headerImage = doc.data().HeaderImage
             const headerImageSmall = doc.data().HeaderImageSmall
-            const insights = doc.data().Insights
-            const goal = doc.data().Levensvraag
-    
-             // Hidding articles with no insights for non-coach
-                if (insights.length == 0){
-                    auth.onAuthStateChanged(User =>{
-                        if(User){
-                    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                        const usertype = doc.data().Usertype
-    
-                        console.log(usertype)
-        
-                        if(usertype != "Coach"){
-                            outerSection.style.display = "none"
-                        }
-                    })
-                } else {
-                    outerSection.style.display = "none"
-                }
-                })
-            };
+            const domain = doc.data().Domain
+            const author = doc.data().Author
          
             const outerSection = document.createElement("section")
                 outerSection.setAttribute("class", "levensvraag-artikel-section")
                 outerSection.setAttribute("data-title", title)
-                outerSection.setAttribute("data-goal", goal)
             const headerDiv = document.createElement("div")
                 headerDiv.setAttribute("class", "levensvraag-artikel-header")
             const headerImg = document.createElement("img")
                 headerImg.setAttribute("class", "header-image-article")
+            const metaUserDiv = document.createElement("div")
+                metaUserDiv.setAttribute("class", "meta-user-div")
+            const metaUserPhoto = document.createElement("img")
+            const metaUserName = document.createElement("p")
+                metaUserName.setAttribute("id", "meta-user-name")
             const titleDiv = document.createElement("div")
             const titleSub = document.createElement("h5")
                 titleSub.setAttribute("class", "titleSub")
@@ -370,23 +204,7 @@ function loadSelectedArticles(selectedArticle){
                 buttonDiv.setAttribute("class", "button-algemeen-card")
                 buttonDiv.setAttribute("onclick", "seeArticle(this)")
     
-            // Dynamic title
-            const count = insights.length
-    
-            titleSub.innerHTML = `${count} coaches over`
-    
-            if(count == 1){
-            titleSub.innerHTML = `${count} coach over`
-            }
-    
-            // Exemption on dynamic title
-            if(title == "Zelfliefde"){
-                titleSub.innerHTML = `${count} tips voor meer`
-    
-                if(count == 1){
-                titleSub.innerHTML = `${count} tip voor meer`
-            }
-            }
+            showAuthorOnPreview(author, metaUserPhoto, metaUserName, metaUserDiv)
     
             titleH2.innerHTML = title
             headerImg.src = headerImageSmall
@@ -398,6 +216,9 @@ function loadSelectedArticles(selectedArticle){
     
             DOMarticle.appendChild(outerSection)
             outerSection.appendChild(headerDiv)
+            outerSection.appendChild(metaUserDiv)
+            metaUserDiv.appendChild(metaUserPhoto)
+            metaUserDiv.appendChild(metaUserName)
             headerDiv.appendChild(headerImg)
             outerSection.appendChild(titleDiv)
             titleDiv.appendChild(titleSub)
@@ -429,8 +250,75 @@ const paragrphListInsightsLevensvraag = document.getElementById("paragraph-list-
 const selectParagraphCoachInsightLevensvraag = document.createElement("select")
     selectParagraphCoachInsightLevensvraag.setAttribute("id", "select-paragraph-coach-insight-levensvraag")
 
+function sanityTinyMCE(){
+
+    const tinyMCEOuterDiv = document.getElementById("article-body-div")
+
+    const spans = tinyMCEOuterDiv.querySelectorAll("span")
+    const Ps = tinyMCEOuterDiv.querySelectorAll("P")
+    const H2s = tinyMCEOuterDiv.querySelectorAll("h2")
+    const lis = tinyMCEOuterDiv.querySelectorAll("li")
+    const imgs = tinyMCEOuterDiv.querySelectorAll("img")
+
+    const spanArray = Array.from(spans)
+
+    spanArray.forEach(span => {
+
+        span.style.fontSize = ""
+        span.style.fontFamily = "Nunito Sans, sans-serif"
+        span.style.letterSpacing = "1px"
+        span.style.color = "#122b46"
+
+    });
+
+    const pArray = Array.from(Ps)
+
+    pArray.forEach(p => {
+
+        p.style.fontSize = "18px"
+        p.style.fontFamily = "Nunito Sans, sans-serif"
+        p.style.letterSpacing = "1px"
+        p.style.width = "auto"
+    });
+
+    const H2Array = Array.from(H2s)
+
+    H2Array.forEach(H2 => {
+
+        H2.style.fontSize = "20px"
+        H2.style.fontFamily = "Nunito Sans, sans-serif"
+        H2.style.letterSpacing = "1px"
+        H2.style.textAlign = "left"
+        H2.style.color = "#122b46"
+        H2.style.marginBottom = "0px"
+        H2.style.width = "auto"
+
+    });
+
+    const liArray = Array.from(lis)
+
+    liArray.forEach(li => {
+
+        li.style.fontSize = "18px"
+        li.style.fontFamily = "Nunito Sans, sans-serif"
+        li.style.letterSpacing = "1px"
+        li.style.textAlign = "left"
+        li.style.width = "auto"
+    });
+
+    const imgsArray = Array.from(imgs)
+
+    imgsArray.forEach(img => {
+
+        img.style.borderRadius = "5px"
+        img.style.width = "100% !important"
+        img.style.height = "auto !important"
+    });
+
+};
+
 function appendLifelessonsToInsight(titleInsight){
-    db.collectionGroup("Levenslesson").where("Source", "==", titleInsight)
+    db.collectionGroup("Levenslesson").where("Source", "==", titel)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
@@ -446,799 +334,147 @@ function appendLifelessonsToInsight(titleInsight){
     });
 }
 
-db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-
-        const paragraphs = doc.data().Paragraphs
-        const titleArticle = doc.data().Levensvraag
-        const summaryArticle = doc.data().Summary
-        const keywords = doc.data().Keywords
-        const headerImage = doc.data().HeaderImage
-        const insights = doc.data().Insights
-
-        title.innerHTML = titleArticle
-        summary.innerHTML = summaryArticle
-        headerImg.src = headerImage
-
-        headerDiv.appendChild(headerImg)
-
-        //Paragraphs in article summary
-        paragraphs.forEach(paragraph => {
-
-            const menuItem = document.createElement("p")
-                menuItem.setAttribute("class", "menu-paragraph-item")
-
-            menuItem.innerHTML = paragraph
-
-            paragraphListLevensvraag.appendChild(menuItem)
-
-            const menuItemTitle = menuItem.innerText
-
-            console.log(menuItemTitle)
-
-            menuItem.style.display = "none"
-
-            db.collection("Insights").where("LevensvraagArtikel", "==", titel)
-            .where("Paragraph", "==", menuItemTitle).orderBy("Timestamp", "asc")
-            .get().then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-            
-                    menuItem.style.display = "block"
-                })
-            });
-        });
-
-        // Paragraphs in article as subtitles
-        paragraphs.forEach(paragraph => {
-
-            const parraDiv = document.createElement("div")
-                parraDiv.setAttribute("class", "article-paragraphs")
-
-            const parra = document.createElement("h2")
-
-            parra.innerHTML = paragraph
-
-            coachInsightsLevensvraag.appendChild(parraDiv)
-            parraDiv.appendChild(parra)
-        });
-
-            // Paragraphs in select coach insight
-
-            paragraphs.forEach(paragraph => {
-
-                const option = document.createElement("option")
-     
-                 option.innerHTML = paragraph
-     
-                 paragrphListInsightsLevensvraag.appendChild(selectParagraphCoachInsightLevensvraag)
-                 selectParagraphCoachInsightLevensvraag.appendChild(option)
-             });
-
-        // Edit summary
-        const editDiv = document.createElement("div")
-        const editIcon = document.createElement("img")
-            editIcon.setAttribute("src", "../images/edit-icon.png")
-            editIcon.setAttribute("class", "edit-icon-insights")
-            editIcon.setAttribute("onclick", "editIconSummary(this)")
-            editIcon.setAttribute("data-title", titleArticle)
-
-            editDiv.appendChild(editIcon)
-
-        //Non admin
-        auth.onAuthStateChanged(User =>{
-            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                    const admin = doc.data().Admin
-
-                if(admin != "Yes"){
-                    editIcon.style.display = "none"
-                }
-            
-        })
-    })
-
-        // Visitor
-        auth.onAuthStateChanged(User =>{
-            if (!User){
-
-                editIcon.style.display = "none"
-            }
-        });
-
-       // Pagetitle, meta's & facebook crawl
-
-        const titelHeadArray = Array.from(titelHead)
-
-        titelHeadArray.forEach(tit => {
-            if(insights.length === 1){
-                tit.innerHTML = insights.length + " coach over " + titleArticle.toLowerCase()
-            } else {
-                tit.innerHTML = insights.length + " coaches over " + titleArticle.toLowerCase()
-            }
-             console.log(tit)
-        });
-
-        metaKeywords.content = keywords
-        metaDescription.content = summaryArticle
-        facebookUrl.content = window.location.href
-
-        if(insights.length === 1){
-            facebookTitle.content = insights.length + " coach over " + titleArticle.toLowerCase()
-        } else {
-            facebookTitle.content = insights.length + " coaches over " + titleArticle.toLowerCase()
-        }
-        facebookDescription.content = summaryArticle
-        facebookImg.content = headerImage
-
-    })
-}).then(() => {   
-
-    // Append insight to paragraph
-
-    const paragraphList = document.getElementsByClassName("article-paragraphs")
-
-    const paraArray = Array.from(paragraphList)
-
-    paraArray.forEach(parra => {
-
-        parra.style.display = "none"
-
-        const parraTitle = parra.innerText
-
-    // Loading Insight levensvraag articles
-
-const DOM = document.getElementById("coach-insights")
-
-db.collection("Insights").where("LevensvraagArtikel", "==", titel).where("Paragraph", "==", parraTitle).orderBy("Timestamp", "asc").get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-        const titelInsight = doc.data().Titel
-        const body = doc.data().Body
-        const coach = doc.data().Auteur
-        const thema = doc.data().Thema
-        const levensvraagArtikel = doc.data().LevensvraagArtikel
-        const themeArtikel = doc.data().ThemeArtikel
-
-        parra.style.display = "block"
-
-        db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
-            querySnapshot.forEach(doc1 => {
-                const gebruikersnaamClean = doc1.data().GebruikersnaamClean
-                const nameID = doc1.data().Gebruikersnaam
-                const photo = doc1.data().Profielfoto
-
-                outerDiv = document.createElement("div")
-                    outerDiv.setAttribute("class", "insights-outer-div")
-                    outerDiv.setAttribute("data-coach", coach)
-                const metaDiv = document.createElement("div")
-                    metaDiv.setAttribute("class", "meta-div-insights")
-                const metaPhoto = document.createElement("img")
-                    metaPhoto.setAttribute("class", "meta-photo")
-                const metaName = document.createElement("p")
-                const textDiv = document.createElement("div")
-                    textDiv.setAttribute("class", "text-div-insights")
-                const textTitle = document.createElement("h3")
-                const textBody = document.createElement("p")
-                const readMoreDiv = document.createElement("div")
-                    readMoreDiv.setAttribute("class", "read-more-div")
-                const readMore = document.createElement("button")
-                    readMore.setAttribute("class", "button-read-more")
-                const socialDiv = document.createElement("div")
-                    socialDiv.setAttribute("class", "sociale-div-insights")
-                const themaDiv = document.createElement("div")
-                    themaDiv.setAttribute("class", "social-div-thema-div-insights")
-                const themaH3 = document.createElement("h3")
-                const themaP = document.createElement("p")
-                const inspirationalDiv = document.createElement("div")
-                inspirationalDiv.setAttribute("class", "social-div-inspirational-div-insights")
-                const inspirationalImg = document.createElement("img")
-                    inspirationalImg.setAttribute("onclick", "inspirerend(this)")
-                    inspirationalImg.setAttribute("data-titel", titelInsight)
-                    inspirationalImg.setAttribute("data-coach", coach)
-                    inspirationalImg.setAttribute("data-body", body)
-                const inspirationIconDiv = document.createElement("div")
-                    inspirationIconDiv.setAttribute("class", "inspiration-icon-div")
-                const inspirationIcon = document.createElement("img")
-                    inspirationIcon.setAttribute("class", "inspiration-icons")
-                    inspirationIcon.setAttribute("id", "inspiration-icon")
-                const inspirationIconDescription = document.createElement("p")  
-                    inspirationIconDescription.setAttribute("id", "inspiration-icon-description")
-                const toevoegenLevenslesOuterDiv = document.createElement("div")
-                    toevoegenLevenslesOuterDiv.setAttribute("id", "toevoegen-levensles-outer-div")
-                const toevoegenLevenslesSelectDiv = document.createElement("div")
-                    toevoegenLevenslesSelectDiv.setAttribute("class", "toeveogen-levensles-select-div")
-                const toevoegenLevenslesSelect = document.createElement("select")
-                    toevoegenLevenslesSelect.setAttribute("class", "toevoegen-levensles-select")
-                    toevoegenLevenslesSelect.setAttribute("id", "toevoegen-levensles-select-id")
-                const toevoegenLevensles = document.createElement("h3")
-                    toevoegenLevensles.setAttribute("class", "toevoegen-levensles")
-                const toevoegenLevenslesInput = document.createElement("textarea")
-                    toevoegenLevenslesInput.setAttribute("placeholder", "Wat heb je geleerd?")
-                    toevoegenLevenslesInput.setAttribute("class", "toevoegen-levensles-input")
-                const toevoegenLevenslesDiv = document.createElement("div")
-                    toevoegenLevenslesDiv.setAttribute("id", "toevoegen-levensles-div")
-                const toevoegenLevenslesButtonDiv = document.createElement("div")
-                const toevoegenLevenslesButton = document.createElement("button")
-                    toevoegenLevenslesButton.setAttribute("onclick", "toevoegenLevenslesButton(this)")
-                    toevoegenLevenslesButton.setAttribute("data-titel", titelInsight)
-                    toevoegenLevenslesButton.setAttribute("data-coach", coach)
-                    toevoegenLevenslesButton.setAttribute("data-body", body)
-                    toevoegenLevenslesButton.setAttribute("class", "button-algemeen")
-                const CTAnoGoalDiv = document.createElement("div")
-                    CTAnoGoalDiv.setAttribute("id", "CTA-no-goal-auth")
-                const CTAnoGoalP = document.createElement("p")
-                const CTAvisitorDiv = document.createElement("div")
-                    CTAvisitorDiv.setAttribute("class", "CTA-visitor")
-                const CTAvisitor = document.createElement("p")
-                const opgeslagen = document.createElement("p")
-                    opgeslagen.setAttribute("class", "social-note")
-                    opgeslagen.setAttribute("id", "social-note-id")
-                const editIcon = document.createElement("img")
-                    editIcon.setAttribute("src", "../images/edit-icon.png")
-                    editIcon.setAttribute("class", "edit-icon-insights")
-                    editIcon.setAttribute("onclick", "editIconInsights(this)")
-                    editIcon.setAttribute("data-title", titelInsight)
-                    editIcon.setAttribute("data-levensvraagtitle", levensvraagArtikel)
-                    editIcon.setAttribute("data-themetitle", themeArtikel)
-                    editIcon.setAttribute("data-coach", coach)
-
-                    inspirationIcon.src = "../images/inspiration-icon-2.png"
-                    inspirationIconDescription.innerText = "Heb je iets over jezelf geleerd?"
-                    inspirationIconDiv.addEventListener("click", (e) => {
-                        toevoegenLevenslesOuterDiv.style.display = "flex"
-                        inspirationIcon.style.display = "none"
-                        inspirationIconDescription.style.display = "none"
-                    })
-
-                    toevoegenLevensles.innerText = "Heb je iets geleerd over:"
-
-                    auth.onAuthStateChanged(User =>{
-                        if (User){
-                    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-    
-                        const goals = doc.data().Goals
-                        const auth = doc.data().Gebruikersnaam
-    
-                        if(goals == undefined){
-    
-                        toevoegenLevensles.innerHTML = `Heb je iets geleerd over jezelf?`
-        
-                        toevoegenLevenslesInput.style.display = "none"
-                        toevoegenLevenslesButton.style.display = "none"
-                        toevoegenLevenslesSelect.style.display = "none"
-    
-                        CTAnoGoalDiv.appendChild(CTAnoGoalP)
-    
-                        CTAnoGoalDiv.style.display = "block"
-                        CTAnoGoalP.innerText = "Maak eerst een doel aan om je les aan te koppelen"
-    
-                        CTAnoGoalDiv.addEventListener("click", () => {
-                            window.open("../Vitaminders/" + auth, "_self");
-                        });
-    
-                        } else {
-    
-                        goals.forEach(goal => {
-    
-                            db.collectionGroup("Levensvragen").where("Goal", "==", goal).where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
-                                querySnapshot.forEach(doc1 => {
-    
-                                    const levensvraag = doc1.data().LevensvraagClean
-    
-                                    const toevoegenLevenslesOptions = document.createElement("option")
-    
-                                    toevoegenLevenslesOptions.innerHTML = levensvraag  
-    
-                                    toevoegenLevenslesSelect.appendChild(toevoegenLevenslesOptions)
-                                                
-                                            }); 
-                                        });
-                                    });
-                                }
-                            });
-                        } else {
-    
-                                    toevoegenLevensles.innerHTML = `Heb je iets geleerd over jezelf?`
-            
-                                    toevoegenLevenslesInput.style.display = "none"
-                                    toevoegenLevenslesButton.style.display = "none"
-                                    toevoegenLevenslesSelect.style.display = "none"
-            
-                                    CTAvisitor.innerHTML = " Maak een Digimind aan om je lessen in op te slaan"
-                                    CTAvisitorDiv.style.cursor = "pointer"
-            
-                                    CTAvisitorDiv.addEventListener("click", () => {
-                                        window.open("../Register.html", "_self");
-                                    })
-            
-                                    CTAvisitorDiv.appendChild(CTAvisitor)
-            
-                                    };
-                    });
-
-                // Insights title
-                auth.onAuthStateChanged(User =>{
-                    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-
-                            const naam = doc.data().GebruikersnaamClean
-
-                            const sectionTitle = document.getElementById("insight-title")
-                            if(sectionTitle != null){
-                                    // Exemptions for this title
-                            if(titel == "Zelfliefde"){
-                                sectionTitle.innerHTML = `${naam},<br> geef een tip voor meer<br> ${titel}`
-                            } else {
-                            sectionTitle.innerHTML = `${naam},<br> geef je professionele inzicht over:<br> ${titel}`
-                            };
-                        };    
-                    })
-                })
-
-                metaPhoto.src = photo
-                metaName.innerHTML = `<a href="../Vitaminders/${nameID}.html">${gebruikersnaamClean}</a>`
-                textTitle.innerHTML = titelInsight
-                textBody.innerHTML = body
-                readMore.innerHTML = "Lees meer"
-                themaH3.innerHTML = "Verder lezen"
-                toevoegenLevenslesButton.innerHTML = "Opslaan"
-                opgeslagen.innerHTML = `Opgeslagen in je <u>Digimind</u>`
-
-                // Heart
-                inspirationalImg.src = "../images/heart-icon.png"
-
-                inspirationalImg.addEventListener("mouseenter", () => {
-                    inspirationalImg.src = "../images/heart-icon-hover.png"
-                        });
-            
-                inspirationalImg.addEventListener("mouseleave", () => {
-                    inspirationalImg.src = "../images/heart-icon.png"
-                        });
-                
-                inspirationalImg.addEventListener("click", () => {
-                    inspirationalImg.src = "../images/heart-icon-hover.png"
-
-                    inspirationalImg.addEventListener("mouseleave", () => {
-                        inspirationalImg.src = "../images/heart-icon-hover.png"
-                            });
-                        });
-
-                        //Pre-fill saved hearts 
-                        auth.onAuthStateChanged(User =>{
-                            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                                    const auth = doc.data().Gebruikersnaam
-
-                                    db.collectionGroup("Inspiration").where("Giver", "==", auth).get().then(querySnapshot => {
-                                        querySnapshot.forEach(doc1 => {
-
-                                            const insightTitle = doc1.data().Source
-
-                                            if(insightTitle == titelInsight){
-                                                inspirationalImg.src = "../images/heart-icon-hover.png"
-                                            }
-                                        })
-                                    })
-                            });
-                        });
-
-                        // Like count
-                        const lenghtP = document.createElement("p")
-
-                        inspirationalDiv.appendChild(lenghtP)
-
-                        db.collection("Insights").where("Titel", "==", titelInsight).onSnapshot(querySnapshot => {
-
-                            // Remove old count
-                            if(lenghtP)
-                            inspirationalDiv.removeChild(lenghtP)
-
-                            querySnapshot.forEach(doc => {
-
-                                console.log("tets")
-
-                                const likes = doc.data().Inspiratiepunten
-
-                                lenghtP.innerText = likes
-
-                                inspirationalDiv.appendChild(lenghtP)
-
-                            });
-                        });
-
-
-
-
-                auth.onAuthStateChanged(User =>{
-                    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                            const auth = doc.data().Gebruikersnaam
-            
-                            opgeslagen.addEventListener("click", () => {
-                                window.open("../Vitaminders/" + auth + ".html", "_self");
-                        });       
-                    });
-                });
-                
-                // Display read more of this theme button if read more is set
-                if(thema == undefined){
-                    themaDiv.style.display = "none"
-                }else{
-                themaP.innerHTML = thema
-
-                themaP.addEventListener("click", () => {
-                    window.open("../Theme-articles/" + thema + ".html", "_self")
-                })
-                };
-
-                metaDiv.addEventListener("click", () => {
-                    window.open("../Vitaminders/" + coach + ".html", "_self");
-                });
-
-                readMore.addEventListener("click", () => {
-                    textDiv.style.maxHeight = "max-content"
-                    readMore.style.display = "none"
-                });
-
-
-                // Loader
-                const loader = document.getElementById("loader")
-                    loader.style.display = "none"
-
-                parra.appendChild(outerDiv)
-                outerDiv.appendChild(metaDiv)
-                metaDiv.appendChild(metaPhoto)
-                metaDiv.appendChild(metaName)
-                outerDiv.appendChild(textDiv)
-                textDiv.appendChild(editIcon)
-                textDiv.appendChild(textTitle)
-                textDiv.appendChild(textBody)
-                
-
-                 // Append "read more" if max height is > 300px
-                    if(textDiv.offsetHeight >= 300){
-                        parra.appendChild(readMoreDiv)
-                        readMoreDiv.appendChild(readMore)
-                        textDiv.style.maxHeight = "290px"
-                        textDiv.style.overflow = "hidden"
-                        outerDiv.style.paddingBottom = "50px"
-                    };
-
-                parra.appendChild(socialDiv)
-                socialDiv.appendChild(inspirationalDiv)
-                inspirationalDiv.appendChild(inspirationalImg)
-                socialDiv.appendChild(inspirationIconDiv)
-                inspirationIconDiv.appendChild(inspirationIcon)
-                inspirationIconDiv.appendChild(inspirationIconDescription)
-                socialDiv.appendChild(toevoegenLevenslesOuterDiv)
-                toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesSelectDiv)
-                toevoegenLevenslesSelectDiv.appendChild(toevoegenLevensles)
-                toevoegenLevenslesSelectDiv.appendChild(toevoegenLevenslesSelect)
-                toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesDiv)
-                toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesInput)
-                toevoegenLevenslesOuterDiv.appendChild(toevoegenLevenslesButtonDiv)
-                toevoegenLevenslesButtonDiv.appendChild(toevoegenLevenslesButton)
-                toevoegenLevenslesOuterDiv.appendChild(CTAvisitorDiv)
-                toevoegenLevenslesOuterDiv.appendChild(CTAnoGoalDiv)
-                toevoegenLevenslesOuterDiv.appendChild(opgeslagen)
-            
-                // Menu scroll to paragraph
-
-            const menuItem = document.getElementsByClassName("menu-paragraph-item")
-            const paragraphTitle = document.getElementsByClassName("article-paragraphs")
-
-            const menuItemArray = Array.from(menuItem)
-
-            menuItemArray.forEach(menu => {
-
-                const paragraphTitleArray = Array.from(paragraphTitle)
-
-                paragraphTitleArray.forEach(para => {
-
-                    if(menu.innerText == para.firstElementChild.innerText){
-                        menu.addEventListener("click", () => {
-                            para.scrollIntoView()
-                        });
-                    };
-                })
-            });
-
-                // User role
-                    // Visitor
-                auth.onAuthStateChanged(User =>{
-                    if (!User){
-                        const editIcon = document.getElementsByClassName("edit-icon-insights")
-                
-                        const editIconArray = Array.from(editIcon)
-                
-                        editIconArray.forEach(icon => {
-                            icon.style.display = "none"
-                        })
-                    };
-                });
-                   //Non auth
-
-                   const coachData = outerDiv.dataset.coach
-                   
-                   auth.onAuthStateChanged(User =>{
-                    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                            const auth = doc.data().Gebruikersnaam
-                    
-                if(coachData != auth){
-
-                    if(editIcon != undefined){
-                    editIcon.style.display = "none"
-                };
-                    };
-                        })
-                            });
-
-                        // Admin
-
-                        auth.onAuthStateChanged(User =>{
-                            db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                                    const admin = doc.data().Admin
-                            
-                        if(admin == "Yes"){
-        
-                            editIcon.style.display = "flex"
-        
-                                };
-                            });
-                        });
-                    });
-                });
-            });
-        });
-    });
-});
-
-
-// Saving coach insights to database
-
-// Open new insights with onclick on textarea
-
-const textareaInisghts = document.getElementById("insights-CTA")
-const insightsParagraphIdeas = document.getElementById("insights-theme-ideas")
-const newPost = document.getElementById("nieuwepost")
-
-!function openNewInsight(){
-
-    textareaInisghts.addEventListener("click", () => {
-
-        const noticeP = document.createElement("p")
-            noticeP.setAttribute("id", "upgrade-notice")
-        const inputDiv = document.getElementById("coach-input")
-    
-        auth.onAuthStateChanged(User =>{
-            if(User){
-            const userRef = db.collection("Vitaminders").doc(User.uid);
-            userRef.get().then(function(doc) {
-    
-                const coachType = doc.data().SubscriptionType
-    
-                if(coachType === "Premium"){
-                    console.log("Premium")
-
-                    insightsParagraphIdeas.style.display = "flex"
-                    newPost.style.display = "flex"
-                    textareaInisghts.style.display = "none"
-                } else if (coachType === "Basic"){
-                    console.log("Basic")
-
-                    textareaInisghts.style.display = "none"
-                    noticeP.innerHTML = '<u>Upgrade</u> naar een Premium account om aan de artikelen bij te dragen.'
-                    inputDiv.appendChild(noticeP)
-    
-                    upgradeModal(noticeP)
-                };
-            });
-        };
-    }); 
-    });
-}(); 
-
-function upgradeModal(notice){
-
-    const upgradeModal = document.getElementById("upgrade-account-modal")
-
-    notice.addEventListener("click", () => {
-
-        upgradeModal.style.display = "flex"
-    });
-};
-
-!function upgradeMessage(){
-
-    const title = document.getElementById("welcome-message-upgrade")
+function showEditIconAuthorAndAdmin(icon){
 
     auth.onAuthStateChanged(User =>{
         if(User){
-        const userRef = db.collection("Vitaminders").doc(User.uid);
-        userRef.get().then(function(doc) {
+        db.collection("Vitaminders").doc(User.uid).get().then(doc =>{
 
-            const name = doc.data().GebruikersnaamClean
+            const admin = doc.data().Admin
+            const auth = doc.data().Gebruikersnaam
 
-            title.innerHTML = `Wat leuk dat je wilt updragen naar een Premium abonnement, ${name}!`
-
-            });
-        };
-    });
-}();
-
-!function sendUpgradeRequest(){
-    const requestButton = document.getElementById("upgrade-button")
-
-    requestButton.addEventListener("click", () => {
-
-    auth.onAuthStateChanged(User =>{
-        if(User){
-        const userRef = db.collection("Vitaminders").doc(User.uid);
-        userRef.get().then(function(doc) {
-
-            const email = doc.data().Email
-            const nameClean = doc.data().GebruikersnaamClean
-
-                db.collection("Mail").doc().set({
-                    to: [email],
-                    cc: "info@vitaminds.nu",
-                    message: {
-                    subject: `Upgrade naar Premium Vitaminds account`,
-                    html: `Hallo ${nameClean}, </br></br>
-                            Wat leuk dat je een Premium-account hebt aangevraagd!<br><br> 
-                            
-                            We gaan je account direct upgraden. Je ontvangt een mailtje zodra je account is ge-upgrade.</br></br>
-
-                            Vriendelijke groet, </br></br>
-                            Het Vitaminds Team </br></br>
-                            <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-                    Gebruikersnaam: nameClean,
-                    Emailadres: email,
-                    Type: "Upgrade request"
-                    }        
-                    })
-            .then(() => {
-
-                requestButton.innerText = "Je upgrade is aangevraagd!"
-
-            })
-            });
-        };
-    });
-});
-}();
-
-!function exitModalUpgrade(){
-
-     const exitModal = document.getElementById("exit-modal")
-     const upgradeModal = document.getElementById("upgrade-account-modal")
-
-     exitModal.addEventListener("click", () => {
-
-        upgradeModal.style.display = "none"
-
-     });
-}();
-
-!function personalizeCTAtoWriteInsight(){
-    auth.onAuthStateChanged(User =>{
-        db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-
-                const naam = doc.data().GebruikersnaamClean
-
-                textareaInisghts.placeholder = `Klik hier om een bijdrage toe te voegen, ${naam}`
-
-        });
-    });
-}();
-
-
-function nieuwepostsubmit(){
-        auth.onAuthStateChanged(User =>{
-            if (User){
-
-                const insightsRef = db.collection("Insights").doc();
-                const docRef = db.collection("Vitaminders").doc(User.uid);
-                    docRef.get().then(function(doc){
-                        const coachNaam = doc.data().Gebruikersnaam;
-                 
-                const nieuwePostTitelVar = document.getElementById("nieuwposttitel").value;
-                const titelInput = document.getElementById("nieuwposttitel")
-
-                if (nieuwePostTitelVar == ""){
-                    titelInput.style.borderColor = "red"
-                    titelInput.scrollIntoView()
-                }
-
-                const paragraphSelect = document.getElementById("select-paragraph-coach-insight-levensvraag")
-
-                const option = paragraphSelect.options
-                const selected = option[option.selectedIndex].innerHTML
-
-                let nieuwePostBodyVar = tinyMCE.get('tiny-mce').getContent()
-
-                                insightsRef.set({
-                                    Titel: nieuwePostTitelVar,
-                                    Body: nieuwePostBodyVar,
-                                    Auteur: coachNaam,
-                                    Inspiratiepunten: 1,
-                                    LevensvraagArtikel: titel,
-                                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                                    Type: "Insight-levensvraag",
-                                    Paragraph: selected,
-                                    Content: "Text",
-                                });
-                         
-                        //Storing insight in levensvraag
-                db.collection("Levensvragen").where("Levensvraag", "==", titel).get().then(querySnapshot => {
+                db.collection("Articles").where("Title", "==", titel)
+                .get().then(querySnapshot => {
                     querySnapshot.forEach(doc1 => {
 
-                        db.collection("Levensvragen").doc(doc1.id).update({
-                            Insights: firebase.firestore.FieldValue.arrayUnion(nieuwePostTitelVar)
+                        const author = doc1.data().Author
 
-                                })
-                            });
-                        }).then(() => {
-                            location.reload()
-                        });
-                    }) ;    
-                };
-        });
+                        console.log(admin)
+                        
+                        if(admin === "Yes" || auth === author){
+                            icon.style.display = "block"
+                        };
+                    });
+                });
+            });
+        };
+    });
 };
 
- // Toevoegen aan levensles verwerken in database
+!function editArticle(){
+    const editIcon = document.getElementById("edit-div")
+    const tinyMCEdiv = document.getElementById("tiny-mce-div")
+    const articleBody = document.getElementById("article-body-div")
 
-    // Saving insight to lifequestion
- function toevoegenLevenslesButton(elem){
+    showEditIconAuthorAndAdmin(editIcon)
 
-     const titelElem = elem.dataset.titel
-     const input = elem.parentElement.previousElementSibling.value
-     const coach = elem.dataset.coach
+    editIcon.addEventListener("click", () => {
 
-     const select = document.getElementById("toevoegen-levensles-select-id")
-     const option = select.options
-     const selected = option[option.selectedIndex].innerHTML
+        tinyMCEdiv.style.display = "block"
+        articleBody.style.display = "none"
 
-     db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", selected).get()
-     .then(querySnapshot => {
-         querySnapshot.forEach(doc => {
+        db.collection("Articles").where("Title", "==", titel).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
 
-            const levensvraagID = doc.data().Levensvraag
+                const body = doc.data().Body
 
-     auth.onAuthStateChanged(User =>{
-         userRef = db.collection("Vitaminders").doc(User.uid)
-         userRef.get()
-          .then(doc => {
-                  const naam = doc.data().Gebruikersnaam
+                setTimeout(() => { 
+                    tinymce.get("tiny-mce").setContent(body);
+                }, 1000);
 
-     db.collection("Vitaminders").doc(User.uid).collection("Levenslessen").doc().set({
-     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-     Levensles: input,
-     Auteur: coach,
-     Gebruikersnaam: naam,
-     Titel: titel,
-     Inspirerend: 1,
-     Type: "Coach-inzicht",
-     Source: titelElem,
-     Levensvraag: levensvraagID,
-     Status: "Approved"
-             })
+            });
+        });
+    });
+}();
 
-     levensvraagRef = db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraagID).where("Gebruikersnaam", "==", naam)
-     levensvraagRef.get()
-     .then(querySnapshot => {
-         querySnapshot.forEach(doc => {
-             
-             userRef.collection("Levensvragen").doc(doc.id).update({
-                 Levenslessen: firebase.firestore.FieldValue.arrayUnion(input)
-             }).then(() => {
-                 
-                elem.innerHTML = "Opgeslagen in je Digimind"
-                elem.setAttribute("onclick", "none")
-             })
-         })
-     })
-     
+!function saveEditedArticle(){
+    
+    const saveButton = document.getElementById("button-edited-article")
+
+    console.log(saveButton)
+
+    saveButton.addEventListener("click", () => {
+
+        saveButton.innerText = "Opgeslagen"
+
+        const editedBody = tinymce.get("tiny-mce").getContent();
+
+        db.collection("Articles").where("Title", "==", titel).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                db.collection("Articles").doc(doc.id).update({
+                    Body: editedBody
                 })
-            })
-        })
+                .then(() => {
+                    location.reload();
+                });
+            });
+        });
+    });
+}();
+
+function setH2HeadersInSummary(bodyText){
+
+    const SubTitles = bodyText.querySelectorAll("h2")
+    const summaryDiv = document.getElementById("paragraph-list")
+    const ul = document.createElement("ul")
+
+    const subtitleArray = Array.from(SubTitles)
+
+    subtitleArray.forEach(title => {
+
+        const summaryItem = document.createElement("li")
+            summaryItem.setAttribute('class', 'summary-li')
+
+        summaryItem.innerText = title.innerText
+
+        summaryDiv.appendChild(ul)
+        ul.appendChild(summaryItem)
+
+        scrollToSummaryItem(summaryItem, title)
+    });
+};
+
+function scrollToSummaryItem(summaryTitle, h2Title){
+
+    summaryTitle.addEventListener("click", () => {
+
+        h2Title.scrollIntoView()
+
+    });
+};
+
+!function articleQuery(){
+
+    const bodyDiv = document.getElementById("article-body-div")
+    const metaUserPhoto = document.getElementById("author-photo")
+    const metaUserName = document.getElementById("author-name")
+    const authorDiv = document.getElementById("author-div")
+
+    db.collection("Articles").where("Title", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const titleArticle = doc.data().Title
+            const headerImage = doc.data().HeaderImage
+            const body = doc.data().Body
+            const domain = doc.data().Domain
+            const author = doc.data().Author
+
+            title.innerHTML = titleArticle
+            headerImg.src = headerImage
+
+            headerDiv.appendChild(headerImg)
+
+            bodyDiv.innerHTML = body
+
+            loadArticlesWithSameDomain(domain)
+            showAuthorOnPreview(author, metaUserPhoto, metaUserName, authorDiv)
+            setH2HeadersInSummary(bodyDiv)
+            sanityTinyMCE()
+    
+        });
     })
-};  
+}();
 
 // Inspiratiepunt wegschrijven naar reactie en coach
 
@@ -1287,6 +523,104 @@ function inspirerend(elem){
 });
 }); 
 };
+
+// Create new lifelesson
+
+!function routeSelectOfAuth(){
+
+    const routeSelect = document.getElementById("route-select")
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+            db.collection("Vitaminders").doc(User.uid)
+            .collection("Levensvragen")
+            .get().then(querySnapshot =>{
+                querySnapshot.forEach(doc => {
+
+                    const routes = doc.data().LevensvraagClean
+
+                    const options = document.createElement("option")
+
+                    options.innerText = routes
+
+                    routeSelect.appendChild(options)
+
+                });
+            });
+        };
+    });
+}();
+
+!function saveLifeLesson(){
+
+    const buttonLifelesson = document.getElementById("button-lifelesson")
+    const notice = document.getElementById("notice")
+
+            db.collection("Articles").where("Title", "==", titel).get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                    const naam = doc.data().Author
+            
+                auth.onAuthStateChanged(User =>{
+                    if(User){
+
+                        const routeSelectDiv = document.getElementById("select-route-div")
+                        routeSelectDiv.style.display = "flex"
+                        const routeSelect = document.getElementById("route-select")
+
+                        buttonLifelesson.addEventListener("click", () => {
+
+                            const option = routeSelect.options
+
+                            if(option.length === 0){
+                                routeSelectDiv.style.display = "none"
+                                buttonLifelesson.style.display = "none"
+                                notice.style.display = "block"
+                            };
+
+                            const selected = option[option.selectedIndex].innerHTML
+                
+                            const lesson = document.getElementById("lifelesson-input").value
+
+                          buttonLifelesson.innerText = "Opgeslagen"
+
+                        db.collection("Vitaminders").doc(User.uid)
+                        .get().then(doc1 => {
+
+                            const auth = doc1.data().Gebruikersnaam
+
+                            db.collection("Vitaminders").doc(User.uid)
+                            .collection("Levensvragen")
+                            .where("LevensvraagClean", "==", selected)
+                            .get().then(querySnapshot => {
+                                querySnapshot.forEach(doc2 => {
+
+                                    const levensvraagID = doc2.data().Levensvraag
+                        
+                                    db.collection("Vitaminders").doc(User.uid)
+                                    // .collection("Levenslessen").doc().set({
+                                    //     Auteur: naam,
+                                    //     Gebruikersnaam: auth,
+                                    //     Inspirerend: 0,
+                                    //     Levensles: lesson,
+                                    //     Levensvraag: levensvraagID,
+                                    //     Source: titel,
+                                    //     Status: "Approved",
+                                    //     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                    //     Type: "Coach-inzicht"
+                                    // });
+                                });
+                            });
+                        }); 
+                    });
+                } else {
+                    buttonLifelesson.style.display = "none"
+                    notice.style.display = "block"
+                }
+            });
+        });
+    });
+}();
 
 // Load lifelessons
 
@@ -1376,44 +710,34 @@ function loadCreatorData(creatorName, innerSection){
 
 // More inspiration
 
-function loadArticlesWitjSameDomain(articleDomain, DOMarticle){
-    db.collection("Levensvragen").where("Domein", "==", articleDomain)
+function loadArticlesWithSameDomain(articleDomain){
+
+    const loadMoreOuterDiv = document.getElementById("more-inspiration")
+
+    db.collection("Articles").where("Domain", "==", articleDomain)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
     
-            const title = doc.data().Levensvraag
+             const title = doc.data().Title
             const headerImage = doc.data().HeaderImage
             const headerImageSmall = doc.data().HeaderImageSmall
-            const insights = doc.data().Insights
-            const goal = doc.data().Levensvraag
-    
-             // Hidding articles with no insights for non-coach
-                if (insights.length == 0){
-                    auth.onAuthStateChanged(User =>{
-                        if(User){
-                    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                        const usertype = doc.data().Usertype
-    
-                        console.log(usertype)
-        
-                        if(usertype != "Coach"){
-                            outerSection.style.display = "none"
-                        }
-                    })
-                } else {
-                    outerSection.style.display = "none"
-                }
-                })
-            };
+            const domain = doc.data().Domain
+            const author = doc.data().Author
+
+            console.log(title)
          
             const outerSection = document.createElement("section")
                 outerSection.setAttribute("class", "levensvraag-artikel-section")
                 outerSection.setAttribute("data-title", title)
-                outerSection.setAttribute("data-goal", goal)
             const headerDiv = document.createElement("div")
                 headerDiv.setAttribute("class", "levensvraag-artikel-header")
             const headerImg = document.createElement("img")
                 headerImg.setAttribute("class", "header-image-article")
+            const metaUserDiv = document.createElement("div")
+                metaUserDiv.setAttribute("class", "meta-user-div")
+            const metaUserPhoto = document.createElement("img")
+            const metaUserName = document.createElement("p")
+                metaUserName.setAttribute("id", "meta-user-name")
             const titleDiv = document.createElement("div")
             const titleSub = document.createElement("h5")
                 titleSub.setAttribute("class", "titleSub")
@@ -1423,39 +747,21 @@ function loadArticlesWitjSameDomain(articleDomain, DOMarticle){
                 buttonDiv.setAttribute("class", "button-algemeen-card")
                 buttonDiv.setAttribute("onclick", "seeArticle(this)")
     
-            // Dynamic title
-            const count = insights.length
-    
-            titleSub.innerHTML = `${count} coaches over`
-    
-            if(count == 1){
-            titleSub.innerHTML = `${count} coach over`
-            }
-
-            //Hide current article
-            if(titel === title){
-                outerSection.style.display = "none"
-            }
-    
-            // Exemption on dynamic title
-            if(title == "Zelfliefde"){
-                titleSub.innerHTML = `${count} tips voor meer`
-    
-                if(count == 1){
-                titleSub.innerHTML = `${count} tip voor meer`
-            }
-            }
+            showAuthorOnPreview(author, metaUserPhoto, metaUserName, metaUserDiv)
     
             titleH2.innerHTML = title
             headerImg.src = headerImageSmall
             buttonDiv.innerHTML = `<a href="../Artikelen/${title}.html">Bekijk</a>`
     
-            if(DOMarticle == null){
+            if(loadMoreOuterDiv == null){
                 console.log("null")
             } else {
     
-            DOMarticle.appendChild(outerSection)
+            loadMoreOuterDiv.appendChild(outerSection)
             outerSection.appendChild(headerDiv)
+            outerSection.appendChild(metaUserDiv)
+            metaUserDiv.appendChild(metaUserPhoto)
+            metaUserDiv.appendChild(metaUserName)
             headerDiv.appendChild(headerImg)
             outerSection.appendChild(titleDiv)
             titleDiv.appendChild(titleSub)
@@ -1466,140 +772,123 @@ function loadArticlesWitjSameDomain(articleDomain, DOMarticle){
     });
 };
 
-!function loadMoreInspiration(){
+// Follow coach
 
-    const loadMoreOuterDiv = document.getElementById("more-inspiration")
+const naam = ""
 
-    db.collection("Levensvragen").where("Levensvraag", "==", titel)
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+!function followUnfollowCoach(){
 
-            const domain = doc.data().Domein
+    const followButton = document.getElementById("follow-author")
 
-            loadArticlesWitjSameDomain(domain, loadMoreOuterDiv)
+    auth.onAuthStateChanged(User =>{
+            if(User){
+    db.collection("Vitaminders").doc(User.uid).get().then(doc =>{
 
+                    const followers = doc.data().FavCoaches
 
-        });
+                    // Hide follow for auth on his own profile
+                    const auth = doc.data().Gebruikersnaam
+
+                    if(auth == naam){
+                            followButton.style.display = "none" 
+                    }
+    
+                    followersArray = Array.from(followers)
+    
+                    if(followersArray.includes(naam)){
+    
+                            followButton.innerHTML = "Ontvolgen"
+                            followButton.setAttribute("onclick", "unfollowCoach()")
+
+                    };   
+            });
+    };
+});
+}();
+
+// Follow coach
+
+function sendEmailNewFollower(gebruikersnaamFollower){
+    db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+
+                    const email = doc1.data().Email
+                    const gebruikersnaamClean = doc1.data().GebruikersnaamClean
+                    const gebruikersnaam = doc1.data().Gebruikersnaam
+            
+
+    db.collection("Mail").doc().set({
+            to: email,
+            cc: "info@vitaminds.nu",
+            message: {
+            subject: `Nieuwe volger op Vitaminds`,
+            html: `Hallo ${gebruikersnaamClean},</br></br>
+            
+            ${gebruikersnaamFollower} volgt jouw nu op Vitaminds.</br></br>
+            
+            Vriendelijke groet, </br></br>
+            Het Vitaminds Team </br></br>
+            <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+            Gebruikersnaam: gebruikersnaam
+            }
+                    
+            }).catch((err) => {
+            console.log(err)
+            });
+            });
+    });
+};
+
+function followCoach(){
+
+    auth.onAuthStateChanged(User =>{
+            if(User){
+                    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                            const gebruikersnaamCleanFollower = doc.data().GebruikersnaamClean
+                    
+                    db.collection("Vitaminders").doc(User.uid).update({
+                            FavCoaches: firebase.firestore.FieldValue.arrayUnion(naam)
+                    }).then(() => {
+                            sendEmailNewFollower(gebruikersnaamCleanFollower)
+                    });
+            });
+
+                    const button = document.getElementById("follow-author")
+                    button.innerHTML = "Volgend"
+            } else {
+                    const followMassageVisitor = document.getElementById("follow-massage-visitor")
+                    followMassageVisitor.style.display = "block"
+            };
+    });
+};  
+
+!function followButton(){
+    const followButton = document.getElementById("follow-author")
+
+            followButton.addEventListener("click", () => {
+
+                    followCoach();
     });
 }();
 
-// De meest dankbare plek van het internet
 
-    // Insights count on overview page
-    const titelSubGrateful = document.getElementById("titleSub-Grateful")
-
-    db.collection("Practice").where("Practice", "==", "Grateful").get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            const count = doc.data().Grateful
-
-            const countArray = []
-
-            countArray.push(count)
-
-            const lengthSub = countArray.length
-
-            if(titelSubGrateful != null){
-
-            if(lengthSub == 1){
-                titelSubGrateful.innerHTML = `${lengthSub} mens heeft bijgedragen aan`
-            } else {
-                titelSubGrateful.innerHTML = `${lengthSub} mensen hebben bijgedragen aan`
-            };
-        };
-    })
-});
-
-
-const titelH2Grateful = document.getElementById("insight-title-dankbaar")
-
-if(titelH2Grateful != null){
+// Unfollow coach
+function unfollowCoach(){
 
     auth.onAuthStateChanged(User =>{
-        if (User){
-            db.collection("Vitaminders").doc(User.uid).get().then(function(doc){
-                    const naamClean = doc.data().GebruikersnaamClean;
-
-    titelH2Grateful.innerHTML = `Waar ben jij vandaag dankbaar voor, ${naamClean}`
-
-            })
-        } else {
-            const visitorCTA = document.getElementById("visitorCTA")
-            const inputGrateful = document.getElementById("input-grateful")
-
-            inputGrateful.style.display = "none"
-            visitorCTA.style.display = "block"
-        }
-    });
-};
-
-    // Saving new submits to database
-
-    function nieuwepostsubmitDankbaar(elem){
-
-        const grateful = elem.previousElementSibling.value
-
-        auth.onAuthStateChanged(User =>{
             if(User){
-                    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
 
-                            const naam = doc.data().Gebruikersnaam
+                    console.log(User.uid)
+                    db.collection("Vitaminders").doc(User.uid).update({
+                            FavCoaches: firebase.firestore.FieldValue.arrayRemove(naam)
+                    }); 
 
-                            console.log(naam)
-
-                            db.collection("Practice").doc().set({
-                                Gebruikersnaam: naam,
-                                Grateful: grateful,
-                                Practice: "Grateful",
-                                Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
-                        }).then(() => {
-                                location.reload()
-                        });
-                    })
-                }
-        });
-    };
-
-    // Loading gratefuls in DOM
-
-    const gratefulsDiv = document.getElementById("grateful-div")
-
-    if(gratefulsDiv != null){
-
-    db.collection("Practice").where("Practice", "==", "Grateful").get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            const grateful = doc.data().Grateful
-            const naam = doc.data().Gebruikersnaam
-
-            const innerDiv = document.createElement("div")
-                innerDiv.setAttribute("class", "inner-div-grateful")
-            const gratefulsP = document.createElement("p")
-
-            gratefulsP.innerHTML = grateful
-
-            db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
-
-                    const profielfoto = doc1.data().Profielfoto
-                    const naamClean = doc1.data().GebruikersnaamClean
-
-                    const img = document.createElement("img")
-                        img.setAttribute("class", "meta-photo-grateful")
-
-                    img.src = profielfoto
-
-                    img.addEventListener("click", () => {
-                        window.open(`/Vitaminders/${gebruikersnaam}.html`, "_self");
-                    })
-
-            gratefulsDiv.appendChild(innerDiv)
-            innerDiv.appendChild(img)
-            innerDiv.appendChild(gratefulsP)
-
-                })
-            });
-        })
+                    const button = document.getElementById("follow-author")
+                    button.innerHTML = "Ontvolgd"
+            };
     });
 };
+
+
+
     
