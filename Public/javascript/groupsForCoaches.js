@@ -1227,7 +1227,10 @@ function upgradeModal(notice){
 
             const name = doc.data().GebruikersnaamClean
 
-            title.innerHTML = `Wat leuk dat je wilt updragen naar een Premium abonnement, ${name}!`
+                if(title != null){
+
+                    title.innerHTML = `Wat leuk dat je wilt updragen naar een Premium abonnement, ${name}!`
+                };
 
             });
         };

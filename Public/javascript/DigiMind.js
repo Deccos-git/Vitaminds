@@ -93,6 +93,7 @@ function digimindMetaTags(coachDescription, coach, profilePic){
                 myProcesOuterDiv[3].style.display = "none"
                 myProcesOuterDiv[4].style.display = "none"
                 myProcesOuterDiv[5].style.display = "none"
+                myProcesOuterDiv[6].style.display = "none"
         });  
 }();
 
@@ -105,6 +106,10 @@ function insertProfileImage(profilePhoto){
         const image = document.createElement("img")
 
         image.src = profilePhoto
+
+        if(profilePhoto === undefined){
+                image.src = "../images/dummy-profile-photo.jpeg"
+        }
 
         profilePictureDiv.appendChild(image)
 
@@ -161,6 +166,10 @@ function coachingInformation(coachStyle, coachMethode, coachMotivation){
 
         displayPublicSectionIfExist(coachStyle ,  coachInformationDiv)
 
+        hideEmptyProfileElements(coachStyle, styleDiv)
+        hideEmptyProfileElements(coachMethode, methodeDiv)
+        hideEmptyProfileElements(coachMotivation, motivationDiv)
+
 };
 
 function experienceInformation(coachYears, coachExperience, coachEducation){
@@ -184,6 +193,16 @@ function experienceInformation(coachYears, coachExperience, coachEducation){
 
         displayPublicSectionIfExist(coachYears, coachExperienceDiv)
 
+        hideEmptyProfileElements(coachYears, yearsDiv)
+        hideEmptyProfileElements(coachExperience, experienceDiv)
+        hideEmptyProfileElements(coachEducation, educationDiv)
+
+};
+
+function hideEmptyProfileElements(element, div){
+        if(element === ""){
+                div.style.display = "none"
+        };
 };
 
 function practicalInformation(coachLocation, coachTargetgroup, coachCosts, coachWebsite, coachTelephone){
@@ -215,7 +234,13 @@ function practicalInformation(coachLocation, coachTargetgroup, coachCosts, coach
 
         displayPublicSectionIfExist(coachCosts, practicalDiv)
 
-;}
+        hideEmptyProfileElements(coachLocation, locationDiv)
+        hideEmptyProfileElements(coachTargetgroup, targetgroupDiv)
+        hideEmptyProfileElements(coachCosts, costsDiv)
+        hideEmptyProfileElements(coachWebsite, websiteDiv)
+        hideEmptyProfileElements(coachTelephone, telephoneDiv)
+
+};
 
 // Follow coach
 !function hideFollowButtonNonCoach(){
@@ -347,6 +372,8 @@ function unfollowCoach(){
         });
 };
 
+
+// Chat
 function sendMailNewChat(authUserClean){
 
         db.collection("Vitaminders")
@@ -543,6 +570,8 @@ function hideChatIfAuthIsCoachAndUserIsVitaminder(typeAuth){
 
         const menuItem = menuItemDiv.getElementsByTagName("p")
 
+        console.log(menuItem)
+
         for (var i = 0; i < menuItem.length; i++) {
                 menuItem[i].addEventListener("click", function() {
 
@@ -564,6 +593,8 @@ function getSection(){
         const option = mobileMenuSelect.options
         const selected = option[option.selectedIndex].innerHTML
 
+        console.log(privateOuterDiv[6])
+
         if (selected === "Mijn trajecten"){
                 privateOuterDiv[0].style.display = "flex"
                 privateOuterDiv[1].style.display = "none"
@@ -571,6 +602,7 @@ function getSection(){
                 privateOuterDiv[3].style.display = "none"
                 privateOuterDiv[4].style.display = "none"
                 privateOuterDiv[5].style.display = "none"
+                privateOuterDiv[6].style.display = "none"
         } else if (selected === "Favoriete coaches"){
                 privateOuterDiv[0].style.display = "none"
                 privateOuterDiv[1].style.display = "flex"
@@ -578,6 +610,7 @@ function getSection(){
                 privateOuterDiv[3].style.display = "none"
                 privateOuterDiv[4].style.display = "none"
                 privateOuterDiv[5].style.display = "none"
+                privateOuterDiv[6].style.display = "none"
         } else if (selected === "Tools"){
                 privateOuterDiv[0].style.display = "none"
                 privateOuterDiv[1].style.display = "none"
@@ -585,6 +618,7 @@ function getSection(){
                 privateOuterDiv[3].style.display = "none"
                 privateOuterDiv[4].style.display = "none"
                 privateOuterDiv[5].style.display = "none"
+                privateOuterDiv[6].style.display = "none"
         } else if (selected === "Analytics"){
                 privateOuterDiv[0].style.display = "none"
                 privateOuterDiv[1].style.display = "none"
@@ -592,6 +626,7 @@ function getSection(){
                 privateOuterDiv[3].style.display = "flex"
                 privateOuterDiv[4].style.display = "none"
                 privateOuterDiv[5].style.display = "none"
+                privateOuterDiv[6].style.display = "none"
         } else if (selected === "Notificaties"){
                 privateOuterDiv[0].style.display = "none"
                 privateOuterDiv[1].style.display = "none"
@@ -599,6 +634,7 @@ function getSection(){
                 privateOuterDiv[3].style.display = "none"
                 privateOuterDiv[4].style.display = "flex"
                 privateOuterDiv[5].style.display = "none"
+                privateOuterDiv[6].style.display = "none"
         } else if (selected === "Ontwikkeltegoed"){
                 privateOuterDiv[0].style.display = "none"
                 privateOuterDiv[1].style.display = "none"
@@ -606,6 +642,15 @@ function getSection(){
                 privateOuterDiv[3].style.display = "none"
                 privateOuterDiv[4].style.display = "none"
                 privateOuterDiv[5].style.display = "flex"
+                privateOuterDiv[6].style.display = "none"
+        } else if (selected === "Mijn profiel"){
+                privateOuterDiv[0].style.display = "none"
+                privateOuterDiv[1].style.display = "none"
+                privateOuterDiv[2].style.display = "none"
+                privateOuterDiv[3].style.display = "none"
+                privateOuterDiv[4].style.display = "none"
+                privateOuterDiv[5].style.display = "none"
+                privateOuterDiv[6].style.display = "flex"
         }
 };
 
@@ -618,15 +663,16 @@ function getSection(){
 
         const menuItem = menuItemDiv.getElementsByTagName("p")
 
-        menuItemswitch(menuItem, privateSection, 0, 0, 1, 2, 3, 4, 5)
-        menuItemswitch(menuItem, privateSection, 1, 1, 0, 2, 3, 4, 5)
-        menuItemswitch(menuItem, privateSection, 2, 2, 0, 1, 3, 4, 5)
-        menuItemswitch(menuItem, privateSection, 3, 3, 0, 1, 2, 4, 5)
-        menuItemswitch(menuItem, privateSection, 4, 4, 0, 1, 2, 3, 5)
-        menuItemswitch(menuItem, privateSection, 5, 5, 0, 1, 2, 3, 4)
+        menuItemswitch(menuItem, privateSection, 0, 0, 1, 2, 3, 4, 5, 6)
+        menuItemswitch(menuItem, privateSection, 1, 1, 0, 2, 3, 4, 5, 6)
+        menuItemswitch(menuItem, privateSection, 2, 2, 0, 1, 3, 4, 5, 6)
+        menuItemswitch(menuItem, privateSection, 3, 3, 0, 1, 2, 4, 5, 6)
+        menuItemswitch(menuItem, privateSection, 4, 4, 0, 1, 2, 3, 5, 6)
+        menuItemswitch(menuItem, privateSection, 5, 5, 0, 1, 2, 3, 4, 6)
+        menuItemswitch(menuItem, privateSection, 6, 6, 0, 1, 2, 3, 4, 5)
 }();
 
-function menuItemswitch(menuItemCount, privateSectionCount, menu, section, hide1, hide2, hide3, hide4, hide5 ){
+function menuItemswitch(menuItemCount, privateSectionCount, menu, section, hide1, hide2, hide3, hide4, hide5, hide6 ){
 
         menuItemCount[menu].addEventListener("click", () => {
                 privateSectionCount[section].style.display = "flex"
@@ -635,7 +681,7 @@ function menuItemswitch(menuItemCount, privateSectionCount, menu, section, hide1
                 privateSectionCount[hide3].style.display = "none"
                 privateSectionCount[hide4].style.display = "none"
                 privateSectionCount[hide5].style.display = "none"
-
+                privateSectionCount[hide6].style.display = "none"
         });
 };
 
@@ -709,6 +755,7 @@ function procesPrivatePublic(openbaarSetting, privateSetting, privateTip){
                 };
 };
 
+
 function autoLoadFirstProces(optionZero){
 
         const procesInnerDiv = document.getElementById("proces-inner-div")
@@ -725,9 +772,10 @@ function autoLoadFirstProces(optionZero){
                         const openbaar = doc.data().Openbaar
                         const description = doc.data().Omschrijving
                         const goal = doc.data().Goal
+                        const domain = doc.data().Domain
 
                         addLessonsToProces(levensvraagID)
-                        showArticles(goal)
+                        showArticles(domain)
 
                         const innerDiv = document.createElement("div")
                                 innerDiv.setAttribute("class", "digimind-proces-inner-div")
@@ -779,9 +827,10 @@ function showSelectedProces(selectedProces){
                         const openbaar = doc.data().Openbaar
                         const description = doc.data().Omschrijving
                         const goal = doc.data().Goal
+                        const domain = doc.data().Domain
 
                         addLessonsToProces(levensvraagID)
-                        showArticles(goal)
+                        showArticles(domain)
 
                         const innerDiv = document.createElement("div")
                                 innerDiv.setAttribute("class", "digimind-proces-inner-div")
@@ -857,103 +906,52 @@ function showInspirationDiv(div){
         div.style.display = "flex"
 };
 
-function showArticles(goalAuth){
+function showArticles(domainAuth){
 
         const inspirationOuterDiv = document.getElementById("inspiration-outer-div")
         const inspirationDiv = document.getElementById("inspiration-div")
 
         inspirationOuterDiv.innerHTML = ""
 
-        db.collection("Levensvragen").where("Levensvraag", "==", goalAuth)
+        db.collection("Articles").where("Domain", "==", domainAuth)
         .get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
+                querySnapshot.forEach(doc => {
 
-                        const domain = doc1.data().Domein
-
-                        showInspirationDiv(inspirationDiv)
-
-                        db.collection("Levensvragen").where("Domein", "==", domain)
-                        .get().then(querySnapshot => {
-                                querySnapshot.forEach(doc => {
-
-                                        const title = doc.data().Levensvraag
-                                        const headerImageSmall = doc.data().HeaderImageSmall
-                                        const insights = doc.data().Insights
-                                        const goal = doc.data().Levensvraag
-
-                                        console.log(title)
-                                
-                                        // Hidding articles with no insights for non-coach
-                                        if (insights.length == 0){
-                                                auth.onAuthStateChanged(User =>{
-                                                if(User){
-                                                db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                                                const usertype = doc.data().Usertype
-                                
-                                                console.log(usertype)
-                                
-                                                if(usertype != "Coach"){
-                                                        outerSection.style.display = "none"
-                                                }
-                                                })
-                                        } else {
-                                                outerSection.style.display = "none"
-                                        }
-                                        })
-                                        };
-                                
-                                        const outerSection = document.createElement("section")
-                                        outerSection.setAttribute("class", "levensvraag-artikel-section")
-                                        outerSection.setAttribute("data-title", title)
-                                        outerSection.setAttribute("data-goal", goal)
-                                        const headerDiv = document.createElement("div")
-                                        headerDiv.setAttribute("class", "levensvraag-artikel-header")
-                                        const headerImg = document.createElement("img")
-                                        headerImg.setAttribute("class", "header-image-article")
-                                        const titleDiv = document.createElement("div")
-                                        const titleSub = document.createElement("h5")
-                                        titleSub.setAttribute("class", "titleSub")
-                                        const titleH2 = document.createElement("h2")
-                                        titleH2.setAttribute("class", "titelTekst")
-                                        const buttonDiv = document.createElement("button")
-                                        buttonDiv.setAttribute("class", "button-algemeen-card")
-                                        buttonDiv.setAttribute("onclick", "seeArticle(this)")
-                                
-                                        // Dynamic title
-                                        const count = insights.length
-                                
-                                        titleSub.innerHTML = `${count} coaches over`
-                                
-                                        if(count == 1){
-                                        titleSub.innerHTML = `${count} coach over`
-                                        }
-                                
-                                        // Exemption on dynamic title
-                                        if(title == "Zelfliefde"){
-                                        titleSub.innerHTML = `${count} tips voor meer`
-                                
-                                                if(count == 1){
-                                                titleSub.innerHTML = `${count} tip voor meer`
-                                                };
-                                        };
-                                        
-                                
-                                        titleH2.innerHTML = title
-                                        headerImg.src = headerImageSmall
-                                        buttonDiv.innerHTML = `<a href="../Artikelen/${title}.html">Bekijk</a>`
-                                
-                                        if(inspirationOuterDiv != null){
-                                
-                                        inspirationOuterDiv.appendChild(outerSection)
-                                        outerSection.appendChild(headerDiv)
-                                        headerDiv.appendChild(headerImg)
-                                        outerSection.appendChild(titleDiv)
-                                        titleDiv.appendChild(titleSub)
-                                        titleDiv.appendChild(titleH2)
-                                        outerSection.appendChild(buttonDiv)
-                                        };
-                                });
-                        });
+                        const title = doc.data().Title
+                        const headerImageSmall = doc.data().HeaderImageSmall
+                        
+                        inspirationDiv.style.display = "flex"
+                
+                        const outerSection = document.createElement("section")
+                        outerSection.setAttribute("class", "levensvraag-artikel-section")
+                        outerSection.setAttribute("data-title", title)
+                        const headerDiv = document.createElement("div")
+                        headerDiv.setAttribute("class", "levensvraag-artikel-header")
+                        const headerImg = document.createElement("img")
+                        headerImg.setAttribute("class", "header-image-article")
+                        const titleDiv = document.createElement("div")
+                        const titleSub = document.createElement("h5")
+                        titleSub.setAttribute("class", "titleSub")
+                        const titleH2 = document.createElement("h2")
+                        titleH2.setAttribute("class", "titelTekst")
+                        const buttonDiv = document.createElement("button")
+                        buttonDiv.setAttribute("class", "button-algemeen-card")
+                        buttonDiv.setAttribute("onclick", "seeArticle(this)")
+                
+                        titleH2.innerHTML = title
+                        headerImg.src = headerImageSmall
+                        buttonDiv.innerHTML = `<a href="../Artikelen/${title}.html">Bekijk</a>`
+                
+                        if(inspirationOuterDiv != null){
+                
+                        inspirationOuterDiv.appendChild(outerSection)
+                        outerSection.appendChild(headerDiv)
+                        headerDiv.appendChild(headerImg)
+                        outerSection.appendChild(titleDiv)
+                        titleDiv.appendChild(titleSub)
+                        titleDiv.appendChild(titleH2)
+                        outerSection.appendChild(buttonDiv)
+                        };
                 });
         });
 }
@@ -1273,16 +1271,14 @@ const adminDiv = document.getElementById("admin-analytics")
 
  function hideAnalyticsIfNoCoach(type){
 
-        const analyticsMenuItem = document.getElementsByClassName("analytics-menu-item")
+        const analyticsMenuItem = document.getElementById("analytics-menu-item")
 
-        const itemArray = Array.from(analyticsMenuItem)
+        console.log(type)
 
-        itemArray.forEach(item => {
                 if(type === "Coach"){
 
-                        item.style.display = "flex"
+                        analyticsMenuItem.style.display = "flex"
                 };
-        });
  };
 
  function showAdminAnalyticsForAdmin(adminType){
@@ -1557,6 +1553,7 @@ const adminDiv = document.getElementById("admin-analytics")
     const workshopsP = document.createElement("p")
 
     db.collection("Workshops").where("Eigenaar", "==", "Vitaminds")
+    .where("Status", "==", "Public")
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
@@ -1572,7 +1569,32 @@ const adminDiv = document.getElementById("admin-analytics")
 
 }();
 
-!function numberOfInsights(){
+!function numberOfWorkshopsDraft(){
+
+        const workshopsArray = []
+    
+        const numberOfWorkshopsDraft = document.getElementById("analytics-card-workshops")
+    
+        const workshopsP = document.createElement("p")
+    
+        db.collection("Workshops").where("Eigenaar", "==", "Vitaminds")
+        .where("Status", "==", "Draft")
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+    
+                    workshopsArray.push(doc)
+    
+            });
+        }).then(() => {
+    
+            workshopsP.innerText = workshopsArray.length
+    
+            numberOfWorkshopsDraft.appendChild(workshopsP)
+        });
+    
+    }();
+
+!function numberOfArticles(){
 
     const insightsArray = []
 
@@ -1580,7 +1602,8 @@ const adminDiv = document.getElementById("admin-analytics")
 
     const insightsP = document.createElement("p")
 
-    db.collection("Insights").where("Type", "==", "Insight-levensvraag")
+    db.collection("Articles").where("Owner", "==", "Vitaminds")
+    .where("Status", "==", "Approved")
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
@@ -1594,6 +1617,30 @@ const adminDiv = document.getElementById("admin-analytics")
     });
 
 }();
+
+!function numberOfArticlesDraft(){
+
+        const insightsArray = []
+    
+        const numberOfNewArticles = document.getElementById("analytics-card-articles")
+    
+        const insightsP = document.createElement("p")
+    
+        db.collection("Articles").where("Owner", "==", "Vitaminds")
+        .where("Status", "==", "Draft")
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+    
+                    insightsArray.push(doc)
+            });
+        }).then(() => {
+    
+            insightsP.innerText = insightsArray.length
+    
+            numberOfNewArticles.appendChild(insightsP)
+        });
+    
+    }();
 
 !function numberOCoachgroups(){
 
@@ -1645,15 +1692,7 @@ const adminDiv = document.getElementById("admin-analytics")
 !function notificationsInit(){
 const lengthArray = [];
 
-auth.onAuthStateChanged(User =>{
-        if(User){
-                const userRef = db.collection("Vitaminders").doc(User.uid);
-                userRef.get().then(function(doc) {
-                if (doc.exists) {
-                const auth = doc.data().Gebruikersnaam;
-                const email = doc.data().Email
-
-db.collectionGroup("Inspiration").where("Reciever", "==", auth).get().then(querySnapshot => {
+db.collectionGroup("Inspiration").where("Reciever", "==", naam).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
         const docLengt = [doc]          
@@ -1701,22 +1740,12 @@ db.collectionGroup("Inspiration").where("Reciever", "==", auth).get().then(query
                                 trophiesRewarded(6,160)
                                 
                                 };
-                        });
-                };
-        });
-}
 });
 
 
 
 // Inspiration-notifications
-
-auth.onAuthStateChanged(User =>{
-        let docRef = db.collection("Vitaminders").doc(User.uid);
-                docRef.get().then(function(doc){
-                const auth = doc.data().Gebruikersnaam;
-
-db.collectionGroup("Inspiration").where("Reciever", "==", auth).orderBy("Timestamp", "desc").get().then(querySnapshot => {
+db.collectionGroup("Inspiration").where("Reciever", "==", naam).orderBy("Timestamp", "desc").get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
                 const giver = doc.data().Giver
                 const type = doc.data().Type
@@ -1748,7 +1777,6 @@ db.collectionGroup("Inspiration").where("Reciever", "==", auth).orderBy("Timesta
                                 const giverClean = doc1.data().GebruikersnaamClean
 
                                 //Open up
-                        if (type == "Levensles"){
 
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
@@ -1764,57 +1792,7 @@ db.collectionGroup("Inspiration").where("Reciever", "==", auth).orderBy("Timesta
 
                         liSource.style.display = "none"
                         
-                } else if (type == "Insight"){
-                        // Levensvraag artikelen
-                        db.collection("Insights").where("LevensvraagArtikel", "==", titel).get().then(querySnapshot => {
-                                querySnapshot.forEach(doc3 => {
-
-                                        const levensvraag = doc3.data().LevensvraagArtikel
-
-                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                        dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
-
-                        string.innerHTML = `Je hebt 1 nieuw like ontvangen!`
-                        liGiver.innerHTML = `Van <u>${giverClean}</u>`
-                        liGiver.addEventListener("click", () => {
-                                window.open("../Vitaminders/" + giver + ".html", "_self");
-                        })
-
-                        liType.innerHTML = `Op je inzicht: ${inspiration}`
-                        link.innerHTML = `<u>${inspiration}</u>`
-                        liSource.innerHTML = `Bron: ${levensvraag}`
-
-                        liSource.addEventListener("click", () => {
-                                window.open("../Artikelen/" + levensvraag + ".html", "_self");
-                                        })
-                                })
-                        })   
-
-                        // Theme artikelen
-                        db.collection("Insights").where("ThemeArtikel", "==", titel).get().then(querySnapshot => {
-                                querySnapshot.forEach(doc3 => {
-
-                                        const levensvraag = doc3.data().ThemeArtikel
-
-                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                        dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
-
-                        string.innerHTML = `Je hebt 1 nieuw like ontvangen!`
-                        liGiver.innerHTML = `Van <u>${giverClean}</u>`
-                        liGiver.addEventListener("click", () => {
-                                window.open("../Vitaminders/" + giver + ".html", "_self");
-                        })
-
-                        liType.innerHTML = `Op je inzicht: ${inspiration}`
-                        link.innerHTML = `<u>${inspiration}</u>`
-                        liSource.innerHTML = `Bron: ${levensvraag}`
-
-                        liSource.addEventListener("click", () => {
-                                window.open("../Artikelen/" + levensvraag + ".html", "_self");
-                                        })
-                                })
-                        })   
-                } 
+                
                 })
         })
 
@@ -1830,8 +1808,6 @@ db.collectionGroup("Inspiration").where("Reciever", "==", auth).orderBy("Timesta
                         })
                 
                 })
-        })
-});
 }();
     
 
@@ -1866,8 +1842,12 @@ db.collectionGroup("Inspiration").where("Reciever", "==", auth).orderBy("Timesta
         productDiv.appendChild(productTitle)
         };
 
-        auth.onAuthStateChanged(User =>{
-        db.collection("Vitaminders").doc(User.uid)
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", naam)
+        .get().then(querySnapshot =>{
+                querySnapshot.forEach(doc1 =>{ 
+
+        db.collection("Vitaminders").doc(doc1.id)
         .collection("Gelukstegoed")
         .orderBy("Timestamp", "desc")
         .get().then(querySnapshot =>{
@@ -1896,5 +1876,312 @@ db.collectionGroup("Inspiration").where("Reciever", "==", auth).orderBy("Timesta
 
                 currentTeGoed.innerText = `€${sum}`
         });
+});
         });
 }();
+
+// Coach information
+
+function editMeTextIfUndefined(message, text){
+
+        if(message === ""){
+                text.innerText = "Klik hier om in te vullen"
+                text.style.color = "#a7bdbd"
+        };
+};
+
+function editWelcomeMessage(elem){
+
+        const tinyMCE = document.getElementById("tiny-mce-div")
+
+        tinyMCE.style.display = "block"
+
+        tinymce.get("tiny-welcome").setContent(elem.innerHTML)
+
+        setTimeout( () => { 
+               elem.style.display = "none"; 
+        }, 1000);
+};
+
+!function saveEditedWelcomeMessage(){
+
+        const button = document.getElementById("save-button-welcome")
+
+        button.addEventListener("click", () => {
+
+                const welcomeMessage = tinymce.get("tiny-welcome").getContent();
+                button.innerText = "Opgeslagen"
+
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+
+                                db.collection("Vitaminders").doc(doc.id).update({
+                                        Introduction: welcomeMessage
+                                });
+                        });
+                });
+        });
+}();
+
+function editProfilPicture(elem){
+
+        const inputDiv = document.getElementById("upload-div")
+        const saveImageButton = document.getElementById("saveImageButton")
+        const image = document.getElementById("profile-image")
+
+        inputDiv.style.display = "flex"
+
+        saveImageButton.addEventListener("click", () => {
+
+                const selectedFile = document.getElementById("upload-profile-picture").files[0]
+
+                const storageRef = firebase.storage().ref("/Profielfotos/" + selectedFile.name);
+        
+                const uploadTask = storageRef.put(selectedFile)
+                uploadTask.then(() => {
+                // Register three observers:
+                // 1. 'state_changed' observer, called any time the state changes
+                // 2. Error observer, called on failure
+                // 3. Completion observer, called on successful completion
+                uploadTask.on('state_changed', function(snapshot){
+                // Observe state change events such as progress, pause, and resume
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                progressBar.innerHTML = ` ${progress} %`;
+                switch (snapshot.state) {
+                case firebase.storage.TaskState.PAUSED: // or 'paused'
+                    console.log('Upload is paused');
+                    break;
+                case firebase.storage.TaskState.RUNNING: // or 'running'
+                    console.log('Upload is running');
+                    break;
+                }
+                }, function(error) {
+                // Handle unsuccessful uploads
+                }, function() {
+                // Handle successful uploads on complete
+                // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                console.log('File available at', downloadURL);
+
+                saveImageButton.innerText = "Opgeslagen"
+                image.src = downloadURL
+
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+        
+                                db.collection("Vitaminders").doc(doc.id).update({
+                                        Profielfoto: downloadURL
+                                })
+                        });
+                });
+        });
+        });
+        });
+        });     
+};
+
+function insertProfileImagePrivate(profilePhoto){
+
+        const profilePictureDiv = document.getElementById("profile-picture-div-private")
+
+        const image = document.createElement("img")
+                image.setAttribute("onclick", "editProfilPicture(this)")
+                image.setAttribute("class", "edit-element")
+                image.setAttribute("id", "profile-image")
+
+        image.src = profilePhoto
+
+        if(profilePhoto === undefined){
+                image.src = "../images/dummy-profile-photo.jpeg"
+        }
+
+        profilePictureDiv.appendChild(image)
+
+};
+
+function welcomeMessagePrivate(userMessage){
+
+        const welcomeMess = document.getElementById("welcome-message-private")
+
+        const messageP = document.createElement("p")
+                messageP.setAttribute("class", "edit-element")
+                messageP.setAttribute("onclick", "editWelcomeMessage(this)")
+
+        messageP.innerHTML = userMessage
+
+        if(userMessage === undefined){
+                messageP.innerText = "Klik hier om een welkomsboodschap te schrijven"
+                messageP.style.color = "#a7bdbd"
+        };
+
+        welcomeMess.appendChild(messageP)
+
+};
+
+function editStyle(elem){
+
+        const tinyStyleDiv = document.getElementById("tiny-style-div")
+
+                tinyStyleDiv.style.display = "block"
+
+        tinymce.get("tiny-style").setContent(elem.innerHTML)
+
+        elem.style.display = "none"
+};
+
+!function saveEditedStyle(){
+        const button = document.getElementById("save-button-style")
+
+        button.addEventListener("click", () => {
+
+                const style = tinymce.get("tiny-style").getContent();
+                button.innerText = "Opgeslagen"
+
+                console.log(style)
+
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+
+                                db.collection("Vitaminders").doc(doc.id).update({
+                                        Coachingstyle: style
+                                });
+                        });
+                });
+        });
+
+}();
+
+function coachingInformationPrivate(coachStyle, coachMethode, coachMotivation){
+
+        const styleDiv = document.getElementById("coachingstyle-private")
+        const methodeDiv = document.getElementById("methode-private")
+        const motivationDiv = document.getElementById("motivation-private")
+        const coachInformationDiv = document.getElementById("coaching-div-private")
+
+        const styleP = document.createElement("p")
+                styleP.setAttribute("class", "edit-element")
+                styleP.setAttribute("onclick", "editStyle(this)")
+        const methodeP = document.createElement("p")
+                methodeP.setAttribute("class", "edit-element")
+        const motivationP = document.createElement("p")
+                motivationP.setAttribute("class", "edit-element")
+        
+        styleP.innerHTML = coachStyle
+        methodeP.innerHTML = coachMethode
+        motivationP.innerHTML = coachMotivation
+
+        styleDiv.appendChild(styleP)
+        methodeDiv.appendChild(methodeP)
+        motivationDiv.appendChild(motivationP)
+
+        editMeTextIfUndefined(coachStyle, styleP)
+        editMeTextIfUndefined(coachMethode, methodeP)
+        editMeTextIfUndefined(coachMotivation, motivationP)
+
+};
+
+function experienceInformationPrivate(coachYears, coachExperience, coachEducation){
+
+        const yearsDiv = document.getElementById("years-private")
+        const experienceDiv = document.getElementById("experience-private")
+        const educationDiv = document.getElementById("education-private")
+        const coachExperienceDiv = document.getElementById("experience-div-private")
+
+        const yearsP = document.createElement("p")
+        const experienceP = document.createElement("p")
+        const educationP = document.createElement("p")
+        
+        yearsP.innerHTML = coachYears
+        experienceP.innerHTML = coachExperience
+        educationP.innerHTML = coachEducation
+
+        yearsDiv.appendChild(yearsP)
+        experienceDiv.appendChild(experienceP)
+        educationDiv.appendChild(educationP)
+
+        editMeTextIfUndefined(coachYears, yearsP)
+        editMeTextIfUndefined(coachExperience, experienceP)
+        editMeTextIfUndefined(coachEducation, educationP)
+
+};
+
+function practicalInformationPrivate(coachLocation, coachTargetgroup, coachCosts, coachWebsite, coachTelephone){
+
+        const locationDiv = document.getElementById("location-private")
+        const targetgroupDiv = document.getElementById("targetgroup-private")
+        const costsDiv = document.getElementById("costs-private")
+        const websiteDiv = document.getElementById("website-private")
+        const telephoneDiv = document.getElementById("telephone-private")
+        const practicalDiv = document.getElementById("practical-div-private")
+
+        const locationP = document.createElement("p")
+        const targetgroupP = document.createElement("p")
+        const costsP = document.createElement("p")
+        const websiteP = document.createElement("p")
+        const telephoneP = document.createElement("p")
+        
+        locationP.innerHTML = coachLocation
+        targetgroupP.innerHTML = coachTargetgroup
+        costsP.innerHTML = coachCosts
+        websiteP.innerHTML = `<a href='https://${coachWebsite}'>${coachWebsite}</a>`
+        telephoneP.innerHTML = coachTelephone
+
+        locationDiv.appendChild(locationP)
+        targetgroupDiv.appendChild(targetgroupP)
+        costsDiv.appendChild(costsP)
+        websiteDiv.appendChild(websiteP)
+        telephoneDiv.appendChild(telephoneP)
+
+        editMeTextIfUndefined(coachLocation, locationP)
+        editMeTextIfUndefined(coachTargetgroup, targetgroupP)
+        editMeTextIfUndefined(coachCosts, costsP)
+        editMeTextIfUndefined(coachWebsite, websiteP)
+        editMeTextIfUndefined(coachTelephone, telephoneP)
+
+};
+
+// Database Query
+!function databaseQueryPublic(){
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        const profileImage = doc.data().Profielfoto
+                        const coachMessage = doc.data().Introduction
+                        const coachingStyle = doc.data().Coachingstyle
+                        const methode = doc.data().Approach
+                        const motivation = doc.data().Why
+                        const years = doc.data().YearsExperience
+                        const education = doc.data().Education
+                        const experience = doc.data().Experience
+                        const location = doc.data().City
+                        const costs = doc.data().Costs
+                        const telephone = doc.data().PhoneNumber
+                        const targetgroup = doc.data().Targetgroup
+                        const website = doc.data().Website
+                        const usertype = doc.data().Usertype
+
+                        insertProfileImagePrivate(profileImage)
+                        welcomeMessagePrivate(coachMessage)
+                        coachingInformationPrivate(coachingStyle, methode, motivation)
+                        experienceInformationPrivate(years, experience, education)
+                        practicalInformationPrivate(location, targetgroup, costs, website, telephone)
+                        showCoachProfileInformationIfCoach(usertype)
+
+                });
+        });
+}();
+
+function showCoachProfileInformationIfCoach(type){
+
+        const coachProfileInformation = document.getElementById("coach-profile-private")
+
+        if(type === "Coach"){
+                coachProfileInformation.style.display = "flex"
+        }
+
+}

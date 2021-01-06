@@ -1,8 +1,13 @@
 
 // Fetching title from url
 const titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
-const titel0 = titelhtml.replace('.html', '')
-const titel1 = titel0.replace('%20',' ')
+const titelOne = titelhtml.replace('.html', '')
+const titelTwo = titelOne.replace('%20',' ')
+const titelThree = titelTwo.replace('%20',' ')
+const titelFour = titelThree.replace('%20',' ')
+const titelFive = titelFour.replace('%20',' ')
+const titelSix = titelFive.replace('%20',' ')
+const titel1 = titelSix.replace('%20',' ')
 const titel2 = titel1.replace('%20',' ')
 const titel3 = titel2.replace('%20',' ')
 const titel4 = titel3.replace('%20',' ')
@@ -94,6 +99,7 @@ function loadAllArticles(){
 DOMarticle = document.getElementById("levensvraag-artikel-ouyter-div")
 
 db.collection("Articles").where("Owner", "==", "Vitaminds")
+.orderBy("Timestamp", "desc")
 .where("Status", "==", "Approved")
 .get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
@@ -173,6 +179,7 @@ loadSelectedArticles(selectedClean[0])
 
 function loadSelectedArticles(selectedArticle){
     db.collection("Articles").where("Domain", "==", selectedArticle)
+    .orderBy("Timestamp", "desc")
     .where("Status", "==", "Approved")
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -231,25 +238,24 @@ function loadSelectedArticles(selectedArticle){
 
 // Individual article page
 
-    // Title, header-image and summary
-const title = document.getElementById("title-article")
-const summary = document.getElementById("summary-article")
-const insightsTitle = titel
-const titelHead = document.getElementsByTagName("title")
-const metaKeywords = document.getElementById("meta-keywords")
-const metaDescription = document.getElementById("meta-description")
-const headerDiv = document.getElementById("levensvraag-artikel-main-image")
-const headerImg = document.createElement("img")
-const facebookUrl = document.getElementById("facebook-url")
-const facebookTitle = document.getElementById("facebook-title")
-const facebookDescription = document.getElementById("facebook-description")
-const facebookImg = document.getElementById("facebook-img")
-const paragraphListLevensvraag= document.getElementById("paragraph-list")
-const coachInsightsLevensvraag = document.getElementById("coach-insights")
-const paragrphListInsightsLevensvraag = document.getElementById("paragraph-list-insights")
-const selectParagraphCoachInsightLevensvraag = document.createElement("select")
-    selectParagraphCoachInsightLevensvraag.setAttribute("id", "select-paragraph-coach-insight-levensvraag")
+function setMetaAttributesArticle(titleAtt, summaryAtt, keywordsAtt, FBImg){
+    const titleMeta = document.getElementById("title-meta")
+    const summaryMeta = document.getElementById("meta-description")
+    const metaKeywords = document.getElementById("meta-keywords")
+    const facebookDescription = document.getElementById("facebook-description")
+    const facebookUrl = document.getElementById("facebook-url")
+    const facebookTitle = document.getElementById("facebook-title")
+    const facebookImg = document.getElementById("facebook-img")
 
+    titleMeta.innerText = titleAtt
+    summaryMeta.innerText = summaryAtt
+    metaKeywords.innerText = keywordsAtt
+    facebookDescription.innerText = summaryAtt
+    facebookUrl.innerText = window.location.href
+    facebookTitle.innerText = titleAtt
+    facebookImg.innerText = FBImg
+};
+    
 function sanityTinyMCE(){
 
     const tinyMCEOuterDiv = document.getElementById("article-body-div")
@@ -289,7 +295,7 @@ function sanityTinyMCE(){
         H2.style.fontFamily = "Nunito Sans, sans-serif"
         H2.style.letterSpacing = "1px"
         H2.style.textAlign = "left"
-        H2.style.color = "#122b46"
+        H2.style.color = "#0c6665"
         H2.style.marginBottom = "0px"
         H2.style.width = "auto"
 
@@ -348,10 +354,8 @@ function showEditIconAuthorAndAdmin(icon){
                     querySnapshot.forEach(doc1 => {
 
                         const author = doc1.data().Author
-
-                        console.log(admin)
                         
-                        if(admin === "Yes" || auth === author){
+                        if(admin === "Yes"){
                             icon.style.display = "block"
                         };
                     });
@@ -450,6 +454,9 @@ function scrollToSummaryItem(summaryTitle, h2Title){
     const metaUserPhoto = document.getElementById("author-photo")
     const metaUserName = document.getElementById("author-name")
     const authorDiv = document.getElementById("author-div")
+    const title = document.getElementById("title-article")
+    const headerDiv = document.getElementById("levensvraag-artikel-main-image")
+    const headerImg = document.createElement("img")
 
     db.collection("Articles").where("Title", "==", titel).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -467,11 +474,11 @@ function scrollToSummaryItem(summaryTitle, h2Title){
 
             bodyDiv.innerHTML = body
 
+            setMetaAttributesArticle(titleArticle, titleArticle, titleArticle, headerImage)
             loadArticlesWithSameDomain(domain)
             showAuthorOnPreview(author, metaUserPhoto, metaUserName, authorDiv)
             setH2HeadersInSummary(bodyDiv)
             sanityTinyMCE()
-    
         });
     })
 }();
@@ -598,17 +605,17 @@ function inspirerend(elem){
                                     const levensvraagID = doc2.data().Levensvraag
                         
                                     db.collection("Vitaminders").doc(User.uid)
-                                    // .collection("Levenslessen").doc().set({
-                                    //     Auteur: naam,
-                                    //     Gebruikersnaam: auth,
-                                    //     Inspirerend: 0,
-                                    //     Levensles: lesson,
-                                    //     Levensvraag: levensvraagID,
-                                    //     Source: titel,
-                                    //     Status: "Approved",
-                                    //     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                                    //     Type: "Coach-inzicht"
-                                    // });
+                                    .collection("Levenslessen").doc().set({
+                                        Auteur: naam,
+                                        Gebruikersnaam: auth,
+                                        Inspirerend: 0,
+                                        Levensles: lesson,
+                                        Levensvraag: levensvraagID,
+                                        Source: titel,
+                                        Status: "Approved",
+                                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                        Type: "Coach-inzicht"
+                                    });
                                 });
                             });
                         }); 

@@ -83,7 +83,7 @@ function registerCoach(){
       Approach: approach,
       Costs: costs,
       ID: cred.user.uid,
-      Status: Approved,
+      Status: "Draft",
       Levensvragen: [],
       SubscriptionType: subscriptionType
     })

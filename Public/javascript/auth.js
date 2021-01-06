@@ -123,17 +123,17 @@ const logoutDOM = document.getElementById("button-logout")
 const registerButton = document.getElementById("button-register")
 const registerButtonCoach = document.getElementById("button-register-coach")
 
-auth.onAuthStateChanged(User =>{
-    if(User){
-      loginDOM.style.display = "none"
-      registerButton.style.display = "none"
-      registerButtonCoach.style.display = "none"
-    } else {
-      logoutDOM.style.display = "none"
-    };
-});
-
-
+if(loginDOM != null || loginDOM != null || registerButton != null || registerButtonCoach != null){
+    auth.onAuthStateChanged(User =>{
+      if(User){
+        loginDOM.style.display = "none"
+        registerButton.style.display = "none"
+        registerButtonCoach.style.display = "none"
+      } else {
+        logoutDOM.style.display = "none"
+      };
+  });
+};
 
 // Mobile menu
 const hamburgerMenu = document.getElementById("mobile-hamburger-menu")
@@ -258,8 +258,6 @@ auth.onAuthStateChanged(User =>{
         const naam = naamID.replace(ID, "")
         const profilePic = doc.data().Profielfoto
 
-        console.log(naamID)
-
     if(profilePic == undefined){
       profilePicture.innerHTML = `<h6 class="menu-auth-name" >${naam}</h6>`
     } else {
@@ -332,19 +330,8 @@ auth.onAuthStateChanged(User =>{
               const docLengt = [doc]          
                     objectLength = Object.keys(docLengt).length
                     lengthArray.push(objectLength)
-    
-                    const giver = doc.data().Giver
-
-                    db.collection("Vitaminders").where("Gebruikersnaam", "==", giver)
-                    .get().then(querySnapshot => {
-                      querySnapshot.forEach(doc3 => {
-
-                    const giverID = doc3.data().ID
-                    const giverClean = giver.replace(giverID, "")
       
                     notificationsP.innerHTML = `Je hebt 1 nieuw <i>inspiratiepunt</i> ontvangen.`
-                      });
-                    });
     
                     notificationsDiv.addEventListener("click", () => { 
                       
@@ -353,7 +340,7 @@ auth.onAuthStateChanged(User =>{
                       db.collection("Vitaminders").doc(doc2.id).collection("Inspiration").doc(doc.id).update({
                         New: "No"
                       }).then(() => {
-                          window.open("../notifications.html", "_self")
+                          window.open(`../Vitaminders/${naamID}.html`)
                       });
                     });
                   });

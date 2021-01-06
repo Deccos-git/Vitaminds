@@ -33,9 +33,9 @@
       height: 600,
       width: "auto",
       selector: '#tiny-mce',
-      toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media',
-      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media paste',
-      placeholder: "Geef je artikel de structuur: inleiding, middenstuk, samenvatting",
+      toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol | code ',
+      plugins: 'code table advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media paste',
+      placeholder: "Geef je artikel de structuur: inleiding, middenstuk, samenvatting. Je hoeft niet te letten op de opmaak. Die wordt nadat je je artikel opslaat gestandadiseerd voor het publiseren.",
       toolbar_mode: 'floating',
       paste_as_text: true,
       plugin_preview_width: 720,
@@ -139,7 +139,14 @@
 
       <div id="welcome-div">
         <p id="auth-welcome"></p>
-        <p>Wat leuk dat je een artikel gaat schrijven. Een artikel is een hele laagdrempelige manier om mensen te laten zien hoe jij als coach tegen verschillende relevante onderwerpen aankijkt. Het geeft je lezers de kans om te voelen of ze een klik hebben met jou als coach. Om je op weg te helpen kun je over de verschillende onderdelen van een artikel tips vinden.</p>
+        <p>Wat leuk dat je een artikel gaat schrijven. 
+          Een artikel is een hele laagdrempelige manier om mensen te laten zien hoe jij als 
+          coach tegen verschillende relevante onderwerpen aankijkt. 
+          Het geeft je lezers de kans om te voelen of ze een klik hebben met jou als coach. 
+          Om je op weg te helpen kun je over de verschillende onderdelen van een artikel tips vinden.<br><br>
+          <b>Let op</b><br>
+          Nadat je artikel is opgeslagen wordt je artikel gecontroleerd op spel- en taalfouten 
+          en gestandadiseerd voor publicatie. Je krijgt een bericht als je artikel gepubliseerd is.</p>
 
         <div class="tips-div">
           <div onclick="openTipsOverview(this)" id="general-tips-title" class="title-div">
@@ -347,7 +354,7 @@
         <div id="tiny-mce"></div>
 
         <div id="theme-select">
-          <h3>Kies één of meerdere thema's</h3>
+          <h3>Kies een thema</h3>
           <div class="theme-input"><input name="route" type="radio" id="basisvaardigheden" value="Basisvaardigheden" /><label for="basisvaardigheden">Basisvaardigheden</label><br /></div>
           <div class="theme-input"><input name="route" type="radio" id="basiskennis" value="Basiskennis"  /><label for="basiskennis">Basiskennis</label><br /></div>
           <div class="theme-input"><input name="route" type="radio" id="ik" value="Ik" /><label for="ik">Ik</label><br /></div>
@@ -364,7 +371,7 @@
           <div class="theme-input"><input name="route" type="radio" id="koers bepalen" value="Koers bepalen" /><label for="koers bepalen">Koers bepalen</label><br /></div>
         </div>
 
-        <button id="save-article-button" onclick="newArticleSubmitButton(this)" class="button-algemeen button-create-article">Opslaan</button>
+        <button id="save-article-button" onclick="newArticleSubmitButton(this)" class="button-algemeen button-create-article">Opslaan en laten controleren</button>
       </div>
 
     <!-- Toolbar mobile -->

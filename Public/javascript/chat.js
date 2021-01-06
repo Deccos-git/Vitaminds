@@ -1,3 +1,4 @@
+
 // Naam uit URL halen
 const naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
 const naam1 = naamhtml.replace('.html', '')
@@ -378,6 +379,9 @@ function saveAuthToReadlist(docID, authName, userName){
             } else {
                 window.open(`../Chats/${userName}.html`, "_self");
             };
+        }
+        else {
+            window.open(`../Chats/${userName}.html`, "_self");
         };
         });
     });
@@ -512,25 +516,20 @@ function updateReadStatusBasedOnOnline(onlineArray, authName, docID){
 
 function newMessageInOverview(docID, authName, chatsDivDOM, newMessage){
 
-    const docRef = db.collection("Chats").doc(docID) 
-
     const newMessageCount = []
 
-    docRef.get().then(doc => {
-
-        const type = doc.data().Type
-
-    docRef.collection("Messages")
+    db.collection("Chats").doc(docID) 
+    .collection("Messages")
     .where("Status", "==", "New")
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc2 => {
 
             const room = doc2.data().Room
 
+            console.log("test")
+
             const authSender = doc2.data().Auth        
             newMessageCount.push(doc2)
-
-            if (type === "Chat"){
 
             const roomArray = room.split("_")
 
@@ -542,18 +541,14 @@ function newMessageInOverview(docID, authName, chatsDivDOM, newMessage){
 
                     };
                 };
-            }  else {
-           
-            newMessage.innerText = newMessageCount.length
-
-            };
         })
     }).then(() => {
         if(newMessageCount.length != 0){
-        chatsDivDOM.appendChild(newMessage)
+
+            chatsDivDOM.appendChild(newMessage)
+
         };
-    })
-});
+    });
 };
  
 
@@ -645,7 +640,7 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
 
         userArray.forEach(user => {
 
-                if(auth != user){        
+                if(auth != user){    
 
                     db.collection("Vitaminders").where("Gebruikersnaam", "==", user).get().then(querySnapshot => {
                         querySnapshot.forEach(doc4 => { 
@@ -673,6 +668,12 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
 
                     // Update status of message based on online/offline in room
                     updateReadStatusBasedOnOnline(online, auth, doc1.id)
+
+                    //New message in overview
+                    const newMessagesP = document.createElement("p")
+                    newMessagesP.setAttribute("class", "new-message-count-chats")
+
+                    newMessageInOverview(doc1.id, auth, chatsDiv, newMessagesP)
         
                     DOMchats.appendChild(chatsDiv)
                     chatsDiv.appendChild(photoDiv)
@@ -680,11 +681,6 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
                     photoDiv.appendChild(groupType)
                     chatsDiv.appendChild(chatsP)
 
-                    // New messages
-                    const newMessagesP = document.createElement("p")
-                        newMessagesP.setAttribute("class", "new-message-count-chats")
-
-                     newMessageInOverview(doc1.id, auth, chatsDiv, newMessagesP)
                                     });
                                 });
                             };    

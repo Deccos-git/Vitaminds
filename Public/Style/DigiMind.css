@@ -83,11 +83,13 @@
 }
 
 #private-button{
-    border-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 #public-button{
-    border-radius: 5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 .section-outer-div{
@@ -228,8 +230,18 @@
     margin: 20px
 }
 
-.analytics-menu-item{
+#analytics-menu-item{
     display: none;
+}
+
+.small-tiny-div{
+    display: none;
+}
+
+#coach-profile-private{
+    display: none;
+    flex-direction: column;
+    align-items: center;
 }
 
 .private-div{
@@ -267,7 +279,7 @@
     display: none;
     flex-direction: column;
     align-items: center;
-    border: 1px solid #122b46;
+    border: 1px solid lightgray;
     border-radius: 15px;
     padding: 10px;
 }
@@ -307,12 +319,47 @@
 
 #menu-div-mobile{
     display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.edit-element:hover{
+    border: 0.5px dotted black;
+    cursor: url('../images/edit-icon.png'), auto;
+}
+
+#tiny-mce-div{
+    display: none;
+}
+
+#menu-div-mobile p{
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 0px;
 }
 
 #menu-select-mobile{
     width: auto;
     width: 100%;
-    margin-top: 50px;
+}
+
+#profile-picture-div-private{
+    margin: 30px;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+#upload-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profile-picture-div-private img{
+    border-radius: 50%;
+    height: 210px;
+    width: 210px;
 }
 
 #favorite-coaches-select{
@@ -415,6 +462,7 @@
     align-items: center;
     background-color: whitesmoke;
     margin: 30px 0px;
+    width: 100%;
 }
 
 .analytics-card{
@@ -585,7 +633,7 @@
 @media only screen and (max-width: 938px){
 
     #menu-div-mobile{
-        display: block;
+        display: flex;
     }
 
     #menu-div{

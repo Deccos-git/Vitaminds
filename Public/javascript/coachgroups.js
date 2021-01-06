@@ -201,10 +201,12 @@ function hideCoachgroupBuilderForNoneCoach(){
 
                     const coachGroupBuiderDiv = document.getElementById("coachgroup-builder-div")
 
-                    if(userType === "Coach" ){
-                        coachGroupBuiderDiv.style.display = "block"
-                    }
+                        if(coachGroupBuiderDiv != null){
 
+                            if(userType === "Coach" ){
+                                coachGroupBuiderDiv.style.display = "block"
+                            };
+                        };
                     });
                 });
             });
@@ -936,7 +938,7 @@ function setInnerTextOfDOMobjects(chat, grouptype, user, typeOfGroup){
     grouptype.innerText = typeOfGroup
   };
 
-function updateOnlineStatus(docID, authName){
+function updateOnlineStatusGroup(docID, authName){
     db.collection("Coachgroups")
     .doc(docID)
     .update({
@@ -944,7 +946,7 @@ function updateOnlineStatus(docID, authName){
     });
 };
 
-function updateReadList(docID, authName, titleURL){
+function updateReadListGroup(docID, authName, titleURL){
     const chatRef = db.collection("Coachgroups")
     .doc(docID)
 
@@ -1044,7 +1046,7 @@ function updateOnlineStatusFromPagesLeaveGroup(authName){
     });
 };
 
-function updateReadStatusBasedOnOnline(onlineArray, authName, docID){
+function updateReadStatusBasedOnOnlineGroup(onlineArray, authName, docID){
     if(onlineArray.includes(authName)){
        const docRefOnline = db.collection("Coachgroups").doc(docID)
        docRefOnline.collection("Messages").where("Status", "==", "New")
@@ -1060,7 +1062,7 @@ function updateReadStatusBasedOnOnline(onlineArray, authName, docID){
     };
 };
 
-function newMessageInOverview(docID, chatsDivDOM, newMessage){
+function newMessageInOverviewGroups(docID, chatsDivDOM, newMessage){
 
     const docRef = db.collection("Coachgroups").doc(docID) 
 
@@ -1086,7 +1088,7 @@ function newMessageInOverview(docID, chatsDivDOM, newMessage){
     });
 };
 
-function groupsOverviewTitle(title, group, photo, typeDescription){
+function groupsOverviewTitleGroup(title, group, photo, typeDescription){
 
     group.innerText = title
     photo.src = "/images/groups-icon.jpg"
@@ -1129,14 +1131,14 @@ db.collection("Coachgroups").where("Members", "array-contains", auth).get().then
                   if (members.includes(auth)){
 
 
-                    groupsOverviewTitle(titleClean, chatsP, photoImg, groupType)
+                    groupsOverviewTitleGroup(titleClean, chatsP, photoImg, groupType)
                                     
                     // Open group
                     chatsDiv.addEventListener("click", () => {
 
-                        updateOnlineStatus(doc1.id, auth)
+                        updateOnlineStatusGroup(doc1.id, auth)
                     
-                        updateReadList(doc1.id, auth, title)
+                        updateReadListGroup(doc1.id, auth, title)
 
                     });
 
@@ -1148,7 +1150,7 @@ db.collection("Coachgroups").where("Members", "array-contains", auth).get().then
                     updateOnlineStatusFromPagesLeaveGroup(auth)
 
                     // Update status of message based on online/offline in room
-                    updateReadStatusBasedOnOnline(online, auth, doc1.id)
+                    updateReadStatusBasedOnOnlineGroup(online, auth, doc1.id)
 
                 DOMGroupChats.appendChild(chatsDiv)
                 chatsDiv.appendChild(photoDiv)
@@ -1160,7 +1162,7 @@ db.collection("Coachgroups").where("Members", "array-contains", auth).get().then
                     const newMessagesPGroups = document.createElement("p")
                         newMessagesPGroups.setAttribute("class", "new-message-count-chats")
                         
-                    newMessageInOverview(doc1.id, chatsDiv, newMessagesPGroups) 
+                    newMessageInOverviewGroups(doc1.id, chatsDiv, newMessagesPGroups) 
                     };                
             });
         });
@@ -1221,8 +1223,10 @@ function upgradeModal(notice){
 
             const name = doc.data().GebruikersnaamClean
 
-            title.innerHTML = `Wat leuk dat je wilt updragen naar een Premium abonnement, ${name}!`
+                if(title != null){
 
+                    title.innerHTML = `Wat leuk dat je wilt updragen naar een Premium abonnement, ${name}!`
+                };
             });
         };
     });
@@ -1231,43 +1235,46 @@ function upgradeModal(notice){
 !function sendUpgradeRequest(){
     const requestButton = document.getElementById("upgrade-button")
 
-    requestButton.addEventListener("click", () => {
+    if(requestButton != null){
 
-    auth.onAuthStateChanged(User =>{
-        if(User){
-        const userRef = db.collection("Vitaminders").doc(User.uid);
-        userRef.get().then(function(doc) {
+        requestButton.addEventListener("click", () => {
 
-            const email = doc.data().Email
-            const nameClean = doc.data().GebruikersnaamClean
+            auth.onAuthStateChanged(User =>{
+                if(User){
+                const userRef = db.collection("Vitaminders").doc(User.uid);
+                userRef.get().then(function(doc) {
 
-                db.collection("Mail").doc().set({
-                    to: [email],
-                    cc: "info@vitaminds.nu",
-                    message: {
-                    subject: `Upgrade naar Premium Vitaminds account`,
-                    html: `Hallo ${nameClean}, </br></br>
-                            Wat leuk dat je een Premium-account hebt aangevraagd!<br><br> 
-                            
-                            We gaan je account direct upgraden. Je ontvangt een mailtje zodra je account is ge-upgrade.</br></br>
+                    const email = doc.data().Email
+                    const nameClean = doc.data().GebruikersnaamClean
 
-                            Vriendelijke groet, </br></br>
-                            Het Vitaminds Team </br></br>
-                            <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-                    Gebruikersnaam: nameClean,
-                    Emailadres: email,
-                    Type: "Upgrade request"
-                    }        
-                    })
-            .then(() => {
+                        db.collection("Mail").doc().set({
+                            to: [email],
+                            cc: "info@vitaminds.nu",
+                            message: {
+                            subject: `Upgrade naar Premium Vitaminds account`,
+                            html: `Hallo ${nameClean}, </br></br>
+                                    Wat leuk dat je een Premium-account hebt aangevraagd!<br><br> 
+                                    
+                                    We gaan je account direct upgraden. Je ontvangt een mailtje zodra je account is ge-upgrade.</br></br>
 
-                requestButton.innerText = "Je upgrade is aangevraagd!"
+                                    Vriendelijke groet, </br></br>
+                                    Het Vitaminds Team </br></br>
+                                    <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                            Gebruikersnaam: nameClean,
+                            Emailadres: email,
+                            Type: "Upgrade request"
+                            }        
+                            })
+                        .then(() => {
 
-            })
+                            requestButton.innerText = "Je upgrade is aangevraagd!"
+
+                        });
+                    });
+                };
             });
-        };
-    });
-});
+        });
+    };
 }();
 
 // Group goal

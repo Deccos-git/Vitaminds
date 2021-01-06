@@ -254,18 +254,20 @@ auth.onAuthStateChanged(User =>{
                         // noAuthDiv.style.display = "none"
                         // authDiv.style.display = "flex"
 
-        db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", gebruikersnaam).get().then(querySnapshot => {
-                querySnapshot.forEach(doc => {
+                        db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", gebruikersnaam).get().then(querySnapshot => {
+                                querySnapshot.forEach(doc => {
 
-                        const goal = doc.data().LevensvraagClean
+                                        const goal = doc.data().LevensvraagClean
 
-                        const option = document.createElement("option")
+                                        const option = document.createElement("option")
 
-                        option.innerHTML = goal
+                                        option.innerHTML = goal
 
-                        goalSelect.appendChild(option)
+                                        if(goalSelect != null){
 
-                                })
+                                                goalSelect.appendChild(option)
+                                        };
+                                });
                         });
                 });
         };

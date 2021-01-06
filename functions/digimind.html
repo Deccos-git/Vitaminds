@@ -37,7 +37,7 @@
     <script>
       tinymce.init({
         height: 500,
-        selector: '#tiny-mce',
+        selector: '.tiny-mce-digimind',
         toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media',
       plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media',
         toolbar_mode: 'floating',
@@ -47,6 +47,14 @@
           console.log(args.content);
           args.content += ' preprocess';
         }
+      });
+
+      tinymce.init({
+        height: 200,
+        selector: '.tiny-mce-small',
+        toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media',
+      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media',
+        toolbar_mode: 'floating',
       });
     </script>
     <!-- End Tiny MCE -->
@@ -198,12 +206,14 @@
       <p id="my-proces" class="private-menu-active">Mijn trajecten</p>
       <p>Favoriete coaches</p>
       <p>Tools</p>
-      <p class="analytics-menu-item">Analytics</p>
+      <p id="analytics-menu-item">Analytics</p>
       <p>Notificaties</p>
       <p>Ontwikkeltegoed</p>
+      <p>Mijn profiel</p>
     </div>
 
     <div id="menu-div-mobile">
+      <p>Menu</p>
       <select name="" id="menu-select-mobile" onchange="getSection(this)">
         <option>Mijn trajecten</option>
         <option>Favoriete coaches</option>
@@ -211,6 +221,7 @@
         <option class="analytics-menu-item">Analytics</option>
         <option>Notificaties</option>
         <option>Ontwikkeltegoed</option>
+        <option>Mijn profiel</option>
       </select>
     </div>
 
@@ -318,7 +329,7 @@
               <p>Aantal Vitaminders</p>
           </div>
           <div id="insights" class="analytics-card">
-              <p>Aantal bijdragen aan artikelen</p>
+              <p>Aantal artikelen</p>
           </div>
           <div id="workshops" class="analytics-card">
               <p>Aantal workshops</p>
@@ -331,6 +342,12 @@
           </div>
           <div id="analytics-card-flagged" class="analytics-card">
               <p>Flagged Openups</p>
+          </div>
+          <div id="analytics-card-articles" class="analytics-card">
+            <p>Nieuwe artikelen</p>
+          </div>
+          <div id="analytics-card-workshops" class="analytics-card">
+            <p>Nieuwe workshops</p>
           </div>
       </div>
   </div>
@@ -366,12 +383,86 @@
     </div>
     <div>
       <h2>Bij/af</h2>
-      <div id="plus-minus-div">
+      <div id="plus-minus-div"></div>
     </div>
   </div>
 
-  <div class="private-outer-div" id="admin-outer-div">
-    <h1>Admin</h1>
+  <div class="private-outer-div" id="coach-information-outer-div">
+
+    <div id="profile-picture-div-private">
+      <div id="upload-div">
+        <input type="file" id="upload-profile-picture">
+        <div>
+          <button class="button-algemeen button-digimind" id="saveImageButton">Opslaan</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="welcome-div-private" class="section-inner-div">
+      <h2>Welkom</h2>
+      <div id="welcome-message-private"></div>
+      <div id="tiny-mce-div">
+        <div class="tiny-mce-digimind" id="tiny-welcome"></div>
+        <button class="button-algemeen button-digimind" id="save-button-welcome">Opslaan</button>
+      </div> 
+    </div>
+
+    <div id="coach-profile-private">
+      <div id="coaching-div-private" class="section-inner-div">
+        <h2>Mijn coaching</h2>
+        <div id="coaching-inner-div-private">
+          <div id="coachingstyle-private">
+            <h3>Coachstijl</h3>
+          <div class="small-tiny-div" id="tiny-style-div">
+            <div class="tiny-mce-small" id="tiny-style"></div>
+            <button class="button-algemeen button-digimind" id="save-button-style">Opslaan</button>
+          </div>
+          </div>
+          <div id="methode-private">
+            <h3>Methodiek</h3>
+          </div>
+          <div id="motivation-private">
+            <h3>Motivatie</h3>
+          </div>
+        </div>
+      </div>
+
+      <div id="experience-div-private" class="section-inner-div">
+        <h2>Mijn ervaringen</h2>
+        <div id="experience-inner-div-private">
+          <div id="years-private">
+            <h3>Aantal jaren ervaring</h3>
+          </div>
+          <div id="experience-private">
+            <h3>Ervaringen</h3>
+          </div>
+          <div id="education-private">
+            <h3>Opleidingen & certificaten</h3>
+          </div>
+        </div>
+      </div>
+
+      <div id="practical-div-private" class="section-inner-div">
+        <h2>Praktische informatie</h2>
+        <div id="practical-inner-div-private">
+          <div id="location-private">
+            <h3>Praktijklocatie</h3>
+          </div>
+          <div id="targetgroup-private">
+            <h3>Doelgroep</h3>
+          </div>
+          <div id="costs-private">
+            <h3>Tarief</h3>
+          </div>
+          <div id="website-private">
+            <h3>Website</h3>
+          </div>
+          <div id="telephone-private">
+            <h3>Telefoonnummer</h3>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   
   <!-- Toolbar mobile -->

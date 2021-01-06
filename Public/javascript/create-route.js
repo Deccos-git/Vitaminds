@@ -14,33 +14,6 @@
 }();
 
 
-function appendGoalsToselect(goal){
-
-    const goalSelect = document.getElementById("select-route-goal")
-
-    const option = document.createElement("option")
-
-    option.innerText = goal
-
-    goalSelect.appendChild(option)
-
-};
-
-!function databaseQueryRouteGoals(){
-
-    db.collection("Levensvragen")
-    .where("Eigenaar", "==", "Vitaminds")
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            const goalClean = doc.data().Levensvraag
-
-            appendGoalsToselect(goalClean)
-
-        });
-    });
-}();
-
 !function showOptions(){
 
     const optionsButton = document.getElementById("show-step-two")
@@ -108,7 +81,6 @@ function saveInputAuth(){
     } else if(privatePublicOption === "Public") {
         private = "Nee"
     };
-
 
             db.collection("Vitaminders")
             .doc(doc.id).collection("Levensvragen").doc()
