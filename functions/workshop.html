@@ -103,7 +103,7 @@
   <h1 id="workshop-landing-title"></h1>
   <p id="workshop-description"></p>
   <ul id="workshop-facts"></ul>
-  <div id="button-div-landing">
+  <div id="button-div-landing-workshop">
     <button class="button-algemeen" id="button-workshop-landing">Workshop starten</button>
   </div>
 </div>
@@ -138,17 +138,19 @@
       <p>Stel me een vraag</p>
     </div>
       <div id="workshop-goal-check">
-        <h3>Jouw doel</h3>
-        <div id="workshop-goal-check-inner-div"></div>
+        <h3>Jouw ontwikkeltraject</h3>
+        <div id="workshop-goal-check-inner-div">
+          <div id="auth-routes"></div>
+        </div>
         <div id="set-new-goal-div">
-          <p>Doel</p>
+          <p>Thema</p>
           <p id="workshop-goal-title"></p>
-          <p>Geef je doel een persoonlijke titel</p>
+          <p>Geef je ontwikkeldoel een persoonlijke titel</p>
           <input id="personal-goal-title" type="text" placeholder="Titel">
-          <p>Geef je doel een korte omschrijving</p>
+          <p>Geef je ontwikkeldoel een korte omschrijving</p>
           <textarea name="" id="goal-summary" cols="30" rows="10" placeholder="Omschrijving van je doel"></textarea>
           <div>
-            <button onclick="createGoalAndStartWorkshop()">Start de workshop</button>
+            <button class="button-algemeen button-workshop" onclick="createGoalAndStartWorkshop()">Start de workshop</button>
           </div>
         </div>
       </div>

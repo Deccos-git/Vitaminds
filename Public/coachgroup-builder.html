@@ -119,7 +119,23 @@
     </div>
 
     <h3>Wat is het doel van je oefengroep?</h3>
-    <select name="" id="create-coachgroup-goal-select"></select>
+    <select name="" id="create-coachgroup-goal-select">
+      <option id="Alles", value="Alles">Alles</option>
+      <option id="Basisvaardigheden", value="Basisvaardigheden">Basisvaardigheden</option>
+      <option id="Basiskennis", value="Basiskennis">Basiskennis</option>
+      <option id="Ik", value="Ik">Ik</option>
+      <option id="Gedachten", value="Gedachten">Gedachten</option>
+      <option id="Gevoelens & Emoties", value="Gevoelens & Emoties">Gevoelens en Emoties</option>
+      <option id="Lichaam & Geest", value="Lichaam & Geest">Lichaam en Geest</option>
+      <option id="Relaties", value="Relaties">Liefde en Relaties</option>
+      <option id="Seksualiteit", value="Seksualiteit">Seksualiteit</option>
+      <option id="Sociaal", value="Sociaal">Spiritualiteit</option>
+      <option id="Sociaal", value="Sociaal">Sociaal</option>
+      <option id="Opvoeden", value="Opvoeden">Opvoeden</option>
+      <option id="Werken-succes", value="Werken en Succes">Werken en Succes</option>
+      <option id="Betekenisvol-leven", value="Betekenisvol leven">Betekenisvol leven</option>
+      <option id="Koers-bepalen", value="Koers bepalen">Koers bepalen</option>
+    </select>
     
     <h3>Geef je coachgroep een titel</h3>
     <input id="coachgroup-title" type="text" placeholder="Titel van je coachgroep">
@@ -146,6 +162,9 @@
 
     <h3>Hoeveel maanden duurt je coachgroep?</h3>
     <input id="coachgroup-length" type="number" placeholder="Aantal maanden">
+
+    <h3>Wanneer is het eerste startmoment?</h3>
+    <input id="coachgroup-start" type="date">
 
     <div id="save-bar-coachgroup-builder">
         <button onclick="saveCoachgroup()" id="button-coachgroup" class="button-algemeen-card">Opslaan</button>

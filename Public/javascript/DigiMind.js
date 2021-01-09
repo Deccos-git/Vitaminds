@@ -888,7 +888,6 @@ function addLessonsToProces(selectedProces){
                        
                         levenslesH3.innerHTML = levensles
                         metaType.innerHTML = type
-                        metaTimestamp.innerHTML = timestamp
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         metaTimestamp.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
 
@@ -1898,9 +1897,7 @@ function editWelcomeMessage(elem){
 
         tinymce.get("tiny-welcome").setContent(elem.innerHTML)
 
-        setTimeout( () => { 
-               elem.style.display = "none"; 
-        }, 1000);
+        elem.style.display = "none"; 
 };
 
 !function saveEditedWelcomeMessage(){
@@ -2018,7 +2015,6 @@ function welcomeMessagePrivate(userMessage){
         };
 
         welcomeMess.appendChild(messageP)
-
 };
 
 function editStyle(elem){
@@ -2055,6 +2051,69 @@ function editStyle(elem){
 
 }();
 
+function editMethode(elem){
+
+        const tinyDiv = document.getElementById("tiny-methode-div")
+
+                tinyDiv.style.display = "block"
+
+        tinymce.get("tiny-methode").setContent(elem.innerHTML)
+
+        elem.style.display = "none"
+};
+
+!function saveEditedMethode(){
+        const button = document.getElementById("save-button-methode")
+
+        button.addEventListener("click", () => {
+
+                const methode = tinymce.get("tiny-methode").getContent();
+                button.innerText = "Opgeslagen"
+
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+
+                                db.collection("Vitaminders").doc(doc.id).update({
+                                        Approach: methode
+                                });
+                        });
+                });
+        });
+}();
+
+function editMotivation(elem){
+
+        const tinyDiv = document.getElementById("tiny-motivation-div")
+
+                tinyDiv.style.display = "block"
+
+        tinymce.get("tiny-motivation").setContent(elem.innerHTML)
+
+        elem.style.display = "none"
+};
+
+!function saveEditedMotivation(){
+        const button = document.getElementById("save-button-motivation")
+
+        button.addEventListener("click", () => {
+
+                const motivation = tinymce.get("tiny-motivation").getContent();
+                button.innerText = "Opgeslagen"
+
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+
+                                db.collection("Vitaminders").doc(doc.id).update({
+                                        Why: motivation
+                                });
+                        });
+                });
+        });
+
+}();
+
 function coachingInformationPrivate(coachStyle, coachMethode, coachMotivation){
 
         const styleDiv = document.getElementById("coachingstyle-private")
@@ -2067,8 +2126,10 @@ function coachingInformationPrivate(coachStyle, coachMethode, coachMotivation){
                 styleP.setAttribute("onclick", "editStyle(this)")
         const methodeP = document.createElement("p")
                 methodeP.setAttribute("class", "edit-element")
+                methodeP.setAttribute("onclick", "editMethode(this)")
         const motivationP = document.createElement("p")
                 motivationP.setAttribute("class", "edit-element")
+                motivationP.setAttribute("onclick", "editMotivation(this)")
         
         styleP.innerHTML = coachStyle
         methodeP.innerHTML = coachMethode
@@ -2084,6 +2145,102 @@ function coachingInformationPrivate(coachStyle, coachMethode, coachMotivation){
 
 };
 
+function editYears(elem){
+
+        const tinyDiv = document.getElementById("tiny-years-div")
+
+                tinyDiv.style.display = "block"
+
+        tinymce.get("tiny-years").setContent(elem.innerHTML)
+
+        elem.style.display = "none"
+};
+
+!function saveEditedYears(){
+        const button = document.getElementById("save-button-years")
+
+        button.addEventListener("click", () => {
+
+                const years = tinymce.get("tiny-years").getContent();
+                button.innerText = "Opgeslagen"
+
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+
+                                db.collection("Vitaminders").doc(doc.id).update({
+                                        YearsExperience: years
+                                });
+                        });
+                });
+        });
+
+}();
+
+function editExperience(elem){
+
+        const tinyDiv = document.getElementById("tiny-experience-div")
+
+                tinyDiv.style.display = "block"
+
+        tinymce.get("tiny-experience").setContent(elem.innerHTML)
+
+        elem.style.display = "none"
+};
+
+!function saveEditedExperience(){
+        const button = document.getElementById("save-button-experience")
+
+        button.addEventListener("click", () => {
+
+                const experience = tinymce.get("tiny-experience").getContent();
+                button.innerText = "Opgeslagen"
+
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+
+                                db.collection("Vitaminders").doc(doc.id).update({
+                                        Experience: experience
+                                });
+                        });
+                });
+        });
+
+}();
+
+function editEducation(elem){
+
+        const tinyDiv = document.getElementById("tiny-education-div")
+
+                tinyDiv.style.display = "block"
+
+        tinymce.get("tiny-education").setContent(elem.innerHTML)
+
+        elem.style.display = "none"
+};
+
+!function saveEditedEducation(){
+        const button = document.getElementById("save-button-education")
+
+        button.addEventListener("click", () => {
+
+                const education = tinymce.get("tiny-education").getContent();
+                button.innerText = "Opgeslagen"
+
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+
+                                db.collection("Vitaminders").doc(doc.id).update({
+                                        Education: education
+                                });
+                        });
+                });
+        });
+
+}();
+
 function experienceInformationPrivate(coachYears, coachExperience, coachEducation){
 
         const yearsDiv = document.getElementById("years-private")
@@ -2092,8 +2249,14 @@ function experienceInformationPrivate(coachYears, coachExperience, coachEducatio
         const coachExperienceDiv = document.getElementById("experience-div-private")
 
         const yearsP = document.createElement("p")
+                yearsP.setAttribute("class", "edit-element")
+                yearsP.setAttribute("onclick", "editYears(this)")
         const experienceP = document.createElement("p")
+                experienceP.setAttribute("class", "edit-element")
+                experienceP.setAttribute("onclick", "editExperience(this)")
         const educationP = document.createElement("p")
+                educationP.setAttribute("class", "edit-element")
+                educationP.setAttribute("onclick", "editEducation(this)")
         
         yearsP.innerHTML = coachYears
         experienceP.innerHTML = coachExperience
@@ -2109,6 +2272,164 @@ function experienceInformationPrivate(coachYears, coachExperience, coachEducatio
 
 };
 
+function editLocation(elem){
+
+        const tinyDiv = document.getElementById("tiny-location-div")
+
+                tinyDiv.style.display = "block"
+
+        tinymce.get("tiny-location").setContent(elem.innerHTML)
+
+        elem.style.display = "none"
+};
+
+!function saveEditedLocation(){
+        const button = document.getElementById("save-button-location")
+
+        button.addEventListener("click", () => {
+
+                const location = tinymce.get("tiny-location").getContent();
+                button.innerText = "Opgeslagen"
+
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+
+                                db.collection("Vitaminders").doc(doc.id).update({
+                                        City: location
+                                });
+                        });
+                });
+        });
+}();
+
+function editTargetgroup(elem){
+
+        const tinyDiv = document.getElementById("tiny-targetgroup-div")
+
+                tinyDiv.style.display = "block"
+
+        tinymce.get("tiny-targetgroup").setContent(elem.innerHTML)
+
+        elem.style.display = "none"
+};
+
+!function saveEditedTargetgroup(){
+        const button = document.getElementById("save-button-targetgroup")
+
+        button.addEventListener("click", () => {
+
+                const targetgroup = tinymce.get("tiny-targetgroup").getContent();
+                button.innerText = "Opgeslagen"
+
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+
+                                db.collection("Vitaminders").doc(doc.id).update({
+                                        Targetgroup: targetgroup
+                                });
+                        });
+                });
+        });
+}();
+
+function editCosts(elem){
+
+        const tinyDiv = document.getElementById("tiny-costs-div")
+
+                tinyDiv.style.display = "block"
+
+        tinymce.get("tiny-costs").setContent(elem.innerHTML)
+
+        elem.style.display = "none"
+};
+
+!function saveEditedCosts(){
+        const button = document.getElementById("save-button-costs")
+
+        button.addEventListener("click", () => {
+
+                const costs = tinymce.get("tiny-costs").getContent();
+                button.innerText = "Opgeslagen"
+
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+
+                                db.collection("Vitaminders").doc(doc.id).update({
+                                        Costs: costs
+                                });
+                        });
+                });
+        });
+
+}();
+
+function editWebsite(elem){
+
+        const tinyDiv = document.getElementById("tiny-website-div")
+
+                tinyDiv.style.display = "block"
+
+        tinymce.get("tiny-website").setContent(elem.innerHTML)
+
+        elem.style.display = "none"
+};
+
+!function saveEditedWebsite(){
+        const button = document.getElementById("save-button-website")
+
+        button.addEventListener("click", () => {
+
+                const website = tinymce.get("tiny-website").getContent();
+                button.innerText = "Opgeslagen"
+
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+
+                                db.collection("Vitaminders").doc(doc.id).update({
+                                        Website: website
+                                });
+                        });
+                });
+        });
+
+}();
+
+function editTelephone(elem){
+
+        const tinyDiv = document.getElementById("tiny-telephone-div")
+
+                tinyDiv.style.display = "block"
+
+        tinymce.get("tiny-telephone").setContent(elem.innerHTML)
+
+        elem.style.display = "none"
+};
+
+!function saveEditedTelephone(){
+        const button = document.getElementById("save-button-telephone")
+
+        button.addEventListener("click", () => {
+
+                const telephone = tinymce.get("tiny-telephone").getContent();
+                button.innerText = "Opgeslagen"
+
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc => {
+
+                                db.collection("Vitaminders").doc(doc.id).update({
+                                        PhoneNumber: telephone
+                                });
+                        });
+                });
+        });
+
+}();
+
 function practicalInformationPrivate(coachLocation, coachTargetgroup, coachCosts, coachWebsite, coachTelephone){
 
         const locationDiv = document.getElementById("location-private")
@@ -2119,15 +2440,25 @@ function practicalInformationPrivate(coachLocation, coachTargetgroup, coachCosts
         const practicalDiv = document.getElementById("practical-div-private")
 
         const locationP = document.createElement("p")
+                locationP.setAttribute("class", "edit-element")
+                locationP.setAttribute("onclick", "editLocation(this)")
         const targetgroupP = document.createElement("p")
+                targetgroupP.setAttribute("class", "edit-element")
+                targetgroupP.setAttribute("onclick", "editTargetgroup(this)")
         const costsP = document.createElement("p")
+                costsP.setAttribute("class", "edit-element")
+                costsP.setAttribute("onclick", "editCosts(this)")
         const websiteP = document.createElement("p")
+                websiteP.setAttribute("class", "edit-element")
+                websiteP.setAttribute("onclick", "editWebsite(this)")
         const telephoneP = document.createElement("p")
+                telephoneP.setAttribute("class", "edit-element")
+                telephoneP.setAttribute("onclick", "editTelephone(this)")
         
         locationP.innerHTML = coachLocation
         targetgroupP.innerHTML = coachTargetgroup
         costsP.innerHTML = coachCosts
-        websiteP.innerHTML = `<a href='https://${coachWebsite}'>${coachWebsite}</a>`
+        websiteP.innerHTML = coachWebsite
         telephoneP.innerHTML = coachTelephone
 
         locationDiv.appendChild(locationP)

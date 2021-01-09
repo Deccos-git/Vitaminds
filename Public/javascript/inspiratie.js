@@ -21,7 +21,36 @@ const titel11 = titel10.replace('%20',' ')
 const titel12 = titel11.split("?fb")
 const titel = titel12[0]
 
-console.log(titel)
+// Meta tags
+!function setMetaAttributesArticle(){
+    const titleMeta = document.getElementById("title-meta")
+    const summaryMeta = document.getElementById("meta-description")
+    const metaKeywords = document.getElementById("meta-keywords")
+    const facebookDescription = document.getElementById("facebook-description")
+    const facebookUrl = document.getElementById("facebook-url")
+    const facebookTitle = document.getElementById("facebook-title")
+    const facebookImg = document.getElementById("facebook-img")
+
+    if(titleMeta != null || summaryMeta != null || metaKeywords != null || facebookDescription != null || facebookUrl != null || facebookTitle != null|| facebookImg != null){
+       
+        titleMeta.innerText = titel
+        summaryMeta.content = titel
+        metaKeywords.content = titel
+        facebookDescription.content = titel
+        facebookUrl.content = window.location.href
+        facebookTitle.content = titel
+    
+        db.collection("Articles").where("Title", "==", titel).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+    
+                const headerImage = doc.data().HeaderImage
+    
+                facebookImg.content = headerImage
+            
+            });
+        });
+    };
+}();
 
 // Register view count on article load
 window.addEventListener("load", () => {
@@ -109,6 +138,7 @@ db.collection("Articles").where("Owner", "==", "Vitaminds")
         const headerImageSmall = doc.data().HeaderImageSmall
         const domain = doc.data().Domain
         const author = doc.data().Author
+        const timestamp = doc.data().Timestamp
      
         const outerSection = document.createElement("section")
             outerSection.setAttribute("class", "levensvraag-artikel-section")
@@ -127,6 +157,8 @@ db.collection("Articles").where("Owner", "==", "Vitaminds")
             titleSub.setAttribute("class", "titleSub")
         const titleH2 = document.createElement("h2")
             titleH2.setAttribute("class", "titelTekst")
+        const timestampP = document.createElement("p")
+            timestampP.setAttribute("class", "timestamp-p")
         const buttonDiv = document.createElement("button")
             buttonDiv.setAttribute("class", "button-algemeen-card")
             buttonDiv.setAttribute("onclick", "seeArticle(this)")
@@ -136,9 +168,11 @@ db.collection("Articles").where("Owner", "==", "Vitaminds")
         titleH2.innerHTML = title
         headerImg.src = headerImageSmall
         buttonDiv.innerHTML = `<a href="../Artikelen/${title}.html">Bekijk</a>`
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
 
         if(DOMarticle == null){
-            console.log("null")
+
         } else {
 
         DOMarticle.appendChild(outerSection)
@@ -150,6 +184,7 @@ db.collection("Articles").where("Owner", "==", "Vitaminds")
         outerSection.appendChild(titleDiv)
         titleDiv.appendChild(titleSub)
         titleDiv.appendChild(titleH2)
+        outerSection.appendChild(timestampP)
         outerSection.appendChild(buttonDiv)
         };
     });
@@ -237,24 +272,6 @@ function loadSelectedArticles(selectedArticle){
     };
 
 // Individual article page
-
-function setMetaAttributesArticle(titleAtt, summaryAtt, keywordsAtt, FBImg){
-    const titleMeta = document.getElementById("title-meta")
-    const summaryMeta = document.getElementById("meta-description")
-    const metaKeywords = document.getElementById("meta-keywords")
-    const facebookDescription = document.getElementById("facebook-description")
-    const facebookUrl = document.getElementById("facebook-url")
-    const facebookTitle = document.getElementById("facebook-title")
-    const facebookImg = document.getElementById("facebook-img")
-
-    titleMeta.innerText = titleAtt
-    summaryMeta.innerText = summaryAtt
-    metaKeywords.innerText = keywordsAtt
-    facebookDescription.innerText = summaryAtt
-    facebookUrl.innerText = window.location.href
-    facebookTitle.innerText = titleAtt
-    facebookImg.innerText = FBImg
-};
     
 function sanityTinyMCE(){
 
@@ -474,7 +491,6 @@ function scrollToSummaryItem(summaryTitle, h2Title){
 
             bodyDiv.innerHTML = body
 
-            setMetaAttributesArticle(titleArticle, titleArticle, titleArticle, headerImage)
             loadArticlesWithSameDomain(domain)
             showAuthorOnPreview(author, metaUserPhoto, metaUserName, authorDiv)
             setH2HeadersInSummary(bodyDiv)
@@ -536,6 +552,9 @@ function inspirerend(elem){
 !function routeSelectOfAuth(){
 
     const routeSelect = document.getElementById("route-select")
+    const notice = document.getElementById("notice")
+    const routeSelectDiv = document.getElementById("select-route-div")
+    const saveLessonButton = document.getElementById("button-lifelesson")
 
     auth.onAuthStateChanged(User =>{
         if(User){
@@ -545,6 +564,10 @@ function inspirerend(elem){
                 querySnapshot.forEach(doc => {
 
                     const routes = doc.data().LevensvraagClean
+
+                    notice.style.display = "none"
+                    routeSelectDiv.style.display = "flex"
+                    saveLessonButton.style.display = "block"
 
                     const options = document.createElement("option")
 
@@ -570,9 +593,6 @@ function inspirerend(elem){
             
                 auth.onAuthStateChanged(User =>{
                     if(User){
-
-                        const routeSelectDiv = document.getElementById("select-route-div")
-                        routeSelectDiv.style.display = "flex"
                         const routeSelect = document.getElementById("route-select")
 
                         buttonLifelesson.addEventListener("click", () => {
@@ -662,7 +682,7 @@ function loadCreatorData(creatorName, innerSection){
 
 !function loadLifeLessonsOfArticle(){
 
-    const lifelessonsOuterDiv = document.getElementById("lifelessons-outer-div")
+    const lifelessonsOuterDiv = document.getElementById("lifelessons-div")
 
     db.collectionGroup("Levensvragen")
                 .where("Openbaar", "==", "Ja")
@@ -673,8 +693,9 @@ function loadCreatorData(creatorName, innerSection){
 
                         lifelessons.forEach(lesson => {
 
-                        db.collectionGroup("Levenslessen").where("Titel", "==", titel)
+                        db.collectionGroup("Levenslessen").where("Source", "==", titel)
                         .where("Levensles", "==", lesson)
+                        .where("Type", "==", "Coach-inzicht")
                         .get().then(querySnapshot => {
                             querySnapshot.forEach(doc1 => {
 
@@ -682,6 +703,9 @@ function loadCreatorData(creatorName, innerSection){
                                 const source = doc1.data().Source
                                 const timestamp = doc1.data().Timestamp
                                 const creator = doc1.data().Gebruikersnaam
+
+                                console.log(source)
+
 
                                 const innerDiv = document.createElement("div")
                                     innerDiv.setAttribute("class", "inner-div")
@@ -730,8 +754,6 @@ function loadArticlesWithSameDomain(articleDomain){
             const headerImageSmall = doc.data().HeaderImageSmall
             const domain = doc.data().Domain
             const author = doc.data().Author
-
-            console.log(title)
          
             const outerSection = document.createElement("section")
                 outerSection.setAttribute("class", "levensvraag-artikel-section")

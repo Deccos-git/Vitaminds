@@ -235,14 +235,37 @@
 }
 
 #workshop-goal-check p{
-    font-size: 16px;
+    font-size: 20px;
+    font-weight: bold;
 }
 
 #workshop-goal-check-inner-div{
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    text-align: left;
+    margin: 50px 150px 50px 150px;
+}
+
+.button-workshop{
+    margin: 5px;
+}
+
+#workshop-goal-title{
+    font-size: 18px !important;
+    font-weight: normal !important;
+}
+
+#auth-routes{
+    font-size: 20px;
+    color: #122b46;
+}
+
+#auth-routes select{
+    border: 1px solid lightgray;
+    border-radius: 3px;
+    margin-top: 5px;
+    font-weight: bold;
 }
 
 #set-new-goal-div{
@@ -250,6 +273,8 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
+    width: 100%;
+    background-color: #a7bdbd;
 }
 
 #workshop-inner-div{
@@ -261,6 +286,10 @@
 #workshop-image{
     width: 100%;
     height: 100%;
+}
+
+#set-new-goal-div textarea{
+    width: 50%;
 }
 
 #workshop-header-image{
@@ -327,7 +356,7 @@ iframe{
 }
 
 .step-check-div{
-    width: 15px;
+    min-width: 15px;
     height: 15px;
     border-radius: 3px;
     border: 1px solid #008e8e;
@@ -422,6 +451,14 @@ iframe{
 
 #save-update-button{
     display: none;
+}
+
+.coach-pic-div-workshop p{
+    font-size: 16px;
+}
+
+span{
+    color: #122b46;
 }
 
 /* Create workshop */
@@ -791,10 +828,18 @@ textarea{
         margin: 0px 0px 0px 0px;
     }
 
+    #workshop-goal-check-inner-div {
+        margin: 20px;
+    }
+
+    #workshop-goal-check p {
+        padding: 0px 10px;
+    }
+
     .step-introduction-div{
         box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
         border-radius: 3px;
-        padding: 10px;
+        padding: 20px;
         margin: 10px 0px 30px 0px;
         display: flex;
         flex-direction: column;

@@ -164,7 +164,7 @@ function loadCoachesOnFilteredDomain(selectedOption){
         if(stijlCH.offsetHeight >= 200){
             nieuweDiv.appendChild(readMoreDiv)
             readMoreDiv.appendChild(readMore)
-            stijlCH.style.maxHeight = "50px"
+            stijlCH.style.maxHeight = "70px"
             stijlCH.style.overflow = "hidden"
         };
 

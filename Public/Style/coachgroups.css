@@ -177,15 +177,21 @@
     border-radius: 50%;
     margin-top: -50px;
     border: 5px solid white;
+    background-color: white;
 }
 
 .group-meta-div{
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .group-meta-div p{
     font-size: 14px;
-    margin: 10px 10px;
+    margin: 5px 10px;
+    border-bottom: 1px solid lightgray;
 }
 
 .title-div-themegroups{
@@ -256,16 +262,15 @@
 }
 
 .message-options{
-    font-size: 14px;
+    font-size: 25px;
     margin: 0px;
     cursor: pointer;
-    margin-top: -30px;
+    margin-top: -43px;
     color: #49beb7;
 }
 
 .send-chat-as-mail{
     font-size: 14px;
-    margin: 0px;
     display: none;
     cursor: pointer;
     color: #49beb7;
@@ -277,6 +282,7 @@
     display: flex;
     flex-direction: column;
     padding: 20px 0px;
+    background-color: #a7bdbd;
 }
 
 .group-member-photo{
@@ -311,6 +317,13 @@
     padding: 0px 15px;
 }
 
+.notice-group-visitor{
+    font-size: 16px;
+    font-weight: bold;
+    color: #cf6e13;
+    cursor: pointer;
+}
+
 .auth-message-p{
     display: flex;
     flex-direction: column-reverse;
@@ -320,10 +333,12 @@
     font-size: 16px;
     margin: 2px;
     max-width: 50%;
+    background-color: white;
+    box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
 }
 
 .sender-name-message{
-    font-size: 11px;
+    font-size: 14px;
     margin-top: 0px;
     text-align: right;
 }

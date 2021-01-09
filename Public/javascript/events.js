@@ -14,10 +14,14 @@ const titel11 = titel10.replace('%20',' ')
 const titel12 = titel11.split("?fb")
 const titel = titel12[0]
 
+console.log(titel)
+
 // Open make new event
 !function makeNewEvent(){
 const makeNewEventButton = document.getElementById("new-event-button")
 const makeNeweventDiv = document.getElementById("make-new-event")
+
+if(makeNewEventButton != null){
 
 makeNewEventButton.addEventListener("click", () => {
 
@@ -48,6 +52,7 @@ auth.onAuthStateChanged(User =>{
 };
 }); 
 });
+};
 }();
 
 function upgradeModal(notice){
@@ -80,6 +85,8 @@ function upgradeModal(notice){
 
 !function sendUpgradeRequest(){
     const requestButton = document.getElementById("upgrade-button")
+
+    if(requestButton != null){
 
     requestButton.addEventListener("click", () => {
 
@@ -118,6 +125,7 @@ function upgradeModal(notice){
         };
     });
 });
+};
 }();
 
 !function exitModalUpgrade(){
@@ -125,11 +133,14 @@ function upgradeModal(notice){
      const exitModal = document.getElementById("exit-modal")
      const upgradeModal = document.getElementById("upgrade-account-modal")
 
-     exitModal.addEventListener("click", () => {
+     if(exitModal != null){
 
-        upgradeModal.style.display = "none"
+        exitModal.addEventListener("click", () => {
 
-     });
+            upgradeModal.style.display = "none"
+
+        });
+    };
 }();
 
 // Make new event 
@@ -261,6 +272,8 @@ db.collection("Events").where("Owner", "==", "Vitaminds")
         const date = doc.data().Date
         const eventBanner = doc.data().Banner
         const organizer = doc.data().Organizer
+        const type = doc.data().Type
+        const titleID = doc.data().TitleID
 
         const outerDiv = document.createElement("div")
             outerDiv.setAttribute("class", "event-outer-div")
@@ -269,6 +282,8 @@ db.collection("Events").where("Owner", "==", "Vitaminds")
             organiserEventDiv.setAttribute("class", "organizer-event-div")
         const organiserEventPhoto = document.createElement("img")
         const organiserEventP = document.createElement("p")
+        const eventTypeP = document.createElement("p")
+            eventTypeP.setAttribute("class", "event-type")
         const dateEvent = document.createElement("p")
             dateEvent.setAttribute("class", "date-event")
         const titleEvent = document.createElement("h2")
@@ -283,6 +298,11 @@ db.collection("Events").where("Owner", "==", "Vitaminds")
         organiserEventDiv.addEventListener("click", () => {
             window.open("../Vitaminders/" + organizer, "_self");
         })
+
+        if(type === "coachgroup"){
+            eventTypeP.innerText = "Coachgroep"
+            buttonEvent.innerHTML = `<a href="../group/${titleID}.html">Meer informatie</a>`
+        }
 
         db.collection("Vitaminders")
         .where("Gebruikersnaam", "==", organizer)
@@ -302,6 +322,7 @@ db.collection("Events").where("Owner", "==", "Vitaminds")
         outerDiv.appendChild(organiserEventDiv)
         organiserEventDiv.appendChild(organiserEventPhoto)
         organiserEventDiv.appendChild(organiserEventP)
+        outerDiv.appendChild(eventTypeP)
         outerDiv.appendChild(titleEvent)
         outerDiv.appendChild(dateEvent)
         outerDiv.appendChild(buttonEvent)
@@ -440,6 +461,8 @@ function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateO
         });
     });
 };
+
+
 
 db.collection("Events").where("Title", "==", titel)
 .get().then(querySnapshot => {

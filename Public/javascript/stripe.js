@@ -62,7 +62,7 @@ function reduceGelukstegoed(){
 
   const amountArray = []
 
-  const buttonDivLanding = document.getElementById("button-div-landing")
+  const buttonDivLanding = document.getElementById("button-div-landing-workshop")
   const notice = document.createElement("p")
   notice.setAttribute("class", "notice-group-visitor")
 
@@ -128,11 +128,12 @@ auth.onAuthStateChanged(User =>{
   });
   });
   } else {
-    notice.innerHTML = "Maak een <u>Digimind</u> aan om een workshop te doen."
+    notice.innerHTML = "Maak een gratis <u>ontwikkelomgeving</u> aan om deze workshop te doen.<br> Je ontwikkelomgeving is jouw persoonlijke privé omgeving waar je alles wat je over jezelf op kunt slaan."
     notice.addEventListener("click", () => {
         window.open("../Register.html", "_self")
     });
     buttonDivLanding.appendChild(notice)
+    buttonWorkshopLandingStripe.style.display = "none"
   };
 });  
 
@@ -283,7 +284,7 @@ db.collection("Coachgroups").where("Room", "==", titel).get().then(querySnapshot
         const notice = document.createElement("p")
         notice.setAttribute("class", "notice-group-visitor")
 
-    notice.innerHTML = "Maak een gratis <u>Digimind</u> aan om je aan te melden voor deze groep"
+    notice.innerHTML = "Maak een gratis <u>ontwikkelomgeving</u> aan om je aan te melden voor deze groep. <br> Je ontwikkelomgeving is jouw persoonlijke privé omgeving waar je alles wat je over jezelf op kunt slaan."
     notice.addEventListener("click", () => {
         window.open("../Register.html", "_self")
     });
@@ -372,10 +373,12 @@ auth.onAuthStateChanged(User =>{
   });
   });
   } else {
-    buyCoachgroupButton.innerText = "Maak een Digimind aan om je aan te melden voor deze groep"
-    buyCoachgroupButton.addEventListener("click", () => {
+    notice.innerHTML = "Maak een gratis <u>ontwikkelomgeving</u> aan om deze workshop te doen.<br> Je ontwikkelomgeving is jouw persoonlijke privé omgeving waar je alles wat je over jezelf op kunt slaan."
+    notice.addEventListener("click", () => {
         window.open("../Register.html", "_self")
-    })
+    });
+    buttonDivLanding.appendChild(notice)
+    buttonWorkshopLandingStripe.style.display = "none"
   }
 }); 
 buyCoachgroupButton.appendChild(notice)

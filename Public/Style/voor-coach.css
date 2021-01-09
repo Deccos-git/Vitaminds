@@ -660,6 +660,10 @@
 
 @media only screen and (max-width: 938px){
 
+#for-coach-banner-title {
+    margin-top: 0px;
+}
+
 #for-coach-banner{
     background-image: url(/images/headerimg.jpeg);
     height: 650px;

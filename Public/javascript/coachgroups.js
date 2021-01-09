@@ -62,6 +62,7 @@ db.collection("Coachgroups").where("Type", "==", "Coachgroup").get().then(queryS
         const members = doc.data().Members
         const type = doc.data().Type
         const duration = doc.data().GroupLength
+        const startdate = doc.data().StartDate
 
         const DOM = document.getElementById("coachgroups")
 
@@ -82,6 +83,7 @@ db.collection("Coachgroups").where("Type", "==", "Coachgroup").get().then(queryS
         const memberCount = document.createElement("p")
         const startNumberP = document.createElement("p")
         const dataP = document.createElement("p")
+        const startdateP = document.createElement("p")
         const groupLenghtP = document.createElement("p")
         const costsP = document.createElement("p")
         const bottomDiv = document.createElement("div")
@@ -100,6 +102,8 @@ db.collection("Coachgroups").where("Type", "==", "Coachgroup").get().then(queryS
 
             groupCoverPhoto.src = coverPhoto
             groupTitleH2.innerText = titleClean
+
+            console.log(startdate)
 
             openGroup(title, groupButton)
 
@@ -127,10 +131,11 @@ db.collection("Coachgroups").where("Type", "==", "Coachgroup").get().then(queryS
                 });
             });
 
-            numberParticipantsP.innerHTML = `<b>Aantal deelnemers:</b> ${numberParticipants}`
-            memberCount.innerHTML = `<b>Aantal aanmeldingen:</b> ${members.length}`
-            groupLenghtP.innerHTML = `<b>Duur van de coachgroep:</b> ${duration} maanden`
-            costsP.innerHTML = `<b>Kosten:</b> ${costs} euro`
+            numberParticipantsP.innerHTML = `<b>Aantal deelnemers:</b><br> ${numberParticipants}`
+            memberCount.innerHTML = `<b>Aantal aanmeldingen:</b><br> ${members.length}`
+            groupLenghtP.innerHTML = `<b>Duur van de coachgroep:</b><br> ${duration} maanden`
+            startdateP.innerHTML = `<b>Startdatum:</b><br> ${startdate}`
+            costsP.innerHTML = `<b>Kosten:</b><br> ${costs} euro`
             leaveGroup.innerHTML = "Aanmelding annuleren"
 
             // Coachgroup agreement
@@ -155,11 +160,10 @@ db.collection("Coachgroups").where("Type", "==", "Coachgroup").get().then(queryS
             bottomDiv.appendChild(groupTitleH2)
             bottomDiv.appendChild(descriptionP)
             groupInnerDiv.appendChild(metaDiv)
-            metaDiv.appendChild(dataP)
             metaDiv.appendChild(numberParticipantsP)
-            metaDiv.appendChild(startNumberP)
             metaDiv.appendChild(memberCount)
             metaDiv.appendChild(groupLenghtP)
+            metaDiv.appendChild(startdateP)
             metaDiv.appendChild(costsP)
             groupInnerDiv.appendChild(buttonDiv)
             buttonDiv.appendChild(groupButton)
@@ -359,17 +363,19 @@ function hideLandingIfAuthIsMember(membersArray, groupLandingPageOuterDiv){
     });
 }; 
 
-function groupFactsLanding(memberCount, totalCosts, maximumMembersCount, groupType, durationTime){
+function groupFactsLanding(memberCount, totalCosts, maximumMembersCount, durationTime, startDate){
 
     const numberOfMembersLi = document.createElement("li")
     const maximumMembers = document.createElement("li")
     const costs = document.createElement("li")
     const duration = document.createElement("li")
+    const start = document.createElement("li")
 
         numberOfMembersLi.innerHTML = `<b>Aantal aanmeldingen:</b> ${memberCount.length}`
         costs.innerHTML = `<b>Kosten:</b> ${totalCosts} euro`
         maximumMembers.innerHTML = `<b>Aantal deelnemers:</b> ${maximumMembersCount}`
         duration.innerHTML = `<b>Duur van coachgroep:</b> ${durationTime} maanden`
+        start.innerHTML = `<b>Start datum:</b> ${startDate}`
 
         groupFactsUl.appendChild(maximumMembers)
         if(groupFactsUl != null){
@@ -377,6 +383,7 @@ function groupFactsLanding(memberCount, totalCosts, maximumMembersCount, groupTy
             };
         groupFactsUl.appendChild(duration)
         groupFactsUl.appendChild(costs)
+        groupFactsUl.appendChild(start)
 };
 
 function groupDescriptionLanding(descriptionOfGroup){
@@ -415,12 +422,19 @@ function hideLandingModal(){
             const maxMembers = doc1.data().NumberParticipants
             const groupDescription = doc1.data().Description
             const duration = doc1.data().GroupLength
+            const start = doc1.data().StartDate
+
+            const dateArray = start.split("-")
+
+            const date = `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`
+
+            console.log(dateArray)
 
             groupLandingH1(roomClean)
 
             groupLandingCreatorInformation(creator, type1)
 
-            groupFactsLanding(members, price, maxMembers, type1, duration)
+            groupFactsLanding(members, price, maxMembers, duration, date)
     
             hideLandingIfAuthIsMember(members, groupLandingPageOuterDiv)
     
@@ -749,7 +763,7 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
         function messageOptions(sender, chatMessage, chatRoom, authChatter){
             const options = document.createElement("p")
                options.setAttribute("class", "message-options")
-            options.innerText = "..."
+            options.innerText = "+"
        
             const sendAsMail = document.createElement("p")
                sendAsMail.setAttribute("class", "send-chat-as-mail")
@@ -763,7 +777,12 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
             options.appendChild(sendAsMail)
        
             options.addEventListener("click", () => {
-                   sendAsMail.style.display = "block" 
+                if(sendAsMail.style.display === "block"){
+                   sendAsMail.style.display = "none" 
+                } else {
+                    sendAsMail.style.display = "block" 
+                };
+
             });
        };
        
@@ -808,16 +827,16 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
                                    cc: "info@vitaminds.nu",
                            message: {
                            subject: `Je hebt een nieuw coachbericht ontvangen van ${SenderNameClean} in je Coachgroep ${titelClean}`,
-                           html: `Hallo ${naam}, </br></br>
+                           html: `Hallo ${naam}, <br><br>
                                    ${SenderNameClean} heeft je een bericht gestuurd in de Coachgroep ${titelClean} : <br><br>
        
-                                   ${message}<br><br>
+                                   "${message}"<br><br>
                                    
                                    Ga naar je <a href="www.vitaminds.nu/Group/${titel}.html">Coachgroep</a> om op het bericht te reageren.<br><br>
                                    P.s. Om privacyredenen kun je coachgroep alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
                            
-                                   Vriendelijke groet, </br></br>
-                                   Het Vitaminds Team </br></br>
+                                   Vriendelijke groet, <br></br>
+                                   Het Vitaminds Team <br></br>
                                    <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
                            Gebruikersnaam: naam,
                            Emailadres: email,
@@ -954,6 +973,8 @@ function updateReadListGroup(docID, authName, titleURL){
 
         const messages = doc2.data().Messages
 
+        console.log(messages)
+
         if (messages != 0){
 
     chatRef.collection("Messages")
@@ -981,18 +1002,22 @@ function updateReadListGroup(docID, authName, titleURL){
         })
         .then(() => {
 
+            console.log("Readlist geupdate")
             window.open(`../Group/${titleURL}.html`, "_self");
         });
     } else {
+        console.log("Als auth sender is")
         window.open(`../Group/${titleURL}.html`, "_self");
     };   
         });
     } else {
+        console.log("Bericht is niet nieuw")
         window.open(`../Group/${titleURL}.html`, "_self");
     };
                 });
             });
         } else {
+            console.log("Geen nieuwe berichten")
             window.open(`../Group/${titleURL}.html`, "_self");
         }
     });
@@ -1136,6 +1161,8 @@ db.collection("Coachgroups").where("Members", "array-contains", auth).get().then
                     // Open group
                     chatsDiv.addEventListener("click", () => {
 
+                        console.log("klik")
+
                         updateOnlineStatusGroup(doc1.id, auth)
                     
                         updateReadListGroup(doc1.id, auth, title)
@@ -1277,40 +1304,6 @@ function upgradeModal(notice){
     };
 }();
 
-// Group goal
-const groupGoalSelect = document.getElementById("create-practicegroup-goal-select")
-
-if(groupGoalSelect != null){
-
-db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
-    querySnapshot.forEach(doc=> {
-            const doel = doc.data().Levensvraag
-
-            const option = document.createElement("option")
-
-            option.innerHTML = doel
-
-            groupGoalSelect.appendChild(option)
-        });
-    });
-};
-
-const coachgroupGoalSelect = document.getElementById("create-coachgroup-goal-select")
-
-if(coachgroupGoalSelect != null){
-
-db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
-    querySnapshot.forEach(doc=> {
-            const doel = doc.data().Levensvraag
-
-            const option = document.createElement("option")
-
-            option.innerHTML = doel
-
-            coachgroupGoalSelect.appendChild(option)
-        });
-    });
-};
 
 // Title
 
@@ -1439,12 +1432,20 @@ function saveCoachgroup(){
         userRef.get().then(function(doc) {
     
             const auth = doc.data().Gebruikersnaam
+            const authClean = doc.data().GebruikersnaamClean
     
     const title = document.getElementById("coachgroup-title").value
     const description = document.getElementById("coachgroup-description").value
     const numberParticipants = document.getElementById("coachgroup-number-participants").value
     const costs = document.getElementById("coachgroup-costs").value
     const groupLength = document.getElementById("coachgroup-length").value
+    const startdate = document.getElementById("coachgroup-start").value
+
+    const dateArray = startdate.split("-")
+
+    const day = dateArray[2]
+    const month = dateArray[1]
+    const year = dateArray[0]
 
     // Group goal
     const groupGoalSelect = document.getElementById("create-coachgroup-goal-select")
@@ -1452,7 +1453,9 @@ function saveCoachgroup(){
     const select = groupGoalSelect.options
     const option = select[select.selectedIndex].innerHTML
 
-   db.collection("Chats").doc().set({
+    saveCoachgroupAsEvent(auth, authClean, title, description, day, month, year, numberParticipants, costs, `<a href="../Group/${idClean + title}.html", "_self"`, coverPhoto, idClean)
+
+   db.collection("Coachgroups").doc().set({
         Eigenaar: "Vitaminds",
         Room: idClean + title,
         RoomClean: title,
@@ -1460,16 +1463,18 @@ function saveCoachgroup(){
         Description: description,
         NumberParticipants: numberParticipants,
         Costs: costs,
+        Messages: 0,
         GroupLength: groupLength,
         Members: firebase.firestore.FieldValue.arrayUnion(auth),
         Goal: option,
+        StartDate: startdate,
         Online: [],
         Type: "Coachgroup", 
         CoverPhoto: coverPhoto
                 }).then(() => {
                         const notice = document.createElement("p")
 
-                        notice.innerText = "Je groep is aangemaakt!"
+                        notice.innerHTML = "Je <u>groep</u> is aangemaakt!"
 
                         const buttonCoachGroup = document.getElementById("button-coachgroup")
 
@@ -1484,6 +1489,29 @@ function saveCoachgroup(){
             });
         };
     });
+};
+
+function saveCoachgroupAsEvent(authName, authNameClean, titleGroup, description, day, month, year, participants, price, link, banner, id){
+
+    db.collection("Events").doc().set({
+        Organizer: authName,
+        OrganizerClean: authNameClean,
+        Title: titleGroup,
+        TitleID: `${id} + ${title}`,
+        Description: description,
+        Date: `${day}-${month}-${year}`,
+        DateDay: day,
+        Participants: [],
+        DateMonth: month,
+        DateYear: year,
+        MaxParticipants: participants,
+        Price: price,
+        Location: link,
+        Online: "Online",
+        Banner: banner,
+        Type: "coachgroup",
+        Owner: "Vitaminds"
+                });
 };
 
 

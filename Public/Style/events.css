@@ -141,16 +141,28 @@
     margin: 20px 10% 20px 10%;
 }
 
+.event-type{
+    color: white;
+    border: 1px solid #a7bdbd;
+    background-color: #a7bdbd;
+    border-radius: 15px;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .event-outer-div h2{
-    margin-top: 10px;
+    margin: 10px;
+    font-size: 25px;
 }
 
 .date-event{
     background-color: white;
     border-radius: 5px;
-    margin: -10px 50px 20px 50px;
+    margin: 10px 50px 20px 50px;
     padding: 10px;
-
+    font-weight: bold;
 }
 
 .organizer-event-div{

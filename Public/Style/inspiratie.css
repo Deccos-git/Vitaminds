@@ -105,6 +105,10 @@ table td{
     width: auto;
 }
 
+#button-lifelesson{
+    display: none;
+}
+
 #select-route-div{
     display: none;
     flex-direction: column;
@@ -120,7 +124,7 @@ table td{
 }
 
 #notice{
-    display: none;
+    display: block;
     font-size: 18px;
 }
 
@@ -372,6 +376,11 @@ table td{
     flex-wrap: wrap;
 }
 
+.timestamp-p{
+    font-size: 14px;
+    margin-top: -10px;
+}
+
 .tool-outer-div{
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
     display: flex;
@@ -556,6 +565,7 @@ table td{
     width: 890px;
     font-size: 18px;
     color: #122b46;
+    letter-spacing: 1px;
 }
 
 #paragraph-list{

@@ -638,8 +638,7 @@ ul{
   font-family: 'Nunito Sans', sans-serif;
   font-size: 18px;
   color: #008e8e;
-  cursor: pointer;
-  margin-top: auto;
+  cursor: pointer; 
  }
 
  .button-algemeen-card a{
@@ -669,7 +668,7 @@ ul{
 }
 
 .button-welkom{
-  background-color: #0c6665;
+  background-color: white;
   border: 1px #0c6665 solid;
   border-radius: 10px;
   font-family: 'Nunito Sans', sans-serif;
@@ -779,8 +778,12 @@ ul{
   justify-content: center;
 }
 
-#coaches-section{
+#features-section{
   background-color: #a7bdbd;
+}
+
+#coaches-section{
+  background-color: white;
 }
 
 #digimind-section{

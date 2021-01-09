@@ -14,12 +14,6 @@ const titel11 = titel10.replace('%20',' ')
 const titel12 = titel11.split("?fb")
 const titel = titel12[0]
 
-// Warning when leaving page
-
-window.onbeforeunload = function(){
-    return 'Weet je zeker dat je alles hebt opgeslagen?';
-  };
-
 // UPDATE META TAGS
 function workshopMetaTags(descriptionWorkshop, titleWorkshop, bannerWorkshop){
 const keywords = document.getElementById("meta-keywords")
@@ -53,10 +47,10 @@ querySnapshot.forEach(doc => {
 });
 
 // WORKSHOP LANDING
-
 const workshopLandingPageOuterDiv = document.getElementById("workshop-landing-page")
 const workshopLandingTitle = document.getElementById("workshop-landing-title")
 const buttonWorkshopLanding = document.getElementById("button-workshop-landing")
+// See stripe.js for workshopButtonLanding
 const workshopDescription = document.getElementById("workshop-description")
 const workshopFactsUl = document.getElementById("workshop-facts")
 const agreementSection = document.getElementById("workshop-agreement")
@@ -252,6 +246,245 @@ function hideLandingIfAuthIsArrayMember(array){
         };
     });
 }();
+
+// Goal check
+
+function authRoutes(workshopDomain){
+
+    const authRouteDiv = document.getElementById("auth-routes")
+
+    const routeArray = []
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+            db.collection("Vitaminders").doc(User.uid).get()
+            .then(doc => {
+    
+
+                const nameClean = doc.data().GebruikersnaamClean
+                const name = doc.data().Gebruikersnaam
+
+                authHasNoRouteNotice(authRouteDiv, workshopDomain, nameClean)
+
+                console.log(workshopDomain)
+
+                db.collection("Vitaminders")
+                .doc(doc.id).collection("Levensvragen")
+                .where("Domain", "==", workshopDomain)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc1 => {
+
+                        const routes = doc1.data().LevensvraagClean
+
+                        routeArray.push(routes)
+
+                        console.log(routeArray.length)
+
+                        if(routeArray.length === 1){
+                            
+                            authHasOneRouteNotice(authRouteDiv, workshopDomain, nameClean, routes)
+
+                        } else if (routeArray.length > 1){
+
+                                authHasMultipleRouteNotice(authRouteDiv, workshopDomain, nameClean)
+
+                        };
+                    });
+                });
+            });
+        };
+    });
+};
+
+function appendRoutesOfAUthToRouteSelect(workshopDomain){
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+            db.collection("Vitaminders").doc(User.uid).get()
+            .then(doc => {
+
+                db.collection("Vitaminders")
+                .doc(doc.id).collection("Levensvragen")
+                .where("Domain", "==", workshopDomain)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc1 => {
+
+                        const routes = doc1.data().LevensvraagClean
+
+    const routeSelect = document.getElementById("routeSelectAuth")
+
+    const option = document.createElement("option")
+
+    option.innerHTML = `<b>${routes}</b>`
+
+    routeSelect.appendChild(option)
+
+    console.log(routeSelect)
+
+                    });
+                });
+            });
+        };
+    });
+};
+
+function authHasNoRouteNotice(authHasNoRouteDiv, workshopDomain, nameClean){
+    authHasNoRouteDiv.innerHTML = `
+                Het thema van deze workshop is <b>${workshopDomain}</b>.  <br> <br>
+                Ik zie dat je nog geen ontwikkeltraject hebt gestart met dit thema.  <br> 
+                Maak eerst even een ontwikkelstraject met het thema ${workshopDomain}.  <br> 
+                Dan kun je alles wat je bij deze workshop leert in je onwikkelomgeving opslaan. <br>  <br> 
+                <button onclick="startRoute()">Ontwikkeltraject maken</button>`
+}
+
+function authHasOneRouteNotice(authHasOneRouteDiv, workshopDomain, nameClean, routeOfAuth){
+    authHasOneRouteDiv.innerHTML = `
+                Het thema van deze workshop is <b>${workshopDomain}</b>. <br><br>
+                Ik zie dat je een ontwikkeltraject hebt met dit thema: <br>
+                <select id="routeSelectAuth"></select> <br>
+                Wil je deze workshop aan dat ontwikkeltraject koppelen?<br><br>
+                Alles dat je over jezelf leert tijdens deze workshop wordt dan onder dat traject opgeslagen in je ontwikkelomgeving.<br><br>
+                <div class="goal-auth-buttons">
+                <button class="button-algemeen button-workshop" onclick="linkRouteAndWorkshop()">Ontwikkeltraject koppelen</button>
+                </div>
+                <div class="goal-auth-buttons">
+                <button class="button-algemeen button-workshop" onclick="startRoute()">Nieuw ontwikkeltraject starten</button>
+                </div>`
+                
+}
+
+function authHasMultipleRouteNotice(authHasOneRouteDiv, workshopDomain, nameClean){
+    authHasOneRouteDiv.innerHTML = `
+                Het thema van deze workshop is <b>${workshopDomain}</b>. <br><br>
+                Ik zie dat je meerdere ontwikkeltrajecten hebt met dit thema: <br>
+                <select id="routeSelectAuth"></select> <br>
+                Wil je deze workshop aan een van deze ontwikkeltrajecten koppelen? <br>
+                Selecteer dat hierboven een van je ontwikkeltrajecten.<br><br>
+                Alles dat je over jezelf leert tijdens deze workshop wordt dan onder dat traject opgeslagen in je ontwikkelomgeving.<br><br>
+                <div class="goal-auth-buttons">
+                <button class="button-algemeen button-workshop" onclick="linkRouteAndWorkshop()">Ontwikkeltraject koppelen</button>
+                </div>
+                <div class="goal-auth-buttons">
+                <button class="button-algemeen button-workshop" onclick="startRoute()">Nieuw ontwikkeltraject starten</button>
+                </div>`
+}
+
+function linkRouteAndWorkshop(){
+
+    let workshopDomain = ""
+
+    const routeSelect = document.getElementById("routeSelectAuth")
+
+    const option = routeSelect.options
+    const selected = option[option.selectedIndex].innerHTML
+
+    db.collection("Workshops")
+                .where("WorkshopTitle", "==", titel)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+
+                        workshopDomain = doc.data().Goal
+
+                    });
+                })
+                .then(() => {
+
+                    saveSet(workshopDomain, selected)
+
+                });
+};
+
+
+function createGoalAndStartWorkshop(){
+
+    const workshopGoal = document.getElementById("workshop-goal-title").innerText
+    const goalTitle = document.getElementById("personal-goal-title").value
+    const goalDescription = document.getElementById("goal-summary").value
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+            db.collection("Vitaminders").doc(User.uid).get()
+            .then(doc => {
+
+                const auth = doc.data().Gebruikersnaam
+
+                db.collection("Vitaminders")
+                .doc(doc.id).collection("Levensvragen").doc()
+                .set({
+                    Eigenaar: "Vitaminds",
+                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                    Gebruikersnaam: auth,
+                    Domain: workshopGoal,
+                    Levenslessen: [],
+                    ID: idClean,
+                    Levensvraag: idClean + goalTitle,
+                    LevensvraagClean: goalTitle,
+                    Omschrijving: goalDescription,
+                    Openbaar: "private"
+                })
+                .then(() => {
+                    saveSet(workshopGoal, goalTitle)
+                });
+            });
+        };
+    });
+};
+
+function checkIfAuthHasSaveSet(docID){
+
+    const checkGoalOuterDiv = document.getElementById("workshop-goal-check")
+    const workshopOuterDiv = document.getElementById("workshop-inner-div")
+
+    db.collection("Vitaminders").doc(docID)
+    .collection("Workshops")
+    .where("Workshops", "==", titel)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            checkGoalOuterDiv.style.display = "none"
+            workshopOuterDiv.style.display = "flex"
+
+        });
+    });
+};
+
+!function workshopsQuery(){
+
+    const workshopDomainInStartNewRoute = document.getElementById("workshop-goal-title")
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+            db.collection("Vitaminders").doc(User.uid).get()
+            .then(doc => {
+
+                const auth = doc.data().Gebruikersnaam
+
+                db.collection("Workshops")
+                .where("WorkshopTitle", "==", titel)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+
+                        const workshopDomain = doc.data().Goal
+
+                        authRoutes(workshopDomain)
+
+                        workshopDomainInStartNewRoute.innerText = workshopDomain
+
+                        appendRoutesOfAUthToRouteSelect(workshopDomain)
+
+                    });
+                });
+            });
+        };
+    });
+}();
+
+function startRoute(){
+
+    const startNewRouteDiv = document.getElementById("set-new-goal-div")
+
+    startNewRouteDiv.style.display = "flex"
+}
     
 
    // Save set
@@ -281,138 +514,16 @@ function hideLandingIfAuthIsArrayMember(array){
         StepNineInput: "",
         ClosingInput: "",
         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                });
+                })
+                .then(() => {
+                    location.reload();
+                })
             });
         };
     });
 };
 
-// Append workshopgoal to auth goal or make a new goal
 
-const levensvraagArray = []
-
-function hideGoalDivAfterChoose(){
-    const goalDiv = document.getElementById("workshop-goal-check")
-
-    goalDiv.style.display = "none"
-};
-
-function appendGoal(){
-
-    auth.onAuthStateChanged(User =>{
-        if(User){
-          db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
-              const auth = doc.data().Gebruikersnaam;
-                const authGoal = doc.data().Goals
-
-                db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
-                    querySnapshot.forEach(doc1 => {
-    
-                        const workshopGoal = doc1.data().Goal
-
-                        if(authGoal.includes(workshopGoal)){
-
-                                authGoal.forEach(goal => {
-
-                                    if(goal == workshopGoal){
-
-                                    db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", auth)
-                                    .where("Goal", "==", goal).get().then(querySnapshot => {
-                                        querySnapshot.forEach(doc2 => {
-
-                                            const levensvraag = doc2.data().Levensvraag
-
-                                            // If more than one
-                                            levensvraagArray.push(levensvraag)
-
-                                        });
-                                    }).then(()=>{
-
-                                        hideGoalDivAfterChoose()
-
-                                        saveSet(workshopGoal, goal) 
-                                });
-                            };
-                        });
-                    };
-                });
-            });
-          });
-        };
-    });
-
-    const workshopDiv = document.getElementById("workshop-inner-div")
-    workshopDiv.style.display = "block"
-}
-
-function newGoal(){
-
-    const workshopGoalNewGoalDiv = document.getElementById("set-new-goal-div")
-
-    workshopGoalNewGoalDiv.style.display = "flex"
-
-    const workshopGoalTitlePreFill = document.getElementById("workshop-goal-title")
-
-    db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc1 => {
-
-            const workshopGoal = doc1.data().Goal
-
-            workshopGoalTitlePreFill.innerHTML = `<i>${workshopGoal}</i>`
-        });
-    });
-};
-
-function createGoalAndStartWorkshop(){
-
-    const workshopGoalTitlePreFill = document.getElementById("workshop-goal-title")
-
-    const personalGoalTitle = document.getElementById("personal-goal-title").value
-    const goalSummary = document.getElementById("goal-summary").value
-
-    auth.onAuthStateChanged(User =>{
-        if(User){
-          db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
-              const auth = doc.data().Gebruikersnaam;
-              const authGoal = doc.data().Goals
-
-              db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
-
-                    const workshopGoal = doc1.data().Goal
-
-                    workshopGoalTitlePreFill.innerHTML = `<i>${workshopGoal}</i>`
-
-        db.collection('Vitaminders').doc(User.uid).collection("Levensvragen").doc().set({
-            ID: idClean,
-            Goal: workshopGoal,
-            Levensvraag: idClean + personalGoalTitle,
-            LevensvraagClean: personalGoalTitle,
-            Levenslessen: [],
-            Gebruikersnaam: auth,
-            Eigenaar: "Vitaminds",
-            Omschrijving: goalSummary,
-            Openbaar: "Nee",
-            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-
-                        }).then(() => {
-                        db.collection('Vitaminders').doc(User.uid).update({
-                                Goals: firebase.firestore.FieldValue.arrayUnion(workshopGoal)
-                            });
-                            
-                        hideGoalDivAfterChoose()
-
-                        saveSet(workshopGoal, personalGoalTitle)
-                        });
-                    });
-                });                 
-            });
-        };
-    })
-
-    const workshopDiv = document.getElementById("workshop-inner-div")
-    workshopDiv.style.display = "block"
-};
 
 // All images responsive
 
@@ -460,68 +571,6 @@ function appendToolbar(stepTitle, toolbarDiv, toolbarCheck, toolbarCount, toolBa
         };
 }; 
 
-function appendWorkshopGoalorNewGoal(goal){
-    auth.onAuthStateChanged(User =>{
-        if(User){
-          db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
-              const auth = doc.data().Gebruikersnaam;
-              const authClean = doc.data().GebruikersnaamClean
-                const authGoal = doc.data().Goals
-
-                const workshopGoalDOM = document.getElementById("workshop-goal-check-inner-div")
-
-                if(authGoal == undefined){
-                    const workshopMessage = `<p>Het doel van deze workshop is <i>${goal}</i>.<br> 
-                Ik zie dat <i>${goal}</i> nog geen doel van je is.<br> 
-                Maak het eerst het doel <i>${goal}</i> aan. Dan beginnen we direct daarna met de workshop. </p><br>
-                <button onclick="newGoal()" id="new-goal">Nieuw doel aanmaken</button>`
-
-                workshopGoalDOM.innerHTML = workshopMessage
-                }
-
-                if(authGoal.includes(goal)){
-
-                        let authgoalThatsTheSameAsWorkshopGoal = ""
-
-                        authGoal.forEach(goalAuth => {
-
-                            if(goal === goalAuth){
-                                authgoalThatsTheSameAsWorkshopGoal = goalAuth
-                            };
-                        });
-               
-                    const workshopMessage = `<p>Het doel van deze workshop is <i>${goal}</i>.<br> 
-                    Ik zie dat jij een doel hebt met de naam: <i> ${authgoalThatsTheSameAsWorkshopGoal}</i>.<br> 
-                    Wil je deze workshop aan dat doel koppelen?</p><br>
-                    <button onclick="appendGoal()" id="append-goal">Koppelen</button><button onclick="newGoal()" id="new-goal">Nieuw doel aanmaken</button>`
-
-                    workshopGoalDOM.innerHTML = workshopMessage
-                    }
-                    else {
-                            const workshopMessage = `<p>Het doel van deze workshop is <i>${goal}</i>.<br> 
-                    Ik zie dat <i>${goal}</i> nog geen doel van je is.<br> 
-                    Maak het eerst het doel <i>${goal}</i> aan. Dan beginnen we daarna direct met de workshop. </p><br>
-                    <button onclick="newGoal()" id="new-goal">Nieuw doel aanmaken</button>`
-
-                    workshopGoalDOM.innerHTML = workshopMessage
-                        }
-
-                    if(authGoal == undefined){
-                        const workshopMessage = `<p>Het doel van deze workshop is <i>${goal}</i>.<br> 
-                    Ik zie dat jij <i>${goal}</i> nog geen doel van je is.<br> 
-                    Maak het eerst het doel <i>${goal}</i> aan. Dan beginnen we daarna direct met de workshop. </p><br>
-                    <button onclick="newGoal()" id="new-goal">Nieuw doel aanmaken</button>`
-
-                    workshopGoalDOM.innerHTML = workshopMessage
-                    }
-
-                        const appendGoal = document.getElementById("append-goal")
-                        const newGoal =document.getElementById("new-goal")
-            });
-        };
-    });
-}; 
-
  // Step overview
  function stepOverview(stepTitle, stepTitleP, innerTextTitleP, stepPreviewDiv, stepCheck, stepOverviewDom){
     if(stepTitle != ""){
@@ -559,7 +608,6 @@ function openDigimindAfterCloseWorkshopButton(){
     });
 };
 
-// Append workshopgoal to authgoal question in DOM
 db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
@@ -627,9 +675,6 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 
         // Add workshop data to edit workshop button
         addWorkshopDataToEditWorkshopButton(title, coach)
-
-        // Wokshop goal auth check
-        appendWorkshopGoalorNewGoal(workshopGoal)
 
         db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
@@ -1005,6 +1050,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                     const closingInputAuth = doc.data().ClosingInput
 
                 // Load step one
+                console.log(stepOneTitle)
                 if(stepOneTitle != ""){
                     stepOneIntroductionButton.addEventListener("click", () => {  
 
@@ -1259,6 +1305,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 
                                 closingButton.style.display = "block"
                                 stepTwoButton.style.display = "none"
+
+                                saveTwoButton.style.display = "none"
                                
                                 closingTitleH3.innerText = closingTwoTitle
                                 closingTextP.innerHTML = closingTwoText
@@ -1386,6 +1434,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                             closingButton.style.display = "block"
 
                             stepThreeButton.style.display = "none"
+
+                            saveThreeButton.style.display = "none"
                            
                             closingTitleH3.innerText = closingThreeTitle
                             closingTextP.innerHTML = closingThreeText
@@ -1512,6 +1562,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 
                             closingButton.style.display = "block"
                             stepFourButton.style.display = "none"
+
+                            saveFourButton.style.display = "none"
                            
                             closingTitleH3.innerText = closingFourTitle
                             closingTextP.innerHTML = closingFourText
@@ -1638,6 +1690,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 
                                 closingButton.style.display = "block"
                                 stepFiveButton.style.display = "none"
+
+                                saveFourButton.style.display = "none"
                                
                                 closingTitleH3.innerText = closingFiveTitle
                                 closingTextP.innerHTML = closingFiveText
@@ -1767,7 +1821,9 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 
                                 closingButton.style.display = "block"
                                 stepSixButton.style.display = "none"
-                               
+
+                                saveFiveButton.style.display = "none"
+
                                 closingTitleH3.innerText = closingSixTitle
                                 closingTextP.innerHTML = closingSixText
     
@@ -1888,7 +1944,7 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                
                             } else {
 
-                                const stepSevenButton = document.getElementById("step-seven-button")
+                                const stepSevenButton = document.getElementById("step-eight-button")
 
                                 toolbarSevenCount.innerText = "V"
                                 toolbarSevenCheck.style.backgroundColor = "white"
@@ -1899,6 +1955,8 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
                                 closingButton.style.display = "block"
                                 stepSevenButton.style.display = "none"
                                 saveEightButton.style.display = "none"
+
+                                saveSixButton.style.display = "none"
                                
                                 closingTitleH3.innerText = closingSevenTitle
                                 closingTextP.innerHTML = closingSevenText
@@ -2029,7 +2087,9 @@ db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(queryS
 
                                 closingButton.style.display = "block"
                                 stepEightButton.style.display = "none"
-                               
+
+                                saveSevenButton.style.display = "none"
+
                                 closingTitleH3.innerText = closingEightTitle
                                 closingTextP.innerHTML = closingEightText
     
@@ -2792,10 +2852,6 @@ function hideSaveButtonShowUpdateButton(){
                 const closingNineTitle = doc.data().ClosingNineTitle
                 const workshopGoal = doc.data().Goal
 
-                console.log(workshopGoals)
-                console.log(workshopGoal)
-                console.log( tinyMCE.get('editor1'))
-
                 // Load workshop title
                 const workshopTitleDOM = document.getElementById("workshop-title")
 
@@ -3149,8 +3205,6 @@ function updateWorkshop(){
         // Price
         const workshopPrice = document.getElementById("workshop-price")
 
-        console.log(workshopPrice.value)
-
        // Step one
        const stepOneTitle =  document.getElementById("step-one-title").value
        const stepOneExplainer = tinyMCE.get('editor3').getContent()
@@ -3316,7 +3370,7 @@ function publishWorkshop(){
 
             console.log(workshopTitle)
             db.collection("Workshops").doc(doc.id).update({
-                Status: "Public"
+                Status: "Review"
             })
         })
     });
@@ -3327,29 +3381,6 @@ function publishWorkshop(){
     workshopPublishedNotification.style.display = "block"
     
 };
-
-// Select workshopgoal
-!function selectWorkshopGoal(){
-
-    const select = document.getElementById("select-goel-workshop")
-
-    if(select != null){
-
-    db.collection("Levensvragen").where("Eigenaar", "==", "Vitaminds").get()
-    .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            const goal = doc.data().Levensvraag
-
-            const option = document.createElement("option")
-
-            option.innerText = goal
-
-            select.appendChild(option)
-            });
-        });
-    };
-}();
 
 // Create steps
 
