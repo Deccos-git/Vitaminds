@@ -1,7 +1,13 @@
 // URL title
 const titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
-const titel1 = titelhtml.replace('.html', '')
-const titel2 = titel1.replace('%20',' ')
+const titelOne = titelhtml.replace('.html', '')
+const titelTwo = titelOne.replace('%20',' ')
+const titelThree = titelTwo.replace('%20',' ')
+const titelFour = titelThree.replace('%20',' ')
+const titelFive = titelFour.replace('%20',' ')
+const titelSix = titelFive.replace('%20',' ')
+const titelSeven = titelSix.replace('%20',' ')
+const titel2 = titelSeven.replace('%20',' ')
 const titel3 = titel2.replace('%20',' ')
 const titel4 = titel3.replace('%20',' ')
 const titel5 = titel4.replace('%20',' ')
@@ -77,6 +83,13 @@ function workshopLandingH1(workshopName){
             workshopLandingTitle.innerText = workshopName
 
     };
+};
+
+function workshopHeader(image){
+
+    const header = document.getElementById("workshop-header")
+
+    header.src = image
 };
 
 function groupLandingCreatorInformation(creator){
@@ -206,6 +219,7 @@ function hideLandingIfAuthIsArrayMember(array){
             workshopAgreementQuestion(creator)
             agreementButton()
             hideLandingIfAuthIsArrayMember(takersArray)
+            workshopHeader(bannerImage)
 
             workshopDescription.innerHTML = summary
 
@@ -334,7 +348,7 @@ function authHasNoRouteNotice(authHasNoRouteDiv, workshopDomain, nameClean){
                 Ik zie dat je nog geen ontwikkeltraject hebt gestart met dit thema.  <br> 
                 Maak eerst even een ontwikkelstraject met het thema ${workshopDomain}.  <br> 
                 Dan kun je alles wat je bij deze workshop leert in je onwikkelomgeving opslaan. <br>  <br> 
-                <button onclick="startRoute()">Ontwikkeltraject maken</button>`
+                <button class="button-algemeen button-workshop onclick="startRoute()">Ontwikkeltraject maken</button>`
 }
 
 function authHasOneRouteNotice(authHasOneRouteDiv, workshopDomain, nameClean, routeOfAuth){

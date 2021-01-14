@@ -995,7 +995,7 @@ function updateReadListGroup(docID, authName, titleURL){
 
         if(authSender != authName){
 
-        docRef.update({
+        chatRef.update({
 
         Read: firebase.firestore.FieldValue.arrayUnion(authName)
 

@@ -133,7 +133,7 @@ function followCoach(naamCoach){
                 const type = doc.data().Type
                 const timestamp = doc.data().Timestamp
                 const inspirator = doc.data().Auteur
-                const bron = doc.data().Titel
+                const lessonSource = doc.data().Source
                 const gebruikersnaam = doc.data().Gebruikersnaam
                 const levensvraag = doc.data().Levensvraag
                 const backgroundImage = doc.data().BackgroundImage
@@ -195,6 +195,10 @@ function followCoach(naamCoach){
                     bronDiv.appendChild(timestampMeta)
                     bronDiv.appendChild(metaDiv) 
 
+                    if(lessonSource != undefined){
+
+                    sourceP.innerHTML = `In: <a href="Artikelen/${lessonSource}.html">${lessonSource}</a>`
+                    };
 
                     // Loader display none
                     const loader = document.getElementById("loader")

@@ -106,6 +106,7 @@
 #events-overview{
     display: flex;
     justify-content: center;
+    background-color: whitesmoke;
 }
 
 #event-overview{

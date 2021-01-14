@@ -271,11 +271,67 @@
 
   <div class="private-outer-div" id="tools-outer-div">
     <a href="../tools.html"><button id="start-new-proces-button">Bekijk alle tools</button></a>
+    <div id="select-div">
+      <p>Selecteer een tool</p>
+      <select name="" id="select-tool" onchange="getTool(this)"></select>
+    </div>
     <div id="happiness-scale-div">
       <h2>Geluksschaal</h2>
+      <div id="chart-div">
+        <canvas id="happiness-chart"></canvas>
+      </div>
+      <p>Hoe hoog is je geluksgevoel vandaag?</p>
+      <div id="happiness-scale">
+        <img class="hapiness-scale-img" src="../images/hapiness-scale/heel-laag.png" alt="">
+        <img class="hapiness-scale-img" src="../images/hapiness-scale/laag.png" alt="">
+        <img class="hapiness-scale-img" src="../images/hapiness-scale/neutral.png" alt="">
+        <img class="hapiness-scale-img" src="../images/hapiness-scale/hoog.png" alt="">
+        <img class="hapiness-scale-img" src="../images/hapiness-scale/heel hoog.png" alt="">
+      </div>
+      <p id="happiness-entry-notice">Opgeslagen</p>
     </div>
     <div id="check-in-div">
-      <h2>Check in</h2>
+      <h2>Stok achter de deur</h2>
+      <div id="tool-settings">
+        <h3>Activeer een traject</h3>
+        <select name="" id="check-in-select-goals"></select>
+        <!-- <h3>Selecteer frequentie</h3>
+        <select name="" id="check-in-select-frequence">
+          <option value="dagelijks">Dagelijks</option>
+          <option value="wekeliks">Wekelijks</option>
+          <option value="maandelijks">Maandelijks</option>
+        </select> -->
+      </div>
+      <div id="activate-div">
+        <button onclick="activateCheckIn()" id="tool-button-digimind" class="button-digimind button-algemeen">Activeer</button>
+      </div>
+      <p id="activate-notice"></p>
+      <div id="activated-goals">
+      </div>
+    </div>
+    <div id="gratitute-journal-div">
+      <h2>Dankbaarheidsdagboek</h2>
+      <!-- <div id="reminder-div">
+        <img src="../images/design/mail-icon.png" alt="">
+      </div> -->
+      <div id="new-gratitude-div">
+        <p>Waar ben je dankbaar voor?</p>
+        <textarea id="gratitude-input"></textarea>
+        <div id="setPrivatePublicDiv">
+          <p>Wil je dit delen met iedereen of prive houden?</p>
+          <div id="input-div">
+            <input type="radio" id="Private" name="public-private-gratitude" value="Private"
+              checked>
+            <label for="Private">Prive</label>
+            <input type="radio" id="Public" name="public-private-gratitude" value="Public">
+            <label for="Public">Delen</label>
+          </div>
+        </div>
+      </div>
+      <button id="save-new-gratitude-button" class="button-algemeen button-digimind">Opslaan</button>
+      <div id="gratitudes-overview-div">
+        <div id="page-div"></div>
+      </div>
     </div>
   </div>
 

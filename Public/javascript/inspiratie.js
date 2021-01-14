@@ -7,7 +7,13 @@ const titelThree = titelTwo.replace('%20',' ')
 const titelFour = titelThree.replace('%20',' ')
 const titelFive = titelFour.replace('%20',' ')
 const titelSix = titelFive.replace('%20',' ')
-const titel1 = titelSix.replace('%20',' ')
+const titelSeven = titelSix.replace('%20',' ')
+const titelEight = titelSeven.replace('%20',' ')
+const titelNine = titelEight.replace('%20',' ')
+const titelTen = titelNine.replace('%20',' ')
+const titelEleven = titelTen.replace('%20',' ')
+const titelTwelve = titelEleven.replace('%20',' ')
+const titel1 = titelTwelve.replace('%20',' ')
 const titel2 = titel1.replace('%20',' ')
 const titel3 = titel2.replace('%20',' ')
 const titel4 = titel3.replace('%20',' ')
@@ -20,6 +26,8 @@ const titel10 = titel9.replace('%20',' ')
 const titel11 = titel10.replace('%20',' ')
 const titel12 = titel11.split("?fb")
 const titel = titel12[0]
+
+console.log(titel)
 
 // Meta tags
 !function setMetaAttributesArticle(){
@@ -43,7 +51,7 @@ const titel = titel12[0]
         db.collection("Articles").where("Title", "==", titel).get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
     
-                const headerImage = doc.data().HeaderImage
+                const headerImage = doc.data().HeaderImageSmall
     
                 facebookImg.content = headerImage
             
@@ -302,6 +310,7 @@ function sanityTinyMCE(){
         p.style.fontFamily = "Nunito Sans, sans-serif"
         p.style.letterSpacing = "1px"
         p.style.width = "auto"
+        p.style.marginTop = "0px"
     });
 
     const H2Array = Array.from(H2s)
@@ -339,23 +348,6 @@ function sanityTinyMCE(){
     });
 
 };
-
-function appendLifelessonsToInsight(titleInsight){
-    db.collectionGroup("Levenslesson").where("Source", "==", titel)
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            const lesson = doc.data().Levensles
-
-            const lessonDiv = document.createElement("div")
-            const lessonP = document.createElement("p")
-
-            lessonP.innerText = lesson
-
-            lessonDiv.appendChild(lessonP)
-        });
-    });
-}
 
 function showEditIconAuthorAndAdmin(icon){
 
@@ -684,55 +676,49 @@ function loadCreatorData(creatorName, innerSection){
 
     const lifelessonsOuterDiv = document.getElementById("lifelessons-div")
 
-    db.collectionGroup("Levensvragen")
-                .where("Openbaar", "==", "Ja")
-                .get().then(querySnapshot => {
-                    querySnapshot.forEach(doc => {
+    const divTitle = document.createElement("h3")
 
-                        const lifelessons = doc.data().Levenslessen
+    db.collectionGroup("Levenslessen")
+    .where("Source", "==", titel)
+    .where("Status", "==", "Approved")
+    .where("Type", "==", "Coach-inzicht")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
 
-                        lifelessons.forEach(lesson => {
+            const lifelesson = doc.data().Levensles
+            const route = doc.data().Levensvraag
+            const timestamp = doc.data().Timestamp
+            const creator = doc.data().Gebruikersnaam
 
-                        db.collectionGroup("Levenslessen").where("Source", "==", titel)
-                        .where("Levensles", "==", lesson)
-                        .where("Type", "==", "Coach-inzicht")
-                        .get().then(querySnapshot => {
-                            querySnapshot.forEach(doc1 => {
-
-                                const lifelesson = doc1.data().Levensles
-                                const source = doc1.data().Source
-                                const timestamp = doc1.data().Timestamp
-                                const creator = doc1.data().Gebruikersnaam
-
-                                console.log(source)
-
-
-                                const innerDiv = document.createElement("div")
-                                    innerDiv.setAttribute("class", "inner-div")
-                                const divTitle = document.createElement("h3")
-                                const lifelessonP = document.createElement("p")
-                                    lifelessonP.setAttribute("id", "lifelesson-p")
-                                const metaDiv = document.createElement("div")
-                                    metaDiv.setAttribute("id", "meta-div")
-                                const sourceP = document.createElement("p")
-                                const timestampP = document.createElement("p")
-                                
-                                divTitle.innerText = "Wat mensen over zichzelf geleerd hebben"
-                                lifelessonP.innerText = lifelesson
-                                sourceP.innerText = source
-                                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const innerDiv = document.createElement("div")
+                innerDiv.setAttribute("class", "inner-div")
+            const lifelessonP = document.createElement("p")
+                lifelessonP.setAttribute("id", "lifelesson-p")
+            const metaDiv = document.createElement("div")
+                metaDiv.setAttribute("id", "meta-div")
+            const timestampP = document.createElement("p")
+            
+            divTitle.innerText = "Wat mensen over zichzelf geleerd hebben van dit artikel"
+            lifelessonP.innerText = lifelesson
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                                 timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options)
-                               
-                                lifelessonsOuterDiv.appendChild(divTitle)
-                                lifelessonsOuterDiv.appendChild(innerDiv)
 
-                                loadCreatorData(creator, innerDiv)
+            // Check if route is public
+            db.collectionGroup("Levensvragen")
+            .where("Levensvraag", "==", route)
+            .where("Openbaar", "==", "Ja")
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+            
+                    lifelessonsOuterDiv.appendChild(divTitle)
+                    lifelessonsOuterDiv.appendChild(innerDiv)
+                            
+                    loadCreatorData(creator, innerDiv)
 
-                                innerDiv.appendChild(lifelessonP)
-                                innerDiv.appendChild(metaDiv)
-                                metaDiv.appendChild(sourceP)
-                                metaDiv.appendChild(timestampP)
-                    });
+                    innerDiv.appendChild(metaDiv)
+                    innerDiv.appendChild(lifelessonP)
+                    metaDiv.appendChild(timestampP)
+
                 });
             });
         });
@@ -746,6 +732,7 @@ function loadArticlesWithSameDomain(articleDomain){
     const loadMoreOuterDiv = document.getElementById("more-inspiration")
 
     db.collection("Articles").where("Domain", "==", articleDomain)
+    .where("Status", "==", "Approved")
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
     

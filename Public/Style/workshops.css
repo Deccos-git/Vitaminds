@@ -4,6 +4,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    background-color: whitesmoke;
 }
 
 .workshop-section{
@@ -107,8 +108,12 @@
 }
 
 #workshop-description{
-    margin: 20px 100px;
+    margin: 40px 100px;
     text-align: left;
+}
+
+#workshop-description span{
+    font-size: 20px !important;
 }
 
 #workshop-facts li{

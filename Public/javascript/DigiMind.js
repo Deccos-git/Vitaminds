@@ -593,8 +593,6 @@ function getSection(){
         const option = mobileMenuSelect.options
         const selected = option[option.selectedIndex].innerHTML
 
-        console.log(privateOuterDiv[6])
-
         if (selected === "Mijn trajecten"){
                 privateOuterDiv[0].style.display = "flex"
                 privateOuterDiv[1].style.display = "none"
@@ -962,7 +960,7 @@ function displayCoachSelectAndOverviewIfFavoriteCoaches(favoriteCoachesQuery){
 
         if (favoriteCoachesQuery != undefined){
                 coachSelectDiv.style.display = "flex"
-                overViewDiv.style.display = "block"
+                overViewDiv.style.display = "flex"
         };
 
 };
@@ -1109,38 +1107,352 @@ function createCoachDOMElements(coachName, title,time){
 
 // Tools
 
-!function showHapinessToolIfInstalled(){
+function getTool(){
 
-        const happinessDiv = document.getElementById("happiness-scale-div")
-
-        db.collection("Tools")
-        .where("Tool", "==", "HapinessChart")
-        .where("Installs", "array-contains", naam)
-        .get().then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-
-                        happinessDiv.style.display = "flex"
-
-                });
-        });
-}();
-
-!function showCheckInDiv(){
-
+        const toolSelect = document.getElementById("select-tool")
+        const happinessChartDiv = document.getElementById("happiness-scale-div")
         const checkInDiv = document.getElementById("check-in-div")
+        const gratitudeDiv = document.getElementById("gratitute-journal-div")
 
-        db.collection("Tools")
-        .where("Tool", "==", "Check-in")
-        .where("Gebruikersnaam", "==", naam)
-        .get().then(querySnapshot => {
+        const option = toolSelect.options
+        const selected = option[option.selectedIndex].innerHTML
+
+        if(selected === "Geluksschaal"){
+                happinessChartDiv.style.display = "flex"
+                checkInDiv.style.display = "none"
+                gratitudeDiv.style.display = "none"
+        } else if (selected === "Stok achter de deur"){
+                checkInDiv.style.display = "flex"
+                gratitudeDiv.style.display = "none" 
+                happinessChartDiv.style.display = "none"
+        } else if (selected === "Dankbaarheidsdagboek"){
+                gratitudeDiv.style.display = "flex"
+                checkInDiv.style.display = "none"
+                happinessChartDiv.style.display = "none"
+        };
+};
+
+function showToolOptionIfInstalled(toolName, optionID, optionValue, optionText){
+
+        const selectDiv = document.getElementById("select-div")
+
+        const toolSelect = document.getElementById("select-tool")
+        const option = document.createElement("option")
+                option.setAttribute("id", optionID)
+                option.setAttribute("value", optionValue)
+
+        option.innerText = optionText
+
+        auth.onAuthStateChanged(User =>{
+                db.collection("Vitaminders").doc(User.uid)
+                .get()
+                    .then(doc => {
+                        const tools = doc.data().Tools
+
+                        if(tools.includes(toolName)){
+                                toolSelect.appendChild(option)
+
+                                selectDiv.style.display = "block"
+                        };
+                })
+                .then(() => {
+                        showFirstToolInSelect(toolSelect)
+                })
+        });
+};
+
+showToolOptionIfInstalled("Check in", "check-in-option", "check-in", "Stok achter de deur")
+showToolOptionIfInstalled("Happiness Chart", "happiness-option", "happiness-scale", "Geluksschaal")
+showToolOptionIfInstalled("Gratitude Journal", "gratitude-option", "gratitude-journal", "Dankbaarheidsdagboek")
+
+function showFirstToolInSelect(toolSelect){
+
+        const option = toolSelect.querySelectorAll("option")[0].value
+
+        const hapinessChart = document.getElementById("happiness-scale-div")
+        const checkInDiv = document.getElementById("check-in-div")
+        const gratitudeDiv = document.getElementById("gratitute-journal-div")
+
+        if(option === "happiness-scale"){
+                hapinessChart.style.display = "flex"
+        } else if (option === "gratitude-journal"){
+                gratitudeDiv.style.display = "flex"
+        } else if (option === "check-in"){
+                checkInDiv.style.display = "flex"
+        }; 
+};
+
+   
+function hapinessChartAxis(dates, heightOfHapiness){
+
+        const hapinessChart = document.getElementById('happiness-chart').getContext('2d');
+
+const myChart = new Chart(hapinessChart, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: 'Geluksniveau',
+                data: heightOfHapiness,
+                backgroundColor: [
+                        "#0c66650D"
+                ],
+                borderColor: [
+                        "#0c6665"
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+                legend: {
+                        display: false
+                },           
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        userCallback: function(label, index, labels) {
+                                // when the floored value is the same as the value we have a whole number
+                                if (Math.floor(label) === label) {
+                                    return label;
+                                }
+                        }
+                    }
+                }]
+            }
+        }
+    });
+};
+
+!function fillHapinessChartWithData(){
+const dateArray = []
+const heightArray = []
+
+        db.collectionGroup("HapinessScale")
+        .orderBy("Timestamp", "asc")
+        .where("User", "==", naam)
+        .onSnapshot(querySnapshot => {
                 querySnapshot.forEach(doc => {
 
-                        checkInDiv.style.display = "flex"
+                    const height = doc.data().Height
+                    const date = doc.data().Timestamp
+
+                    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+                    const dateLocale = date.toDate().toLocaleDateString("nl-NL", options);
+
+                    dateArray.push(dateLocale) 
+                    heightArray.push(height)
+
+                    hapinessChartAxis(dateArray, heightArray)
 
                 });
         });
-
 }();
+
+!function newHappinessEntry(){
+        const veryLow = document.getElementsByClassName("hapiness-scale-img")
+
+        veryLow[0].addEventListener("mouseover", () => {
+                veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+                veryLow[1].src = "../images/hapiness-scale/laag.png"
+                veryLow[2].src = "../images/hapiness-scale/neutral.png"
+                veryLow[3].src = "../images/hapiness-scale/hoog.png"
+                veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
+        });
+
+        veryLow[1].addEventListener("mouseover", () => {
+                veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+                veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
+                veryLow[2].src = "../images/hapiness-scale/neutral.png"
+                veryLow[3].src = "../images/hapiness-scale/hoog.png"
+                veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
+        });
+
+        veryLow[2].addEventListener("mouseover", () => {
+                veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+                veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
+                veryLow[2].src = "../images/hapiness-scale/neutral-hover.png"
+                veryLow[3].src = "../images/hapiness-scale/hoog.png"
+                veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
+        });
+
+        veryLow[3].addEventListener("mouseover", () => {
+                veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+                veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
+                veryLow[2].src = "../images/hapiness-scale/neutral-hover.png"
+                veryLow[3].src = "../images/hapiness-scale/hoog-hover.png"
+                veryLow[4].src = "../images/hapiness-scale/heel hoog.png"
+        });
+
+        veryLow[4].addEventListener("mouseover", () => {
+                veryLow[0].src = "../images/hapiness-scale/heel-laag-hover.png"
+                veryLow[1].src = "../images/hapiness-scale/laag-hover.png"
+                veryLow[2].src = "../images/hapiness-scale/neutral-hover.png"
+                veryLow[3].src = "../images/hapiness-scale/hoog-hover.png"
+                veryLow[4].src = "../images/hapiness-scale/heel hoog-hover.png"
+        });
+
+        saveHapiness(0, veryLow)
+        saveHapiness(1, veryLow)
+        saveHapiness(2, veryLow)
+        saveHapiness(3, veryLow)
+        saveHapiness(4, veryLow)
+}();
+
+
+function saveHapiness(heightOfHapiness, veryLow){
+
+        const happinessEntryNotice = document.getElementById("happiness-entry-notice")
+
+        veryLow[heightOfHapiness].addEventListener("click", () => { 
+
+                auth.onAuthStateChanged(User =>{
+                        if (User){
+                        db.collection("Vitaminders").doc(User.uid)
+                        .collection("HapinessScale").doc()
+                                .set({
+                                        Height: heightOfHapiness,
+                                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                        Eigenaar: "Vitaminds",
+                                        User: naam
+                                })
+                        };
+                });
+        });
+};
+
+
+
+
+!function saveNewGratitute(){
+
+        const saveNewGratituteButton = document.getElementById("save-new-gratitude-button")
+
+        saveNewGratituteButton.addEventListener("click", () => {
+
+                const privatePublicOption = document.querySelector('input[name="public-private-gratitude"]:checked').value;
+
+                const newInput = document.getElementById("gratitude-input").value
+                saveNewGratituteButton.innerText = "Opgeslagen"
+
+                db.collection("Tools").doc().set({
+                        Type: "Gratitude",
+                        Gratitude: newInput,
+                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                        Owner: "Vitaminds",
+                        User: naam,
+                        PublicPrivate: privatePublicOption,
+                });
+        });
+}();
+
+!function displayGratitudesInOverview(){
+
+        const journalPage = document.getElementById("page-div")
+
+        db.collection("Tools")
+        .where("Type", "==", "Gratitude")
+        .where("User", "==", naam)
+        .orderBy("Timestamp", "desc")
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        const gratitude = doc.data().Gratitude
+                        const timestamp = doc.data().Timestamp
+                        const publicPrivate = doc.data().PublicPrivate
+
+                        const gratitudeDiv = document.createElement("div")
+                                gratitudeDiv.setAttribute("class", "gratitude-div")
+                        const gratitudeH3 = document.createElement("h3")
+                        const publicPrivateImgDiv = document.createElement("div")
+                                publicPrivateImgDiv.setAttribute("class", "public-private-image-div")
+                        const publicPrivateImg = document.createElement("img")
+                        const dateP = document.createElement("p")
+
+                        gratitudeH3.innerText = gratitude
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        dateP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options)
+
+                        showPublicPrivateOptionOnHoverOverIcon(publicPrivateImgDiv, publicPrivate, publicPrivateImg, gratitude)
+
+                        if(publicPrivate === "Private"){
+                                publicPrivateImg.src = "../images/private.png"
+                        } else if (publicPrivate === "Public"){
+                                publicPrivateImg.src = "../images/public.png"
+                        };
+
+                        journalPage.appendChild(gratitudeDiv)
+                        gratitudeDiv.appendChild(dateP)
+                        gratitudeDiv.appendChild(publicPrivateImgDiv)
+                        publicPrivateImgDiv.appendChild(publicPrivateImg)
+                        gratitudeDiv.appendChild(gratitudeH3)
+
+                });
+        });
+}();
+
+function setPublicPrivateStatusOfGratitude(elem){
+
+        elem.innerHTML = `<p id="changed-notice">Gewijzigd</p>`
+
+        const gratitudeTitle = elem.dataset.gratitude
+        const privatePublicStatus = elem.dataset.status
+
+        let status = ""
+
+        if(privatePublicStatus === "Private"){
+                status = "Public"
+        } else if (privatePublicStatus === "Public"){
+                status = "Private"
+        };
+
+        db.collection("Tools")
+        .where("Type", "==", "Gratitude")
+        .where("Gratitude", "==", gratitudeTitle)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        db.collection("Tools")
+                        .doc(doc.id).update({
+                                PublicPrivate: status
+                        })
+                });
+        });
+};
+
+function showPublicPrivateOptionOnHoverOverIcon(icon, status, image, gratitude){
+
+        image.addEventListener("click", () => {
+
+                const optionsDiv = document.createElement("div")
+                        optionsDiv.setAttribute("class", "options-div")
+                const noticeP = document.createElement("p")
+                const changeStatusDiv = document.createElement("div")
+                        changeStatusDiv.setAttribute("class", "change-status-div")
+                        changeStatusDiv.setAttribute("onclick", "setPublicPrivateStatusOfGratitude(this)")
+                        changeStatusDiv.setAttribute("data-gratitude", gratitude)
+                        changeStatusDiv.setAttribute("data-status", status)
+                const changeStatusImg = document.createElement("img")
+                const changeStatusP = document.createElement("p")
+                        changeStatusP.setAttribute("class", "change-status-public-private-gratitude")
+
+                if(status === "Private"){
+                        noticeP.innerHTML = `Huidige status: <b>prive</b>` 
+                        changeStatusP.innerHTML = `Verander naar <b>openbaar</b>`
+                } else if (status === "Public"){
+                        noticeP.innerHTML = `Huidige status: <b>openbaar</b>`
+                        changeStatusP.innerHTML = `Verander naar <b>prive</b>`
+                };
+
+                changeStatusImg.src = "../images/design/change-icon.png"
+
+                icon.appendChild(optionsDiv)
+                optionsDiv.appendChild(noticeP)
+                optionsDiv.appendChild(changeStatusDiv)
+                changeStatusDiv.appendChild(changeStatusImg)
+                changeStatusDiv.appendChild(changeStatusP)
+        });
+};
 
 !function queryCheckinsUser(){
         db.collection("Tools").where("Tool", "==", "Check-in")
@@ -1154,24 +1466,24 @@ function createCoachDOMElements(coachName, title,time){
         });
 }();
 
-function userGoalsInSelectCheckinTool(){
+!function userGoalsInSelectCheckinTool(){
 
-}
 const goalSelect = document.getElementById("check-in-select-goals")
 
-db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+        db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
 
-                const goal = doc.data().LevensvraagClean
+                        const goal = doc.data().LevensvraagClean
 
-                const option = document.createElement("option")
+                        const option = document.createElement("option")
 
-                option.innerHTML = goal
+                        option.innerHTML = goal
 
-                goalSelect.appendChild(option)
+                        goalSelect.appendChild(option)
 
-        })
-});
+                })
+        });
+}();
 
 function activateCheckIn(){
 
@@ -1195,7 +1507,7 @@ function activateCheckIn(){
         }).then(() => {
                 const activateNotice = document.getElementById("activate-notice")
 
-                activateNotice.innerHTML = `Check in geactiveerd voor ${goalOption}`
+                activateNotice.innerHTML = `Stok achter de deur geactiveerd voor ${goalOption}`
                 activateNotice.style.display = "block"
         }).then(() => {
                 db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
@@ -1244,22 +1556,24 @@ function activateCheckIn(){
 
 const activeGoalsDiv = document.getElementById("activated-goals")
 
+const activatedGoalsInnerDiv = document.createElement("div")
+const activeGoalsH3 = document.createElement("h3")
+
+activeGoalsH3.innerHTML = "Geactiveerde doelen"
+
 db.collectionGroup("Levensvragen").where("Levenslessen", "array-contains", "Tool geactiveerd: Check in")
 .where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
 
                         const levensvragen = doc.data().LevensvraagClean
-
-                        const activeGoalsH3 = document.createElement("h3")
                         const activeGoalP = document.createElement("p")
 
-                        activeGoalsH3.innerHTML = "Geactiveerde doelen"
                         activeGoalP.innerHTML = levensvragen
 
                         activeGoalsDiv.appendChild(activeGoalsH3)
-                        activeGoalsDiv.appendChild(activeGoalP)
-
-})
+                        activeGoalsDiv.appendChild(activatedGoalsInnerDiv)
+                        activatedGoalsInnerDiv.appendChild(activeGoalP)
+        });
 });
 
 // Analytics

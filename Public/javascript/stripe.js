@@ -128,7 +128,7 @@ auth.onAuthStateChanged(User =>{
   });
   });
   } else {
-    notice.innerHTML = "Maak een gratis <u>ontwikkelomgeving</u> aan om deze workshop te doen.<br> Je ontwikkelomgeving is jouw persoonlijke privé omgeving waar je alles wat je over jezelf op kunt slaan."
+    notice.innerHTML = "Maak een gratis <u>ontwikkelomgeving</u> aan om deze workshop te doen.<br> Je ontwikkelomgeving is jouw persoonlijke privé omgeving waar je alles wat je over jezelf op kunt slaan. <br><br> Heb je al een Vitaminds account? Klik dan <a href='../inlog.html' >hier </a> om in te loggen."
     notice.addEventListener("click", () => {
         window.open("../Register.html", "_self")
     });
@@ -284,7 +284,7 @@ db.collection("Coachgroups").where("Room", "==", titel).get().then(querySnapshot
         const notice = document.createElement("p")
         notice.setAttribute("class", "notice-group-visitor")
 
-    notice.innerHTML = "Maak een gratis <u>ontwikkelomgeving</u> aan om je aan te melden voor deze groep. <br> Je ontwikkelomgeving is jouw persoonlijke privé omgeving waar je alles wat je over jezelf op kunt slaan."
+    notice.innerHTML = "Maak een gratis <u>ontwikkelomgeving</u> aan om je aan te melden voor deze groep. <br> Je ontwikkelomgeving is jouw persoonlijke privé omgeving waar je alles wat je over jezelf op kunt slaan. <br><br> Heb je al een Vitaminds account? Klik dan <a href='../inlog.html' >hier </a> om in te loggen."
     notice.addEventListener("click", () => {
         window.open("../Register.html", "_self")
     });
@@ -373,7 +373,7 @@ auth.onAuthStateChanged(User =>{
   });
   });
   } else {
-    notice.innerHTML = "Maak een gratis <u>ontwikkelomgeving</u> aan om deze workshop te doen.<br> Je ontwikkelomgeving is jouw persoonlijke privé omgeving waar je alles wat je over jezelf op kunt slaan."
+    notice.innerHTML = "Maak een gratis <u>ontwikkelomgeving</u> aan om aan deze coachgroep mee te doen.<br> Je ontwikkelomgeving is jouw persoonlijke privé omgeving waar je alles wat je over jezelf op kunt slaan. <br><br> Heb je al een Vitaminds account? Klik dan <a href='../inlog.html' >hier </a> om in te loggen."
     notice.addEventListener("click", () => {
         window.open("../Register.html", "_self")
     });

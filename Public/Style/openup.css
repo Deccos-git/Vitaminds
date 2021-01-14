@@ -5,7 +5,7 @@
     justify-content: center;
     flex-wrap: wrap;
     width: 100%;
-    background-color: #fff;
+    background-color: whitesmoke;
     margin-top: 0px;
 }
 
@@ -124,7 +124,7 @@
     align-items: center;
     padding: 15px;
     border-radius: 3px;
-    margin: 10px 250px;
+    margin: 0px;
 }
 
 #check-in-outer-div p{
@@ -300,6 +300,7 @@
     border-radius: 2px;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
     padding: 20px 20px 0px 20px;
+    background-color: white;
 }
 
 .bron-div-detail p{

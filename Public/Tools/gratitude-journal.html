@@ -18,6 +18,7 @@
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
   <!-- Tiny MCE -->
   <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
@@ -84,36 +85,36 @@
         </div>
         <div id="button-login" class = "login-logout"><button><a href="../inlog.html">Log in</a></button></div>
         <div id="slash" class = "login-logout"><a>|</a></div>
-        <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
+        <a href="../voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
       </div>
     </nav>
 
-<section>
-  <header id="check-in-header">
-    <div>
-    <h1>Check in</h1>
-    <p>Deze tool helpt je om actief bezig te blijven met je doelen. Ontvang wekelijks een herinnering in de mail om een update te plaatsen voor een doel of meerdere doelen uit je Digimind</p>
-    </div>
-    <img src="../images/tools-check-in.png" alt="">
-  </header>
-  <main>
-    <h2>Wat heb je aan deze tool?</h2>
-    <p>In de drukte van het dagelijks leven is het gemakkelijk om je doelen uit het oog te verliezen. Dat geldt voor alle doelen en zeker ook voor doelen op het gebied van persoonljke ontwikkkeling.<br><br> 
-      Deze tool helpt je om de doelen die je kiest een onderdeel te houden van je dagelijks leven.</p>
-    <h2>Hoe werkt het?</h2>
-    <ul>
-      <li>Installeer de tool in je ontwikkelomgeving</li>
-      <li>Je vind de tool in het prive gedeelte van je ontwikkelomgeving onder Tools</li>
-      <li>Kies een van je doelen</li>
-      <li>Je ontvangt wekelijks een email-notificatie</li>
-      <li>Klik op de link in de email-notificatie en omschrijf hoe het nu met je gaat (met betrekking tot je doel)</li>
-    </ul>
-  </main>
-  <div class="button-div-tool">
-    <button id="install-check-in-button" class="button-algemeen button-tools">Installeer</button>
-    <p class="tool-notice" id="tool-notice-check-in"></p>
-  </div>
-</section>
+    <section>
+      <header id="check-in-header">
+        <div>
+        <h1>Dankbaarheidsdagboek</h1>
+        <p>Deze tool helpt je om dankbaarheid een onderdeel te maken van je dagelijks leven.</p>
+        </div>
+        <img src="../images/gratitude-header.png" alt="">
+      </header>
+      <main>
+        <h2>Wat heb je aan deze tool?</h2>
+        <p>Dankbaarheid heeft een enorm positieve invloed op je geluksgevoel en algehele gezondheid.<br><br> 
+          Deze tool helpt je om dankbaarheid een onderdeel te maken van je dagelijks leven.</p>
+        <h2>Hoe werkt het?</h2>
+        <ul>
+          <li>Installeer de tool in je ontwikkelomgeving</li>
+          <li>Je vind de tool in het prive gedeelte van je ontwikkelomgeving onder Tools</li>
+          <li>Beschrijf zo vaak je wilt waar je dankbaar voor bent</li>
+          <li>Je ontvangt wekelijks een email-notificatie ter herinnering</li>
+        </ul>
+      </main>
+    </section>
+
+<div class="button-div-tool">
+  <button id="install-gratitude-button" class="button-algemeen button-tools">Installeer</button>
+  <p class="tool-notice" id="tool-notice-check-in"></p>
+</div>
 
 <!-- footer -->
 <footer class="footer">
@@ -131,6 +132,7 @@
 
 
       <script type="text/javascript" src="../javascript/firebase.js"></script>
+      <script type="text/javascript" src="../javascript/inspiratie.js"></script>
       <script type="text/javascript" src="../javascript/auth.js"></script>
       <script type="text/javascript" src="../javascript/tools.js"></script>
     </body>

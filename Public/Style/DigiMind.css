@@ -46,7 +46,25 @@
     display: none;
     justify-content: center;
     align-items: center;
-    margin: 30px 0px 0px 0px;
+    margin: 20px 0px 20px 0px;
+}
+
+#tool-settings{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#activated-goals{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 100px 5px 100px;
+    background-color: white;
+    padding: 15px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    border-radius: 2px;
+    border: 1px solid #f7f7f7;
 }
 
 .active{
@@ -109,6 +127,166 @@
     align-items: flex-start;
     padding: 0px 30px;
     box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+}
+
+#check-in-div{
+    display: none;
+}
+
+#gratitute-journal-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: whitesmoke;
+}
+
+.hapiness-scale-img{
+    cursor: pointer;
+}
+
+#gratitudes-overview-div{
+    min-height: 600px;
+    width: 433px;
+    border: 8px solid #8e0000;
+    border-radius: 15px;
+    background-color:whitesmoke;
+    box-shadow: 0 8px 10px 0 rgba(0,0,0,.14), 0 12px 4px -8px rgba(0,0,0,.2), 0 4px 20px 0 rgba(0,0,0,.12);
+}
+
+.gratitude-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    border-bottom: 1px solid lightgray;
+}
+
+.options-div{
+    padding: 10px;
+    background-color: whitesmoke;
+    border-radius: 3px;
+    display: block;
+}
+
+.gratitude-div h3{
+    font-size: 20px;
+}
+
+.gratitude-div p{
+    font-size: 14px;
+    margin: 0px 5px;
+}
+
+.gratitude-div img{
+    width: 15px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+#setPrivatePublicDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#setPrivatePublicDiv p{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#input-div{
+    display: inline;
+    font-size: 16px;
+    color: #122b46;
+}
+
+#new-gratitude-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: whitesmoke;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+}
+
+#input-div input{
+    width: auto;
+}
+
+.public-private-image-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.change-status-public-private-gratitude{
+    cursor: pointer;
+}
+
+.change-status-div{
+    display: flex;
+    align-items: center;
+    border: 1px solid lightgray;
+    padding: 5px;
+    border-radius: 3px;
+    background-color: white;
+}
+
+.change-status-div img{
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+#private-public-gratitude-button{
+    display: flex;
+    justify-content: center;
+}
+
+#private-public-gratitude p{
+    font-size: 16px;
+}
+
+#private-public-gratitude img{
+    height: 20px;
+}
+
+#private-public-gratitude-title{
+    font-weight: bold;
+}
+
+#page-div{
+    margin: 15px;
+    width: 400px;
+    min-height: 600px;
+    height: auto;
+    background-color: #a7bdbd;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+#reminder-div img{
+    width: 25px;
+    height: 15px;
+    cursor: pointer;
+}
+
+#select-tool{
+    border: 1px solid lightgray;
+    width: auto;
+}
+
+.titelTekst{
+    font-size: 20px;
+    padding: 10px;
+}
+
+.header-image-article{
+    height: 200px;
+    width: 100%;
 }
 
 #welcome-div{
@@ -125,6 +303,12 @@
 
 #practical-div{
     display: none;
+}
+
+#chart-div{
+    margin: 50px 0px;
+    width: 600px;
+    height: 300px;
 }
 
 #traject-div{
@@ -156,6 +340,10 @@
 
 #private-section{
     display: none;
+}
+
+#coach-information-outer-div{
+    background-color: whitesmoke;
 }
 
 .private-outer-div{
@@ -224,6 +412,7 @@
     margin: 30px 5%;
     padding: 15px;
     width: -webkit-fill-available;
+    background-color: white;
 }
 
 .button-digimind{
@@ -273,6 +462,10 @@
 
 #favorite-coaches-div{
     display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: whitesmoke;
 }
 
 #select-proces-div{
@@ -294,6 +487,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    background-color: whitesmoke;
+    margin-top: 20px;
 }
 
 .levensles-div-ontwikkeling{
@@ -301,10 +497,11 @@
     border-radius: 15px;
     margin: 30px 5%;
     padding: 15px;
+    background-color: white;
 }
 
 .levensles-div-ontwikkeling h3{
-    font-size: 22px;
+    font-size: 20px;
 }
 
 .ontwikkeling-levensles-meta-div{
@@ -376,6 +573,10 @@
     border-radius: 15px;
     padding: 10px;
     margin: 50px 20px 20px 30px;
+}
+
+#select-div{
+    display: none;
 }
 
 .insights-outer-div{
@@ -480,12 +681,26 @@
     font-weight: bold;
 }
 
+#happiness-entry-notice{
+    display: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
 #happiness-scale-div{
     display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: whitesmoke;
 }
 
 #check-in-div{
     display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    background-color: whitesmoke;
 }
 
 .analytics-card li{
@@ -522,6 +737,11 @@
 
 #social-notifications-outer-div{
     margin-top: 50px;
+    background-color: whitesmoke;
+}
+
+#public-section{
+    background-color: whitesmoke;
 }
 
 .gamefication-outer-div{

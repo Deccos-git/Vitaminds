@@ -28,7 +28,7 @@ h2{
   font-family: 'Libre Baskerville', serif;
   font-size: 30px;
   text-align: center;
-  color: #0c6665;
+  color: #122b46;
 }
 
 h3{
@@ -353,7 +353,6 @@ ul{
   /* z-index: 2; */
   width: 220px;
   background-color: #fff;
-  border: 1px solid #858585;
   border-radius: 5px;
   box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.2), 0 7px 21px 0 rgba(0, 0, 0, 0.19);   
 }
@@ -739,6 +738,17 @@ ul{
   font-size: 40px;
 }
 
+.coach-information-text{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.coach-information-text ul{
+  font-size: 20px;
+}
+
+
 
 /*DigiMind welkom */
 
@@ -812,7 +822,7 @@ ul{
 }
 
 #coaches-text-div p{
-  font-size: 25px;
+  font-size: 22px;
 }
 
 #feautures-inner-div{
@@ -1247,6 +1257,14 @@ ul{
   color: #122b46;
 }
 
+.qualitySafetyImage{
+  width: 75px;
+}
+
+#quality-safety-image{
+  width: 600px;
+}
+
 /* layout pages */
 
 .section-1{
@@ -1546,7 +1564,7 @@ margin: 0px 0px 30px 0px;
   .header-image h2{
     margin-bottom: 0px;
     letter-spacing: 0.5px;
-    margin-top: -100px;
+    margin: -50px 20px 50px 20px;
     font-size: 30px;
   }
 
@@ -1624,7 +1642,15 @@ margin: 0px 0px 30px 0px;
 }
 
 #digimind-image-div img {
-  width: auto;
+  width: 90%;
+}
+
+#digimind-image-div{
+  display: contents;
+}
+
+#coaches-text-div li{
+  font-size: 18px;
 }
 
 #description {
