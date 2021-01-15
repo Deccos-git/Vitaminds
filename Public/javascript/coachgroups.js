@@ -103,13 +103,10 @@ db.collection("Coachgroups").where("Type", "==", "Coachgroup").get().then(queryS
             groupCoverPhoto.src = coverPhoto
             groupTitleH2.innerText = titleClean
 
-            console.log(startdate)
-
             openGroup(title, groupButton)
 
             hideLeaveGroupButtonIfAuthIsNotMember(members, leaveGroup)
-
-            // openCoachGroupAfterAgreement(title)
+            showVisitGroupIfAuthIsMember(members, groupButton, title)
 
             db.collection("Vitaminders").where("Gebruikersnaam", "==", auth)
             .get().then(querySnapshot => {
@@ -178,7 +175,7 @@ db.collection("Coachgroups").where("Type", "==", "Coachgroup").get().then(queryS
               groupIsFull(members.length, groupButton, numberParticipants)
 
               //Already a member of the group
-            alreadyMember(members, groupButton)
+            // alreadyMember(members, groupButton)
 
              //Leave group
              leaveGroup.addEventListener("click", () => {
@@ -236,6 +233,22 @@ function hideLeaveGroupButtonIfAuthIsNotMember(membersOfGroup, leaveGroupButton)
     });
 };
 
+function showVisitGroupIfAuthIsMember(membersOfGroup, button, title){
+    auth.onAuthStateChanged(User =>{
+        if (User){
+    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+
+        const auth = doc.data().Gebruikersnaam
+
+        if(membersOfGroup.includes(auth)){
+            button.innerHTML = `<a class="visit-group" href='../Group/${title}.html'>Ga naar groep</a>`
+        }
+
+            });
+        };
+    });
+}
+
  // Group is full message
 
  function groupIsFull(a,b,c){
@@ -248,23 +261,23 @@ function hideLeaveGroupButtonIfAuthIsNotMember(membersOfGroup, leaveGroupButton)
 
  // Already a member notice
 
- function alreadyMember(a,b){
+//  function alreadyMember(a,b){
 
-    auth.onAuthStateChanged(User =>{
-        if(User){
-        const userRef = db.collection("Vitaminders").doc(User.uid);
-        userRef.get().then(function(doc) {
+//     auth.onAuthStateChanged(User =>{
+//         if(User){
+//         const userRef = db.collection("Vitaminders").doc(User.uid);
+//         userRef.get().then(function(doc) {
     
-            const auth = doc.data().Gebruikersnaam
-     if(a.includes(auth)){
-            b.innerText = "Je bent aangemeld"
-            b.setAttribute("onclick", "null()")
+//             const auth = doc.data().Gebruikersnaam
+//      if(a.includes(auth)){
+//             b.innerText = "Je bent aangemeld"
+//             b.setAttribute("onclick", "null()")
 
-                };
-            });
-        };
-    });
-;}
+//                 };
+//             });
+//         };
+//     });
+// ;}
 
 // Leave group
 function leaveTheGroup(roomTitle){
@@ -1453,7 +1466,7 @@ function saveCoachgroup(){
     const select = groupGoalSelect.options
     const option = select[select.selectedIndex].innerHTML
 
-    saveCoachgroupAsEvent(auth, authClean, title, description, day, month, year, numberParticipants, costs, `<a href="../Group/${idClean + title}.html", "_self"`, coverPhoto, idClean)
+    saveCoachgroupAsEvent(auth, authClean, title, description, day, month, year, numberParticipants, costs, `<a href="../Group/${idClean + title}.html", "_self"`, coverPhoto, idClean, title)
 
    db.collection("Coachgroups").doc().set({
         Eigenaar: "Vitaminds",
@@ -1491,7 +1504,7 @@ function saveCoachgroup(){
     });
 };
 
-function saveCoachgroupAsEvent(authName, authNameClean, titleGroup, description, day, month, year, participants, price, link, banner, id){
+function saveCoachgroupAsEvent(authName, authNameClean, titleGroup, description, day, month, year, participants, price, link, banner, id, title){
 
     db.collection("Events").doc().set({
         Organizer: authName,

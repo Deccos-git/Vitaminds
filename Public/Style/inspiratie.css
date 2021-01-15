@@ -69,7 +69,7 @@ table td{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    background-color: whitesmoke;
+    background-color: #a7bdbd26;
 }
 
 .meta-user-div{

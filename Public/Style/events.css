@@ -105,8 +105,9 @@
 
 #events-overview{
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    background-color: whitesmoke;
+    background-color: #a7bdbd26;
 }
 
 #event-overview{

@@ -96,59 +96,6 @@ createSession("/create-session-hundred", 10000)
 createSession("/create-session-hundredfifty", 15000)
 createSession("/create-session-twohundred", 20000)
 
-// Complete coachprofile reminders
-
-!function completeCoachprofile(){
-
-    db.collection("Vitaminders").where("Usertype", "==", "Coach")
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            const domains = doc.data().Domains
-            const gebruikersnaam = doc.data().Gebruikersnaam
-
-            db.collection("Vitaminders").where("Gebruikersnaam", "==", gebruikersnaam)
-            .get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
-
-                    const email = doc.data().Email
-                    const gebruikersnaamClean = doc.data().GebruikersnaamClean
-
-                    cron.schedule("00 14 15 * *", () => {
-
-                        db.collection("Mail").doc().set({
-                            to: email,
-                            cc: "info@vitaminds.nu",
-                        message: {
-                        subject: `Maak je coachprofiel compleet`,
-                        html: `Hallo, ${gebruikersnaamClean}</br></br>
-                            Om goed gevonden te worden op Vitaminds is het belangrijk om je coachprofiel zo veel mogelijk compleet te maken. <br>
-                            Je ontvant deze mail omdat onze code heeft ontdenkt dat je je profiel nog niet helemaal hebt ingevuld.<br>
-                            Dat kan zijn omdat je iets hebt vergeten om in te vullen of omdat we iets nieuws hebben toegevoegd.
-                            <br><br>
-                            Incompleet profiel onderdeel: Domeinen<br>
-                            Wanneer je domeinen zijn ingevuld kun je daarop gevonden worden op de website.<br><br>
-
-                            Klik <a href="https://vitaminds.nu/Vitaminders/${gebruikersnaam}"> hier</a> om je coachprofiel compleet te maken.<br><br> 
-                        
-                            Vriendelijke groet, </br></br>
-                            Het Vitaminds Team </br></br>
-                            <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-                        Type: "Vitaminders",
-                        gebruikersnaam: gebruikersnaam
-                        }
-                                
-                        }).catch((err) => {
-                            console.log(err)
-                        })
-                    });
-                });
-            });
-        });
-    });
-}();
-
-
 // Group aanmaken op basis van URL
 app.get('/Group/:id',function(req,res)
 {

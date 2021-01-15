@@ -264,7 +264,7 @@ saveNewEventButton.addEventListener("click", () => {
 const eventsOverview = document.getElementById("events-overview")
 
 db.collection("Events").where("Owner", "==", "Vitaminds")
-.orderBy("Date", "desc")
+.orderBy("Date", "asc")
 .get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 

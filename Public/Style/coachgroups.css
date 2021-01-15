@@ -80,7 +80,7 @@
     display: none;
     flex-wrap: wrap;
     justify-content: center;
-    background-color: whitesmoke;
+    background-color: #a7bdbd26;;
 }
 
 .groups-for-coach-outer-div{
@@ -438,10 +438,14 @@
 
 #group-description{
     margin: 0px 5% 50px 5%;
-    font-size: 30px;
+    font-size: 20px;
     background: white;
     border-radius: 5px;
     padding: 20px;
+}
+
+.visit-group{
+    text-decoration: none !important;
 }
 
 #group-facts{
