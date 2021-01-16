@@ -108,3 +108,14 @@
 #canvas-div{
     background-color: #a7bdbd26;
 }
+
+@media only screen and (max-width: 938px){
+
+    #gratitudes-overview-div {
+        width: 80%;
+    }
+
+    #page-div {
+        width: 90%;
+    }
+}

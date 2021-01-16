@@ -1,5 +1,6 @@
 #practice-overview{
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     background-color: whitesmoke;
 }
@@ -147,7 +148,15 @@ main p{
         margin: 10px 10px 50px 10px;
     }
 
-    main {
-        margin: 50px 10px 50px 10px;
+    main p {
+        margin: 0px 20px;
+    }
+
+    #hapiness-explainer-section {
+        padding: 20px;
+    }
+
+    #check-in-header h1{
+        font-size: 25px;
     }
 }

@@ -114,7 +114,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 100px 0px;
+    margin: 50px 0px;
 }
 
 .section-inner-div{
@@ -914,8 +914,10 @@
     }
 
     .insights-outer-div {
-        width: auto;
+        width: 85%;
         margin: 5px;
+        flex-direction: column;
+        align-items: center;
     }
 
     #inspiration-notifications {
@@ -929,6 +931,45 @@
 
     .analytics-card li{
         font-size: 16px;
+    }
+
+    #activated-goals {
+        margin: 20px;
+    }
+
+    #happiness-scale img{
+        height: 60px;
+    }
+
+    #chart-div {
+        width: 100%;
+        height: auto;
+        margin: 20px 0px 0px 0px;
+    }
+
+    #happiness-question{
+        margin: 30px 20px 10px 20px;
+        font-size: 18px;
+    }
+
+    #gratitudes-overview-div {
+        width: 90%;
+    }
+
+    #page-div {
+        width: 90%;
+    }
+
+    .meta-div-insights {
+        padding: 10px;
+    }
+
+    .tox{
+        width: 300px;
+    }
+
+    #select-route-div p{
+        font-size: 18px;
     }
 
 }
