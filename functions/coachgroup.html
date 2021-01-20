@@ -114,7 +114,6 @@
     <div id="auth-menu">
       <div id="auth-DOM"></div>
       <div id="profile-picture">
-        <p>Profiel</p>
       </div>
       <div id="login-register-div">
         <div id="button-register" class = "login-logout"><button><a href="../Register.html">Aanmelden</a></button></div>
@@ -167,9 +166,9 @@
   <div id="chat-screen"></div>
 
   <div id="input-div">
-    <div class="inspiration-icon-div">
+    <!-- <div class="inspiration-icon-div">
       <img id="inspiration-icon" class="inspiration-icons" src="../images/inspiration-icon-2.png" alt="">
-    </div>
+    </div> -->
     <div id="video-div">
       <img id="video-icon" src="../images/video-icon.png" alt="start een video gesprek">
       <img id="video-stop-icon" src="../images/stop-video-icon.png" alt="">
@@ -179,13 +178,22 @@
   </div>
 
   <div id="add-learning-div">
-    <h3 id="add-learning-h3">Heb je iets geleerd over:</h3>
-    <select name="" id="select-goals"></select>
-    <textarea name="" id="input-learning" cols="30" rows="10"></textarea>
-    <div id="add-learning-button-div">
-      <button class="button-algemeen" id="button-add-learning">Opslaan</button>
+    <div id="learnings-title-div">
+    <h3 id="add-learning-h3">Heb je iets geleerd over jezelf?</h3>
+    <img src="../images/down-icon.png" alt="">
     </div>
-    <p id="notice-learning-added">Je levensles is opgeslagen</p>
+    <div id="learning-inner-div">
+      <div id="auth-div">
+        <input name="" id="input-learning" placeholder="Wat heb je geleerd?"></input>
+        <p>Selecteer een traject</p>
+        <select name="" id="select-goals"></select>
+        <div id="add-learning-button-div">
+          <button class="button-algemeen" id="button-add-learning">Opslaan</button>
+        </div>
+      </div>
+      <p id="cta-lesson-coachgroup">Start eerst een <a href="../create-route.html">ontwikkeltraject</a> zodat je je les op kan slaan</p>
+      <p id="notice-learning-added">Je les is opgeslagen</p>
+    </div>
   </div>
 
   <!-- <section id="videochat-outer-div">

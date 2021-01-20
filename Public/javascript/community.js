@@ -13,8 +13,6 @@
 
             participateExplainerArray.forEach(explainer => {
 
-                console.log(explainer.style.display)
-
                 if (explainer.style.display === "block"){
                     explainer.style.display = "none"
                 } else if (explainer.style.display === ""){
@@ -41,21 +39,42 @@
 
                     const gratitude = doc.data().Gratitude
                     const timestamp = doc.data().Timestamp
-                    const publicPrivate = doc.data().PublicPrivate
+                    const name = doc.data().User
 
                     const gratitudeDiv = document.createElement("div")
                             gratitudeDiv.setAttribute("class", "gratitude-div")
                     const gratitudeH3 = document.createElement("h3")
                     const dateP = document.createElement("p")
+                    const userDiv = document.createElement("div")
+                    const nameP = document.createElement("p")
+                        nameP.setAttribute("class", "gratitude-username")
 
                     gratitudeH3.innerText = gratitude
                     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         dateP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options)
+                    
+
+                    db.collection("Vitaminders")
+                    .where("Gebruikersnaam", "==", name)
+                    .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc1 => {
+
+                            const userName = doc1.data().GebruikersnaamClean
+
+                            nameP.innerText = userName
+
+                            nameP.addEventListener("click", () => {
+                                window.open("../Vitaminders/" + name + ".html", "_self");
+                            });
 
                     journalPage.appendChild(gratitudeDiv)
-                    gratitudeDiv.appendChild(dateP)
+                    gratitudeDiv.appendChild(userDiv)
+                    userDiv.appendChild(nameP)
                     gratitudeDiv.appendChild(gratitudeH3)
+                    gratitudeDiv.appendChild(dateP)
 
+                        });
+                    });
             });
     });
 }();

@@ -677,6 +677,9 @@ function loadCreatorData(creatorName, innerSection){
     const lifelessonsOuterDiv = document.getElementById("lifelessons-div")
 
     const divTitle = document.createElement("h3")
+    divTitle.innerText = "Wat mensen over zichzelf geleerd hebben van dit artikel"
+    
+    lifelessonsOuterDiv.appendChild(divTitle)
 
     db.collectionGroup("Levenslessen")
     .where("Source", "==", titel)
@@ -697,8 +700,7 @@ function loadCreatorData(creatorName, innerSection){
             const metaDiv = document.createElement("div")
                 metaDiv.setAttribute("id", "meta-div")
             const timestampP = document.createElement("p")
-            
-            divTitle.innerText = "Wat mensen over zichzelf geleerd hebben van dit artikel"
+           
             lifelessonP.innerText = lifelesson
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                                 timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options)
@@ -710,7 +712,6 @@ function loadCreatorData(creatorName, innerSection){
             .get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
             
-                    lifelessonsOuterDiv.appendChild(divTitle)
                     lifelessonsOuterDiv.appendChild(innerDiv)
                             
                     loadCreatorData(creator, innerDiv)

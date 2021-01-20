@@ -612,40 +612,59 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
     };
     
         // Load goals of auth in select
-        db.collection("Coachgroup").where("Room", "==", titel).get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
 
-                const goal = doc.data().Goal
+function showGoalsAndInputOfAuth(){
 
-                auth.onAuthStateChanged(User =>{
-                    if(User){
-                      const userRef = db.collection("Vitaminders").doc(User.uid);
-                      userRef.get().then(function(doc) {
-            
-                        const auth = doc.data().Gebruikersnaam
+    const authDiv = document.getElementById("auth-div")
+    const CTA = document.getElementById("cta-lesson-coachgroup")
 
-                        console.log(goal)
-                
-                        db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", auth).where("Goal", "==", goal)
-                        .get()
-                        .then(querySnapshot => {
-                            querySnapshot.forEach(doc1 => {
-            
-                                const levensvraagClean = doc1.data().LevensvraagClean
-            
-                                const option = document.createElement("option")
-            
-                                option.innerText = levensvraagClean
-            
-                                selectGoals.appendChild(option)
-                            });
-                        });
-                      });
-                    };
+    authDiv.style.display = "flex"
+    CTA.style.display = "none"
+}
+
+auth.onAuthStateChanged(User =>{
+    if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+
+        const auth = doc.data().Gebruikersnaam
+
+            db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", auth)
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    const levensvraagClean = doc1.data().LevensvraagClean
+
+                    const option = document.createElement("option")
+
+                    option.innerText = levensvraagClean
+
+                    selectGoals.appendChild(option)
+
+                    showGoalsAndInputOfAuth()
                 });
-    
             });
         });
+    };
+});
+
+!function showAddLearningDiv(){
+
+    const learningTitleDiv = document.getElementById("learnings-title-div")
+
+    const learningInnerDiv = document.getElementById("learning-inner-div")
+
+    learningTitleDiv.addEventListener("click", () => {
+
+        if(learningInnerDiv.style.display === "none"){
+            learningInnerDiv.style.display = "flex"
+        } else {
+            learningInnerDiv.style.display = "none"
+        };
+    });
+}();
+
     
     if (buttonAddLearning != null){
         buttonAddLearning.addEventListener("click", () => {
@@ -803,8 +822,6 @@ db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnaps
            const message = elem.dataset.message
            const room = elem.dataset.room
            const coach = elem.dataset.auth
-       
-           console.log(coach)
        
            elem.innerText = "Verstuurd"
        

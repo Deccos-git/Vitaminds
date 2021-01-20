@@ -9,7 +9,7 @@
 }
 
 .summary-li {
-    font-size: 18px;
+    font-size: 20px;
     color: white;
     cursor: pointer;
 }
@@ -39,7 +39,8 @@ table td{
     flex-direction: column;
     align-items: center;
     border-radius: 5px;
-    padding: 30px;
+    padding: 10px 20px;
+    margin: 10px;
     width: 70%;
     background-color: white;
     box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
@@ -1640,7 +1641,7 @@ table td{
     }
 
     #title-article{
-        font-size: 30px;
+        font-size: 25px;
     }
 
     #title-article-div {

@@ -334,7 +334,7 @@
     display: flex;
     flex-direction: column-reverse;
     border: 1px solid rgba(0,0,0,.2);
-    padding: 5px;
+    padding: 10px;
     border-radius: 15px;
     font-size: 16px;
     margin: 5px 6px;
@@ -350,9 +350,11 @@
 }
 
 #add-learning-div{
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
+    background-color: #a7bdbd26;
 }
 
 #add-learning-div select{
@@ -361,6 +363,29 @@
 
 #add-learning-div button{
     margin-top: 20px;
+}
+
+#learning-inner-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+#learnings-title-div{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+#learnings-title-div img{
+    margin-left: 5px;
+}
+
+
+#select-goals{
+    border: 1ps solid lightgray;
+    border-radius: 15px;
+    padding: 5px;
 }
 
 #notice-learning-added{

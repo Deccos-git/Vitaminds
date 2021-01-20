@@ -572,7 +572,7 @@ if(button != null){
 message: {
 subject: `Verifier je account op Vitaminds! `,
 html: `Hallo ${userName}, </br></br>
-      Welkom bij de Vitaminds community. Het sociale netwerk voor imperfecte mensen.<br><br>
+      Welkom bij de Vitaminds community. Persoonlijke ontwikkeling. Op jouw manier.<br><br>
       Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
       
       Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.</br></br>
