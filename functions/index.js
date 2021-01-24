@@ -179,7 +179,8 @@ db.collection("Tools").where("Tool", "==", "Check-in")
         const levensvraag = doc.data().Levensvraag
         const gebruikersnaam = doc.data().Gebruikersnaam
 
-        db.collection("Vitaminders").where("Gebruikersnaam", "==", gebruikersnaam).get().then(querySnapshot => {
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", gebruikersnaam)
+        .get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
 
                 const email = doc1.data().Email
@@ -219,66 +220,6 @@ db.collection("Tools").where("Tool", "==", "Check-in")
 }).catch((err) => {
     console.log(err)
 })
-
-// Tool sheduling
-
-db.collection("Tools").where("Tool", "==", "HapinessChart")
-.get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-
-        const installs = doc.data().Installs
-
-        installs.forEach(install => {
-
-            db.collection("Vitaminders").where("Gebruikersnaam", "==", install)
-            .get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
-    
-                    const email = doc1.data().Email
-                    const gebruikersnaamClean = doc1.data().GebruikersnaamClean
-
-                    console.log(email)
-    
-                    cron.schedule(" 0 8 * * 6", () => {
-    
-                    db.collection("Mail").doc().set({
-                        to: email,
-                        cc: "info@vitaminds.nu",
-                    message: {
-                    subject: `Hallo ${gebruikersnaamClean}, hoe gaat het nu met je?`,
-                    html: `Hallo, ${gebruikersnaamClean}</br></br>
-                        Geluk zit hem in kleine dagelijkse gewoontes. <br>
-                        Met de Vitaminds Tools maken we onze persoonlijke ontwikkeling een onderdeel van onze dagelijkse gewoontes.<br><br>
-                        Bij deze ontvang jij je <i>Geluksschaal</i> email.<br><br>
-                      
-                        - Log in bij je account.<br>
-                        - Ga naar je profiel.<br>
-                        - Klik op de Tools tab. <br>
-                        - Vul je huidige geluksniveau in. <br><br>
-                    
-                        Vriendelijke groet, </br></br>
-                        Het Vitaminds Team </br></br>
-                        <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-                    Type: "Vitaminders",
-                    gebruikersnaam: gebruikersnaam
-                    }
-                            
-                    }).catch((err) => {
-                        console.log(err)
-                    })
-                });
-    
-                })
-            }).catch((err) => {
-                console.log(err)
-            })
-
-        })
-    })
-}).catch((err) => {
-    console.log(err)
-})
-
 
 // Redirects
 app.get('/agenda/*',function(req,res)

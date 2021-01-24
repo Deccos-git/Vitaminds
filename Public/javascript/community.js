@@ -53,7 +53,6 @@
                     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         dateP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options)
                     
-
                     db.collection("Vitaminders")
                     .where("Gebruikersnaam", "==", name)
                     .get().then(querySnapshot => {

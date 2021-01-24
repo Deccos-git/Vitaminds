@@ -799,16 +799,20 @@ ul{
   justify-content: center;
 }
 
-#features-section{
+#community-section{
   background-color: #a7bdbd;
 }
 
-#coaches-section{
+#features-section{
   background-color: white;
 }
 
-#digimind-section{
+#coaches-section{
   background-color: #a7bdbd;
+}
+
+#digimind-section{
+  background-color: white;
 }
 
 #coaches-text-div{

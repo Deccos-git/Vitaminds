@@ -34,6 +34,32 @@ installTool("install-check-in-button", "Check in")
 installTool("install-happiness-button", "Happiness Chart")
 installTool("install-gratitude-button", "Gratitude Journal")
 
+function changeButtonIfToolIsInstalled(toolButton, toolNotice, tool){
+
+    const button = document.getElementById(toolButton)
+    const notice = document.getElementById(toolNotice)
+
+    auth.onAuthStateChanged(User =>{
+        db.collection("Vitaminders").doc(User.uid)
+        .get()
+            .then(doc => {
+                const tools = doc.data().Tools
+                const naam = doc.data().Gebruikersnaam
+
+                if(tools.includes(tool)){
+
+                    button.innerText = "Geinstalleerd"
+                    notice.innerHTML = `Je vindt deze tool in het prive gedeelte van je <a href="/Vitaminders/${naam}">ontwikkelomgeving</a> onder Tools`
+
+                }
+            });
+        });
+};
+
+changeButtonIfToolIsInstalled("install-gratitude-button", "tool-notice-gratitude", "Gratitude Journal")
+changeButtonIfToolIsInstalled("install-check-in-button", "tool-notice-check-in", "Check in")
+changeButtonIfToolIsInstalled("install-happiness-button", "tool-notice-happiness", "Happiness Chart")
+
 !function showNoticeForVisitors(){
 
     const noticeText = document.getElementsByClassName("tool-notice")
