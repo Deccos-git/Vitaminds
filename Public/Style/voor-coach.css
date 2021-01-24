@@ -658,6 +658,50 @@
     margin: 0px;
 }
 
+#matchcall{
+    display: flex;
+    justify-content: center;
+    background-color: #a7bdbd26;
+}
+
+#matchcall p{
+    font-size: 20px;
+    text-align: center;
+}
+
+#coachcall-outer-div{
+    margin: 0px 100px;
+}
+
+#coachcall-welcome{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#coachcall-welcome img{
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+}
+
+#founder-name{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#form-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a7bdbd26;
+    margin-bottom: 100px;
+}
+
+.button-coach-call{
+    margin: 20px;
+}
+
 @media only screen and (max-width: 938px){
 
 #for-coach-banner-title {
