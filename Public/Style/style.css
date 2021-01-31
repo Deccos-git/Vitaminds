@@ -200,8 +200,12 @@ ul{
 }
 
 #logo-menu{
-  width: 150px;
+  width: 70px;
   margin-top: 7px;
+}
+
+#community-div{
+  margin: 50px 0px 50px 0px;
 }
 
  #ul-ul{
@@ -714,6 +718,7 @@ ul{
   margin-top: auto;
   width: auto;
   align-self: center;
+  padding: 1px 10px
 }
 
 /* header*/
@@ -739,6 +744,7 @@ ul{
   margin-top: 0px;
   padding: 15px;
   text-align: center;
+  align-items: center;
 }
 
 
@@ -753,6 +759,9 @@ ul{
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #122b4621;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .coach-information-text ul{
@@ -767,7 +776,6 @@ ul{
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 100px;
 }
 
 .section-div h3{
@@ -1289,6 +1297,10 @@ ul{
   align-items: center;
 }
 
+#community-img{
+  margin: 20px 0px;
+}
+
 .section-2{
   display: flex;
   margin-left: 80px;
@@ -1730,6 +1742,16 @@ display: none;
 
 #quality-safety-image {
   width: 100%;
+}
+
+#welcome-section p {
+  margin: 0px;
+  font-size: 18px;
+}
+
+#community-img {
+  margin: 20px 10px;
+  width: 90%;
 }
 
 

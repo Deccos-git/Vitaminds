@@ -404,8 +404,6 @@ function showEditIconAuthorAndAdmin(icon){
     
     const saveButton = document.getElementById("button-edited-article")
 
-    console.log(saveButton)
-
     saveButton.addEventListener("click", () => {
 
         saveButton.innerText = "Opgeslagen"
@@ -672,14 +670,9 @@ function loadCreatorData(creatorName, innerSection){
     });
 };
 
-!function loadLifeLessonsOfArticle(){
+function loadLifeLessonsOfArticle(){
 
     const lifelessonsOuterDiv = document.getElementById("lifelessons-div")
-
-    const divTitle = document.createElement("h3")
-    divTitle.innerText = "Wat mensen over zichzelf geleerd hebben van dit artikel"
-    
-    lifelessonsOuterDiv.appendChild(divTitle)
 
     db.collectionGroup("Levenslessen")
     .where("Source", "==", titel)
@@ -723,6 +716,20 @@ function loadCreatorData(creatorName, innerSection){
                 });
             });
         });
+    });
+};
+
+!function hideNoticeMakeAccountIfAuth(){
+
+    const registerNoticeArticle = document.getElementById("register-notice-article")
+
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+
+            registerNoticeArticle.style.display = "none"
+            loadLifeLessonsOfArticle()
+        };
     });
 }();
 

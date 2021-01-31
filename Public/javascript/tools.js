@@ -17,7 +17,7 @@ function installTool(button, toolName){
                 .then(doc => {
                     const naam = doc.data().Gebruikersnaam
 
-                    notice.innerHTML =  `Je vindt deze tool in het prive gedeelte van je <a href="/Vitaminders/${naam}">ontwikkelomgeving</a> onder Tools`
+                    notice.innerHTML =  `Je vindt deze tool in het prive gedeelte van je <a href="/Vitaminders/${naam}">account</a> onder Tools`
 
                     db.collection("Vitaminders")
                     .doc(doc.id)
@@ -49,7 +49,7 @@ function changeButtonIfToolIsInstalled(toolButton, toolNotice, tool){
                 if(tools.includes(tool)){
 
                     button.innerText = "Geinstalleerd"
-                    notice.innerHTML = `Je vindt deze tool in het prive gedeelte van je <a href="/Vitaminders/${naam}">ontwikkelomgeving</a> onder Tools`
+                    notice.innerHTML = `Je vindt deze tool in het prive gedeelte van je <a href="/Vitaminders/${naam}">account</a> onder Tools`
 
                 }
             });

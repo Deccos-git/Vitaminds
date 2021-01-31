@@ -28,17 +28,15 @@
   <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
     tinymce.init({
-      height: 400,
+      height: 600,
+      width: 900,
+      content_css: "/Style/style.css",
       selector: '#tiny-mce',
-      toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media',
-      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media',
+      toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media | code',
+      plugins: 'code advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media',
       toolbar_mode: 'floating',
       plugin_preview_width: 720,
       forced_root_block : false,
-      paste_preprocess: function(plugin, args) {
-        console.log(args.content);
-        args.content += ' preprocess';
-      }
     });
   </script>
   <!-- End Tiny MCE -->
@@ -51,11 +49,11 @@
     <a href="../tickets.html"> <p>Feedback</p></a>
   </div>
 
- <!-- Mobile-menu -->
- <nav id="mobile-menu"> 
+<!-- Mobile-menu -->
+<nav id="mobile-menu"> 
   <div id="menu-mobile-visible-layer">
     <img id="mobile-hamburger-menu" src="../images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
-    <div class="main-menu-mobile"><a href="../index.html"><img id="logo-menu" src="../images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+    <div class="main-menu-mobile"><a href="../index.html"><img id="logo-menu" src="../images/design/Logo2021-red.png" alt="Vitaminds logo" width="100px"></a></div>
   </div>
   <div id="mobile-menu-outer-div">
     <div id="mobile-menu-inner-div">
@@ -99,7 +97,7 @@
 
    <!-- menu --> 
    <nav id="menu">
-    <div id="main-menu-logo"><a href="../index.html"><img id="logo-menu" src="../images/logo.png" alt="Vitaminds logo" width="100px"></a></div>
+    <div id="main-menu-logo"><a href="../index.html"><img id="logo-menu" src="../images/design/Logo2021-red.png" alt="Vitaminds logo" width="100px"></a></div>
     <div id="navigation-menu">
       <div class="main-menu"><a href="../community.html">Community</a></div>
       <div class="main-menu"><a href="../artikelen.html">Artikelen</a></div>
@@ -126,8 +124,16 @@
 
 <!-- Event -->
 
-<div id="event-overview"></div>
 
+<div id="event-detail-outer-div">
+  <div id="organizer-event-detail-div"></div>
+  <div id="event-description-div"></div>
+  <div id="tiny-mce-div">
+    <div id="tiny-mce"></div>
+    <button id="button-edit-event-description" class="button-algemeen button-article">Opslaan</button>
+  </div>
+  <div id="meta-div-event-detail"></div>
+</div>
 
 
  <!-- Toolbar mobile -->

@@ -1,3 +1,49 @@
+!function hideNoticeMakeAccountIfAuth(){
+
+    const authButton = document.getElementsByClassName("open-community-element")
+    const noticeVisitorDiv = document.getElementsByClassName("notice-visitor")
+
+    if(authButton != null || noticeVisitorDiv != null){
+       
+        auth.onAuthStateChanged(User =>{
+            if(User){
+
+                const authButtonArray = Array.from(authButton)
+                authButtonArray.forEach(button => {
+
+                    button.style.display = "block"
+                });
+
+                const noticeVisitorDivArray = Array.from(noticeVisitorDiv)
+                noticeVisitorDivArray.forEach(noticeDiv => {
+                    noticeDiv.style.display = "none"
+                });
+            };
+        });
+    };
+}();
+
+function showVisitorNotice(buttonElement, noticeElement){
+
+    const button = document.getElementById(buttonElement)
+    const notice = document.getElementById(noticeElement)
+
+    if(button != null || notice != null){
+
+        button.addEventListener("click", () => {
+
+            notice.style.display = "block"
+
+        });
+    };
+};
+
+showVisitorNotice("visitor-button-open-up", "notice-open-up")
+showVisitorNotice("visitor-button-gratitude", "notice-gratitude")
+showVisitorNotice("visitor-button-happiness", "notice-happiness")
+
+
+
 !function participate(){
 
     const participateButton = document.getElementsByClassName("participate-CTA")

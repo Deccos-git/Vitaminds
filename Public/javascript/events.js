@@ -225,6 +225,7 @@ if(saveNewEventButton != null){
 saveNewEventButton.addEventListener("click", () => {
 
     saveNewEventButton.innerText = "Opgeslagen"
+    saveNewEventButton.id = "Clicked"
     const options = onlineOfflineSelect.options
     const option = options[options.selectedIndex].innerHTML;
     const eventBanner = document.getElementById("selected-header-img").src
@@ -264,7 +265,7 @@ saveNewEventButton.addEventListener("click", () => {
 const eventsOverview = document.getElementById("events-overview")
 
 db.collection("Events").where("Owner", "==", "Vitaminds")
-.orderBy("Date", "asc")
+.orderBy("Date", "desc")
 .get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
@@ -302,6 +303,8 @@ db.collection("Events").where("Owner", "==", "Vitaminds")
         if(type === "coachgroup"){
             eventTypeP.innerText = "Coachgroep"
             buttonEvent.innerHTML = `<a href="../group/${titleID}.html">Meer informatie</a>`
+        } else if (type === "Online event"){
+            eventTypeP.innerText = "Online event"
         }
 
         db.collection("Vitaminders")
@@ -364,16 +367,13 @@ function registerNoticeWhenNoAccount(registerEventButton, DOM){
 
                 const registerNotice = document.createElement("p")
 
-                registerNotice.innerHTML = `Maak een gratis <a href="../Register.html">Digimind</a> aan om je aanmelden voor dit event`
+                registerNotice.innerHTML = `Maak een gratis <a href="../Register.html">account</a> aan om je aanmelden voor dit event`
 
                 DOM.appendChild(registerNotice)
             });
-        } ;
+        };
     });
-
-
-
-}
+};
 
 const eventOverview = document.getElementById("event-overview")
 
@@ -462,6 +462,78 @@ function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateO
     });
 };
 
+function editDescriptionEvent(dom, descriptionDiv){
+
+    const editIcon = document.createElement("img")
+        editIcon.setAttribute("id", "edit-icon-event-description")
+    editIcon.scr = "../images/edit-icon.png"
+
+    const tinyMCEDiv = document.getElementById("tiny-mce-div")
+
+    displayEditIconIfAuthIsAdmin(editIcon)
+
+    dom.appendChild(editIcon)
+
+    editIcon.addEventListener("click", () => {
+
+        tinyMCEDiv.style.display = "block"
+        descriptionDiv.style.display = "none"
+
+        db.collection("Events").where("Title", "==", titel)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                const description = doc.data().Description
+
+                    tinymce.get("tiny-mce").setContent(description);
+
+            });
+        });
+    });
+};
+
+function displayEditIconIfAuthIsAdmin(editIcon){
+
+    auth.onAuthStateChanged(User =>{
+        db.collection("Vitaminders").doc(User.uid)
+        .get().then(doc => {
+
+            const admin = doc.data().Admin
+
+            if(admin === "Yes"){
+
+                editIcon.style.display = "block"
+
+            };
+        });
+    });
+};
+
+!function saveEditedDescription(){
+
+    const button = document.getElementById("button-edit-event-description")
+
+    button.addEventListener("click", () => {
+
+        const description = tinymce.get("tiny-mce").getContent();
+
+        button.innerText = "Opgeslagen"
+        button.id = "Clicked"
+
+        db.collection("Events").where("Title", "==", titel)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                db.collection("Events").doc(doc.id).update({
+                    Description: description
+                })
+                .then(() => {
+                    location.reload(); 
+                });
+            });
+        });
+    });
+}();
 
 
 db.collection("Events").where("Title", "==", titel)
@@ -480,22 +552,20 @@ db.collection("Events").where("Title", "==", titel)
         const organiserClean = doc.data().OrganizerClean
         const participants = doc.data().Participants
 
-        const outerDiv = document.createElement("div")
-            outerDiv.setAttribute("class", "event-detail-outer-div")
-        const bannerImg = document.createElement("img")
-        const organiserEventDiv = document.createElement("div")
-            organiserEventDiv.setAttribute("class", "organizer-event-detail-div")
+        const outerDiv = document.getElementById("event-detail-outer-div")
+        const organiserEventDiv = document.getElementById("organizer-event-detail-div")
         const organiserEventPhoto = document.createElement("img")
         const organiserEventP = document.createElement("p")
         const organiserEventMessage = document.createElement("p")
             organiserEventMessage.setAttribute("class", "organiser-event-message")
+        const bannerImg = document.createElement("img")
         const dateEvent = document.createElement("p")
             dateEvent.setAttribute("class", "date-event")
         const titleEvent = document.createElement("h2")
+        const descriptionDiv = document.getElementById("event-description-div")
         const descriptionEvent = document.createElement("p")
             descriptionEvent.setAttribute("id", "event-description")
-        const metaDiv = document.createElement("div")
-            metaDiv.setAttribute("class", "meta-div-event-detail")
+        const metaDiv = document.getElementById("meta-div-event-detail")
         const locationEvent = document.createElement("p")
         const maxParticipantsEvent = document.createElement("p")
         const currentParticipants = document.createElement("p")
@@ -515,7 +585,7 @@ db.collection("Events").where("Title", "==", titel)
         organiserEventDiv.addEventListener("click", () => {
             window.open("../Vitaminders/" + organizer, "_self");
         });
-        descriptionEvent.innerText = description
+        descriptionEvent.innerHTML = description
         if(online === "Fysieke locatie"){
         locationEvent.innerHTML = `<b>Locatie:</b> ${location}` 
         } else {
@@ -543,7 +613,6 @@ db.collection("Events").where("Title", "==", titel)
             });
         });
 
-        eventOverview.appendChild(outerDiv)
         outerDiv.appendChild(titleEvent)
         outerDiv.appendChild(organiserEventDiv)
         organiserEventDiv.appendChild(organiserEventMessage)
@@ -551,7 +620,9 @@ db.collection("Events").where("Title", "==", titel)
         organiserEventDiv.appendChild(organiserEventP)
         outerDiv.appendChild(bannerImg)
         outerDiv.appendChild(dateEvent)
-        outerDiv.append(descriptionEvent)
+        outerDiv.appendChild(descriptionDiv)
+        editDescriptionEvent(outerDiv, descriptionEvent)
+        descriptionDiv.append(descriptionEvent)
         outerDiv.appendChild(metaDiv)
         metaDiv.appendChild(locationEvent)
         metaDiv.appendChild(maxParticipantsEvent)

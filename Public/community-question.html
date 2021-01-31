@@ -3,18 +3,23 @@
 
   <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  gtag('config', 'UA-159826016-1');
-</script>
-
-    <Title> Inlog </title>
+      gtag('config', 'UA-159826016-1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="Levensvragen">
+    <meta name="description" content="Inspiratie voor jouw levensvragen">
+    <Title> Vitaminds - Inspiratie voor een leven waar je blij van wordt</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Style/style.css">
+    <link rel="stylesheet" href="Style/community.css">
     <link rel="shortcut icon" href="images/Favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -24,12 +29,7 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
   </head>
 
-  <body> 
-
-   <!-- Feedback -->
-   <div id="feedback">
-    <a href="tickets.html"> <p>Feedback</p></a>
-  </div>
+  <body>
 
 <!-- Mobile-menu -->
 <nav id="mobile-menu"> 
@@ -103,75 +103,79 @@
       </div>
     </div>
   </nav>
-  
-      <h1>Log in</h1>
-      <div class="inlogVM">
-          <input id="emailVM" type="email" name="email" placeholder="emailadres">
-          <input id="passwordVM" type="password" name="password" id="" placeholder="password">
-          <button class="button-algemeen" id="button-inlog" onclick= "inlogVM()" >Go!</button>
-          <p class="inlog-notice">Nog geen account? Maak <a href="/Register.html">hier</a> je Digimind aan.</p>
-      </div>
 
-      <!-- Toolbar mobile -->
-      <div class="toolbar-mobile">
-        <div class="toolbar-mobile-inner-div">
-          <img src="images/home-icon.png" alt="" id="toolbar-home">
-          <p class="description-menu-icons-toolbar-mobile">Open up</p>
-        </div>
-        <div class="toolbar-mobile-inner-div" id="toolbar-inner-div-chats-groups">
-          <img src="images/send-icon.png" alt="" id="toolbar-chats-groups">
-          <p class="description-menu-icons-toolbar-mobile">Chats & groepen</p>
-        </div>
-        <div class="toolbar-mobile-inner-div">
-          <div id="toolbar-inspiration-div" class="toolbar-mobile-inner-div">
-            <div id="toolbar-inspration-options">
-              <p id="toolbar-inspiration-public">Publiek</p>
-              <p id="toolbar-inspiration-private">Prive</p>
-            </div>
-            <img src="images/inspiration-icon-2.png" alt="" id="toolbar-inspiration">
-            <p class="description-menu-icons-toolbar-mobile">Nieuw inzicht</p>
-          </div>
-        </div>
-        <div class="toolbar-mobile-inner-div">
-          <img src="images/menu-dashboard.png" alt="" id="toolbar-digimind">
-          <p class="description-menu-icons-toolbar-mobile">Mijn Digimind</p>
-        </div>  
-      </div>
 
-      <!-- footer -->
-      <footer class="footer">
-        <div id="top-layer">
-          <div>
-          <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
-          </div>
-          <div>
-            <h3 id="slogan-footer">Maak geluk een onderdeel van je dagelijks leven</h3>
-          </div>
-          <div>
-          <a href="https://www.facebook.com/Vitaminds.nu"><img src="images/Logo-facebook.png" alt="" width="25px"></a>
-          <a href="https://www.instagram.com/vitaminds.nu"><img src="images/logo-insta.png" alt="" width="50px"></a>
-          </div>
-        </div>
-        <div id="contact-layer">
-          <div class="adress-div">
-            <img class="icon-contact-layer" src="/images/adres-icon.png" alt="Vitaminds adres">
-            <p>Beijumerweg 24</p>
-            <p>9737AD</p> 
-            <p>Groningen</p>
-          </div>
-          <div class="adress-div">
-            <img class="icon-contact-layer" src="/images/email-icon.png" alt="Vitaminds emailadres">
-            <p> info@vitaminds.nu</p>
-          </div>
-          <div class="adress-div">
-            <img class="icon-contact-layer" src="/images/telephone-icon.png" alt="Vitaminds phonenumber">
-            <p>+316 244 098 43</p>
-          </div>
-        </div>
-      </footer>
-      
-          <script type="text/javascript" src="javascript/firebase.js"></script>
-          <script type="text/javascript" src="javascript/auth.js"></script>
-          <script type="text/javascript" src="javascript/index.js"></script>
-        </body>
-</html>
+<h1>Vraag advies aan de community</h1>
+<h2 class="sub-title-community">We zijn allemaal imperfect. Laten we elkaar ondersteunen in de dingen waar we mee rond lopen</h2>
+
+
+<div id="community-gratitude-outer-div">
+    <div id="gratitudes-overview-div">
+        <div id="page-div"></div>
+    </div>
+</div>
+
+<!-- Toolbar mobile -->
+<div class="toolbar-mobile">
+  <div class="toolbar-mobile-inner-div">
+    <img src="images/home-icon.png" alt="" id="toolbar-home">
+    <p class="description-menu-icons-toolbar-mobile">Open up</p>
+  </div>
+  <div class="toolbar-mobile-inner-div" id="toolbar-inner-div-chats-groups">
+    <img src="images/send-icon.png" alt="" id="toolbar-chats-groups">
+    <p class="description-menu-icons-toolbar-mobile">Chats & groepen</p>
+  </div>
+  <div class="toolbar-mobile-inner-div">
+    <div id="toolbar-inspiration-div" class="toolbar-mobile-inner-div">
+      <div id="toolbar-inspration-options">
+        <p id="toolbar-inspiration-public">Publiek</p>
+        <p id="toolbar-inspiration-private">Prive</p>
+      </div>
+      <img src="images/inspiration-icon-2.png" alt="" id="toolbar-inspiration">
+      <p class="description-menu-icons-toolbar-mobile">Nieuw inzicht</p>
+    </div>
+  </div>
+  <div class="toolbar-mobile-inner-div">
+    <img src="images/menu-dashboard.png" alt="" id="toolbar-digimind">
+    <p class="description-menu-icons-toolbar-mobile">Mijn Digimind</p>
+  </div>  
+</div>
+
+<!-- footer -->
+<footer class="footer">
+  <div id="top-layer">
+    <div>
+    <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+    </div>
+    <div>
+      <h3 id="slogan-footer">Maak geluk een onderdeel van je dagelijks leven</h3>
+    </div>
+    <div>
+    <a href="https://www.facebook.com/Vitaminds.nu"><img src="images/Logo-facebook.png" alt="" width="25px"></a>
+    <a href="https://www.instagram.com/vitaminds.nu"><img src="images/logo-insta.png" alt="" width="50px"></a>
+    </div>
+  </div>
+  <div id="contact-layer">
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="/images/adres-icon.png" alt="Vitaminds adres">
+      <p>Beijumerweg 24</p>
+      <p>9737AD</p> 
+      <p>Groningen</p>
+    </div>
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="/images/email-icon.png" alt="Vitaminds emailadres">
+      <p> info@vitaminds.nu</p>
+    </div>
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="/images/telephone-icon.png" alt="Vitaminds phonenumber">
+      <p>+316 244 098 43</p>
+    </div>
+  </div>
+</footer>
+
+      <script type="text/javascript" src="javascript/firebase.js"></script>
+      <script type="text/javascript" src="javascript/auth.js"></script>
+      <script type="text/javascript" src="javascript/index.js"></script>
+      <script type="text/javascript" src="javascript/community.js"></script>
+    </body>
+  </html>

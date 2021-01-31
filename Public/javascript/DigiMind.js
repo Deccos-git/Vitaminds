@@ -420,6 +420,7 @@ function sendMailNewChat(authUserClean){
                 userRef.get().then(function(doc) {
 
                         const auth = doc.data().Gebruikersnaam
+                        const authClean = doc.data().GebruikersnaamClean
 
                         const roomName = auth<naam ? auth+'_'+naam : naam+'_'+auth;
 
@@ -437,7 +438,7 @@ function sendMailNewChat(authUserClean){
                 Members: membersArray,
                 Online: []
         }).then(() => {
-                sendMailNewChat(auth)
+                sendMailNewChat(authClean)
         });    
         });
                 } else {
@@ -593,7 +594,7 @@ function getSection(){
         const option = mobileMenuSelect.options
         const selected = option[option.selectedIndex].innerHTML
 
-        if (selected === "Mijn trajecten"){
+        if (selected === "Mijn doelen"){
                 privateOuterDiv[0].style.display = "flex"
                 privateOuterDiv[1].style.display = "none"
                 privateOuterDiv[2].style.display = "none"

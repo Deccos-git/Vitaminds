@@ -762,7 +762,7 @@ function followCoach(naamCoach){
 
             const DOM = document.getElementById("check-in-outer-div")
 
-            noAuth.innerText = `Maak eerst even een Digimind aan om te kunnen delen`
+            noAuth.innerText = `Maak eerst even een aacount aan om te kunnen delen`
 
             noAuth.style.cursor = "pointer"
             noAuth.style.textDecoration = "underline"

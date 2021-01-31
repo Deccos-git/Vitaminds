@@ -3,7 +3,6 @@
     flex-direction: column;
     align-items: center;
     margin: 100px 100px 100px 100px;
-    border: 1px solid #122b46;
     padding: 30px;
     background-color: #eeeeee;
     border-radius: 15px;
@@ -45,6 +44,9 @@
     flex-direction: column;
     align-items: center;
     margin: 30px;
+    background-color: #122b4621;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 #register-button {
@@ -97,6 +99,7 @@
 
 .vitaminders-information{
     flex-wrap: wrap;
+    margin: 0px;
     }
 
     #sub-titel{
@@ -111,5 +114,40 @@
 
     #register-div {
         margin: 100px 0px 100px 0px;
+        display: flex;
+        border: 0px;
+        border-radius: 0px; 
+    }
+
+    .vitamindersinformation-image{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .vitamindersinformation-image img{
+        width: 90%;
+    }
+
+    #goals-div{
+        flex-direction: column-reverse;
+        margin: 0px;
+    }
+
+    #goals-div img{
+        width: 90%;
+    }
+
+    #favorites{
+        flex-direction: column-reverse;
+        margin: 0px;
+    }
+
+    #favorites img{
+        width: 90%;
+    }
+
+    .vitaminders-information-text {
+        margin: 0px;
     }
 }
