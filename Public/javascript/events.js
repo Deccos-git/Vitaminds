@@ -438,7 +438,6 @@ function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateO
                                         Wat geweldig dat je je hebt aangemeld voor mijn evenement ${titleEvent}!<br><br> 
                 
                                         Ik zal je de link voor het evenement binnenkort toe sturen.<br>
-                                        Ik stuur je binnenkort een factuur van ${priceOfEvent} voor de deelnemerskosten. <br><br>
 
                                         Tot ${dateOfEvent}! <br><br>
                                     

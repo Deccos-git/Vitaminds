@@ -128,44 +128,48 @@ showVisitorNotice("visitor-button-happiness", "notice-happiness")
 
 const veryLow = document.getElementsByClassName("hapiness-scale-img")
 
-const hapinessChart = document.getElementById('hapiness-chart-combined').getContext('2d');
-function hapinessChartAxis(dates, heightOfHapiness){
+const hapinessChart = document.getElementById('hapiness-chart-combined')
 
-const myChart = new Chart(hapinessChart, {
-        type: 'line',
-        data: {
-            labels: dates,
-            datasets: [{
-                label: 'Geluksniveau',
-                data: heightOfHapiness,
-                backgroundColor: [
-                        "#0c66650D"
-                ],
-                borderColor: [
-                        "#0c6665"
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-                legend: {
-                        display: false
-                },           
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        userCallback: function(label, index, labels) {
-                                // when the floored value is the same as the value we have a whole number
-                                if (Math.floor(label) === label) {
-                                    return label;
-                                }
-                        }
-                    }
+    function hapinessChartAxis(dates, heightOfHapiness){
+
+        if(hapinessChart != null){
+
+    const myChart = new Chart(hapinessChart.getContext('2d'), {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Geluksniveau',
+                    data: heightOfHapiness,
+                    backgroundColor: [
+                            "#0c66650D"
+                    ],
+                    borderColor: [
+                            "#0c6665"
+                    ],
+                    borderWidth: 1
                 }]
+            },
+            options: {
+                    legend: {
+                            display: false
+                    },           
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            userCallback: function(label, index, labels) {
+                                    // when the floored value is the same as the value we have a whole number
+                                    if (Math.floor(label) === label) {
+                                        return label;
+                                    }
+                            }
+                        }
+                    }]
+                }
             }
-        }
-    });
+        });
+    };
 };
 
 const dateArray = []
@@ -189,3 +193,231 @@ const heightArray = []
 
                 });
         });
+
+// Community question
+
+!function personalizedTitle(){
+
+    const title = document.getElementById("personalized-question-title")
+
+    auth.onAuthStateChanged(User =>{
+        db.collection("Vitaminders")
+        .doc(User.uid).get().then(doc =>{
+
+            const userName = doc.data().GebruikersnaamClean
+
+            title.innerHTML = `Stel een vraag, ${userName}`
+
+        });
+    });
+}();
+
+!function saveNewQuestion(){
+
+    const button = document.getElementById("save-question-button")
+
+    button.addEventListener("click", () => {
+
+        const input = document.getElementById("input-question").value
+
+        button.innerText = "Ingediend"
+        button.id = "Clicked"
+
+        auth.onAuthStateChanged(User =>{
+            db.collection("Vitaminders")
+            .doc(User.uid).get().then(doc =>{
+
+                const userName = doc.data().Gebruikersnaam
+                const userNameClean = doc.data().GebruikersnaamClean
+                const userPhoto = doc.data().Profielfoto
+
+                db.collection("Tools").doc().set({
+                    Type: "Question",
+                    Question: input,
+                    User: userName,
+                    Id: idClean,
+                    UserPhoto: userPhoto,
+                    UserClean: userNameClean,
+                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                    Owner: "Vitaminds"
+                });
+            });
+        });
+    });
+}();
+
+function linkToUser(userDiv, userName){
+
+    userDiv.addEventListener("click", () => {
+
+        window.open("../Vitaminders/" + userName + ".html", "_self");
+
+    })
+
+}
+
+!function displayQuestionsInOverview(){
+
+    const DOM = document.getElementById("question-overview")
+
+    db.collection("Tools").where("Type", "==", "Question")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const question = doc.data().Question
+            const timestamp = doc.data().Timestamp
+            const userClean = doc.data().UserClean
+            const userName = doc.data().User
+            const userPhoto = doc.data().UserPhoto
+            const identifier = doc.data().Id
+
+            const questionInnerDiv = document.createElement("div")
+                questionInnerDiv.setAttribute("class", "question-inner-div")
+            const userDiv = document.createElement("div")
+                userDiv.setAttribute("class", "question-user-div")
+            const userPhotoImg = document.createElement("img")
+            const userNameP = document.createElement("p")
+            const questionP = document.createElement("p")
+                questionP.setAttribute("class", "question-p")
+            const dateP = document.createElement("p")
+                dateP.setAttribute("class", "timestamp-question")
+            const socialDiv = document.createElement("div")
+                socialDiv.setAttribute("class", "question-social-div")
+            const answerIconDiv = document.createElement("div")
+                answerIconDiv.setAttribute("class", "answer-icon-div")
+            const answerIcon = document.createElement("img")
+            const answerIconText = document.createElement("p")
+
+            questionP.innerText = question
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
+            userPhotoImg.src = userPhoto
+            userNameP.innerText = userClean
+            answerIcon.src = "../images/design/talk-icon.png"
+            answerIconText.innerText = "Geef een antwoord"
+
+            DOM.appendChild(questionInnerDiv)
+            questionInnerDiv.appendChild(userDiv)
+            userDiv.appendChild(userPhotoImg)
+            userDiv.appendChild(userNameP)
+            questionInnerDiv.appendChild(questionP)
+            questionInnerDiv.appendChild(dateP)
+            questionInnerDiv.appendChild(socialDiv)
+            socialDiv.appendChild(answerIconDiv)
+            answerIconDiv.appendChild(answerIcon)
+            answerIconDiv.appendChild(answerIconText)
+
+            linkToUser(userDiv, userName)
+            addAnswerToQuestionTextarea(answerIconDiv, questionInnerDiv, question, identifier)
+            appendAnswersToQuestion(doc.id, identifier, questionInnerDiv)
+
+        });
+    });
+}();
+
+function addAnswerToQuestionTextarea(answerIcon, questionInnerDiv, question, identifier){
+
+    const replyDiv = document.createElement("div")
+            replyDiv.setAttribute("class", "reply-div")
+    const textarea = document.createElement("textarea")
+        textarea.setAttribute("placeholder", "Jouw antwoord")
+    const answerButton = document.createElement("button")
+        answerButton.setAttribute("class", "button-algemeen")
+        answerButton.setAttribute("data-question", question)
+        answerButton.setAttribute("data-idcode", identifier)
+
+        answerButton.innerText = "Verzenden"
+
+    saveAnswer(answerButton, textarea)
+
+    answerIcon.addEventListener("click", () => {
+    
+        questionInnerDiv.appendChild(replyDiv)
+        replyDiv.appendChild(textarea)
+        replyDiv.appendChild(answerButton)
+
+    });
+};
+
+function saveAnswer(button, textarea){
+
+    button.addEventListener("click", () => {
+
+        button.innerText = "Verzonden"
+        button.id = "Clicked"
+
+        const question = button.dataset.question
+        const idCode = button.dataset.idcode
+
+        const answer = textarea.value
+
+        auth.onAuthStateChanged(User =>{
+            db.collection("Vitaminders")
+            .doc(User.uid).get().then(doc =>{
+
+                const userName = doc.data().Gebruikersnaam
+                const userNameClean = doc.data().GebruikersnaamClean
+                const userPhoto = doc.data().Profielfoto
+
+                db.collection("Tools")
+                .where("Question", "==", question)
+                .where("Id", "==", idCode)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+
+                        db.collection("Tools")
+                        .doc(doc.id)
+                        .collection("Answer")
+                        .doc()
+                        .set({
+                            Answer: answer,
+                            Question: question,
+                            QuestionID: idCode,
+                            UserName: userName,
+                            UserNameClean: userNameClean,
+                            UserPhoto: userPhoto,
+                            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                            Owner: "Vitaminds",
+                            Type: "Answer"
+                        });
+                    });
+                });
+            });
+        });
+    });
+};
+
+function appendAnswersToQuestion(documentID, questionID, questionInnerDiv){
+
+
+    db.collection("Tools").doc(documentID)
+    .collection("Answer")
+    .where("QuestionID", "==", questionID)
+    .orderBy("Timestamp", "desc")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const answer = doc.data().Answer
+            const userNameClean = doc.data().UserNameClean
+            const userName = doc.data().UserName
+
+            const answerDiv = document.createElement("div")
+                answerDiv.setAttribute("class", "answer-div")
+            const answerP = document.createElement("p")
+                answerP.setAttribute("class", "answer-p")
+            const userNameP = document.createElement("p")
+                userNameP.setAttribute("class", "answer-username")
+
+            answerP.innerText = answer
+            userNameP.innerText = userNameClean
+
+            linkToUser(userNameP, userName)
+
+            questionInnerDiv.appendChild(answerDiv)
+            answerDiv.appendChild(userNameP)
+            answerDiv.appendChild(answerP)
+
+        });
+    });
+};
+

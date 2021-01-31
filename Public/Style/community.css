@@ -21,6 +21,26 @@
     background-color: #FFF;
 }
 
+#community-happiness-chart-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a7bdbd26;
+    margin: 50px 0px;
+}
+
+#community-resources-outer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#community-happiness-chart-div h3{
+    text-align: center;
+    color: #122b46;
+}
+
+
 .notice-visitor{
     display: flex;
     flex-direction: column;
@@ -137,8 +157,112 @@
     color: #122b46;
 }
 
-#canvas-div{
+#question-input-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+#question-overview{
     background-color: #a7bdbd26;
+}
+
+.question-social-div{
+    background-color: #a7bdbd26;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 5px 0px;
+}
+
+.answer-icon-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.answer-icon-div img{
+    width: 20px;
+    height: 20px;
+}
+
+.answer-icon-div p{
+    font-size: 14px;
+}
+
+.reply-div{
+    background-color: whitesmoke;
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.answer-username{
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+}
+
+.answer-p{
+    font-size: 18px;
+    color: white;
+}
+
+.question-p{
+    padding: 0px 20px;
+}
+
+.answer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; 
+    background-color: lightgray;
+    border-bottom: 1px solid white;
+}
+
+.question-inner-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px 100px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    background-color: white;
+}
+
+#question-overview h3{
+    text-align: center;
+}
+
+.question-user-div{
+    display: flex;
+    margin: 10px;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.question-user-div img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.question-user-div p{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.timestamp-question{
+    font-size: 16px;
+}
+
+.button-question{
+    margin: 20px;
 }
 
 @media only screen and (max-width: 938px){
@@ -149,5 +273,13 @@
 
     #page-div {
         width: 90%;
+    }
+
+    #personalized-question-title{
+        text-align: center;
+    }
+
+    .question-inner-div {
+        margin: 30px 0px;
     }
 }
