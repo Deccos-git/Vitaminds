@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
-const stripe = require('stripe')('sk_test_licm1PHJnZ26zQHj8OGkBV1Z00CgJf2SX8');
+const stripe = require('stripe')('sk_live_5IDnKTA0GsJaZzHrsshzRryA00VoC6sRbs');
 const cron = require('node-cron');
 
 var firebaseConfig = {
@@ -25,7 +25,7 @@ admin.initializeApp(firebaseConfig);
 app.use(require('prerender-node').set('prerenderToken', 'Ab0cCom4i1KuazJ2YhDA'));
 
 // Stripe
-const endpointSecret = "whsec_YS59bdkyVZrr3v9SInNkbqzWmNEBVGHa"
+const endpointSecret = "whsec_JST8P5CV41wYqcC0FZE0EA7fLScY8X2q"
 
 // only use the raw bodyParser for webhooks
 app.use((req, res, next) => {

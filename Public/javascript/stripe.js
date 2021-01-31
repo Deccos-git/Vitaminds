@@ -452,7 +452,7 @@ if(buyCoachgroupButton != null){
 
 
 // Create an instance of the Stripe object with your publishable API key
-const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
+const stripe = Stripe('pk_live_I3InkDUaGFoq17tXjFhE5LdG00PUsoxMPY');
 
 const checkoutButtonFive = document.getElementById("checkout-button-five");
 const checkoutButtonTen = document.getElementById("checkout-button-ten");

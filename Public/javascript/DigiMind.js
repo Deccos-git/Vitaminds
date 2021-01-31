@@ -2188,6 +2188,8 @@ db.collectionGroup("Inspiration").where("Reciever", "==", naam).orderBy("Timesta
         }).then(() => {
                 sum = amountArray.reduce((pv, cv) => pv + cv, 0);
 
+                console.log(amountArray)
+
                 currentTeGoed.innerText = `€${sum}`
         });
 });
