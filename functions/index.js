@@ -1,10 +1,17 @@
+
 const functions = require('firebase-functions');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const admin = require('firebase-admin');
-const stripe = require('stripe')('sk_live_5IDnKTA0GsJaZzHrsshzRryA00VoC6sRbs');
+const stripe = require('stripe')(functions.config().stripe.key);
 const cron = require('node-cron');
+
+// if(process.env.stripeapi === undefined){
+// console.log("not set")
+// } else {
+//     console.log("set")
+// }
 
 var firebaseConfig = {
   apiKey: "AIzaSyB_y0DwGVL7PCB7xc5s2lSiaPCyzrGZOV4",
@@ -15,6 +22,7 @@ var firebaseConfig = {
   messagingSenderId: "645063606604",
   appId: "1:645063606604:web:f8e27d4577f8622d"
 };
+
 // Initialize Firebase
 admin.initializeApp(firebaseConfig);
 
