@@ -16,7 +16,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../Style/style.css">
   <link rel="stylesheet" href="../Style/coachgroups.css">
-  <link rel="stylesheet" href="../Style/videochat.css">
+  <link rel="stylesheet" href="../Style/videochat-test.css">
   <link rel="shortcut icon" href="../images/Favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -145,27 +145,6 @@
       </div>
     </div>
 
-    <!-- <section id="coachgroup-agreement" class="page-title">
-      <div id="register-notice">
-        <h2 id="coachgroup-member-agreement-title"></h2>
-        <img src="/images/coachgroup-landing.png" alt="Coachgroup abonnement is aangemaakt.">
-        <h3>Wat kun je verwachten?</h3>
-        <p>
-          Zodra de groep vol is gaan we beginnen. Ik laat je dat direct via de mail weten.
-           Als we zijn begonnen stuur ik je wekelijks een nieuwe oefening.
-          Je kan de oefening op je eigen tijd doen. 
-            Ik raad je wel aan om niet teveel achter te lopen, 
-            omdat veel van het leren ook gebeurd in de gesprekken die we met elkaar hebben in de groep.</p>
-          <h3>Vragen</h3>
-          Voor vragen kun je mij altijd even een berichtje sturen.
-          <div id="questions-coachgroup-agreement"></div>  
-          <div>
-              <button class="button-algemeen" id="visitCoachgroup">Open coachgroep</button>
-          </div>
-      </div>
-    </section> -->
-  
-
   <h1 id="group-title"></h1>
   <div id="list-of-members">
     <div id="list-of-members-inner-div"></div>
@@ -203,17 +182,78 @@
     </div>
   </div>
 
-  <!-- <section id="videochat-outer-div">
-    <div id="buttons">
-      <button class="button-algemeen" disabled id="createBtn">
-          <span>Start een videochat</span>
-      </button>
-      <button class="button-algemeen" disabled id="joinBtn">
-          <span>Deelnemen aan videochat</span>
-      </button>
-  </div> -->
+  <div>
+    <span id="currentRoom"></span>
+  </div>
+  <div id="videos" class='single_cell'>
+      <div class="video-box" id="localVideoContainer">
+          <video id="localVideo" muted autoplay playsinline></video>
+      </div>
+  </div>
 
-  <div id="room-dialog">
+  <div id="buttons">
+    <button class="material-icons btn-circle" id="createBtn">group_add</button>
+    <button class="material-icons btn-circle" id="joinBtn">call</button>
+    <button class="material-icons hidden btn-circle" id="hangupBtn">call_end</button>
+    <button class="material-icons hidden btn-circle" id="shareButton">add_ic_call</button>
+    <button class="material-icons btn-circle" id="muteButton">mic</button>
+    <button class="material-icons btn-circle" id="videoButton">videocam</button>
+    <button class="material-icons btn-circle hidden" id="screenShareButton">screen_share</button>
+    <button class="material-icons btn-circle hidden" id="localVideoShowButton">visibility</button>
+    <button class="material-icons btn-circle" id="appFullscreenButton">fullscreen</button>
+    <div id = "deviceDropdown">
+        <!--<button class="mdc-button" id="cameraOptions"><span class="mdc-button__label">Camera</span</button>-->
+        <button class="material-icons btn-circle" id="cameraOptions">arrow_drop_up</button>
+        <div class="mdc-menu-surface--anchor">
+            <div class="mdc-menu mdc-menu-surface" tabindex="-1" style="transform-origin: center bottom; left: 0px; bottom: 0px; max-height: 767.781px;">
+                <ul class="mdc-list" role="menu" aria-hidden="true">
+                    <div id="cameras">
+                        <li>Camera</li>
+                        <!--<li class="mdc-list-item mdc-ripple-upgraded" role="menuitem" tabindex="0">Passionfruit</li>-->
+                    </div>
+                    <li class="mdc-list-divider" role="separator"></li>
+                    <!--<div id="microphones">-->
+                    <!--<li>Audio</li>-->
+                    <!--[><li class="mdc-list-item mdc-ripple-upgraded" role="menuitem" tabindex="-1">Pineapple</li><]-->
+                    <!--</div>-->
+                </ul>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="mdc-dialog"
+id="room-dialog"
+role="alertdialog"
+aria-modal="true"
+aria-labelledby="my-dialog-title"
+aria-describedby="my-dialog-content">
+<div class="mdc-dialog__container">
+   <div class="mdc-dialog__surface">
+       <h2 class="mdc-dialog__title" id="my-dialog-title">Join room</h2>
+       <div class="mdc-dialog__content" id="my-dialog-content">
+           Enter ID for room to join:
+           <div class="mdc-text-field">
+               <input type="text" id="room-id" class="mdc-text-field__input">
+               <label class="mdc-floating-label" for="my-text-field">Room ID</label>
+               <div class="mdc-line-ripple"></div>
+           </div>
+       </div>
+       <footer class="mdc-dialog__actions">
+           <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
+               <span class="mdc-button__label">Cancel</span>
+           </button>
+           <button id="confirmJoinBtn" type="button" class="mdc-button mdc-dialog__button"
+                                                     data-mdc-dialog-action="yes">
+               <span class="mdc-button__label">Join</span>
+           </button>
+       </footer>
+   </div>
+</div>
+<div class="mdc-dialog__scrim"></div>
+</div>
+
+  <!-- <div id="room-dialog">
     <h2 id="my-dialog-title">Deelnemen aan videogesprek</h2>
     <div id="my-dialog-content">
       <p>Vul de toegangscode in:</p>
@@ -225,13 +265,13 @@
     </footer>
   </div>
 
-  <div id="videos">
+   <div id="videos">
       <video id="localVideo" muted autoplay playsinline></video>
       <video id="remoteVideo" autoplay playsinline></video>
       <video id="remoteVideo" autoplay playsinline></video>
-  </div>
+  </div> 
 
-  <button class="button-algemeen" id="learning-video-chat">Heb je iets geleerd over jezelf?</button>
+  <button class="button-algemeen" id="learning-video-chat">Heb je iets geleerd over jezelf?</button> -->
 
 <!-- Toolbar mobile -->
 <div class="toolbar-mobile">
@@ -296,6 +336,9 @@
       <script type="text/javascript" src="../javascript/coachgroups.js"></script>
       <script type="text/javascript" src="../javascript/auth.js"></script>
       <script type="text/javascript" src="../javascript/index.js"></script>
+      <script type="text/javascript" src="../javascript/videochatTestStyle.js"></script>
+      <script  type="text/javascript"src="../javascript/videochatTestCodecHandler.js"></script>
+      <script defer type="text/javascript" src="../javascript/videochatTestApp.js"></script>
       <script type="text/javascript" src="../javascript/stripe.js"></script>
       <script type="text/javascript" src="../javascript/videochat-groups.js"></script>
     </body>
