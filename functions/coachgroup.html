@@ -31,6 +31,7 @@
   <script>
     tinymce.init({
       height: 400,
+      width: 800,
       selector: '#tiny-mce',
       toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media',
       plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media',
@@ -131,14 +132,20 @@
       <div id="creator-information-div"></div>
       <h1 id="group-landing-title"></h1>
       <div id="banner-div"></div>
+      <div id="description-div">
       <p id="group-description"></p>
+      </div>
+      <div id="tiny-mce-div">
+        <div id="tiny-mce"></div>
+       <button id="button-edit-group-description">Opslaan</button> 
+      </div>
       <ul id="group-facts"></ul>
       <div id="button-div-landing">
         <button class="button-algemeen" id="button-group-landing">Aanmelden</button>
       </div>
     </div>
 
-    <section id="coachgroup-agreement" class="page-title">
+    <!-- <section id="coachgroup-agreement" class="page-title">
       <div id="register-notice">
         <h2 id="coachgroup-member-agreement-title"></h2>
         <img src="/images/coachgroup-landing.png" alt="Coachgroup abonnement is aangemaakt.">
@@ -156,7 +163,7 @@
               <button class="button-algemeen" id="visitCoachgroup">Open coachgroep</button>
           </div>
       </div>
-    </section>
+    </section> -->
   
 
   <h1 id="group-title"></h1>

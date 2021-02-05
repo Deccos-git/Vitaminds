@@ -7,12 +7,6 @@ const admin = require('firebase-admin');
 const stripe = require('stripe')(functions.config().stripe.key);
 const cron = require('node-cron');
 
-// if(process.env.stripeapi === undefined){
-// console.log("not set")
-// } else {
-//     console.log("set")
-// }
-
 var firebaseConfig = {
   apiKey: "AIzaSyB_y0DwGVL7PCB7xc5s2lSiaPCyzrGZOV4",
   authDomain: "vitaminds-78cfa.firebaseapp.com",
@@ -80,7 +74,7 @@ app.post(sessionNumber, async (req, res) => {
       ],
       mode: 'payment',
       success_url: 'https://www.vitaminds.nu/succes.html',
-      cancel_url: 'https://www.vitaminds.nu/subscription',
+      cancel_url: 'https://www.vitaminds.nu/',
     });
   
     res.json({ id: session.id });
@@ -103,6 +97,42 @@ createSession("/create-session-ninety", 9000)
 createSession("/create-session-hundred", 10000)
 createSession("/create-session-hundredfifty", 15000)
 createSession("/create-session-twohundred", 20000)
+
+app.post("/create-checkout-session", async (req, res) => {
+    const { priceId } = req.body;
+  
+    // See https://stripe.com/docs/api/checkout/sessions/create
+    // for additional parameters to pass.
+    try {
+      const session = await stripe.checkout.sessions.create({
+        mode: "subscription",
+        payment_method_types: ['ideal', 'card'],
+        line_items: [
+          {
+            price: priceId,
+            // For metered billing, do not pass quantity
+            quantity: 1,
+          },
+        ],
+        // {CHECKOUT_SESSION_ID} is a string literal; do not change it!
+        // the actual Session ID is returned in the query parameter when your customer
+        // is redirected to the success page.
+        success_url: 'https://www.vitaminds.nu/succes.html',
+        cancel_url: 'https://www.vitaminds.nu/subscription.html',
+      });
+  
+      res.send({
+        sessionId: session.id,
+      });
+    } catch (e) {
+      res.status(400);
+      return res.send({
+        error: {
+          message: e.message,
+        }
+      });
+    }
+  });
 
 // Group aanmaken op basis van URL
 app.get('/Group/:id',function(req,res)
@@ -266,11 +296,6 @@ app.get('/news-feed/*',function(req,res)
 });
 
 app.get('/coaches-2/*',function(req,res)
-{
-    res.sendFile('/index-redirect.html', { root: __dirname });
-});
-
-app.get('/voor-coach.html',function(req,res)
 {
     res.sendFile('/index-redirect.html', { root: __dirname });
 });

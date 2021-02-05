@@ -1,0 +1,8 @@
+{
+    "stripe": {
+      "webhook_signature": "whsec_YS59bdkyVZrr3v9SInNkbqzWmNEBVGHa",
+      "webhooksecret": "whsec_YS59bdkyVZrr3v9SInNkbqzWmNEBVGHa",
+      "secret": "sk_test_licm1PHJnZ26zQHj8OGkBV1Z00CgJf2SX8",
+      "key": "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"
+    }
+  }
