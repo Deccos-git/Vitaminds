@@ -192,15 +192,42 @@
 </div>
 
 <div id="buttons">
-  <button class="material-icons btn-circle" id="createBtn">group_add</button>
-  <button class="material-icons btn-circle" id="joinBtn">call</button>
-  <button class="material-icons hidden btn-circle" id="hangupBtn">call_end</button>
-  <button class="material-icons hidden btn-circle" id="shareButton">add_ic_call</button>
-  <button class="material-icons btn-circle" id="muteButton">mic</button>
-  <button class="material-icons btn-circle" id="videoButton">videocam</button>
-  <button class="material-icons btn-circle hidden" id="screenShareButton">screen_share</button>
-  <button class="material-icons btn-circle hidden" id="localVideoShowButton">visibility</button>
-  <button class="material-icons btn-circle" id="appFullscreenButton">fullscreen</button>
+  <div class="button-div">
+    <button class="material-icons btn-circle" id="createBtn">group_add</button>
+    <p>Uitnodiging versturen</p>
+  </div>
+  <div class="button-div">
+    <button class="material-icons btn-circle" id="joinBtn">call</button>
+    <p>Deelnemen aan gesprek</p>
+  </div>
+  <div class="button-div">
+    <button class="material-icons hidden btn-circle" id="hangupBtn">call_end</button>
+    <p>Gesprek verlaten</p>
+  </div>
+  <div class="button-div">
+    <button class="material-icons hidden btn-circle" id="shareButton">add_ic_call</button>
+    <p>Uitnodiging versturen</p>
+  </div>
+  <div class="button-div">
+    <button class="material-icons btn-circle" id="muteButton">mic</button>
+    <p>Geluid aan/uit</p>
+  </div>
+  <div class="button-div">
+    <button class="material-icons btn-circle" id="videoButton">videocam</button>
+    <p>Beeld <br> aan/uit</p>
+  </div>
+  <div class="button-div">
+    <button class="material-icons btn-circle hidden" id="screenShareButton">screen_share</button>
+    <p>Scherm delen</p>
+  </div>
+  <div class="button-div">
+    <button class="material-icons btn-circle hidden" id="localVideoShowButton">visibility</button>
+    <p>Iets</p>
+  </div>
+  <div class="button-div">
+    <button class="material-icons btn-circle" id="appFullscreenButton">fullscreen</button>
+    <p>Volledig scherm</p>
+  </div>
   <div id="deviceDropdown">
      <button class="mdc-button" id="cameraOptions"><span class="mdc-button__label">Camera</span</button>
       <button class="material-icons btn-circle" id="cameraOptions">arrow_drop_up</button>
@@ -232,20 +259,20 @@ aria-describedby="my-dialog-content">
    <div class="mdc-dialog__surface">
        <h2 class="mdc-dialog__title" id="my-dialog-title">Join room</h2>
        <div class="mdc-dialog__content" id="my-dialog-content">
-           Enter ID for room to join:
+           Voer een code in om deel te nemen:
            <div class="mdc-text-field">
                <input type="text" id="room-id" class="mdc-text-field__input">
-               <label class="mdc-floating-label" for="my-text-field">Room ID</label>
+               <label class="mdc-floating-label" for="my-text-field"></label>
                <div class="mdc-line-ripple"></div>
            </div>
        </div>
        <footer class="mdc-dialog__actions">
            <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
-               <span class="mdc-button__label">Cancel</span>
+               <span class="mdc-button__label">Annuleren</span>
            </button>
            <button id="confirmJoinBtn" type="button" class="mdc-button mdc-dialog__button"
                                                      data-mdc-dialog-action="yes">
-               <span class="mdc-button__label">Join</span>
+               <span class="mdc-button__label">Deelnemen</span>
            </button>
        </footer>
    </div>
