@@ -157,7 +157,6 @@
   <div id="input-div">
     <div id="video-div">
       <img id="video-icon" src="../images/video-icon.png" alt="start een video gesprek">
-      <img id="video-stop-icon" src="../images/stop-video-icon.png" alt="">
     </div> 
     <input id="chat-input" type="text">
     <img id="send-icon-group" src="../images/send-icon.png" alt="">
@@ -182,10 +181,29 @@
     </div>
   </div>
 
+<div id="buttons-room">
+  <div class="button-div">
+    <button class="material-icons btn-circle" id="createBtn">group_add</button>
+    <p>Uitnodiging<br> versturen</p>
+  </div>
+  <div class="button-div">
+    <button class="material-icons btn-circle" id="joinBtn">call</button>
+    <p>Deelnemen<br> aan gesprek</p>
+  </div>
+  <div class="button-div">
+    <button class="material-icons hidden btn-circle" id="hangupBtn">call_end</button>
+    <p>Gesprek<br> verlaten</p>
+  </div>
+  <div class="button-div">
+    <button class="material-icons hidden btn-circle" id="shareButton">add_ic_call</button>
+    <p>Uitnodiging<br> delen</p>
+  </div>
+</div>
+
 <div>
     <span id="currentRoom"></span>
 </div>
-<div id="videos" class='single_cell'>
+<div id="videos">
     <div class="video-box" id="localVideoContainer">
         <video id="localVideo" muted autoplay playsinline></video>
     </div>
@@ -193,24 +211,8 @@
 
 <div id="buttons">
   <div class="button-div">
-    <button class="material-icons btn-circle" id="createBtn">group_add</button>
-    <p>Uitnodiging versturen</p>
-  </div>
-  <div class="button-div">
-    <button class="material-icons btn-circle" id="joinBtn">call</button>
-    <p>Deelnemen aan gesprek</p>
-  </div>
-  <div class="button-div">
-    <button class="material-icons hidden btn-circle" id="hangupBtn">call_end</button>
-    <p>Gesprek verlaten</p>
-  </div>
-  <div class="button-div">
-    <button class="material-icons hidden btn-circle" id="shareButton">add_ic_call</button>
-    <p>Uitnodiging delen</p>
-  </div>
-  <div class="button-div">
     <button class="material-icons btn-circle" id="muteButton">mic</button>
-    <p>Geluid aan/uit</p>
+    <p>Geluid<br> aan/uit</p>
   </div>
   <div class="button-div">
     <button class="material-icons btn-circle" id="videoButton">videocam</button>
@@ -218,15 +220,15 @@
   </div>
   <div class="button-div">
     <button class="material-icons btn-circle hidden" id="screenShareButton">screen_share</button>
-    <p>Scherm delen</p>
+    <p>Scherm<br> delen</p>
   </div>
   <div class="button-div">
     <button class="material-icons btn-circle hidden" id="localVideoShowButton">visibility</button>
-    <p>Eigen video zichtbaar</p>
+    <p>Eigen video<br> zichtbaar</p>
   </div>
   <div class="button-div">
     <button class="material-icons btn-circle" id="appFullscreenButton">fullscreen</button>
-    <p>Volledig scherm</p>
+    <p>Volledig<br> scherm</p>
   </div>
   <div id="deviceDropdown">
      <button class="mdc-button" id="cameraOptions"><span class="mdc-button__label">Camera</span</button>
