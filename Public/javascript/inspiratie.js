@@ -27,8 +27,6 @@ const titel11 = titel10.replace('%20',' ')
 const titel12 = titel11.split("?fb")
 const titel = titel12[0]
 
-console.log(titel)
-
 // Meta tags
 !function setMetaAttributesArticle(){
     const titleMeta = document.getElementById("title-meta")
@@ -147,6 +145,8 @@ db.collection("Articles").where("Owner", "==", "Vitaminds")
         const domain = doc.data().Domain
         const author = doc.data().Author
         const timestamp = doc.data().Timestamp
+        const video = doc.data().Video
+        const podcast = doc.data().Podcast
      
         const outerSection = document.createElement("section")
             outerSection.setAttribute("class", "levensvraag-artikel-section")
@@ -188,6 +188,7 @@ db.collection("Articles").where("Owner", "==", "Vitaminds")
         outerSection.appendChild(metaUserDiv)
         metaUserDiv.appendChild(metaUserPhoto)
         metaUserDiv.appendChild(metaUserName)
+        showMediaType(video, podcast, headerDiv, title)
         headerDiv.appendChild(headerImg)
         outerSection.appendChild(titleDiv)
         titleDiv.appendChild(titleSub)
@@ -232,6 +233,8 @@ function loadSelectedArticles(selectedArticle){
             const headerImageSmall = doc.data().HeaderImageSmall
             const domain = doc.data().Domain
             const author = doc.data().Author
+            const video = doc.data().Video
+            const podcast = doc.data().Podcast
          
             const outerSection = document.createElement("section")
                 outerSection.setAttribute("class", "levensvraag-artikel-section")
@@ -270,6 +273,7 @@ function loadSelectedArticles(selectedArticle){
             metaUserDiv.appendChild(metaUserPhoto)
             metaUserDiv.appendChild(metaUserName)
             headerDiv.appendChild(headerImg)
+            showMediaType(video, podcast, headerDiv, title)
             outerSection.appendChild(titleDiv)
             titleDiv.appendChild(titleSub)
             titleDiv.appendChild(titleH2)
@@ -278,6 +282,29 @@ function loadSelectedArticles(selectedArticle){
         });
     });
     };
+
+function showMediaType(video, podcast, dom, title){
+
+    const label = document.createElement("div")
+        label.setAttribute("class", "mediatype-label")
+    const labelImg = document.createElement("img")
+
+    if(video === "Yes"){
+        labelImg.src = "images/design/filmroll-icon.png"
+    } else if (podcast === "Yes"){
+        labelImg.src = "images/design/old-microphone-icon.png"
+    } else {
+        labelImg.src = "images/design/old-microphone-icon.png"
+        labelImg.style.visibility = "hidden"
+    }
+
+    dom.appendChild(label)
+    label.appendChild(labelImg)
+
+    label.addEventListener("click", () => {
+        window.open("../Artikelen/" + title + ".html", "_self");
+        });
+};
 
 // Individual article page
     
@@ -600,6 +627,7 @@ function inspirerend(elem){
                             const lesson = document.getElementById("lifelesson-input").value
 
                           buttonLifelesson.innerText = "Opgeslagen"
+                          buttonLifelesson.id = "Clicked"
 
                         db.collection("Vitaminders").doc(User.uid)
                         .get().then(doc1 => {
@@ -798,11 +826,32 @@ function loadArticlesWithSameDomain(articleDomain){
 
 // Follow coach
 
-const naam = ""
-
-!function followUnfollowCoach(){
+!function dataAttributeAuthorNameInFollowButton(){
 
     const followButton = document.getElementById("follow-author")
+
+    db.collection("Articles")
+    .where("Title", "==", titel)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const author = doc.data().Author
+
+            followButton.setAttribute("data-author", author)
+
+        });
+    })
+    .then(() => {
+        followUnfollowCoach()
+    });
+}();
+
+function followUnfollowCoach(){
+
+    const followButton = document.getElementById("follow-author")
+    const coach = followButton.dataset.author
+
+    console.log(coach)
 
     auth.onAuthStateChanged(User =>{
             if(User){
@@ -813,13 +862,13 @@ const naam = ""
                     // Hide follow for auth on his own profile
                     const auth = doc.data().Gebruikersnaam
 
-                    if(auth == naam){
+                    if(auth == coach){
                             followButton.style.display = "none" 
                     }
     
                     followersArray = Array.from(followers)
     
-                    if(followersArray.includes(naam)){
+                    if(followersArray.includes(coach)){
     
                             followButton.innerHTML = "Ontvolgen"
                             followButton.setAttribute("onclick", "unfollowCoach()")
@@ -828,12 +877,16 @@ const naam = ""
             });
     };
 });
-}();
+};
 
 // Follow coach
 
 function sendEmailNewFollower(gebruikersnaamFollower){
-    db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+
+    const followButton = document.getElementById("follow-author")
+    const coach = followButton.dataset.author
+
+    db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
 
                     const email = doc1.data().Email
@@ -863,7 +916,9 @@ function sendEmailNewFollower(gebruikersnaamFollower){
     });
 };
 
-function followCoach(){
+function followCoach(coach){
+
+    const button = document.getElementById("follow-author")
 
     auth.onAuthStateChanged(User =>{
             if(User){
@@ -871,17 +926,16 @@ function followCoach(){
                             const gebruikersnaamCleanFollower = doc.data().GebruikersnaamClean
                     
                     db.collection("Vitaminders").doc(User.uid).update({
-                            FavCoaches: firebase.firestore.FieldValue.arrayUnion(naam)
+                            FavCoaches: firebase.firestore.FieldValue.arrayUnion(coach)
                     }).then(() => {
-                            sendEmailNewFollower(gebruikersnaamCleanFollower)
+                            sendEmailNewFollower(gebruikersnaamCleanFollower, coach)
                     });
             });
-
-                    const button = document.getElementById("follow-author")
                     button.innerHTML = "Volgend"
             } else {
                     const followMassageVisitor = document.getElementById("follow-massage-visitor")
-                    followMassageVisitor.style.display = "block"
+                    followMassageVisitor.style.display = "flex"
+                    button.style.display = "none"
             };
     });
 };  
@@ -891,7 +945,10 @@ function followCoach(){
 
             followButton.addEventListener("click", () => {
 
-                    followCoach();
+                const coach = followButton.dataset.author
+
+                    followCoach(coach);
+                    
     });
 }();
 
@@ -899,16 +956,20 @@ function followCoach(){
 // Unfollow coach
 function unfollowCoach(){
 
+    const followButton = document.getElementById("follow-author")
+    const coach = followButton.dataset.author
+
     auth.onAuthStateChanged(User =>{
             if(User){
 
                     console.log(User.uid)
                     db.collection("Vitaminders").doc(User.uid).update({
-                            FavCoaches: firebase.firestore.FieldValue.arrayRemove(naam)
-                    }); 
+                            FavCoaches: firebase.firestore.FieldValue.arrayRemove(coach)
+                    }).then(() => {
 
-                    const button = document.getElementById("follow-author")
-                    button.innerHTML = "Ontvolgd"
+                        followButton.innerHTML = "Ontvolgd"
+
+                    });
             };
     });
 };

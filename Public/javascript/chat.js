@@ -1,22 +1,25 @@
 
 // Naam uit URL halen
-const naamhtml = location.pathname.replace(/^.*[\\\/]/, '')
-const naam1 = naamhtml.replace('.html', '')
-const naam2 = naam1.replace('%20',' ')
-const naam3 = naam2.replace('%20',' ')
-const naam4 = naam3.replace('%20',' ')
-const naam5 = naam4.replace('%20',' ')
-const naam6 = naam5.replace('%20',' ')
-const naam7 = naam6.replace('%20',' ')
-const naam8 = naam7.replace('%20',' ')
-const naam9 = naam8.replace('%20',' ')
-const naam10 = naam9.replace('%20',' ')
-const naam11 = naam10.replace('%20',' ')
-const naam = naam11.replace('%20',' ')
+const titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
+const titel1 = titelhtml.replace('.html', '')
+const titel2 = titel1.replace('%20',' ')
+const titel3 = titel2.replace('%20',' ')
+const titel4 = titel3.replace('%20',' ')
+const titel5 = titel4.replace('%20',' ')
+const titel6 = titel4.replace('%20',' ')
+const titel7 = titel6.replace('%20',' ')
+const titel8 = titel7.replace('%20',' ')
+const titel9 = titel8.replace('%20',' ')
+const titel10 = titel9.replace('%20',' ')
+const titel11 = titel10.replace('%20',' ')
+const titel12 = titel11.split("?fb")
+const titel = titel12[0]
+
+console.log(titel)
 
 
 // Title 
-db.collection('Vitaminders').where('Gebruikersnaam', '==', naam )
+db.collection('Vitaminders').where('Gebruikersnaam', '==', titel )
     .get()
     .then(querySnapshot => {
     querySnapshot.forEach(doc => {
@@ -44,7 +47,7 @@ function saveMessage(){
     
                 const auth = doc.data().Gebruikersnaam
 
-    const roomName = auth<naam ? auth+'_'+naam : naam+'_'+auth;
+    const roomName = auth<titel ? auth+'_'+titel : titel+'_'+auth;
 
 db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
@@ -93,9 +96,11 @@ function emptyScreenByOnsnapshot(){
 };
 
 function messageOptions(message, chatMessage, chatRoom, authChatter){
-     const options = document.createElement("p")
+    const optionsDiv = document.createElement("div")
+        optionsDiv.setAttribute("id", "options-div")
+     const options = document.createElement("img")
         options.setAttribute("class", "message-options")
-     options.innerText = "..."
+     options.src = "../images/design/mail-icon2.jpg"
 
      const sendAsMail = document.createElement("p")
         sendAsMail.setAttribute("class", "send-chat-as-mail")
@@ -105,20 +110,28 @@ function messageOptions(message, chatMessage, chatRoom, authChatter){
         sendAsMail.setAttribute("onclick", "sendChatAsMail(this)")
      sendAsMail.innerText = "Verstuur bericht als email"
 
-     message.appendChild(options)
-     options.appendChild(sendAsMail)
+     message.appendChild(optionsDiv)
+     optionsDiv.appendChild(options)
+     optionsDiv.appendChild(sendAsMail)
 
-     options.addEventListener("click", () => {
-            sendAsMail.style.display = "block" 
-     });
+     toggleSendAsMail(options, sendAsMail)
+};
+
+function toggleSendAsMail(options, sendChatAsMail){
+
+    options.addEventListener("click", () => {
+            if(sendChatAsMail.style.display === "flex"){
+                sendChatAsMail.style.display = "none" 
+            } else {
+                sendChatAsMail.style.display = "flex" 
+            };
+    });
 };
 
 function sendChatAsMail(elem){
     const message = elem.dataset.message
     const room = elem.dataset.room
     const coach = elem.dataset.auth
-
-    console.log(coach)
 
     elem.innerText = "Verstuurd"
 
@@ -137,8 +150,6 @@ function sendChatAsMail(elem){
             const type = doc.data().Type
 
             members.forEach(member => {
-
-                console.log(type)
 
                 if(type === "Chat"){
 
@@ -161,13 +172,13 @@ function sendChatAsMail(elem){
 
                                 ${message}<br><br>
                                 
-                                Ga naar jullie <a href="www.vitaminds.nu/Chats/${naam}.html">chat</a> om op het bericht te reageren.<br><br>
+                                Ga naar jullie <a href="www.vitaminds.nu/Chats/${titel}.html">chat</a> om op het bericht te reageren.<br><br>
                                 P.s. Om privacyredenen kun je chat alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
                         
                                 Vriendelijke groet, </br></br>
                                 Het Vitaminds Team </br></br>
                                 <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-                        Gebruikersnaam: naam,
+                        Gebruikersnaam: titel,
                         Emailadres: email,
                         Type: "New coachmessage in chat"
                         }        
@@ -181,9 +192,6 @@ function sendChatAsMail(elem){
 
                         const email = doc2.data().Email
                         const naam = doc2.data().GebruikersnaamClean
-
-                        console.log(email)
-
                       
                         db.collection("Mail").doc().set({
                             to: email,
@@ -257,7 +265,9 @@ auth.onAuthStateChanged(User =>{
 
             const auth = doc.data().Gebruikersnaam
 
-            const roomName = auth<naam ? auth+'_'+naam : naam+'_'+auth;
+            const roomName = auth<titel ? auth+'_'+titel : titel+'_'+auth;
+
+            console.log(roomName)
 
             db.collectionGroup("Messages")
             .where("Room", "==", roomName)
@@ -271,6 +281,8 @@ auth.onAuthStateChanged(User =>{
 
                     const authMessage = doc2.data().Message
                     const sender = doc2.data().Auth
+
+                    console.log(sender)
 
                     const messageP = document.createElement("p")
                     messageP.setAttribute("class", "auth-message-p")
@@ -648,7 +660,7 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
                             const userClean = doc4.data().GebruikersnaamClean
                             const photo = doc4.data().Profielfoto
 
-                    setInnerTextOfDOMobjects(chatsP,groupType,  userClean, type);
+                    setInnerTextOfDOMobjects(chatsP, userClean);
                         
                     getProfilePicOfChat(photo, photoImg);
 
@@ -694,35 +706,49 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
 };
 
 
-function addLearning(){
+    // Add learning
 
-    const inspirationIcon = document.getElementById("inspiration-icon")
-    const addLearningDiv = document.getElementById("add-learning-div")
-    const selectGoals = document.getElementById("select-goals")
-    const buttonAddLearning = document.getElementById("button-add-learning")
-    const inputAddLearning = document.getElementById("input-learning")
-    const addLearningH3 = document.getElementById("add-learning-h3")
-    const addLearningButtonDiv = document.getElementById("add-learning-button-div")
+    function addLearning(){
 
-    if(inspirationIcon != null ){
+        const inspirationIcon = document.getElementById("inspiration-icon")
+        const addLearningDiv = document.getElementById("add-learning-div")
+        const selectGoals = document.getElementById("select-goals")
+        const buttonAddLearning = document.getElementById("button-add-learning")
+        const inputAddLearning = document.getElementById("input-learning")
+        const addLearningH3 = document.getElementById("add-learning-h3")
+        const addLearningButtonDiv = document.getElementById("add-learning-button-div")
+
+        if(inspirationIcon != null){
+    
         inspirationIcon.addEventListener("click", () => {
-
+    
             addLearningDiv.style.display = "flex"
-
+            addLearningDiv.scrollIntoView();
+    
         });
     };
-
-    // Load goals of auth in select
-
-    if(selectGoals != null){
-
-    auth.onAuthStateChanged(User =>{
-        if(User){
-          const userRef = db.collection("Vitaminders").doc(User.uid);
-          userRef.get().then(function(doc) {
-
-            const auth = doc.data().Gebruikersnaam
     
+        // Load goals of auth in select
+
+function showGoalsAndInputOfAuth(){
+
+    const authDiv = document.getElementById("auth-div")
+    const CTA = document.getElementById("cta-lesson-coachgroup")
+
+    if(authDiv != null || CTA != null){
+
+        authDiv.style.display = "flex"
+        CTA.style.display = "none"
+    };
+}
+
+auth.onAuthStateChanged(User =>{
+    if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+
+        const auth = doc.data().Gebruikersnaam
+
             db.collectionGroup("Levensvragen").where("Gebruikersnaam", "==", auth)
             .get()
             .then(querySnapshot => {
@@ -734,101 +760,89 @@ function addLearning(){
 
                     option.innerText = levensvraagClean
 
+                    if(selectGoals != null){
+
                     selectGoals.appendChild(option)
+                    };
+
+                    showGoalsAndInputOfAuth()
                 });
-            }).then (() => {
-            // If auth has no goals display notice
-            const optionLenght = Array.from(selectGoals.options)
+            });
+        });
+    };
+});
 
-            console.log(optionLenght.length)
+!function showAddLearningDiv(){
 
-            if(optionLenght.length == 0){
+    const learningTitleDiv = document.getElementById("learnings-title-div")
 
-                selectGoals.style.display = "none"
-                inputAddLearning.style.display = "none"
-                addLearningButtonDiv.style.display = "none"
+    const learningInnerDiv = document.getElementById("learning-inner-div")
 
-                addLearningH3.innerText = "Maak een doel aan in je Digimind om een levensles op te kunnen slaan"
-                addLearningH3.style.cursor = "pointer"
-                addLearningH3.style.color = "#cf6e13"
+    if(learningInnerDiv != null){
 
-                addLearningH3.addEventListener("click", () => {
+        learningTitleDiv.addEventListener("click", () => {
 
-                    auth.onAuthStateChanged(User =>{
-                        if(User){
-                          const userRef = db.collection("Vitaminders").doc(User.uid);
-                          userRef.get().then(function(doc) {
-
-                              const naamID = doc.data().Gebruikersnaam;
-
-                              window.open("../Vitaminders/" + [naamID] + ".html", "_self");
-
-                          });
-                        };
-                    });
-
-
-                });
-
+            if(learningInnerDiv.style.display === "flex"){
+                learningInnerDiv.style.display = "none"
+            } else {
+                learningInnerDiv.style.display = "flex"
             };
         });
-          });
-        };
-    });
-};
+    };
+}();
 
-
-if (buttonAddLearning != null){
-    buttonAddLearning.addEventListener("click", () => {
-
-        const input = document.getElementById("input-learning").value
-   
-        const select = document.getElementById("select-goals")
-        const option = select.options
-        const selected = option[option.selectedIndex].innerHTML
-   
-        db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", selected).get()
-        .then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-   
-               const levensvraagID = doc.data().Levensvraag
-   
-        auth.onAuthStateChanged(User =>{
-            userRef = db.collection("Vitaminders").doc(User.uid)
-            userRef.get()
-             .then(doc => {
-                     const auth = doc.data().Gebruikersnaam
-   
-        db.collection("Vitaminders").doc(User.uid).collection("Levenslessen").doc().set({
-        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-        Levensles: input,
-        Gebruikersnaam: auth,
-        Inspirerend: 1,
-        Type: "Chat-inzicht",
-        Source: `Chat met ${naam}`,
-        Levensvraag: levensvraagID
+    
+    if (buttonAddLearning != null){
+        buttonAddLearning.addEventListener("click", () => {
+    
+            const input = document.getElementById("input-learning").value
+       
+            const select = document.getElementById("select-goals")
+            const option = select.options
+            const selected = option[option.selectedIndex].innerHTML
+       
+            db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", selected).get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+       
+                   const levensvraagID = doc.data().Levensvraag
+       
+            auth.onAuthStateChanged(User =>{
+                userRef = db.collection("Vitaminders").doc(User.uid)
+                userRef.get()
+                 .then(doc => {
+                         const auth = doc.data().Gebruikersnaam
+       
+            db.collection("Vitaminders").doc(User.uid).collection("Levenslessen").doc().set({
+            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+            Levensles: input,
+            Gebruikersnaam: auth,
+            Inspirerend: 1,
+            Type: "Coachgroup-inzicht",
+            Source: titel,
+            Levensvraag: levensvraagID,
+            Status: "Approved"
+                    })
+       
+            levensvraagRef = db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraagID).where("Gebruikersnaam", "==", auth)
+            levensvraagRef.get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc4 => {
+    
+                    console.log(input)
+                    
+                    db.collection("Vitaminders").doc(User.uid).collection("Levensvragen").doc(doc4.id).update({
+                        Levenslessen: firebase.firestore.FieldValue.arrayUnion(input)
+                    })
+                    
                 })
-   
-        levensvraagRef = db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraagID).where("Gebruikersnaam", "==", auth)
-        levensvraagRef.get()
-        .then(querySnapshot => {
-            querySnapshot.forEach(doc4 => {
-
-                console.log(input)
-                
-                db.collection("Vitaminders").doc(User.uid).collection("Levensvragen").doc(doc4.id).update({
-                    Levenslessen: firebase.firestore.FieldValue.arrayUnion(input)
-                })
-                
             })
-        })
-        const savedNotice = document.getElementById("notice-learning-added")
-        savedNotice.style.display = "block"
+            const savedNotice = document.getElementById("notice-learning-added")
+            savedNotice.style.display = "block"
+                       })
                    })
                })
            })
-       })
-    });  
-};
-}; addLearning()
-
+        }); 
+    }; 
+    }; addLearning()

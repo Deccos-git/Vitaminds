@@ -1114,6 +1114,7 @@ function getTool(){
         const happinessChartDiv = document.getElementById("happiness-scale-div")
         const checkInDiv = document.getElementById("check-in-div")
         const gratitudeDiv = document.getElementById("gratitute-journal-div")
+        const resourcesDiv = document.getElementById("resources-div")
 
         const option = toolSelect.options
         const selected = option[option.selectedIndex].innerHTML
@@ -1122,12 +1123,20 @@ function getTool(){
                 happinessChartDiv.style.display = "flex"
                 checkInDiv.style.display = "none"
                 gratitudeDiv.style.display = "none"
+                resourcesDiv.style.display = "none"
         } else if (selected === "Stok achter de deur"){
                 checkInDiv.style.display = "flex"
                 gratitudeDiv.style.display = "none" 
                 happinessChartDiv.style.display = "none"
+                resourcesDiv.style.display = "none"
         } else if (selected === "Dankbaarheidsdagboek"){
                 gratitudeDiv.style.display = "flex"
+                checkInDiv.style.display = "none"
+                happinessChartDiv.style.display = "none"
+                resourcesDiv.style.display = "none"
+        } else if (selected === "Hulpbronnen"){
+                resourcesDiv.style.display = "flex"
+                gratitudeDiv.style.display = "none"
                 checkInDiv.style.display = "none"
                 happinessChartDiv.style.display = "none"
         };
@@ -1150,6 +1159,8 @@ function showToolOptionIfInstalled(toolName, optionID, optionValue, optionText){
                     .then(doc => {
                         const tools = doc.data().Tools
 
+                        console.log(tools)
+
                         if(tools.includes(toolName)){
                                 toolSelect.appendChild(option)
 
@@ -1165,6 +1176,7 @@ function showToolOptionIfInstalled(toolName, optionID, optionValue, optionText){
 showToolOptionIfInstalled("Check in", "check-in-option", "check-in", "Stok achter de deur")
 showToolOptionIfInstalled("Happiness Chart", "happiness-option", "happiness-scale", "Geluksschaal")
 showToolOptionIfInstalled("Gratitude Journal", "gratitude-option", "gratitude-journal", "Dankbaarheidsdagboek")
+showToolOptionIfInstalled("Resources", "resource-option", "resource", "Hulpbronnen")
 
 function showFirstToolInSelect(toolSelect){
 
@@ -1335,6 +1347,8 @@ function saveHapiness(heightOfHapiness, veryLow){
 
                 const newInput = document.getElementById("gratitude-input").value
                 saveNewGratituteButton.innerText = "Opgeslagen"
+                saveNewGratituteButton.id = "Clicked"
+                newInput.value = ""
 
                 db.collection("Tools").doc().set({
                         Type: "Gratitude",
@@ -1347,6 +1361,17 @@ function saveHapiness(heightOfHapiness, veryLow){
         });
 }();
 
+function emptyScreenByOnsnapshot(){
+        const gratitudeDivsUser = document.getElementsByClassName("gratitude-div")
+        const DOMgratitudeScreen = document.getElementById("page-div")
+    
+        const gratitudeDivsArrayUser = Array.from(gratitudeDivsUser)
+    
+        gratitudeDivsArrayUser.forEach(gratitudeUser => {
+                DOMgratitudeScreen.removeChild(gratitudeUser)
+        });
+    };
+
 !function displayGratitudesInOverview(){
 
         const journalPage = document.getElementById("page-div")
@@ -1355,7 +1380,10 @@ function saveHapiness(heightOfHapiness, veryLow){
         .where("Type", "==", "Gratitude")
         .where("User", "==", naam)
         .orderBy("Timestamp", "desc")
-        .get().then(querySnapshot => {
+        .onSnapshot(querySnapshot => {
+
+                emptyScreenByOnsnapshot()
+
                 querySnapshot.forEach(doc => {
 
                         const gratitude = doc.data().Gratitude
@@ -1576,6 +1604,142 @@ db.collectionGroup("Levensvragen").where("Levenslessen", "array-contains", "Tool
                         activatedGoalsInnerDiv.appendChild(activeGoalP)
         });
 });
+
+// Resources tool
+
+!function saveNewResource(){
+
+        const saveNewResourceButton = document.getElementById("save-new-resource")
+
+        saveNewResourceButton.addEventListener("click", () => {
+
+                const privatePublicOption = document.querySelector('input[name="public-private-resource"]:checked').value;
+
+                const newInput = document.getElementById("resource-input").value
+                saveNewResourceButton.innerText = "Opgeslagen"
+
+                db.collection("Tools").doc().set({
+                        Type: "Resource",
+                        Resource: newInput,
+                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                        Owner: "Vitaminds",
+                        User: naam,
+                        PublicPrivate: privatePublicOption,
+                });
+        });
+}();
+
+!function displayResourcesInOverview(){
+
+        const resourcesOverview = document.getElementById("resources-overview-div")
+
+        db.collection("Tools")
+        .where("Type", "==", "Resource")
+        .where("User", "==", naam)
+        .orderBy("Timestamp", "desc")
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        const resource = doc.data().Resource
+                        const timestamp = doc.data().Timestamp
+                        const publicPrivate = doc.data().PublicPrivate
+
+                        const resourceDiv = document.createElement("div")
+                                resourceDiv.setAttribute("class", "resource-inner-div")
+                        const resourceH3 = document.createElement("h3")
+                        const publicPrivateImgDiv = document.createElement("div")
+                                publicPrivateImgDiv.setAttribute("class", "public-private-image-div")
+                        const publicPrivateImg = document.createElement("img")
+                        const dateP = document.createElement("p")
+
+                        resourceH3.innerText = resource
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        dateP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options)
+
+                        showPublicPrivateOptionOnHoverOverIconResource(publicPrivateImgDiv, publicPrivate, publicPrivateImg, resource)
+
+                        if(publicPrivate === "Private"){
+                                publicPrivateImg.src = "../images/private.png"
+                        } else if (publicPrivate === "Public"){
+                                publicPrivateImg.src = "../images/public.png"
+                        };
+
+                        resourcesOverview.appendChild(resourceDiv)
+                        resourceDiv.appendChild(dateP)
+                        resourceDiv.appendChild(publicPrivateImgDiv)
+                        publicPrivateImgDiv.appendChild(publicPrivateImg)
+                        resourceDiv.appendChild(resourceH3)
+
+                });
+        });
+}();
+
+function setPublicPrivateStatusOfResource(elem){
+
+        elem.innerHTML = `<p id="changed-notice">Gewijzigd</p>`
+
+        const resourceTitle = elem.dataset.resource
+        const privatePublicStatus = elem.dataset.status
+
+        console.log(resourceTitle)
+
+        let status = ""
+
+        if(privatePublicStatus === "Private"){
+                status = "Public"
+        } else if (privatePublicStatus === "Public"){
+                status = "Private"
+        };
+
+        console.log(status)
+
+        db.collection("Tools")
+        .where("Type", "==", "Resource")
+        .where("Resource", "==", resourceTitle)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        db.collection("Tools")
+                        .doc(doc.id).update({
+                                PublicPrivate: status
+                        })
+                });
+        });
+};
+
+function showPublicPrivateOptionOnHoverOverIconResource(icon, status, image, resource){
+
+        image.addEventListener("click", () => {
+
+                const optionsDiv = document.createElement("div")
+                        optionsDiv.setAttribute("class", "options-div")
+                const noticeP = document.createElement("p")
+                const changeStatusDiv = document.createElement("div")
+                        changeStatusDiv.setAttribute("class", "change-status-div")
+                        changeStatusDiv.setAttribute("onclick", "setPublicPrivateStatusOfResource(this)")
+                        changeStatusDiv.setAttribute("data-resource", resource)
+                        changeStatusDiv.setAttribute("data-status", status)
+                const changeStatusImg = document.createElement("img")
+                const changeStatusP = document.createElement("p")
+                        changeStatusP.setAttribute("class", "change-status-public-private-resourse")
+
+                if(status === "Private"){
+                        noticeP.innerHTML = `Huidige status: <b>prive</b>` 
+                        changeStatusP.innerHTML = `Verander naar <b>openbaar</b>`
+                } else if (status === "Public"){
+                        noticeP.innerHTML = `Huidige status: <b>openbaar</b>`
+                        changeStatusP.innerHTML = `Verander naar <b>prive</b>`
+                };
+
+                changeStatusImg.src = "../images/design/change-icon.png"
+
+                icon.appendChild(optionsDiv)
+                optionsDiv.appendChild(noticeP)
+                optionsDiv.appendChild(changeStatusDiv)
+                changeStatusDiv.appendChild(changeStatusImg)
+                changeStatusDiv.appendChild(changeStatusP)
+        });
+};
 
 // Analytics
 
@@ -2149,11 +2313,17 @@ db.collectionGroup("Inspiration").where("Reciever", "==", naam).orderBy("Timesta
         productTitle.innerHTML = productTitel
         price.innerText = `€${productPrice}`
 
-        plusMinusDiv.appendChild(plusMinusInnerDiv)
-        plusMinusInnerDiv.appendChild(date)
-        plusMinusInnerDiv.appendChild(productDiv)
-        productDiv.appendChild(price)
-        productDiv.appendChild(productTitle)
+        console.log(productTitel)
+
+        if(productTitel != "Account created"){
+                productDiv.style.display = "none"
+        };
+
+                plusMinusDiv.appendChild(plusMinusInnerDiv)
+                plusMinusInnerDiv.appendChild(date)
+                plusMinusInnerDiv.appendChild(productDiv)
+                productDiv.appendChild(price)
+                productDiv.appendChild(productTitle)
         };
 
         db.collection("Vitaminders")

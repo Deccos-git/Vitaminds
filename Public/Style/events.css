@@ -126,7 +126,7 @@
     height: auto;
     width: 250px;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
-    margin: 0px 10px 30px 10px;
+    margin: 30px 10px 30px 10px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     border-bottom-left-radius: 15px;
@@ -228,12 +228,24 @@
 }
 
 #meta-div-event-detail{
-    margin-top: 20px;
+    margin: 20px;
 }
 
 #meta-div-event-detail p{
     font-size: 18px;
     margin-top: 0px;
+}
+
+.event-banner{
+    width: 90%;
+}
+
+.event-notice{
+    font-size: 18px;
+    margin-top: 30px;
+    border: 1px solid lightgray;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 #register-event-button{

@@ -33,6 +33,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 0px 30px;
 }
 
 #community-happiness-chart-div h3{
@@ -59,10 +60,16 @@
 
 .community-notice{
     display: none;
-    background-color: #a7bdbd26;
+    border-radius: 5px;
+    margin-top: 20px;
+    border: 1px solid lightgray;
     padding:  0px 5px;
     border-radius: 5px;
     margin-top: 20px;
+}
+
+.notice-p{
+    font-size: 18px;
 }
 
 .log-in{
@@ -263,6 +270,27 @@
 
 .button-question{
     margin: 20px;
+}
+
+.resource-author{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.resource-date{
+    font-size: 16px;
+}
+
+.resource-inner-div{
+    background-color: #a7bdbd;
+    width: 300px;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.resource-p{
+    color: white;
 }
 
 @media only screen and (max-width: 938px){

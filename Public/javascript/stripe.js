@@ -18,8 +18,6 @@
       
                   const userSessionId = doc1.data().SessionId
                   const userName = doc1.data().UserName
-
-                  console.log(userName)
               
                       docRef.doc(doc1.id).update({
                           Status: "Approved",
@@ -330,12 +328,23 @@ auth.onAuthStateChanged(User =>{
     const agreementModal = document.getElementById("coachgroup-agreement")
     const landingModal = document.getElementById("group-landing-page")
 
+    auth.onAuthStateChanged(User =>{
+      if(User){
+      db.collection("Vitaminders").doc(User.uid)
+      .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+          const auth = doc.data().Gebruikersnaam
+
       db.collection("Coachgroups")
       .where("Room", "==", titel)
       .get().then(querySnapshot => {
           querySnapshot.forEach(doc1 => {
 
               const price = doc1.data().Costs
+              const members = doc1.data().Members
+
+              if(!members.includes(auth)){
 
           const sum = amountArray.reduce((pv, cv) => pv + cv, 0);
 
@@ -355,7 +364,7 @@ auth.onAuthStateChanged(User =>{
                       Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
                   })
                   .then(() => {
-                    agreementModal.style.display = "flex"
+                    // agreementModal.style.display = "flex"
                     landingModal.style.display = "none"
                     arrayOfCoachgroupSignUps()
                     storeMemberInDatabase(doc1.id)
@@ -369,7 +378,14 @@ auth.onAuthStateChanged(User =>{
               window.open("../gelukstegoed.html", "_self")
           });
          };
+        } else {
+          landingModal.style.display = "none"
+        }
       });
+  });
+});
+      });
+    };
   });
   });
   } else {
@@ -453,6 +469,7 @@ if(buyCoachgroupButton != null){
 
 // Create an instance of the Stripe object with your publishable API key
 const stripe = Stripe('pk_live_I3InkDUaGFoq17tXjFhE5LdG00PUsoxMPY');
+// const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
 
 const checkoutButtonFive = document.getElementById("checkout-button-five");
 const checkoutButtonTen = document.getElementById("checkout-button-ten");
@@ -490,52 +507,86 @@ createSession("/create-session-twohundred", checkoutButtonTwohundred)
 
 function createSession(sessionNumber, buttonProduct){
 
-  buttonProduct.addEventListener("click", function () {
+  if(buttonProduct != null){
 
-    buttonProduct.innerText = "Laden"
+    buttonProduct.addEventListener("click", function () {
 
-  fetch(sessionNumber, {
-    method: "POST",
-  })
-    .then(function (response) {
-      return response.json();
+      buttonProduct.innerText = "Laden"
+
+    fetch(sessionNumber, {
+      method: "POST",
     })
-    .then(function (session) {
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (session) {
 
-      auth.onAuthStateChanged(User =>{
-        if (User){
-           const userRef = db.collection("Vitaminders").doc(User.uid)
-           userRef.get().then(doc => {
+        auth.onAuthStateChanged(User =>{
+          if (User){
+            const userRef = db.collection("Vitaminders").doc(User.uid)
+            userRef.get().then(doc => {
 
-            const gebruikersnaam = doc.data().Gebruikersnaam
-            const email = doc.data().Email
-           
-            db.collection("PaymentUser").doc().set({
-              SessionId: session.id,
-              UserName: gebruikersnaam,
-              Email: email,
-              Status: "Not approved"
-            })
+              const gebruikersnaam = doc.data().Gebruikersnaam
+              const email = doc.data().Email
             
-          }).then(() => {
-            stripe.redirectToCheckout({
-              sessionId: session.id
-             }); 
-          })
-          };
-        });    
-    })
-    .then(function (result) {
-      // If redirectToCheckout fails due to a browser or network
-      // error, you should display the localized error message to your
-      // customer using error.message.
-      if (result.error) {
-        alert(result.error.message);
-      }
-    })
-    .catch(function (error) {
-      console.error("Error:", error);
+              db.collection("PaymentUser").doc().set({
+                SessionId: session.id,
+                UserName: gebruikersnaam,
+                Email: email,
+                Status: "Not approved"
+              })
+              
+            }).then(() => {
+              stripe.redirectToCheckout({
+                sessionId: session.id
+              }); 
+            })
+            };
+          });    
+      })
+      .then(function (result) {
+        // If redirectToCheckout fails due to a browser or network
+        // error, you should display the localized error message to your
+        // customer using error.message.
+        if (result.error) {
+          alert(result.error.message);
+        }
+      })
+      .catch(function (error) {
+        console.error("Error:", error);
+      });
+    });
+  };
+};
+
+const checkoutButtonSubscriptionCoach = document.getElementById("checkout")
+
+checkoutButtonSubscriptionCoach
+  .addEventListener("click", function(evt) {
+
+    var createCheckoutSession = function(priceId) {
+      return fetch("/webhook-subscription", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          priceId: priceId
+        })
+      }).then(function(result) {
+        return result.json();
+      });
+    };
+
+    createCheckoutSession('price_1IHFIvFIim4HzRlUzJdZ4QbI').then(function(data) {
+      // Call Stripe.js method to redirect to the new Checkout page
+      stripe
+        .redirectToCheckout({
+          sessionId: data.sessionId
+        })
+        .then(handleResult);
     });
   });
-};
+
+
 

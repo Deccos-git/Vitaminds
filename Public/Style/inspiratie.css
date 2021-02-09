@@ -18,6 +18,20 @@
     font-size: 18px;
 }
 
+#follow-massage-visitor{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    border: 1px solid lightgray;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#follow-massage-visitor p{
+    font-size: 18px;
+}
+
 table td{
     padding: 10px;
 }
@@ -190,6 +204,13 @@ table td{
     background-color: #FFF;
 }
 
+.levensvraag-artikel-header{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
 .mainTekst:hover{
     box-shadow: 0 8px 8px 0 rgba(0,0,0,.14), 0 9px 7px -8px rgba(0,0,0,.2), 0 7px 11px 0 rgba(0,0,0,.12);
 }
@@ -360,12 +381,28 @@ table td{
     background-size: cover;
     height: 200px;
     width: 100%;
-    margin: 0px 0px -30px 0px;
+    margin: 15px 0px -30px 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
     z-index: 1;
 }
+
+.mediatype-label{
+    margin-bottom: -30px;
+    margin-right: 185px;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.mediatype-label img{
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    background-color: white;
+}
+
 
 .titleSub{
     margin-top: 0px;

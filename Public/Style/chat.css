@@ -23,11 +23,8 @@
 }
 
 .message-options{
-    font-size: 14px;
-    margin: 0px;
     cursor: pointer;
-    margin-top: -30px;
-    color: #49beb7;
+    width: 15px;
 }
 
 .send-chat-as-mail{
@@ -35,7 +32,9 @@
     margin: 0px;
     display: none;
     cursor: pointer;
-    color: #49beb7;
+    color: gray;
+    border: 1px solid lightgray;
+    border-radius: 3px;
 }
 
 #chat-screen{
@@ -64,12 +63,22 @@
     font-size: 14px;
     margin-top: 0px;
     text-align: right;
+    margin-bottom: 0px;
+}
+
+#options-div{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 5px;
 }
 
 #add-learning-div{
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-evenly;
+    background-color: #a7bdbd26;
 }
 
 #add-learning-div select{
@@ -78,6 +87,27 @@
 
 #add-learning-div button{
     margin-top: 20px;
+}
+
+#add-learning-h3{
+    font-size: 20px;
+}
+
+#learnings-title-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#learnings-title-div img{
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#learning-inner-div{
+    display: none;
 }
 
 #notice-learning-added{

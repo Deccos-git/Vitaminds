@@ -690,6 +690,10 @@
     font-weight: bold;
 }
 
+#checkout{
+    /* visibility: hidden; */
+}
+
 #form-div{
     display: flex;
     flex-direction: column;

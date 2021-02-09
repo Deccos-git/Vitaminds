@@ -300,11 +300,15 @@ db.collection("Events").where("Owner", "==", "Vitaminds")
             window.open("../Vitaminders/" + organizer, "_self");
         })
 
+        console.log(type)
+
         if(type === "coachgroup"){
             eventTypeP.innerText = "Coachgroep"
             buttonEvent.innerHTML = `<a href="../group/${titleID}.html">Meer informatie</a>`
         } else if (type === "Online event"){
             eventTypeP.innerText = "Online event"
+        } else if (type === "customerEvent"){
+            eventTypeP.innerText = "Event"
         }
 
         db.collection("Vitaminders")
@@ -366,6 +370,7 @@ function registerNoticeWhenNoAccount(registerEventButton, DOM){
                 registerEventButton.style.display = "none"
 
                 const registerNotice = document.createElement("p")
+                    registerNotice.setAttribute("class", "event-notice")
 
                 registerNotice.innerHTML = `Maak een gratis <a href="../Register.html">account</a> aan om je aanmelden voor dit event`
 
@@ -558,6 +563,7 @@ db.collection("Events").where("Title", "==", titel)
         const organiserEventMessage = document.createElement("p")
             organiserEventMessage.setAttribute("class", "organiser-event-message")
         const bannerImg = document.createElement("img")
+            bannerImg.setAttribute("class", "event-banner")
         const dateEvent = document.createElement("p")
             dateEvent.setAttribute("class", "date-event")
         const titleEvent = document.createElement("h2")
@@ -580,7 +586,7 @@ db.collection("Events").where("Title", "==", titel)
         titleEvent.innerText = title
         bannerImg.src = eventBanner
         buttonEvent.innerText = "Aanmelden"
-        organiserEventMessage.innerText = "Als je vraag hebt over dit event kun je die altijd aan mij stellen."
+        organiserEventMessage.innerText = "Als je een vraag hebt over dit event kun je die altijd aan mij stellen."
         organiserEventDiv.addEventListener("click", () => {
             window.open("../Vitaminders/" + organizer, "_self");
         });

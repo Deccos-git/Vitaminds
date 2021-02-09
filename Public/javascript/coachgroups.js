@@ -130,22 +130,29 @@ db.collection("Coachgroups").where("Type", "==", "Coachgroup").get().then(queryS
 
             numberParticipantsP.innerHTML = `<b>Aantal deelnemers:</b><br> ${numberParticipants}`
             memberCount.innerHTML = `<b>Aantal aanmeldingen:</b><br> ${members.length}`
-            groupLenghtP.innerHTML = `<b>Duur van de coachgroep:</b><br> ${duration} maanden`
-            startdateP.innerHTML = `<b>Startdatum:</b><br> ${startdate}`
+
+            if( duration === "Doorlopend"){
+                groupLenghtP.innerHTML = `<b>Duur van coachgroep:</b> ${duration}` 
+            } else {
+                groupLenghtP.innerHTML = `<b>Duur van coachgroep:</b> ${duration} maanden`
+            };
+
             costsP.innerHTML = `<b>Kosten:</b><br> ${costs} euro`
             leaveGroup.innerHTML = "Aanmelding annuleren"
 
-            // Coachgroup agreement
-            db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
+            changeFormatOfDate(startdate, startdateP)
 
-                    const profilePic = doc1.data().Profielfoto
-                    const coachNameClean = doc1.data().GebruikersnaamClean
+            // // Coachgroup agreement
+            // db.collection("Vitaminders").where("Gebruikersnaam", "==", auth).get().then(querySnapshot => {
+            //     querySnapshot.forEach(doc1 => {
 
-                    coachGroupAgreementQuestions(profilePic, coachNameClean, auth)
+            //         const profilePic = doc1.data().Profielfoto
+            //         const coachNameClean = doc1.data().GebruikersnaamClean
 
-                });
-            });   
+            //         coachGroupAgreementQuestions(profilePic, coachNameClean, auth)
+
+            //     });
+            // });   
 
             if(DOM != null){
 
@@ -186,6 +193,16 @@ db.collection("Coachgroups").where("Type", "==", "Coachgroup").get().then(queryS
 
     });
 });
+
+function changeFormatOfDate(date, startdateP){
+
+    const splitDate = date.split("-")
+
+    const formattedDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
+
+    startdateP.innerHTML = `<b>Startdatum:</b><br> ${formattedDate}`
+
+}
 
 function hideCoachgroupBuilderForNoneCoach(){
     auth.onAuthStateChanged(User =>{
@@ -387,7 +404,12 @@ function groupFactsLanding(memberCount, totalCosts, maximumMembersCount, duratio
         numberOfMembersLi.innerHTML = `<b>Aantal aanmeldingen:</b> ${memberCount.length}`
         costs.innerHTML = `<b>Kosten:</b> ${totalCosts} euro`
         maximumMembers.innerHTML = `<b>Aantal deelnemers:</b> ${maximumMembersCount}`
-        duration.innerHTML = `<b>Duur van coachgroep:</b> ${durationTime} maanden`
+
+        if(durationTime === "Doorlopend"){
+            duration.innerHTML = `<b>Duur van coachgroep:</b> ${durationTime}` 
+        } else {
+            duration.innerHTML = `<b>Duur van coachgroep:</b> ${durationTime} maanden`
+        }
         start.innerHTML = `<b>Start datum:</b> ${startDate}`
 
         groupFactsUl.appendChild(maximumMembers)
@@ -402,7 +424,7 @@ function groupFactsLanding(memberCount, totalCosts, maximumMembersCount, duratio
 function groupDescriptionLanding(descriptionOfGroup){
     
 
-    groupDescription.innerText = descriptionOfGroup
+    groupDescription.innerHTML = descriptionOfGroup
 }
 
 function groupLandingBanner(imagePhoto){
@@ -422,6 +444,81 @@ function hideLandingModal(){
     });
 };
 
+!function editDescriptionEvent(){
+
+    const editIcon = document.createElement("img")
+        editIcon.setAttribute("id", "edit-icon-event-description")
+    editIcon.src = "/images/edit-icon.png"
+
+    const dom = document.getElementById("description-div")
+
+    const tinyMCEDiv = document.getElementById("tiny-mce-div")
+
+    displayEditIconIfAuthIsAdmin(editIcon)
+
+    editIcon.addEventListener("click", () => {
+
+        tinyMCEDiv.style.display = "flex"
+        dom.style.display = "none"
+
+        db.collection("Coachgroups").where("Room", "==", titel)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                const description = doc.data().Description
+
+                    tinymce.get("tiny-mce").setContent(description);
+
+            });
+        });
+    });
+}();
+
+function displayEditIconIfAuthIsAdmin(editIcon){
+
+    const dom = document.getElementById("description-div")
+
+    auth.onAuthStateChanged(User =>{
+        db.collection("Vitaminders").doc(User.uid)
+        .get().then(doc => {
+
+            const admin = doc.data().Admin
+
+            if(admin === "Yes"){
+
+                dom.appendChild(editIcon)
+
+            };
+        });
+    });
+};
+
+!function saveEditedDescription(){
+
+    const button = document.getElementById("button-edit-group-description")
+
+    button.addEventListener("click", () => {
+
+        const description = tinymce.get("tiny-mce").getContent();
+
+        button.innerText = "Opgeslagen"
+        button.id = "Clicked"
+
+        db.collection("Coachgroups").where("Room", "==", titel)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                db.collection("Coachgroups").doc(doc.id).update({
+                    Description: description
+                })
+                .then(() => {
+                    location.reload(); 
+                });
+            });
+        });
+    });
+}();
+
 !function fillLandingWithGroupData(){
     db.collection("Coachgroups").where("Room", "==", titel).get().then(querySnapshot => {
         querySnapshot.forEach(doc1 => {
@@ -439,9 +536,7 @@ function hideLandingModal(){
 
             const dateArray = start.split("-")
 
-            const date = `${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`
-
-            console.log(dateArray)
+            const date = `${dateArray[0]}-${dateArray[1]}-${dateArray[2]}`
 
             groupLandingH1(roomClean)
 
@@ -461,66 +556,74 @@ function hideLandingModal(){
     });
 }();
 
-// Coachgroup agreement
+// // Coachgroup agreement
 
-    const agreementButton = document.getElementById("visitCoachgroup")
+//     const agreementButton = document.getElementById("visitCoachgroup")
 
-function coachgroupAgreementTitle(){
-    const title = document.getElementById("coachgroup-member-agreement-title")
+// function coachgroupAgreementTitle(){
+//     const title = document.getElementById("coachgroup-member-agreement-title")
     
-    if (title != null){
+//     if (title != null){
     
-    auth.onAuthStateChanged(User =>{
-        if(User){
-        const userRef = db.collection("Vitaminders").doc(User.uid);
-        userRef.get().then(function(doc) {
+//     auth.onAuthStateChanged(User =>{
+//         if(User){
+//         const userRef = db.collection("Vitaminders").doc(User.uid);
+//         userRef.get().then(function(doc) {
     
-            const auth = doc.data().GebruikersnaamClean
+//             const auth = doc.data().GebruikersnaamClean
     
-    title.innerText = `Welkom bij mijn coachgroep, ${auth}`
+//     title.innerText = `Welkom bij mijn coachgroep, ${auth}`
     
-                    });
-                };
-            });
-        };
-    };
+//                     });
+//                 };
+//             });
+//         };
+//     };
     
-// Coachgroup payment agreement questions
-function coachGroupAgreementQuestions(imageSource, coachNameClean, coachName){
+// // Coachgroup payment agreement questions
+// function coachGroupAgreementQuestions(imageSource, coachNameClean, coachName){
 
-    const DOM = document.getElementById("questions-coachgroup-agreement")
+//     const DOM = document.getElementById("questions-coachgroup-agreement")
 
-    if (DOM != null){
+//     if (DOM != null){
 
-    const imgAndNameDiv = document.createElement("div")
-        imgAndNameDiv.setAttribute("id", "img-name-div-coachgroup-agreement-questions")
-    const img = document.createElement("img")
-    const name = document.createElement("p")
+//     const imgAndNameDiv = document.createElement("div")
+//         imgAndNameDiv.setAttribute("id", "img-name-div-coachgroup-agreement-questions")
+//     const img = document.createElement("img")
+//     const name = document.createElement("p")
 
-    img.src = imageSource
-    name.innerText = coachNameClean
+//     img.src = imageSource
+//     name.innerText = coachNameClean
 
-    DOM.appendChild(imgAndNameDiv)
-    imgAndNameDiv.appendChild(img)
-    imgAndNameDiv.appendChild(name)
+//     DOM.appendChild(imgAndNameDiv)
+//     imgAndNameDiv.appendChild(img)
+//     imgAndNameDiv.appendChild(name)
 
-    imgAndNameDiv.addEventListener("click", () => {
-        window.open("../Vitaminders/" + coachName + ".html", "_self");
-        });
-    };
-};
+//     imgAndNameDiv.addEventListener("click", () => {
+//         window.open("../Vitaminders/" + coachName + ".html", "_self");
+//         });
+//     };
+// };
 
-function openCoachGroupAfterAgreement(titleRoom){
+// function openCoachGroupAfterAgreement(titleRoom){
 
-    if(visitCoachgroup != null){
+//     if(visitCoachgroup != null){
 
-        visitCoachgroup.addEventListener("click", () => {
-        agreementModal.style.display = "none"
-    })
-    };
-}
+//         visitCoachgroup.addEventListener("click", () => {
+//         agreementModal.style.display = "none"
+//     })
+//     };
+// }
 
 // Coachgroup individual page
+
+!function scrollToTextInputOnLoad(){
+
+    const textInput = document.getElementById("chat-input")
+
+    textInput.scrollIntoView();
+
+}();
 
     // Title
 
@@ -618,8 +721,11 @@ function showGoalsAndInputOfAuth(){
     const authDiv = document.getElementById("auth-div")
     const CTA = document.getElementById("cta-lesson-coachgroup")
 
-    authDiv.style.display = "flex"
-    CTA.style.display = "none"
+    if(authDiv != null || CTA != null){
+
+        authDiv.style.display = "flex"
+        CTA.style.display = "none"
+    };
 }
 
 auth.onAuthStateChanged(User =>{
@@ -640,7 +746,10 @@ auth.onAuthStateChanged(User =>{
 
                     option.innerText = levensvraagClean
 
+                    if(selectGoals != null){
+
                     selectGoals.appendChild(option)
+                    };
 
                     showGoalsAndInputOfAuth()
                 });
@@ -655,14 +764,17 @@ auth.onAuthStateChanged(User =>{
 
     const learningInnerDiv = document.getElementById("learning-inner-div")
 
-    learningTitleDiv.addEventListener("click", () => {
+    if(learningInnerDiv != null){
 
-        if(learningInnerDiv.style.display === "none"){
-            learningInnerDiv.style.display = "flex"
-        } else {
-            learningInnerDiv.style.display = "none"
-        };
-    });
+        learningTitleDiv.addEventListener("click", () => {
+
+            if(learningInnerDiv.style.display === "none"){
+                learningInnerDiv.style.display = "flex"
+            } else {
+                learningInnerDiv.style.display = "none"
+            };
+        });
+    };
 }();
 
     
@@ -792,38 +904,95 @@ auth.onAuthStateChanged(User =>{
             });
         };
 
-        function messageOptions(sender, chatMessage, chatRoom, authChatter){
-            const options = document.createElement("p")
-               options.setAttribute("class", "message-options")
-            options.innerText = "+"
-       
-            const sendAsMail = document.createElement("p")
-               sendAsMail.setAttribute("class", "send-chat-as-mail")
-               sendAsMail.setAttribute("data-message", chatMessage)
-               sendAsMail.setAttribute("data-room", chatRoom)
-               sendAsMail.setAttribute("data-auth", authChatter)
-               sendAsMail.setAttribute("onclick", "sendChatAsMail(this)")
-            sendAsMail.innerText = "Verstuur bericht als email"
-       
-            sender.appendChild(options)
-            options.appendChild(sendAsMail)
-       
-            options.addEventListener("click", () => {
-                if(sendAsMail.style.display === "block"){
-                   sendAsMail.style.display = "none" 
-                } else {
-                    sendAsMail.style.display = "block" 
-                };
+        function chooseRecipientForMail(sendAsMailDiv){
 
+            const selectMember = document.createElement("select")
+            selectMember.setAttribute("id", "select-member-to-send-mail")
+            const optionAllMembers = document.createElement("option")
+            optionAllMembers.innerText = "Iedereen"
+            selectMember.appendChild(optionAllMembers)
+            
+            db.collection("Coachgroups")
+                .where("Room", "==", roomName)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+
+                        const members = doc.data().Members
+
+                        members.forEach(member => {
+
+                            db.collection("Vitaminders")
+                        .where("Gebruikersnaam", "==", member)
+                        .get().then(querySnapshot => {
+                            querySnapshot.forEach(doc1 => {
+
+                                const usernameClean = doc1.data().GebruikersnaamClean
+                                const option = document.createElement("option")
+                                option.innerText = usernameClean
+                                selectMember.appendChild(option)
+                        });
+                    });
+
+                        sendAsMailDiv.appendChild(selectMember)
+
+                    });
+                });
+            });
+        }; 
+
+        function sendMessageAsMailButton(sendAsMailDiv){
+
+            const sendButton = document.createElement("button")
+            sendButton.setAttribute("id", "sendAsMailButton")
+            sendButton.setAttribute("onclick", "sendChatAsMail(this)")
+            sendButton.innerText = "Verstuur bericht als mail"
+
+            sendAsMailDiv.appendChild(sendButton)
+        }
+
+        function messageOptions(sender, chatMessage, chatRoom, authChatter){
+            const options = document.createElement("img")
+               options.setAttribute("class", "message-options")
+            options.src = "../images/email-icon.png"
+
+            const sendAsMailDiv = document.createElement("div")
+               sendAsMailDiv.setAttribute("class", "send-chat-as-mail-div")
+               sendAsMailDiv.setAttribute("data-message", chatMessage)
+               sendAsMailDiv.setAttribute("data-room", chatRoom)
+               sendAsMailDiv.setAttribute("data-auth", authChatter)
+
+            sender.appendChild(options)
+            sender.appendChild(sendAsMailDiv)
+            chooseRecipientForMail(sendAsMailDiv)
+            sendMessageAsMailButton(sendAsMailDiv)
+            toggleSendAsMail(options, sendAsMailDiv)
+       
+       };
+
+       function toggleSendAsMail(options, sendChatAsMailDiv){
+
+            options.addEventListener("click", () => {
+                    if(sendChatAsMailDiv.style.display === "flex"){
+                        sendChatAsMailDiv.style.display = "none" 
+                    } else {
+                        sendChatAsMailDiv.style.display = "flex" 
+                    };
             });
        };
        
        function sendChatAsMail(elem){
-           const message = elem.dataset.message
-           const room = elem.dataset.room
-           const coach = elem.dataset.auth
+           const message = elem.parentElement.dataset.message
+           const room = elem.parentElement.dataset.room
+           const coach = elem.parentElement.dataset.auth
        
            elem.innerText = "Verstuurd"
+
+           const memberSelect = elem.nextSibling
+
+           const option = memberSelect.options
+           const selected = option[option.selectedIndex].innerHTML
+
+           console.log(selected)
        
            db.collection("Vitaminders").where("GebruikersnaamClean", "==", coach)
                .get().then(querySnapshot => {
@@ -849,39 +1018,48 @@ auth.onAuthStateChanged(User =>{
        
                                const email = doc2.data().Email
                                const naam = doc2.data().GebruikersnaamClean
-       
-                               console.log(email)
-       
-                               db.collection("Mail").doc().set({
-                                   to: email,
-                                   cc: "info@vitaminds.nu",
-                           message: {
-                           subject: `Je hebt een nieuw coachbericht ontvangen van ${SenderNameClean} in je Coachgroep ${titelClean}`,
-                           html: `Hallo ${naam}, <br><br>
-                                   ${SenderNameClean} heeft je een bericht gestuurd in de Coachgroep ${titelClean} : <br><br>
-       
-                                   "${message}"<br><br>
-                                   
-                                   Ga naar je <a href="www.vitaminds.nu/Group/${titel}.html">Coachgroep</a> om op het bericht te reageren.<br><br>
-                                   P.s. Om privacyredenen kun je coachgroep alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
-                           
-                                   Vriendelijke groet, <br></br>
-                                   Het Vitaminds Team <br></br>
-                                   <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-                           Gebruikersnaam: naam,
-                           Emailadres: email,
-                           Type: "New coachmessage in chat"
-                           }        
-                           });  
-                       });
-                   });
-                   
+
+                               if(selected === naam){
+                                    console.log(email)
+                                    emailLayout(email, SenderNameClean, titelClean, message, titel, naam)
+                               
+                               } else if (selected === "Iedereen") {
+                                    console.log(email)
+                                    emailLayout(email, SenderNameClean, titelClean, message, titel, naam)
+                               };
+                            });
+                        });
                    });
                });
            });
        });
     });
 };
+
+function emailLayout(emailAdress, SenderNameClean, titelClean, message, titel, naam){
+           db.collection("Mail").doc().set({
+                to: emailAdress,
+                cc: "info@vitaminds.nu",
+        message: {
+        subject: `Je hebt een nieuw coachbericht ontvangen van ${SenderNameClean} in je Coachgroep ${titelClean}`,
+        html: `Hallo ${naam}, <br><br>
+                ${SenderNameClean} heeft je een bericht gestuurd in de Coachgroep ${titelClean} : <br><br>
+
+                "${message}"<br><br>
+                
+                Ga naar je <a href="www.vitaminds.nu/Group/${titel}.html">Coachgroep</a> om op het bericht te reageren.<br><br>
+                P.s. Om privacyredenen kun je coachgroep alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
+        
+                Vriendelijke groet, <br></br>
+                Het Vitaminds Team <br></br>
+                <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+        Gebruikersnaam: naam,
+        Emailadres: emailAdress,
+        Type: "New coachmessage in chat"
+        }        
+    });  
+
+}
 
 // Load massages in realtime
     auth.onAuthStateChanged(User =>{
@@ -899,8 +1077,6 @@ auth.onAuthStateChanged(User =>{
                     querySnapshot.forEach(doc3 => {
 
                         const admin = doc3.data().Creater
-
-                        console.log(admin)
 
                 db.collectionGroup("Messages")
                 .where("Room", "==", roomName)
@@ -1363,9 +1539,11 @@ const authRef = auth.onAuthStateChanged(User =>{
     // Save to database
     const uploadCoverPhotoButton = document.getElementById("upload-cover-photo-coachgroup")
 
-    if(uploadCoverPhotoButton != null){
+if(uploadCoverPhotoButton != null){
 
     uploadCoverPhotoButton.addEventListener("click", () => {
+
+        console.log("Test1")
         const selectedFile = document.getElementById('foto-upload').files[0];
         const progressBar = document.getElementById("progress-bar")
 
@@ -1408,51 +1586,6 @@ const authRef = auth.onAuthStateChanged(User =>{
     });
 };
 
-    const uploadCoverPhotoButtonPracticegroup = document.getElementById("upload-cover-photo-practicegroup")
-
-    if (uploadCoverPhotoButtonPracticegroup != null){
-    uploadCoverPhotoButtonPracticegroup.addEventListener("click", () => {
-        const selectedFile = document.getElementById('foto-upload').files[0];
-        const progressBar = document.getElementById("progress-bar")
-
-        uploadCoverPhotoButtonPracticegroup.innerText = "Uploaden..."
-        
-        const storageRef = firebase.storage().ref("/GroupCoverPhotos/" + selectedFile.name);
-        
-           const uploadTask = storageRef.put(selectedFile)
-           uploadTask.then(() => {
-            // Register three observers:
-            // 1. 'state_changed' observer, called any time the state changes
-            // 2. Error observer, called on failure
-            // 3. Completion observer, called on successful completion
-            uploadTask.on('state_changed', function(snapshot){
-            // Observe state change events such as progress, pause, and resume
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            progressBar.innerHTML = ` ${progress} %`;
-            switch (snapshot.state) {
-              case firebase.storage.TaskState.PAUSED: // or 'paused'
-                console.log('Upload is paused');
-                break;
-              case firebase.storage.TaskState.RUNNING: // or 'running'
-                console.log('Upload is running');
-                break;
-            }
-          }, function(error) {
-            // Handle unsuccessful uploads
-          }, function() {
-            // Handle successful uploads on complete
-            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-              console.log('File available at', downloadURL);
-              uploadCoverPhotoButtonPracticegroup.innerText = "Geupload"
-              window.coverPhoto = downloadURL
-
-                });
-            });
-        });
-    });
-};
 
 function saveCoachgroup(){
 
@@ -1515,9 +1648,55 @@ function saveCoachgroup(){
                         notice.addEventListener("click", () => {
                             window.open(`../Group/${idClean + title}.html`, "_self");
                         });
-                });
+                })
+                .then(() => {
+                    // sendMailToFollowers("Vitaminder", auth, authClean, title)
+                    // sendMailToFollowers("Coach", auth, authClean, title)
+                })
             });
         };
+    });
+};
+
+function sendMailToFollowers(type, auth, authClean, title){
+
+    db.collection("Vitaminders")
+    .where("Usertype", "==", type)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const favoriteCoaches = doc.data().FavCoaches
+            const gebruikersnaamClean = doc.data().GebruikersnaamClean
+            const gebruikersnaam = doc.data().Gebruikersnaam
+            const email = doc.data().Email
+
+                if(favoriteCoaches != undefined){
+        
+                if(favoriteCoaches.includes(auth)){
+
+                    db.collection("Mail").doc().set({
+                        to: email,
+                        cc: "info@vitaminds.nu",
+                    message: {
+                    subject: `Je favoriete coach ${authClean} is een nieuwe coachgroep gestart`,
+                    html: `Hallo, ${gebruikersnaamClean}</br></br>
+                    Je favoriete coach ${authClean} is een nieuwe coachgroep gestart op Vitaminds<br><br>
+                        
+                        Bekijk het artikel <a href="https://vitaminds.nu/Group/${title}.html"> hier </a>.<br><br> 
+                    
+                        Vriendelijke groet, </br></br>
+                        Het Vitaminds Team </br></br>
+                        <img src="https://vitaminds.nu/images/design/logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
+                    Type: "Vitaminders",
+                    gebruikersnaam: gebruikersnaam
+                    }
+                            
+                    }).catch((err) => {
+                        console.log(err)
+                    });
+                };
+            };
+        });
     });
 };
 
@@ -1543,6 +1722,5 @@ function saveCoachgroupAsEvent(authName, authNameClean, titleGroup, description,
         Owner: "Vitaminds"
                 });
 };
-
 
 

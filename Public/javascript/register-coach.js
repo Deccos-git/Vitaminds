@@ -121,7 +121,8 @@ Type: "Coach"
  })
  .then(() => {
 
-  successModal.style.display = "flex"
+  const checkoutButton = document.getElementById("checkout")
+  checkoutButton.click();
 
   firebase.auth().signOut()
     

@@ -1,0 +1,219 @@
+:hover #buttons {
+    bottom: 5vh;
+}
+
+#buttons {
+    display: none;
+    left: 35vw;
+    right: 35vw;
+    z-index: 3;
+    bottom: -10vh;
+    align-items: center;
+    justify-content: center;
+}
+
+#buttons-room{
+    display: none;
+    left: 35vw;
+    right: 35vw;
+    z-index: 3;
+    bottom: -10vh;
+    align-items: center;
+    justify-content: center;
+}
+
+#message {
+    background: white;
+    max-width: 360px;
+    margin: 100px auto 16px;
+    padding: 32px 24px;
+    border-radius: 3px;
+}
+
+#message h2 {
+    color: #ffa100;
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0 0 8px;
+}
+
+#message h1 {
+    font-size: 22px;
+    font-weight: 300;
+    color: rgba(0, 0, 0, 0.6);
+    margin: 0 0 16px;
+}
+
+#message p {
+    line-height: 140%;
+    margin: 16px 0 24px;
+    font-size: 14px;
+}
+
+#message a {
+    display: block;
+    text-align: center;
+    background: #039be5;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: white;
+    padding: 16px;
+    border-radius: 4px;
+}
+
+#message, #message a {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+#load {
+    color: rgba(0, 0, 0, 0.4);
+    text-align: center;
+    font-size: 13px;
+}
+
+#localVideoContainer{
+    width: 20%;
+    height: 20%;
+    position: relative;
+    border-bottom-right-radius: 15px;
+}
+
+#videos {
+    position: relative;
+    width: 100%;
+    display: none;
+    background-color: #a7bdbd;
+    min-height: 400px;
+}
+
+#localVideo{
+    display: none;
+    border-bottom-right-radius: 15px;
+    box-shadow: 0 5px 9px 0 rgb(0 0 0 / 20%), 0 7px 21px 0 rgb(0 0 0 / 19%);
+}
+
+.video-box {
+    align-items: center;
+    justify-items: center;
+}
+
+.video-box video {
+    width: 100%;
+    height: 100%;
+    background: #a7bdbd;
+    object-fit: contain;
+}
+
+#video-icon{
+    margin: 5px;
+    cursor: pointer;
+}
+
+.inverseVid {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
+.button-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: 2px 5px;
+}
+
+.button-div p{
+    font-size: 14px;
+}
+
+#buttons button {
+    text-decoration: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+#buttons-room button {
+    text-decoration: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+#deviceDropdown{
+    display: none;
+}
+
+#shareButtonDiv{
+    display: none;
+}
+
+#localVideoShowDiv{
+    display: none;
+}
+
+#fullScreenDiv{
+    display: none;
+}
+
+#screen-cast-div{
+    display: none;
+}
+
+.toggle {
+    background-color: red !important;
+}
+
+.btn-circle {
+    border: none;
+    width: 85px;
+    height: 45px;
+    line-height: 45px;
+    text-align: center;
+    padding: 0;
+    outline: none;
+    border: none;
+}
+
+.material-icons {
+    color: #122b46 !important;
+}
+
+#hangupBtn {
+    color : red !important;
+}
+
+.hidden {
+    display: none;
+}
+
+.relaxedHidden {
+    visibility: hidden;
+}
+
+.sideLocalVideo {
+    position: fixed;
+    right: 1vw;
+    bottom: 1vh;
+    z-index: 1;
+}
+
+.sideLocalVideo video {
+    width: 15vw;
+    height: auto;
+}
+
+.contentContainer {
+    grid-column: 1 / 4;
+    grid-row: 1 / 4;
+}
+
+.mdc-menu-surface--anchor {
+    width: 13vw;
+}
+
+@media only screen and (max-width: 938px){
+
+    #localVideoContainer {
+        width: 40%;
+        height: 40%;
+    }
+}

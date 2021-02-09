@@ -194,6 +194,63 @@ const heightArray = []
                 });
         });
 
+// Community resources
+
+!function showCommunityResources(){
+
+    const resourcesOverview = document.getElementById("resource-div")
+
+    db.collection("Tools")
+    .where("Type", "==", "Resource")
+    .where("PublicPrivate", "==", "Public")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const resource = doc.data().Resource
+            const author = doc.data().User
+            const date = doc.data().Timestamp
+
+            const resourceInnerDiv = document.createElement("div")
+                resourceInnerDiv.setAttribute("class", "resource-inner-div")
+            const resourceP = document.createElement("p")
+                resourceP.setAttribute("class", "resource-p")
+            const authorP = document.createElement("p")
+                authorP.setAttribute("class", "resource-author")
+            const dateP = document.createElement("p")
+                dateP.setAttribute("class", "resource-date")
+
+            resourceP.innerText = resource
+
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateP.innerHTML = date.toDate().toLocaleDateString("nl-NL", options)
+
+            showAuthorNameOfResource(author, authorP)
+
+            resourcesOverview.appendChild(resourceInnerDiv)
+            resourceInnerDiv.appendChild(authorP)
+            resourceInnerDiv.appendChild(resourceP) 
+            resourceInnerDiv.appendChild(dateP)
+
+        });
+    });
+}();
+
+function showAuthorNameOfResource(author, authorP){
+
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", author)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const authorClean = doc.data().GebruikersnaamClean
+
+            authorP.innerText = authorClean
+
+        });
+    });
+};
+
+
 // Community question
 
 !function personalizedTitle(){
