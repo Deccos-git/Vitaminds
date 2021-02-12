@@ -57,6 +57,7 @@ db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot =>
         Auth: auth,
         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
         Message: message,
+        Members: [auth, titel],
         Read: [], 
         Room: roomName,
         Status: "New"
@@ -346,8 +347,8 @@ function getProfilePicOfChat(pic, picDOMobject){
     };
 };
 
-function setInnerTextOfDOMobjects(chat, user){
-    chat.innerText = user
+function setNameOfChat(chatsP, userClean){
+    chatsP.innerText = userClean
   };
 
 function updateOnlineStatus(docID, authName){
@@ -630,10 +631,11 @@ auth.onAuthStateChanged(User =>{
 
         const auth = doc.data().Gebruikersnaam
 
-db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "array-contains", auth).get().then(querySnapshot => {
+db.collection("Chats")
+.where("Members", "array-contains", auth)
+.get().then(querySnapshot => {
     querySnapshot.forEach(doc1 => {
 
-        const type = doc1.data().Type
         const title = doc1.data().Room
         const online = doc1.data().Online
 
@@ -660,7 +662,7 @@ db.collection("Chats").where("Eigenaar", "==", "Vitaminds").where("Members", "ar
                             const userClean = doc4.data().GebruikersnaamClean
                             const photo = doc4.data().Profielfoto
 
-                    setInnerTextOfDOMobjects(chatsP, userClean);
+                    setNameOfChat(chatsP, userClean);
                         
                     getProfilePicOfChat(photo, photoImg);
 

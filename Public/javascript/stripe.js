@@ -331,10 +331,9 @@ auth.onAuthStateChanged(User =>{
     auth.onAuthStateChanged(User =>{
       if(User){
       db.collection("Vitaminders").doc(User.uid)
-      .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+      .get().then(doc => {
 
-          const auth = doc.data().Gebruikersnaam
+          const authUser = doc.data().Gebruikersnaam
 
       db.collection("Coachgroups")
       .where("Room", "==", titel)
@@ -344,7 +343,7 @@ auth.onAuthStateChanged(User =>{
               const price = doc1.data().Costs
               const members = doc1.data().Members
 
-              if(!members.includes(auth)){
+              if(!members.includes(authUser)){
 
           const sum = amountArray.reduce((pv, cv) => pv + cv, 0);
 
@@ -354,7 +353,7 @@ auth.onAuthStateChanged(User =>{
 
          if(newAmount >= 0){
           auth.onAuthStateChanged(User =>{
-              if(User){
+            if(User){
                   db.collection("Vitaminders").doc(User.uid)
                   .collection("Gelukstegoed").doc().set({
                       Type: "Minus",
@@ -383,7 +382,6 @@ auth.onAuthStateChanged(User =>{
         }
       });
   });
-});
       });
     };
   });

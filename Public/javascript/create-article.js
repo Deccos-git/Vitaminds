@@ -116,11 +116,11 @@ function sendMailToFollowers(type, auth, authClean, title){
                     html: `Hallo, ${gebruikersnaamClean}</br></br>
                     Je favoriete coach ${authClean} heeft een nieuw artikel geplaatst op Vitaminds<br><br>
                         
-                        Bekijk het artikel <a href="https://vitaminds.nu/Artikel/${title}.html"> hier </a>.<br><br> 
+                        Bekijk het artikel <a href="https://vitaminds.nu/Artikelen/${title}.html"> hier </a>.<br><br> 
                     
                         Vriendelijke groet, </br></br>
                         Het Vitaminds Team </br></br>
-                        <img src="https://vitaminds.nu/images/design/logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
+                        <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
                     Type: "Vitaminders",
                     gebruikersnaam: gebruikersnaam
                     }

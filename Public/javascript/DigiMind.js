@@ -361,7 +361,6 @@ function unfollowCoach(){
         auth.onAuthStateChanged(User =>{
                 if(User){
 
-                        console.log(User.uid)
                         db.collection("Vitaminders").doc(User.uid).update({
                                 FavCoaches: firebase.firestore.FieldValue.arrayRemove(naam)
                         }); 
@@ -393,7 +392,7 @@ function sendMailNewChat(authUserClean){
           html: `Hallo ${nameClean}, </br></br>
                ${authUserClean} heeft je een chatverzoek gestuurd.<br><br> 
                 
-                Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om naar je chats te gaan.
+                Klik <a href="https://vitaminds.nu/chats-groups.html"> hier </a> om naar je chats te gaan.
                 Vriendelijke groet, </br></br>
                 Het Vitaminds Team </br></br>
                 <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
@@ -450,10 +449,40 @@ function sendMailNewChat(authUserClean){
         });
 }();
 
+function visitChatIfChatIf(button){
+
+        auth.onAuthStateChanged(User =>{
+                if(User){
+                const userRef = db.collection("Vitaminders").doc(User.uid);
+                userRef.get().then(function(doc) {
+
+                        const auth = doc.data().Gebruikersnaam
+
+                        db.collection("Chats")
+                        .where("Members", "array-contains", auth)
+                        .get().then(querySnapshot => {
+                                querySnapshot.forEach(doc => {
+
+                                        const members = doc.data().Members
+
+                                                if(members.includes(naam)){
+                                                        button.innerHTML = `<a id="show-chat" href="../Chats/${naam}.html">Bekijk chat</a>`
+                                                        button.id = "show-chat-button"
+                                                        button.class = "button-vitaminds"
+                                                };
+                                        });
+                                });
+                        });
+                };
+        });
+};
+
 
 !function hideChatIfAuth(){
 
         const chatButton = document.getElementById("chat-button")
+
+        visitChatIfChatIf(chatButton)
 
         auth.onAuthStateChanged(User =>{
                 if(User){
@@ -571,8 +600,6 @@ function hideChatIfAuthIsCoachAndUserIsVitaminder(typeAuth){
 
         const menuItem = menuItemDiv.getElementsByTagName("p")
 
-        console.log(menuItem)
-
         for (var i = 0; i < menuItem.length; i++) {
                 menuItem[i].addEventListener("click", function() {
 
@@ -626,7 +653,7 @@ function getSection(){
                 privateOuterDiv[4].style.display = "none"
                 privateOuterDiv[5].style.display = "none"
                 privateOuterDiv[6].style.display = "none"
-        } else if (selected === "Notificaties"){
+        } else if (selected === "Steun"){
                 privateOuterDiv[0].style.display = "none"
                 privateOuterDiv[1].style.display = "none"
                 privateOuterDiv[2].style.display = "none"
@@ -774,7 +801,7 @@ function autoLoadFirstProces(optionZero){
                         const domain = doc.data().Domain
 
                         addLessonsToProces(levensvraagID)
-                        showArticles(domain)
+                        // showArticles(domain)
 
                         const innerDiv = document.createElement("div")
                                 innerDiv.setAttribute("class", "digimind-proces-inner-div")
@@ -829,7 +856,7 @@ function showSelectedProces(selectedProces){
                         const domain = doc.data().Domain
 
                         addLessonsToProces(levensvraagID)
-                        showArticles(domain)
+                        // showArticles(domain)
 
                         const innerDiv = document.createElement("div")
                                 innerDiv.setAttribute("class", "digimind-proces-inner-div")
@@ -1158,8 +1185,6 @@ function showToolOptionIfInstalled(toolName, optionID, optionValue, optionText){
                 .get()
                     .then(doc => {
                         const tools = doc.data().Tools
-
-                        console.log(tools)
 
                         if(tools.includes(toolName)){
                                 toolSelect.appendChild(option)
@@ -1681,8 +1706,6 @@ function setPublicPrivateStatusOfResource(elem){
         const resourceTitle = elem.dataset.resource
         const privatePublicStatus = elem.dataset.status
 
-        console.log(resourceTitle)
-
         let status = ""
 
         if(privatePublicStatus === "Private"){
@@ -1690,8 +1713,6 @@ function setPublicPrivateStatusOfResource(elem){
         } else if (privatePublicStatus === "Public"){
                 status = "Private"
         };
-
-        console.log(status)
 
         db.collection("Tools")
         .where("Type", "==", "Resource")
@@ -1750,8 +1771,6 @@ const adminDiv = document.getElementById("admin-analytics")
  function hideAnalyticsIfNoCoach(type){
 
         const analyticsMenuItem = document.getElementById("analytics-menu-item")
-
-        console.log(type)
 
                 if(type === "Coach"){
 
@@ -2166,126 +2185,212 @@ const adminDiv = document.getElementById("admin-analytics")
 
 }();
 
-// Notifications
-!function notificationsInit(){
-const lengthArray = [];
+// Support
 
-db.collectionGroup("Inspiration").where("Reciever", "==", naam).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+function typeOfSupportOnCard(type, typeP){
 
-        const docLengt = [doc]          
-                objectLength = Object.keys(docLengt).length
-                lengthArray.push(objectLength)
+        if(type === "YourNotAlone"){
+                typeP.innerText = "Je staat er niet alleen voor"
+        } else if(type === "KeepAtIt"){
+                typeP.innerText = "Ga zo door!"
+        } else if(type === "YourGoodTheWayYouAre"){
+                typeP.innerText = "Je bent goed zoals je bent"
+        } else if(type === "IFeelForYou"){
+                typeP.innerText = "Ik voel met je mee"
+        } else if(type === "IUnderstandYou"){
+                typeP.innerText = "Ik weet wat je voelt"
+        };
+};
 
-                                })
-                        }).then(() => {
-                                
-                                // Total points in Notifications
-                                const DOM =  document.getElementById("total-inspiration")
+function giverOnCard(giver, giverP){
 
-                                if(DOM == null){
-                                        console.log("Error")
-                                } else{
-                                const innerDiv = document.createElement("div")
-                                        innerDiv.setAttribute("id", "inner-div-gamefication")
-                                const totalPoints = document.createElement("p")
-                                const titel = document.createElement("h2")
-                                
-                                titel.innerHTML = "Totaal aantal inspiratiepunten"
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", giver)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
 
-                                totalPoints.innerHTML = lengthArray.length
-                
-                                DOM.appendChild(innerDiv)
-                                innerDiv.appendChild(titel)
-                                innerDiv.appendChild(totalPoints)
+                        const userNameClean = doc.data().GebruikersnaamClean
 
-                                        
-                                // Trophies 
-                                const trophies = document.getElementById("trophies").getElementsByTagName("img")
+                        giverP.innerText = userNameClean
 
-                                function trophiesRewarded(a,b){
-                                if(lengthArray.length >= b){
-                                        trophies[a].src = `../images/Trophies/${b}.png`
-                                        }  
-                                }
+                        giverP.style.cursor = "pointer"
 
-                                trophiesRewarded(0,1)
-                                trophiesRewarded(1,5)
-                                trophiesRewarded(2,10)
-                                trophiesRewarded(3,20)
-                                trophiesRewarded(4,40)
-                                trophiesRewarded(5,80)
-                                trophiesRewarded(6,160)
-                                
-                                };
-});
-
-
-
-// Inspiration-notifications
-db.collectionGroup("Inspiration").where("Reciever", "==", naam).orderBy("Timestamp", "desc").get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-                const giver = doc.data().Giver
-                const type = doc.data().Type
-                const titel = doc.data().Titel
-                const inspiration = doc.data().Inspiration
-                const source = doc.data().Source
-
-                const DOM = document.getElementById("inspiration-notifications")
-                if(DOM == null){
-                        console.log("Error")
-                } else {
-                const outerDiv = document.createElement("div")
-                        outerDiv.setAttribute("class", "gamefication-outer-div")
-                const dateP = document.createElement("h4")
-                const string = document.createElement("h3")
-                const innerDiv = document.createElement("div")
-                        innerDiv.setAttribute("class", "gamefication-inner-div")
-                const ul = document.createElement("ul")
-                const liGiver = document.createElement("li")
-                        liGiver.setAttribute("class", "meta-notifications")
-                const liType = document.createElement("li")
-                const liSource = document.createElement("li")
-                        liSource.setAttribute("class", "meta-notifications")
-                const link = document.createElement("h4")
-
-                db.collection("Vitaminders"). where('Gebruikersnaam', "==", giver).get().then(querySnapshot => {
-                        querySnapshot.forEach(doc1 => {
-
-                                const giverClean = doc1.data().GebruikersnaamClean
-
-                                //Open up
-
-                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                        dateP.innerHTML = "Op " + doc.data().Timestamp.toDate().toLocaleDateString("nl-NL", options);
-
-                        string.innerHTML = `Je hebt 1 nieuw like ontvangen!`
-                        liGiver.innerHTML = `Van <u>${giverClean}</u>`
-                        liGiver.addEventListener("click", () => {
-                                window.open("../Vitaminders/" + giver + ".html", "_self");
+                        giverP.addEventListener("click", () => {
+                                window.open("../Vitaminders/" + [giver] + ".html", "_self");
                         })
 
-                        liType.innerHTML = `Op je levensles: ${inspiration}`
-                        link.innerHTML = `<u>${inspiration}</u>`
+                });
+        });
+};
 
-                        liSource.style.display = "none"
-                        
-                
-                })
+function metaBSupportCard(sourceType, source, sourceLink){
+
+        if(sourceType === "Coachgroup"){
+        sourceLink.innerHTML = `<a href="../Group/${source}.html">Bekijk bericht in groep</a>`
+        }
+};
+
+function supportCard(timestamp, type, message, sourceType, source, giver){
+
+        const DOM = document.getElementById("reactions-overview")
+
+        const supportCard = document.createElement("div")
+                supportCard.setAttribute("class", "support-card")
+
+        const typeP = document.createElement("p")
+                typeP.setAttribute("class", "support-card-type")
+        const messageP = document.createElement("p")
+                messageP.setAttribute("class", "support-card-message")
+        const metaADiv = document.createElement("div")
+                metaADiv.setAttribute("class", "meta-a-div")
+        const giverP = document.createElement("p")
+        const timestampP = document.createElement("p")
+        const metaBDiv = document.createElement("div")
+                metaBDiv.setAttribute("class", "meta-b-div")
+        const sourceLink = document.createElement("p")
+
+        typeOfSupportOnCard(type, typeP)
+        metaBSupportCard(sourceType, source, sourceLink)
+        giverOnCard(giver, giverP)
+
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
+        messageP.innerText = message
+
+        DOM.appendChild(supportCard)
+        supportCard.appendChild(typeP)
+        supportCard.appendChild(messageP)
+        supportCard.appendChild(metaADiv)
+        metaADiv.appendChild(giverP)
+        metaADiv.appendChild(timestampP)
+        supportCard.appendChild(metaBDiv)
+        metaBDiv.appendChild(sourceLink)
+        
+}
+
+function supportCount(supportType, typeCounter){
+
+        const DOMtype = document.getElementById(typeCounter)
+
+        const docArray = []
+
+        db.collectionGroup("Support")
+        .where("Reciever", "==", naam)
+        .where("Type", "==", supportType)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        docArray.push(doc)
+
+
+                });
         })
+        .then(() => {
 
-                DOM.appendChild(outerDiv)
-                outerDiv.appendChild(string)
-                outerDiv.appendChild(innerDiv)
-                innerDiv.appendChild(ul)
-                ul.appendChild(liGiver)
-                ul.appendChild(liType)
-                ul.appendChild(liSource)
-                outerDiv.appendChild(dateP)
-                                }
-                        })
-                
-                })
+                const typeCount = docArray.length
+
+                DOMtype.innerText = typeCount
+
+        });
+};
+
+supportCount("YourNotAlone", "yourNotAloneCount")
+supportCount("KeepAtIt", "keepAtItCount")
+supportCount("YourGoodTheWayYouAre", "yourGoodTheWayYouAreCount")
+supportCount("IUnderstandYou", "IUnderstandCount")
+supportCount("IFeelForYou", "IFeelForYouCount")
+
+function supportNotificationInDigimind(newArray, status){
+
+        if(status === "New"){
+                newArray.push("New")
+        };
+};
+
+function appendNewCountToDOM(newSupportCount){
+
+        const privateMenuSupport = document.getElementById("support-menu-item")
+        const privateMenu = document.getElementById("private-button")
+
+        const newCountMenuSupport = document.createElement("p")
+        newCountMenuSupport.setAttribute("class", "newSupportCountP")
+
+        newCountMenuSupport.innerText = newSupportCount
+
+        const newCountMenuPrivate = document.createElement("p")
+        newCountMenuPrivate.setAttribute("class", "newSupportCountP")
+
+        newCountMenuPrivate.innerText = newSupportCount
+
+        privateMenuSupport.appendChild(newCountMenuSupport)
+        privateMenu.appendChild(newCountMenuPrivate)
+
+        if(newSupportCount === 0){
+                newCountMenuPrivate.style.display = "none"
+                newCountMenuSupport.style.display = "none"
+        };
+};
+
+!function querySupport(){
+
+        const newArray = []
+
+        db.collectionGroup("Support")
+        .where("Reciever", "==", naam)
+        .orderBy("Timestamp", "desc")
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        const type = doc.data().Type
+                        const giver = doc.data().Giver
+                        const message = doc.data().Message
+                        const source = doc.data().Source
+                        const sourceType = doc.data().SourceType
+                        const status = doc.data().Status
+                        const timestamp = doc.data().Timestamp
+
+                        supportCard(timestamp, type, message, sourceType, source, giver)
+                        supportNotificationInDigimind(newArray, status)
+
+                });
+        }).then(() => {
+
+                const newSupportCount = newArray.length
+                appendNewCountToDOM(newSupportCount)
+        });
+}();
+
+!function updateNewStatuSupport(){
+
+        const menuItemSupport = document.getElementById("support-menu-item")
+
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", naam)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        db.collection("Vitaminders")
+                        .doc(doc.id)
+                        .collection("Support")
+                        .where("Reciever", "==", naam)
+                        .where("Status", "==", "New")
+                        .get().then(querySnapshot => {
+                                querySnapshot.forEach(doc1 => {
+
+                                        menuItemSupport.addEventListener("click", () => {
+
+                                                db.collection("Vitaminders")
+                                                .doc(doc.id)
+                                                .collection("Support")
+                                                .doc(doc1.id)
+                                                .update({
+                                                Status: "Read"
+                                                });
+                                        });
+                                });
+                        });
+                });
+        });
 }();
     
 
@@ -2312,8 +2417,6 @@ db.collectionGroup("Inspiration").where("Reciever", "==", naam).orderBy("Timesta
         date.innerHTML = timestampAction.toDate().toLocaleDateString("nl-NL", options);
         productTitle.innerHTML = productTitel
         price.innerText = `€${productPrice}`
-
-        console.log(productTitel)
 
         if(productTitel != "Account created"){
                 productDiv.style.display = "none"
@@ -2357,8 +2460,6 @@ db.collectionGroup("Inspiration").where("Reciever", "==", naam).orderBy("Timesta
                 });
         }).then(() => {
                 sum = amountArray.reduce((pv, cv) => pv + cv, 0);
-
-                console.log(amountArray)
 
                 currentTeGoed.innerText = `€${sum}`
         });
@@ -2522,8 +2623,6 @@ function editStyle(elem){
 
                 const style = tinymce.get("tiny-style").getContent();
                 button.innerText = "Opgeslagen"
-
-                console.log(style)
 
                 db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
                 .get().then(querySnapshot => {

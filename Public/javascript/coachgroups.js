@@ -1,18 +1,18 @@
 // Fetching title from url
-const titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
-const titel1 = titelhtml.replace('.html', '')
-const titel2 = titel1.replace('%20',' ')
-const titel3 = titel2.replace('%20',' ')
-const titel4 = titel3.replace('%20',' ')
-const titel5 = titel4.replace('%20',' ')
-const titel6 = titel4.replace('%20',' ')
-const titel7 = titel6.replace('%20',' ')
-const titel8 = titel7.replace('%20',' ')
-const titel9 = titel8.replace('%20',' ')
-const titel10 = titel9.replace('%20',' ')
-const titel11 = titel10.replace('%20',' ')
-const titel12 = titel11.split("?fb")
-const titel = titel12[0]
+const titelhtmlCG = window.location.href.replace(/^.*[\\\/]/, '')
+const titel1CG = titelhtmlCG.replace('.html', '')
+const titel2CG = titel1CG.replace('%20',' ')
+const titel3CG = titel2CG.replace('%20',' ')
+const titel4CG = titel3CG.replace('%20',' ')
+const titel5CG = titel4CG.replace('%20',' ')
+const titel6CG = titel4CG.replace('%20',' ')
+const titel7CG = titel6CG.replace('%20',' ')
+const titel8CG = titel7CG.replace('%20',' ')
+const titel9CG = titel8CG.replace('%20',' ')
+const titel10CG = titel9CG.replace('%20',' ')
+const titel11CG = titel10CG.replace('%20',' ')
+const titel12CG = titel11CG.split("?fb")
+const titelCG = titel12CG[0]
 
 function groupMetaTags(descriptionGroup, titleGroup, bannerGroup){
     const keywords = document.getElementById("meta-keywords")
@@ -32,7 +32,7 @@ function groupMetaTags(descriptionGroup, titleGroup, bannerGroup){
     facebookImage.content = bannerGroup
     };
     
-    db.collection("Coachgroups").where("Room", "==", titel)
+    db.collection("Coachgroups").where("Room", "==", titelCG)
     .get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
@@ -461,7 +461,7 @@ function hideLandingModal(){
         tinyMCEDiv.style.display = "flex"
         dom.style.display = "none"
 
-        db.collection("Coachgroups").where("Room", "==", titel)
+        db.collection("Coachgroups").where("Room", "==", titelCG)
         .get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
 
@@ -504,7 +504,7 @@ function displayEditIconIfAuthIsAdmin(editIcon){
         button.innerText = "Opgeslagen"
         button.id = "Clicked"
 
-        db.collection("Coachgroups").where("Room", "==", titel)
+        db.collection("Coachgroups").where("Room", "==", titelCG)
         .get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
 
@@ -520,7 +520,7 @@ function displayEditIconIfAuthIsAdmin(editIcon){
 }();
 
 !function fillLandingWithGroupData(){
-    db.collection("Coachgroups").where("Room", "==", titel).get().then(querySnapshot => {
+    db.collection("Coachgroups").where("Room", "==", titelCG).get().then(querySnapshot => {
         querySnapshot.forEach(doc1 => {
 
             const members = doc1.data().Members
@@ -631,7 +631,7 @@ function displayEditIconIfAuthIsAdmin(editIcon){
 
     if(DOMtitle != null){
 
-        db.collection("Coachgroups").where("Room", "==", titel).get().then(querySnapshot => {
+        db.collection("Coachgroups").where("Room", "==", titelCG).get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
 
                 const roomClean = doc.data().RoomClean
@@ -653,7 +653,7 @@ function displayEditIconIfAuthIsAdmin(editIcon){
 
     const listOfMembers = document.getElementById("list-of-members-inner-div")
 
-    const roomName = titel
+    const roomName = titelCG
 
 db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
@@ -805,7 +805,7 @@ auth.onAuthStateChanged(User =>{
             Gebruikersnaam: auth,
             Inspirerend: 1,
             Type: "Coachgroup-inzicht",
-            Source: titel,
+            Source: titeCGl,
             Levensvraag: levensvraagID,
             Status: "Approved"
                     })
@@ -848,7 +848,7 @@ auth.onAuthStateChanged(User =>{
         
                     const auth = doc.data().Gebruikersnaam
 
-        const roomName = titel
+        const roomName = titelCG
 
     db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -953,7 +953,7 @@ auth.onAuthStateChanged(User =>{
         function messageOptions(sender, chatMessage, chatRoom, authChatter){
             const options = document.createElement("img")
                options.setAttribute("class", "message-options")
-            options.src = "../images/email-icon.png"
+            options.src = "../images/design/mail-icon2.jpg"
 
             const sendAsMailDiv = document.createElement("div")
                sendAsMailDiv.setAttribute("class", "send-chat-as-mail-div")
@@ -1058,10 +1058,490 @@ function emailLayout(emailAdress, SenderNameClean, titelClean, message, titel, n
         Type: "New coachmessage in chat"
         }        
     });  
+};
+
+function addDataToSocial(social, userName, message){
+
+    social.setAttribute("data-username", userName)
+    social.setAttribute("data-message", message)
+
+};
+
+function addSocialIconsToMessage(messageP, userName, message, auth){
+
+    const socialIconDiv = document.createElement("div")
+    socialIconDiv.setAttribute("class", "social-div") 
+
+    const IFeelForYouIconDiv = document.createElement("div")
+    const IUnderstandIconDiv = document.createElement("div")
+    const yourGoodTheWayYouAreDiv = document.createElement("div")
+    const keepAtItDiv = document.createElement("div")
+    const yourNotAloneDiv = document.createElement("div")
+
+    const IFeelForYouIconP = document.createElement("p")
+    const IUnderstandIconP = document.createElement("p")
+    const yourGoodTheWayYouAreP = document.createElement("p")
+    const keepAtItP = document.createElement("p")
+    const yourNotAloneP = document.createElement("p")
+
+    IFeelForYouIconP.innerHTML = "Ik leef <br> met je mee"
+    IUnderstandIconP.innerHTML = "Ik weet wat <br> je voelt"
+    yourGoodTheWayYouAreP.innerHTML = "Je bent goed <br> zoals je bent"
+    keepAtItP.innerHTML = "Ga zo door!"
+    yourNotAloneP.innerHTML = "Je staat er <br> niet alleen voor"
+
+    IFeelForYouIconDiv.setAttribute("class", "social-icon-div") 
+    IUnderstandIconDiv.setAttribute("class", "social-icon-div")  
+    yourGoodTheWayYouAreDiv.setAttribute("class", "social-icon-div") 
+    keepAtItDiv.setAttribute("class", "social-icon-div") 
+    yourNotAloneDiv.setAttribute("class", "social-icon-div") 
+
+    addDataToSocial(IFeelForYouIconDiv, userName, message)
+    addDataToSocial(IUnderstandIconDiv, userName, message)
+    addDataToSocial(yourGoodTheWayYouAreDiv, userName, message)
+    addDataToSocial(keepAtItDiv, userName, message)
+    addDataToSocial(yourNotAloneDiv, userName, message)
+
+    saveIFeelForYou(IFeelForYouIconDiv, auth, IFeelForYouIconP)
+    saveIUnderstandYou(IUnderstandIconDiv, auth, IUnderstandIconP)
+    saveyourGoodTheWayYouAre(yourGoodTheWayYouAreDiv, auth, yourGoodTheWayYouAreP)
+    savekeepAtIt(keepAtItDiv, auth, keepAtItP)
+    saveyourNotAlone(yourNotAloneDiv, auth, yourNotAloneP)
+
+    const IFeelForYouIcon = document.createElement("img")
+    const IUnderstandIcon = document.createElement("img")
+    const yourGoodTheWayYouAre = document.createElement("img")
+    const keepAtIt = document.createElement("img")
+    const yourNotAlone = document.createElement("img")
+
+    IFeelForYouIcon.src = "../images/design/person-24px-heart.png"
+    IUnderstandIcon.src = "../images/comparison-icon.png"
+    yourGoodTheWayYouAre.src = "../images/design/person-24px-check.png"
+    keepAtIt.src = "../images/heart-icon.png"
+    yourNotAlone.src = "../images/design/group-24px.png"
+
+    socialIconDiv.appendChild(IFeelForYouIconDiv)
+    IFeelForYouIconDiv.appendChild(IFeelForYouIcon)
+    IFeelForYouIconDiv.appendChild(IFeelForYouIconP)
+    socialIconDiv.appendChild(IUnderstandIconDiv)
+    IUnderstandIconDiv.appendChild(IUnderstandIcon)
+    IUnderstandIconDiv.appendChild(IUnderstandIconP)
+    socialIconDiv.appendChild(yourGoodTheWayYouAreDiv)
+    yourGoodTheWayYouAreDiv.appendChild(yourGoodTheWayYouAre)
+    yourGoodTheWayYouAreDiv.appendChild(yourGoodTheWayYouAreP)
+    socialIconDiv.appendChild(keepAtItDiv)
+    keepAtItDiv.appendChild(keepAtIt)
+    keepAtItDiv.appendChild(keepAtItP)
+    socialIconDiv.appendChild(yourNotAloneDiv)
+    yourNotAloneDiv.appendChild(yourNotAlone)
+    yourNotAloneDiv.appendChild(yourNotAloneP)
+
+    messageP.appendChild(socialIconDiv)
+}
+
+function saveIFeelForYou(IFeelForYou, auth, notice){
+
+    IFeelForYou.addEventListener("click", () => {
+
+        const username = IFeelForYou.dataset.username
+        const message = IFeelForYou.dataset.message
+
+        saveIFeelForYouInMessage(username, message)
+        saveIFeelForYouInUser(username, auth, message)
+
+        notice.innerText = "Verstuurd"
+        notice.style.color = "#8e0000"
+
+    });
+};
+
+function saveIUnderstandYou(IUnderstandIconDiv, auth, notice){
+
+    IUnderstandIconDiv.addEventListener("click", () => {
+
+        const username = IUnderstandIconDiv.dataset.username
+        const message = IUnderstandIconDiv.dataset.message
+
+        saveIUnderstandYouInMessage(username, message)
+        saveIUnderstandYouInUser(username, auth, message)
+
+        notice.innerText = "Verstuurd"
+        notice.style.color = "#8e0000"
+
+    });
+};
+
+function saveyourGoodTheWayYouAre(yourGoodTheWayYouAre, auth, notice){
+
+    yourGoodTheWayYouAre.addEventListener("click", () => {
+
+        const username = yourGoodTheWayYouAre.dataset.username
+        const message = yourGoodTheWayYouAre.dataset.message
+
+        saveyourGoodTheWayYouAreInMessage(username, message)
+        saveyourGoodTheWayYouAreInUser(username, auth, message)
+
+        notice.innerText = "Verstuurd"
+        notice.style.color = "#8e0000"
+
+    });
+};
+
+function savekeepAtIt(keepAtIt, auth, notice){
+
+    keepAtIt.addEventListener("click", () => {
+
+        const username = keepAtIt.dataset.username
+        const message = keepAtIt.dataset.message
+
+        savekeepAtItInMessage(username, message)
+        savekeepAtItInUser(username, auth, message)
+
+        notice.innerText = "Verstuurd"
+        notice.style.color = "#8e0000"
+
+    });
+};
+
+function saveyourNotAlone(yourNotAlone, auth, notice){
+
+    yourNotAlone.addEventListener("click", () => {
+
+        const username = yourNotAlone.dataset.username
+        const message = yourNotAlone.dataset.message
+
+        saveyourNotAloneInMessage(username, message)
+        saveyourNotAloneInUser(username, auth, message)
+
+        notice.innerText = "Verstuurd"
+        notice.style.color = "#8e0000"
+
+    });
+};
+
+function saveIFeelForYouInMessage(username, message){
+
+    db.collection("Coachgroups")
+    .where("Room", "==", titelCG)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            db.collection("Coachgroups")
+            .doc(doc.id)
+            .collection("Messages")
+            .where("Room", "==", titelCG)
+            .where("Auth", "==", username)
+            .where("Message", "==", message)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    db.collection("Coachgroups")
+                    .doc(doc.id)
+                    .collection("Messages")
+                    .doc(doc1.id)
+                    .update({
+                        IFeelForYou: firebase.firestore.FieldValue.increment(1)
+                    });
+                });
+            });
+        });
+    });
+};
+
+function saveIUnderstandYouInMessage(username, message){
+
+    db.collection("Coachgroups")
+    .where("Room", "==", titelCG)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            db.collection("Coachgroups")
+            .doc(doc.id)
+            .collection("Messages")
+            .where("Room", "==", titelCG)
+            .where("Auth", "==", username)
+            .where("Message", "==", message)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    db.collection("Coachgroups")
+                    .doc(doc.id)
+                    .collection("Messages")
+                    .doc(doc1.id)
+                    .update({
+                        IUnderstandYou: firebase.firestore.FieldValue.increment(1)
+                    });
+                });
+            });
+        });
+    });
+};
+
+function saveyourGoodTheWayYouAreInMessage(username, message){
+
+    db.collection("Coachgroups")
+    .where("Room", "==", titelCG)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            db.collection("Coachgroups")
+            .doc(doc.id)
+            .collection("Messages")
+            .where("Room", "==", titelCG)
+            .where("Auth", "==", username)
+            .where("Message", "==", message)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    db.collection("Coachgroups")
+                    .doc(doc.id)
+                    .collection("Messages")
+                    .doc(doc1.id)
+                    .update({
+                        YourGoodTheWayYouAre: firebase.firestore.FieldValue.increment(1)
+                    });
+                });
+            });
+        });
+    });
+};
+
+function savekeepAtItInMessage(username, message){
+
+    db.collection("Coachgroups")
+    .where("Room", "==", titelCG)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            db.collection("Coachgroups")
+            .doc(doc.id)
+            .collection("Messages")
+            .where("Room", "==", titelCG)
+            .where("Auth", "==", username)
+            .where("Message", "==", message)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    db.collection("Coachgroups")
+                    .doc(doc.id)
+                    .collection("Messages")
+                    .doc(doc1.id)
+                    .update({
+                        KeepAtIt: firebase.firestore.FieldValue.increment(1)
+                    });
+                });
+            });
+        });
+    });
+};
+
+function saveyourNotAloneInMessage(username, message){
+
+    db.collection("Coachgroups")
+    .where("Room", "==", titelCG)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            db.collection("Coachgroups")
+            .doc(doc.id)
+            .collection("Messages")
+            .where("Room", "==", titelCG)
+            .where("Auth", "==", username)
+            .where("Message", "==", message)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    db.collection("Coachgroups")
+                    .doc(doc.id)
+                    .collection("Messages")
+                    .doc(doc1.id)
+                    .update({
+                        YourNotAlone: firebase.firestore.FieldValue.increment(1)
+                    });
+                });
+            });
+        });
+    });
+};
+
+function saveIFeelForYouInUser(username, giver, message){
+
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", username)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const email = doc.data().Email
+            const usernameClean = doc.data().GebruikersnaamClean
+
+            sendMailNewSocial(email, usernameClean, "Ik leef met je mee")
+
+            db.collection("Vitaminders")
+            .doc(doc.id)
+            .collection("Support")
+            .doc()
+            .set({
+                Type: "IFeelForYou",
+                Giver: giver,
+                Reciever: username,
+                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                Message: message,
+                Source: titelCG,
+                SourceType: "Coachgroup",
+                Status: "New"
+            });
+        });
+    });
+};
+
+function saveIUnderstandYouInUser(username, giver, message){
+
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", username)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const email = doc.data().Email
+            const usernameClean = doc.data().GebruikersnaamClean
+
+            sendMailNewSocial(email, usernameClean, "Ik weet wat je voelt")
+
+            db.collection("Vitaminders")
+            .doc(doc.id)
+            .collection("Support")
+            .doc()
+            .set({
+                Type: "IUnderstandYou",
+                Giver: giver,
+                Reciever: username,
+                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                Message: message,
+                Source: titelCG,
+                SourceType: "Coachgroup",
+                Status: "New"
+            });
+        });
+    });
+};
+
+function saveyourGoodTheWayYouAreInUser(username, giver, message){
+
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", username)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const email = doc.data().Email
+            const usernameClean = doc.data().GebruikersnaamClean
+
+            sendMailNewSocial(email, usernameClean, "Je bent goed zoals je bent")
+
+            db.collection("Vitaminders")
+            .doc(doc.id)
+            .collection("Support")
+            .doc()
+            .set({
+                Type: "YourGoodTheWayYouAre",
+                Giver: giver,
+                Reciever: username,
+                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                Message: message,
+                Source: titelCG,
+                SourceType: "Coachgroup",
+                Status: "New"
+            });
+        });
+    });
+};
+
+function savekeepAtItInUser(username, giver, message){
+
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", username)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const email = doc.data().Email
+            const usernameClean = doc.data().GebruikersnaamClean
+
+            sendMailNewSocial(email, usernameClean, "Ga zo door!")
+
+            db.collection("Vitaminders")
+            .doc(doc.id)
+            .collection("Support")
+            .doc()
+            .set({
+                Type: "KeepAtIt",
+                Giver: giver,
+                Reciever: username,
+                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                Message: message,
+                Source: titelCG,
+                SourceType: "Coachgroup",
+                Status: "New"
+            });
+        });
+    });
+};
+
+function saveyourNotAloneInUser(username, giver, message){
+
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", username)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const email = doc.data().Email
+            const usernameClean = doc.data().GebruikersnaamClean
+
+            sendMailNewSocial(email, usernameClean, "Je staat er niet alleen voor")
+
+            db.collection("Vitaminders")
+            .doc(doc.id)
+            .collection("Support")
+            .doc()
+            .set({
+                Type: "YourNotAlone",
+                Giver: giver,
+                Reciever: username,
+                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                Message: message,
+                Source: titelCG,
+                SourceType: "Coachgroup",
+                Status: "New"
+            });
+        });
+    });
+};
+
+function sendMailNewSocial(email, gebruikersnaamClean, socialType){
+
+    console.log(email)
+
+    db.collection("Mail").doc().set({
+        to: email,
+        cc: "info@vitaminds.nu",
+        message: {
+        subject: `Nieuwe reactie op Vitaminds`,
+        html: `Hallo ${gebruikersnaamClean},</br></br>
+        
+        Je hebt een nieuwe reactie: <b>"${socialType}"</b>.</br></br>
+
+        Ga naar <a href="www.vitaminds.nu">Vitaminds</a> en bekijk je nieuwe reactie.</br></br>
+        
+        Vriendelijke groet, </br></br>
+        Het Vitaminds Team </br></br>
+        <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`
+        }
+                
+        }).catch((err) => {
+        console.log(err)
+        });
 
 }
 
 // Load massages in realtime
+!function loadMessageInRealtime(){
     auth.onAuthStateChanged(User =>{
         if(User){
         const userRef = db.collection("Vitaminders").doc(User.uid);
@@ -1069,7 +1549,7 @@ function emailLayout(emailAdress, SenderNameClean, titelClean, message, titel, n
 
                 const auth = doc.data().Gebruikersnaam
 
-                const roomName = titel
+                const roomName = titelCG
 
                 db.collection("Coachgroups")
                 .where("Room", "==", roomName)
@@ -1091,6 +1571,9 @@ function emailLayout(emailAdress, SenderNameClean, titelClean, message, titel, n
                         const sender = doc2.data().Auth
                         const members = doc2.data().Members
 
+                        const messageDiv = document.createElement("div")
+                            messageDiv.setAttribute("class", "message-div")
+
                         const messageP = document.createElement("p")
                         messageP.setAttribute("class", "auth-message-p")
     
@@ -1104,42 +1587,36 @@ function emailLayout(emailAdress, SenderNameClean, titelClean, message, titel, n
                         const colour = doc1.data().Color
                     
                         if (auth == sender){
-    
                             senderName.innerText = messageNameClean
     
+                            messageDiv.style.alignSelf = "flex-end"
                             messageP.innerText = authMessage
-    
-                            messageP.style.alignSelf = "flex-end"
                             senderName.style.color = colour
                             senderName.style.fontWeight = "bold"
                             senderName.style.alignSelf = "flex-end"
 
-                            console.log(admin)
-
                             if(admin.includes(sender)){
-
                             messageOptions(senderName, authMessage, roomName, messageNameClean)
                             };
     
                         } else {
-    
+
                             senderName.innerText = messageNameClean
     
+                            messageDiv.style.alignSelf = "flex-start"
                             messageP.innerText = authMessage
-    
-                            messageP.style.alignSelf = "flex-start"
                             senderName.style.fontWeight = "bold"
                             senderName.style.alignSelf = "flex-start"
                             senderName.style.color = colour
                             
                             };
-    
-                            messageP.appendChild(senderName)
+                            messageDiv.appendChild(senderName)
+                            messageDiv.appendChild(messageP)
+                            addSocialIconsToMessage(messageDiv, sender, authMessage, auth)
 
                         });
                     });
-
-                    DOMchatScreen.appendChild(messageP)
+                    DOMchatScreen.appendChild(messageDiv)
                 });
             });
         });
@@ -1147,6 +1624,7 @@ function emailLayout(emailAdress, SenderNameClean, titelClean, message, titel, n
         });
     };
 });
+}();
 
 // Groups of auth AND notifications
 

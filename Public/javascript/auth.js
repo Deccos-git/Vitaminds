@@ -1,5 +1,3 @@
-// localStorage.clear()
-
 
 // Fetching title from url
 const titelURLDOM = window.location.href.replace(/^.*[\\\/]/, '')
@@ -22,8 +20,6 @@ const id = Math.random()
 const idAlpha = id.toString(36)
 const idClean = idAlpha.replace("0.", "")
 
-console.log(idClean)
-
 // Random color
 function getRandomColor() {
   var letters = '0123456789ABCDEF';
@@ -35,21 +31,18 @@ function getRandomColor() {
 };
 
 const colour = getRandomColor()
-console.log(colour)
-
-// Stripe
-// const stripe = Stripe('pk_test_ZEgiqIsOgob2wWIceTh0kCV4001CPznHi4');
 
 // Cookies notice
+!function cookieNotice(){
+  const cookies = localStorage.getItem("Cookies")
+  const cookieDiv = document.getElementById("cookie-notice")
 
-const cookies = localStorage.getItem("Cookies")
-const cookieDiv = document.getElementById("cookie-notice")
-
-if(cookies != "OK"){
-  if(cookieDiv != null || cookieDiv != undefined){
-  cookieDiv.style.display = "flex"
+  if(cookies != "OK"){
+    if(cookieDiv != null || cookieDiv != undefined){
+    cookieDiv.style.display = "flex"
+    };
   };
-}
+}();
 
 function cookiesOK(){
       localStorage.setItem("Cookies", "OK")
@@ -57,12 +50,13 @@ function cookiesOK(){
 }
 
 // Register a pageleave
-
-window.addEventListener("unload", (e) => { 
-  
-  localStorage.setItem("leftPages", [titelURL])
-        
-});
+!function registerPageLeaves(){
+  window.addEventListener("unload", (e) => { 
+    
+    localStorage.setItem("leftPages", [titelURL])
+          
+  });
+}();
 
 // Update online/offline of chat/group when user leaves page
 const pageLeaves = localStorage.getItem("leftPages")
@@ -101,7 +95,7 @@ function onlineFunctionQueryChats(authName){
   });
 };
 
-function updateOnlineStatusFromPagesLeave(){
+!function updateOnlineStatusFromPagesLeave(){
 
     auth.onAuthStateChanged(User =>{
         if(User){
@@ -115,38 +109,45 @@ function updateOnlineStatusFromPagesLeave(){
         });
       };
     });
-} updateOnlineStatusFromPagesLeave()
+}(); 
 
 // Inlog/uitlog verbergen
-const loginDOM = document.getElementById("button-login")
-const logoutDOM = document.getElementById("button-logout")
-const registerButton = document.getElementById("button-register")
-const registerButtonCoach = document.getElementById("button-register-coach")
 
-if(loginDOM != null || loginDOM != null || registerButton != null || registerButtonCoach != null){
-    auth.onAuthStateChanged(User =>{
-      if(User){
-        loginDOM.style.display = "none"
-        registerButton.style.display = "none"
-        registerButtonCoach.style.display = "none"
-      } else {
-        logoutDOM.style.display = "none"
-      };
-  });
-};
+!function hideLogInIfAuth(){
+  const loginDOM = document.getElementById("button-login")
+  const logoutDOM = document.getElementById("button-logout")
+  const registerButton = document.getElementById("button-register")
+  const registerButtonCoach = document.getElementById("button-register-coach")
+
+  if(loginDOM != null || loginDOM != null || registerButton != null || registerButtonCoach != null){
+      auth.onAuthStateChanged(User =>{
+        if(User){
+          loginDOM.style.display = "none"
+          registerButton.style.display = "none"
+          registerButtonCoach.style.display = "none"
+        } else {
+          logoutDOM.style.display = "none"
+        };
+    });
+  };
+}();
 
 // Mobile menu
-const hamburgerMenu = document.getElementById("mobile-hamburger-menu")
-const mobileMenu = document.getElementById("mobile-menu-outer-div")
 
-hamburgerMenu.addEventListener("click", () => {
-       
-        if (mobileMenu.style.display == "flex") 
-        mobileMenu.style.display = "none"
-        else {
-        mobileMenu.style.display = "flex"    
-        };
-});
+!function showMobileMenu(){
+  const hamburgerMenu = document.getElementById("mobile-hamburger-menu")
+  const mobileMenu = document.getElementById("mobile-menu-outer-div")
+
+  hamburgerMenu.addEventListener("click", () => {
+        
+          if (mobileMenu.style.display == "flex") 
+          mobileMenu.style.display = "none"
+          else {
+          mobileMenu.style.display = "flex"    
+          };
+  });
+}();
+
 
 const coachMenuDOM = document.getElementById("aanmeldCH-mobile")
 const coachMenuMobile = document.getElementById("coach-menu-main-mobile")
@@ -161,277 +162,349 @@ if(coachMenuDOM != null){
 
 // Ingelogd in mobile-menu
 
-auth.onAuthStateChanged(User =>{
-  if(User){
-    const userRef = db.collection("Vitaminders").doc(User.uid);
-    userRef.get().then(function(doc) {
-      if (doc.exists) {
-       const naamID = doc.data().Gebruikersnaam
-       const ID = doc.data().ID
-       const naam = naamID.replace(ID, "")
-       const profilePic = doc.data().Profielfoto
-
-        const profilePicture = document.getElementById("profile-picture-mobile")
-        const login = document.getElementById("button-login-mobile")
-
-        login.style.display = "none" 
-
-        if(profilePic == undefined){
-          profilePicture.innerHTML = `<h6 class="menu-auth-name" >${naam}</h6>`
-        } else {
-            profilePicture.style.backgroundImage = `url('${profilePic}')`
-            profilePicture.setAttribute("class", "login-logout")
-        };
-
-        profilePicture.addEventListener("click", () => {
-          window.open("../Vitaminders/" + [naamID] + ".html", "_self");
-        });
-      };
-    });
-  };
-});
-
-//Auth menu
-const authDOM = document.getElementById("auth-DOM")
-
-      if(authDOM == null){
-        console.log("No auth menu")
-      }; 
-
-const lengthArray = []
-const newMessageArray = []
-
-const authDiv = document.createElement("div")
-    authDiv.setAttribute("id", "menu-auth-div")
-const authName = document.createElement("h5")
-    authName.setAttribute("id", "profile-name")
-const authProfile = document.createElement("h5")
-    authProfile.setAttribute("id", "auth-profile")
-const authProfileP = document.createElement("p")
-      authProfileP.setAttribute("id", "authprofile-p")
-const authPhoto = document.createElement("div")
-    authPhoto.setAttribute("id", "profile-photo")
-const closeDiv = document.createElement("div")
-    closeDiv.setAttribute("id", "close-div")
-    closeDiv.setAttribute("onclick", "close(this)") 
-
-const profilePicture = document.getElementById("profile-picture")
-
-const logout = document.createElement("h5")
-      logout.setAttribute("id", "button-logout")
-      logout.setAttribute("onclick", "logOut()")
-
-const chatsGroupDiv = document.createElement("div")
-      chatsGroupDiv.setAttribute("id", "chats-groups-div-auth-menu")
-
-const chatGroupNewMessageCountDiv = document.createElement("div")
-      chatGroupNewMessageCountDiv.setAttribute("id", "chats-groups-new-message-div")
-const chatGroupNewMessageCountP = document.createElement("p")
-
-const titleLink = document.createElement("a")
-const linkImg = document.createElement('img')
-
-const notificationsTotalDivToolbar = document.createElement("div")
-      notificationsTotalDivToolbar.setAttribute("id", "notification-div-menu-toolbar")
-const notificationsTotalP = document.createElement("p")
-const notificationsTotalPAuthMenu = document.createElement("p")
-      notificationsTotalPAuthMenu.setAttribute("id", "menu-notifications")
-const notificationsDiv = document.createElement("div")
-      notificationsDiv.setAttribute("class", "notification-div-menu")
-const notificationsTitle = document.createElement("h3")
-const notificationsPDiv = document.createElement("div")
-const notificationsP = document.createElement("p")
-
-const messagesMobileMenu = document.getElementById("toolbar-inner-div-chats-groups")
-
-const chatsDiv = document.getElementsByClassName("chats-div")
-
-  // Construct auth menu with naam and pic
-  function constructAuthMenu(){
-auth.onAuthStateChanged(User =>{
-  if(User){
-    const userRef = db.collection("Vitaminders").doc(User.uid);
-    userRef.get().then(function(doc) {
-
-        const naamID = doc.data().Gebruikersnaam;
+!function loggedInMobileMenu(){
+  auth.onAuthStateChanged(User =>{
+    if(User){
+      const userRef = db.collection("Vitaminders").doc(User.uid);
+      userRef.get().then(function(doc) {
+        if (doc.exists) {
+        const naamID = doc.data().Gebruikersnaam
         const ID = doc.data().ID
         const naam = naamID.replace(ID, "")
         const profilePic = doc.data().Profielfoto
 
-    if(profilePic == undefined){
-      profilePicture.innerHTML = `<h6 class="menu-auth-name" >${naam}</h6>`
+          const profilePicture = document.getElementById("profile-picture-mobile")
+          const login = document.getElementById("button-login-mobile")
+
+          login.style.display = "none" 
+
+          if(profilePic == undefined){
+            profilePicture.innerHTML = `<h6 class="menu-auth-name" >${naam}</h6>`
+          } else {
+              profilePicture.style.backgroundImage = `url('${profilePic}')`
+              profilePicture.setAttribute("class", "login-logout")
+          };
+
+          profilePicture.addEventListener("click", () => {
+            window.open("../Vitaminders/" + [naamID] + ".html", "_self");
+          });
+        };
+      });
+    };
+});
+};
+
+// Auth menu
+
+function profilePictureInMenu(profilePicture, naam, userName){
+
+  const DOMprofilePicture = document.getElementById("profile-picture")
+
+  const profileImage = document.createElement("img")
+    profileImage.setAttribute("id", "profile-image")
+
+  profileImage.src = profilePicture
+
+  DOMprofilePicture.appendChild(profileImage)
+
+  expandAuthMenu(DOMprofilePicture, profilePicture, naam, userName)
+
+};
+
+function expandAuthMenu(DOMprofilePicture, profilePicture, naam, userName){
+
+  const profilePicInMenu = document.getElementById("profile-image")
+
+  const authMenu = document.createElement("div")
+    authMenu.setAttribute("id", "menu-auth-div")
+
+    DOMprofilePicture.appendChild(authMenu)
+
+  profilePicInMenu.addEventListener("click", (e) => {
+
+    const totalCount = document.getElementById("totalNewCountP")
+
+    if(authMenu.style.display === "flex"){
+      authMenu.style.display = "none"
+      profilePicInMenu.style.display = "block"
     } else {
-        profilePicture.style.backgroundImage = `url('${profilePic}')`
-        profilePicture.setAttribute("class", "login-logout")
-    };
-
-    authPhoto.style.backgroundImage = `url('${profilePic}')`
-    authName.innerHTML = `<a href = "../Vitaminders/${naamID}">${naam}</a>`
-    authProfileP.innerHTML = `<a href = "../Vitaminders/${naamID}"><img id="icon-auth-menu-digimind" src="../images/menu-dashboard.png">Mijn omgeving</a>`
-    authPhoto.addEventListener("click", () => {
-      window.open("../Vitaminders/" + [naamID] + ".html", "_self");
-    });
-  });
-
-  } else {
-    const logOutMobile = document.getElementById("log-out-mobile")
-
-    logOutMobile.style.display = "none"
-    notificationsTotalPAuthMenu.style.display = "none"
+      authMenu.style.display = "flex"
+      profilePicInMenu.style.display = "none"
+      totalCount.style.display = "none"
     };
   });
-}; constructAuthMenu()
 
-        // Open & close
-      function openCloseAutMenu(){
-        
-        closeDiv.style.backgroundImage = "url(../images/close-icon.png)";
+  pictureAndNameInAuthMenu(authMenu, profilePicture, naam, userName)
+  logOutAuthMenu(authMenu)
+  closeAuthMenu(authMenu, profilePicInMenu)
+};
 
-        closeDiv.addEventListener("click", () => {
-          authDiv.style.display= "none"
-        })
+function closeAuthMenu(authDiv, profilePicInMenu){
 
-        profilePicture.addEventListener("click", () => {
-          authDiv.style.display= "flex"
-        })
-      }; openCloseAutMenu()
+  const closeDiv = document.createElement("div")
+  closeDiv.setAttribute("id", "close-div")
+  const closeImage = document.createElement("img")
 
+  closeImage.src = "../images/close-icon.png"
 
-      // Logout
-      function logOutAuthMenu(){
-      
-    logout.innerHTML = "Log uit"
-      } logOutAuthMenu()
+  authDiv.prepend(closeDiv)
+  closeDiv.appendChild(closeImage)
 
+  closeDiv.addEventListener("click", () => {
 
-    // Chats & groups link
-    titleLink.innerText = "Chats & Groepen"
-    linkImg.src = "../images/send-icon.png"
+    const totalCount = document.getElementById("totalNewCountP")
 
-    titleLink.addEventListener("click", () => {
-      window.open("../chats-groups.html", "_self");
-    })
+    authDiv.style.display= "none"
+    totalCount.style.display = "flex"
+    profilePicInMenu.style.display = "block"
+  });
 
-
-      // Notificaties in menu
-      notificationsTitle.innerHTML = "Notificaties"
-
-      auth.onAuthStateChanged(User =>{
-        if(User){
-          const userRef = db.collection("Vitaminders").doc(User.uid);
-          userRef.get().then(function(doc) {
-      
-              const naamID = doc.data().Gebruikersnaam;
-
-             // Inspirationpoints
-          db.collectionGroup("Inspiration").where("Reciever", "==", naamID).where("New", "==", "Yes").get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-    
-              const docLengt = [doc]          
-                    objectLength = Object.keys(docLengt).length
-                    lengthArray.push(objectLength)
-      
-                    notificationsP.innerHTML = `Je hebt 1 nieuw <i>inspiratiepunt</i> ontvangen.`
-    
-                    notificationsDiv.addEventListener("click", () => { 
-                      
-                      db.collection("Vitaminders").where("Gebruikersnaam", "==", naamID).get().then(querySnapshot =>{
-                        querySnapshot.forEach(doc2 => { 
-                      db.collection("Vitaminders").doc(doc2.id).collection("Inspiration").doc(doc.id).update({
-                        New: "No"
-                      }).then(() => {
-                          window.open(`../Vitaminders/${naamID}.html`)
-                      });
-                    });
-                  });
-                });      
-              });
-              }).then(() => {
-
-                // Notifications from chats and groups
-
-                db.collection("Chats").where("Members", "array-contains", naamID).get().then(querySnapshot =>{
-                  querySnapshot.forEach(doc3 => { 
-
-                    const type = doc3.data().Type
-
-                  db.collection("Chats").doc(doc3.id).collection("Messages").where("Status", "==", "New").get().then(querySnapshot => {
-                    querySnapshot.forEach(doc1 => {
-
-                      const authUser = doc1.data().Auth
-                      const users = doc1.data().Room
-                      const readList = doc1.data().Read
-
-                      const userArray = users.split("_")
-
-                      if (type === "Group" || type === "Practicegroup" || type === "Coachgroup"){
-                      // Groups
-                      if (readList != undefined){
-                      if(!readList.includes(naamID)){
-                        if(authUser != naamID){
-
-                          newMessageArray.push(doc1.id)
-                          lengthArray.push(doc1.id)
-                        };
-                      };
-                    };
-                  } else {
-
-                    // Chats
-                if(userArray.includes(naamID)){
-                  if(authUser != naamID){
-
-                    newMessageArray.push(doc1.id)
-                    lengthArray.push(doc1.id)
-                  };
-                };
-              };
-              
-              });
-                  }).then(() => {
-                    if(newMessageArray.length != 0){
-                    chatGroupNewMessageCountP.innerText = newMessageArray.length
-                    notificationsTotalPAuthMenu.innerText = lengthArray.length
-                    messagesMobileMenu.appendChild(notificationsTotalDivToolbar)
-                    notificationsTotalDivToolbar.appendChild(notificationsTotalP)
-                    notificationsTotalP.innerText = lengthArray.length
-                    };
-                  });
-                });
-              }); 
-                });
-                });
-              };
-            });
-    
-            notificationsDiv.appendChild(notificationsTitle)
-            notificationsTitle.appendChild(notificationsPDiv)
-            notificationsPDiv.appendChild(notificationsP)
-
-            notificationsDiv.appendChild(notificationsTitle)
-            notificationsTitle.appendChild(notificationsPDiv)
-            notificationsPDiv.appendChild(notificationsP)
-
-            profilePicture.appendChild(notificationsTotalPAuthMenu)
-            authDOM.appendChild(authDiv)
-            authDiv.appendChild(closeDiv)
-            authDiv.appendChild(authPhoto)
-            authDiv.appendChild(authName)
-            authDiv.appendChild(authProfile)
-            authProfile.appendChild(authProfileP)
-            authProfile.appendChild(chatsGroupDiv)
-            chatsGroupDiv.appendChild(linkImg)
-            chatsGroupDiv.appendChild(titleLink)
-            chatsGroupDiv.appendChild(chatGroupNewMessageCountDiv)
-            chatGroupNewMessageCountDiv.appendChild(chatGroupNewMessageCountP)
-            authProfile.appendChild(notificationsDiv)
-            authDiv.appendChild(logout)
-
-// Close authmenu
-
-function close(elem){
-  elem.parentElement.style.display = "none"
 }
+
+function pictureAndNameInAuthMenu(authDiv, profilePicture, naam, userName){
+
+  const picAndNameDiv = document.createElement("div")
+    picAndNameDiv.setAttribute("id", "picture-name-div")
+
+  const picture = document.createElement("img")
+    picture.setAttribute("id", "profile-photo")
+  const nameP = document.createElement("p")
+    nameP.setAttribute("id", "profile-name")
+
+  picture.src = profilePicture
+  nameP.innerText = naam
+
+  authDiv.appendChild(picAndNameDiv)
+  picAndNameDiv.appendChild(picture)
+  picAndNameDiv.appendChild(nameP)
+
+  visitAccountByClickOnPictureAndName(picAndNameDiv, userName)
+  authMenuLinks(authDiv, userName)
+
+};
+
+function visitAccountByClickOnPictureAndName(picAndNameDiv, userName){
+
+  picAndNameDiv.addEventListener("click", () =>{
+    window.open("../Vitaminders/" + userName + ".html", "_self");
+  });
+};
+
+function authMenuLinks(authMenu, userName){
+
+  const authMenuLinksDiv = document.createElement("div")
+    authMenuLinksDiv.setAttribute("id", "auth-menu-links-div")
+
+    authMenu.appendChild(authMenuLinksDiv)
+
+    myAccountButton(authMenuLinksDiv, userName)
+    myGroupsAndChats(authMenuLinksDiv)
+    mySupport(authMenuLinksDiv, userName)
+
+};
+
+function myAccountButton(authMenuLinksDiv, userName){
+
+  const myAccountDiv = document.createElement("div")
+    myAccountDiv.setAttribute("class", "auth-menu-links-innerdiv")
+  const myAccountIcon = document.createElement("img")
+  const myAccountP = document.createElement("p")
+
+  myAccountIcon.src = "../images/menu-dashboard.png"
+  myAccountP.innerText = "Mijn account"
+
+  authMenuLinksDiv.appendChild(myAccountDiv)
+  myAccountDiv.appendChild(myAccountIcon)
+  myAccountDiv.appendChild(myAccountP)
+
+  myAccountDiv.addEventListener("click", () =>{
+    window.open("../Vitaminders/" + userName + ".html", "_self");
+  });
+};
+
+function myGroupsAndChats(authMenuLinksDiv){
+  const myGroupsAndChatsDiv = document.createElement("div")
+  myGroupsAndChatsDiv.setAttribute("class", "auth-menu-links-innerdiv")
+  myGroupsAndChatsDiv.setAttribute("id", "groups-chats-div")
+  const myGroupsAndChatsIcon = document.createElement("img")
+  const myGroupsAndChatsP = document.createElement("p")
+
+  myGroupsAndChatsIcon.src = "../images/send-icon.png"
+  myGroupsAndChatsP.innerText = "Chats & groepen"
+
+  authMenuLinksDiv.appendChild(myGroupsAndChatsDiv)
+  myGroupsAndChatsDiv.appendChild(myGroupsAndChatsIcon)
+  myGroupsAndChatsDiv.appendChild(myGroupsAndChatsP)
+
+  myGroupsAndChatsDiv.addEventListener("click", () =>{
+    window.open("../chats-groups.html", "_self");
+  });
+}
+
+function mySupport(authMenuLinksDiv, userName){
+  const mySupportDiv = document.createElement("div")
+  mySupportDiv.setAttribute("class", "auth-menu-links-innerdiv")
+  mySupportDiv.setAttribute("id", "my-support-div")
+  const mySupportIcon = document.createElement("img")
+  const mySupportP = document.createElement("p")
+
+  mySupportIcon.src = "../images/comparison-icon.png"
+  mySupportP.innerText = "Mijn steun"
+
+  authMenuLinksDiv.appendChild(mySupportDiv)
+  mySupportDiv.appendChild(mySupportIcon)
+  mySupportDiv.appendChild(mySupportP)
+
+  mySupportDiv.addEventListener("click", () =>{
+    window.open("../Vitaminders/" + userName + ".html", "_self");
+  });
+}
+
+function logOutAuthMenu(authMenu){
+    
+  const logout = document.createElement("h5")
+  logout.setAttribute("id", "button-logout")
+  logout.setAttribute("onclick", "logOut()")
+  
+    logout.innerHTML = "Log uit"
+
+    authMenu.appendChild(logout)
+};
+
+!function authQuery(){
+
+  auth.onAuthStateChanged(User =>{
+    if(User){
+      const userRef = db.collection("Vitaminders").doc(User.uid);
+      userRef.get().then(function(doc) {
+
+          const naamID = doc.data().Gebruikersnaam;
+          const ID = doc.data().ID
+          const naam = doc.data().GebruikersnaamClean
+          const profilePicture = doc.data().Profielfoto
+
+          profilePictureInMenu(profilePicture, naam, naamID)
+
+      });
+    };
+  });
+}(); 
+
+// Notifications in authMenu
+
+function supportNotificationInAuthMenu(status){
+
+  if(status === "New"){
+          newArray.push("New")
+          totalNew.push("New")
+  };
+};
+
+ function appendNewCountToAuthMenu(newSupportCount, div){
+
+  const authMenuDiv = document.getElementById(div)
+
+  const newCountMenuPrivate = document.createElement("p")
+  newCountMenuPrivate.setAttribute("class", "newSupportCountP")
+
+  newCountMenuPrivate.innerText = newSupportCount
+
+  authMenuDiv.appendChild(newCountMenuPrivate)
+
+  if(newSupportCount === 0){
+          newCountMenuPrivate.style.display = "none"
+  };
+};
+
+const totalNew = [];
+const newArray = [];
+
+function totalCountInProfilePicture(){
+
+  const profilePicInMenu = document.getElementById("profile-picture")
+
+  const totalP = document.createElement("p")
+  totalP.setAttribute("id", "totalNewCountP")
+
+  totalP.innerText = totalNew.length
+
+  profilePicInMenu.prepend(totalP)
+
+  if(totalNew.length === 0){
+    totalP.style.display = "none"
+  };
+
+};
+
+!function querySupportAuth(){
+
+  auth.onAuthStateChanged(User =>{
+    if(User){
+    const userRef = db.collection("Vitaminders").doc(User.uid);
+    userRef.get().then(function(doc) {
+
+      const auth = doc.data().Gebruikersnaam
+
+        db.collectionGroup("Support")
+        .where("Reciever", "==", auth)
+        .orderBy("Timestamp", "desc")
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        const status = doc.data().Status
+
+                        supportNotificationInAuthMenu(status)
+
+                });
+        }).then(() => {
+
+                const newSupportCount = newArray.length
+                appendNewCountToAuthMenu(newSupportCount, "my-support-div")
+        });
+      });
+    };
+  });
+}();
+
+const newMessageArray = [];
+
+!function newMessageChatsInAuthMenu(){
+
+  auth.onAuthStateChanged(User =>{
+    if(User){
+    const userRef = db.collection("Vitaminders").doc(User.uid);
+    userRef.get().then(function(doc) {
+
+      const auth = doc.data().Gebruikersnaam
+
+        db.collectionGroup("Messages")
+        .where("Status", "==", "New")
+        .where("Members", "array-contains", auth)
+        // .where("Read", "not-in", [auth])
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+              const read = doc.data().Read
+
+              if(!read.includes(auth)){
+              newMessageArray.push(doc)
+              totalNew.push(doc)
+              };
+
+                });
+            }).then(() => {
+
+              const newMessageCount = newMessageArray.length
+                appendNewCountToAuthMenu(newMessageCount, "groups-chats-div")
+
+                totalCountInProfilePicture()
+
+        });
+      });
+    };
+  });
+}();
+
 
 // Coach-menu
 
@@ -521,6 +594,7 @@ if(button != null){
   const repeatPasswordVMInput = document.getElementById("register-wachtwoord-repeat")
   const firstName = document.getElementById('register-firstname').value;
   const lastName = document.getElementById('register-lastname').value;
+  const contributionQuestion = document.getElementById("contribution-question").value
 
   const colour = getRandomColor()
 
@@ -553,6 +627,7 @@ if(button != null){
       Usertype: "Vitaminder",
       Inspiratiepunten: 1,
       Email: email, 
+      MainGoal: contributionQuestion,
       ID: cred.user.uid,
       Color: colour,
       Levensvragen: [],

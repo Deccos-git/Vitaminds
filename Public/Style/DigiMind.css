@@ -411,6 +411,8 @@
     display: flex;
     justify-content: space-between;
     margin: 100px 50px 0px 50px;
+    overflow: auto;
+    white-space: nowrap;
 }
 
 #menu-div p{
@@ -899,14 +901,104 @@
     cursor: pointer;
 }
 
+.support-card-message{
+    font-size: 16px;
+    background-color: #a7bdbd26;
+    padding: 20px;
+}
+
+#reaction-count-div{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 50px;
+}
+
+#reactions-overview{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a7bdbd26;
+}
+
+.support-card-type{
+    font-weight: bold;
+    text-align: center;
+}
+
+.meta-a-div{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.meta-a-div p{
+    font-size: 16px;
+}
+
+.meta-b-div{
+    display: flex;
+    justify-content: center;
+}
+
+.meta-b-div p{
+    font-size: 16px;
+}
+
+
+.support-card{
+    width: 80%;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    border-radius: 5px;
+    margin-top: 20px;
+    background-color: white;
+}
+
+.reaction-image-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+.reaction-image-div img{
+    width: 50px;
+    height: 50px;
+}
+
+.reaction-image-div p{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#show-chat{
+    text-decoration: none;
+    color: white;
+}
+
+#show-chat-button{
+    display: none;
+    background-color: #008e8e;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer; 
+}
+
+.account-private-menu-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media only screen and (max-width: 938px){
 
-    #menu-div-mobile{
-        display: flex;
+    #menu-div{
+        margin: 10px 10px 0px 10px;
     }
 
-    #menu-div{
-        display: none;
+    .account-private-menu-div{
+        margin: 0px 15px;
     }
 
     #private-public-div {

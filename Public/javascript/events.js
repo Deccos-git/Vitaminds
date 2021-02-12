@@ -414,7 +414,7 @@ function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateO
                       message: {
                       subject: `Aangemeld voor ${titleEvent}`,
                       html: `Hallo ${naamClean}, </br></br>
-                            Wat geweldig dat je je hebt aangemeld voor mijn evenement ${titleEvent}!<br><br> 
+                            Leuk dat je je hebt aangemeld voor ${titleEvent}!<br><br> 
     
                             Ik zie je graag op ${dateOfEvent}. <br>
                             De locatie is: ${locationOfEvent}. </br></br>
@@ -440,11 +440,11 @@ function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateO
                                   message: {
                                   subject: `Aangemeld voor ${titleEvent}`,
                                   html: `Hallo ${naamClean}, </br></br>
-                                        Wat geweldig dat je je hebt aangemeld voor mijn evenement ${titleEvent}!<br><br> 
+                                        Leuk dat je je hebt aangemeld voor mijn evenement ${titleEvent}!<br><br> 
                 
-                                        Ik zal je de link voor het evenement binnenkort toe sturen.<br>
+                                        In de loop naar ${dateOfEvent} ontvang je per mail een bevestiging en de link om deel te nemen.<br>
 
-                                        Tot ${dateOfEvent}! <br><br>
+                                        Tot dan! <br><br>
                                     
                                         Als je nog vragen hebt kun je mij altijd een berichtje sturen.<br><br>
 

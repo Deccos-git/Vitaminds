@@ -233,28 +233,28 @@
 
   <section id="private-section">
     <div id="menu-div">
-      <p id="my-proces" class="private-menu-active">Mijn doelen</p>
-      <p>Favoriete coaches</p>
-      <p>Tools</p>
-      <p id="analytics-menu-item">Analytics</p>
-      <p>Notificaties</p>
-      <p>Ontwikkeltegoed</p>
-      <p>Mijn profiel</p>
+      <div class="account-private-menu-div">
+        <p id="my-proces" class="private-menu-active">Mijn doelen</p>
+      </div>
+      <div class="account-private-menu-div">
+        <p>Favoriete coaches</p>
+      </div>
+      <div class="account-private-menu-div">
+        <p>Tools</p>
+      </div>
+      <div class="account-private-menu-div">
+        <p id="analytics-menu-item">Analytics</p>
+      </div>
+      <div id="support-menu-item" class="account-private-menu-div">
+        <p>Steun</p>
+      </div>
+      <div class="account-private-menu-div">
+        <p>Ontwikkeltegoed</p>
+      </div>
+      <div class="account-private-menu-div">
+        <p>Mijn profiel</p>
+      </div>
     </div>
-
-    <div id="menu-div-mobile">
-      <p>Menu</p>
-      <select name="" id="menu-select-mobile" onchange="getSection(this)">
-        <option>Mijn doelen</option>
-        <option>Favoriete coaches</option>
-        <option>Tools</option>
-        <option class="analytics-menu-item">Analytics</option>
-        <option>Notificaties</option>
-        <option>Ontwikkeltegoed</option>
-        <option>Mijn profiel</option>
-      </select>
-    </div>
-
   </section>
 
   <div class="private-outer-div activeSection" id="my-proces-outer-div">
@@ -463,25 +463,43 @@
           </div>
       </div>
   </div>
-  
+
   </div>
 
   <div class="private-outer-div" id="notifications-outer-div">
-    <div id="rewards-outer-div">
-      <div id="total-inspiration"></div>
-      <div id="trophies">
-        <img id="trophy-1" src="../images/Trophies/1-gray.png" alt="Trophy-1">
-        <img id="trophy-5" src="../images/Trophies/5-gray.png" alt="Trophy-5">
-        <img id="trophy-10" src="../images/Trophies/10-gray.png" alt="Trophy-10">
-        <img id="trophy-20" src="../images/Trophies/20-gray.png" alt="Trophy-20">
-        <img id="trophy-40" src="../images/Trophies/40-gray.png" alt="Trophy-40">
-        <img id="trophy-80" src="../images/Trophies/80-gray.png" alt="Trophy-80">
-        <img id="trophy-160" src="../images/Trophies/160-gray.png" alt="Trophy-160">
+    <div id="reactions-outer-div">
+      <div id="total-reaction"></div>
+      <div id="reaction-count-div">
+        <div class="reaction-image-div">
+          <img src="../images/design/person-24px-heart.png" alt="">
+          <p>Ik voel me je mee</p>
+          <p id="IFeelForYouCount">0</p>
+        </div>
+        <div class="reaction-image-div">
+          <img src="../images/comparison-icon.png" alt="">
+          <p>Ik weet wat je voelt</p>
+          <p id="IUnderstandCount">0</p>
+        </div>
+        <div class="reaction-image-div">
+          <img src="../images/design/person-24px-check.png" alt="">
+          <p>Je bent goed zoals je bent</p>
+          <p id="yourGoodTheWayYouAreCount">0</p>
+        </div>
+        <div class="reaction-image-div">
+          <img src="../images/heart-icon.png" alt="">
+          <p>Ga zo door!</p>
+          <p id="keepAtItCount">0</p>
+        </div>
+        <div class="reaction-image-div">
+          <img src="../images/design/group-24px.png" alt="">
+          <p>Je staat er niet alleen voor</p>
+          <p id="yourNotAloneCount">0</p>
+        </div>
       </div>
     </div>
-    <div id="social-notifications-outer-div">
-      <h2>Nieuwe meldingen</h2>
-      <div id="inspiration-notifications">
+    <div id="reactions-outer-div">
+      <h2>Alle reacties</h2>
+      <div id="reactions-overview">
       </div>
     </div>
   </div>
