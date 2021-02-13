@@ -118,7 +118,9 @@ function updateReadList(docID, authName, titleURL, messages){
                     });
                 } else {
                     console.log("Auth is already on readlist")
+                    setTimeout(() => {
                         window.open(`../Group/${titleURL}.html`, "_self");
+                     }, 1000);
                 };
             });
         });
@@ -452,16 +454,39 @@ function leaveTheGroup(roomTitle){
 
     auth.onAuthStateChanged(User =>{
         if(User){
-        const userRef = db.collection("Vitaminders").doc(User.uid);
-        userRef.get().then(function(doc) {
+        const userRef = db.collection("Vitaminders")
+        .doc(User.uid);
+        userRef.get()
+        .then(function(doc) {
 
             const auth = doc.data().Gebruikersnaam
 
-            db.collection("Coachgroups").where("Room", "==", roomTitle ).get().then(querySnapshot => {
-                querySnapshot.forEach(doc => {
+            db.collection("Coachgroups")
+            .where("Room", "==", roomTitle )
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
         
-                db.collection("Coachgroups").doc(doc.id).update({
+                db.collection("Coachgroups")
+                .doc(doc1.id)
+                .update({
                     Members: firebase.firestore.FieldValue.arrayRemove(auth)
+                            });
+                    
+                            db.collection("Coachgroups")
+                            .doc(doc1.id)
+                            .collection("Messages")
+                            .where("Members", "array-contains", auth)
+                            .get().then(querySnapshot => {
+                                querySnapshot.forEach(doc2 => {
+
+                                    db.collection("Coachgroups")
+                                    .doc(doc.id)
+                                    .collection("Messages")
+                                    .doc(doc2.id)
+                                    .update({
+                                        Members:firebase.firestore.FieldValue.arrayRemove(auth)
+                                    });   
+                                });
                             });
                         });
                     });

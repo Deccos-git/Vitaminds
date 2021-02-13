@@ -501,6 +501,8 @@ const newMessageArray = [];
 
       const auth = doc.data().Gebruikersnaam
 
+      console.log(auth)
+
         db.collectionGroup("Messages")
         .where("Members", "array-contains", auth)
         // .where("Read", "not-in", [auth])

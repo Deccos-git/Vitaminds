@@ -372,7 +372,9 @@ function saveAuthToReadlist(docID, authName, messages, user){
                     });
                 } else {
                     console.log("Auth is already on readlist")
+                    setTimeout(() =>  {
                         window.open(`../Chats/${user}.html`, "_self");
+                    }, 1000);
                 };
             });
         });
