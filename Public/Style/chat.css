@@ -167,8 +167,8 @@
 .new-message-count-chats{
     border-radius: 50%;
     background-color: #8e0000;
-    height: 12px;
-    width: 12px;
+    min-height: 12px;
+    min-width: 12px;
     font-size: 10px;
     color: white;
     display: flex;

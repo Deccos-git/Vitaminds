@@ -325,10 +325,21 @@
     color: #FFF;
 }
 
+.social-div-openup{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: none;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 0px;
+}
+
 .meta-div-open-up{
     display: flex;
     justify-content: right;
     align-items: center;
+    background-color: #a7bdbd26;
+    margin-top: 25px;
 }
 
 .meta-div-open-up p{

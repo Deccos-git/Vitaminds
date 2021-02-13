@@ -196,6 +196,29 @@ if(coachMenuDOM != null){
 
 // Auth menu
 
+function profilePictureInMobileMenu(profilePicture, auth){
+  const DOMprofilePictureMobile = document.getElementById("profile-picture-mobile")
+  const loginButton = document.getElementById("button-login-mobile")
+
+  const profileImage = document.createElement("img")
+    profileImage.setAttribute("id", "profile-image")
+
+    DOMprofilePictureMobile.appendChild(profileImage)
+
+  profileImage.src = profilePicture
+  loginButton.style.display = "none"
+
+  goToAccountFromProfilePicture(DOMprofilePictureMobile, auth)
+};
+
+function goToAccountFromProfilePicture(picture, auth){
+
+  picture.addEventListener("click", () => {
+    window.open("../Vitaminders/" + auth + ".html", "_self");
+  })
+
+}
+
 function profilePictureInMenu(profilePicture, naam, userName){
 
   const DOMprofilePicture = document.getElementById("profile-picture")
@@ -349,7 +372,7 @@ function mySupport(authMenuLinksDiv, userName){
   const mySupportP = document.createElement("p")
 
   mySupportIcon.src = "../images/comparison-icon.png"
-  mySupportP.innerText = "Mijn steun"
+  mySupportP.innerText = "Mijn steunreacties"
 
   authMenuLinksDiv.appendChild(mySupportDiv)
   mySupportDiv.appendChild(mySupportIcon)
@@ -379,11 +402,11 @@ function logOutAuthMenu(authMenu){
       userRef.get().then(function(doc) {
 
           const naamID = doc.data().Gebruikersnaam;
-          const ID = doc.data().ID
           const naam = doc.data().GebruikersnaamClean
           const profilePicture = doc.data().Profielfoto
 
           profilePictureInMenu(profilePicture, naam, naamID)
+          profilePictureInMobileMenu(profilePicture, naamID)
 
       });
     };
@@ -460,6 +483,7 @@ function totalCountInProfilePicture(){
 
                 const newSupportCount = newArray.length
                 appendNewCountToAuthMenu(newSupportCount, "my-support-div")
+                appendNewCountToAuthMenu(newSupportCount, "toolbar-digimind-div")
         });
       });
     };
@@ -478,7 +502,6 @@ const newMessageArray = [];
       const auth = doc.data().Gebruikersnaam
 
         db.collectionGroup("Messages")
-        .where("Status", "==", "New")
         .where("Members", "array-contains", auth)
         // .where("Read", "not-in", [auth])
         .get().then(querySnapshot => {
@@ -497,7 +520,10 @@ const newMessageArray = [];
             }).then(() => {
 
               const newMessageCount = newMessageArray.length
+
+              console.log(newMessageCount)
                 appendNewCountToAuthMenu(newMessageCount, "groups-chats-div")
+                appendNewCountToAuthMenu(newMessageCount, "toolbar-inner-div-chats-groups")
 
                 totalCountInProfilePicture()
 

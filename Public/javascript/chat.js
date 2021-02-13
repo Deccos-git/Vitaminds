@@ -15,9 +15,6 @@ const titel11 = titel10.replace('%20',' ')
 const titel12 = titel11.split("?fb")
 const titel = titel12[0]
 
-console.log(titel)
-
-
 // Title 
 db.collection('Vitaminders').where('Gebruikersnaam', '==', titel )
     .get()
@@ -268,8 +265,6 @@ auth.onAuthStateChanged(User =>{
 
             const roomName = auth<titel ? auth+'_'+titel : titel+'_'+auth;
 
-            console.log(roomName)
-
             db.collectionGroup("Messages")
             .where("Room", "==", roomName)
             .orderBy("Timestamp", "asc")
@@ -282,8 +277,6 @@ auth.onAuthStateChanged(User =>{
 
                     const authMessage = doc2.data().Message
                     const sender = doc2.data().Auth
-
-                    console.log(sender)
 
                     const messageP = document.createElement("p")
                     messageP.setAttribute("class", "auth-message-p")
@@ -339,23 +332,17 @@ auth.onAuthStateChanged(User =>{
 // Get chats of auth
 
         // Chat functions
-function getProfilePicOfChat(pic, picDOMobject){
-    if(pic == undefined){
-        picDOMobject.src = "images/dummy-profile-photo.jpeg"
-    } else {
-    picDOMobject.src = pic
-    };
-};
+function getProfilePicAndNameOfChat(chatsP, picDOMobject, user){
 
-function setNameOfChat(chatsP, userClean){
-    chatsP.innerText = userClean
-  };
+    db.collection("Vitaminders").where("Gebruikersnaam", "==", user).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => { 
 
-function updateOnlineStatus(docID, authName){
-    db.collection("Chats")
-    .doc(docID)
-    .update({
-        Online: firebase.firestore.FieldValue.arrayUnion(authName)
+            const photo = doc.data().Profielfoto
+            const userClean = doc.data().GebruikersnaamClean
+
+            picDOMobject.src = photo
+            chatsP.innerText = userClean
+        });
     });
 };
 
@@ -395,67 +382,36 @@ function saveAuthToReadlist(docID, authName, messages, user){
     };
 }; 
 
-function updateNewStatusOfMessageChat(authName){
-    db.collection("Chats")
-    .where("Members", "array-contains", authName)
-    .where("Type", "==", "Chat")
-    .get().then(querySnapshot => {
-     querySnapshot.forEach(doc2 => {
 
-            const members = doc2.data().Members
-
-              const docRef = db.collection("Chats").doc(doc2.id).collection("Messages")
-              docRef.where("Status", "==", "New")
-                .get().then(querySnapshot => {
-                    querySnapshot.forEach(doc3 => {
-
-                const sender = doc3.data().Auth
-                const readList = doc3.data().Read
-
-                if(readList.includes(authName)){
-
-                    if(sender != authName){
-
-                        docRef.doc(doc3.id).update({
-                            Status: "Read"
-                            });
-                        };
-                    };
-                    });
-                });
-        });
-    });
-};
-
-
-function newMessageInOverview(docID, auth, chatsDivDOM, newMessage){
+function newMessageInOverview(docID, auth, chatsDivDOM){
 
     const newMessageCount = []
 
+    const newMessagesP = document.createElement("p")
+    newMessagesP.setAttribute("class", "new-message-count-chats")
+
     db.collection("Chats").doc(docID) 
     .collection("Messages")
-    .where("Status", "==", "New")
+    .where("Members", "array-contains", auth)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc2 => {
 
-            const read = doc.data().Read
+            const read = doc2.data().Read
 
             if(!read.includes(auth)){     
             newMessageCount.push(doc2)
             };
            
-            newMessage.innerText = newMessageCount.length
+            newMessagesP.innerText = newMessageCount.length
 
         });
     }).then(() => {
 
-        console.log(newMessageCount)
+            chatsDivDOM.appendChild(newMessagesP)
 
-        if(newMessageCount.length != 0){
-
-            chatsDivDOM.appendChild(newMessage)
-
-        };
+            if(newMessageCount.length === 0){
+                newMessagesP.style.display = "none"
+            }
     });
 };
 
@@ -473,67 +429,49 @@ auth.onAuthStateChanged(User =>{
 
         const auth = doc.data().Gebruikersnaam
 
-db.collection("Chats")
-.where("Members", "array-contains", auth)
-.get().then(querySnapshot => {
-    querySnapshot.forEach(doc1 => {
+        db.collection("Chats")
+        .where("Members", "array-contains", auth)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
 
-        const title = doc1.data().Room
-        const messages = doc1.data().Messages
+                const messages = doc1.data().Messages
+                const members = doc1.data().Members
 
-        const chatsDiv = document.createElement("div")
-            chatsDiv.setAttribute("class", "chats-div")
-        const chatsP = document.createElement("p")
-        const photoDiv = document.createElement("div")
-            photoDiv.setAttribute("class", "photo-div")
-        const photoImg = document.createElement("img")
-        const groupType = document.createElement("p")
-            groupType.setAttribute("class", "grouptype-description")
-            
-        const userArray = title.split("_")
+                const chatsDivChat = document.createElement("div")
+                    chatsDivChat.setAttribute("class", "chats-div")
+                const chatsPChat = document.createElement("p")
+                const photoDivChat = document.createElement("div")
+                    photoDivChat.setAttribute("class", "photo-div")
+                const photoImgChat = document.createElement("img")
+                const groupTypeChat = document.createElement("p")
+                    groupTypeChat.setAttribute("class", "grouptype-description")
+                    
+                    let user = ""
 
-        if(userArray.includes(auth)){
+                    const membersArray = Array.from(members)
 
-        userArray.forEach(user => {
-
-                if(auth != user){    
-
-                    db.collection("Vitaminders").where("Gebruikersnaam", "==", user).get().then(querySnapshot => {
-                        querySnapshot.forEach(doc4 => { 
-
-                            const userClean = doc4.data().GebruikersnaamClean
-                            const photo = doc4.data().Profielfoto
-
-                    setNameOfChat(chatsP, userClean);
-                        
-                    getProfilePicOfChat(photo, photoImg);
+                    membersArray.forEach(member => {
+                        if(member != auth){
+                            user = member
+                        };
+                    });
+                
+                    newMessageInOverview(doc1.id, auth, chatsDivChat)
+        
+                    getProfilePicAndNameOfChat(chatsPChat, photoImgChat, user)
 
                     // Open chat
-                    chatsDiv.addEventListener("click", () => {
+                    chatsDivChat.addEventListener("click", () => {
                             
                          saveAuthToReadlist(doc1.id, auth, messages, user)
                     });
-            
-                    // Update status of message
-                    updateNewStatusOfMessageChat(auth)
-
-                    //New message in overview
-                    const newMessagesP = document.createElement("p")
-                    newMessagesP.setAttribute("class", "new-message-count-chats")
-
-                    newMessageInOverview(doc1.id, auth, chatsDiv, newMessagesP)
         
-                    DOMchats.appendChild(chatsDiv)
-                    chatsDiv.appendChild(photoDiv)
-                    photoDiv.appendChild(photoImg)
-                    photoDiv.appendChild(groupType)
-                    chatsDiv.appendChild(chatsP)
+                    DOMchats.appendChild(chatsDivChat)
+                    chatsDivChat.appendChild(photoDivChat)
+                    photoDivChat.appendChild(photoImgChat)
+                    photoDivChat.appendChild(groupTypeChat)
+                    chatsDivChat.appendChild(chatsPChat)
 
-                                            });
-                                        });
-                                    };    
-                                });
-                            };              
                         });
                     });
                 });
@@ -665,8 +603,6 @@ auth.onAuthStateChanged(User =>{
             levensvraagRef.get()
             .then(querySnapshot => {
                 querySnapshot.forEach(doc4 => {
-    
-                    console.log(input)
                     
                     db.collection("Vitaminders").doc(User.uid).collection("Levensvragen").doc(doc4.id).update({
                         Levenslessen: firebase.firestore.FieldValue.arrayUnion(input)

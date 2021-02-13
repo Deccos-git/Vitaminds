@@ -155,14 +155,9 @@ auth.onAuthStateChanged(User =>{
 
 const toolbarMobile = document.getElementsByClassName("toolbar-mobile")
 
-const toolbarHome = document.getElementById("toolbar-home")
+const toolbarCommunity = document.getElementById("toolbar-community")
 const toolbarChatsGroups = document.getElementById("toolbar-chats-groups")
-const toolbarInspiration = document.getElementById("toolbar-inspiration")
-const toolbarDigimind = document.getElementById("toolbar-digimind")
-
-const toolbarInspirationOption = document.getElementById("toolbar-inspration-options")
-const toolbarInspirationPublic = document.getElementById("toolbar-inspiration-public")
-const toolbarInspirationPrivate = document.getElementById("toolbar-inspiration-private")
+const toolbarDigimind = document.getElementById("toolbar-digimind-div")
 
 
 // Hide on screen bigger then 938
@@ -177,30 +172,13 @@ if (window.innerWidth < 938){
 
 // Links
 
-toolbarHome.addEventListener("click", (e) => {
-        window.open("../openup.html", "_self")
+toolbarCommunity.addEventListener("click", (e) => {
+        window.open("../community.html", "_self")
 });
 
 toolbarChatsGroups.addEventListener("click", (e) => {
         window.open("../chats-groups.html", "_self");
 });
-
-toolbarInspiration.addEventListener("click", (e) => {
-        toolbarInspirationOption.style.display = "flex"
-        toolbarInspiration.style.display = "none"
-});
-
-if(toolbarInspirationPublic != undefined){
-        toolbarInspirationPublic.addEventListener("click", (e) =>{
-                window.open("../openup.html", "_self")
-        });
-};
-
-if(toolbarInspirationPrivate != undefined){
-        toolbarInspirationPrivate.addEventListener("click", (e) => {
-                linkDigimind()
-        });
-};
 
 toolbarDigimind.addEventListener("click", (e) => {
         linkDigimind()

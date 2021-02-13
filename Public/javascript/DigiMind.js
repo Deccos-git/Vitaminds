@@ -653,7 +653,7 @@ function getSection(){
                 privateOuterDiv[4].style.display = "none"
                 privateOuterDiv[5].style.display = "none"
                 privateOuterDiv[6].style.display = "none"
-        } else if (selected === "Steun"){
+        } else if (selected === "Steunreacties"){
                 privateOuterDiv[0].style.display = "none"
                 privateOuterDiv[1].style.display = "none"
                 privateOuterDiv[2].style.display = "none"

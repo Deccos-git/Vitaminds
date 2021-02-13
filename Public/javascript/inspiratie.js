@@ -641,6 +641,15 @@ function inspirerend(elem){
                                 querySnapshot.forEach(doc2 => {
 
                                     const levensvraagID = doc2.data().Levensvraag
+                                    const public = doc2.data().Openbaar
+
+                                    let publicGoal = ""
+
+                                    if(public === "Ja"){
+                                        publicGoal = "Yes"
+                                    } else if (public === "Nee"){
+                                        publicGoal = "No"
+                                    }
                         
                                     db.collection("Vitaminders").doc(User.uid)
                                     .collection("Levenslessen").doc().set({
@@ -649,6 +658,7 @@ function inspirerend(elem){
                                         Inspirerend: 0,
                                         Levensles: lesson,
                                         Levensvraag: levensvraagID,
+                                        Public: publicGoal,
                                         Source: titel,
                                         Status: "Approved",
                                         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),

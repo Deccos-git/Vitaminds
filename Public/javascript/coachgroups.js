@@ -57,7 +57,7 @@ function setImageGroup(photoImg){
     photoImg.src = "/images/groups-icon.jpg"
 };
 
-function newMessageInOverview(docID, groupsDivDOM, auth){
+function newMessageInOverviewGroup(docID, groupsDivDOM, auth){
 
     const newMessageCount = []
 
@@ -84,8 +84,6 @@ function newMessageInOverview(docID, groupsDivDOM, auth){
     }).then(() => {
 
             groupsDivDOM.appendChild(newMessagesP)
-
-            console.log(newMessageCount)
 
             if(newMessageCount.length === 0){
                 newMessagesP.style.display = "none"
@@ -149,7 +147,6 @@ auth.onAuthStateChanged(User =>{
 
                     const roomClean = doc.data().RoomClean
                     const room = doc.data().Room
-                    const online = doc.data().Online
                     const messages = doc.data().Messages
 
                     const groupsDiv = document.createElement("div")
@@ -161,9 +158,9 @@ auth.onAuthStateChanged(User =>{
                     const groupType = document.createElement("p")
                         groupType.setAttribute("class", "grouptype-description")    
 
+                                newMessageInOverviewGroup(doc.id, groupsDiv, auth)
                                 setNameOfGroup(groupsP, roomClean);
                                 setImageGroup(photoImg)
-                                newMessageInOverview(doc.id, groupsDiv, auth)
 
                                 // Open chat
                                 groupsDiv.addEventListener("click", () => {
@@ -905,8 +902,6 @@ auth.onAuthStateChanged(User =>{
             levensvraagRef.get()
             .then(querySnapshot => {
                 querySnapshot.forEach(doc4 => {
-    
-                    console.log(input)
                     
                     db.collection("Vitaminders").doc(User.uid).collection("Levensvragen").doc(doc4.id).update({
                         Levenslessen: firebase.firestore.FieldValue.arrayUnion(input)
@@ -986,7 +981,7 @@ auth.onAuthStateChanged(User =>{
 
         //Functions
         function emptyScreenByOnsnapshot(){
-            const chatDivsUser = document.getElementsByClassName("auth-message-p")
+            const chatDivsUser = document.getElementsByClassName("message-div")
         
             const chatDivsArrayUser = Array.from(chatDivsUser)
         
@@ -1083,8 +1078,6 @@ auth.onAuthStateChanged(User =>{
            const option = memberSelect.options
            const selected = option[option.selectedIndex].innerHTML
 
-           console.log(selected)
-       
            db.collection("Vitaminders").where("GebruikersnaamClean", "==", coach)
                .get().then(querySnapshot => {
                    querySnapshot.forEach(doc2 => {
@@ -1151,14 +1144,14 @@ function emailLayout(emailAdress, SenderNameClean, titelClean, message, titel, n
     });  
 };
 
-function addDataToSocial(social, userName, message){
+function addDataToSocial(supportType, userName, message){
 
-    social.setAttribute("data-username", userName)
-    social.setAttribute("data-message", message)
+    supportType.setAttribute("data-username", userName)
+    supportType.setAttribute("data-message", message)
 
 };
 
-function addSocialIconsToMessage(messageP, userName, message, auth){
+function addSocialIconsToMessage(messageP, userName, message){
 
     const socialIconDiv = document.createElement("div")
     socialIconDiv.setAttribute("class", "social-div") 
@@ -1193,11 +1186,22 @@ function addSocialIconsToMessage(messageP, userName, message, auth){
     addDataToSocial(keepAtItDiv, userName, message)
     addDataToSocial(yourNotAloneDiv, userName, message)
 
-    saveIFeelForYou(IFeelForYouIconDiv, auth, IFeelForYouIconP)
-    saveIUnderstandYou(IUnderstandIconDiv, auth, IUnderstandIconP)
-    saveyourGoodTheWayYouAre(yourGoodTheWayYouAreDiv, auth, yourGoodTheWayYouAreP)
-    savekeepAtIt(keepAtItDiv, auth, keepAtItP)
-    saveyourNotAlone(yourNotAloneDiv, auth, yourNotAloneP)
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+
+                const auth = doc.data().Gebruikersnaam
+
+                savebutton(IFeelForYouIconDiv, "IFeelForYou", auth, IFeelForYouIconP, message)
+                savebutton(IUnderstandIconDiv, "IUnderstandYou", auth, IUnderstandIconP, message)
+                savebutton(yourGoodTheWayYouAreDiv, "YourGoodTheWayYouAre", auth, yourGoodTheWayYouAreP, message)
+                savebutton(keepAtItDiv, "KeepAtIt", auth, keepAtItP, message)
+                savebutton(yourNotAloneDiv, "YourNotAlone", auth, yourNotAloneP, message)
+
+            });
+        };
+    });
 
     const IFeelForYouIcon = document.createElement("img")
     const IUnderstandIcon = document.createElement("img")
@@ -1230,31 +1234,15 @@ function addSocialIconsToMessage(messageP, userName, message, auth){
     messageP.appendChild(socialIconDiv)
 }
 
-function saveIFeelForYou(IFeelForYou, auth, notice){
+function savebutton(supportType, support, auth, notice){
 
-    IFeelForYou.addEventListener("click", () => {
+    supportType.addEventListener("click", () => {
 
-        const username = IFeelForYou.dataset.username
-        const message = IFeelForYou.dataset.message
+        const username = supportType.dataset.username
+        const message = supportType.dataset.message
 
-        saveIFeelForYouInMessage(username, message)
-        saveIFeelForYouInUser(username, auth, message)
-
-        notice.innerText = "Verstuurd"
-        notice.style.color = "#8e0000"
-
-    });
-};
-
-function saveIUnderstandYou(IUnderstandIconDiv, auth, notice){
-
-    IUnderstandIconDiv.addEventListener("click", () => {
-
-        const username = IUnderstandIconDiv.dataset.username
-        const message = IUnderstandIconDiv.dataset.message
-
-        saveIUnderstandYouInMessage(username, message)
-        saveIUnderstandYouInUser(username, auth, message)
+        saveInMessage(support, username, message)
+        saveInUser(username, auth, message, support)
 
         notice.innerText = "Verstuurd"
         notice.style.color = "#8e0000"
@@ -1262,55 +1250,7 @@ function saveIUnderstandYou(IUnderstandIconDiv, auth, notice){
     });
 };
 
-function saveyourGoodTheWayYouAre(yourGoodTheWayYouAre, auth, notice){
-
-    yourGoodTheWayYouAre.addEventListener("click", () => {
-
-        const username = yourGoodTheWayYouAre.dataset.username
-        const message = yourGoodTheWayYouAre.dataset.message
-
-        saveyourGoodTheWayYouAreInMessage(username, message)
-        saveyourGoodTheWayYouAreInUser(username, auth, message)
-
-        notice.innerText = "Verstuurd"
-        notice.style.color = "#8e0000"
-
-    });
-};
-
-function savekeepAtIt(keepAtIt, auth, notice){
-
-    keepAtIt.addEventListener("click", () => {
-
-        const username = keepAtIt.dataset.username
-        const message = keepAtIt.dataset.message
-
-        savekeepAtItInMessage(username, message)
-        savekeepAtItInUser(username, auth, message)
-
-        notice.innerText = "Verstuurd"
-        notice.style.color = "#8e0000"
-
-    });
-};
-
-function saveyourNotAlone(yourNotAlone, auth, notice){
-
-    yourNotAlone.addEventListener("click", () => {
-
-        const username = yourNotAlone.dataset.username
-        const message = yourNotAlone.dataset.message
-
-        saveyourNotAloneInMessage(username, message)
-        saveyourNotAloneInUser(username, auth, message)
-
-        notice.innerText = "Verstuurd"
-        notice.style.color = "#8e0000"
-
-    });
-};
-
-function saveIFeelForYouInMessage(username, message){
+function saveInMessage(support, username, message){
 
     db.collection("Coachgroups")
     .where("Room", "==", titelCG)
@@ -1331,7 +1271,7 @@ function saveIFeelForYouInMessage(username, message){
                     .collection("Messages")
                     .doc(doc1.id)
                     .update({
-                        IFeelForYou: firebase.firestore.FieldValue.increment(1)
+                        Support: firebase.firestore.FieldValue.arrayUnion(support)
                     });
                 });
             });
@@ -1339,123 +1279,8 @@ function saveIFeelForYouInMessage(username, message){
     });
 };
 
-function saveIUnderstandYouInMessage(username, message){
 
-    db.collection("Coachgroups")
-    .where("Room", "==", titelCG)
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            db.collection("Coachgroups")
-            .doc(doc.id)
-            .collection("Messages")
-            .where("Room", "==", titelCG)
-            .where("Auth", "==", username)
-            .where("Message", "==", message)
-            .get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
-
-                    db.collection("Coachgroups")
-                    .doc(doc.id)
-                    .collection("Messages")
-                    .doc(doc1.id)
-                    .update({
-                        IUnderstandYou: firebase.firestore.FieldValue.increment(1)
-                    });
-                });
-            });
-        });
-    });
-};
-
-function saveyourGoodTheWayYouAreInMessage(username, message){
-
-    db.collection("Coachgroups")
-    .where("Room", "==", titelCG)
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            db.collection("Coachgroups")
-            .doc(doc.id)
-            .collection("Messages")
-            .where("Room", "==", titelCG)
-            .where("Auth", "==", username)
-            .where("Message", "==", message)
-            .get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
-
-                    db.collection("Coachgroups")
-                    .doc(doc.id)
-                    .collection("Messages")
-                    .doc(doc1.id)
-                    .update({
-                        YourGoodTheWayYouAre: firebase.firestore.FieldValue.increment(1)
-                    });
-                });
-            });
-        });
-    });
-};
-
-function savekeepAtItInMessage(username, message){
-
-    db.collection("Coachgroups")
-    .where("Room", "==", titelCG)
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            db.collection("Coachgroups")
-            .doc(doc.id)
-            .collection("Messages")
-            .where("Room", "==", titelCG)
-            .where("Auth", "==", username)
-            .where("Message", "==", message)
-            .get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
-
-                    db.collection("Coachgroups")
-                    .doc(doc.id)
-                    .collection("Messages")
-                    .doc(doc1.id)
-                    .update({
-                        KeepAtIt: firebase.firestore.FieldValue.increment(1)
-                    });
-                });
-            });
-        });
-    });
-};
-
-function saveyourNotAloneInMessage(username, message){
-
-    db.collection("Coachgroups")
-    .where("Room", "==", titelCG)
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            db.collection("Coachgroups")
-            .doc(doc.id)
-            .collection("Messages")
-            .where("Room", "==", titelCG)
-            .where("Auth", "==", username)
-            .where("Message", "==", message)
-            .get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
-
-                    db.collection("Coachgroups")
-                    .doc(doc.id)
-                    .collection("Messages")
-                    .doc(doc1.id)
-                    .update({
-                        YourNotAlone: firebase.firestore.FieldValue.increment(1)
-                    });
-                });
-            });
-        });
-    });
-};
-
-function saveIFeelForYouInUser(username, giver, message){
+function saveInUser(username, giver, message, support){
 
     db.collection("Vitaminders")
     .where("Gebruikersnaam", "==", username)
@@ -1465,140 +1290,19 @@ function saveIFeelForYouInUser(username, giver, message){
             const email = doc.data().Email
             const usernameClean = doc.data().GebruikersnaamClean
 
-            sendMailNewSocial(email, usernameClean, "Ik leef met je mee")
+            sendMailNewSocial(email, usernameClean, support)
 
             db.collection("Vitaminders")
             .doc(doc.id)
             .collection("Support")
             .doc()
             .set({
-                Type: "IFeelForYou",
+                Type: support,
                 Giver: giver,
                 Reciever: username,
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                 Message: message,
-                Source: titelCG,
-                SourceType: "Coachgroup",
-                Status: "New"
-            });
-        });
-    });
-};
-
-function saveIUnderstandYouInUser(username, giver, message){
-
-    db.collection("Vitaminders")
-    .where("Gebruikersnaam", "==", username)
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            const email = doc.data().Email
-            const usernameClean = doc.data().GebruikersnaamClean
-
-            sendMailNewSocial(email, usernameClean, "Ik weet wat je voelt")
-
-            db.collection("Vitaminders")
-            .doc(doc.id)
-            .collection("Support")
-            .doc()
-            .set({
-                Type: "IUnderstandYou",
-                Giver: giver,
-                Reciever: username,
-                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                Message: message,
-                Source: titelCG,
-                SourceType: "Coachgroup",
-                Status: "New"
-            });
-        });
-    });
-};
-
-function saveyourGoodTheWayYouAreInUser(username, giver, message){
-
-    db.collection("Vitaminders")
-    .where("Gebruikersnaam", "==", username)
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            const email = doc.data().Email
-            const usernameClean = doc.data().GebruikersnaamClean
-
-            sendMailNewSocial(email, usernameClean, "Je bent goed zoals je bent")
-
-            db.collection("Vitaminders")
-            .doc(doc.id)
-            .collection("Support")
-            .doc()
-            .set({
-                Type: "YourGoodTheWayYouAre",
-                Giver: giver,
-                Reciever: username,
-                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                Message: message,
-                Source: titelCG,
-                SourceType: "Coachgroup",
-                Status: "New"
-            });
-        });
-    });
-};
-
-function savekeepAtItInUser(username, giver, message){
-
-    db.collection("Vitaminders")
-    .where("Gebruikersnaam", "==", username)
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            const email = doc.data().Email
-            const usernameClean = doc.data().GebruikersnaamClean
-
-            sendMailNewSocial(email, usernameClean, "Ga zo door!")
-
-            db.collection("Vitaminders")
-            .doc(doc.id)
-            .collection("Support")
-            .doc()
-            .set({
-                Type: "KeepAtIt",
-                Giver: giver,
-                Reciever: username,
-                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                Message: message,
-                Source: titelCG,
-                SourceType: "Coachgroup",
-                Status: "New"
-            });
-        });
-    });
-};
-
-function saveyourNotAloneInUser(username, giver, message){
-
-    db.collection("Vitaminders")
-    .where("Gebruikersnaam", "==", username)
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            const email = doc.data().Email
-            const usernameClean = doc.data().GebruikersnaamClean
-
-            sendMailNewSocial(email, usernameClean, "Je staat er niet alleen voor")
-
-            db.collection("Vitaminders")
-            .doc(doc.id)
-            .collection("Support")
-            .doc()
-            .set({
-                Type: "YourNotAlone",
-                Giver: giver,
-                Reciever: username,
-                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                Message: message,
-                Source: titelCG,
-                SourceType: "Coachgroup",
+                SourceType: "OpenUp",
                 Status: "New"
             });
         });
@@ -1732,161 +1436,42 @@ function setInnerTextOfDOMobjects(chat, grouptype, user, typeOfGroup){
     grouptype.innerText = typeOfGroup
   };
 
-function updateOnlineStatusGroup(docID, authName){
-    db.collection("Coachgroups")
-    .doc(docID)
-    .update({
-        Online: firebase.firestore.FieldValue.arrayUnion(authName)
-    });
-};
 
-function updateReadListGroup(docID, authName, titleURL){
-    const chatRef = db.collection("Coachgroups")
-    .doc(docID)
+  function updateReadListGroup(docID, authName, messages, user){
+   
+    if(messages != 0){
+        db.collection("Coachgroups")
+        .doc(docID)
+        .collection("Messages")
+        .where("Members", "array-contains", authName)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
 
-    chatRef.get().then(doc2 => {
+                const read = doc1.data().Read
 
-        const messages = doc2.data().Messages
-
-        console.log(messages)
-
-        if (messages != 0){
-
-    chatRef.collection("Messages")
-    .get()
-    .then(querySnapshot => {
-        querySnapshot.forEach(doc6 => {
-
-            const status = doc6.data().Status
-
-            if(status === "New"){
-
-        const messageRef = chatRef
-    .collection("Messages").doc(doc6.id)
-    
-    messageRef.get().then(doc7 => {
-
-        const authSender = doc7.data().Auth
-
-        if(authSender != authName){
-
-        chatRef.update({
-
-        Read: firebase.firestore.FieldValue.arrayUnion(authName)
-
-        })
-        .then(() => {
-
-            console.log("Readlist geupdate")
-            window.open(`../Group/${titleURL}.html`, "_self");
-        });
-    } else {
-        console.log("Als auth sender is")
-        window.open(`../Group/${titleURL}.html`, "_self");
-    };   
-        });
-    } else {
-        console.log("Bericht is niet nieuw")
-        window.open(`../Group/${titleURL}.html`, "_self");
-    };
-                });
+                if(!read.includes(authName)){
+                    db.collection("Coachgroups")
+                    .doc(docID)
+                    .collection("Messages")
+                    .doc(doc1.id)
+                    .update({
+                        Read: firebase.firestore.FieldValue.arrayUnion(authName)
+                    })
+                    .then(() => {
+                        console.log("Readlist geupdate met auth")
+                        window.open(`../Group/${user}.html`, "_self");
+                    });
+                } else {
+                    console.log("Auth is already on readlist")
+                        window.open(`../Group/${user}.html`, "_self");
+                };
             });
-        } else {
-            console.log("Geen nieuwe berichten")
-            window.open(`../Group/${titleURL}.html`, "_self");
-        }
-    });
+        });
+    }else{
+        console.log("Geen berichten uberhaubt")
+        window.open(`../Group/${user}.html`, "_self");
+    };
 }; 
-
-function updateNewStatusOfMessageGroup(authName){
-    db.collection("Coachgroups")
-    .where("Members", "array-contains", authName)
-    .get().then(querySnapshot => {
-     querySnapshot.forEach(doc2 => {
-
-     const docRef = db.collection("Coachgroups").doc(doc2.id).collection("Messages")
-     docRef.where("Status", "==", "New")
-     .get().then(querySnapshot => {
-         querySnapshot.forEach(doc3 => {
-
-             const members = doc3.data().Members
-             const readlist = doc3.data().Read
-
-             const readList = doc3.data().Read
-
-             if(readList.includes(authName)){
-
-                 if(members.lenght === readlist.lenght){
-                     docRef.doc(doc3.id).update({
-                         Status: "Read"
-                         });
-                     };
-                    };
-                 });
-             });
-     });
- });
-};
-
-function updateOnlineStatusFromPagesLeaveGroup(authName){
-
-    const pageLeaves = localStorage.getItem("leftPages")
-
-    db.collection("Coachgroups")
-    .where("Members", "array-contains", authName)
-    .where("Room", "==", pageLeaves)
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc10 => {
-
-    db.collection("Coachgroups").doc(doc10.id).update({
-        Online: firebase.firestore.FieldValue.arrayRemove(authName)
-
-            });
-        });
-    });
-};
-
-function updateReadStatusBasedOnOnlineGroup(onlineArray, authName, docID){
-    if(onlineArray.includes(authName)){
-       const docRefOnline = db.collection("Coachgroups").doc(docID)
-       docRefOnline.collection("Messages").where("Status", "==", "New")
-       .get().then(querySnapshot => {
-           querySnapshot.forEach(
-        doc11 => {
-
-        docRefOnline.collection("Messages").doc(doc11.id).update({
-            Read: firebase.firestore.FieldValue.arrayUnion(authName)
-                });
-            });
-        });
-    };
-};
-
-function newMessageInOverviewGroups(docID, chatsDivDOM, newMessage){
-
-    const docRef = db.collection("Coachgroups").doc(docID) 
-
-    const newMessageCount = []
-
-    docRef.collection("Messages")
-    .where("Status", "==", "New")
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc2 => {
-
-            const room = doc2.data().Room
-
-            const authSender = doc2.data().Auth        
-            newMessageCount.push(doc2)
-           
-            newMessage.innerText = newMessageCount.length
-
-        })
-    }).then(() => {
-        if(newMessageCount.length != 0){
-        chatsDivDOM.appendChild(newMessage)
-        };
-    });
-};
 
 function groupsOverviewTitleGroup(title, group, photo, typeDescription){
 
@@ -1935,10 +1520,6 @@ db.collection("Coachgroups").where("Members", "array-contains", auth).get().then
                                     
                     // Open group
                     chatsDiv.addEventListener("click", () => {
-
-                        console.log("klik")
-
-                        updateOnlineStatusGroup(doc1.id, auth)
                     
                         updateReadListGroup(doc1.id, auth, title)
 
@@ -2112,7 +1693,6 @@ if(uploadCoverPhotoButton != null){
 
     uploadCoverPhotoButton.addEventListener("click", () => {
 
-        console.log("Test1")
         const selectedFile = document.getElementById('foto-upload').files[0];
         const progressBar = document.getElementById("progress-bar")
 
