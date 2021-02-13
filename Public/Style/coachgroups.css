@@ -349,6 +349,14 @@
     font-size: 16px;
 }
 
+.groups-div{
+    cursor: pointer;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+}
+
 .sender-name-message{
     font-size: 14px;
     margin-top: 0px;

@@ -47,6 +47,156 @@ function groupMetaTags(descriptionGroup, titleGroup, bannerGroup){
     });
 });
 
+// Groups of auth in Chats&Groups
+
+function setNameOfGroup(groupsP, roomClean){
+    groupsP.innerText = roomClean
+  };
+
+function setImageGroup(photoImg){
+    photoImg.src = "/images/groups-icon.jpg"
+};
+
+function newMessageInOverview(docID, groupsDivDOM, auth){
+
+    const newMessageCount = []
+
+    const newMessagesP = document.createElement("p")
+    newMessagesP.setAttribute("class", "new-message-count-chats")
+
+    db.collection("Coachgroups").doc(docID) 
+    .collection("Messages")
+    .where("Status", "==", "New")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const read = doc.data().Read
+
+            if(!read.includes(auth)){
+       
+            newMessageCount.push(doc)
+
+            };
+           
+            newMessagesP.innerText = newMessageCount.length
+
+        })
+    }).then(() => {
+
+            groupsDivDOM.appendChild(newMessagesP)
+
+            console.log(newMessageCount)
+
+            if(newMessageCount.length === 0){
+                newMessagesP.style.display = "none"
+            }
+
+    });
+};
+
+function updateReadList(docID, authName, titleURL, messages){
+
+    if(messages != 0){
+        db.collection("Coachgroups")
+        .doc(docID)
+        .collection("Messages")
+        .where("Members", "array-contains", authName)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+
+                const read = doc1.data().Read
+
+                if(!read.includes(authName)){
+                    db.collection("Coachgroups")
+                    .doc(docID)
+                    .collection("Messages")
+                    .doc(doc1.id)
+                    .update({
+                        Read: firebase.firestore.FieldValue.arrayUnion(authName)
+                    })
+                    .then(() => {
+                        console.log("Readlist geupdate met auth")
+                        window.open(`../Group/${titleURL}.html`, "_self");
+                    });
+                } else {
+                    console.log("Auth is already on readlist")
+                        window.open(`../Group/${titleURL}.html`, "_self");
+                };
+            });
+        });
+    }else{
+        console.log("Geen berichten uberhaubt")
+        window.open(`../Group/${titleURL}.html`, "_self");
+    };
+};
+
+!function dataBaseQueryGroups(){
+const DOMgroups = document.getElementById("overview-groups")
+
+if (DOMgroups != null){
+
+auth.onAuthStateChanged(User =>{
+    if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+
+        const auth = doc.data().Gebruikersnaam
+
+            db.collection("Coachgroups")
+            .where("Members", "array-contains", auth)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                    const roomClean = doc.data().RoomClean
+                    const room = doc.data().Room
+                    const online = doc.data().Online
+                    const messages = doc.data().Messages
+
+                    const groupsDiv = document.createElement("div")
+                        groupsDiv.setAttribute("class", "groups-div")
+                    const groupsP = document.createElement("p")
+                    const photoDiv = document.createElement("div")
+                        photoDiv.setAttribute("class", "photo-div")
+                    const photoImg = document.createElement("img")
+                    const groupType = document.createElement("p")
+                        groupType.setAttribute("class", "grouptype-description")    
+
+                                setNameOfGroup(groupsP, roomClean);
+                                setImageGroup(photoImg)
+                                newMessageInOverview(doc.id, groupsDiv, auth)
+
+                                // Open chat
+                                groupsDiv.addEventListener("click", () => {
+
+                                        // updateOnlineStatus(doc.id, auth)
+                                        
+                                        updateReadList(doc.id, auth, room, messages)
+                                });
+                        
+                                // Update status of message
+                                // updateNewStatusOfMessageChat(auth)
+
+                                // Update online/offline when user leaves page
+                                // updateOnlineStatusFromPagesLeaveChat(auth);
+
+                                // Update status of message based on online/offline in room
+                                // updateReadStatusBasedOnOnline(online, auth, doc.id)
+                    
+                                DOMgroups.appendChild(groupsDiv)
+                                groupsDiv.appendChild(photoDiv)
+                                photoDiv.appendChild(photoImg)
+                                photoDiv.appendChild(groupType)
+                                groupsDiv.appendChild(groupsP)
+            
+                        });
+                    });
+                });
+            };
+        });
+    };
+}();
+
+
 // Overviewpage
 
 db.collection("Coachgroups").where("Type", "==", "Coachgroup").get().then(querySnapshot => {
@@ -556,65 +706,6 @@ function displayEditIconIfAuthIsAdmin(editIcon){
     });
 }();
 
-// // Coachgroup agreement
-
-//     const agreementButton = document.getElementById("visitCoachgroup")
-
-// function coachgroupAgreementTitle(){
-//     const title = document.getElementById("coachgroup-member-agreement-title")
-    
-//     if (title != null){
-    
-//     auth.onAuthStateChanged(User =>{
-//         if(User){
-//         const userRef = db.collection("Vitaminders").doc(User.uid);
-//         userRef.get().then(function(doc) {
-    
-//             const auth = doc.data().GebruikersnaamClean
-    
-//     title.innerText = `Welkom bij mijn coachgroep, ${auth}`
-    
-//                     });
-//                 };
-//             });
-//         };
-//     };
-    
-// // Coachgroup payment agreement questions
-// function coachGroupAgreementQuestions(imageSource, coachNameClean, coachName){
-
-//     const DOM = document.getElementById("questions-coachgroup-agreement")
-
-//     if (DOM != null){
-
-//     const imgAndNameDiv = document.createElement("div")
-//         imgAndNameDiv.setAttribute("id", "img-name-div-coachgroup-agreement-questions")
-//     const img = document.createElement("img")
-//     const name = document.createElement("p")
-
-//     img.src = imageSource
-//     name.innerText = coachNameClean
-
-//     DOM.appendChild(imgAndNameDiv)
-//     imgAndNameDiv.appendChild(img)
-//     imgAndNameDiv.appendChild(name)
-
-//     imgAndNameDiv.addEventListener("click", () => {
-//         window.open("../Vitaminders/" + coachName + ".html", "_self");
-//         });
-//     };
-// };
-
-// function openCoachGroupAfterAgreement(titleRoom){
-
-//     if(visitCoachgroup != null){
-
-//         visitCoachgroup.addEventListener("click", () => {
-//         agreementModal.style.display = "none"
-//     })
-//     };
-// }
-
 // Coachgroup individual page
 
 !function scrollToTextInputOnLoad(){
@@ -861,7 +952,7 @@ auth.onAuthStateChanged(User =>{
             Message: message,
             Room: roomName,
             Members: members,
-            Read: [],
+            Read: [auth],
             Status: "New"
             }).then(() => {
                 db.collection("Coachgroups").doc(doc.id).update({
@@ -1522,10 +1613,10 @@ function sendMailNewSocial(email, gebruikersnaamClean, socialType){
         to: email,
         cc: "info@vitaminds.nu",
         message: {
-        subject: `Nieuwe reactie op Vitaminds`,
+        subject: `Nieuwe steunreactie op Vitaminds`,
         html: `Hallo ${gebruikersnaamClean},</br></br>
         
-        Je hebt een nieuwe reactie: <b>"${socialType}"</b>.</br></br>
+        Je hebt een nieuwe steunreactie: <b>"${socialType}"</b>.</br></br>
 
         Ga naar <a href="www.vitaminds.nu">Vitaminds</a> en bekijk je nieuwe reactie.</br></br>
         

@@ -485,8 +485,10 @@ const newMessageArray = [];
             querySnapshot.forEach(doc => {
 
               const read = doc.data().Read
+              const message = doc.data().Message
 
               if(!read.includes(auth)){
+                console.log(message)
               newMessageArray.push(doc)
               totalNew.push(doc)
               };
