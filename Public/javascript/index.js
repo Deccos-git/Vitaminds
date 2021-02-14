@@ -170,6 +170,22 @@ if (window.innerWidth < 938){
         });
 };
 
+// Change layout for mobile
+!function changeLayoutForMobile(){
+
+        const featuresMobileImage = document.getElementById("image-mobile")
+        const featuresImage = document.getElementById("feautures-img")
+        const communityImage = document.getElementById("community-img")
+        const coachesImage = document.getElementById("coaches-image")
+
+        if (window.innerWidth < 938){
+                featuresImage.style.display = "none"
+                featuresMobileImage.src = "images/design/iphone-horizontal.png"
+                communityImage.src = "images/design/ipad-horizontal.png"
+                coachesImage.src = "images/design/coaches-image-horizontal.png"
+        };
+}();
+
 // Links
 
 toolbarCommunity.addEventListener("click", (e) => {

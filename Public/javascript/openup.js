@@ -176,6 +176,8 @@ function addSocialIconsToMessage(metaDiv, userName, lesson){
     keepAtItP.innerHTML = "Ga zo door!"
     yourNotAloneP.innerHTML = "Je staat er <br> niet alleen voor"
 
+
+
     IFeelForYouIconDiv.setAttribute("class", "social-icon-div") 
     IUnderstandIconDiv.setAttribute("class", "social-icon-div")  
     yourGoodTheWayYouAreDiv.setAttribute("class", "social-icon-div") 
@@ -195,11 +197,11 @@ function addSocialIconsToMessage(metaDiv, userName, lesson){
 
                 const auth = doc.data().Gebruikersnaam
 
-                savebutton(IFeelForYouIconDiv, "IFeelForYou", auth, IFeelForYouIconP, lesson)
-                savebutton(IUnderstandIconDiv, "IUnderstandYou", auth, IUnderstandIconP, lesson)
-                savebutton(yourGoodTheWayYouAreDiv, "YourGoodTheWayYouAre", auth, yourGoodTheWayYouAreP, lesson)
-                savebutton(keepAtItDiv, "KeepAtIt", auth, keepAtItP, lesson)
-                savebutton(yourNotAloneDiv, "YourNotAlone", auth, yourNotAloneP, lesson)
+                savebutton(IFeelForYouIconDiv, "IFeelForYou", auth, IFeelForYouIconP, "Ik leef met je mee")
+                savebutton(IUnderstandIconDiv, "IUnderstandYou", auth, IUnderstandIconP, "Ik weet wat je voelt")
+                savebutton(yourGoodTheWayYouAreDiv, "YourGoodTheWayYouAre", auth, yourGoodTheWayYouAreP, "Je bent goed zoals je bent")
+                savebutton(keepAtItDiv, "KeepAtIt", auth, keepAtItP, "Ga zo door!")
+                savebutton(yourNotAloneDiv, "YourNotAlone", auth, yourNotAloneP, "Je staat er niet alleen voor")
 
             });
         };
@@ -236,7 +238,7 @@ function addSocialIconsToMessage(metaDiv, userName, lesson){
     metaDiv.appendChild(socialIconDiv)
 }
 
-function savebutton(supportType, support, auth, notice){
+function savebutton(supportType, support, auth, notice, socialTypeWritten){
 
     supportType.addEventListener("click", () => {
 
@@ -244,7 +246,7 @@ function savebutton(supportType, support, auth, notice){
         const lesson = supportType.dataset.lesson
 
         saveInLesson(support, lesson, username)
-        saveInUser(username, auth, lesson, support)
+        saveInUser(username, auth, lesson, support, socialTypeWritten)
 
         notice.innerText = "Verstuurd"
         notice.style.color = "#8e0000"
@@ -277,7 +279,7 @@ function saveInLesson(support, lesson, username){
 };
 
 
-function saveInUser(username, giver, message, support){
+function saveInUser(username, giver, lesson, support, socialTypeWritten){
 
     db.collection("Vitaminders")
     .where("Gebruikersnaam", "==", username)
@@ -287,7 +289,7 @@ function saveInUser(username, giver, message, support){
             const email = doc.data().Email
             const usernameClean = doc.data().GebruikersnaamClean
 
-            sendMailNewSocial(email, usernameClean, support)
+            sendMailNewSocial(email, usernameClean, socialTypeWritten)
 
             db.collection("Vitaminders")
             .doc(doc.id)
@@ -298,7 +300,7 @@ function saveInUser(username, giver, message, support){
                 Giver: giver,
                 Reciever: username,
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                Message: message,
+                Message: lesson,
                 SourceType: "OpenUp",
                 Status: "New"
             });
@@ -306,7 +308,7 @@ function saveInUser(username, giver, message, support){
     });
 };
 
-function sendMailNewSocial(email, gebruikersnaamClean, socialType){
+function sendMailNewSocial(email, gebruikersnaamClean, socialTypeWritten){
 
     console.log(email)
 
@@ -317,7 +319,7 @@ function sendMailNewSocial(email, gebruikersnaamClean, socialType){
         subject: `Nieuwe steunreactie op Vitaminds`,
         html: `Hallo ${gebruikersnaamClean},</br></br>
         
-        Je hebt een nieuwe steunreactie: <b>"${socialType}"</b>.</br></br>
+        Je hebt een nieuwe steunreactie: <b>"${socialTypeWritten}"</b>.</br></br>
 
         Ga naar <a href="www.vitaminds.nu">Vitaminds</a> en bekijk je nieuwe reactie.</br></br>
         

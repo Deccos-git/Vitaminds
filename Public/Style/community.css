@@ -209,14 +209,17 @@
 }
 
 .answer-username{
-    font-size: 14px;
-    color: white;
+    font-size: 16px;
+    color: #122b46;
+    cursor: pointer;
+    font-weight: bold;
     cursor: pointer;
 }
 
 .answer-p{
     font-size: 18px;
-    color: white;
+    color: #122b46;
+    padding: 10px;
 }
 
 .question-p{

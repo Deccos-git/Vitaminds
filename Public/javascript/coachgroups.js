@@ -1218,11 +1218,11 @@ function addSocialIconsToMessage(messageP, userName, message){
 
                 const auth = doc.data().Gebruikersnaam
 
-                savebutton(IFeelForYouIconDiv, "IFeelForYou", auth, IFeelForYouIconP, message)
-                savebutton(IUnderstandIconDiv, "IUnderstandYou", auth, IUnderstandIconP, message)
-                savebutton(yourGoodTheWayYouAreDiv, "YourGoodTheWayYouAre", auth, yourGoodTheWayYouAreP, message)
-                savebutton(keepAtItDiv, "KeepAtIt", auth, keepAtItP, message)
-                savebutton(yourNotAloneDiv, "YourNotAlone", auth, yourNotAloneP, message)
+                savebutton(IFeelForYouIconDiv, "IFeelForYou", auth, IFeelForYouIconP, "Ik leef met je mee")
+                savebutton(IUnderstandIconDiv, "IUnderstandYou", auth, IUnderstandIconP, "Ik weet wat je voelt")
+                savebutton(yourGoodTheWayYouAreDiv, "YourGoodTheWayYouAre", auth, yourGoodTheWayYouAreP, "Je bent goed zoals je bent")
+                savebutton(keepAtItDiv, "KeepAtIt", auth, keepAtItP, "Ga zo door!")
+                savebutton(yourNotAloneDiv, "YourNotAlone", auth, yourNotAloneP, "Je staat er niet alleen voor")
 
             });
         };
@@ -1259,7 +1259,7 @@ function addSocialIconsToMessage(messageP, userName, message){
     messageP.appendChild(socialIconDiv)
 }
 
-function savebutton(supportType, support, auth, notice){
+function savebutton(supportType, support, auth, notice, socialTypeWritten){
 
     supportType.addEventListener("click", () => {
 
@@ -1267,7 +1267,7 @@ function savebutton(supportType, support, auth, notice){
         const message = supportType.dataset.message
 
         saveInMessage(support, username, message)
-        saveInUser(username, auth, message, support)
+        saveInUser(username, auth, message, support, socialTypeWritten)
 
         notice.innerText = "Verstuurd"
         notice.style.color = "#8e0000"
@@ -1305,7 +1305,7 @@ function saveInMessage(support, username, message){
 };
 
 
-function saveInUser(username, giver, message, support){
+function saveInUser(username, giver, message, support, socialTypeWritten){
 
     db.collection("Vitaminders")
     .where("Gebruikersnaam", "==", username)
@@ -1315,7 +1315,7 @@ function saveInUser(username, giver, message, support){
             const email = doc.data().Email
             const usernameClean = doc.data().GebruikersnaamClean
 
-            sendMailNewSocial(email, usernameClean, support)
+            sendMailNewSocial(email, usernameClean, socialTypeWritten)
 
             db.collection("Vitaminders")
             .doc(doc.id)
@@ -1334,7 +1334,7 @@ function saveInUser(username, giver, message, support){
     });
 };
 
-function sendMailNewSocial(email, gebruikersnaamClean, socialType){
+function sendMailNewSocial(email, gebruikersnaamClean, socialTypeWritten){
 
     console.log(email)
 
@@ -1345,7 +1345,7 @@ function sendMailNewSocial(email, gebruikersnaamClean, socialType){
         subject: `Nieuwe steunreactie op Vitaminds`,
         html: `Hallo ${gebruikersnaamClean},</br></br>
         
-        Je hebt een nieuwe steunreactie: <b>"${socialType}"</b>.</br></br>
+        Je hebt een nieuwe steunreactie: <b>"${socialTypeWritten}"</b>.</br></br>
 
         Ga naar <a href="www.vitaminds.nu">Vitaminds</a> en bekijk je nieuwe reactie.</br></br>
         

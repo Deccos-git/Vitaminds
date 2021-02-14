@@ -202,6 +202,7 @@ const heightArray = []
 
     db.collection("Tools")
     .where("Type", "==", "Resource")
+    .orderBy("Timestamp", "asc")
     .where("PublicPrivate", "==", "Public")
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
