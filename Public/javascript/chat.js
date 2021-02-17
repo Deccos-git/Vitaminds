@@ -171,7 +171,7 @@ function sendChatAsMail(elem){
                                 ${message}<br><br>
                                 
                                 Ga naar jullie <a href="www.vitaminds.nu/Chats/${titel}.html">chat</a> om op het bericht te reageren.<br><br>
-                                P.s. Om privacyredenen kun je chat alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
+                                P.s. Om privacyredenen kun je je chat alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
                         
                                 Vriendelijke groet, </br></br>
                                 Het Vitaminds Team </br></br>
@@ -346,7 +346,37 @@ function getProfilePicAndNameOfChat(chatsP, picDOMobject, user){
     });
 };
 
+function chatsBlaBla(){
+
+    db.collection("Chats")
+    .where("Eigenaar", "==", "Vitaminds")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const members = doc.data().Members
+
+            db.collectionGroup("Messages")
+            .where("Status", "==", "New")
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    db.collection("Chats")
+                    .doc(doc.id)
+                    .collection("Messages")
+                    .doc(doc1.id)
+                    .update({
+                        Members: members
+                    })
+
+                });
+            });
+        });
+    });
+}; 
+
 function saveAuthToReadlist(docID, authName, messages, user){
+
+    console.log("Functie werkt")
    
     if(messages != 0){
         db.collection("Chats")
@@ -357,6 +387,8 @@ function saveAuthToReadlist(docID, authName, messages, user){
             querySnapshot.forEach(doc1 => {
 
                 const read = doc1.data().Read
+
+                console.log("We're in")
 
                 if(!read.includes(authName)){
                     db.collection("Chats")

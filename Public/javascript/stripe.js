@@ -86,7 +86,7 @@ auth.onAuthStateChanged(User =>{
           };
       });
   }).then(() => {
-      db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
+      db.collection("Workshops").where("WorkshopTitle", "==", titelCG).get().then(querySnapshot => {
           querySnapshot.forEach(doc1 => {
 
               const price = doc1.data().Price
@@ -104,7 +104,7 @@ auth.onAuthStateChanged(User =>{
                   .collection("Gelukstegoed").doc().set({
                       Type: "Minus",
                       Amount: Number(price),
-                      Product: `Workshop: <br> ${titel}`,
+                      Product: `Workshop: <br> ${titelCG}`,
                       SessionID: idClean,
                       Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
                   })
@@ -140,7 +140,7 @@ auth.onAuthStateChanged(User =>{
 
 function arrayOfWorkshopTakers(){
 
-  db.collection("Workshops").where("WorkshopTitle", "==", titel)
+  db.collection("Workshops").where("WorkshopTitle", "==", titelCG)
   .get().then(querySnapshot => {
   querySnapshot.forEach(doc1 => {
 
@@ -170,7 +170,7 @@ function arrayOfWorkshopTakers(){
                         db.collection("Vitaminders").doc(doc1.id).collection("Earnings").doc().set({
                           Earning: netPrice,
                           Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                          Source: `Workshop <br> ${titel}`,
+                          Source: `Workshop <br> ${titelCG}`,
                           Buyer: auth,
                           Billed: "No"
                         })
@@ -180,7 +180,7 @@ function arrayOfWorkshopTakers(){
                           db.collection("Revenue").doc().set({
                             Earning: vitamindsPrice,
                             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                            Source: `Workshop <br> ${titel}`,
+                            Source: `Workshop <br> ${titelCG}`,
                             Buyer: auth,
                             Billed: "No",
                             Coach: coach
@@ -239,7 +239,7 @@ function sendEmailbyNewMember(){
             const auth = doc.data().Gebruikersnaam
             const authClean = doc.data().GebruikersnaamClean
 
-db.collection("Coachgroups").where("Room", "==", titel).get().then(querySnapshot => {
+db.collection("Coachgroups").where("Room", "==", titelCG).get().then(querySnapshot => {
     querySnapshot.forEach(doc1 => {
 
         const type = doc1.data().Type
@@ -336,7 +336,7 @@ auth.onAuthStateChanged(User =>{
           const authUser = doc.data().Gebruikersnaam
 
       db.collection("Coachgroups")
-      .where("Room", "==", titel)
+      .where("Room", "==", titelCG)
       .get().then(querySnapshot => {
           querySnapshot.forEach(doc1 => {
 
@@ -358,7 +358,7 @@ auth.onAuthStateChanged(User =>{
                   .collection("Gelukstegoed").doc().set({
                       Type: "Minus",
                       Amount: Number(price),
-                      Product: `Coachgroep: ${titel}`,
+                      Product: `Coachgroep: ${titelCG}`,
                       SessionID: idClean,
                       Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
                   })
@@ -400,7 +400,7 @@ buyCoachgroupButton.appendChild(notice)
 
 function arrayOfCoachgroupSignUps(){
 
-  db.collection("Coachgroups").where("Room", "==", titel)
+  db.collection("Coachgroups").where("Room", "==", titelCG)
   .get().then(querySnapshot => {
   querySnapshot.forEach(doc1 => {
 
@@ -427,7 +427,7 @@ function arrayOfCoachgroupSignUps(){
                         db.collection("Vitaminders").doc(doc1.id).collection("Earnings").doc().set({
                           Earning: netPrice,
                           Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                          Source: `Coachgroep <br> ${titel}`,
+                          Source: `Coachgroep <br> ${titelCG}`,
                           Buyer: auth,
                           Billed: "No"
                         })
@@ -437,7 +437,7 @@ function arrayOfCoachgroupSignUps(){
                           db.collection("Revenue").doc().set({
                             Earning: vitamindsPrice,
                             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                            Source: `Coachgroep <br> ${titel}`,
+                            Source: `Coachgroep <br> ${titelCG}`,
                             Buyer: auth,
                             Billed: "No",
                             Coach: coach

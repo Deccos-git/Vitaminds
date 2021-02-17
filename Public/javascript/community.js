@@ -76,52 +76,55 @@ showVisitorNotice("visitor-button-happiness", "notice-happiness")
 
     const journalPage = document.getElementById("page-div")
 
-    db.collection("Tools")
-    .where("Type", "==", "Gratitude")
-    .where("PublicPrivate", "==", "Public")
-    .orderBy("Timestamp", "desc")
-    .get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
+    if(journalPage != null){
 
-                    const gratitude = doc.data().Gratitude
-                    const timestamp = doc.data().Timestamp
-                    const name = doc.data().User
+        db.collection("Tools")
+        .where("Type", "==", "Gratitude")
+        .where("PublicPrivate", "==", "Public")
+        .orderBy("Timestamp", "desc")
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
 
-                    const gratitudeDiv = document.createElement("div")
-                            gratitudeDiv.setAttribute("class", "gratitude-div")
-                    const gratitudeH3 = document.createElement("h3")
-                    const dateP = document.createElement("p")
-                    const userDiv = document.createElement("div")
-                    const nameP = document.createElement("p")
-                        nameP.setAttribute("class", "gratitude-username")
+                        const gratitude = doc.data().Gratitude
+                        const timestamp = doc.data().Timestamp
+                        const name = doc.data().User
 
-                    gratitudeH3.innerText = gratitude
-                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                        dateP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options)
-                    
-                    db.collection("Vitaminders")
-                    .where("Gebruikersnaam", "==", name)
-                    .get().then(querySnapshot => {
-                        querySnapshot.forEach(doc1 => {
+                        const gratitudeDiv = document.createElement("div")
+                                gratitudeDiv.setAttribute("class", "gratitude-div")
+                        const gratitudeH3 = document.createElement("h3")
+                        const dateP = document.createElement("p")
+                        const userDiv = document.createElement("div")
+                        const nameP = document.createElement("p")
+                            nameP.setAttribute("class", "gratitude-username")
 
-                            const userName = doc1.data().GebruikersnaamClean
+                        gratitudeH3.innerText = gratitude
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                            dateP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options)
+                        
+                        db.collection("Vitaminders")
+                        .where("Gebruikersnaam", "==", name)
+                        .get().then(querySnapshot => {
+                            querySnapshot.forEach(doc1 => {
 
-                            nameP.innerText = userName
+                                const userName = doc1.data().GebruikersnaamClean
 
-                            nameP.addEventListener("click", () => {
-                                window.open("../Vitaminders/" + name + ".html", "_self");
+                                nameP.innerText = userName
+
+                                nameP.addEventListener("click", () => {
+                                    window.open("../Vitaminders/" + name + ".html", "_self");
+                                });
+
+                        journalPage.appendChild(gratitudeDiv)
+                        gratitudeDiv.appendChild(userDiv)
+                        userDiv.appendChild(nameP)
+                        gratitudeDiv.appendChild(gratitudeH3)
+                        gratitudeDiv.appendChild(dateP)
+
                             });
-
-                    journalPage.appendChild(gratitudeDiv)
-                    gratitudeDiv.appendChild(userDiv)
-                    userDiv.appendChild(nameP)
-                    gratitudeDiv.appendChild(gratitudeH3)
-                    gratitudeDiv.appendChild(dateP)
-
                         });
-                    });
-            });
-    });
+                });
+        });
+    };
 }();
 
 // Hapiness scale
@@ -200,40 +203,43 @@ const heightArray = []
 
     const resourcesOverview = document.getElementById("resource-div")
 
-    db.collection("Tools")
-    .where("Type", "==", "Resource")
-    .orderBy("Timestamp", "asc")
-    .where("PublicPrivate", "==", "Public")
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+    if(resourcesOverview != null){
 
-            const resource = doc.data().Resource
-            const author = doc.data().User
-            const date = doc.data().Timestamp
+        db.collection("Tools")
+        .where("Type", "==", "Resource")
+        .orderBy("Timestamp", "asc")
+        .where("PublicPrivate", "==", "Public")
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
 
-            const resourceInnerDiv = document.createElement("div")
-                resourceInnerDiv.setAttribute("class", "resource-inner-div")
-            const resourceP = document.createElement("p")
-                resourceP.setAttribute("class", "resource-p")
-            const authorP = document.createElement("p")
-                authorP.setAttribute("class", "resource-author")
-            const dateP = document.createElement("p")
-                dateP.setAttribute("class", "resource-date")
+                const resource = doc.data().Resource
+                const author = doc.data().User
+                const date = doc.data().Timestamp
 
-            resourceP.innerText = resource
+                const resourceInnerDiv = document.createElement("div")
+                    resourceInnerDiv.setAttribute("class", "resource-inner-div")
+                const resourceP = document.createElement("p")
+                    resourceP.setAttribute("class", "resource-p")
+                const authorP = document.createElement("p")
+                    authorP.setAttribute("class", "resource-author")
+                const dateP = document.createElement("p")
+                    dateP.setAttribute("class", "resource-date")
 
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            dateP.innerHTML = date.toDate().toLocaleDateString("nl-NL", options)
+                resourceP.innerText = resource
 
-            showAuthorNameOfResource(author, authorP)
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                dateP.innerHTML = date.toDate().toLocaleDateString("nl-NL", options)
 
-            resourcesOverview.appendChild(resourceInnerDiv)
-            resourceInnerDiv.appendChild(authorP)
-            resourceInnerDiv.appendChild(resourceP) 
-            resourceInnerDiv.appendChild(dateP)
+                showAuthorNameOfResource(author, authorP)
 
+                resourcesOverview.appendChild(resourceInnerDiv)
+                resourceInnerDiv.appendChild(authorP)
+                resourceInnerDiv.appendChild(resourceP) 
+                resourceInnerDiv.appendChild(dateP)
+
+            });
         });
-    });
+    };
 }();
 
 function showAuthorNameOfResource(author, authorP){
@@ -258,50 +264,56 @@ function showAuthorNameOfResource(author, authorP){
 
     const title = document.getElementById("personalized-question-title")
 
-    auth.onAuthStateChanged(User =>{
-        db.collection("Vitaminders")
-        .doc(User.uid).get().then(doc =>{
+    if(title != null){
 
-            const userName = doc.data().GebruikersnaamClean
+        auth.onAuthStateChanged(User =>{
+            db.collection("Vitaminders")
+            .doc(User.uid).get().then(doc =>{
 
-            title.innerHTML = `Stel een vraag, ${userName}`
+                const userName = doc.data().GebruikersnaamClean
 
+                title.innerHTML = `Stel een vraag, ${userName}`
+
+            });
         });
-    });
+    };
 }();
 
 !function saveNewQuestion(){
 
     const button = document.getElementById("save-question-button")
 
-    button.addEventListener("click", () => {
+    if(button != null){
 
-        const input = document.getElementById("input-question").value
+        button.addEventListener("click", () => {
 
-        button.innerText = "Ingediend"
-        button.id = "Clicked"
+            const input = document.getElementById("input-question").value
 
-        auth.onAuthStateChanged(User =>{
-            db.collection("Vitaminders")
-            .doc(User.uid).get().then(doc =>{
+            button.innerText = "Ingediend"
+            button.id = "Clicked"
 
-                const userName = doc.data().Gebruikersnaam
-                const userNameClean = doc.data().GebruikersnaamClean
-                const userPhoto = doc.data().Profielfoto
+            auth.onAuthStateChanged(User =>{
+                db.collection("Vitaminders")
+                .doc(User.uid).get().then(doc =>{
 
-                db.collection("Tools").doc().set({
-                    Type: "Question",
-                    Question: input,
-                    User: userName,
-                    Id: idClean,
-                    UserPhoto: userPhoto,
-                    UserClean: userNameClean,
-                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                    Owner: "Vitaminds"
+                    const userName = doc.data().Gebruikersnaam
+                    const userNameClean = doc.data().GebruikersnaamClean
+                    const userPhoto = doc.data().Profielfoto
+
+                    db.collection("Tools").doc().set({
+                        Type: "Question",
+                        Question: input,
+                        User: userName,
+                        Id: idClean,
+                        UserPhoto: userPhoto,
+                        UserClean: userNameClean,
+                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                        Owner: "Vitaminds"
+                    });
                 });
             });
         });
-    });
+    };
 }();
 
 function linkToUser(userDiv, userName){
@@ -476,6 +488,52 @@ function appendAnswersToQuestion(documentID, questionID, questionInnerDiv){
             answerDiv.appendChild(answerP)
 
         });
+    });
+};
+
+// Promotions
+
+!function saveRegistrations(){
+
+    const registrationButton = document.getElementsByClassName("submit-interest")
+
+    if(registrationButton != null){
+
+        const buttonArray = Array.from(registrationButton)
+
+        buttonArray.forEach(button => {
+
+            button.addEventListener("click", () => {
+
+                button.innerText = "Opgeslagen"
+
+                const titel = button.dataset.title
+
+                saveRegistrationToDB(titel)
+
+            });
+        });
+    };
+}();
+
+function saveRegistrationToDB(titel){
+
+    auth.onAuthStateChanged(User =>{
+        if (User){
+            db.collection("Vitaminders")
+            .doc(User.uid)
+            .get().then(function(doc){
+
+                const auth = doc.data().Gebruikersnaam
+
+                db.collection("Promotions")
+                .doc(doc.id)
+                .set({
+                    Title: titel,
+                    Regsitration: auth
+                });
+            });
+        };
     });
 };
 

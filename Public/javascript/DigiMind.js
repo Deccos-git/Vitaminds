@@ -13,6 +13,22 @@ const naam10 = naam9.replace('%20',' ')
 const naam11 = naam10.replace('%20',' ')
 const naam = naam11.replace('%20',' ')
 
+function getMainGoals(){
+
+        db.collection("Vitaminders")
+        .where("Usertype", "==", "Vitaminder")   
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        const mainGoal = doc.data().MainGoal
+                        const gebruikersnaamClean = doc.data().GebruikersnaamClean
+
+                        console.log(gebruikersnaamClean, mainGoal)
+
+                });
+        });
+};getMainGoals()
+
 // UPDATE META TAGS
 function digimindMetaTags(coachDescription, coach, profilePic){
         const keywords = document.getElementById("meta-keywords")
@@ -1449,7 +1465,7 @@ function setPublicPrivateStatusOfGratitude(elem){
 
         elem.innerHTML = `<p id="changed-notice">Gewijzigd</p>`
 
-        const gratitudeTitle = elem.dataset.gratitude
+        const gratitudeTitle = elem.gratitude
         const privatePublicStatus = elem.dataset.status
 
         let status = ""

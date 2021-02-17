@@ -5,7 +5,7 @@ const titel2CG = titel1CG.replace('%20',' ')
 const titel3CG = titel2CG.replace('%20',' ')
 const titel4CG = titel3CG.replace('%20',' ')
 const titel5CG = titel4CG.replace('%20',' ')
-const titel6CG = titel4CG.replace('%20',' ')
+const titel6CG = titel5CG.replace('%20',' ')
 const titel7CG = titel6CG.replace('%20',' ')
 const titel8CG = titel7CG.replace('%20',' ')
 const titel9CG = titel8CG.replace('%20',' ')
@@ -650,45 +650,51 @@ function displayEditIconIfAuthIsAdmin(editIcon){
 
     const dom = document.getElementById("description-div")
 
-    auth.onAuthStateChanged(User =>{
-        db.collection("Vitaminders").doc(User.uid)
-        .get().then(doc => {
+    if(dom != null){
 
-            const admin = doc.data().Admin
+        auth.onAuthStateChanged(User =>{
+            db.collection("Vitaminders").doc(User.uid)
+            .get().then(doc => {
 
-            if(admin === "Yes"){
+                const admin = doc.data().Admin
 
-                dom.appendChild(editIcon)
+                if(admin === "Yes"){
 
-            };
+                    dom.appendChild(editIcon)
+
+                };
+            });
         });
-    });
+    };
 };
 
 !function saveEditedDescription(){
 
     const button = document.getElementById("button-edit-group-description")
 
-    button.addEventListener("click", () => {
+    if(button != null){
 
-        const description = tinymce.get("tiny-mce").getContent();
+        button.addEventListener("click", () => {
 
-        button.innerText = "Opgeslagen"
-        button.id = "Clicked"
+            const description = tinymce.get("tiny-mce").getContent();
 
-        db.collection("Coachgroups").where("Room", "==", titelCG)
-        .get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
+            button.innerText = "Opgeslagen"
+            button.id = "Clicked"
 
-                db.collection("Coachgroups").doc(doc.id).update({
-                    Description: description
-                })
-                .then(() => {
-                    location.reload(); 
+            db.collection("Coachgroups").where("Room", "==", titelCG)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                    db.collection("Coachgroups").doc(doc.id).update({
+                        Description: description
+                    })
+                    .then(() => {
+                        location.reload(); 
+                    });
                 });
             });
         });
-    });
+    };
 }();
 
 !function fillLandingWithGroupData(){
@@ -734,8 +740,10 @@ function displayEditIconIfAuthIsAdmin(editIcon){
 
     const textInput = document.getElementById("chat-input")
 
-    textInput.scrollIntoView();
+    if(textInput != null){
 
+    textInput.scrollIntoView();
+    };
 }();
 
     // Title
@@ -1194,7 +1202,7 @@ function addSocialIconsToMessage(messageP, userName, message){
     const yourNotAloneP = document.createElement("p")
 
     IFeelForYouIconP.innerHTML = "Ik leef <br> met je mee"
-    IUnderstandIconP.innerHTML = "Ik weet wat <br> je voelt"
+    IUnderstandIconP.innerHTML = "Ik begrijp wat <br> je voelt"
     yourGoodTheWayYouAreP.innerHTML = "Je bent goed <br> zoals je bent"
     keepAtItP.innerHTML = "Ga zo door!"
     yourNotAloneP.innerHTML = "Je staat er <br> niet alleen voor"
@@ -1219,7 +1227,7 @@ function addSocialIconsToMessage(messageP, userName, message){
                 const auth = doc.data().Gebruikersnaam
 
                 savebutton(IFeelForYouIconDiv, "IFeelForYou", auth, IFeelForYouIconP, "Ik leef met je mee")
-                savebutton(IUnderstandIconDiv, "IUnderstandYou", auth, IUnderstandIconP, "Ik weet wat je voelt")
+                savebutton(IUnderstandIconDiv, "IUnderstandYou", auth, IUnderstandIconP, "Ik begrijp wat je voelt")
                 savebutton(yourGoodTheWayYouAreDiv, "YourGoodTheWayYouAre", auth, yourGoodTheWayYouAreP, "Je bent goed zoals je bent")
                 savebutton(keepAtItDiv, "KeepAtIt", auth, keepAtItP, "Ga zo door!")
                 savebutton(yourNotAloneDiv, "YourNotAlone", auth, yourNotAloneP, "Je staat er niet alleen voor")
@@ -1505,80 +1513,6 @@ function groupsOverviewTitleGroup(title, group, photo, typeDescription){
     typeDescription.innerText = "Coachgroup"
 };
 
-
-        // Database query
-const DOMGroupChats = document.getElementById("overview-groups")
-
-if (DOMGroupChats != null){
-
-auth.onAuthStateChanged(User =>{
-    if(User){
-      const userRef = db.collection("Vitaminders").doc(User.uid);
-      userRef.get().then(function(doc) {
-
-        const auth = doc.data().Gebruikersnaam
-
-db.collection("Coachgroups").where("Members", "array-contains", auth).get().then(querySnapshot => {
-    querySnapshot.forEach(doc1 => {
-
-        const type = doc1.data().Type
-        const title = doc1.data().Room
-        const titleClean = doc1.data().RoomClean
-        const members = doc1.data().Members
-        const creator = doc1.data().Creater
-        const online = doc1.data().Online
-        const messages = doc1.data().Messages
-
-        const chatsDiv = document.createElement("div")
-            chatsDiv.setAttribute("class", "chats-div")
-        const chatsP = document.createElement("p")
-        const photoDiv = document.createElement("div")
-            photoDiv.setAttribute("class", "photo-div")
-        const photoImg = document.createElement("img")
-        const groupType = document.createElement("p")
-            groupType.setAttribute("class", "grouptype-description")
-                
-                  if (members.includes(auth)){
-
-
-                    groupsOverviewTitleGroup(titleClean, chatsP, photoImg, groupType)
-                                    
-                    // Open group
-                    chatsDiv.addEventListener("click", () => {
-                    
-                        updateReadListGroup(doc1.id, auth, title)
-
-                    });
-
-                    // Update new status of message if all members have read the message
-                    
-                    updateNewStatusOfMessageGroup(auth)
-
-                    // Update status of message based on online/offline in room
-                    updateOnlineStatusFromPagesLeaveGroup(auth)
-
-                    // Update status of message based on online/offline in room
-                    updateReadStatusBasedOnOnlineGroup(online, auth, doc1.id)
-
-                DOMGroupChats.appendChild(chatsDiv)
-                chatsDiv.appendChild(photoDiv)
-                photoDiv.appendChild(photoImg)
-                photoDiv.appendChild(groupType)
-                chatsDiv.appendChild(chatsP)
-
-                    // New messages
-                    const newMessagesPGroups = document.createElement("p")
-                        newMessagesPGroups.setAttribute("class", "new-message-count-chats")
-                        
-                    newMessageInOverviewGroups(doc1.id, chatsDiv, newMessagesPGroups) 
-                    };                
-            });
-        });
-      });
-    };
-});
-};
-
 // Coachgroup builder
 function startCoachgroupBuilder(){
 
@@ -1712,53 +1646,63 @@ const authRef = auth.onAuthStateChanged(User =>{
     groupTitle("practicegroup-builder-title", "oefengroep")
 
     // Save to database
+
+    let coverPhoto = ""
+
+!function uploadCoverPhoto(){
+
     const uploadCoverPhotoButton = document.getElementById("upload-cover-photo-coachgroup")
 
-if(uploadCoverPhotoButton != null){
+    console.log(uploadCoverPhotoButton)
 
-    uploadCoverPhotoButton.addEventListener("click", () => {
-
-        const selectedFile = document.getElementById('foto-upload').files[0];
-        const progressBar = document.getElementById("progress-bar")
-
-        uploadCoverPhotoButton.innerText = "Uploaden..."
-        
-        const storageRef = firebase.storage().ref("/GroupCoverPhotos/" + selectedFile.name);
-        
-           const uploadTask = storageRef.put(selectedFile)
-           uploadTask.then(() => {
-            // Register three observers:
-            // 1. 'state_changed' observer, called any time the state changes
-            // 2. Error observer, called on failure
-            // 3. Completion observer, called on successful completion
-            uploadTask.on('state_changed', function(snapshot){
-            // Observe state change events such as progress, pause, and resume
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            progressBar.innerHTML = ` ${progress} %`;
-            switch (snapshot.state) {
-              case firebase.storage.TaskState.PAUSED: // or 'paused'
-                console.log('Upload is paused');
-                break;
-              case firebase.storage.TaskState.RUNNING: // or 'running'
-                console.log('Upload is running');
-                break;
-            }
-          }, function(error) {
-            // Handle unsuccessful uploads
-          }, function() {
-            // Handle successful uploads on complete
-            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-              console.log('File available at', downloadURL);
-              uploadCoverPhotoButton.innerText = "Geupload"
-              window.coverPhoto = downloadURL
-
+    if(uploadCoverPhotoButton != null){
+    
+        uploadCoverPhotoButton.addEventListener("click", () => {
+    
+            console.log("button clicked")
+    
+            const selectedFile = document.getElementById('foto-upload').files[0];
+            const progressBar = document.getElementById("progress-bar")
+    
+            uploadCoverPhotoButton.innerText = "Uploaden..."
+            
+            const storageRef = firebase.storage().ref("/GroupCoverPhotos/" + selectedFile.name);
+            
+               const uploadTask = storageRef.put(selectedFile)
+               uploadTask.then(() => {
+                // Register three observers:
+                // 1. 'state_changed' observer, called any time the state changes
+                // 2. Error observer, called on failure
+                // 3. Completion observer, called on successful completion
+                uploadTask.on('state_changed', function(snapshot){
+                // Observe state change events such as progress, pause, and resume
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                progressBar.innerHTML = ` ${progress} %`;
+                switch (snapshot.state) {
+                  case firebase.storage.TaskState.PAUSED: // or 'paused'
+                    console.log('Upload is paused');
+                    break;
+                  case firebase.storage.TaskState.RUNNING: // or 'running'
+                    console.log('Upload is running');
+                    break;
+                }
+              }, function(error) {
+                // Handle unsuccessful uploads
+              }, function() {
+                // Handle successful uploads on complete
+                // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                  console.log('File available at', downloadURL);
+                  uploadCoverPhotoButton.innerText = "Geupload"
+                  coverPhoto = downloadURL
+    
+                    });
                 });
             });
         });
-    });
-};
+    };
+}();
 
 
 function saveCoachgroup(){
@@ -1790,7 +1734,7 @@ function saveCoachgroup(){
     const select = groupGoalSelect.options
     const option = select[select.selectedIndex].innerHTML
 
-    saveCoachgroupAsEvent(auth, authClean, title, description, day, month, year, numberParticipants, costs, `<a href="../Group/${idClean + title}.html", "_self"`, coverPhoto, idClean, title)
+    // saveCoachgroupAsEvent(auth, authClean, title, description, day, month, year, numberParticipants, costs, `<a href="../Group/${idClean + title}.html", "_self"`, coverPhoto, idClean, title)
 
    db.collection("Coachgroups").doc().set({
         Eigenaar: "Vitaminds",

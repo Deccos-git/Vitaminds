@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="nl">
 
-<head>
+  <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-    gtag('config', 'UA-159826016-1');
-</script>
-
-    <Title> Vitaminds chats & groepen </title>
+      gtag('config', 'UA-159826016-1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="Levensvragen">
+    <meta name="description" content="Inspiratie voor jouw levensvragen">
+    <Title> Vitaminds - Inspiratie voor een leven waar je blij van wordt</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Style/style.css">
-    <link rel="stylesheet" href="Style/chat.css">
-    <link rel="stylesheet" href="Style/coachgroups.css">
+    <link rel="stylesheet" href="Style/community.css">
     <link rel="shortcut icon" href="images/Favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -24,14 +27,9 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
-    </head>
+  </head>
 
-    <body>
-
-    <!-- Feedback -->
-    <div id="feedback">
-    <a href="tickets.html"> <p>Feedback</p></a>
-    </div>
+  <body>
 
 <!-- Mobile-menu -->
 <nav id="mobile-menu"> 
@@ -105,19 +103,24 @@
       </div>
     </div>
   </nav>
-    
-<!-- Main -->
 
-<h1>Chats & Groepen</h1>
 
-<div id="overview-chats">
-  <h2>Chats</h2>
-</div>
-<div id="overview-groups">
-  <h2>Coachgroepen</h2>
-</div>
-<div id="overview-groups-for-coaches">
-  <h2 id="overview-groups-for-coaches-title"></h2>
+<h1>Acties en aanbiedingen</h1>
+<h2 class="sub-title-community">Exclusieve aanbiedingen voor Vitaminds leden</h2>
+
+<div id="promotions-overview-div">
+    <div class="promotion-inner-div">
+        <h3>Doe gratis mee aan de <a href="/eventpage/Introductie%20workshop%20meditatie.html">'Introductie workshop meditatie'</a> van <a href="/Vitaminders/m6i7pfl74vjAngelique%20van%20der%20Moezel.html">Angelique van Moezel</a></h3>
+        <ul>
+            <li>Aantal gratis tickets: <b>3</b></li>
+            <li>Looptijd: <b>Tot 1 maart 2021</b></li>
+            <li>Voorwaarden: <b>Geen</b></li>
+            <li>Type: <b>Verloting</b></li>
+        </ul>
+        <div id="button-div">
+          <button data-title="Introductie-workshop-meditatie" class="button-algemeen submit-interest">Aanmelden</button>
+        </div>
+    </div>
 </div>
 
 <!-- Toolbar mobile -->
@@ -169,12 +172,9 @@
   </div>
 </footer>
 
-        <script type="text/javascript" src="javascript/firebase.js"></script>
-        <script type="text/javascript" src="javascript/index.js"></script>
-        <script type="text/javascript" src="javascript/auth.js"></script>
-        <script type="text/javascript" src="javascript/chat.js"></script>
-        <script type="text/javascript" src="javascript/coachgroups.js"></script>
-        <script type="text/javascript" src="javascript/groupsForCoaches.js"></script>
+      <script type="text/javascript" src="javascript/firebase.js"></script>
+      <script type="text/javascript" src="javascript/auth.js"></script>
+      <script type="text/javascript" src="javascript/index.js"></script>
+      <script type="text/javascript" src="javascript/community.js"></script>
     </body>
-    </html>
-      
+  </html>

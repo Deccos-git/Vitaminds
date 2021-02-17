@@ -171,12 +171,10 @@ function addSocialIconsToMessage(metaDiv, userName, lesson){
     const yourNotAloneP = document.createElement("p")
 
     IFeelForYouIconP.innerHTML = "Ik leef <br> met je mee"
-    IUnderstandIconP.innerHTML = "Ik weet wat <br> je voelt"
+    IUnderstandIconP.innerHTML = "Ik begrijp wat <br> je voelt"
     yourGoodTheWayYouAreP.innerHTML = "Je bent goed <br> zoals je bent"
     keepAtItP.innerHTML = "Ga zo door!"
     yourNotAloneP.innerHTML = "Je staat er <br> niet alleen voor"
-
-
 
     IFeelForYouIconDiv.setAttribute("class", "social-icon-div") 
     IUnderstandIconDiv.setAttribute("class", "social-icon-div")  
@@ -198,7 +196,7 @@ function addSocialIconsToMessage(metaDiv, userName, lesson){
                 const auth = doc.data().Gebruikersnaam
 
                 savebutton(IFeelForYouIconDiv, "IFeelForYou", auth, IFeelForYouIconP, "Ik leef met je mee")
-                savebutton(IUnderstandIconDiv, "IUnderstandYou", auth, IUnderstandIconP, "Ik weet wat je voelt")
+                savebutton(IUnderstandIconDiv, "IUnderstandYou", auth, IUnderstandIconP, "Ik begrijp wat je voelt")
                 savebutton(yourGoodTheWayYouAreDiv, "YourGoodTheWayYouAre", auth, yourGoodTheWayYouAreP, "Je bent goed zoals je bent")
                 savebutton(keepAtItDiv, "KeepAtIt", auth, keepAtItP, "Ga zo door!")
                 savebutton(yourNotAloneDiv, "YourNotAlone", auth, yourNotAloneP, "Je staat er niet alleen voor")

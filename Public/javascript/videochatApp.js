@@ -527,6 +527,7 @@ function saveMessage(roomID){
 
         shareRoomIDCoachgroup(auth, message)
         shareRoomIDChat(auth, message)
+        shareRoomIDGroupForCoaches(auth, message)
 
             });
         };
@@ -535,9 +536,7 @@ function saveMessage(roomID){
 
 function shareRoomIDCoachgroup(auth, message){
 
-    const roomName = titel
-
-    db.collection("Coachgroups").where("Room", "==", roomName).get().then(querySnapshot => {
+    db.collection("Coachgroups").where("Room", "==", titelCG).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
     
             const members = doc.data().Members
@@ -559,11 +558,33 @@ function shareRoomIDCoachgroup(auth, message){
     });
 };
 
+function shareRoomIDGroupForCoaches(auth, message){
+
+    db.collection("GroupsForCoaches").where("Room", "==", titelCG).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+    
+            const members = doc.data().Members
+    
+        db.collection("GroupsForCoaches").doc(doc.id).collection("Messages").doc().set({
+            Auth: auth,
+            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+            Message: message,
+            Room: roomName,
+            Members: members,
+            Read: [],
+            Status: "New"
+            }).then(() => {
+                db.collection("GroupsForCoaches").doc(doc.id).update({
+                    Messages: firebase.firestore.FieldValue.increment(1)
+                });
+            });  
+        });
+    });
+};
+
 function shareRoomIDChat(auth, message){
 
     const roomName = auth<titel ? auth+'_'+titel : titel+'_'+auth;
-
-    console.log(roomName)
 
     db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {

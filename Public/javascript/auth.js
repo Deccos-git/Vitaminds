@@ -456,7 +456,6 @@ function totalCountInProfilePicture(){
   if(totalNew.length === 0){
     totalP.style.display = "none"
   };
-
 };
 
 !function querySupportAuth(){
@@ -501,8 +500,6 @@ const newMessageArray = [];
 
       const auth = doc.data().Gebruikersnaam
 
-      console.log(auth)
-
         db.collectionGroup("Messages")
         .where("Members", "array-contains", auth)
         // .where("Read", "not-in", [auth])
@@ -528,7 +525,6 @@ const newMessageArray = [];
                 appendNewCountToAuthMenu(newMessageCount, "toolbar-inner-div-chats-groups")
 
                 totalCountInProfilePicture()
-
         });
       });
     };
@@ -546,12 +542,12 @@ if(coachMenu != null){
 if(coachMenu.style.display = "none"){
   voorCoachDOM.addEventListener("mouseover", () => {
     coachMenu.style.display = "flex"
-  })
+  });
 } else {
   voorCoachDOM.addEventListener("mouseover", () => {
     coachMenu.style.display = "none"
-  })
-}
+  });
+};
 };
 
 //Inlog
