@@ -507,6 +507,7 @@ function appendAnswersToQuestion(documentID, questionID, questionInnerDiv){
             button.addEventListener("click", () => {
 
                 button.innerText = "Opgeslagen"
+                button.id = "Clicked"
 
                 const titel = button.dataset.title
 

@@ -86,7 +86,7 @@ auth.onAuthStateChanged(User =>{
           };
       });
   }).then(() => {
-      db.collection("Workshops").where("WorkshopTitle", "==", titelCG).get().then(querySnapshot => {
+      db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
           querySnapshot.forEach(doc1 => {
 
               const price = doc1.data().Price
@@ -104,7 +104,7 @@ auth.onAuthStateChanged(User =>{
                   .collection("Gelukstegoed").doc().set({
                       Type: "Minus",
                       Amount: Number(price),
-                      Product: `Workshop: <br> ${titelCG}`,
+                      Product: `Workshop: <br> ${titel}`,
                       SessionID: idClean,
                       Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
                   })
@@ -140,7 +140,7 @@ auth.onAuthStateChanged(User =>{
 
 function arrayOfWorkshopTakers(){
 
-  db.collection("Workshops").where("WorkshopTitle", "==", titelCG)
+  db.collection("Workshops").where("WorkshopTitle", "==", titel)
   .get().then(querySnapshot => {
   querySnapshot.forEach(doc1 => {
 
@@ -170,7 +170,7 @@ function arrayOfWorkshopTakers(){
                         db.collection("Vitaminders").doc(doc1.id).collection("Earnings").doc().set({
                           Earning: netPrice,
                           Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                          Source: `Workshop <br> ${titelCG}`,
+                          Source: `Workshop <br> ${titel}`,
                           Buyer: auth,
                           Billed: "No"
                         })

@@ -23,11 +23,11 @@ function getMainGoals(){
                         const mainGoal = doc.data().MainGoal
                         const gebruikersnaamClean = doc.data().GebruikersnaamClean
 
-                        console.log(gebruikersnaamClean, mainGoal)
-
                 });
         });
-};getMainGoals()
+};
+
+// getMainGoals()
 
 // UPDATE META TAGS
 function digimindMetaTags(coachDescription, coach, profilePic){
@@ -3115,6 +3115,49 @@ function showCoachProfileInformationIfCoach(type){
 
         if(type === "Coach"){
                 coachProfileInformation.style.display = "flex"
-        }
+        };
+};
 
+// Select as coach
+
+!function showSelectAsCoachButtonIfCoach(){
+
+        const selectAsCoachButton = document.getElementById("select-button")
+
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", naam)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        const usertype = doc.data().Usertype
+
+                        if(usertype === "Coach"){
+                                selectAsCoachButton.style.display = "block"
+                        };
+
+                        hideSelectAsCoachIfAuthIsCoach(selectAsCoachButton)
+                });
+        });
+}();
+
+function hideSelectAsCoachIfAuthIsCoach(button){
+
+        auth.onAuthStateChanged(User =>{
+                if(User){
+                    db.collection("Vitaminders").doc(User.uid)
+                    .get().then(function(doc) {
+            
+                    const auth = doc.data().Gebruikersnaam
+
+                    if (auth === naam){
+                            button.style.display = "none"
+                    };
+
+                    });
+                };
+        });
+};
+
+function createFile(){
+        
 }

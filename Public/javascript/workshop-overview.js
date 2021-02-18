@@ -185,6 +185,8 @@ function openWorkshop(elem){
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
+            console.log(divTitle)
+
             db.collection("Workshops").doc(doc.id).update({
                 Views: firebase.firestore.FieldValue.increment(1)
             })
