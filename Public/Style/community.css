@@ -66,6 +66,7 @@
     padding:  0px 5px;
     border-radius: 5px;
     margin-top: 20px;
+    background-color: lightgray;
 }
 
 .notice-p{
@@ -213,6 +214,7 @@
     flex-direction: column;
     align-items: center;
     background-color: #a7bdbd26;
+    padding: 30px;
 }
 
 .promotion-inner-div{

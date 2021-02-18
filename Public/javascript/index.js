@@ -151,24 +151,6 @@ auth.onAuthStateChanged(User =>{
         };
 };
 
-// Mobile toolbar
-
-const toolbarMobile = document.getElementsByClassName("toolbar-mobile")
-
-const toolbarCommunity = document.getElementById("toolbar-community")
-const toolbarChatsGroups = document.getElementById("toolbar-chats-groups")
-const toolbarDigimind = document.getElementById("toolbar-digimind-div")
-
-
-// Hide on screen bigger then 938
-
-if (window.innerWidth < 938){
-        const toolbarMobileArray = Array.from(toolbarMobile)
-
-        toolbarMobileArray.forEach(TB => {
-                TB.style.display = "flex"
-        });
-};
 
 // Change layout for mobile
 !function changeLayoutForMobile(){
@@ -186,33 +168,6 @@ if (window.innerWidth < 938){
         };
 }();
 
-// Links
-
-toolbarCommunity.addEventListener("click", (e) => {
-        window.open("../community.html", "_self")
-});
-
-toolbarChatsGroups.addEventListener("click", (e) => {
-        window.open("../chats-groups.html", "_self");
-});
-
-toolbarDigimind.addEventListener("click", (e) => {
-        linkDigimind()
-});
-
-function linkDigimind(){
-        auth.onAuthStateChanged(User =>{
-                if(User){
-                        const userRef = db.collection("Vitaminders").doc(User.uid);
-                        userRef.get().then(function(doc) {
-
-                        const naamID = doc.data().Gebruikersnaam;
-
-        window.open("../Vitaminders/" + [naamID] + ".html", "_self");
-                        });
-                };
-        });
-};
 
 
 

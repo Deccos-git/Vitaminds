@@ -41,6 +41,8 @@ function showVisitorNotice(buttonElement, noticeElement){
 showVisitorNotice("visitor-button-open-up", "notice-open-up")
 showVisitorNotice("visitor-button-gratitude", "notice-gratitude")
 showVisitorNotice("visitor-button-happiness", "notice-happiness")
+showVisitorNotice("visitor-button-questions", "notice-questions")
+showVisitorNotice("visitor-button-promotions", "notice-promotions")
 
 
 
@@ -458,7 +460,6 @@ function saveAnswer(button, textarea){
 };
 
 function appendAnswersToQuestion(documentID, questionID, questionInnerDiv){
-
 
     db.collection("Tools").doc(documentID)
     .collection("Answer")

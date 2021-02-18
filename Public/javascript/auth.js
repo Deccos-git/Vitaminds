@@ -44,10 +44,17 @@ const colour = getRandomColor()
   };
 }();
 
-function cookiesOK(){
+!function cookiesOK(){
+  const button = document.getElementById("button-cookies")
+
+  if(button != null){
+
+    button.addEventListener("click", () => {
       localStorage.setItem("Cookies", "OK")
-        cookieDiv.style.display = "none"
-}
+          cookieDiv.style.display = "none"
+    });
+  };
+}();
 
 // Register a pageleave
 !function registerPageLeaves(){
@@ -57,59 +64,6 @@ function cookiesOK(){
           
   });
 }();
-
-// Update online/offline of chat/group when user leaves page
-const pageLeaves = localStorage.getItem("leftPages")
-
-function onlineFunctionQueryGroups(authName){
-  db.collection("Chats").where("Members", "array-contains", authName).where("Room", "==", pageLeaves)
-  .get().then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-
-  db.collection("Chats").doc(doc.id).update({
-      Online: firebase.firestore.FieldValue.arrayRemove(authName)
-            }).then(() => {
-              localStorage.removeItem(pageLeaves)
-      });
-    });
-  });
-};
-
-function onlineFunctionQueryChats(authName){
-  db.collection("Chats").where("Members", "array-contains", authName).where("Type", "==", "Chat")
-  .get().then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-
-        const members = doc.data().Members
-
-
-        if(members.includes(pageLeaves) && members.includes(authName)){
-
-  db.collection("Chats").doc(doc.id).update({
-      Online: firebase.firestore.FieldValue.arrayRemove(authName)
-            }).then(() => {
-              localStorage.removeItem(pageLeaves)
-            })
-        };
-      });
-  });
-};
-
-!function updateOnlineStatusFromPagesLeave(){
-
-    auth.onAuthStateChanged(User =>{
-        if(User){
-          const userRef = db.collection("Vitaminders").doc(User.uid);
-          userRef.get().then(function(doc) {
-    
-                const auth = doc.data().Gebruikersnaam
-
-                onlineFunctionQueryGroups(auth)
-                onlineFunctionQueryChats(auth)
-        });
-      };
-    });
-}(); 
 
 // Inlog/uitlog verbergen
 
@@ -792,7 +746,68 @@ auth.onAuthStateChanged(User =>{
   })
 };
 
+// Mobile toolbar
+
+!function toolBarMobileInit(){
+
+  const toolbarMobile = document.getElementsByClassName("toolbar-mobile")
+
+  const toolbarCommunity = document.getElementById("toolbar-community")
+  const toolbarChatsGroups = document.getElementById("toolbar-chats-groups")
+  const toolbarDigimind = document.getElementById("toolbar-digimind-div")
 
 
+  // Hide on screen bigger then 938
+function showToolbarOnMobile(){
+  if (window.innerWidth < 938){
+          const toolbarMobileArray = Array.from(toolbarMobile)
+
+          toolbarMobileArray.forEach(TB => {
+                  TB.style.display = "flex"
+          });
+  };
+};
+
+  !function hideToolBarForVisitor(){
+
+    auth.onAuthStateChanged(User =>{
+      if(User){
+
+        console.log("test")
+                showToolbarOnMobile()
+                toolBarLinks()
+      };
+    });
+  }();
+
+  // Links
+function toolBarLinks(){
+  toolbarCommunity.addEventListener("click", (e) => {
+          window.open("../community.html", "_self")
+  });
+
+  toolbarChatsGroups.addEventListener("click", (e) => {
+          window.open("../chats-groups.html", "_self");
+  });
+
+  toolbarDigimind.addEventListener("click", (e) => {
+          linkDigimind()
+  });
+
+  function linkDigimind(){
+          auth.onAuthStateChanged(User =>{
+                  if(User){
+                          const userRef = db.collection("Vitaminders").doc(User.uid);
+                          userRef.get().then(function(doc) {
+
+                          const naamID = doc.data().Gebruikersnaam;
+
+                          window.open("../Vitaminders/" + [naamID] + ".html", "_self");
+                          });
+                  };
+          });
+  };
+};
+}();
 
 
