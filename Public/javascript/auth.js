@@ -46,6 +46,7 @@ const colour = getRandomColor()
 
 !function cookiesOK(){
   const button = document.getElementById("button-cookies")
+  const cookieDiv = document.getElementById("cookie-notice")
 
   if(button != null){
 
@@ -54,15 +55,6 @@ const colour = getRandomColor()
           cookieDiv.style.display = "none"
     });
   };
-}();
-
-// Register a pageleave
-!function registerPageLeaves(){
-  window.addEventListener("unload", (e) => { 
-    
-    localStorage.setItem("leftPages", [titelURL])
-          
-  });
 }();
 
 // Inlog/uitlog verbergen

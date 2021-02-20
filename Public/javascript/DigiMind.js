@@ -23,11 +23,15 @@ function getMainGoals(){
                         const mainGoal = doc.data().MainGoal
                         const gebruikersnaamClean = doc.data().GebruikersnaamClean
 
+                        if(mainGoal != undefined){
+                                console.log(gebruikersnaamClean, mainGoal)
+                        }
+
                 });
         });
 };
 
-// getMainGoals()
+getMainGoals()
 
 // UPDATE META TAGS
 function digimindMetaTags(coachDescription, coach, profilePic){
@@ -534,6 +538,50 @@ function hideChatIfAuthIsCoachAndUserIsVitaminder(typeAuth){
         });
 };
 
+// Select as coach
+
+!function showSelectAsCoachButtonIfCoach(){
+
+        const selectAsCoachButton = document.getElementById("select-button")
+
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", naam)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        const usertype = doc.data().Usertype
+
+                        if(usertype === "Coach"){
+                                selectAsCoachButton.style.display = "block"
+                        };
+
+                        hideSelectAsCoachIfAuthIsCoach(selectAsCoachButton)
+                });
+        });
+}();
+
+function hideSelectAsCoachIfAuthIsCoach(button){
+
+        auth.onAuthStateChanged(User =>{
+                if(User){
+                    db.collection("Vitaminders").doc(User.uid)
+                    .get().then(function(doc) {
+            
+                    const auth = doc.data().Gebruikersnaam
+
+                    if (auth === naam){
+                            button.style.display = "none"
+                    };
+
+                    });
+                };
+        });
+};
+
+function createFile(){
+        
+}
+
 !function showPublicProcess(){
 
         const publicProcesDiv = document.getElementById("public-trajects")
@@ -797,6 +845,13 @@ function procesPrivatePublic(openbaarSetting, privateSetting, privateTip){
                 };
 };
 
+function progressBox(){
+
+        const procesBoxOuterDiv = document.createElement("div")
+                procesBoxOuterDiv.setAttribute("class", "proces-box-outer-div")
+
+};
+
 
 function autoLoadFirstProces(optionZero){
 
@@ -909,6 +964,9 @@ function showSelectedProces(selectedProces){
 function addLessonsToProces(selectedProces){
 
         const lessonsDiv = document.getElementById("proces-lessons")
+        const lessonDivTitle = document.createElement("h3")
+                lessonDivTitle.setAttribute("id", "lesson-div-title")
+        lessonDivTitle.innerText = "Lessen"
 
         lessonsDiv.innerHTML = ""
 
@@ -927,12 +985,13 @@ function addLessonsToProces(selectedProces){
                                 metaDiv.setAttribute("class", "ontwikkeling-levensles-meta-div")
                         const metaType = document.createElement("p")
                         const metaTimestamp = document.createElement("p")
-                       
+                
                         levenslesH3.innerHTML = levensles
                         metaType.innerHTML = type
                         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
                         metaTimestamp.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
 
+                        lessonsDiv.prepend(lessonDivTitle)
                         lessonsDiv.appendChild(levenslesDiv)
                         levenslesDiv.appendChild(levenslesH3)
                         levenslesDiv.appendChild(metaDiv)
@@ -997,6 +1056,8 @@ function showArticles(domainAuth){
         });
 }
 
+// Favorite coaches section
+
 function displayCoachSelectAndOverviewIfFavoriteCoaches(favoriteCoachesQuery){
 
         const coachSelectDiv = document.getElementById("coach-select-div")
@@ -1009,7 +1070,6 @@ function displayCoachSelectAndOverviewIfFavoriteCoaches(favoriteCoachesQuery){
 
 };
 
-// Favorite coaches section
 !function favoriteCoachesQuery(){
         db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
         .get().then(querySnapshot => {
@@ -3118,46 +3178,3 @@ function showCoachProfileInformationIfCoach(type){
         };
 };
 
-// Select as coach
-
-!function showSelectAsCoachButtonIfCoach(){
-
-        const selectAsCoachButton = document.getElementById("select-button")
-
-        db.collection("Vitaminders")
-        .where("Gebruikersnaam", "==", naam)
-        .get().then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-
-                        const usertype = doc.data().Usertype
-
-                        if(usertype === "Coach"){
-                                selectAsCoachButton.style.display = "block"
-                        };
-
-                        hideSelectAsCoachIfAuthIsCoach(selectAsCoachButton)
-                });
-        });
-}();
-
-function hideSelectAsCoachIfAuthIsCoach(button){
-
-        auth.onAuthStateChanged(User =>{
-                if(User){
-                    db.collection("Vitaminders").doc(User.uid)
-                    .get().then(function(doc) {
-            
-                    const auth = doc.data().Gebruikersnaam
-
-                    if (auth === naam){
-                            button.style.display = "none"
-                    };
-
-                    });
-                };
-        });
-};
-
-function createFile(){
-        
-}

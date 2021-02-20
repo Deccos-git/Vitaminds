@@ -1517,17 +1517,7 @@
                             updateReadListGroup(doc1.id, auth, title)
     
                         });
-    
-                        // Update new status of message if all members have read the message
-                        
-                        updateNewStatusOfMessageGroup(auth)
-    
-                        // Update status of message based on online/offline in room
-                        updateOnlineStatusFromPagesLeaveGroup(auth)
-    
-                        // Update status of message based on online/offline in room
-                        updateReadStatusBasedOnOnlineGroup(online, auth, doc1.id)
-    
+
                     DOMGroupChats.appendChild(chatsDiv)
                     chatsDiv.appendChild(photoDiv)
                     photoDiv.appendChild(photoImg)

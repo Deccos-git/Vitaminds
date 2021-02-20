@@ -985,6 +985,10 @@
     cursor: pointer; 
 }
 
+#lesson-div-title{
+    text-align: center;
+}
+
 .account-private-menu-div{
     display: flex;
     align-items: center;

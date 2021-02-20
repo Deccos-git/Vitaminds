@@ -1,5 +1,5 @@
 #for-coach-banner{
-  background-image: url(/images/headerimg.jpeg);
+  background-image: url(/images/Hero-III.jpg);
   height: 650px;
   width: 100%;
   background-attachment: fixed;
@@ -46,7 +46,7 @@
 }
 
 #for-coach-banner-title{
-    color: white;
+    color: #122b46;
     font-size: 35px;
     text-align: center;
     margin-top: 65px;
@@ -99,21 +99,26 @@
     flex-direction: column;
     align-items: center;
     background-color: #a7bdbd;
+    padding-bottom: 30px;
 }
 
 .coachtools-img{
     border-radius: 30%;
-    width: 100px;
+    width: 200px;
 }
 
 .coachtool-detail-div{
-    margin: 0px 0px;
+    margin: 10px 10px;
     width: 45%;
     padding: 5%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
     justify-content: center;
+    background-color: white;
+    box-shadow: 0 5px 9px 0 rgb(0 0 0 / 20%), 0 7px 21px 0 rgb(0 0 0 / 19%);
+    border-radius: 5px;
 }
 
 .coachtool-inner-div{
@@ -124,6 +129,10 @@
 .coachtool-link{
     font-size: 14px;
     font-weight: bold;
+    text-decoration: none !important;
+    border: 1px solid #122b46;
+    padding: 5px;
+    border-radius: 15px;
 }
 
 .coachtool-detail-div h4{
@@ -661,12 +670,19 @@
 #matchcall{
     display: flex;
     justify-content: center;
+    align-items: center;
     background-color: #a7bdbd26;
 }
 
 #matchcall p{
     font-size: 20px;
     text-align: center;
+    font-weight: bold;
+}
+
+#matchcall img{
+    height: 50px;
+    margin: 0px 20px;
 }
 
 #coachcall-outer-div{
@@ -690,10 +706,6 @@
     font-weight: bold;
 }
 
-#checkout{
-    /* visibility: hidden; */
-}
-
 #form-div{
     display: flex;
     flex-direction: column;
@@ -713,7 +725,7 @@
 }
 
 #for-coach-banner{
-    background-image: url(/images/headerimg.jpeg);
+    background-image: url(/images/mobile-hero.png);
     height: 650px;
     width: 100%;
     background-attachment: scroll;
@@ -727,6 +739,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#matchcall p {
+    font-size: 18px;
 }
 
 #subtitle-register-coach {
@@ -815,14 +831,12 @@
 
 .coachtool-inner-div {
     flex-direction: column;
-    margin: 0px 10px;
 }
 
 .coachtool-detail-div {
     width: auto;
     padding: 10%;
-    align-items: flex-start;
-    margin-top: -50px;
+    width: 80%;
 }
 
 #subtitle-subtitle {
@@ -830,7 +844,7 @@
 }
 
 .text-div p{
-    font-size: 18px;
+    font-size: 20px;
 }
 
 .coachtool-detail-div p{
@@ -844,10 +858,6 @@
 
 .text-div {
     width: 80%;
-}
-
-.image-div img{
-    margin-top: 170px;
 }
 
 #coachtool-bottom-button{
@@ -869,6 +879,24 @@
 
 .coachtool-detail-div h4 {
     margin-bottom: 0px;
+}
+
+#matchcall{
+    padding: 0px 10px;
+}
+
+#matchcall img{
+    height: 45px;
+    margin: 0px 10px;
+}
+
+#platform-section{
+    flex-direction: column-reverse;
+    align-items: center;
+}
+
+.coachtool-inner-div {
+    margin: 0px 30px;
 }
 
 }
