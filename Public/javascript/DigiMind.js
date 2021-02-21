@@ -21,7 +21,7 @@ function getMainGoals(){
                 querySnapshot.forEach(doc => {
 
                         const mainGoal = doc.data().MainGoal
-                        const gebruikersnaamClean = doc.data().GebruikersnaamClean
+                        const gebruikersnaamClean = doc.data().Gebruikersnaam
 
                         if(mainGoal != undefined){
                                 console.log(gebruikersnaamClean, mainGoal)
@@ -826,6 +826,38 @@ function showCheckInByProces(){
 
 };
 
+function saveCheckInByProgress(levensvraagID, publicGoal){
+
+        const button = document.getElementById("save-input-button")
+
+        button.addEventListener("click", () => {
+                const input = document.getElementById("check-in-by-proces-input").value
+                button.innerText = "Opgeslagen"
+                button.id = "Clicked"
+
+                db.collection("Vitaminders")
+                .where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot =>{
+                        querySnapshot.forEach(doc =>{
+
+                                db.collection("Vitaminders")
+                                .doc(doc.id)
+                                .collection("Levenslessen")
+                                .doc()
+                                .set({
+                                        Gebruikersnaam: naam,
+                                        Levensles: input,
+                                        Levensvraag: levensvraagID,
+                                        Public: publicGoal,
+                                        Status: "Approved",
+                                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                        Type: "Check-in"
+                                });    
+                        });
+                });
+        });
+};
+
 function procesPrivatePublic(openbaarSetting, privateSetting, privateTip){
 
         // Private or public
@@ -845,11 +877,192 @@ function procesPrivatePublic(openbaarSetting, privateSetting, privateTip){
                 };
 };
 
-function progressBox(){
+function progressBox(goal, DOCID){
 
-        const procesBoxOuterDiv = document.createElement("div")
-                procesBoxOuterDiv.setAttribute("class", "proces-box-outer-div")
+        const progressBoxDOM = document.getElementById("progress-box-outer-div")
+        const progressBoxOuterDiv = document.createElement("div")
+                progressBoxOuterDiv.setAttribute("id", "progress-box")
+        const canvas = document.createElement("canvas")
+                canvas.setAttribute("id", "progress-chart")
+        
+        const title = document.createElement("h3")
 
+        title.innerText = "Ontwikkeling"
+
+        progressBoxDOM.prepend(title)
+        progressBoxDOM.appendChild(progressBoxOuterDiv)
+        progressBoxOuterDiv.appendChild(canvas)
+        selectProgressNumber(progressBoxOuterDiv, goal)
+
+        saveProgressNumberOnClick(goal, DOCID)
+
+};
+
+function selectProgressNumber(progressBoxDiv, goal){
+
+        const numberDiv = document.createElement("div")
+                numberDiv.setAttribute("id", "number-div")
+                numberDiv.setAttribute("data-goal", goal)
+        
+        const numberBox1 = document.createElement("p")
+        numberBox1.setAttribute("class", "number-inner-box")
+        const numberBox2 = document.createElement("p")
+        numberBox2.setAttribute("class", "number-inner-box")
+        const numberBox3 = document.createElement("p")
+        numberBox3.setAttribute("class", "number-inner-box")
+        const numberBox4 = document.createElement("p")
+        numberBox4.setAttribute("class", "number-inner-box")
+        const numberBox5 = document.createElement("p")
+        numberBox5.setAttribute("class", "number-inner-box")
+        const numberBox6 = document.createElement("p")
+        numberBox6.setAttribute("class", "number-inner-box")
+        const numberBox7 = document.createElement("p")
+        numberBox7.setAttribute("class", "number-inner-box")
+        const numberBox8 = document.createElement("p")
+        numberBox8.setAttribute("class", "number-inner-box")
+        const numberBox9 = document.createElement("p")
+        numberBox9.setAttribute("class", "number-inner-box")
+        const numberBox10 = document.createElement("p")
+        numberBox10.setAttribute("class", "number-inner-box")
+
+        numberBox1.innerText = "1"
+        numberBox2.innerText = "2"
+        numberBox3.innerText = "3"
+        numberBox4.innerText = "4"
+        numberBox5.innerText = "5"
+        numberBox6.innerText = "6"
+        numberBox7.innerText = "7"
+        numberBox8.innerText = "8"
+        numberBox9.innerText = "9"
+        numberBox10.innerText = "10"
+
+        numberBoxCTA(progressBoxDiv)
+        progressBoxDiv.appendChild(numberDiv)
+        numberDiv.appendChild(numberBox1)
+        numberDiv.appendChild(numberBox2)
+        numberDiv.appendChild(numberBox3)
+        numberDiv.appendChild(numberBox4)
+        numberDiv.appendChild(numberBox5)
+        numberDiv.appendChild(numberBox6)
+        numberDiv.appendChild(numberBox7)
+        numberDiv.appendChild(numberBox8)
+        numberDiv.appendChild(numberBox9)
+        numberDiv.appendChild(numberBox10)
+
+};
+
+function saveProgressNumberOnClick(goal, DOCID){
+
+        const numberInnerDiv = document.getElementsByClassName("number-inner-box")
+
+        const numberInnerDivArray = Array.from(numberInnerDiv)
+
+        numberInnerDivArray.forEach(div => {
+
+                div.addEventListener("click", () => {
+
+                        const number = div.innerText
+                        div.setAttribute("class", "Clicked")
+
+                        db.collection("Vitaminders")
+                        .where("Gebruikersnaam", "==", naam)
+                        .get().then(querySnapshot =>{
+                                querySnapshot.forEach(doc =>{
+
+                                        db.collection("Vitaminders")
+                                        .doc(doc.id)
+                                        .collection("Levensvragen")
+                                        .doc(DOCID)
+                                        .collection("Progress")
+                                        .doc()
+                                        .set({
+                                                Number: number,
+                                                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                                User: naam,
+                                                Goal: goal
+                                        });
+                                });
+                        });
+                });
+        });
+};
+
+function numberBoxCTA(progressBoxDiv){
+
+        const numberDivCTATitle = document.createElement("p")
+                numberDivCTATitle.setAttribute("id", "number-div-CTA-title")
+
+        numberDivCTATitle.innerText = "Hoe gaat het nu met dit doel?"
+
+        progressBoxDiv.appendChild(numberDivCTATitle)
+};
+
+function progressChartAxis(dates, numbers){
+
+        const hapinessChart = document.getElementById('progress-chart').getContext('2d');
+
+const myChart = new Chart(hapinessChart, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: 'Ontwikkeling',
+                data: numbers,
+                backgroundColor: [
+                        "#0c66650D"
+                ],
+                borderColor: [
+                        "#0c6665"
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+                legend: {
+                        display: false
+                },           
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        userCallback: function(label, index, labels) {
+                                // when the floored value is the same as the value we have a whole number
+                                if (Math.floor(label) === label) {
+                                    return label;
+                                }
+                        }
+                    }
+                }]
+            }
+        }
+    });
+};
+
+function fillProgressChartWithData(goal){
+
+        const dateArray = []
+        const numberArray = []
+
+        db.collectionGroup("Progress")
+        .where("Goal", "==", goal)
+        .where("User", "==", naam)
+        .orderBy("Timestamp", "asc")
+        .onSnapshot(querySnapshot =>{
+                querySnapshot.forEach(doc =>{
+
+                        const number = doc.data().Number
+                        const date = doc.data().Timestamp
+
+                        const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+                        const dateLocale = date.toDate().toLocaleDateString("nl-NL", options);
+    
+                        dateArray.push(dateLocale) 
+                        numberArray.push(number)
+
+                        progressChartAxis(dateArray, numberArray)
+
+                });
+        });
 };
 
 
@@ -872,6 +1085,9 @@ function autoLoadFirstProces(optionZero){
                         const domain = doc.data().Domain
 
                         addLessonsToProces(levensvraagID)
+                        progressBox(levensvraagID, doc.id)
+                        fillProgressChartWithData(levensvraagID)
+                        saveCheckInByProgress(levensvraagID, openbaar)
                         // showArticles(domain)
 
                         const innerDiv = document.createElement("div")
@@ -909,8 +1125,10 @@ function autoLoadFirstProces(optionZero){
 function showSelectedProces(selectedProces){
 
         const procesInnerDiv = document.getElementById("proces-inner-div")
+        const progressBoxFilled = document.getElementById("progress-box-outer-div")
 
         procesInnerDiv.innerHTML = ""
+        progressBoxFilled.innerHTML = ""
 
         db.collectionGroup("Levensvragen")
         .where("Gebruikersnaam", "==", naam)
@@ -927,6 +1145,9 @@ function showSelectedProces(selectedProces){
                         const domain = doc.data().Domain
 
                         addLessonsToProces(levensvraagID)
+                        progressBox(levensvraagID, doc.id)
+                        fillProgressChartWithData(levensvraagID)
+                        saveCheckInByProgress(levensvraagID, openbaar)
                         // showArticles(domain)
 
                         const innerDiv = document.createElement("div")

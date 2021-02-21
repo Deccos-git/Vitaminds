@@ -170,16 +170,16 @@
     </div>
     <div id="workshopHeader"></div>
       <div id="workshop-goal-check">
-        <h3>Jouw ontwikkeltraject</h3>
+        <h3>Voor we beginnen</h3>
         <div id="workshop-goal-check-inner-div">
           <div id="auth-routes"></div>
         </div>
         <div id="set-new-goal-div">
           <p>Thema</p>
           <p id="workshop-goal-title"></p>
-          <p>Geef je ontwikkeldoel een persoonlijke titel</p>
+          <p>Geef je doel een titel</p>
           <input id="personal-goal-title" type="text" placeholder="Titel">
-          <p>Geef je ontwikkeldoel een korte omschrijving</p>
+          <p>Geef je doel een korte omschrijving</p>
           <textarea name="" id="goal-summary" cols="30" rows="10" placeholder="Omschrijving van je doel"></textarea>
           <div>
             <button class="button-algemeen button-workshop" onclick="createGoalAndStartWorkshop()">Start de workshop</button>
@@ -195,11 +195,255 @@
       <div id="steps-overview">
         <h3>Wat gaan we doen?</h3>
       </div>
+      <div>
+        <button class="button-algemeen button-workshop" id="start-workshop">Workshop starten</button>
+      </div>
     </div>
   </div>
+
+  <div id="steps-div">
+
+    <div class="step-div" id="step-one-div">
+      <div class="step-title">
+        <h2 id="step-one-title"></h2>
+      </div>
+      <div class="step-explainer">
+        <p id="step-one-explainer"></p>
+      </div>
+      <div class="step-CTA">
+        <h3>Wat heb je geleerd?</h3>
+        <textarea name="" id="step-one-CTA" cols="60" rows="10" placeholder="Noteer hier wat je geleerd hebt."></textarea>
+      </div>
+      <div>
+        <button class="button-algemeen button-workshop" id="step-two-button">Volgende stap</button>
+      </div>
+    </div>
+
+    <div class="closing-div" id="closing-one">
+      <h3 class="closing-title" id="closing-title-one"></h3>
+      <p class="closing-text" id="closing-text-one"></p>
+      <h3>Geef eventueel feedback</h3>
+      <textarea class="feedback-input" name="" id="feedback-one" cols="60" rows="10" placeholder="Schrijf hier je feedback"></textarea>
+      <div>
+        <button class="close-workshop button-workshop button-algemeen">Opslaan en afsluiten</button>
+      </div>
+    </div>
+
+    <div class="step-div" id="step-two-div">
+      <div class="step-title">
+        <h2 id="step-two-title"></h2>
+      </div>
+      <div class="step-explainer">
+        <p id="step-two-explainer"></p>
+      </div>
+      <div class="step-CTA">
+        <h3>Wat heb je geleerd?</h3>
+        <textarea name="" id="step-two-CTA" cols="60" rows="10" placeholder="Noteer hier wat je geleerd hebt."></textarea>
+      </div>
+      <div>
+        <button class="button-algemeen button-workshop" id="step-three-button">Volgende stap</button>
+      </div>
+    </div>
+
+    <div class="closing-div" id="closing-two">
+      <h3 class="closing-title" id="closing-title-two"></h3>
+      <p class="closing-text" id="closing-text-two"></p>
+      <h3>Geef eventueel feedback</h3>
+      <textarea class="feedback-input" name="" id="feedback-two" cols="60" rows="10" placeholder="Schrijf hier je feedback"></textarea>
+      <div>
+        <button class="close-workshop button-workshop button-algemeen">Opslaan en afsluiten</button>
+      </div>
+    </div>
+
+    <div class="step-div" id="step-three-div">
+      <div class="step-title">
+        <h2 id="step-three-title"></h2>
+      </div>
+      <div class="step-explainer">
+        <p id="step-three-explainer"></p>
+      </div>
+      <div class="step-CTA">
+        <h3>Wat heb je geleerd?</h3>
+        <textarea name="" id="step-three-CTA" cols="60" rows="10" placeholder="Noteer hier wat je geleerd hebt."></textarea>
+      </div>
+      <div>
+        <button class="button-algemeen button-workshop" id="step-four-button">Volgende stap</button>
+      </div>
+    </div>
+
+    <div class="closing-div" id="closing-three">
+      <h3 class="closing-title" id="closing-title-three"></h3>
+      <p class="closing-text" id="closing-text-three"></p>
+      <h3>Geef eventueel feedback</h3>
+      <textarea class="feedback-input" name="" id="feedback-three" cols="60" rows="10" placeholder="Schrijf hier je feedback"></textarea>
+      <div>
+        <button class="close-workshop button-workshop button-algemeen">Opslaan en afsluiten</button>
+      </div>
+    </div>
+
+    <div class="step-div" id="step-four-div">
+      <div class="step-title">
+        <h2 id="step-four-title"></h2>
+      </div>
+      <div class="step-explainer">
+        <p id="step-four-explainer"></p>
+      </div>
+      <div class="step-CTA">
+        <h3>Wat heb je geleerd?</h3>
+        <textarea name="" id="step-four-CTA" cols="60" rows="10" placeholder="Noteer hier wat je geleerd hebt."></textarea>
+      </div>
+      <div>
+        <button class="button-algemeen button-workshop" id="step-five-button">Volgende stap</button>
+      </div>
+    </div>
+
+    <div class="closing-div" id="closing-four">
+      <h3 class="closing-title" id="closing-title-four"></h3>
+      <p class="closing-text" id="closing-text-four"></p>
+      <h3>Geef eventueel feedback</h3>
+      <textarea class="feedback-input" name="" id="feedback-four" cols="60" rows="10" placeholder="Schrijf hier je feedback"></textarea>
+      <div>
+        <button class="close-workshop button-workshop button-algemeen">Opslaan en afsluiten</button>
+      </div>
+    </div>
+
+    <div class="step-div" id="step-five-div">
+      <div class="step-title">
+        <h2 id="step-five-title"></h2>
+      </div>
+      <div class="step-explainer">
+        <p id="step-five-explainer"></p>
+      </div>
+      <div class="step-CTA">
+        <h3>Wat heb je geleerd?</h3>
+        <textarea name="" id="step-five-CTA" cols="60" rows="10" placeholder="Noteer hier wat je geleerd hebt."></textarea>
+      </div>
+      <div>
+        <button class="button-algemeen button-workshop" id="step-six-button">Volgende stap</button>
+      </div>
+    </div>
+
+    <div class="closing-div" id="closing-five">
+      <h3 class="closing-title" id="closing-title-five"></h3>
+      <p class="closing-text" id="closing-text-five"></p>
+      <h3>Geef eventueel feedback</h3>
+      <textarea class="feedback-input" name="" id="feedback-five" cols="60" rows="10" placeholder="Schrijf hier je feedback"></textarea>
+      <div>
+        <button class="close-workshop button-workshop button-algemeen">Opslaan en afsluiten</button>
+      </div>
+    </div>
+
+    <div class="step-div" id="step-six-div">
+      <div class="step-title">
+        <h2 id="step-six-title"></h2>
+      </div>
+      <div class="step-explainer">
+        <p id="step-six-explainer"></p>
+      </div>
+      <div class="step-CTA">
+        <h3>Wat heb je geleerd?</h3>
+        <textarea name="" id="step-six-CTA" cols="60" rows="10" placeholder="Noteer hier wat je geleerd hebt."></textarea>
+      </div>
+      <div>
+        <button class="button-algemeen button-workshop" id="step-seven-button">Volgende stap</button>
+      </div>
+    </div>
+
+    <div class="closing-div" id="closing-six">
+      <h3 class="closing-title" id="closing-title-six"></h3>
+      <p class="closing-text" id="closing-text-six"></p>
+      <h3>Geef eventueel feedback</h3>
+      <textarea class="feedback-input" name="" id="feedback-six" cols="60" rows="10" placeholder="Schrijf hier je feedback"></textarea>
+      <div>
+        <button class="close-workshop button-workshop button-algemeen">Opslaan en afsluiten</button>
+      </div>
+    </div>
+
+    <div class="step-div" id="step-seven-div">
+      <div class="step-title">
+        <h2 id="step-seven-title"></h2>
+      </div>
+      <div class="step-explainer">
+        <p id="step-seven-explainer"></p>
+      </div>
+      <div class="step-CTA">
+        <h3>Wat heb je geleerd?</h3>
+        <textarea name="" id="step-seven-CTA" cols="60" rows="10" placeholder="Noteer hier wat je geleerd hebt."></textarea>
+      </div>
+      <div>
+        <button class="button-algemeen button-workshop" id="step-eight-button">Volgende stap</button>
+      </div>
+    </div>
+
+    <div class="closing-div" id="closing-seven">
+      <h3 class="closing-title" id="closing-title-seven"></h3>
+      <p class="closing-text" id="closing-text-seven"></p>
+      <h3>Geef eventueel feedback</h3>
+      <textarea class="feedback-input" name="" id="feedback-seven" cols="60" rows="10" placeholder="Schrijf hier je feedback"></textarea>
+      <div>
+        <button class="close-workshop button-workshop button-algemeen">Opslaan en afsluiten</button>
+      </div>
+    </div>
+
+    <div class="step-div" id="step-eight-div">
+      <div class="step-title">
+        <h2 id="step-eight-title"></h2>
+      </div>
+      <div class="step-explainer">
+        <p id="step-eight-explainer"></p>
+      </div>
+      <div class="step-CTA">
+        <h3>Wat heb je geleerd?</h3>
+        <textarea name="" id="step-eight-CTA" cols="60" rows="10" placeholder="Noteer hier wat je geleerd hebt."></textarea>
+      </div>
+      <div>
+        <button class="button-algemeen button-workshop" id="step-nine-button">Volgende stap</button>
+      </div>
+    </div>
+
+    <div class="closing-div" id="closing-eight">
+      <h3 class="closing-title" id="closing-title-eight"></h3>
+      <p class="closing-text" id="closing-text-eight"></p>
+      <h3>Geef eventueel feedback</h3>
+      <textarea class="feedback-input" name="" id="feedback-eight" cols="60" rows="10" placeholder="Schrijf hier je feedback"></textarea>
+      <div>
+        <button class="close-workshop button-workshop button-algemeen">Opslaan en afsluiten</button>
+      </div>
+    </div>
+
+    <div class="step-div" id="step-nine-div">
+      <div class="step-title">
+        <h2 id="step-nine-title"></h2>
+      </div>
+      <div class="step-explainer">
+        <p id="step-nine-explainer"></p>
+      </div>
+      <div class="step-CTA">
+        <h3>Wat heb je geleerd?</h3>
+        <textarea name="" id="step-nine-CTA" cols="60" rows="10" placeholder="Noteer hier wat je geleerd hebt."></textarea>
+      </div>
+      <div>
+        <button class="button-algemeen button-workshop" id="step-ten-button">Volgende stap</button>
+      </div>
+    </div>
+
+    <div class="closing-div" id="closing-nine">
+      <h3 class="closing-title" id="closing-title-nine"></h3>
+      <p class="closing-text" id="closing-text-nine"></p>
+      <h3>Geef eventueel feedback</h3>
+      <textarea class="feedback-input" name="" id="feedback-nine" cols="60" rows="10" placeholder="Schrijf hier je feedback"></textarea>
+      <div>
+        <button class="close-workshop button-workshop button-algemeen">Opslaan en afsluiten</button>
+      </div>
+    </div>
+
+  </div>
+
 </section>
 
-<div id="tool-bar-div"></div>
+<div id="tool-bar-div">
+  <button class="button-toolbar" id="update">Opslaan</button>
+</div>
 
  <!-- Toolbar mobile -->
  <div class="toolbar-mobile">

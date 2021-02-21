@@ -23,6 +23,24 @@
     });
 };
 
+function changeButtonIfAuthIsWorkshopTaker(takers, button){
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+
+            db.collection("Vitaminders").doc(User.uid).get()
+            .then(doc2 => {
+
+                const auth = doc2.data().Gebruikersnaam
+
+                if(takers.includes(auth)){
+                    button.innerText = "Ga verder met workshop"
+                };
+            });
+        };
+    });
+};
+
 !function showWorkshopsInDraftForAuth(){
     auth.onAuthStateChanged(User =>{
         if(User){
@@ -32,15 +50,20 @@
 
                 const admin = doc2.data().Admin
 
-                db.collection("Workshops").where("Status", "==", "Draft").get().then(querySnapshot => {
+                db.collection("Workshops")
+                .where("Status", "==", "Draft")
+                .get().then(querySnapshot => {
                     querySnapshot.forEach(doc => {
                 
                         const title = doc.data().WorkshopTitle
                         const coach = doc.data().Coach
                         const headerImg = doc.data().BannerImage
                         const workshopPrice = doc.data().Price
+                        const takers = doc.data().Takers
                 
-                        db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
+                        db.collection("Vitaminders")
+                        .where("Gebruikersnaam", "==", coach).get()
+                        .then(querySnapshot => {
                             querySnapshot.forEach(doc1 => {
                 
                                 const nameClean = doc1.data().GebruikersnaamClean
@@ -75,14 +98,14 @@
                                 button.innerText = "Meer informatie"
                                 draftStatus.innerText = "Niet gepubliceerd"
                                 draftStatus.style.color = "#cf6e13"
+
+                                changeButtonIfAuthIsWorkshopTaker(takers, button)
                 
                                 if(DOM != null){
 
                                     db.collection("Vitaminders").doc(User.uid).get().then(function(doc2) {
 
                                     const auth = doc2.data().Gebruikersnaam
-
-                                    console.log(admin)
 
                                     if(name === auth || admin === "Yes"){
                 
@@ -117,6 +140,7 @@ db.collection("Workshops").where("Status", "==", "Public").get().then(querySnaps
         const coach = doc.data().Coach
         const headerImg = doc.data().BannerImage
         const workshopPrice = doc.data().Price
+        const takers = doc.data().Takers
 
         db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
@@ -151,7 +175,7 @@ db.collection("Workshops").where("Status", "==", "Public").get().then(querySnaps
                 priceP.innerText = `Prijs: ${workshopPrice} euro`
                 button.innerText = "Meer informatie"
 
-                console.log(nameP)
+                changeButtonIfAuthIsWorkshopTaker(takers, button)
 
                 if(DOM != null){
 
@@ -220,6 +244,11 @@ function openWorkshop(elem){
 
 // Build workshop
 
+function clearLocalStorage(){
+    localStorage.removeItem("workshopTitle")
+    localStorage.removeItem("workshopCoach")
+};
+
 !function buildWorkshop(){
 
     const makeWorkshopButton = document.getElementById("build-workshop")
@@ -228,6 +257,8 @@ function openWorkshop(elem){
     const bottomDiv = document.getElementById("button-div-create-workshop")
 
     makeWorkshopButton.addEventListener("click", () => {
+
+        clearLocalStorage()
 
     auth.onAuthStateChanged(User =>{
         if(User){

@@ -147,7 +147,7 @@
             <img id="selected-header-img">
           </div>
           <input id="foto-upload-create-workshop" type="file">
-          <button id="upload-banner">Upload</button>
+          <button class="button-algemeen" id="upload-banner">Upload</button>
   
           <h3>Wat is het doel van je workshop?</h3>
           <select id="select-goel-workshop">
@@ -159,14 +159,13 @@
             <option id="Lichaam & Geest", value="Lichaam & Geest">Lichaam en Geest</option>
             <option id="Relaties", value="Relaties">Liefde en Relaties</option>
             <option id="Seksualiteit", value="Seksualiteit">Seksualiteit</option>
-            <option id="Sociaal", value="Sociaal">Spiritualiteit</option>
+            <option id="Spiritualiteit", value="Spiritualiteit">Spiritualiteit</option>
             <option id="Sociaal", value="Sociaal">Sociaal</option>
             <option id="Opvoeden", value="Opvoeden">Opvoeden</option>
             <option id="Werken-succes", value="Werken en Succes">Werken en Succes</option>
             <option id="Betekenisvol-leven", value="Betekenisvol leven">Betekenisvol leven</option>
             <option id="Koers-bepalen", value="Koers bepalen">Koers bepalen</option>
           </select>
-          <p id="goal-proposal-tip">Zit je doel er niet bij? <a href="/Inspiratie/proposal.html"> Doe een voorstel.</a></p>
   
           <h3>Welke bijdrage wil je leveren aan de deelnemers van deze workshop?</h3>
           <div class="pointer-div">
@@ -182,7 +181,7 @@
             <p>euro</p>
           </div>
           <div>
-              <button class="add-step" id="button-step-one">Voeg een stap toe</button>
+              <button class="add-step" id="button-step-one">Voeg je eerste stap toe</button>
           </div>
       </div>
   
@@ -195,10 +194,8 @@
         <div class="step-inner-div" id="step-one-inner-div">
           <div class="title-delete-div">
             <h2>Stap 1</h2>
-            <p id="delete-1" onclick="deleteStep1(this)">Delete</p>
+            <!-- <p id="delete-1" onclick="deleteStep1(this)">Delete</p> -->
           </div>
-          <h3>Voorproefje van de eerste stap</h3>
-          <div class="tiny-mce" id="editor2" placeholder="Geef een korte preview van stap één"></div>
           <h3>Geef stap één een titel</h3>
           <input type="text" id="step-one-title" placeholder="Inspirerende titel">
   
@@ -218,7 +215,7 @@
         <div class="closing-div" id="closing-1">
           <div class="title-delete-div">
             <h2>Afsluiting</h2>
-            <p id="delete-closing-1" onclick="deleteClosing(this)">Delete</p>
+            <!-- <p id="delete-closing-1" onclick="deleteClosing(this)">Delete</p> -->
           </div>
           <h3>Geef je afsluiting een titel</h3>
           <input id="closing-title-input-1" type="text" placeholder="Titel van afsluiting">
@@ -232,10 +229,9 @@
         <div class="step-inner-div" id="step-two-inner-div">
           <div class="title-delete-div">
             <h2>Stap 2</h2>
-            <p id="delete-2" onclick="deleteStep2(this)">Delete</p>
+            <!-- <p id="delete-2" onclick="deleteStep2(this)">Delete</p> -->
           </div>
-          <h3>Voorproefje van stap twee</h3>
-          <div class="tiny-mce" id="editor-preview-step-two" placeholder="Geef een korte preview van stap twee"></div>
+
           <h3>Geef stap twee een titel</h3>
           <input type="text" id="step-two-title" placeholder="Inspirerende titel">
   
@@ -255,7 +251,7 @@
         <div class="closing-div" id="closing-2">
           <div class="title-delete-div">
             <h2>Afsluiting</h2>
-            <p id="delete-closing-2" onclick="deleteClosing(this)">Delete</p>
+            <!-- <p id="delete-closing-2" onclick="deleteClosing(this)">Delete</p> -->
           </div>
           <h3>Geef je afsluiting een titel</h3>
           <input id="closing-title-input-2" type="text" placeholder="Titel van afsluiting">
@@ -269,10 +265,9 @@
         <div class="step-inner-div" id="step-three-inner-div">
           <div class="title-delete-div">
             <h2>Stap 3</h2>
-            <p id="delete-3" onclick="deleteStep3(this)">Delete</p>
+            <!-- <p id="delete-3" onclick="deleteStep3(this)">Delete</p> -->
           </div>
-          <h3>Voorproefje van stap drie</h3>
-          <div class="tiny-mce" id="editor-preview-step-three" placeholder="Geef een korte preview van stap drie"></div>
+
           <h3>Geef stap drie een titel</h3>
           <input type="text" id="step-three-title" placeholder="Inspirerende titel">
   
@@ -292,7 +287,7 @@
         <div class="closing-div" id="closing-3">
           <div class="title-delete-div">
             <h2>Afsluiting</h2>
-            <p id="delete-closing-3" onclick="deleteClosing(this)">Delete</p>
+            <!-- <p id="delete-closing-3" onclick="deleteClosing(this)">Delete</p> -->
           </div>
           <h3>Geef je afsluiting een titel</h3>
           <input id="closing-title-input-3" type="text" placeholder="Titel van afsluiting">
@@ -306,10 +301,9 @@
         <div class="step-inner-div" id="step-four-inner-div">
           <div class="title-delete-div">
             <h2>Stap 4</h2>
-            <p id="delete-4" onclick="deleteStep4(this)">Delete</p>
+            <!-- <p id="delete-4" onclick="deleteStep4(this)">Delete</p> -->
           </div>
-          <h3>Voorproefje van stap vier</h3>
-          <div class="tiny-mce" id="editor-preview-step-four" placeholder="Geef een korte preview van stap vier"></div>
+         
           <h3>Geef stap vier een titel</h3>
           <input type="text" id="step-four-title" placeholder="Inspirerende titel">
   
@@ -329,7 +323,7 @@
         <div class="closing-div" id="closing-4">
           <div class="title-delete-div">
             <h2>Afsluiting</h2>
-            <p id="delete-closing-4" onclick="deleteClosing(this)">Delete</p>
+            <!-- <p id="delete-closing-4" onclick="deleteClosing(this)">Delete</p> -->
           </div>
           <h3>Geef je afsluiting een titel</h3>
           <input id="closing-title-input-4" type="text" placeholder="Titel van afsluiting">
@@ -343,10 +337,9 @@
         <div class="step-inner-div" id="step-five-inner-div">
           <div class="title-delete-div">
             <h2>Stap 5</h2>
-            <p id="delete-5" onclick="deleteStep5(this)">Delete</p>
+            <!-- <p id="delete-5" onclick="deleteStep5(this)">Delete</p> -->
           </div>
-          <h3>Voorproefje van stap vijf</h3>
-          <div class="tiny-mce" id="editor-preview-step-five" placeholder="Geef een korte preview van stap vijf"></div>
+        
           <h3>Geef stap vijf een titel</h3>
           <input type="text" id="step-five-title" placeholder="Inspirerende titel">
   
@@ -366,7 +359,7 @@
         <div class="closing-div" id="closing-5">
           <div class="title-delete-div">
             <h2>Afsluiting</h2>
-            <p id="delete-closing-5" onclick="deleteClosing(this)">Delete</p>
+            <!-- <p id="delete-closing-5" onclick="deleteClosing(this)">Delete</p> -->
           </div>
           <h3>Geef je afsluiting een titel</h3>
           <input id="closing-title-input-5" type="text" placeholder="Titel van afsluiting">
@@ -380,10 +373,9 @@
         <div class="step-inner-div" id="step-six-inner-div">
           <div class="title-delete-div">
             <h2>Stap 6</h2>
-            <p id="delete-6" onclick="deleteStep6(this)">Delete</p>
+            <!-- <p id="delete-6" onclick="deleteStep6(this)">Delete</p> -->
           </div>
-          <h3>Voorproefje van stap zes</h3>
-          <div class="tiny-mce" id="editor-preview-step-six" placeholder="Geef een korte preview van stap zes"></div>
+       
           <h3>Geef stap zes een titel</h3>
           <input type="text" id="step-six-title" placeholder="Inspirerende titel">
   
@@ -403,7 +395,7 @@
         <div class="closing-div" id="closing-6">
           <div class="title-delete-div">
             <h2>Afsluiting</h2>
-            <p id="delete-closing-6" onclick="deleteClosing(this)">Delete</p>
+            <!-- <p id="delete-closing-6" onclick="deleteClosing(this)">Delete</p> -->
           </div>
           <h3>Geef je afsluiting een titel</h3>
           <input id="closing-title-input-6" type="text" placeholder="Titel van afsluiting">
@@ -417,10 +409,9 @@
         <div class="step-inner-div" id="step-seven-inner-div">
           <div class="title-delete-div">
             <h2>Stap 7</h2>
-            <p id="delete-7" onclick="deleteStep7(this)">Delete</p>
+            <!-- <p id="delete-7" onclick="deleteStep7(this)">Delete</p> -->
           </div>
-          <h3>Voorproefje van stap zeven</h3>
-          <div class="tiny-mce" id="editor-preview-step-seven" placeholder="Geef een korte preview van stap zeven"></div>
+     
           <h3>Geef stap zeven een titel</h3>
           <input type="text" id="step-seven-title" placeholder="Inspirerende titel">
   
@@ -440,7 +431,7 @@
         <div class="closing-div" id="closing-7">
           <div class="title-delete-div">
             <h2>Afsluiting</h2>
-            <p id="delete-closing-7" onclick="deleteClosing(this)">Delete</p>
+            <!-- <p id="delete-closing-7" onclick="deleteClosing(this)">Delete</p> -->
           </div>
           <h3>Geef je afsluiting een titel</h3>
           <input id="closing-title-input-7" type="text" placeholder="Titel van afsluiting">
@@ -454,10 +445,9 @@
         <div class="step-inner-div" id="step-eight-inner-div">
           <div class="title-delete-div">
             <h2>Stap 8</h2>
-            <p id="delete-8" onclick="deleteStep8(this)">Delete</p>
+            <!-- <p id="delete-8" onclick="deleteStep8(this)">Delete</p> -->
           </div>
-          <h3>Voorproefje van stap acht</h3>
-          <div class="tiny-mce" id="editor-preview-step-eight" placeholder="Geef een korte preview van stap acht"></div>
+     
           <h3>Geef stap acht een titel</h3>
           <input type="text" id="step-eight-title" placeholder="Inspirerende titel">
   
@@ -477,7 +467,7 @@
       <div class="closing-div" id="closing-8">
         <div class="title-delete-div">
           <h2>Afsluiting</h2>
-          <p id="delete-closing-8" onclick="deleteClosing(this)">Delete</p>
+          <!-- <p id="delete-closing-8" onclick="deleteClosing(this)">Delete</p> -->
         </div>
         <h3>Geef je afsluiting een titel</h3>
         <input id="closing-title-input-8" type="text" placeholder="Titel van afsluiting">
@@ -491,10 +481,9 @@
         <div class="step-inner-div" id="step-nine-inner-div">
           <div class="title-delete-div">
             <h2>Stap 9</h2>
-            <p id="delete-9" onclick="deleteStep9(this)">Delete</p>
+            <!-- <p id="delete-9" onclick="deleteStep9(this)">Delete</p> -->
           </div>
-          <h3>Voorproefje van stap negen</h3>
-          <div class="tiny-mce" id="editor-preview-step-nine" placeholder="Geef een korte preview van stap negen"></div>
+        
           <h3>Geef stap negen een titel</h3>
           <input type="text" id="step-nine-title" placeholder="Inspirerende titel">
   
@@ -511,7 +500,7 @@
       <div class="closing-div" id="closing-9">
         <div class="title-delete-div">
           <h2>Afsluiting</h2>
-          <p id="delete-closing-9" onclick="deleteClosing(this)">Delete</p>
+          <!-- <p id="delete-closing-9" onclick="deleteClosing(this)">Delete</p> -->
         </div>
         <h3>Geef je afsluiting een titel</h3>
         <input id="closing-title-input-9" type="text" placeholder="Titel van afsluiting">
@@ -520,15 +509,16 @@
       </div>
   </section>
 
+  <div id="loading-modal">
+    <img src="images/loader.gif" alt="">
+  </div>
+
   <!-- Toolbar -->
 <div id="create-workshop-tool-bar">
   <button id="saveWorkshop" onclick="saveWorkshop()">Opslaan</button>
-  <p class="workshop-notification" id="workshop-saved-set-notification">Opgeslagen</p>
   <button id="updateWorkshop" onclick="updateWorkshop()">Opslaan</button>
-  <p class="workshop-notification" id="workshop-saved-updated-notification">Opgeslagen</p>
   <button id="preview-workshop" onclick="previewWorkshop()">Preview</button>
   <button id="publish-workshop" onclick="publishWorkshop()">Aanmelden voor publicatie</button> 
-  <p class="workshop-notification" id="workshop-published-notification">Aangemeld voor publicatie</p>
   <div></div>
 </div>
 

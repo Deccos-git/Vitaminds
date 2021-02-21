@@ -287,6 +287,51 @@
     font-size: 16px;
 }
 
+#progress-box-outer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#number-div{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#number-div p{
+    border: 1px solid lightgray;
+    width: 30px;
+    cursor: pointer;
+    margin-bottom: 0px;
+    font-size: 20px;
+    color: gray;
+}
+
+#progress-chart{
+    margin: 15px;
+    height: 200px !important;
+    width: 290px !important;
+}
+
+#number-div p:hover{
+    background-color: #122b46;
+    color: white;
+}
+
+#number-div-CTA-title{
+    font-size: 18px;
+    margin-bottom: 0px;
+}
+
+#progress-box{
+    min-width: 100px;
+    min-height: 100px;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    background-color: white;
+    border-radius: 5px;
+}
+
 #private-public-gratitude img{
     height: 20px;
 }

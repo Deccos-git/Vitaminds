@@ -718,10 +718,30 @@
     margin: 20px;
 }
 
+#platform-section{
+    flex-direction: flex;
+    align-items: center;
+}
+
+#platform-section img{
+    width: 70%;
+    align-self: flex-start;
+}
+
 @media only screen and (max-width: 938px){
 
 #for-coach-banner-title {
     margin-top: 0px;
+}
+
+.image-div img {
+    padding-top: 30px;
+    width: 80%;
+}
+
+.image-div{
+    display: flex;
+    justify-content: center;
 }
 
 #for-coach-banner{

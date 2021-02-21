@@ -237,6 +237,7 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 50px;
+    background-color: #a7bdbd26;
 }
 
 #workshop-goal-check p{
@@ -249,11 +250,11 @@
     flex-direction: column;
     align-items: center;
     text-align: left;
-    margin: 50px 150px 50px 150px;
+    margin: 20px 150px 50px 150px;
 }
 
 .button-workshop{
-    margin: 5px;
+    margin: 30px;
 }
 
 #workshop-goal-title{
@@ -264,6 +265,9 @@
 #auth-routes{
     font-size: 20px;
     color: #122b46;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #auth-routes select{
@@ -273,6 +277,22 @@
     font-weight: bold;
 }
 
+#loading-modal{
+    padding: 0px 0px 0px 0px;
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    position: fixed; /* Stay in place */
+    z-index: 4; /* Sit on top */
+    top: 0;
+    width: 100%;
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #fff;
+}
+
 #set-new-goal-div{
     display: none;
     flex-direction: column;
@@ -280,6 +300,7 @@
     text-align: center;
     width: 100%;
     background-color: #a7bdbd;
+    padding: 20px 0px;
 }
 
 #workshop-inner-div{
@@ -313,8 +334,46 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 86%;
+    border-radius: 15px;
+    margin: 0px 0px;
+    padding: 20px;
+    background-color: #a7bdbd26;
+}
+
+#steps-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    margin: 0px 20px;
+}
+
+.step-CTA{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.step-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a7bdbd26;
+    width: 90%;
+    border-radius: 15px;
+    margin: 30px 0px;
+    padding: 20px;
+}
+
+.closing-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a7bdbd26;
+    width: 90%;
+    border-radius: 15px;
+    margin: 30px 0px;
+    padding: 20px;
 }
 
 #workshop-summary-div h3{
@@ -325,7 +384,21 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    text-align: center;
     margin: 30px 100px;
+    border-radius: 15px;
+    padding: 20px;
+    background-color: #a7bdbd26;
+}
+
+#step-overview-list{
+    text-align: start;
+}
+
+.closing-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
 }
 
 #steps-overview h3{
@@ -487,6 +560,8 @@ span{
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    background-color: #a7bdbd26;
+    border-radius: 15px;
 }
 
 #edit-or-new-outer-div{
@@ -537,8 +612,20 @@ span{
     color: #cf6e13;
 }
 
+.step-inner-div{
+    background-color: #a7bdbd26;
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 40px;
+}
+
+.tox{
+    width: 90% !important;
+}
+
 #create-workshop-section input{
     width: 60%;
+    background-color: white;
 }
 
 .pointer-div p{
@@ -705,13 +792,6 @@ span{
     color: #008e8e;
 }
 
-.step-outer-div{
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-}
-
 #step-one-inner-div{
     display: none;
     flex-direction: column;
@@ -793,6 +873,18 @@ textarea{
     width: 100%;
 }
 
+#workshopHeader{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+#workshopHeader img{
+    width: 90%;
+    border-radius: 15px;
+}
+
 /* Closing section */
 
 .closing-div{
@@ -800,7 +892,10 @@ textarea{
     flex-direction: column;
     align-items: center;
     text-align: center;
-    margin: 30px 10px;
+    margin: 30px 0px;
+    background-color: #a7bdbd26;
+    padding: 10px;
+    border-radius: 15px;
 }
 
 /* Edit workshop */
@@ -810,6 +905,7 @@ textarea{
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    border-radius: 15px;
     padding: 10px;
     width: auto;
     margin: 0px 300px 0px 300px;
@@ -827,10 +923,36 @@ textarea{
     font-size: 16px;
 }
 
+.button-toolbar{
+    background-color: white;
+    border: 1px #122b46 solid;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #122b46;
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 938px){
 
     #edit-workshop-div{
-        margin: 0px 0px 0px 0px;
+        margin: 0px 20px 0px 20px;
+    }
+     
+    .toolbar-mobile{
+        display: none !important;
+    }
+
+    #workshop-summary-div {
+        width: 80%;
+    }
+
+    .step-div {
+        width: 80%;
+    }
+
+    #workshop-summary img{
+        width: 100%;
+        height: 100%;
     }
 
     #workshop-goal-check-inner-div {

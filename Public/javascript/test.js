@@ -2128,222 +2128,7 @@ function saveNine(){
 };
 
 
-
-// EDIT WORKSHOP
-
-const titleFromStorage = localStorage.getItem("workshopTitle")
-const coachFromStorage = localStorage.getItem("workshopCoach")
-
-function clearLocalStorage(){
-    localStorage.removeItem("workshopTitle")
-    localStorage.removeItem("workshopCoach")
-};
-
-!function editWorkshop(){
-
-    const editWorkshopDiv = document.getElementById("edit-workshop-div")
-
-    if (editWorkshopDiv != null){
-
-        editWorkshopDiv.addEventListener("click", () => {
-            
-            const editWorkshopButton = document.getElementById("edit-workshop")
-
-            const dataTitle = editWorkshopButton.dataset.title
-            const dataCoach = editWorkshopButton.dataset.coach
-
-            localStorage.setItem("workshopTitle", dataTitle)
-            localStorage.setItem("workshopCoach", dataCoach)
-
-            window.open("../create-workshop.html", "_self")
-        });
-    };
-}();
-
-function hideSaveButtonShowUpdateButton(){
-    // Save/update
-    const saveWorkshopButton = document.getElementById("saveWorkshop")
-    const updateWorkshopButton = document.getElementById("updateWorkshop")
-
-    saveWorkshopButton.style.display = "none"
-    updateWorkshopButton.style.display = "flex"
-}
-
-!function fillCreateWorkshopIfLocaleStorageIsSet(){ 
-
-    if(titleFromStorage != undefined && coachFromStorage != undefined){
-
-        setTimeout(() => {
-
-        db.collection("Workshops").where("WorkshopTitle", "==", titleFromStorage)
-        .where("Coach", "==", coachFromStorage).get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-
-                // clearLocalStorage()
-                hideSaveButtonShowUpdateButton()
-        
-                const title = doc.data().WorkshopTitle
-                const headerImg = doc.data().BannerImage
-                const workshopGoals = doc.data().WorkshopGoals
-                const workshopPrice = doc.data().Price
-                const stepOnePreview = doc.data().StepOnePreview
-                const stepOneTitle = doc.data().StepOneTitle
-                const stepOneExplainer = doc.data().StepOneExplainer
-                const stepOneCTA = doc.data().StepOneCTA
-                const stepTwoPreview = doc.data().StepTwoPreview
-                const stepTwoTitle = doc.data().StepTwoTitle
-                const stepTwoExplainer = doc.data().StepTwoExplainer
-                const stepTwoCTA = doc.data().StepTwoCTA
-                const stepThreePreview = doc.data().StepThreePreview
-                const stepThreeTitle = doc.data().StepThreeTitle
-                const stepThreeExplainer = doc.data().StepThreeExplainer
-                const stepThreeCTA = doc.data().StepThreeCTA
-                const stepFourPreview = doc.data().StepFourPreview
-                const stepFourTitle = doc.data().StepFourTitle
-                const stepFourExplainer = doc.data().StepFourExplainer
-                const stepFourCTA = doc.data().StepFourCTA
-                const stepFivePreview = doc.data().StepFivePreview
-                const stepFiveTitle = doc.data().StepFiveTitle
-                const stepFiveExplainer = doc.data().StepFiveExplainer
-                const stepFiveCTA = doc.data().StepFiveCTA
-                const stepSixPreview = doc.data().StepSixPreview
-                const stepSixTitle = doc.data().StepSixTitle
-                const stepSixExplainer = doc.data().StepSixExplainer
-                const stepSixCTA = doc.data().StepSixCTA
-                const stepSevenPreview = doc.data().StepSevenPreview
-                const stepSevenTitle = doc.data().StepSevenTitle
-                const stepSevenExplainer = doc.data().StepSevenExplainer
-                const stepSevenCTA = doc.data().StepSevenCTA
-                const stepEightPreview = doc.data().StepEightPreview
-                const stepEightTitle = doc.data().StepEightTitle
-                const stepEightExplainer = doc.data().StepEightExplainer
-                const stepEightCTA = doc.data().StepEightCTA
-                const stepNinePreview = doc.data().StepNinePreview
-                const stepNineTitle = doc.data().StepNineTitle
-                const stepNineExplainer = doc.data().StepNineExplainer
-                const stepNineCTA = doc.data().StepNineCTA
-                const closingOneText = doc.data().ClosingOneText 
-                const closingOneTitle = doc.data().ClosingOneTitle
-                const closingTwoText = doc.data().ClosingTwoText 
-                const closingTwoTitle = doc.data().ClosingTwoTitle
-                const closingThreeText = doc.data().ClosingThreeText 
-                const closingThreeTitle = doc.data().ClosingThreeTitle
-                const closingFourText = doc.data().ClosingFourText 
-                const closingFourTitle = doc.data().ClosingFourTitle
-                const closingFiveText = doc.data().ClosingFiveText 
-                const closingFiveTitle = doc.data().ClosingFiveTitle
-                const closingSixText = doc.data().ClosingSixText 
-                const closingSixTitle = doc.data().ClosingSixTitle
-                const closingSevenText = doc.data().ClosingSevenText 
-                const closingSevenTitle = doc.data().ClosingSevenTitle
-                const closingEightText = doc.data().ClosingEightText 
-                const closingEightTitle = doc.data().ClosingEightTitle
-                const closingNineText = doc.data().ClosingNineText 
-                const closingNineTitle = doc.data().ClosingNineTitle
-                const workshopGoal = doc.data().Goal
-
-                // Load workshop title
-                const workshopTitleDOM = document.getElementById("workshop-title")
-
-                workshopTitleDOM.value = title
-
-                // Load selected header image 
-                const uploadHeaderImage = document.getElementById("selected-header-img")
-
-                    uploadHeaderImage.src = headerImg
-
-                // Load workshop title
- 
-                tinyMCE.get('editor1').setContent(workshopGoals)
-
-                // Load workshop goal
-                const selectGoal = document.getElementById("select-goel-workshop")
-
-                const options = selectGoal.options
-
-                const optionsArray = Array.from(options)
-
-                optionsArray.forEach(opt => {
-
-                    if(opt.innerHTML == workshopGoal){
-
-                        selectGoal.value = opt.innerHTML
-                    }
-                })
-
-                // Load workshop price
-                const priceDOM = document.getElementById("workshop-price")
-
-                priceDOM.value = workshopPrice
-
-                // Load step content
-
-                function loadSteps(dbTitle,buttonID,DOMtitleID, editorA, editorB, editorC, setContentA, setContentB, setContentC, innerDiv ){
-                    if(dbTitle != ""){
-                        const button = document.getElementById(buttonID)
-        
-                        button.click()
-                        button.style.display = "none"
-                    };
-
-                    const DOMtitle = document.getElementById(DOMtitleID)
-                    tinyMCE.get(editorA).setContent(setContentA)
-                    tinyMCE.get(editorB).setContent(setContentB)
-                    tinyMCE.get(editorC).setContent(setContentC)
-    
-                    DOMtitle.value = dbTitle
-    
-                    const innerDivDOM = document.getElementById(innerDiv)
-                    innerDivDOM.setAttribute("data-title", dbTitle)
-                    innerDivDOM.setAttribute("data-explainer", setContentB)
-                    innerDivDOM.setAttribute("data-cta", setContentC)
-                
-                };
-
-                loadSteps(stepOneTitle, "button-step-one", "step-one-title", 'editor2', 'editor3', 'editor4', stepOnePreview, stepOneExplainer, stepOneCTA, "step-one-inner-div")
-                loadSteps(stepTwoTitle, "button-step-two", "step-two-title", 'editor-preview-step-two', 'editor5', 'editor6', stepTwoPreview, stepTwoExplainer, stepTwoCTA, "step-two-inner-div")
-                loadSteps(stepThreeTitle, "button-step-three", "step-three-title", 'editor-preview-step-three', 'editor7', 'editor8', stepThreePreview, stepThreeExplainer, stepThreeCTA, "step-three-inner-div")
-                loadSteps(stepFourTitle, "button-step-four", "step-four-title", 'editor-preview-step-four', 'editor9', 'editor10', stepFourPreview, stepFourExplainer, stepFourCTA, "step-four-inner-div")
-                loadSteps(stepFiveTitle, "button-step-five", "step-five-title", 'editor-preview-step-five', 'editor11', 'editor12', stepFivePreview, stepFiveExplainer, stepFiveCTA, "step-five-inner-div")
-                loadSteps(stepSixTitle, "button-step-six", "step-six-title", 'editor-preview-step-six', 'editor13', 'editor14', stepSixPreview, stepSixExplainer, stepSixCTA, "step-six-inner-div" )
-                loadSteps(stepSevenTitle, "button-step-seven", "step-seven-title", 'editor-preview-step-seven', 'editor15', 'editor16', stepSevenPreview, stepSevenExplainer, stepSevenCTA, "step-seven-inner-div" )
-                loadSteps(stepEightTitle, "button-step-eight", "step-eight-title", 'editor-preview-step-eight', 'editor17', 'editor18', stepEightPreview, stepEightExplainer, stepEightCTA, "step-eight-inner-div" )
-                loadSteps(stepNineTitle, "button-step-nine", "step-nine-title", 'editor-preview-step-nine', 'editor19', 'editor20', stepNinePreview, stepNineExplainer, stepNineCTA, "step-nine-inner-div" )
-
-                // Load closing
-                
-                function loadClosing(closingTitle, closingText, createClosing, closingTitleInput, editorClosing){
-
-                    if(closingTitle != "" && closingText != ""){
-
-                        const closingButton = document.getElementById(createClosing)
-                            closingButton.click()
-    
-                        const closingTitleDOM = document.getElementById(closingTitleInput)
-                        tinyMCE.get(editorClosing).setContent(closingText)
-    
-                        closingTitleDOM.value = closingTitle
-                    };
-                } loadClosing(closingOneTitle, closingOneText, "create-closing-1", "closing-title-input-1", "editor-closing-1")
-                loadClosing(closingTwoTitle, closingTwoText, "create-closing-2", "closing-title-input-2", "editor-closing-2")
-                loadClosing(closingThreeTitle, closingThreeText, "create-closing-3", "closing-title-input-3", "editor-closing-3")
-                loadClosing(closingFourTitle, closingFourText, "create-closing-4", "closing-title-input-4", "editor-closing-4")
-                loadClosing(closingFiveTitle, closingFiveText, "create-closing-5", "closing-title-input-5", "editor-closing-5")
-                loadClosing(closingSixTitle, closingSixText, "create-closing-6", "closing-title-input-6", "editor-closing-6")
-                loadClosing(closingSevenTitle, closingSevenText, "create-closing-7", "closing-title-input-7", "editor-closing-7")
-                loadClosing(closingEightTitle, closingEightText, "create-closing-8", "closing-title-input-8", "editor-closing-8")
-                loadClosing(closingNineTitle, closingNineText, "create-closing-9", "closing-title-input-9", "editor-closing-9")
-                    
-            });
-        });
-    }, 2000);
-    };
-}();
-
-
 //  CREATE WORKSHOP
-
-// Save(set) first set of input to database
 
 let bannerImage = ""
 
@@ -2563,18 +2348,16 @@ function saveWorkshop(){
         ClosingEightText: closingEightText,
         ClosingNineTitle: closingNineTitle,
         ClosingNineText: closingNineText,
-                        });
-                    });
-                };
+                });
             });
-            const previewWorkshop = document.getElementById("preview-workshop")
-
-            previewWorkshop.style.display = "block"
-        
-            const workshopSavedSetNotification = document.getElementById("workshop-saved-set-notification")
-        
-            workshopSavedSetNotification.style.display = "block"
         };
+    });
+
+    const previewWorkshop = document.getElementById("preview-workshop")
+
+    previewWorkshop.style.display = "block"
+
+};
 
 // Update input
 function updateWorkshop(){
@@ -2582,6 +2365,10 @@ function updateWorkshop(){
     const workshopGoals = tinyMCE.get('editor1').getContent()
     const stepOnePreview = tinyMCE.get('editor2').getContent()
     const selectedBannerImg = document.getElementById("selected-header-img")
+
+    const updateButton = document.getElementById("saveWorkshop")
+    const workshopTitle = updateButton.dataset.title
+    const workshopcoach = updateButton.dataset.coach
 
         // Workshop goal
         const workshopGoalSelect = document.getElementById("select-goel-workshop")
@@ -2668,7 +2455,10 @@ function updateWorkshop(){
         const closingNineTitle = document.getElementById("closing-title-input-9").value
         const closingNineText = tinyMCE.get('editor-closing-9').getContent()
 
-    db.collection("Workshops").where("WorkshopTitle", "==", workshopTitle.value).get().then(querySnapshot => {
+    db.collection("Workshops")
+    .where("WorkshopTitle", "==", workshopTitle.value)
+
+    .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
             db.collection("Workshops").doc(doc.id).update({
