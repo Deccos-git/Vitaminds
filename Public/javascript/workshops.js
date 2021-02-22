@@ -798,7 +798,7 @@ function previewWorkshop(){
         querySnapshot.forEach(doc => {
 
             db.collection("Workshops").doc(doc.id).update({
-                Status: "Review",
+                Status: "Draft",
                 Takers: firebase.firestore.FieldValue.arrayUnion(workshopCoach)
             });
         });
@@ -823,7 +823,7 @@ function publishWorkshop(){
         querySnapshot.forEach(doc => {
 
             db.collection("Workshops").doc(doc.id).update({
-                Status: "Review",
+                Status: "Draft",
                 Takers: firebase.firestore.FieldValue.arrayUnion(workshopCoach)
             });
         });
@@ -1379,6 +1379,38 @@ function updateSaveWorkshop(titel){
     });
 };
 
+function saveAndCloseWorkshop(titel){
+
+    const button = document.getElementsByClassName("close-workshop")
+    const loaderModal = document.getElementById("load-modal")
+
+    const buttonArray = Array.from(button)
+
+    auth.onAuthStateChanged(User =>{
+        if (User){
+            db.collection("Vitaminders")
+            .doc(User.uid).get()
+            .then(doc => {
+
+                    const auth = doc.data().Gebruikersnaam
+
+                    buttonArray.forEach(btn => {
+
+                        btn.addEventListener("click", () => {
+                        updateSaveWorkshop(titel)
+                        
+                        loaderModal.style.display = "flex"
+
+                        setTimeout(() => { 
+                            window.open("../Vitaminders/" + auth + ".html", "_self");
+                         }, 3000);
+                    });
+                });
+            });
+        };
+    });
+};
+
 !function workshopQuery(){
 
     const workshopDomainInStartNewRoute = document.getElementById("workshop-goal-title")
@@ -1565,8 +1597,92 @@ function updateSaveWorkshop(titel){
             closingText(closingTextEightDOM, closingEightText)
             closingText(closingTextNineDOM, closingNineText)
             updateSaveWorkshop(title)
+            saveAndCloseWorkshop(title)
 
         });
+    });
+}();
+
+function loadAlreadySavedSteps(stepInput, stepButton, stepCTA){
+
+    if(stepInput != ""){
+        stepButton.addEventListener("click", () => {
+            stepCTA.value = stepInput
+        });
+    };
+};
+
+!function fillWorkshopWithAuthData(){
+
+    auth.onAuthStateChanged(User =>{
+        if (User){
+            db.collection("Vitaminders")
+            .doc(User.uid).get()
+            .then(doc => {
+
+                const auth = doc.data().Gebruikersnaam
+
+                db.collectionGroup("Workshops")
+                .where("Gebruikersnaam", "==", auth)
+                .where("Workshop", "==", titel)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc1 => {
+
+                        const stepOneInputAuth = doc1.data().StepOneInput
+                        const stepTwoInputAuth = doc1.data().StepTwoInput
+                        const stepThreeInputAuth = doc1.data().StepThreeInput
+                        const stepFourInputAuth = doc1.data().StepFourInput
+                        const stepFiveInputAuth = doc1.data().StepFiveInput
+                        const stepSixInputAuth = doc1.data().StepSixInput
+                        const stepSevenInputAuth = doc1.data().StepSevenInput
+                        const stepEightInputAuth = doc1.data().StepEightInput
+                        const stepNineInputAuth = doc1.data().StepNineInput
+                        const closingInputAuth = doc1.data().ClosingInput
+
+                        const stepOneCTA = document.getElementById("step-one-CTA")
+                        const stepTwoCTA = document.getElementById("step-two-CTA")
+                        const stepThreeCTA = document.getElementById("step-three-CTA")
+                        const stepFourCTA = document.getElementById("step-four-CTA")
+                        const stepFiveCTA = document.getElementById("step-five-CTA")
+                        const stepSixCTA = document.getElementById("step-six-CTA")
+                        const stepSevenCTA = document.getElementById("step-seven-CTA")
+                        const stepEightCTA = document.getElementById("step-eight-CTA")
+                        const stepNineCTA = document.getElementById("step-nine-CTA")
+
+                        const closingOne = document.getElementById("feedback-one")
+                        const closingTwo = document.getElementById("feedback-two")
+                        const closingThree = document.getElementById("feedback-three")
+                        const closingFour = document.getElementById("feedback-four")
+                        const closingFive = document.getElementById("feedback-five")
+                        const closingSix = document.getElementById("feedback-six")
+                        const closingSeven = document.getElementById("feedback-seven")
+                        const closingEight = document.getElementById("feedback-eight")
+                        const closingNine = document.getElementById("feedback-nine")
+
+                        const stepOneButton = document.getElementById("start-workshop")
+                        const stepTwoButton = document.getElementById("step-two-button")
+                        const stepThreeButton = document.getElementById("step-three-button")
+                        const stepFourButton = document.getElementById("step-four-button")
+                        const stepFiveButton = document.getElementById("step-five-button")
+                        const stepSixButton = document.getElementById("step-six-button")
+                        const stepSevenButton = document.getElementById("step-seven-button")
+                        const stepEightButton = document.getElementById("step-eight-button")
+                        const stepNineButton = document.getElementById("step-nine-button")
+
+                        loadAlreadySavedSteps(stepOneInputAuth, stepOneButton, stepOneCTA)
+                        loadAlreadySavedSteps(stepTwoInputAuth, stepTwoButton, stepTwoCTA)
+                        loadAlreadySavedSteps(stepThreeInputAuth, stepThreeButton, stepThreeCTA)
+                        loadAlreadySavedSteps(stepFourInputAuth, stepFourButton, stepFourCTA)
+                        loadAlreadySavedSteps(stepFiveInputAuth, stepFiveButton, stepFiveCTA)
+                        loadAlreadySavedSteps(stepSixInputAuth, stepSixButton, stepSixCTA)
+                        loadAlreadySavedSteps(stepSevenInputAuth, stepSevenButton, stepSevenCTA)
+                        loadAlreadySavedSteps(stepEightInputAuth, stepEightButton, stepEightCTA)
+                        loadAlreadySavedSteps(stepNineInputAuth, stepNineButton, stepNineCTA)
+
+                    });
+                });
+            });
+        };
     });
 }();
 

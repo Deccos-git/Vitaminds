@@ -479,6 +479,7 @@
 
 #banner-div img{
     width: 90%;
+    border-radius: 15px;
 }
 
 #group-description{
