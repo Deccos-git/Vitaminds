@@ -120,11 +120,11 @@ app.get('/Artikelen/:id',function(req,res)
 {
     res.sendFile('Artikel.html', { root: __dirname });
 });
-// Thema aanmaken op basis van URL
 
-app.get('/Thema/:id',function(req,res)
+// File aanmaken op basis van URL
+app.get('/Files/:id',function(req,res)
 {
-    res.sendFile('thema.html', { root: __dirname });
+    res.sendFile('file.html', { root: __dirname });
 });
 
 //Digimind aanmaken op basis van URL

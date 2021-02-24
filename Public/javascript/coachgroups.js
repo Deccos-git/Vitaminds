@@ -565,6 +565,16 @@ function hideLandingIfAuthIsMember(membersArray, groupLandingPageOuterDiv){
     });
 }; 
 
+function changeFormatOfDateLanding(date, startdateP){
+
+    const splitDate = date.split("-")
+
+    const formattedDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
+
+    startdateP.innerHTML = `<b>Startdatum:</b> ${formattedDate}`
+
+}
+
 function groupFactsLanding(memberCount, totalCosts, maximumMembersCount, durationTime, startDate){
 
     const numberOfMembersLi = document.createElement("li")
@@ -583,6 +593,8 @@ function groupFactsLanding(memberCount, totalCosts, maximumMembersCount, duratio
             duration.innerHTML = `<b>Duur van coachgroep:</b> ${durationTime} maanden`
         }
         start.innerHTML = `<b>Start datum:</b> ${startDate}`
+
+        changeFormatOfDateLanding(startDate, start)
 
         groupFactsUl.appendChild(maximumMembers)
         if(groupFactsUl != null){

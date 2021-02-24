@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta id="meta-keywords" name="keywords">
+    <meta id="meta-description" property="og:description" name="description">
+    <meta id="facebook-url" property="og:url"/>
+    <meta property="og:type"  content="article"/>
+    <meta id="facebook-title" property="og:title"/>
+    <meta id="facebook-description" property="og:description"/>
+    <meta id="facebook-img" property="og:image">
+    <title id="page-title" property="og:title"></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../Style/style.css">
+  <link rel="stylesheet" href="../Style/file.css">
+  <link rel="shortcut icon" href="../images/Favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  <!-- Tiny MCE -->
+  <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script>
+    tinymce.init({
+      height: 500,
+      selector: '#tiny-mce',
+      toolbar: 'preview | undo redo | styleselect | bold italic | numlist bullist | alignleft aligncenter alignright alignjustify | outdent indent | image | link | media',
+      plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak, lists, link, media',
+      toolbar_mode: 'floating',
+      plugin_preview_width: 720,
+      forced_root_block : false,
+      paste_preprocess: function(plugin, args) {
+        console.log(args.content);
+        args.content += ' preprocess';
+      }
+    });
+  </script>
+  <!-- End Tiny MCE -->
+</head>
+
+<body>
+  
+   <!-- Feedback -->
+   <div id="feedback">
+    <a href="../tickets.html"> <p>Feedback</p></a>
+  </div>
+
+<!-- Mobile-menu -->
+<nav id="mobile-menu"> 
+    <div id="menu-mobile-visible-layer">
+      <img id="mobile-hamburger-menu" src="../images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+      <div class="main-menu-mobile"><a href="../index.html"><img id="logo-menu" src="../images/design/Logo2021-red.png" alt="Vitaminds logo" width="100px"></a></div>
+    </div>
+    <div id="mobile-menu-outer-div">
+      <div id="mobile-menu-inner-div">
+        <ul id="list-mobile-menu">
+          <li>
+            <div id="profile-picture-mobile"></div>
+          </li>
+          <li>
+            <div id="button-login-mobile" class="login-logout"><button><a href="../inlog.html">Log in</a></button></div>
+          </li>
+          <li>
+            <div class="main-menu-mobile"><a href="../community.html">Community</a></div>
+          </li>
+          <li>
+            <div class="main-menu-mobile"><a href="../artikelen.html">Artikelen</a></div>
+          </li>
+          <li>
+            <div class="main-menu-mobile"><a href="../groups.html">Groepen</a></div> 
+          </li>
+          <li>
+            <div class="main-menu-mobile"><a href="../workshops.html">Workshops</a></div>
+          </li>
+          <li>
+            <div class="main-menu-mobile"><a href="../tools.html">Tools</a></div>
+          </li>
+          <li>
+            <div class="main-menu-mobile"><a href="../coaches.html">Coaches</a></div>
+          </li>
+          <li>
+            <div class="main-menu-mobile"><a href="../events.html">Events</a></div>
+          </li>
+          <li>
+            <a href="/../voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
+          </li>
+          <li>
+            <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+          </li> 
+        </ul>
+      </div>
+    </nav>
+  
+     <!-- menu --> 
+     <nav id="menu">
+      <div id="main-menu-logo"><a href="../index.html"><img id="logo-menu" src="../images/design/Logo2021-red.png" alt="Vitaminds logo" width="100px"></a></div>
+      <div id="navigation-menu">
+        <div class="main-menu"><a href="../community.html">Community</a></div>
+        <div class="main-menu"><a href="../artikelen.html">Artikelen</a></div>
+        <div class="main-menu"><a href="../groups.html">Groepen</a></div> 
+        <div class="main-menu"><a href="../workshops.html">Workshops</a></div>
+        <div class="main-menu"><a href="../tools.html">Tools</a></div>
+        <div class="main-menu"><a href="../coaches.html">Coaches</a></div>
+        <div class="main-menu"><a href="../events.html">Events</a></div>
+      </div>
+      <div id="auth-menu">
+        <div id="auth-DOM"></div>
+        <div id="profile-picture">
+        </div>
+        <div id="login-register-div">
+          <div id="button-register" class = "login-logout"><button><a href="../Register.html">Aanmelden</a></button></div>
+          <div id="button-login" class = "login-logout"><button><a href="../inlog.html">Log in</a></button></div>
+        </div>
+        <div id="slash" class = "login-logout"><a>|</a></div>
+        <div id="info-menu">
+          <a href="../voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
+        </div>
+      </div>
+    </nav>
+
+    <div id="banner-file">
+        <h1 id="file-title">Dossier</h1>
+    </div>
+    <div id="photo-outer-div"></div>
+    <div id="chat-div">
+        <button id="chat-button-file" class="button-file-chat">Ga naar chat</button>
+    </div>
+
+    <div id="file-menu">
+        <div class="file-menu-item">
+            <p class="file-menu-p file-menu-active" id="file-goals">Doelen</p>
+        </div>
+        <div class="file-menu-item">
+            <p class="file-menu-p" id="file-rapports">Berichten</p>
+        </div>
+        <div class="file-menu-item">
+            <p class="file-menu-p" id="file-info">Info</p>
+        </div>
+    </div>
+
+    <div class="file-component-outer-div" id="goals-outer-div">
+        <div>
+            <button id="create-goal-button" class="CTA-button">Voeg een doel toe</button>
+        </div>
+        <div id="create-goal-div">
+            <div id="insert-excinsing-goal">
+                <p>Kies een bestaand doel</p>
+                <div id="select-excisting-goal">
+                    <select name="" id="excisting-goal-select"></select>
+                </div>
+                <div>
+                    <button id="insert-excisting-goal" class= "button-algemeen">Voeg doel toe</button>
+                    <button id="create-new-goal" class= "button-algemeen">Of creeer nieuw doel</button>
+                </div>
+            </div>
+            <div id="backbutton-div">
+                <img src="../images/design/backbutton-icon.png" alt="">
+            </div>
+            <div id="create-new-goal-div">
+                <p class="route-instruction">Selecteer een thema</p>
+                <select id="select-goal">
+                    <option id="Ik", value="Ik">Ik</option>
+                    <option id="Gedachten", value="Gedachten">Gedachten</option>
+                    <option id="Gevoelens & Emoties", value="Gevoelens & Emoties">Gevoelens en Emoties</option>
+                    <option id="Lichaam & Geest", value="Lichaam & Geest">Lichaam en Geest</option>
+                    <option id="Relaties", value="Relaties">Liefde en Relaties</option>
+                    <option id="Seksualiteit", value="Seksualiteit">Seksualiteit</option>
+                    <option id="Sociaal", value="Sociaal">Spiritualiteit</option>
+                    <option id="Sociaal", value="Sociaal">Sociaal</option>
+                    <option id="Opvoeden", value="Opvoeden">Opvoeding</option>
+                    <option id="Werken-succes", value="Werken en Succes">Werken en Succes</option>
+                    <option id="Betekenisvol-leven", value="Betekenisvol leven">Betekenisvol leven</option>
+                    <option id="Koers-bepalen", value="Koers bepalen">Koers bepalen</option>
+                </select>
+                <p class="route-instruction">Geef het doel een korte titel</p>
+                <input type="text" id="goal-title" placeholder="Schrijf hier de titel">
+                <p class="route-instruction">Omschrijf het doel</p>
+                <textarea id="goal-description" cols="30" rows="10" placeholder="Omschrijf hier het doel"></textarea>
+            </div>
+            <div id="insert-goal-button-div">
+                <button id="insert-new-goal-button">Voeg doel toe</button>
+            </div>
+        </div>
+        <div id="goal-overview"></div>
+    </div>
+
+    <div class="file-component-outer-div" id="rapports-outer-div">
+        <div>
+            <button id="create-rapport" class="CTA-button">Voeg een bericht toe</button>
+        </div>
+        <div id="create-message-div">
+            <p>Schrijf een bericht</p>
+            <textarea name="" id="message-input" cols="30" rows="10" placeholder="Schrijf hier je bericht"></textarea>
+            <button id="save-message-button" class="button-algemeen">Opslaan</button>
+        </div>
+        <div id="message-overview"></div>
+    </div>
+
+    <div class="file-component-outer-div" id="info-outer-div">
+        <div id="creation-div">
+            <p><b>Dossier aangemaakt op</b></p>
+            <p id="creation-date"></p>
+        </div>
+    </div>
+
+<!-- Toolbar mobile -->
+<div class="toolbar-mobile">
+  <div class="toolbar-mobile-inner-div" id="toolbar-community">
+    <img src="../images/design/community-icon.png" alt="" id="toolbar-home">
+    <p class="description-menu-icons-toolbar-mobile">Community</p>
+  </div>
+  <div class="toolbar-mobile-inner-div" id="toolbar-inner-div-chats-groups">
+    <img src="../images/send-icon.png" alt="" id="toolbar-chats-groups">
+    <p class="description-menu-icons-toolbar-mobile">Chats & groepen</p>
+  </div>
+  <div class="toolbar-mobile-inner-div" id="toolbar-digimind-div">
+    <img src="../images/menu-dashboard.png" alt="" id="toolbar-digimind">
+    <p class="description-menu-icons-toolbar-mobile">Mijn account</p>
+  </div>  
+</div>
+</div>
+
+<!-- footer -->
+<footer class="footer">
+  <div id="top-layer">
+    <div>
+    <a href="https://www.vitaminds.nu"><img src="../images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+    </div>
+    <div>
+      <h3 id="slogan-footer">Het sociale netwerk voor imperfecte mensen</h3>
+    </div>
+    <div>
+    <a href="https://www.facebook.com/Vitaminds.nu"><img src="../images/Logo-facebook.png" alt="" width="25px"></a>
+    <a href="https://www.instagram.com/vitaminds.nu"><img src="../images/logo-insta.png" alt="" width="50px"></a>
+    </div>
+  </div>
+  <div id="contact-layer">
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="../images/adres-icon.png" alt="Vitaminds adres">
+      <p>Beijumerweg 24</p>
+      <p>9737AD</p> 
+      <p>Groningen</p>
+    </div>
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="../images/email-icon.png" alt="Vitaminds emailadres">
+      <p> info@vitaminds.nu</p>
+    </div>
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="../images/telephone-icon.png" alt="Vitaminds phonenumber">
+      <p>+316 244 098 43</p>
+    </div>
+  </div>
+</footer>
+
+
+      <script type="text/javascript" src="../javascript/firebase.js"></script>
+      <script type="text/javascript" src="../javascript/file.js"></script>
+      <script type="text/javascript" src="../javascript/auth.js"></script>
+      <script type="text/javascript" src="../javascript/index.js"></script>
+    </body>
+  </html>
+  

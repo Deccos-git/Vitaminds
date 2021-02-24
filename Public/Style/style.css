@@ -305,10 +305,6 @@ ul{
   align-items: center;
 }
 
-.login-logout button:hover {
-  border: 2px #FFF solid;
-}
-
 .login-logout button a:link {
   text-decoration: none;
   color: #FFF;

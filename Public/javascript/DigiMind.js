@@ -578,50 +578,98 @@ function hideSelectAsCoachIfAuthIsCoach(button){
         });
 };
 
-function createFile(){
+createChatWhenCoachIsSelected()
+
+function createChatWhenCoachIsSelected(){
+
+        auth.onAuthStateChanged(User =>{
+                if(User){
+                const userRef = db.collection("Vitaminders").doc(User.uid);
+                userRef.get().then(function(doc) {
+
+                        const auth = doc.data().Gebruikersnaam
+                        const authClean = doc.data().GebruikersnaamClean
+
+                        const roomName = auth<naam ? auth+'_'+naam : naam+'_'+auth;
+
+                        const membersArray = [
+                                auth,
+                                naam,
+                        ]
+
+                                // db.collection("Chats").doc().set({
+                                //         Room: roomName,
+                                //         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                //         Type: "Chat",
+                                //         Messages: 0,
+                                //         Eigenaar: "Vitaminds",
+                                //         Members: membersArray,
+                                //         Online: []
+                                // });
+                        });
+                };
+        });
+};
+
+!function createFile(){
+
+        auth.onAuthStateChanged(User =>{
+                if(User){
+                    db.collection("Vitaminders").doc(User.uid)
+                    .get().then(function(doc) {
+            
+                    const auth = doc.data().Gebruikersnaam
+
+                        const button = document.getElementById("select-button")
+
+                        updateSelectAsCoachButton(auth)
+
+                                button.addEventListener("click", () => {
+
+                                        button.innerText = "Geselecteerd"
+
+                                        db.collection("Files")
+                                        .doc()
+                                        .set({
+                                                Coach: naam,
+                                                Coachee: auth,
+                                                ID: idClean,
+                                                Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
+                                        })
+                                        .then(() => {
+                                                createChatWhenCoachIsSelected()
+                                        })
+                                        .then(() => {
+                                                window.open("../Files/" + [idClean] + ".html", "_self");
+                                        })
+                                });
+                        });
+                };
+        });
+                      
+}();
+
+function updateSelectAsCoachButton(auth){
+
+        const button = document.getElementById("select-button")
         
-}
+        db.collection("Files")
+        .where("Coach", "==", naam)
+        .where("Coachee", "==", auth)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
 
-!function showPublicProcess(){
+                        const id = doc.data().ID
 
-        const publicProcesDiv = document.getElementById("public-trajects")
-        const trajectDiv = document.getElementById("traject-div")
+                        button.innerText = "Bekijk dossier"
+                        button.id = "Selected"
 
-        db.collectionGroup("Levensvragen")
-        .where("Gebruikersnaam", "==", naam)
-        .where("Openbaar", "==", "Ja")
-        .get().then(querySnapshot =>{
-                querySnapshot.forEach(doc =>{
-
-                        const ID = doc.data().ID
-                        const levensvraagID = doc.data().Levensvraag
-                        const levensvragen = levensvraagID.replace(ID, "")
-                        const description = doc.data().Omschrijving
-                        const goal = doc.data().Goal
-
-                        addLessonsToProces(levensvraagID)
-
-                        const innerDiv = document.createElement("div")
-                                innerDiv.setAttribute("class", "digimind-proces-inner-div-public")
-                        const goalDiv = document.createElement("div")
-                                goalDiv.setAttribute("class", "goal-div")
-                        const goalP = document.createElement("p")
-                        const levensvraagTitle = document.createElement("h3")
-                        const descriptionP = document.createElement("p")
-
-                        goalP.innerHTML = goal
-                        levensvraagTitle.innerHTML = levensvragen
-                        descriptionP.innerHTML = description
-
-                        publicProcesDiv.appendChild(innerDiv)
-                        innerDiv.appendChild(levensvraagTitle)
-                        innerDiv.appendChild(descriptionP)
-
-                        trajectDiv.style.display = "flex"
-                
+                        button.addEventListener("click", () => {
+                                window.open("../Files/" + [id] + ".html", "_self");
+                        });
                 });
         });
-}();
+};
 
 // Database Query
 !function databaseQueryPublic(){
@@ -1046,7 +1094,7 @@ function fillProgressChartWithData(goal){
         db.collectionGroup("Progress")
         .where("Goal", "==", goal)
         .where("User", "==", naam)
-        .orderBy("Timestamp", "asc")
+        .orderBy("Timestamp", "desc")
         .onSnapshot(querySnapshot =>{
                 querySnapshot.forEach(doc =>{
 

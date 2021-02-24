@@ -696,14 +696,18 @@ function loadCreatorData(creatorName, innerSection){
             photoImg.src = photo
             nameP.innerText = nameClean
 
-            innerSection.appendChild(authDiv)
-            authDiv.appendChild(photoImg)
-            authDiv.appendChild(nameP)
+            auth.onAuthStateChanged(User =>{
+                if(User){
 
-            authDiv.addEventListener("click", () => {
-                window.open("../Vitaminders/" + creatorName + ".html", "_self");
-            })
+                    innerSection.appendChild(authDiv)
+                    authDiv.appendChild(photoImg)
+                    authDiv.appendChild(nameP)
 
+                    authDiv.addEventListener("click", () => {
+                        window.open("../Vitaminders/" + creatorName + ".html", "_self");
+                    });
+                };
+            });
         });
     });
 };
