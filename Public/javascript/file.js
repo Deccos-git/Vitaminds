@@ -48,7 +48,7 @@ function goToChat(auth, coach, coachee){
         if(auth === coach){
                 window.open(`../Chats/${coachee}.html`, "_self");
         } else if (auth === coachee){
-            window.open(`../Chats/${coachee}.html`, "_self");
+            window.open(`../Chats/${coach}.html`, "_self");
         };
     });
 };
@@ -209,7 +209,7 @@ function showSaveNewButton(coach){
     });
 };
 
-function saveNewGoal(coach, coachee, DOCID){
+function saveNewGoal(coach, coachee, DOCID, coachClean){
 
     const saveNewGoalButton = document.getElementById("insert-new-goal-button")
 
@@ -227,7 +227,7 @@ function saveNewGoal(coach, coachee, DOCID){
 
     const goalDescription = document.getElementById("goal-description").value 
 
-    let approved = ""
+    let suggested = ""
 
     auth.onAuthStateChanged(User =>{
         if(User){
@@ -237,13 +237,13 @@ function saveNewGoal(coach, coachee, DOCID){
                     const auth = doc1.data().Gebruikersnaam
 
                     if(auth === coach){
-                        approved = "No"
+                        suggested = coach
                     } else if (auth === coachee){
-                        approved = "Yes"
+                        suggested = "No"
                     };
 
                     db.collection("Vitaminders")
-                    .where("Gebruikersnaam", "==", coach)
+                    .where("Gebruikersnaam", "==", coachee)
                     .get().then(querySnapshot => {
                         querySnapshot.forEach(doc2 => {
                 
@@ -252,7 +252,7 @@ function saveNewGoal(coach, coachee, DOCID){
                             .set({
                                 Eigenaar: "Vitaminds",
                                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                                Gebruikersnaam: coach,
+                                Gebruikersnaam: coachee,
                                 Goal: selected,
                                 Levenslessen: [],
                                 ID: idClean,
@@ -260,7 +260,7 @@ function saveNewGoal(coach, coachee, DOCID){
                                 LevensvraagClean: goalTitle,
                                 Omschrijving: goalDescription,
                                 Openbaar: "Nee",
-                                Approved: approved
+                                Suggested: suggested,
                             })
                             .then(() => {
                                 db.collection("Files")
@@ -277,13 +277,442 @@ function saveNewGoal(coach, coachee, DOCID){
     });
 };
 
-function displayGoalsInOverview(){
+function goalinInSelect(goalClean, option){
 
-    const goalOverview = document.getElementById("goal-overview")
+    option.innerText = goalClean
+};
 
+function displayGoalsInOverview(fileid, coachee, auth){
 
+    const select = document.getElementById("select-goal-overview")
+    const selectDiv = document.getElementById("select-goal-div")
 
-}
+    const goalArray = []
+
+    findFirstGoalInGoalArray(goalArray, coachee, auth)
+
+    db.collection("Files")
+    .where("ID", "==", fileid)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const goals = doc.data().Goals
+
+            goals.forEach(goal => {
+                db.collectionGroup("Levensvragen")
+                .where("Levensvraag", "==", goal)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc1 => {
+
+                        const goalClean = doc1.data().LevensvraagClean
+                        const option = document.createElement("option")
+
+                        goalArray.push(goalClean)
+                        
+                        goalinInSelect(goalClean, option)
+                        select.appendChild(option)
+                    });
+                })
+                .then(() => {
+                    hideSelectIfNoGoals(goalArray, selectDiv)
+                })
+            });
+        });
+    });
+};
+
+function hideSelectIfNoGoals(goalArray, select){
+
+    console.log(goalArray.length)
+
+    if(goalArray.length === 0){
+        select.style.display = "none"
+    };
+};
+
+function findFirstGoalInGoalArray(goalArray, coachee, auth){
+
+    setTimeout(() => {
+        autoLoadFirstProces(goalArray[0], coachee, auth)
+    }, 2000);
+};
+
+function getFileProces(){
+    const select = document.getElementById("select-goal-overview")
+
+    const option = select.options
+    const selected = option[option.selectedIndex].innerHTML
+
+    db.collection("Files")
+    .where("ID", "==", fileid)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const coachee = doc.data().Coachee
+
+            showSelectedProces(selected, coachee)
+
+        });
+    });
+};
+
+function suggestedByCoach(suggested, DOCID, approved){
+
+    const suggestedByCoachDiv = document.getElementById("suggested-div")
+
+    let suggestedNotice = document.createElement("p")
+    const approveButton = document.createElement("button")
+    approveButton.innerText = "Doel goedkeuren"
+
+    goalIsApprovedMessage(approved, approveButton, suggested)
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        db.collection("Vitaminders")
+        .doc(User.uid).get().then(doc1 =>{
+
+            const auth = doc1.data().Gebruikersnaam
+
+            console.log(DOCID)
+
+            approveGoalSuggestedByCoach(auth, DOCID, approveButton)
+
+                if(suggested != undefined){
+
+                    db.collection("Vitaminders")
+                    .where("Gebruikersnaam", "==", suggested)
+                    .get().then(querySnapshot =>{
+                        querySnapshot.forEach(doc =>{
+
+                            const nameClean = doc.data().GebruikersnaamClean
+                            const type = doc.data().Usertype
+
+                            // Suggested is coach
+                            if(suggested != "No"){
+                                suggestedByCoachDiv.appendChild(suggestedNotice)
+
+                                if(auth != suggested){
+                                    suggestedNotice.innerHTML = `Dit doel is voorgesteld door ${type} ${nameClean}`
+                                    suggestedByCoachDiv.appendChild(approveButton)
+                                } else {
+                                    suggestedNotice.innerHTML = `Dit doel is voorgesteld door jou`
+                                }
+                            };
+                        });
+                    });
+                };
+            });
+        };
+    });
+};
+
+function approveGoalSuggestedByCoach(auth, DOCID, approveButton){
+
+    approveButton.addEventListener('click', () => {
+
+        approveButton.innerText = "Opgeslagen"
+
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", auth)
+        .get().then(querySnapshot =>{
+            querySnapshot.forEach(doc1 =>{
+
+                db.collection("Vitaminders")
+                .doc(doc1.id)
+                .collection("Levensvragen")
+                .doc(DOCID)
+                .update({
+                    Approved: "Approved"
+                });
+            });
+        });
+    });
+};
+
+function goalIsApprovedMessage(approved, approveButton, suggested){
+
+    const approvedDiv = document.getElementById("approved-div")
+
+    const approvedNotice = document.createElement("p")
+
+    hideApprovedDivIfGoalIsNotSuggestedByCoach(suggested, approvedNotice)
+
+     if(approved === "Approved"){
+        approvedNotice.innerText = "Doel is goedgekeurd"
+        approvedNotice.style.color = "Green"
+        approveButton.style.display = "none"
+     } else {
+        approvedNotice.innerText = "Doel is nog niet goedgekeurd"
+        approvedNotice.style.color = "Orange"
+     };
+
+     approvedDiv.appendChild(approvedNotice)
+};
+
+function hideApprovedDivIfGoalIsNotSuggestedByCoach(suggested, approvedNotice){
+
+    if (suggested === undefined){
+        approvedNotice.style.display = "none"
+    };
+};
+
+function showSelectedProces(selected, coachee){
+
+    const goalOverview = document.getElementById("goal-overview-inner-div")
+    const progressBoxFilled = document.getElementById("progress-box-outer-div")
+    const suggestedDiv = document.getElementById("suggested-div")
+    const approvedDiv = document.getElementById("approved-div")
+
+    goalOverview.innerHTML = ""
+    progressBoxFilled.innerHTML = ""
+    suggestedDiv.innerHTML = ""
+    approvedDiv.innerHTML = ""
+
+    db.collectionGroup("Levensvragen")
+    .where("Gebruikersnaam", "==", coachee)
+    .where("LevensvraagClean", "==", selected)
+    .get().then(querySnapshot =>{
+            querySnapshot.forEach(doc =>{
+
+                    const ID = doc.data().ID
+                    const levensvraagID = doc.data().Levensvraag
+                    const levensvragen = levensvraagID.replace(ID, "")
+                    const openbaar = doc.data().Openbaar
+                    const description = doc.data().Omschrijving
+                    const goal = doc.data().Goal
+                    const domain = doc.data().Domain
+                    const suggested = doc.data().Suggested
+                    const approved = doc.data().Approved
+
+                    addLessonsToProces(levensvraagID)
+                    progressBox(levensvraagID, doc.id)
+                    fillProgressChartWithData(levensvraagID, coachee)
+                    suggestedByCoach(suggested, doc.id, approved)
+
+                    const innerDiv = document.createElement("div")
+                            innerDiv.setAttribute("class", "digimind-proces-inner-div")
+                    const goalDiv = document.createElement("div")
+                            goalDiv.setAttribute("class", "goal-div")
+                    const goalP = document.createElement("p")
+                    const levensvraagTitle = document.createElement("h2")
+                    const descriptionP = document.createElement("p")
+                    const privateDiv = document.createElement("div")
+                            privateDiv.setAttribute("class", "private-div")
+                    const private = document.createElement("div")
+                    const privateTooltip = document.createElement("p")
+                            privateTooltip.setAttribute("class", "private-tooltip")
+
+                    goalP.innerHTML = goal
+                    levensvraagTitle.innerHTML = levensvragen
+                    descriptionP.innerHTML = description
+
+                    goalOverview.appendChild(innerDiv)
+                    innerDiv.appendChild(privateDiv)
+                    privateDiv.appendChild(private)
+                    privateDiv.appendChild(privateTooltip)
+                    // innerDiv.appendChild(goalDiv)
+                    // goalDiv.appendChild(goalP)
+                    innerDiv.appendChild(levensvraagTitle)
+                    innerDiv.appendChild(descriptionP)
+
+            });
+    });
+};
+
+function autoLoadFirstProces(optionZero, coachee, auth){
+
+    const goalOverview = document.getElementById("goal-overview-inner-div")
+
+    db.collectionGroup("Levensvragen")
+    .where("Gebruikersnaam", "==", coachee)
+    .where("LevensvraagClean", "==", optionZero)
+    .get().then(querySnapshot =>{
+            querySnapshot.forEach(doc =>{
+
+                    const ID = doc.data().ID
+                    const levensvraagID = doc.data().Levensvraag
+                    const levensvragen = levensvraagID.replace(ID, "")
+                    const openbaar = doc.data().Openbaar
+                    const description = doc.data().Omschrijving
+                    const goal = doc.data().Goal
+                    const domain = doc.data().Domain
+                    const suggested = doc.data().Suggested
+                    const approved = doc.data().Approved
+
+                    addLessonsToProces(levensvraagID)
+                    progressBox(levensvraagID, doc.id)
+                    fillProgressChartWithData(levensvraagID, coachee)
+                    suggestedByCoach(suggested, doc.id, approved)
+
+                    const innerDiv = document.createElement("div")
+                            innerDiv.setAttribute("class", "digimind-proces-inner-div")
+                    const goalDiv = document.createElement("div")
+                            goalDiv.setAttribute("class", "goal-div")
+                    const goalP = document.createElement("p")
+                    const levensvraagTitle = document.createElement("h2")
+                    const descriptionP = document.createElement("p")
+                    const privateDiv = document.createElement("div")
+                            privateDiv.setAttribute("class", "private-div")
+                    const private = document.createElement("div")
+                    const privateTooltip = document.createElement("p")
+                            privateTooltip.setAttribute("class", "private-tooltip")
+
+                    goalP.innerHTML = goal
+                    levensvraagTitle.innerHTML = levensvragen
+                    descriptionP.innerHTML = description
+
+                    // procesPrivatePublic(openbaar, private, privateTooltip)
+
+                    goalOverview.appendChild(innerDiv)
+                    innerDiv.appendChild(privateDiv)
+                    privateDiv.appendChild(private)
+                    privateDiv.appendChild(privateTooltip)
+                    // innerDiv.appendChild(goalDiv)
+                    // goalDiv.appendChild(goalP)
+                    innerDiv.appendChild(levensvraagTitle)
+                    innerDiv.appendChild(descriptionP)
+            
+            });
+    });
+};
+
+function progressChartAxis(dates, numbers){
+
+    const hapinessChart = document.getElementById('progress-chart').getContext('2d');
+
+const myChart = new Chart(hapinessChart, {
+    type: 'line',
+    data: {
+        labels: dates,
+        datasets: [{
+            label: 'Ontwikkeling',
+            data: numbers,
+            backgroundColor: [
+                    "#0c66650D"
+            ],
+            borderColor: [
+                    "#0c6665"
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+            legend: {
+                    display: false
+            },           
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    userCallback: function(label, index, labels) {
+                            // when the floored value is the same as the value we have a whole number
+                            if (Math.floor(label) === label) {
+                                return label;
+                            }
+                    }
+                }
+            }]
+        }
+    }
+});
+};
+
+function hideProgressBoxIfNoInputs(dateArray){
+
+    const progressBox = document.getElementById("progress-box-outer-div")
+
+    console.log(dateArray.length)
+
+    if(dateArray.length === 0){
+        progressBox.style.display = "none"
+    };
+};
+
+function fillProgressChartWithData(goal, coachee){
+
+    const dateArray = []
+    const numberArray = []
+
+    db.collectionGroup("Progress")
+    .where("Goal", "==", goal)
+    .where("User", "==", coachee)
+    .orderBy("Timestamp", "desc")
+    .onSnapshot(querySnapshot =>{
+            querySnapshot.forEach(doc =>{
+
+                const number = doc.data().Number
+                const date = doc.data().Timestamp
+
+                const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+                const dateLocale = date.toDate().toLocaleDateString("nl-NL", options);
+
+                dateArray.push(dateLocale) 
+                numberArray.push(number)
+
+                progressChartAxis(dateArray, numberArray)
+
+        });
+    });
+};
+
+function progressBox(){
+
+    const progressBoxDOM = document.getElementById("progress-box-outer-div")
+    const progressBoxOuterDiv = document.createElement("div")
+            progressBoxOuterDiv.setAttribute("id", "progress-box")
+    const canvas = document.createElement("canvas")
+            canvas.setAttribute("id", "progress-chart")
+    
+    const title = document.createElement("h3")
+
+    title.innerText = "Ontwikkeling"
+
+    progressBoxDOM.prepend(title)
+    progressBoxDOM.appendChild(progressBoxOuterDiv)
+    progressBoxOuterDiv.appendChild(canvas)
+};
+
+function addLessonsToProces(selectedProces){
+
+    const lessonsDiv = document.getElementById("proces-lessons")
+    const lessonDivTitle = document.createElement("h3")
+            lessonDivTitle.setAttribute("id", "lesson-div-title")
+    lessonDivTitle.innerText = "Lessen"
+
+    lessonsDiv.innerHTML = ""
+
+    db.collectionGroup("Levenslessen").where("Levensvraag", "==", selectedProces)
+    .orderBy("Timestamp", "desc").get().then(querySnapshot =>{
+            querySnapshot.forEach(doc1 =>{     
+
+                    const levensles = doc1.data().Levensles
+                    const type = doc1.data().Type
+                    const timestamp = doc1.data().Timestamp
+
+                    const levenslesDiv = document.createElement("div")
+                            levenslesDiv.setAttribute("class", "levensles-div-ontwikkeling")
+                    const levenslesH3 = document.createElement("h3")
+                    const metaDiv = document.createElement("div")
+                            metaDiv.setAttribute("class", "ontwikkeling-levensles-meta-div")
+                    const metaType = document.createElement("p")
+                    const metaTimestamp = document.createElement("p")
+            
+                    levenslesH3.innerHTML = levensles
+                    metaType.innerHTML = type
+                    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                    metaTimestamp.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
+
+                    lessonsDiv.prepend(lessonDivTitle)
+                    lessonsDiv.appendChild(levenslesDiv)
+                    levenslesDiv.appendChild(levenslesH3)
+                    levenslesDiv.appendChild(metaDiv)
+                    metaDiv.appendChild(metaType)
+                    metaDiv.appendChild(metaTimestamp)
+
+            });
+    });
+};
+
 
 function showWriteMessageBox(){
 
@@ -332,7 +761,7 @@ function displayMessages(){
 
     db.collectionGroup("Messages")
     .where("FileID", "==", fileid)
-    .orderBy("Timestamp", "asc")
+    .orderBy("Timestamp", "desc")
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
@@ -423,6 +852,7 @@ function insertAuthDataInMessage(auth, nameP, photoP){
                             selectExcistingGoal(doc.id, coachee)
                             saveNewGoal(coach, coachee, doc.id)
                             showSaveNewButton(coach)
+                            displayGoalsInOverview(fileid, coachee)
                         };
                     });
                 };

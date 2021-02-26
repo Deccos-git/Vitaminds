@@ -23,6 +23,7 @@
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
   <!-- Tiny MCE -->
   <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
@@ -186,7 +187,19 @@
                 <button id="insert-new-goal-button">Voeg doel toe</button>
             </div>
         </div>
-        <div id="goal-overview"></div>
+        <div id="goal-overview">
+            <div id="select-goal-div">
+                <p>Selecteer een doel</p>
+                <select name="" id="select-goal-overview" onchange="getFileProces(this)"></select>
+            </div>
+            <div id="goal-overview-outer-div">
+                <div id="suggested-div"></div>
+                <div id="approved-div"></div>
+                <div id="goal-overview-inner-div"></div>
+                <div id="progress-box-outer-div"></div>
+                <div id="proces-lessons"></div>
+            </div>
+        </div>
     </div>
 
     <div class="file-component-outer-div" id="rapports-outer-div">

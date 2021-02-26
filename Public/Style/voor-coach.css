@@ -728,6 +728,16 @@
     align-self: flex-start;
 }
 
+#clicked{
+    background-color: #008e8e;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 938px){
 
 #for-coach-banner-title {

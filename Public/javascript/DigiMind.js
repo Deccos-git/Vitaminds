@@ -46,8 +46,8 @@ function digimindMetaTags(coachDescription, coach, profilePic){
         keywords.content = coach + "," + coachDescription
         description.content = coachDescription
         facebookURL.content = window.location.href
-        facebookTitle.content = `Digmind van ${coach}`
-        pageTitle.innerText = `Digmind van ${coach}`
+        facebookTitle.content = `${coach}`
+        pageTitle.innerText = `${coach}`
         facebookDescription.content = coachDescription
         facebookImage.content = profilePic
         };
@@ -469,7 +469,9 @@ function sendMailNewChat(authUserClean){
         });
 }();
 
-function visitChatIfChatIf(button){
+function visitChatIfChatIsCreated(button){
+
+        const chatDiv = document.getElementById("chat-follow-div")
 
         auth.onAuthStateChanged(User =>{
                 if(User){
@@ -489,6 +491,7 @@ function visitChatIfChatIf(button){
                                                         button.innerHTML = `<a id="show-chat" href="../Chats/${naam}.html">Bekijk chat</a>`
                                                         button.id = "show-chat-button"
                                                         button.class = "button-vitaminds"
+                                                        chatDiv.setAttribute("data-created", "Yes")
                                                 };
                                         });
                                 });
@@ -502,7 +505,7 @@ function visitChatIfChatIf(button){
 
         const chatButton = document.getElementById("chat-button")
 
-        visitChatIfChatIf(chatButton)
+        visitChatIfChatIsCreated(chatButton)
 
         auth.onAuthStateChanged(User =>{
                 if(User){
@@ -578,37 +581,43 @@ function hideSelectAsCoachIfAuthIsCoach(button){
         });
 };
 
-createChatWhenCoachIsSelected()
 
 function createChatWhenCoachIsSelected(){
 
-        auth.onAuthStateChanged(User =>{
-                if(User){
-                const userRef = db.collection("Vitaminders").doc(User.uid);
-                userRef.get().then(function(doc) {
+        const chatDiv = document.getElementById("chat-follow-div")
 
-                        const auth = doc.data().Gebruikersnaam
-                        const authClean = doc.data().GebruikersnaamClean
+        const chatAlreadyExcists = chatDiv.dataset.created
+        
+        if(chatAlreadyExcists != "Yes"){
 
-                        const roomName = auth<naam ? auth+'_'+naam : naam+'_'+auth;
+                auth.onAuthStateChanged(User =>{
+                        if(User){
+                        const userRef = db.collection("Vitaminders").doc(User.uid);
+                        userRef.get().then(function(doc) {
 
-                        const membersArray = [
-                                auth,
-                                naam,
-                        ]
+                                const auth = doc.data().Gebruikersnaam
+                                const authClean = doc.data().GebruikersnaamClean
 
-                                // db.collection("Chats").doc().set({
-                                //         Room: roomName,
-                                //         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                                //         Type: "Chat",
-                                //         Messages: 0,
-                                //         Eigenaar: "Vitaminds",
-                                //         Members: membersArray,
-                                //         Online: []
-                                // });
-                        });
-                };
-        });
+                                const roomName = auth<naam ? auth+'_'+naam : naam+'_'+auth;
+
+                                const membersArray = [
+                                        auth,
+                                        naam,
+                                ]
+
+                                        db.collection("Chats").doc().set({
+                                                Room: roomName,
+                                                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                                Type: "Chat",
+                                                Messages: 0,
+                                                Eigenaar: "Vitaminds",
+                                                Members: membersArray,
+                                                Online: []
+                                        });
+                                });
+                        };
+                });
+        };
 };
 
 !function createFile(){
@@ -641,7 +650,7 @@ function createChatWhenCoachIsSelected(){
                                         })
                                         .then(() => {
                                                 window.open("../Files/" + [idClean] + ".html", "_self");
-                                        })
+                                        });
                                 });
                         });
                 };
@@ -665,7 +674,7 @@ function updateSelectAsCoachButton(auth){
                         button.id = "Selected"
 
                         button.addEventListener("click", () => {
-                                window.open("../Files/" + [id] + ".html", "_self");
+                                // window.open("../Files/" + [id] + ".html", "_self");
                         });
                 });
         });
@@ -1131,6 +1140,7 @@ function autoLoadFirstProces(optionZero){
                         const description = doc.data().Omschrijving
                         const goal = doc.data().Goal
                         const domain = doc.data().Domain
+                        const approved = doc.data().Approved
 
                         addLessonsToProces(levensvraagID)
                         progressBox(levensvraagID, doc.id)
@@ -1165,7 +1175,6 @@ function autoLoadFirstProces(optionZero){
                         // goalDiv.appendChild(goalP)
                         innerDiv.appendChild(levensvraagTitle)
                         innerDiv.appendChild(descriptionP)
-                
                 });
         });
 };
@@ -1191,6 +1200,7 @@ function showSelectedProces(selectedProces){
                         const description = doc.data().Omschrijving
                         const goal = doc.data().Goal
                         const domain = doc.data().Domain
+                        const approved = doc.data().Approved
 
                         addLessonsToProces(levensvraagID)
                         progressBox(levensvraagID, doc.id)
@@ -1217,6 +1227,8 @@ function showSelectedProces(selectedProces){
 
                         procesPrivatePublic(openbaar, private, privateTooltip)
 
+                        console.log(approved)
+
                         procesInnerDiv.appendChild(innerDiv)
                         innerDiv.appendChild(privateDiv)
                         privateDiv.appendChild(private)
@@ -1225,7 +1237,6 @@ function showSelectedProces(selectedProces){
                         // goalDiv.appendChild(goalP)
                         innerDiv.appendChild(levensvraagTitle)
                         innerDiv.appendChild(descriptionP)
-
                 });
         });
 };
@@ -1271,59 +1282,59 @@ function addLessonsToProces(selectedProces){
         });
 };
 
-function showInspirationDiv(div){
-        div.style.display = "flex"
-};
+// function showInspirationDiv(div){
+//         div.style.display = "flex"
+// };
 
-function showArticles(domainAuth){
+// function showArticles(domainAuth){
 
-        const inspirationOuterDiv = document.getElementById("inspiration-outer-div")
-        const inspirationDiv = document.getElementById("inspiration-div")
+//         const inspirationOuterDiv = document.getElementById("inspiration-outer-div")
+//         const inspirationDiv = document.getElementById("inspiration-div")
 
-        inspirationOuterDiv.innerHTML = ""
+//         inspirationOuterDiv.innerHTML = ""
 
-        db.collection("Articles").where("Domain", "==", domainAuth)
-        .get().then(querySnapshot => {
-                querySnapshot.forEach(doc => {
+//         db.collection("Articles").where("Domain", "==", domainAuth)
+//         .get().then(querySnapshot => {
+//                 querySnapshot.forEach(doc => {
 
-                        const title = doc.data().Title
-                        const headerImageSmall = doc.data().HeaderImageSmall
+//                         const title = doc.data().Title
+//                         const headerImageSmall = doc.data().HeaderImageSmall
                         
-                        inspirationDiv.style.display = "flex"
+//                         inspirationDiv.style.display = "flex"
                 
-                        const outerSection = document.createElement("section")
-                        outerSection.setAttribute("class", "levensvraag-artikel-section")
-                        outerSection.setAttribute("data-title", title)
-                        const headerDiv = document.createElement("div")
-                        headerDiv.setAttribute("class", "levensvraag-artikel-header")
-                        const headerImg = document.createElement("img")
-                        headerImg.setAttribute("class", "header-image-article")
-                        const titleDiv = document.createElement("div")
-                        const titleSub = document.createElement("h5")
-                        titleSub.setAttribute("class", "titleSub")
-                        const titleH2 = document.createElement("h2")
-                        titleH2.setAttribute("class", "titelTekst")
-                        const buttonDiv = document.createElement("button")
-                        buttonDiv.setAttribute("class", "button-algemeen-card")
-                        buttonDiv.setAttribute("onclick", "seeArticle(this)")
+//                         const outerSection = document.createElement("section")
+//                         outerSection.setAttribute("class", "levensvraag-artikel-section")
+//                         outerSection.setAttribute("data-title", title)
+//                         const headerDiv = document.createElement("div")
+//                         headerDiv.setAttribute("class", "levensvraag-artikel-header")
+//                         const headerImg = document.createElement("img")
+//                         headerImg.setAttribute("class", "header-image-article")
+//                         const titleDiv = document.createElement("div")
+//                         const titleSub = document.createElement("h5")
+//                         titleSub.setAttribute("class", "titleSub")
+//                         const titleH2 = document.createElement("h2")
+//                         titleH2.setAttribute("class", "titelTekst")
+//                         const buttonDiv = document.createElement("button")
+//                         buttonDiv.setAttribute("class", "button-algemeen-card")
+//                         buttonDiv.setAttribute("onclick", "seeArticle(this)")
                 
-                        titleH2.innerHTML = title
-                        headerImg.src = headerImageSmall
-                        buttonDiv.innerHTML = `<a href="../Artikelen/${title}.html">Bekijk</a>`
+//                         titleH2.innerHTML = title
+//                         headerImg.src = headerImageSmall
+//                         buttonDiv.innerHTML = `<a href="../Artikelen/${title}.html">Bekijk</a>`
                 
-                        if(inspirationOuterDiv != null){
+//                         if(inspirationOuterDiv != null){
                 
-                        inspirationOuterDiv.appendChild(outerSection)
-                        outerSection.appendChild(headerDiv)
-                        headerDiv.appendChild(headerImg)
-                        outerSection.appendChild(titleDiv)
-                        titleDiv.appendChild(titleSub)
-                        titleDiv.appendChild(titleH2)
-                        outerSection.appendChild(buttonDiv)
-                        };
-                });
-        });
-}
+//                         inspirationOuterDiv.appendChild(outerSection)
+//                         outerSection.appendChild(headerDiv)
+//                         headerDiv.appendChild(headerImg)
+//                         outerSection.appendChild(titleDiv)
+//                         titleDiv.appendChild(titleSub)
+//                         titleDiv.appendChild(titleH2)
+//                         outerSection.appendChild(buttonDiv)
+//                         };
+//                 });
+//         });
+// }
 
 // Favorite coaches section
 
