@@ -36,7 +36,15 @@ function showCoachPhoto(coach){
                 photoDivCoach.appendChild(photoP)
                 photoDivCoach.appendChild(nameP)
 
+                visitCoachProfile(photoDivCoach, coach)
+
         });
+    });
+};
+
+function visitCoachProfile(photoDivCoach, coach){
+    photoDivCoach.addEventListener("click", () => {
+        window.open("../Vitaminders/" + coach + ".html", "_self");
     });
 };
 
@@ -838,8 +846,8 @@ function insertAuthDataInMessage(auth, nameP, photoP){
 
                         if(auth === coach || auth === coachee){
 
-                            showCoachPhoto(coach)
                             showCoachPhoto(coachee)
+                            showCoachPhoto(coach)
                             showFileCreationData(timestamp)
                             goToChat(auth, coach, coachee)
                             OpenCreateNewGoalDiv()

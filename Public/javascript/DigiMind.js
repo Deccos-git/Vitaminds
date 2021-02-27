@@ -674,7 +674,7 @@ function updateSelectAsCoachButton(auth){
                         button.id = "Selected"
 
                         button.addEventListener("click", () => {
-                                // window.open("../Files/" + [id] + ".html", "_self");
+                                window.open("../Files/" + [id] + ".html", "_self");
                         });
                 });
         });
@@ -810,16 +810,17 @@ function getSection(){
 
         const menuItem = menuItemDiv.getElementsByTagName("p")
 
-        menuItemswitch(menuItem, privateSection, 0, 0, 1, 2, 3, 4, 5, 6)
-        menuItemswitch(menuItem, privateSection, 1, 1, 0, 2, 3, 4, 5, 6)
-        menuItemswitch(menuItem, privateSection, 2, 2, 0, 1, 3, 4, 5, 6)
-        menuItemswitch(menuItem, privateSection, 3, 3, 0, 1, 2, 4, 5, 6)
-        menuItemswitch(menuItem, privateSection, 4, 4, 0, 1, 2, 3, 5, 6)
-        menuItemswitch(menuItem, privateSection, 5, 5, 0, 1, 2, 3, 4, 6)
-        menuItemswitch(menuItem, privateSection, 6, 6, 0, 1, 2, 3, 4, 5)
+        menuItemswitch(menuItem, privateSection, 0, 0, 1, 2, 3, 4, 5, 6, 7)
+        menuItemswitch(menuItem, privateSection, 1, 1, 0, 2, 3, 4, 5, 6, 7)
+        menuItemswitch(menuItem, privateSection, 2, 2, 0, 1, 3, 4, 5, 6, 7)
+        menuItemswitch(menuItem, privateSection, 3, 3, 0, 1, 2, 4, 5, 6, 7)
+        menuItemswitch(menuItem, privateSection, 4, 4, 0, 1, 2, 3, 5, 6, 7)
+        menuItemswitch(menuItem, privateSection, 5, 5, 0, 1, 2, 3, 4, 6, 7)
+        menuItemswitch(menuItem, privateSection, 6, 6, 0, 1, 2, 3, 4, 5, 7)
+        menuItemswitch(menuItem, privateSection, 7, 7, 0, 1, 2, 3, 4, 5, 6)
 }();
 
-function menuItemswitch(menuItemCount, privateSectionCount, menu, section, hide1, hide2, hide3, hide4, hide5, hide6 ){
+function menuItemswitch(menuItemCount, privateSectionCount, menu, section, hide1, hide2, hide3, hide4, hide5, hide6, hide7 ){
 
         menuItemCount[menu].addEventListener("click", () => {
                 privateSectionCount[section].style.display = "flex"
@@ -829,6 +830,7 @@ function menuItemswitch(menuItemCount, privateSectionCount, menu, section, hide1
                 privateSectionCount[hide4].style.display = "none"
                 privateSectionCount[hide5].style.display = "none"
                 privateSectionCount[hide6].style.display = "none"
+                privateSectionCount[hide7].style.display = "none"
         });
 };
 
@@ -1567,13 +1569,16 @@ function showFirstToolInSelect(toolSelect){
         const checkInDiv = document.getElementById("check-in-div")
         const gratitudeDiv = document.getElementById("gratitute-journal-div")
 
-        if(option === "happiness-scale"){
-                hapinessChart.style.display = "flex"
-        } else if (option === "gratitude-journal"){
-                gratitudeDiv.style.display = "flex"
-        } else if (option === "check-in"){
-                checkInDiv.style.display = "flex"
-        }; 
+        if(option != undefined){
+
+                if(option === "happiness-scale"){
+                        hapinessChart.style.display = "flex"
+                } else if (option === "gratitude-journal"){
+                        gratitudeDiv.style.display = "flex"
+                } else if (option === "check-in"){
+                        checkInDiv.style.display = "flex"
+                }; 
+        };
 };
 
    
@@ -3456,5 +3461,79 @@ function showCoachProfileInformationIfCoach(type){
         if(type === "Coach"){
                 coachProfileInformation.style.display = "flex"
         };
+};
+
+!function displayFiles(){
+
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", naam)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        const usertype = doc.data().Usertype
+
+                        if(usertype === "Coach"){
+                                queryFiles("Coach")
+                        } else if (usertype === "Vitaminder"){
+                                queryFiles("Coachee")
+                        };
+                });
+        });
+}();
+
+function queryFiles(usertype){
+
+        const filesOverview = document.getElementById("files-overview")
+
+        db.collection("Files")
+        .where(usertype, "==", naam)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        const coach = doc.data().Coach
+                        const coachee = doc.data().Coachee
+                        const id = doc.data().ID
+
+                        const fileDiv = document.createElement("div")
+                                fileDiv.setAttribute("class", "file-inner-div")
+                        const fileNameP = document.createElement("p")
+                        const visitP = document.createElement("p")
+                                visitP.setAttribute("class", "vistit-file-p")
+
+                                console.log(usertype)
+
+                        if(usertype === "Coach"){
+                                fileName(coachee, fileNameP)
+                                
+                        } else if (usertype === "Coachee"){
+                                fileName(coach, fileNameP)
+                        };
+
+                        visitP.innerText = "Bekijk"
+
+                        filesOverview.appendChild(fileDiv)
+                        fileDiv.appendChild(fileNameP)
+                        fileDiv.appendChild(visitP)
+
+                        fileDiv.addEventListener("click", () => {
+                                window.open("../Files/" + id + ".html", "_self");
+                        });
+                });
+        });
+};
+
+function fileName(user, fileNameP){
+
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", user)
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        const nameClean = doc.data().GebruikersnaamClean
+
+                        fileNameP.innerHTML = `Dossier met ${nameClean}`
+
+                });
+        });
 };
 
