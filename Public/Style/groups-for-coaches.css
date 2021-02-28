@@ -163,6 +163,36 @@
     z-index: 2;
     margin: 0px;
     width: 100%;
+    border-radius: 5px;
+}
+
+#input-div-reaction{
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+#input-div-reaction textarea{
+    width: 90%;
+}
+
+#input-div-reaction img{
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
+}
+
+.show-reactions-div{
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ text-align: center;
+}
+
+.show-reactions-div p{
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 #chat-input{
@@ -312,6 +342,7 @@
     border-top: 1px solid rgba(0,0,0,.2);
     display: flex;
     flex-direction: column;
+    align-items: center;
     padding: 20px 0px;
     background-color: #a7bdbd;
 }
@@ -333,6 +364,7 @@
 
 #list-of-members-inner-div{
     display: flex;
+    flex-wrap: wrap;
 }
 
 .bottom-div{
@@ -354,14 +386,27 @@
     border: 1px solid rgba(0,0,0,.2);
     padding: 10px;
     border-radius: 15px;
-    margin: 5px 6px;
-    max-width: 50%;
+    margin: 15px 6px;
+    width: 90%;
     background-color: white;
     box-shadow: 0 5px 9px 0 rgb(0 0 0 / 20%), 0 7px 21px 0 rgb(0 0 0 / 19%);
 }
 
+.reactions-div{
+    display: none;
+}
+
+.message-div input{
+    width: 95%;
+}
+
+.reaction-input{
+    border-color: lightgray;
+    border-radius: 5px;
+}
+
 .sender-name-message{
-    font-size: 11px;
+    font-size: 15px;
     margin-top: 0px;
     text-align: right;
 }

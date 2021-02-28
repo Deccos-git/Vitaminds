@@ -192,6 +192,9 @@ function selectExcistingGoal(DOCID, coachee){
                 .doc(DOCID)
                 .update({
                     Goals: firebase.firestore.FieldValue.arrayUnion(goal)
+                })
+                .then(() => {
+                    location.reload(); 
                 });
             });
         });
@@ -277,6 +280,9 @@ function saveNewGoal(coach, coachee, DOCID, coachClean){
                                     Goals: firebase.firestore.FieldValue.arrayUnion(idClean + goalTitle)
                                 });
                             })
+                            .then(() => {
+                                location.reload(); 
+                            });
                         });
                     });
                 });
@@ -290,6 +296,13 @@ function goalinInSelect(goalClean, option){
     option.innerText = goalClean
 };
 
+function hideSelectIfNoGoal(goals, selectGoalDiv){
+
+    if(goals.length === 0){
+        selectGoalDiv.style.display = "none"
+    };
+};
+
 function displayGoalsInOverview(fileid, coachee, auth){
 
     const select = document.getElementById("select-goal-overview")
@@ -298,6 +311,7 @@ function displayGoalsInOverview(fileid, coachee, auth){
     const goalArray = []
 
     findFirstGoalInGoalArray(goalArray, coachee, auth)
+    
 
     db.collection("Files")
     .where("ID", "==", fileid)
@@ -305,6 +319,8 @@ function displayGoalsInOverview(fileid, coachee, auth){
         querySnapshot.forEach(doc => {
 
             const goals = doc.data().Goals
+
+            hideSelectIfNoGoal(goals, selectDiv)
 
             goals.forEach(goal => {
                 db.collectionGroup("Levensvragen")
@@ -320,23 +336,12 @@ function displayGoalsInOverview(fileid, coachee, auth){
                         goalinInSelect(goalClean, option)
                         select.appendChild(option)
                     });
-                })
-                .then(() => {
-                    hideSelectIfNoGoals(goalArray, selectDiv)
-                })
+                });
             });
         });
     });
 };
 
-function hideSelectIfNoGoals(goalArray, select){
-
-    console.log(goalArray.length)
-
-    if(goalArray.length === 0){
-        select.style.display = "none"
-    };
-};
 
 function findFirstGoalInGoalArray(goalArray, coachee, auth){
 
@@ -759,6 +764,9 @@ function saveMessage(DOCID, auth, coach, coachee){
             Coach: coach,
             Coachee: coachee,
             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+        })
+        .then(() => {
+            location.reload(); 
         });
     });
 };
@@ -836,6 +844,7 @@ function insertAuthDataInMessage(auth, nameP, photoP){
             const coachee = doc.data().Coachee
             const coach = doc.data().Coach
             const timestamp = doc.data().Timestamp
+            const goals = doc.data().Goals
 
             auth.onAuthStateChanged(User =>{
                 if(User){

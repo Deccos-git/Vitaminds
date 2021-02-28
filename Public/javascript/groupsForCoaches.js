@@ -940,6 +940,7 @@
                 Message: message,
                 Room: roomName,
                 Members: members,
+                ID: idClean,
                 Read: [auth],
                 Status: "New"
                 }).then(() => {
@@ -1327,6 +1328,159 @@
             });
     
     }
+
+    function appendReactionInputToMessage(messageDiv, message, id, sender){
+
+        const inputDiv = document.createElement("div")
+            inputDiv.setAttribute("id", "input-div-reaction")
+
+        const sendImage = document.createElement("img")
+        const input = document.createElement("textarea")
+            input.placeholder = "Opmerking plaatsen"
+            input.id = "reaction-input-id"
+            input.setAttribute("rows", "1")
+            input.setAttribute("class", "reaction-input")
+            input.setAttribute("data-message", message)
+            input.setAttribute("data-id", id)
+            input.setAttribute("data-sender", sender)
+        
+        sendImage.src = "../images/send-icon.png"
+
+        saveFirstReactionToDatabase(sendImage, input)
+        
+        messageDiv.appendChild(inputDiv)
+        inputDiv.appendChild(input)
+        inputDiv.appendChild(sendImage)
+
+    };
+
+    function showReactions(message, id){
+
+        const showReactionsDiv = document.createElement("div")
+            showReactionsDiv.setAttribute("class", "show-reactions-div")
+
+        const showReactionP = document.createElement("p")
+            showReactionP.setAttribute("data-id", id)
+
+        showReactionP.innerText = "Bekijk opmerkingen"
+
+        message.appendChild(showReactionsDiv)
+        showReactionsDiv.appendChild(showReactionP)
+
+        displayReactionDiv(showReactionP, message)
+    };
+
+    function saveFirstReactionToDatabase(sendImage, input){
+
+        sendImage.addEventListener("click", () => {
+
+            const id = input.dataset.id
+            const message = input.dataset.message
+            const sender = input.dataset.sender
+
+            const reaction = input.value
+
+            input.value = ""
+
+            auth.onAuthStateChanged(User =>{
+                if(User){
+                  db.collection("Vitaminders")
+                  .doc(User.uid)
+                  .get().then(function(doc2) {
+
+                    const auth = doc2.data().Gebruikersnaam
+
+                        db.collection("GroupsForCoaches")
+                        .where("Room", "==", roomName)
+                        .get().then(querySnapshot => {
+                            querySnapshot.forEach(doc => {
+
+                                const messages = doc.data().Messages
+
+                                db.collection("GroupsForCoaches")
+                                .doc(doc.id)
+                                .collection("Reactions")
+                                .doc()
+                                .set({
+                                    Message: reaction,
+                                    ParentID: id,
+                                    Dept: 1,
+                                    ID: idClean,
+                                    ParentMessage: message,
+                                    ParentSender: sender,
+                                    Auth: auth
+                                })
+                                .then(() => {
+                                    db.collection("GroupsForCoaches")
+                                    .where("Room", "==", roomName)
+                                    .get().then(querySnapshot => {
+                                        querySnapshot.forEach(doc => {
+
+                                            db.collectionGroup("Messages")
+                                            .where("ID", "==", id)
+                                            .get().then(querySnapshot => {
+                                                querySnapshot.forEach(doc1 => {
+
+                                                    db.collection("GroupsForCoaches")
+                                                    .doc(doc.id)
+                                                    .collection("Messages")
+                                                    .doc(doc1.id)
+                                                    .update({
+                                                        Reactions: firebase.firestore.FieldValue.increment(1)
+                                                    });
+                                                });
+                                            });
+                                        });
+                                    });
+                                })
+                            });
+                        });
+                    });
+                };
+            });
+        });
+    };
+
+    function displayReactionDiv(showReactionP, message){
+
+        const reactionsDiv = document.createElement("div")
+        reactionsDiv.setAttribute("class", "reactions-div")
+
+        showReactionP.addEventListener("click", () => {
+
+            reactionsDiv.style.display = "flex"
+
+            appendReactionToMessage(showReactionP, message, reactionsDiv)
+
+        });
+    };
+
+    function appendReactionToMessage(showReactionP, message, reactionsDiv){
+       
+        const id = showReactionP.dataset.id
+            
+        displayReactionDiv(showReactionP, reactionsDiv)
+
+        console.log(message, reactionsDiv)
+
+        db.collectionGroup("Reactions")
+        .where("ParentID", "==", id)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                const reaction = doc.data().Message
+
+                const reactionInnerDiv = document.createElement("div")
+                const reactionP = document.createElement("p")
+
+                reactionP.innerText = reaction
+
+                message.appendChild(reactionsDiv)
+                reactionsDiv.appendChild(reactionInnerDiv)
+                reactionInnerDiv.appendChild(reactionP)
+            });
+        });
+    };
     
     // Load massages in realtime
     !function loadMessageInRealtime(){
@@ -1358,9 +1512,11 @@
                             const authMessage = doc2.data().Message
                             const sender = doc2.data().Auth
                             const members = doc2.data().Members
-    
+                            const id = doc2.data().ID
+
                             const messageDiv = document.createElement("div")
                                 messageDiv.setAttribute("class", "message-div")
+                                messageDiv.setAttribute("data-id", id)
     
                             const messageP = document.createElement("p")
                             messageP.setAttribute("class", "auth-message-p")
@@ -1377,7 +1533,7 @@
                             if (auth == sender){
                                 senderName.innerText = messageNameClean
         
-                                messageDiv.style.alignSelf = "flex-end"
+                                // messageDiv.style.alignSelf = "flex-end"
                                 messageP.innerText = authMessage
                                 senderName.style.color = colour
                                 senderName.style.fontWeight = "bold"
@@ -1391,7 +1547,7 @@
     
                                 senderName.innerText = messageNameClean
         
-                                messageDiv.style.alignSelf = "flex-start"
+                                // messageDiv.style.alignSelf = "flex-start"
                                 messageP.innerText = authMessage
                                 senderName.style.fontWeight = "bold"
                                 senderName.style.alignSelf = "flex-start"
@@ -1401,6 +1557,8 @@
                                 messageDiv.appendChild(senderName)
                                 messageDiv.appendChild(messageP)
                                 addSocialIconsToMessage(messageDiv, sender, authMessage, auth)
+                                appendReactionInputToMessage(messageDiv, authMessage, id, sender)
+                                showReactions(messageDiv, id)
     
                             });
                         });
