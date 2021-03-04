@@ -1237,6 +1237,7 @@ function addSocialIconsToMessage(messageP, userName, message){
         userRef.get().then(function(doc) {
 
                 const auth = doc.data().Gebruikersnaam
+                const authClean = doc.data().GebruikersnaamClean
 
                 savebutton(IFeelForYouIconDiv, "IFeelForYou", auth, IFeelForYouIconP, "Ik leef met je mee")
                 savebutton(IUnderstandIconDiv, "IUnderstandYou", auth, IUnderstandIconP, "Ik begrijp wat je voelt")

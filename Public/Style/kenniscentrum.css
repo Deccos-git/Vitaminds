@@ -11,6 +11,56 @@
     font-size: 20px;
 }
 
+#titel-div input{
+    width: 90%;
+}
+
+#create-coach-article{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.timestamp-p {
+    font-size: 14px;
+    margin-top: -10px;
+}
+
+.title-div-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.meta-user-div img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    border: 2px solid white;
+    background-color: white;
+}
+
+.meta-user-div p {
+    font-size: 16px;
+}
+
+.meta-user-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 4;
+    cursor: pointer;
+    margin-top: -8px;
+}
+
+#titel-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px;
+}
+
 #kenniscentrum-filter-div p{
     font-size: 14px;
     font-weight: bold;
@@ -55,13 +105,42 @@
 .titelTekst{
     color: #122b46;
     font-size: 25px;
-    margin: 70px 20px 30px 20px;
+    margin: 20px 20px 30px 20px;
 }
 
 /* Detail page */
 
 .mce-notification-inner {
     display: none !important;
+}
+
+#article-body-div {
+    margin: 80px 0px 50px 0px;
+    width: 890px;
+    font-size: 18px;
+    color: #122b46;
+    letter-spacing: 1px;
+}
+
+#article-body-div img{
+    height: auto;
+    width: 100%;
+    border-radius: 5px;
+}
+
+#paragraph-div {
+    background-color: #a7bdbd;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.coach-artikel-main-information {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px 0px 0px 0px;
 }
 
 #levensvraag-artikel-ouyter-div{
@@ -144,7 +223,7 @@
 }
 
 #paragraph-list{
-    margin-bottom: 80px;
+    margin-bottom: 0px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -154,6 +233,56 @@
 
 .levensvraag-artikel-main-image img{
     width: 80%;
+}
+
+#follow-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#author-div {
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#author-div img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+#author-div p {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+#follow-author {
+    font-size: 16px;
+    color: #008e8e;
+    font-weight: bold;
+    margin-bottom: 0px;
+    border: 1px solid #008e8e;
+    border-radius: 15px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#follow-massage-visitor {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    border: 1px solid lightgray;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#edit-div{
+    display: none;
 }
 
 #levensvraag-artikel-main-image img{
@@ -464,6 +593,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #a7bdbd26;
+}
+
+#tiny-mce-div{
+    display: none;
+    width: 90%;
+}
+
+.summary-li {
+    font-size: 20px;
+    color: white;
+    cursor: pointer;
 }
 
 .coach-menu-main-p{

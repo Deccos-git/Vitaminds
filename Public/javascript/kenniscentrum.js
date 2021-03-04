@@ -1,74 +1,141 @@
-// Coachvragen overview
+ // Fetching title from url
+ titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
+ titel1 = titelhtml.replace('.html', '')
+ titel2 = titel1.replace('%20',' '),
+ titel3 = titel2.replace('%20',' ')
+ titel4 = titel3.replace('%20',' ')
+ titel5 = titel4.replace('%20',' ')
+ titel6 = titel4.replace('%20',' ')
+ titel7 = titel6.replace('%20',' ')
+ titel8 = titel7.replace('%20',' ')
+ titel9 = titel8.replace('%20',' ')
+ titel10 = titel9.replace('%20',' ')
+ titel11 = titel10.replace('%20',' ')
+ titel12 = titel11.replace('%20',' ')
+ titel13 = titel12.replace('%20',' ')
+ titel14 = titel13.replace('%20',' ')
+ titel15 = titel14.replace('%20',' ')
+ titel = titel14.replace('%20',' ')
+ 
+ console.log(titel)
+
+!function hideCreateNewArticleIfAuthIsNotGijs(){
+
+    const createNewarticle = document.getElementById("create-coach-article")
+
+    auth.onAuthStateChanged(User =>{
+        if (User){
+            const docRef = db.collection("Vitaminders").doc(User.uid);
+                docRef.get().then(function(doc){
+
+                    const auth = doc.data().Gebruikersnaam
+
+                    console.log(auth)
+
+                    if(auth === "fbKlPnWobJh0ldPROWQRYGCezhv2Gijs van Beusekom"){
+                        createNewarticle.style.display = "flex"
+                    }
+                });
+            };
+        });
+}();
+
+!function newArticleSubmitButton(){
+
+    const saveButton = document.getElementById("save-coach-article-button")
+
+    if(saveButton != null){
+
+        saveButton.addEventListener("click", () => {
+
+            const title = document.getElementById("title-input").value
+            const newBody = tinyMCE.get('tiny-mce').getContent()
+            const domainSelectDiv = document.getElementById("theme-select")
+            const inputs = domainSelectDiv.querySelectorAll("input")
+            const keywords = document.getElementById("keywords-article").value
+
+            saveButton.innerText = "Opgeslagen"
+            saveButton.setAttribute("onclick", "empty()")
+
+            const inputsArray = Array.from(inputs)
+
+            inputsArray.forEach(input => {
+
+                if (input.checked) {
+                    const selectedInput = input.value    
+
+                    auth.onAuthStateChanged(User =>{
+                        if (User){
+                            const docRef = db.collection("Vitaminders").doc(User.uid);
+                                docRef.get().then(function(doc){
+
+                                    const auth = doc.data().Gebruikersnaam
+                                    const authClean = doc.data().GebruikersnaamClean
+
+                                db.collection("Kenniscentrum").doc().set({
+                                    Author: auth,
+                                    AuthorClean: authClean,
+                                    Keywords: keywords,
+                                    Title: title,
+                                    Body: newBody,
+                                    HeaderImage: "",
+                                    HeaderImageSmall: "",
+                                    Owner: "Vitaminds",
+                                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                    Domain: selectedInput,
+                                    Type: "Kenniscentrum"
+                                });
+                            });
+                        };
+                    });
+                };
+            });
+        });
+    };
+}();
 
 //Filter 
 
-function loadAllArticles(){
+function addTimestamp(timestampP, timestamp){
 
-DOMarticle = document.getElementById("kenniscentrum-artikel-outer-div")
-
-db.collection("Kenniscentrum").where("Eigenaar", "==", "Vitaminds").get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-
-        const title = doc.data().Coachvraag
-        const headerImage = doc.data().HeaderImage
-    
-        const outerSection = document.createElement("section")
-            outerSection.setAttribute("class", "kenniscentrum-artikel-section")
-            outerSection.setAttribute("data-title", title)
-        const headerDiv = document.createElement("div")
-            headerDiv.setAttribute("class", "kenniscentrum-artikel-header")
-        const headerImg = document.createElement("img")
-            headerImg.setAttribute("class", "header-image-article")
-        const titleDiv = document.createElement("div")
-        const titleH2 = document.createElement("h2")
-            titleH2.setAttribute("class", "titelTekst")
-        const buttonDiv = document.createElement("button")
-            buttonDiv.setAttribute("class", "button-algemeen-card")
-            buttonDiv.setAttribute("onclick", "seeArticle(this)")
-
-        headerImg.src = headerImage
-        titleH2.innerHTML = title
-        buttonDiv.innerHTML = `<a href="../Kenniscentrum-coaching/${title}.html">Bekijk</a>`
-
-
-        if(DOMarticle == null){
-            console.log("null")
-        } else {
-
-        DOMarticle.appendChild(outerSection)
-        outerSection.appendChild(headerDiv)
-        headerDiv.appendChild(headerImg)
-        outerSection.appendChild(titleDiv)
-        titleDiv.appendChild(titleH2)
-        outerSection.appendChild(buttonDiv)
-        }
-    })
-});
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
 
 };
 
-loadAllArticles()
+function showAuthorOnPreview(coachName, photoP, userNameP, userDiv){
 
-function getDomain(){
+    db.collection("Vitaminders").where("Gebruikersnaam", "==", coachName)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
 
-    const selectDomain = document.getElementById("kenniscentrum-filter-select")
-    
-        const option = selectDomain.options
-        const selected = option[option.selectedIndex].innerHTML
-    
+            const userClean = doc.data().GebruikersnaamClean
+            const userPhoto = doc.data().Profielfoto
+
+            photoP.src = userPhoto
+                    
+            userNameP.innerHTML = userClean
+
+            userDiv.addEventListener("click", () => {
+                window.open("../Vitaminders/" + [coachName] + ".html", "_self");
+            });
+        });
+    });
+};
+
+function loadAllArticles(){
+
     DOMarticle = document.getElementById("kenniscentrum-artikel-outer-div")
     
-    DOMarticle.innerHTML = ""
-    
-    if(selected === "Alles"){
-        loadAllArticles();
-    };
-
-    db.collection("Kenniscentrum").where("Domein", "==", selected).get().then(querySnapshot => {
+    db.collection("Kenniscentrum")
+    .where("Owner", "==", "Vitaminds")
+    .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
     
-            const title = doc.data().Coachvraag
+            const title = doc.data().Title
             const headerImage = doc.data().HeaderImage
+            const timestamp = doc.data().Timestamp
+            const author = doc.data().Author
         
             const outerSection = document.createElement("section")
                 outerSection.setAttribute("class", "kenniscentrum-artikel-section")
@@ -77,17 +144,27 @@ function getDomain(){
                 headerDiv.setAttribute("class", "kenniscentrum-artikel-header")
             const headerImg = document.createElement("img")
                 headerImg.setAttribute("class", "header-image-article")
+            const metaUserDiv = document.createElement("div")
+                metaUserDiv.setAttribute("class", "meta-user-div")
+            const metaUserPhoto = document.createElement("img")
+            const metaUserName = document.createElement("p")
+                metaUserName.setAttribute("id", "meta-user-name")
             const titleDiv = document.createElement("div")
+                titleDiv.setAttribute("class", "title-div-card")
             const titleH2 = document.createElement("h2")
                 titleH2.setAttribute("class", "titelTekst")
             const buttonDiv = document.createElement("button")
                 buttonDiv.setAttribute("class", "button-algemeen-card")
                 buttonDiv.setAttribute("onclick", "seeArticle(this)")
+            const timestampP = document.createElement("p")
+                timestampP.setAttribute("class", "timestamp-p")
     
             headerImg.src = headerImage
             titleH2.innerHTML = title
             buttonDiv.innerHTML = `<a href="../Kenniscentrum-coaching/${title}.html">Bekijk</a>`
     
+            addTimestamp(timestampP, timestamp)
+            showAuthorOnPreview(author, metaUserPhoto, metaUserName, metaUserDiv)
     
             if(DOMarticle == null){
                 console.log("null")
@@ -96,456 +173,441 @@ function getDomain(){
             DOMarticle.appendChild(outerSection)
             outerSection.appendChild(headerDiv)
             headerDiv.appendChild(headerImg)
+            outerSection.appendChild(metaUserDiv)
+            metaUserDiv.appendChild(metaUserPhoto)
+            metaUserDiv.appendChild(metaUserName)
             outerSection.appendChild(titleDiv)
             titleDiv.appendChild(titleH2)
+            titleDiv.appendChild(timestampP)
             outerSection.appendChild(buttonDiv)
             }
         })
     });
+    
+    };
+    
+    loadAllArticles()
+    
+    function getDomain(){
+    
+        const selectDomain = document.getElementById("kenniscentrum-filter-select")
+        
+            const option = selectDomain.options
+            const selected = option[option.selectedIndex].innerHTML
+        
+        DOMarticle = document.getElementById("kenniscentrum-artikel-outer-div")
+        
+        DOMarticle.innerHTML = ""
+        
+        if(selected === "Alles"){
+            loadAllArticles();
+        };
+    
+        db.collection("Kenniscentrum")
+        .where("Domain", "==", selected)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+        
+                const title = doc.data().Title
+                const headerImage = doc.data().HeaderImage
+                const timestamp = doc.data().Timestamp
+                const author = doc.data().Author
+            
+                const outerSection = document.createElement("section")
+                    outerSection.setAttribute("class", "kenniscentrum-artikel-section")
+                    outerSection.setAttribute("data-title", title)
+                const headerDiv = document.createElement("div")
+                    headerDiv.setAttribute("class", "kenniscentrum-artikel-header")
+                const headerImg = document.createElement("img")
+                    headerImg.setAttribute("class", "header-image-article")
+                const metaUserDiv = document.createElement("div")
+                    metaUserDiv.setAttribute("class", "meta-user-div")
+                const metaUserPhoto = document.createElement("img")
+                const metaUserName = document.createElement("p")
+                    metaUserName.setAttribute("id", "meta-user-name")
+                const titleDiv = document.createElement("div")
+                const titleH2 = document.createElement("h2")
+                    titleH2.setAttribute("class", "titelTekst")
+                const buttonDiv = document.createElement("button")
+                    buttonDiv.setAttribute("class", "button-algemeen-card")
+                    buttonDiv.setAttribute("onclick", "seeArticle(this)")
+                const timestampP = document.createElement("p")
+                    timestampP.setAttribute("class", "timestamp-p")
+        
+                headerImg.src = headerImage
+                titleH2.innerHTML = title
+                buttonDiv.innerHTML = `<a href="../Kenniscentrum-coaching/${title}.html">Bekijk</a>`
+        
+                addTimestamp(timestampP, timestamp)
+                showAuthorOnPreview(author, metaUserPhoto, metaUserName, metaUserDiv)
+        
+                if(DOMarticle == null){
+                    console.log("null")
+                } else {
+        
+                    DOMarticle.appendChild(outerSection)
+                    outerSection.appendChild(headerDiv)
+                    headerDiv.appendChild(headerImg)
+                    outerSection.appendChild(metaUserDiv)
+                    metaUserDiv.appendChild(metaUserPhoto)
+                    metaUserDiv.appendChild(metaUserName)
+                    outerSection.appendChild(titleDiv)
+                    titleDiv.appendChild(titleH2)
+                    titleDiv.appendChild(timestampP)
+                    outerSection.appendChild(buttonDiv)
+                }
+            })
+        });
+    };
+        
+
+// Individual article page
+    
+function sanityTinyMCE(){
+
+    const tinyMCEOuterDiv = document.getElementById("article-body-div")
+
+    const spans = tinyMCEOuterDiv.querySelectorAll("span")
+    const Ps = tinyMCEOuterDiv.querySelectorAll("P")
+    const H2s = tinyMCEOuterDiv.querySelectorAll("h2")
+    const lis = tinyMCEOuterDiv.querySelectorAll("li")
+    const imgs = tinyMCEOuterDiv.querySelectorAll("img")
+
+    const spanArray = Array.from(spans)
+
+    spanArray.forEach(span => {
+
+        span.style.fontSize = ""
+        span.style.fontFamily = "Nunito Sans, sans-serif"
+        span.style.letterSpacing = "1px"
+        span.style.color = "#122b46"
+
+    });
+
+    const pArray = Array.from(Ps)
+
+    pArray.forEach(p => {
+
+        p.style.fontSize = "18px"
+        p.style.fontFamily = "Nunito Sans, sans-serif"
+        p.style.letterSpacing = "1px"
+        p.style.width = "auto"
+        p.style.marginTop = "0px"
+    });
+
+    const H2Array = Array.from(H2s)
+
+    H2Array.forEach(H2 => {
+
+        H2.style.fontSize = "20px"
+        H2.style.fontFamily = "Nunito Sans, sans-serif"
+        H2.style.letterSpacing = "1px"
+        H2.style.textAlign = "left"
+        H2.style.color = "#0c6665"
+        H2.style.marginBottom = "0px"
+        H2.style.width = "auto"
+
+    });
+
+    const liArray = Array.from(lis)
+
+    liArray.forEach(li => {
+
+        li.style.fontSize = "18px"
+        li.style.fontFamily = "Nunito Sans, sans-serif"
+        li.style.letterSpacing = "1px"
+        li.style.textAlign = "left"
+        li.style.width = "auto"
+    });
+
+    const imgsArray = Array.from(imgs)
+
+    imgsArray.forEach(img => {
+
+        img.style.borderRadius = "5px"
+        img.style.width = "100% !important"
+        img.style.height = "auto !important"
+    });
 
 };
-    
 
-// Register view count on article load
-window.addEventListener("load", () => {
-
-    db.collection("Kenniscentrum").where("Coachvraag", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            console.log(doc.id)
-
-            db.collection("Kenniscentrum").doc(doc.id).update({
-                Views: firebase.firestore.FieldValue.increment(1)
-            })  
-        })
-    })
-});
-
-// Fetching title from url
-titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
-titel1 = titelhtml.replace('.html', '')
-titel2 = titel1.replace('%20',' '),
-titel3 = titel2.replace('%20',' ')
-titel4 = titel3.replace('%20',' ')
-titel5 = titel4.replace('%20',' ')
-titel6 = titel4.replace('%20',' ')
-titel7 = titel6.replace('%20',' ')
-titel8 = titel7.replace('%20',' ')
-titel9 = titel8.replace('%20',' ')
-titel10 = titel9.replace('%20',' ')
-titel11 = titel10.replace('%20',' ')
-titel12 = titel11.replace('%20',' ')
-titel13 = titel12.replace('%20',' ')
-titel14 = titel13.replace('%20',' ')
-titel15 = titel14.replace('%20',' ')
-titel = titel14.replace('%20',' ')
-
-console.log(titel)
-
-
-// Levensvraag artikelen detailpagina
-
-    // Title, header-image and summary
-    const title = document.getElementById("title-article")
-    const summary = document.getElementById("summary-article")
-    const hiddenTitleArticle = document.getElementById("hidden-title-div")
-    const insightsTitle = document.getElementById("insight-title")
-    const titelHead = document.getElementsByTagName("title")
-    const metaKeywords = document.getElementById("meta-keywords")
-    const metaDescription = document.getElementById("meta-description")
-    const facebookUrl = document.getElementById("facebook-url")
-    const facebookTitle = document.getElementById("facebook-title")
-    const facebookDescription = document.getElementById("facebook-description")
-    const facebookImg = document.getElementById("facebook-img")
-    const headerDiv = document.getElementById("levensvraag-artikel-main-image")
-    const headerImg = document.createElement("img")
-    
-    
-    db.collection("Kenniscentrum").where("Coachvraag", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-    
-            const titleArticle = doc.data().Coachvraag
-            const summaryArticle = doc.data().Summary
-            const keywords = doc.data().Keywords
-            const headerImage = doc.data().HeaderImage
-    
-            title.innerHTML = titleArticle
-            summary.innerHTML = summaryArticle
-    
-            headerImg.src = headerImage
-    
-            headerDiv.appendChild(headerImg)
-    
-            auth.onAuthStateChanged(User =>{
-                if(User){
-                db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                        const naam = doc.data().GebruikersnaamClean
-    
-                        insightsTitle.innerHTML = `${naam},<br> geef je professionele inzicht over:<br> ${titleArticle}`
-    
-                })
-            }
-            });
-    
-            // Edit summary
-            const editDiv = document.createElement("div")
-            const editIcon = document.createElement("img")
-                editIcon.setAttribute("src", "../images/edit-icon.png")
-                editIcon.setAttribute("class", "edit-icon-insights")
-                editIcon.setAttribute("onclick", "editIconSummary(this)")
-                editIcon.setAttribute("data-title", titleArticle)
-    
-    
-                // summary.app(editDiv)
-                editDiv.appendChild(editIcon)
-    
-            //Non admin
-            auth.onAuthStateChanged(User =>{
-                if(User){
-                db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                        const admin = doc.data().Admin
-    
-                    if(admin != "Yes"){
-                        editIcon.style.display = "none"
-                    }
-                
-            })
-        }
-        });
-    
-            // Visitor
-            auth.onAuthStateChanged(User =>{
-                if (!User){
-    
-                    editIcon.style.display = "none"
-                }
-            });
-    
-            // Pagetitle and meta's
-    
-            const titelHeadArray = Array.from(titelHead)
-    
-            titelHeadArray.forEach(tit => {
-                tit.innerHTML = titleArticle
-            })
-    
-            metaKeywords.content = keywords
-            metaDescription.content = summaryArticle
-            facebookDescription.content = summaryArticle
-            facebookImg.content = headerImage
-            facebookTitle. content = titel
-            facebookUrl. content = window.location.href
-    
-        })
-    }).then(() => {   
-    
-        // Loading articles
-    
-    const DOM = document.getElementById("coach-insights")
-    
-    db.collection("Insights").where("KenniscentrumArtikel", "==", titel).get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            const titelInsight = doc.data().Titel
-            const body = doc.data().Body
-            const coach = doc.data().Auteur
-    
-            db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
-                    const gebruikersnaamClean = doc1.data().GebruikersnaamClean
-                    const photo = doc1.data().Profielfoto
-    
-                    outerDiv = document.createElement("div")
-                        outerDiv.setAttribute("class", "insights-outer-div")
-                        outerDiv.setAttribute("data-coach", coach)
-                    const metaDiv = document.createElement("div")
-                        metaDiv.setAttribute("class", "meta-div-insights")
-                    const metaPhoto = document.createElement("img")
-                        metaPhoto.setAttribute("class", "meta-photo")
-                    const metaName = document.createElement("p")
-                    const visitProfile = document.createElement("p")
-                        visitProfile.setAttribute("class", "visit-profile-button-insights")
-                    const textDiv = document.createElement("div")
-                        textDiv.setAttribute("class", "text-div-insights")
-                    const textTitle = document.createElement("h2")
-                    const textBody = document.createElement("p")
-                    const socialDiv = document.createElement("div")
-                        socialDiv.setAttribute("class", "sociale-div-insights")
-                    const inspirationalDiv = document.createElement("div")
-                    inspirationalDiv.setAttribute("class", "social-div-inspirational-div-insights")
-                    const inspirationalH3 = document.createElement("h3")
-                    const inspirationalImg = document.createElement("img")
-                        inspirationalImg.setAttribute("onclick", "inspirerend(this)")
-                        inspirationalImg.setAttribute("data-titel", titelInsight)
-                        inspirationalImg.setAttribute("data-coach", coach)
-                        inspirationalImg.setAttribute("data-body", body)
-                    const bedankt = document.createElement("p")
-                        bedankt.setAttribute("class", "social-note")
-                    const editIcon = document.createElement("img")
-                        editIcon.setAttribute("src", "../images/edit-icon.png")
-                        editIcon.setAttribute("class", "edit-icon-insights")
-                        editIcon.setAttribute("onclick", "editIconKennis(this)")
-                        editIcon.setAttribute("data-title", titelInsight)
-    
-                    // Loader
-                    const loader = document.getElementById("loader")
-                        loader.style.display = "none"
-
-                        textTitle.innerHTML = titelInsight
-                        textBody.innerHTML = body
-                        metaPhoto.src = photo
-                        metaName.innerHTML = `<a href="../Vitaminders/${coach}.html">${gebruikersnaamClean}</a>`
-    
-    
-                         // Max height of insight
-    
-                    DOM.appendChild(outerDiv)
-                    outerDiv.appendChild(metaDiv)
-                    metaDiv.appendChild(metaPhoto)
-                    metaDiv.appendChild(metaName)
-                    metaDiv.appendChild(visitProfile)
-                    outerDiv.appendChild(textDiv)
-                    textDiv.appendChild(editIcon)
-                    textDiv.appendChild(textTitle)
-                    textDiv.appendChild(textBody)
-                    DOM.appendChild(socialDiv)
-                    socialDiv.appendChild(inspirationalDiv)
-                    inspirationalDiv.appendChild(inspirationalH3)
-                    inspirationalDiv.appendChild(inspirationalImg)
-                    inspirationalDiv.appendChild(bedankt)
-
-                      // Insights title
-                      auth.onAuthStateChanged(User =>{
-                        if(User){
-                        db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                                const auth = doc.data().GebruikersnaamClean
-                                const gebruikersnaam = doc.data().Gebruikersnaam
-    
-                                const sectionTitle = document.getElementById("insight-title")
-                                sectionTitle.innerHTML = `${auth}, <br> geef je professionele inzicht over: <br> ${titel}`
-                   
-                    inspirationalH3.innerHTML = "Inspirerend"
-                    inspirationalImg.src = "../images/menu-karakter.png"
-                    bedankt.innerHTML = `<u>${gebruikersnaamClean}</u> zegt: Bedankt!`
-                });
-            };
-            });
-    
-    
-                    // User role
-                        // Visitor
-                    auth.onAuthStateChanged(User =>{
-                        if (!User){
-                            const editIcon = document.getElementsByClassName("edit-icon-insights")
-                    
-                            const editIconArray = Array.from(editIcon)
-                    
-                            editIconArray.forEach(icon => {
-                                icon.style.display = "none"
-                            })
-                        }
-                    })
-                       //Non auth
-    
-                       const coachData = outerDiv.dataset.coach
-                       
-                       auth.onAuthStateChanged(User =>{
-                           if(User){
-                        db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                                const auth = doc.data().Gebruikersnaam
-                        
-                            if(coachData != auth){
-            
-                                editIcon.style.display = "none"
-            
-                            };
-                        });
-                    };
-                    });
-
-
-                });
-            });
-        });
-    });
-});
-
-// Saving coach insights to database
-
-!function hideInputForNoneAdmin(){
-    const coachInput = document.getElementById("coach-input")
+function showEditIconAuthorAndAdmin(icon){
 
     auth.onAuthStateChanged(User =>{
         if(User){
-        db.collection("Vitaminders").doc(User.uid).get().then(doc => {
-                const auth = doc.data().Gebruikersnaam
-        
-            if(auth != "fbKlPnWobJh0ldPROWQRYGCezhv2Gijs van Beusekom"){
+        db.collection("Vitaminders").doc(User.uid).get().then(doc =>{
 
-                coachInput.style.display = "none"
+            const admin = doc.data().Admin
+                        
+                if(admin === "Yes"){
+                    icon.style.display = "block"
+                };
+            });
+        };
+    });
+};
 
-            };
+!function editArticle(){
+    const editIcon = document.getElementById("edit-div")
+    const tinyMCEdiv = document.getElementById("tiny-mce-div")
+    const articleBody = document.getElementById("article-body-div")
+
+    showEditIconAuthorAndAdmin(editIcon)
+
+    editIcon.addEventListener("click", () => {
+
+        tinyMCEdiv.style.display = "block"
+        articleBody.style.display = "none"
+
+        db.collection("Kenniscentrum").where("Title", "==", titel).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                const body = doc.data().Body
+
+                setTimeout(() => { 
+                    tinymce.get("tiny-mce").setContent(body);
+                }, 1000);
+
+            });
         });
-    } else {
-        coachInput.style.display = "none"
-    }
     });
 }();
 
-function nieuwepostsubmit(){
-    auth.onAuthStateChanged(User =>{
-        if (User){
+!function saveEditedArticle(){
+    
+    const saveButton = document.getElementById("button-edited-article")
 
-            let insightsRef = db.collection("Insights").doc();
-            let docRef = db.collection("Vitaminders").doc(User.uid);
-                docRef.get().then(function(doc){
-                    const coachNaam = doc.data().Gebruikersnaam;
-             
-            let nieuwePostTitelVar = document.getElementById("nieuwposttitel").value;
+    saveButton.addEventListener("click", () => {
 
-            let nieuwePostBodyVar = tinyMCE.get('tiny-mce').getContent()
+        saveButton.innerText = "Opgeslagen"
 
-                            insightsRef.set({
-                                Titel: nieuwePostTitelVar,
-                                Body: nieuwePostBodyVar,
-                                Auteur: coachNaam,
-                                Inspiratiepunten: 1,
-                                KenniscentrumArtikel: titel,
-                                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                                Type: "Insight-kenniscentrum",
-                            }).then(() => {
-                                location.reload()
-                            })
-  
-                    //Storing insight in levensvraag
-            db.collection("Kenniscentrum").where("Coachvraag", "==", titel).get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
+        const editedBody = tinymce.get("tiny-mce").getContent();
 
-                    db.collection("Kenniscentrum").doc(doc1.id).update({
-                        Insights: firebase.firestore.FieldValue.arrayUnion(nieuwePostTitelVar)
+        db.collection("Kenniscentrum").where("Title", "==", titel).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
 
-                            })
-                        })
-                    })
-                })     
-            }
-    })
+                db.collection("Kenniscentrum").doc(doc.id).update({
+                    Body: editedBody
+                })
+                .then(() => {
+                    location.reload();
+                });
+            });
+        });
+    });
+}();
+
+function setH2HeadersInSummary(bodyText){
+
+    const SubTitles = bodyText.querySelectorAll("h2")
+    const summaryDiv = document.getElementById("paragraph-list")
+    const ul = document.createElement("ul")
+
+    const subtitleArray = Array.from(SubTitles)
+
+    subtitleArray.forEach(title => {
+
+        const summaryItem = document.createElement("li")
+            summaryItem.setAttribute('class', 'summary-li')
+
+        summaryItem.innerText = title.innerText
+
+        summaryDiv.appendChild(ul)
+        ul.appendChild(summaryItem)
+
+        scrollToSummaryItem(summaryItem, title)
+    });
 };
 
-// Paragraph-summary
+function scrollToSummaryItem(summaryTitle, h2Title){
 
-const paragraphSummary = document.getElementById("paragraph-list")
+    summaryTitle.addEventListener("click", () => {
 
-db.collection("Insights").where("KenniscentrumArtikel", "==", titel).get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
+        h2Title.scrollIntoView()
 
-        const titel = doc.data().Titel
-        const auteur = doc.data().Auteur
+    });
+};
 
-        db.collection("Vitaminders").where("Gebruikersnaam", "==", auteur).get().then(querySnapshot => {
-            querySnapshot.forEach(doc1=> {
+!function articleQuery(){
 
-                const profielFoto = doc1.data().Profielfoto
-                const gebruikersnaam = doc1.data().Gebruikersnaam
+    const bodyDiv = document.getElementById("article-body-div")
+    const metaUserPhoto = document.getElementById("author-photo")
+    const metaUserName = document.getElementById("author-name")
+    const authorDiv = document.getElementById("author-div")
+    const title = document.getElementById("title-article")
+    const headerDiv = document.getElementById("levensvraag-artikel-main-image")
+    const headerImg = document.createElement("img")
 
-        const innerDiv = document.createElement("div")
-        innerDiv.setAttribute("class", "paragraph-list-inner-div")
-       const titelDiv = document.createElement("p")
-       const photoDiv = document.createElement("div")
-                photoDiv.setAttribute("class", "photo-div-paragraph")
-        const photoImg = document.createElement("img")
-                photoImg.setAttribute("class", "meta-photo")
+    db.collection("Kenniscentrum").where("Title", "==", titel).get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
 
-        titelDiv.innerHTML = titel
-        photoImg.src = profielFoto
+            const titleArticle = doc.data().Title
+            const headerImage = doc.data().HeaderImage
+            const body = doc.data().Body
+            const domain = doc.data().Domain
+            const author = doc.data().Author
 
-        photoDiv.addEventListener("click", () => {
-            window.open(`/Vitaminders/${gebruikersnaam}.html`, "_self");
-        })
+            title.innerHTML = titleArticle
+            headerImg.src = headerImage
 
-        paragraphSummary.appendChild(innerDiv)
-        innerDiv.appendChild(photoDiv)
-        photoDiv.appendChild(photoImg)
-        innerDiv.appendChild(titelDiv)
-        
+            headerDiv.appendChild(headerImg)
 
-        titelDiv.addEventListener("click", () => {
-             const insight = document.getElementsByClassName("text-div-insights")
+            bodyDiv.innerHTML = body
 
-        const insightArray = Array.from(insight)
-
-            insightArray.forEach(ins =>{
-
-                insInner = ins.firstElementChild.nextElementSibling.innerHTML
-
-                if( insInner == titelDiv.innerHTML){
-                    ins.scrollIntoView()
-                }
-
-            })
-        })
-            })
-        })
+            // loadArticlesWithSameDomain(domain)
+            showAuthorOnPreview(author, metaUserPhoto, metaUserName, authorDiv)
+            setH2HeadersInSummary(bodyDiv)
+            sanityTinyMCE()
+        });
     })
-});
+}();
 
-// Edit coach insight
+// Follow coach
 
-function editIconKennis(elem){
+!function dataAttributeAuthorNameInFollowButton(){
 
-    const titelInsight = elem.dataset.title
-     const newInsightTitle = elem.nextElementSibling
-    const newBody = elem.nextElementSibling.nextElementSibling
+    const followButton = document.getElementById("follow-author")
 
-    // const tiny = document.getElementById("tiny-mce")
+    db.collection("Kenniscentrum")
+    .where("Title", "==", titel)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
 
-    // console.log(tiny)
+            const author = doc.data().Author
 
-    // tinyMCE.get('tiny-mce').setContent(newBody)
-    // tiny.scrollIntoView()
+            followButton.setAttribute("data-author", author)
 
-    newInsightTitle.setAttribute("contenteditable", "true")
-        newInsightTitle.style.border = "1px dotted #122b46"
+        });
+    })
+    .then(() => {
+        followUnfollowCoach()
+    });
+}();
 
-    newBody.setAttribute("contenteditable", "true")
-        newBody.style.border = "1px dotted #122b46"
+function followUnfollowCoach(){
 
-    const saveInsightDiv = document.createElement("div")
-        saveInsightDiv.setAttribute("class", "save-div")
-    const saveInsightP = document.createElement("p")
+    const followButton = document.getElementById("follow-author")
+    const coach = followButton.dataset.author
 
-        saveInsightDiv.appendChild(saveInsightP)
-
-        elem.parentElement.appendChild(saveInsightDiv)
-
-        saveInsightP.innerHTML = "Opslaan"
-
-        saveInsightP.addEventListener("click", () => {   
+    console.log(coach)
 
     auth.onAuthStateChanged(User =>{
-        if (User){
+            if(User){
+    db.collection("Vitaminders").doc(User.uid).get().then(doc =>{
 
-        db.collection("Vitaminders").doc(User.uid)
-                .get().then(function(doc){
-                    const coachNaam = doc.data().Gebruikersnaam;
+                    const followers = doc.data().FavCoaches
 
-                db.collection("Insights")
-                .where("Titel", "==", titelInsight)
-                .where("Auteur", "==", coachNaam)
-                .get().then(querySnapshot => {
-                    querySnapshot.forEach(doc1 => {
+                    // Hide follow for auth on his own profile
+                    const auth = doc.data().Gebruikersnaam
 
-                            db.collection("Insights").doc(doc1.id).update({
-                                Titel: newInsightTitle.innerHTML,
-                                Body: newBody.innerHTML
-                            })
-                            .then(() => {
-                                saveInsightP.innerHTML = "Opgeslagen"
-                            })
-                        });
+                    if(auth == coach){
+                            followButton.style.display = "none" 
+                    }
+    
+                    followersArray = Array.from(followers)
+    
+                    if(followersArray.includes(coach)){
+    
+                            followButton.innerHTML = "Ontvolgen"
+                            followButton.setAttribute("onclick", "unfollowCoach()")
+
+                    };   
+            });
+    };
+});
+};
+
+// Follow coach
+
+function sendEmailNewFollower(gebruikersnaamFollower){
+
+    const followButton = document.getElementById("follow-author")
+    const coach = followButton.dataset.author
+
+    db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+
+                    const email = doc1.data().Email
+                    const gebruikersnaamClean = doc1.data().GebruikersnaamClean
+                    const gebruikersnaam = doc1.data().Gebruikersnaam
+            
+
+    db.collection("Mail").doc().set({
+            to: email,
+            cc: "info@vitaminds.nu",
+            message: {
+            subject: `Nieuwe volger op Vitaminds`,
+            html: `Hallo ${gebruikersnaamClean},</br></br>
+            
+            ${gebruikersnaamFollower} volgt jouw nu op Vitaminds.</br></br>
+            
+            Vriendelijke groet, </br></br>
+            Het Vitaminds Team </br></br>
+            <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+            Gebruikersnaam: gebruikersnaam
+            }
+                    
+            }).catch((err) => {
+            console.log(err)
+            });
+            });
+    });
+};
+
+function followCoach(coach){
+
+    const button = document.getElementById("follow-author")
+
+    auth.onAuthStateChanged(User =>{
+            if(User){
+                    db.collection("Vitaminders").doc(User.uid).get().then(doc => {
+                            const gebruikersnaamCleanFollower = doc.data().GebruikersnaamClean
+                    
+                    db.collection("Vitaminders").doc(User.uid).update({
+                            FavCoaches: firebase.firestore.FieldValue.arrayUnion(coach)
+                    }).then(() => {
+                            sendEmailNewFollower(gebruikersnaamCleanFollower, coach)
                     });
-                });
+            });
+                    button.innerHTML = "Volgend"
+            } else {
+                    const followMassageVisitor = document.getElementById("follow-massage-visitor")
+                    followMassageVisitor.style.display = "flex"
+                    button.style.display = "none"
             };
-        });
-    });        
+    });
+};  
+
+!function followButton(){
+    const followButton = document.getElementById("follow-author")
+
+            followButton.addEventListener("click", () => {
+
+                const coach = followButton.dataset.author
+
+                    followCoach(coach);
+                    
+    });
+}();
+
+
+// Unfollow coach
+function unfollowCoach(){
+
+    const followButton = document.getElementById("follow-author")
+    const coach = followButton.dataset.author
+
+    auth.onAuthStateChanged(User =>{
+            if(User){
+
+                    console.log(User.uid)
+                    db.collection("Vitaminders").doc(User.uid).update({
+                            FavCoaches: firebase.firestore.FieldValue.arrayRemove(coach)
+                    }).then(() => {
+
+                        followButton.innerHTML = "Ontvolgd"
+
+                    });
+            };
+    });
 };

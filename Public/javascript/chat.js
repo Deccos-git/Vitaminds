@@ -377,6 +377,7 @@ function chatsBlaBla(){
 function saveAuthToReadlist(docID, authName, messages, user){
 
     console.log("Functie werkt")
+    console.log(messages)
    
     if(messages != 0){
         db.collection("Chats")
