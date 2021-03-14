@@ -40,7 +40,7 @@ facebookDescription.content = descriptionWorkshop
 facebookImage.content = bannerWorkshop
 };
 
-db.collection("Workshops").where("WorkshopTitle", "==", titel)
+db.collection("WorkshopsForCoaches").where("WorkshopTitle", "==", titel)
 .get().then(querySnapshot => {
 querySnapshot.forEach(doc => {
 
@@ -53,6 +53,357 @@ querySnapshot.forEach(doc => {
     });
 });
 
+// WORKSHOP OVERVIEW PAGE
+
+    // Name auth in create workshop
+    const authHeader = document.getElementById("titleSub-workshop")
+    const createWorkshopOuterDiv = document.getElementById("create-your-workshop")
+
+    if(createWorkshopOuterDiv != undefined && authHeader != undefined){
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        db.collection("Vitaminders").doc(User.uid).get().then(function(doc) {
+
+            const userType = doc.data().Usertype
+            const nameClean = doc.data().GebruikersnaamClean
+            const admin = doc.data().Admin
+
+            console.log(admin)
+
+            if(admin == "Yes"){
+                createWorkshopOuterDiv.style.display = "flex"
+                authHeader.innerText = `${nameClean},`
+            };
+
+        });
+        };
+    });
+};
+
+function changeButtonIfAuthIsWorkshopTaker(takers, button){
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+
+            db.collection("Vitaminders").doc(User.uid).get()
+            .then(doc2 => {
+
+                const auth = doc2.data().Gebruikersnaam
+
+                if(takers.includes(auth)){
+                    button.innerText = "Ga verder met workshop"
+                };
+            });
+        };
+    });
+};
+
+!function showWorkshopsInDraftForAuth(){
+    auth.onAuthStateChanged(User =>{
+        if(User){
+
+            db.collection("Vitaminders").doc(User.uid).get()
+            .then(doc2 => {
+
+                const admin = doc2.data().Admin
+
+                db.collection("WorkshopsForCoaches")
+                .where("Status", "==", "Draft")
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                
+                        const title = doc.data().WorkshopTitle
+                        const coach = doc.data().Coach
+                        const headerImg = doc.data().BannerImage
+                        const workshopPrice = doc.data().Price
+                        const takers = doc.data().Takers
+                
+                        db.collection("Vitaminders")
+                        .where("Gebruikersnaam", "==", coach).get()
+                        .then(querySnapshot => {
+                            querySnapshot.forEach(doc1 => {
+                
+                                const nameClean = doc1.data().GebruikersnaamClean
+                                const name = doc1.data().Gebruikersnaam
+                                const profilePic = doc1.data().Profielfoto
+                
+                                const DOM = document.getElementById("workshops-for-coaches")
+                
+                                const innerDiv = document.createElement("div")
+                                    innerDiv.setAttribute("class", "workshop-section")
+                                const header = document.createElement("div")
+                                    header.setAttribute("class", "workshop-header")
+                                const img = document.createElement("img")
+                                    img.setAttribute("class", "header-workshop")
+                                const coachPicDiv = document.createElement("div")
+                                    coachPicDiv.setAttribute("class", "coach-pic-div-workshop")
+                                const draftStatus = document.createElement("p")
+                                    draftStatus.setAttribute("id", "draft-status-workshop")
+                                const coachPic = document.createElement("img")
+                                const titleH3 = document.createElement("h3")
+                                const priceP = document.createElement("p")
+                                    priceP.setAttribute("id", "workshop-price")
+                                const buttonDiv = document.createElement("div")
+                                const button = document.createElement("button")
+                                    button.setAttribute("class", "button-algemeen")
+                                    button.setAttribute("onclick", "openWorkshopCoaches(this)")
+                
+                                img.src = headerImg
+                                coachPic.src = profilePic
+                                titleH3.innerText = title
+                                priceP.innerText = `Prijs: ${workshopPrice} euro`
+                                button.innerText = "Meer informatie"
+                                draftStatus.innerText = "Niet gepubliceerd"
+                                draftStatus.style.color = "#cf6e13"
+
+                                changeButtonIfAuthIsWorkshopTaker(takers, button)
+                
+                                if(DOM != null){
+
+                                    db.collection("Vitaminders").doc(User.uid).get().then(function(doc2) {
+
+                                    const auth = doc2.data().Gebruikersnaam
+
+                                    if(name === auth || admin === "Yes"){
+                
+                                DOM.appendChild(innerDiv)
+                                innerDiv.appendChild(header)
+                                header.appendChild(img)
+                                innerDiv.appendChild(coachPicDiv)
+                                coachPicDiv.appendChild(coachPic)
+                                innerDiv.appendChild(draftStatus)
+                                innerDiv.appendChild(titleH3)
+                                innerDiv.appendChild(priceP)
+                                innerDiv.appendChild(buttonDiv)
+                                buttonDiv.appendChild(button)
+                                        };
+                                    });
+                                };
+                            });
+                        });
+                    })
+                });
+            });
+        };
+    });
+}();
+
+// Workshops loaded from database
+
+db.collection("WorkshopsForCoaches")
+.where("Status", "==", "Public")
+.get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const title = doc.data().WorkshopTitle
+        const coach = doc.data().Coach
+        const headerImg = doc.data().BannerImage
+        const workshopPrice = doc.data().Price
+        const takers = doc.data().Takers
+
+        db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+
+                const nameClean = doc1.data().GebruikersnaamClean
+                const profilePic = doc1.data().Profielfoto
+
+                const DOM = document.getElementById("workshops-for-coaches")
+
+                const innerDiv = document.createElement("div")
+                    innerDiv.setAttribute("class", "workshop-section")
+                const header = document.createElement("div")
+                    header.setAttribute("class", "workshop-header")
+                const img = document.createElement("img")
+                    img.setAttribute("class", "header-workshop")
+                const nameP = document.createElement("p")
+                const coachPicDiv = document.createElement("div")
+                    coachPicDiv.setAttribute("class", "coach-pic-div-workshop")
+                const coachPic = document.createElement("img")
+                const titleH3 = document.createElement("h3")
+                const priceP = document.createElement("p")
+                    priceP.setAttribute("id", "workshop-price")
+                const buttonDiv = document.createElement("div")
+                const button = document.createElement("button")
+                    button.setAttribute("class", "button-algemeen")
+                    button.setAttribute("onclick", "openWorkshopCoaches(this)")
+                const freeNotice = document.createElement("p")
+                    freeNotice.setAttribute("class", "free-notice-workshops")
+
+                img.src = headerImg
+                coachPic.src = profilePic
+                nameP.innerText = nameClean
+                titleH3.innerText = title
+                priceP.innerText = `Prijs: ${workshopPrice} euro`
+                button.innerText = "Meer informatie"
+                freeNotice.innerText = "Gratis voor premium coaches"
+
+                changeButtonIfAuthIsWorkshopTaker(takers, button)
+
+                if(DOM != null){
+
+                DOM.appendChild(innerDiv)
+                innerDiv.appendChild(header)
+                header.appendChild(img)
+                innerDiv.appendChild(coachPicDiv)
+                coachPicDiv.appendChild(coachPic)
+                coachPicDiv.appendChild(nameP)
+                innerDiv.appendChild(titleH3)
+                innerDiv.appendChild(priceP)
+                innerDiv.appendChild(freeNotice)
+                innerDiv.appendChild(buttonDiv)
+                buttonDiv.appendChild(button)
+
+                };
+            })
+        });
+    })
+});
+
+// Open workshops after onclick
+
+function openWorkshopCoaches(elem){
+
+    divTitle = elem.parentElement.previousElementSibling.previousElementSibling.innerText
+
+    console.log(divTitle)
+
+    db.collection("WorkshopsForCoaches")
+    .where("WorkshopTitle", "==", divTitle)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            console.log(divTitle)
+
+            db.collection("WorkshopsForCoaches").doc(doc.id).update({
+                Views: firebase.firestore.FieldValue.increment(1)
+            })
+            .then(() => {
+                window.open("../Workshops-coaches/" + divTitle + ".html", "_self")
+            });
+        });
+    });
+};
+
+// Build workshop
+
+function clearLocalStorage(){
+    localStorage.removeItem("workshopTitle")
+    localStorage.removeItem("workshopCoach")
+};
+
+!function buildWorkshop(){
+
+    const makeWorkshopButton = document.getElementById("build-workshop-coaches")
+    const noticeP = document.createElement("p")
+        noticeP.setAttribute("id", "upgrade-notice")
+    const bottomDiv = document.getElementById("button-div-create-workshop")
+
+    if(makeWorkshopButton != null){
+
+            makeWorkshopButton.addEventListener("click", () => {
+
+                clearLocalStorage()
+
+                auth.onAuthStateChanged(User =>{
+                    if(User){
+                    const userRef = db.collection("Vitaminders").doc(User.uid);
+                    userRef.get().then(function(doc) {
+
+                        const coachType = doc.data().SubscriptionType
+
+                        if(coachType === "Premium"){
+                            console.log("Premium")
+                            window.open("create-workshops-for-coaches.html", "_self");
+                        } else if (coachType === "Basic"){
+                            console.log("Basic")
+                            makeWorkshopButton.style.display = "none"
+                            noticeP.innerHTML = '<u>Upgrade</u> naar een Premium account om een workshop te maken'
+                            bottomDiv.appendChild(noticeP)
+
+                            upgradeModal(noticeP)
+                        };
+                    });
+                };
+            }); 
+        });
+    };
+}();
+
+function upgradeModal(notice){
+
+    const upgradeModal = document.getElementById("upgrade-account-modal")
+
+    notice.addEventListener("click", () => {
+
+        upgradeModal.style.display = "flex"
+    });
+};
+
+!function upgradeMessage(){
+
+    const title = document.getElementById("welcome-message-upgrade")
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+
+            const name = doc.data().GebruikersnaamClean
+
+            title.innerHTML = `Wat leuk dat je wilt updragen naar een Premium abonnement, ${name}!`
+
+            });
+        };
+    });
+}();
+
+!function sendUpgradeRequest(){
+    const requestButton = document.getElementById("upgrade-button")
+
+    if(requestButton != null){
+
+            requestButton.addEventListener("click", () => {
+
+            auth.onAuthStateChanged(User =>{
+                if(User){
+                const userRef = db.collection("Vitaminders").doc(User.uid);
+                userRef.get().then(function(doc) {
+
+                    const email = doc.data().Email
+                    const nameClean = doc.data().GebruikersnaamClean
+
+                        db.collection("Mail").doc().set({
+                            to: [email],
+                            cc: "info@vitaminds.nu",
+                            message: {
+                            subject: `Upgrade naar Premium Vitaminds account`,
+                            html: `Hallo ${nameClean}, </br></br>
+                                    Wat leuk dat je een Premium-account hebt aangevraagd!<br><br> 
+                                    
+                                    We gaan je account direct upgraden. Je ontvangt een mailtje zodra je account is ge-upgrade.</br></br>
+
+                                    Vriendelijke groet, </br></br>
+                                    Het Vitaminds Team </br></br>
+                                    <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+                            Gebruikersnaam: nameClean,
+                            Emailadres: email,
+                            Type: "Upgrade request"
+                            }        
+                            })
+                    .then(() => {
+
+                        requestButton.innerText = "Je upgrade is aangevraagd!"
+
+                    })
+                    });
+                };
+            });
+        });
+    };
+}();
+
+
 // WORKSHOP LANDING
 const workshopLandingPageOuterDiv = document.getElementById("workshop-landing-page")
 const workshopLandingTitle = document.getElementById("workshop-landing-title")
@@ -62,7 +413,7 @@ const workshopDescription = document.getElementById("workshop-description")
 const workshopFactsUl = document.getElementById("workshop-facts")
 const agreementSection = document.getElementById("workshop-agreement")
 
-db.collection("Workshops")
+db.collection("WorkshopsForCoaches")
 .where("WorkshopTitle", "==", titel)
 .get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
@@ -146,7 +497,8 @@ function hideLandingIfAuthIsArrayMember(array){
 
 !function workshopQuery(){
 
-    db.collection("Workshops").where("WorkshopTitle", "==", titel)
+    db.collection("WorkshopsForCoaches")
+    .where("WorkshopTitle", "==", titel)
         .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
@@ -187,7 +539,7 @@ function hideLandingIfAuthIsArrayMember(array){
             localStorage.setItem("workshopTitle", dataTitle)
             localStorage.setItem("workshopCoach", dataCoach)
 
-            window.open("../create-workshop.html", "_self")
+            window.open("../create-workshops-for-coaches.html", "_self")
         });
     };
 }();
@@ -226,9 +578,7 @@ function loadWorkshopGoal(workshopGoal){
 
         if(opt.innerHTML == workshopGoal){
 
-            console.log(opt.innerHTML, selectGoal)
-
-            selectGoal.value = workshopGoal
+            selectGoal.value = opt.innerHTML
         };
     });
 };
@@ -309,7 +659,7 @@ function addMetaDataToUpdateButton(coach, title){
 
             setTimeout(() => {
 
-            db.collection("Workshops").where("WorkshopTitle", "==", titleFromStorage)
+            db.collection("WorkshopsForCoaches").where("WorkshopTitle", "==", titleFromStorage)
             .where("Coach", "==", coachFromStorage).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
             
@@ -413,8 +763,12 @@ let bannerImage = ""
     const selectedBannerImage = document.getElementById("selected-header-img")
     const loaderModal = document.getElementById("loading-modal")
 
+    console.log(uploadImageButton)
+
     if (uploadImageButton != null){
     uploadImageButton.addEventListener("click", () => {
+
+        console.log("test")
 
         loaderModal.style.display = "flex"
 
@@ -483,6 +837,8 @@ function saveWorkshop(){
 
     const select = workshopGoalSelect.options
     const workshopGoal = select[select.selectedIndex].innerHTML
+
+    console.log(workshopGoal)
 
     // Workshop price
     const workshopPrice = document.getElementById("workshop-price").value
@@ -566,7 +922,7 @@ function saveWorkshop(){
                     addMetaDataToUpdateButton(auth, workshopTitle)
                     setMetaDataToLocalStorage(workshopTitle, auth)
 
-    db.collection("Workshops").doc().set({
+    db.collection("WorkshopsForCoaches").doc().set({
         Eigenaar: "Vitaminds",
         Coach: auth,
         Status: "Draft",
@@ -722,14 +1078,14 @@ function updateWorkshop(){
         const closingNineTitle = document.getElementById("closing-title-input-9").value
         const closingNineText = tinyMCE.get('editor-closing-9').getContent()
 
-    db.collection("Workshops")
+    db.collection("WorkshopsForCoaches")
     .where("WorkshopTitle", "==", workshopTitle)
     .where("Coach", "==", workshopCoach)
 
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
-            db.collection("Workshops").doc(doc.id).update({
+            db.collection("WorkshopsForCoaches").doc(doc.id).update({
                 Goal: workshopGoal,
                 Price: workshopPrice.value,
                 Coach: workshopCoach,
@@ -793,20 +1149,20 @@ function previewWorkshop(){
     const workshopTitle = updateButton.dataset.title
     const workshopCoach = updateButton.dataset.coach
 
-    db.collection("Workshops")
+    db.collection("WorkshopsForCoaches")
     .where("WorkshopTitle", "==", workshopTitle)
     .where("Coach", "==", workshopCoach)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
-            db.collection("Workshops").doc(doc.id).update({
+            db.collection("WorkshopsForCoaches").doc(doc.id).update({
                 Status: "Draft",
                 Takers: firebase.firestore.FieldValue.arrayUnion(workshopCoach)
             });
         });
     })
     .then(() => {
-        window.open("../Workshops/" + workshopTitle + ".html", "_blank")
+        window.open("../workshops-coaches/" + workshopTitle + ".html", "_blank")
     });
 };
 
@@ -818,13 +1174,13 @@ function publishWorkshop(){
 
     changeTextOfPublishButton()
 
-    db.collection("Workshops")
+    db.collection("WorkshopsForCoaches")
     .where("WorkshopTitle", "==", workshopTitle)
     .where("Coach", "==", workshopCoach)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
-            db.collection("Workshops").doc(doc.id).update({
+            db.collection("WorkshopsForCoaches").doc(doc.id).update({
                 Status: "Draft",
                 Takers: firebase.firestore.FieldValue.arrayUnion(workshopCoach)
             });
@@ -889,7 +1245,9 @@ function createClosing(elem){
 
                 showEditWorkshopAdmin(admin, editWorkshopDiv)
 
-                db.collection("Workshops").where("WorkshopTitle", "==", titel).where("Coach", "==", auth)
+                db.collection("WorkshopsForCoaches")
+                .where("WorkshopTitle", "==", titel)
+                .where("Coach", "==", auth)
                 .get().then(querySnapshot => {
                     querySnapshot.forEach(doc1 => {
 
@@ -931,12 +1289,12 @@ function authRoutes(workshopDomain){
                 console.log(workshopDomain)
 
                 db.collection("Vitaminders")
-                .doc(doc.id).collection("Levensvragen")
+                .doc(doc.id).collection("Coachvragen")
                 .where("Domain", "==", workshopDomain)
                 .get().then(querySnapshot => {
                     querySnapshot.forEach(doc1 => {
 
-                        const routes = doc1.data().LevensvraagClean
+                        const routes = doc1.data().GoalClean
 
                         routeArray.push(routes)
 
@@ -966,12 +1324,12 @@ function appendRoutesOfAUthToRouteSelect(workshopDomain){
             .then(doc => {
 
                 db.collection("Vitaminders")
-                .doc(doc.id).collection("Levensvragen")
+                .doc(doc.id).collection("Coachvragen")
                 .where("Domain", "==", workshopDomain)
                 .get().then(querySnapshot => {
                     querySnapshot.forEach(doc1 => {
 
-                        const routes = doc1.data().LevensvraagClean
+                        const routes = doc1.data().GoalClean
 
                         const routeSelect = document.getElementById("routeSelectAuth")
 
@@ -1044,7 +1402,7 @@ function linkRouteAndWorkshop(){
     const option = routeSelect.options
     const selected = option[option.selectedIndex].innerHTML
 
-    db.collection("Workshops")
+    db.collection("WorkshopsForCoaches")
         .where("WorkshopTitle", "==", titel)
         .get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
@@ -1075,18 +1433,19 @@ function createGoalAndStartWorkshop(){
                 const auth = doc.data().Gebruikersnaam
 
                 db.collection("Vitaminders")
-                .doc(doc.id).collection("Levensvragen").doc()
+                .doc(doc.id).collection("Coachgoals").doc()
                 .set({
                     Eigenaar: "Vitaminds",
                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                     Gebruikersnaam: auth,
                     Domain: workshopGoal,
-                    Levenslessen: [],
+                    Lessons: [],
                     ID: idClean,
-                    Levensvraag: idClean + goalTitle,
-                    LevensvraagClean: goalTitle,
+                    Goal: idClean + goalTitle,
+                    GoalClean: goalTitle,
                     Omschrijving: goalDescription,
-                    Openbaar: "private"
+                    Openbaar: "private",
+                    Type: "Coachgoal"
                 })
                 .then(() => {
                     saveSet(workshopGoal, goalTitle)
@@ -1108,7 +1467,7 @@ function createGoalAndStartWorkshop(){
 
                 const authName = doc1.data().Gebruikersnaam
 
-                db.collectionGroup("Workshops")
+                db.collectionGroup("WorkshopsForCoaches")
                 .where("Workshop", "==", titel)
                 .where("Gebruikersnaam", "==", authName)
                 .get().then(querySnapshot => {
@@ -1133,7 +1492,10 @@ function saveSet(goalWorkshop, goalAuth){
 
                 const auth = doc.data().Gebruikersnaam
 
-    db.collection("Vitaminders").doc(User.uid).collection("Workshops").doc().set({
+    db.collection("Vitaminders")
+    .doc(User.uid)
+    .collection("WorkshopsForCoaches")
+    .doc().set({
         Workshop: titel,
         Gebruikersnaam: auth,
         Goal: goalWorkshop,
@@ -1352,7 +1714,7 @@ function updateSaveWorkshop(titel){
     
                         const auth = doc.data().Gebruikersnaam
     
-                        db.collectionGroup("Workshops")
+                        db.collectionGroup("WorkshopsForCoaches")
                         .where("Gebruikersnaam", "==", auth)
                         .where("Workshop", "==", titel)
                         .get().then(querySnapshot => {
@@ -1360,7 +1722,7 @@ function updateSaveWorkshop(titel){
         
                             db.collection("Vitaminders")
                             .doc(doc.id)
-                            .collection("Workshops")
+                            .collection("WorkshopsForCoaches")
                             .doc(doc1.id).update({
                                 StepOneInput: stepOneCTA,
                                 StepTwoInput: stepTwoCTA,
@@ -1419,7 +1781,7 @@ function saveAndCloseWorkshop(titel){
     const list = document.createElement("ul")
         list.setAttribute("id", "step-overview-list")
 
-    db.collection("Workshops")
+    db.collection("WorkshopsForCoaches")
     .where("WorkshopTitle", "==", titel)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
@@ -1537,6 +1899,7 @@ function saveAndCloseWorkshop(titel){
             const closingTextNineDOM = document.getElementById("closing-text-nine")
 
             workshopDomainInStartNewRoute.innerText = workshopDomain
+
             loadSummary(workshopGoals)
             authRoutes(workshopDomain)
             appendRoutesOfAUthToRouteSelect(workshopDomain)
@@ -1624,7 +1987,7 @@ function loadAlreadySavedSteps(stepInput, stepButton, stepCTA){
 
                 const auth = doc.data().Gebruikersnaam
 
-                db.collectionGroup("Workshops")
+                db.collectionGroup("WorkshopsForCoaches")
                 .where("Gebruikersnaam", "==", auth)
                 .where("Workshop", "==", titel)
                 .get().then(querySnapshot => {

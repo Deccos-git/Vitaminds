@@ -71,6 +71,7 @@
     display: flex;
      justify-content: center;
      flex-wrap: wrap;
+     background-color: #a7bdbd26;
 }
 
 .kenniscentrum-artikel-section{
@@ -671,5 +672,10 @@
     
     #coach-input {
         margin: 0px 20px 0px 20px;
+    }
+
+    #article-body-div {
+        margin: 40px 20px 50px 20px;
+        width: auto;
     }
 }

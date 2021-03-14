@@ -85,7 +85,7 @@ function registerCoach(){
       ID: cred.user.uid,
       Status: "Draft",
       Levensvragen: [],
-      SubscriptionType: subscriptionType
+      SubscriptionType: subscriptionType,
     })
     .then(() => {
       db.collection('Vitaminders').doc(cred.user.uid).collection("Gelukstegoed").doc().set({

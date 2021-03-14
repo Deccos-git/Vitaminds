@@ -37,7 +37,7 @@ table td{
 }
 
 #article-body-div h2{
-    color: #0c6665;
+    color: #0c6665 !important;
 }
 
 .button-menu{
@@ -609,9 +609,9 @@ table td{
 #article-body-div{
     margin: 80px 0px 50px 0px;
     width: 890px;
-    font-size: 18px;
-    color: #122b46;
-    letter-spacing: 1px;
+    font-size: 18px !important;
+    color: #122b46 !important;
+    letter-spacing: 1px !important;
 }
 
 #paragraph-list{

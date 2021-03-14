@@ -58,6 +58,35 @@
     height: 100px;
     border-radius: 50%;
     margin-top: -20px;
+    border: 3px solid white;
+    background-color: white;
+}
+
+#workshop-header{
+    border-radius: 15px;
+    width: 90%;
+}
+
+#confirm-payment-modal{
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    align-items: center;
+    position: fixed; /* Stay in place */
+    z-index: 5; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: white; /* Fallback color */
+}
+
+#meta-div{
+    background-color: #a7bdbd26;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 #draft-status-workshop{
@@ -307,6 +336,22 @@
     justify-content: center;
     text-align: center;
     background-color: #fff;  
+}
+
+#workshops-for-coaches{
+    display: flex;
+    justify-content: center;
+    background-color: #a7bdbd26;
+}
+
+.free-notice-workshops{
+    color: #cf6e13;
+    font-size: 14px;
+    margin: -10px 0px 25px 0px;
+}
+
+.step-explainer div{
+    margin-left: 0px !important;
 }
 
 #set-new-goal-div{
@@ -921,7 +966,7 @@ textarea{
     display: none;
     flex-direction: column;
     align-items: center;
-    text-align: center;
+    text-align: left;
     margin: 30px 0px;
     background-color: #a7bdbd26;
     padding: 10px;

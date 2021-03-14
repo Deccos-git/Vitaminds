@@ -380,6 +380,7 @@ function saveAuthToReadlist(docID, authName, messages, user){
     console.log(messages)
    
     if(messages != 0){
+        console.log("message is not 0")
         db.collection("Chats")
         .doc(docID)
         .collection("Messages")

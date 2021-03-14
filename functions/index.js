@@ -115,6 +115,12 @@ app.get('/Workshops/:id',function(req,res)
     res.sendFile('workshop.html', { root: __dirname });
 });
 
+// Workshops coaches aanmaken op basis van URL
+app.get('/Workshops-coaches/:id',function(req,res)
+{
+    res.sendFile('workshop-coaches.html', { root: __dirname });
+});
+
 // Levensvraag artikelen aanmaken op basis van URL
 app.get('/Artikelen/:id',function(req,res)
 {

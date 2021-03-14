@@ -44,6 +44,40 @@ const colour = getRandomColor()
   };
 }();
 
+function getTargetGroupMobile(){
+
+  const selectGroup = document.getElementById("select-targetgroup-mobile")
+
+  const option = selectGroup.options
+  const selected = option[option.selectedIndex].innerHTML
+
+  if(selected === "Coaches"){
+    window.open("../voor-coaches.html", "_self");
+  } else if (selected === "Psychologen"){
+    window.open("../register-ggz.html", "_self");
+  } else if (selected === "Particulieren"){
+    window.open("../index.html", "_self");
+  };
+};
+
+function getTargetGroup(){
+
+  const selectGroup = document.getElementById("select-targetgroup")
+
+  const option = selectGroup.options
+  const selected = option[option.selectedIndex].innerHTML
+
+  console.log(selected)
+
+  if(selected === "Coaches"){
+    window.open("../voor-coaches.html", "_self");
+  } else if (selected === "Psychologen"){
+    window.open("../register-ggz.html", "_self");
+  } else if (selected === "Particulieren"){
+    window.open("../index.html", "_self");
+  };
+};
+
 !function cookiesOK(){
   const button = document.getElementById("button-cookies")
   const cookieDiv = document.getElementById("cookie-notice")

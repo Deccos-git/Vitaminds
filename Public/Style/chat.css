@@ -170,7 +170,7 @@
     min-height: 12px;
     min-width: 12px;
     font-size: 10px;
-    color: white;
+    color: white !important;
     display: flex;
     justify-content: center;
     align-items: center;

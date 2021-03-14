@@ -173,10 +173,10 @@
 }
 
 .group-auth-img{
-    height: 100px;
-    width: 100px;
+    height: 70px;
+    width: 70px;
     border-radius: 50%;
-    margin-top: -50px;
+    margin-top: -10px;
     border: 5px solid white;
     background-color: white;
 }

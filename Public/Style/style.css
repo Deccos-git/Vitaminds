@@ -13,7 +13,7 @@ body{
 p{
   font-size: 22px;
   font-family: 'Nunito Sans', sans-serif;
-  color: #122b46;
+  color: #122b46 !important;
 }
 
 h1{
@@ -51,12 +51,14 @@ a{
 
 a:link{
   text-decoration: none;
-  color: #122b46;
+  color: #122b46 !important;
   text-decoration: underline;
-  text-decoration-color: #8e0000 ;
+  text-decoration-color: #8e0000 !important;
 }
 
-
+li{
+  color: #122b46 !important;
+}
 
 h4{
   font-family: 'Nunito Sans', sans-serif;
@@ -140,6 +142,31 @@ ul{
 }
 
 /* menu styling */
+
+#target-group-menu{
+  background-color: #a7bdbd26;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#target-group-inner-menu{
+  display: flex;
+  align-items: center;
+  margin: 0px 10px;
+}
+
+#target-group-inner-menu p{
+  margin: 10px 10px 10px 10px;
+  font-size: 16px;
+}
+
+#target-group-inner-menu select{
+  margin: 5px 0px;
+  width: auto;
+  font-size: 14px;
+  padding: 2px;
+}
 
 #menu{
   height: auto;
@@ -332,11 +359,20 @@ ul{
   margin: 0px 0px;
  }
 
-
+.target-select-button{
+  color: #122b46;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+  padding: 3px;
+  margin-left: 10px;
+}
 
 #log-out-mobile {
   color: #008e8e;
   font-size: 16px;
+  border: 1px solid #008e8e;
+  border-radius: 5px;
+  margin-top: 10px;
 }
 
 #chats-groups-mobile a{
@@ -726,7 +762,7 @@ ul{
  }
 
  .button-algemeen-card a{
-   color: #008e8e;
+   color: #008e8e !important;
  }
 
  .button-header{
@@ -1522,6 +1558,26 @@ margin: 0px 0px 30px 0px;
     flex-direction: column;
   }
 
+  #target-group-menu-mobile{
+    background-color: #a7bdbd26;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+  }
+
+  #target-group-inner-menu{
+    display: flex;
+    justify-content: center;
+    margin: 0px 5px;
+  }
+
+  #target-group-inner-menu p{
+    margin: 10px 10px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
   #menu-mobile-visible-layer{
     display: flex;
     padding: 10px;
@@ -1530,7 +1586,12 @@ margin: 0px 0px 30px 0px;
 
   #mobile-menu-outer-div{
     display: none;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #target-group-menu{
+    display: none;
   }
 
   #profile-picture-mobile{

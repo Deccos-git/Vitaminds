@@ -41,46 +41,65 @@
     <a href="tickets.html"> <p>Feedback</p></a>
   </div>
   
-  <!-- Mobile-menu -->
-  <nav id="mobile-menu"> 
-    <div id="menu-mobile-visible-layer">
-      <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
-      <div class="main-menu-mobile"><a href="/voor-coaches.html"><img id="logo-menu-for-coaches" src="images/logo-coaches.png" alt="Vitaminds voor coaches logo" width="150px"></a></div>
-    </div>
-    <div id="mobile-menu-outer-div">
-      <div id="mobile-menu-inner-div">
-            <div id="profile-picture-mobile"></div>
-            <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
-            <div class="main-menu-mobile"><a href="intervisie.html">Intervisie</a></div>
-            <div class="main-menu-mobile"><a href="cooperations.html">Samenwerken</a></div> 
-            <div class="main-menu-mobile"><a href="kenniscentrum.html">Kenniscentrum</a></div>
-            <div class="main-menu-mobile"><a href="groups-for-coaches.html">Groepen</a></div>
-            <a href="../index.html" id="link-vitaminds">Vitaminds</a>
-        <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+     <!-- Mobile-menu -->
+     <nav id="mobile-menu"> 
+      <div id="menu-mobile-visible-layer">
+        <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+        <div class="main-menu-mobile"><a href="/voor-coaches.html"><img id="logo-menu-for-coaches" src="images/logo-coaches.png" alt="Vitaminds voor coaches logo" width="150px"></a></div>
+      </div>
+      <div id="mobile-menu-outer-div">
+        <div id="mobile-menu-inner-div">
+              <div id="profile-picture-mobile"></div>
+              <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
+              <div class="main-menu-mobile"><a href="intervisie.html">Intervisie</a></div>
+              <div class="main-menu-mobile"><a href="cooperations.html">Samenwerken</a></div> 
+              <div class="main-menu-mobile"><a href="kenniscentrum.html">Kenniscentrum</a></div>
+              <div class="main-menu-mobile"><a href="groups-for-coaches.html">Groepen</a></div>
+              <div class="main-menu-mobile"><a href="workshops-for-coaches.html">Workshops</a></div>
+              <a href="../index.html" id="link-vitaminds">Vitaminds</a>
+          <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+        </div>
+        <div id="target-group-menu-mobile">
+          <div id="target-group-inner-menu">
+            <p>Vitaminds voor</p>
+            <select id="select-targetgroup-mobile" onchange="getTargetGroupMobile(this)">
+              <option value="coaches">Coaches</option>
+              <option value="private">Particulieren</option>
+              <option value="therapist">Psychologen</option>
+            </select>
+          </div>
+        </div>
+      </nav>
+  
+     <!-- menu --> 
+     <div id="target-group-menu">
+      <div id="target-group-inner-menu">
+        <p>Vitaminds voor</p>
+        <select id="select-targetgroup" onchange="getTargetGroup(this)">
+          <option value="coaches">Coaches</option>
+          <option value="private">Particulieren</option>
+          <option value="therapist">Psychologen</option>
+        </select>
+      </div>
+     </div>
+     <nav id="menu">
+      <div id="navigation-menu">
+        <div class="main-menu"><a href="/voor-coaches.html"><img id="logo-menu-for-coaches" src="images/logo-coaches.png" alt="Vitaminds voor coaches logo" width="150px"></a></div>
+        <div id="menu-items">
+          <div class="main-menu"><a href="intervisie.html">Intervisie</a></div>
+          <div class="main-menu"><a href="cooperations.html">Samenwerken</a></div> 
+          <div class="main-menu"><a href="kenniscentrum.html">Kenniscentrum</a></div>
+          <div class="main-menu "><a href="groups-for-coaches.html">Groepen</a></div>
+        </div>
+        <a href="aanmelden-coach.html" id="button-register-coach" class="coach-menu-main-p">Lid worden</a>
+      </div>
+      <div id="auth-menu">
+        <div id="auth-DOM"></div>
+        <div id="profile-picture">
+        </div>
+        <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
       </div>
     </nav>
-
-   <!-- menu --> 
-   <nav id="menu">
-    <div id="navigation-menu">
-      <div class="main-menu"><a href="/voor-coaches.html"><img id="logo-menu-for-coaches" src="images/logo-coaches.png" alt="Vitaminds voor coaches logo" width="150px"></a></div>
-      <div id="menu-items">
-        <div class="main-menu"><a href="intervisie.html">Intervisie</a></div>
-        <div class="main-menu"><a href="cooperations.html">Samenwerken</a></div> 
-        <div class="main-menu"><a href="kenniscentrum.html">Kenniscentrum</a></div>
-        <div class="main-menu "><a href="groups-for-coaches.html">Groepen</a></div>
-      </div>
-      <a href="aanmelden-coach.html" id="button-register-coach" class="coach-menu-main-p">Lid worden</a>
-    </div>
-    <div id="auth-menu">
-      <div id="auth-DOM"></div>
-      <div id="profile-picture">
-      </div>
-      <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
-      <div id="slash" class = "login-logout"><a>|</a></div>
-      <a href="index.html" id="link-vitaminds">Vitaminds</a>
-    </div>
-  </nav>
   
   <h1 id="title-register-coach">Word lid van Vitaminds</h1>
     <div id="banner-register-coach"></div>

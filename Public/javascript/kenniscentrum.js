@@ -129,6 +129,7 @@ function loadAllArticles(){
     
     db.collection("Kenniscentrum")
     .where("Owner", "==", "Vitaminds")
+    .orderBy("Timestamp", "desc")
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
     
@@ -205,6 +206,7 @@ function loadAllArticles(){
     
         db.collection("Kenniscentrum")
         .where("Domain", "==", selected)
+        .orderBy("Timestamp", "desc")
         .get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
         
@@ -262,6 +264,45 @@ function loadAllArticles(){
         
 
 // Individual article page
+
+// Register view count on article load
+!function registerViewOnLoad(){
+    window.addEventListener("load", () => {
+
+        db.collection("Kenniscentrum").where("Title", "==", titel).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                db.collection("Kenniscentrum").doc(doc.id).update({
+                    Views: firebase.firestore.FieldValue.increment(1)
+                }); 
+            });
+        });
+    });
+}();
+
+function setMetaAttributesArticle(keywords, headerImage){
+    const titleMeta = document.getElementById("page-title")
+    const summaryMeta = document.getElementById("meta-description")
+    const metaKeywords = document.getElementById("meta-keywords")
+    const facebookDescription = document.getElementById("facebook-description")
+    const facebookUrl = document.getElementById("facebook-url")
+    const facebookTitle = document.getElementById("facebook-title")
+    const facebookImg = document.getElementById("facebook-img")
+
+    console.log(titleMeta)
+
+    if(titleMeta != null || summaryMeta != null || metaKeywords != null || facebookDescription != null || facebookUrl != null || facebookTitle != null|| facebookImg != null){
+       
+        titleMeta.innerText = titel
+        summaryMeta.content = titel
+        metaKeywords.content = keywords
+        facebookDescription.content = titel
+        facebookUrl.content = window.location.href
+        facebookTitle.content = titel
+        facebookImg.content = headerImage
+
+    };
+};
     
 function sanityTinyMCE(){
 
@@ -446,6 +487,7 @@ function scrollToSummaryItem(summaryTitle, h2Title){
             const body = doc.data().Body
             const domain = doc.data().Domain
             const author = doc.data().Author
+            const keywords = doc.data().Keywords
 
             title.innerHTML = titleArticle
             headerImg.src = headerImage
@@ -458,6 +500,7 @@ function scrollToSummaryItem(summaryTitle, h2Title){
             showAuthorOnPreview(author, metaUserPhoto, metaUserName, authorDiv)
             setH2HeadersInSummary(bodyDiv)
             sanityTinyMCE()
+            setMetaAttributesArticle(keywords, headerImage)
         });
     })
 }();
@@ -611,3 +654,4 @@ function unfollowCoach(){
             };
     });
 };
+

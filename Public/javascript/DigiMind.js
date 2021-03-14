@@ -541,7 +541,7 @@ function hideChatIfAuthIsCoachAndUserIsVitaminder(typeAuth){
         });
 };
 
-// Select as coach
+// Select as coach/therapist
 
 !function showSelectAsCoachButtonIfCoach(){
 
@@ -554,9 +554,14 @@ function hideChatIfAuthIsCoachAndUserIsVitaminder(typeAuth){
 
                         const usertype = doc.data().Usertype
 
+                        console.log(usertype)
+
                         if(usertype === "Coach"){
                                 selectAsCoachButton.style.display = "block"
-                        };
+                        } else if (usertype === "Therapist"){
+                                selectAsCoachButton.style.display = "block"
+                                selectAsCoachButton.innerText = "Selecteer als therapeut"
+                        }
 
                         hideSelectAsCoachIfAuthIsCoach(selectAsCoachButton)
                 });

@@ -67,6 +67,13 @@ function reduceGelukstegoed(){
 auth.onAuthStateChanged(User =>{
   if(User){
   db.collection("Vitaminders").doc(User.uid)
+  .get().then(doc2 =>{
+
+    const admin = doc2.data().Admin
+
+    if(admin != "Yes"){
+
+  db.collection("Vitaminders").doc(User.uid)
   .collection("Gelukstegoed").get().then(querySnapshot =>{
       querySnapshot.forEach(doc =>{ 
 
@@ -116,15 +123,22 @@ auth.onAuthStateChanged(User =>{
          } else if (newAmount < 0){
 
           console.log("No money")
+
+          const confirmPaymentModal = document.getElementById("confirm-payment-modal")
+
           notice.innerHTML = "Je gelukstegoed is te laag om deze workshop te kunnen doen. Klik <u>hier</u> om je gelukstegoed op te hogen."
           notice.addEventListener("click", () => {
               window.open("../gelukstegoed.html", "_self")
           });
-          buttonDivLanding.appendChild(notice)
+          confirmPaymentModal.appendChild(notice)
          };
       });
   });
   });
+} else {
+  arrayOfWorkshopTakers()
+}
+});
   } else {
     notice.innerHTML = "Maak een gratis <u>account</u> aan om deze workshop te doen.<br><br> Heb je al een Vitaminds account? Klik dan <a href='../inlog.html' >hier </a> om in te loggen."
     notice.addEventListener("click", () => {
@@ -140,6 +154,8 @@ auth.onAuthStateChanged(User =>{
 
 function arrayOfWorkshopTakers(){
 
+  const confirmPaymentModal = document.getElementById("confirm-payment-modal")
+
   db.collection("Workshops").where("WorkshopTitle", "==", titel)
   .get().then(querySnapshot => {
   querySnapshot.forEach(doc1 => {
@@ -153,6 +169,10 @@ function arrayOfWorkshopTakers(){
       .get().then(doc =>{ 
 
               const auth = doc.data().Gebruikersnaam
+              const admin = doc.data().Admin
+
+
+              if(admin != "Yes"){
 
               db.collection("Workshops").doc(doc1.id).update({
                   Takers: firebase.firestore.FieldValue.arrayUnion(auth)
@@ -180,7 +200,7 @@ function arrayOfWorkshopTakers(){
                           db.collection("Revenue").doc().set({
                             Earning: vitamindsPrice,
                             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                            Source: `Workshop <br> ${titelCG}`,
+                            Source: `Workshop <br> ${titel}`,
                             Buyer: auth,
                             Billed: "No",
                             Coach: coach
@@ -190,10 +210,19 @@ function arrayOfWorkshopTakers(){
 
                           // Close landing
                           workshopLandingPageOuterDiv.style.display = "none"
+                          confirmPaymentModal.style.display = "none"
                         });
                       });
                   });
                 });
+              } else {
+                console.log("Admin")
+                db.collection("Workshops").doc(doc1.id).update({
+                  Takers: firebase.firestore.FieldValue.arrayUnion(auth)
+              })
+                workshopLandingPageOuterDiv.style.display = "none"
+                confirmPaymentModal.style.display = "none"
+              }
               });
               };
           });
@@ -202,12 +231,55 @@ function arrayOfWorkshopTakers(){
 };
 
 // Button query
-if(buttonWorkshopLandingStripe != null){
-  buttonWorkshopLandingStripe.addEventListener("click", () => {
 
-    buttonWorkshopLandingStripe.innerText = "Laden.."
+!function startWorkshopButton(){
 
-      reduceGelukstegoed()
+  if(buttonWorkshopLandingStripe != null){
+    buttonWorkshopLandingStripe.addEventListener("click", () => {
+
+      buttonWorkshopLandingStripe.innerText = "Laden.."
+
+      confirmPayment()
+    
+    });
+  };
+}();
+
+function confirmPayment(){
+
+  console.log("function werkt")
+
+  const confirmPaymentButton = document.getElementById("confirm-payment-button")
+  const confirmPaymentModal = document.getElementById("confirm-payment-modal")
+  const priceP = document.getElementById("price")
+  const coachP = document.getElementById("coach")
+
+  confirmPaymentModal.style.display = "flex"
+
+  db.collection("Workshops").where("WorkshopTitle", "==", titel)
+  .get().then(querySnapshot => {
+    querySnapshot.forEach(doc1 => {
+
+      const price = doc1.data().Price
+      const coach = doc1.data().Coach
+
+      priceP.innerHTML = `<b>€${price}</b>`
+
+      db.collection("Vitaminders")
+      .where("Gebruikersnaam", "==", coach).get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc2 => {
+
+          const coachClean = doc2.data().GebruikersnaamClean
+
+          coachP.innerHTML = `<b>${coachClean}</b>`
+
+          confirmPaymentButton.addEventListener("click", () => {
+            reduceGelukstegoed()
+          });
+        });
+      });
+    });
   });
 };
 
@@ -224,6 +296,22 @@ function storeMemberInDatabase(docId){
 
       db.collection("Coachgroups").doc(docId).update({
         Members: firebase.firestore.FieldValue.arrayUnion(auth)
+      })
+      .then(() => {
+
+        db.collectionGroup("Messages")
+        .where("Room", "==", titelCG)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc1 => {
+
+            db.collection("Coachgroups").doc(docId)
+            .collection("Messages").doc(doc1.id)
+            .update({
+              Members: firebase.firestore.FieldValue.arrayUnion(auth)
+            });
+          });
+        });
       });
     });
   };

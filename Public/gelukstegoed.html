@@ -46,7 +46,7 @@
     <a href="../tickets.html"> <p>Feedback</p></a>
   </div>
 
- <!-- Mobile-menu -->
+<!-- Mobile-menu -->
 <nav id="mobile-menu"> 
   <div id="menu-mobile-visible-layer">
     <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
@@ -83,16 +83,33 @@
           <div class="main-menu-mobile"><a href="events.html">Events</a></div>
         </li>
         <li>
-          <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
-        </li>
-        <li>
           <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
         </li> 
       </ul>
     </div>
+     <div id="target-group-menu-mobile">
+      <div id="target-group-inner-menu">
+        <p>Vitaminds voor</p>
+        <select id="select-targetgroup-mobile" onchange="getTargetGroupMobile(this)">
+          <option value="private">Particulieren</option>
+          <option value="coaches">Coaches</option>
+          <option value="therapist">Psychologen</option>
+        </select>
+      </div>
+    </div>
   </nav>
 
    <!-- menu --> 
+   <div id="target-group-menu">
+    <div id="target-group-inner-menu">
+      <p>Vitaminds voor</p>
+      <select id="select-targetgroup" onchange="getTargetGroup(this)">
+        <option value="private">Particulieren</option>
+        <option value="coaches">Coaches</option>
+        <option value="therapist">Psychologen</option>
+      </select>
+    </div>
+  </div>
    <nav id="menu">
     <div id="main-menu-logo"><a href="index.html"><img id="logo-menu" src="images/design/Logo2021-red.png" alt="Vitaminds logo" width="100px"></a></div>
     <div id="navigation-menu">
@@ -111,10 +128,6 @@
       <div id="login-register-div">
         <div id="button-register" class = "login-logout"><button><a href="Register.html">Aanmelden</a></button></div>
         <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
-      </div>
-      <div id="slash" class = "login-logout"><a>|</a></div>
-      <div id="info-menu">
-        <a href="/voor-coaches.html" id="aanmeldCH-mobile">Voor coaches</a>
       </div>
     </div>
   </nav>

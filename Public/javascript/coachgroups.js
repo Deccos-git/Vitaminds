@@ -607,9 +607,8 @@ function groupFactsLanding(memberCount, totalCosts, maximumMembersCount, duratio
 
 function groupDescriptionLanding(descriptionOfGroup){
     
-
     groupDescription.innerHTML = descriptionOfGroup
-}
+};
 
 function groupLandingBanner(imagePhoto){
 
@@ -618,7 +617,7 @@ function groupLandingBanner(imagePhoto){
     bannerImg.src = imagePhoto
 
     bannerDiv.appendChild(bannerImg)
-}
+};
 
 function hideLandingModal(){
     const hideIcon = document.getElementById("hide-landing-modal")
@@ -1747,8 +1746,6 @@ function saveCoachgroup(){
     const select = groupGoalSelect.options
     const option = select[select.selectedIndex].innerHTML
 
-    // saveCoachgroupAsEvent(auth, authClean, title, description, day, month, year, numberParticipants, costs, `<a href="../Group/${idClean + title}.html", "_self"`, coverPhoto, idClean, title)
-
    db.collection("Coachgroups").doc().set({
         Eigenaar: "Vitaminds",
         Room: idClean + title,
@@ -1831,27 +1828,5 @@ function sendMailToFollowers(type, auth, authClean, title){
     });
 };
 
-function saveCoachgroupAsEvent(authName, authNameClean, titleGroup, description, day, month, year, participants, price, link, banner, id, title){
-
-    db.collection("Events").doc().set({
-        Organizer: authName,
-        OrganizerClean: authNameClean,
-        Title: titleGroup,
-        TitleID: `${id} + ${title}`,
-        Description: description,
-        Date: `${day}-${month}-${year}`,
-        DateDay: day,
-        Participants: [],
-        DateMonth: month,
-        DateYear: year,
-        MaxParticipants: participants,
-        Price: price,
-        Location: link,
-        Online: "Online",
-        Banner: banner,
-        Type: "coachgroup",
-        Owner: "Vitaminds"
-                });
-};
 
 

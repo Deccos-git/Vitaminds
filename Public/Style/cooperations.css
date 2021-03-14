@@ -1,6 +1,7 @@
 #social-groeps-outer-div{
     display: flex;
     justify-content: center;
+    background-color: #a7bdbd26;
 }
 
 .social-group-div{

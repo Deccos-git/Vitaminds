@@ -1,0 +1,91 @@
+#register-ggz-main{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a7bdbd26;
+    padding: 20px;
+}
+
+#register-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.therapist-info-inner-div{
+    background-color: #a7bdbd;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 50px;
+}
+
+#therapist-information-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#slogan-therapists{
+    margin: -20px 20px 50px 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.image-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-div img{
+    width: 75%;
+    border-radius: 5px;
+}
+
+.info-div p{
+    margin: 20px 20px;
+}
+
+#show-register-therapist{
+    margin-bottom: 30px;
+}
+
+.info-images-div{
+    display: flex;
+    align-items: center;
+    min-height: 430px;
+}
+
+.info-div{
+    width: 50%;
+}
+
+#create-therapist-account{
+    cursor: pointer;
+    text-decoration-color: #8e0000 !important;
+}
+
+#register-ggz-button{
+    margin: 20px;
+}
+
+@media only screen and (max-width: 938px){
+
+    .therapist-info-inner-div{
+        width: 95%;
+    }
+
+    .info-div{
+        width: auto;
+    }
+
+    .info-images-div{
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .image-div img{
+        width: 100%;
+        border-radius: 0px;
+    }
+}
