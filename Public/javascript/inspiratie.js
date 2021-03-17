@@ -27,6 +27,8 @@ const titel11 = titel10.replace('%20',' ')
 const titel12 = titel11.split("?fb")
 const titel = titel12[0]
 
+console.log(titel)
+
 // Meta tags
 !function setMetaAttributesArticle(){
     const titleMeta = document.getElementById("title-meta")

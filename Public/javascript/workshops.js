@@ -1413,6 +1413,15 @@ function saveAndCloseWorkshop(titel){
     });
 };
 
+function stepCTATitle(stepCTATitleDOM, stepCTATitleDB){
+
+    if(stepCTATitleDB != undefined){
+
+    stepCTATitleDOM.innerHTML = stepCTATitleDB
+
+    };
+};
+
 !function workshopQuery(){
 
     const workshopDomainInStartNewRoute = document.getElementById("workshop-goal-title")
@@ -1465,7 +1474,16 @@ function saveAndCloseWorkshop(titel){
             const closingEightTitle = doc.data().ClosingEightTitle
             const closingNineText = doc.data().ClosingNineText 
             const closingNineTitle = doc.data().ClosingNineTitle
-
+            const stepOneCTA = doc.data().StepOneCTA
+            const stepTwoCTA = doc.data().StepTwoCTA
+            const stepThreeCTA = doc.data().StepThreeCTA
+            const stepFourCTA = doc.data().StepFourCTA
+            const stepFiveCTA = doc.data().StepFiveCTA
+            const stepSixCTA = doc.data().StepSixCTA
+            const stepSevenCTA = doc.data().StepSevenCTA
+            const stepEightCTA = doc.data().StepEightCTA
+            const stepNineCTA = doc.data().StepNineCTA
+            
             const buttonOne = document.getElementById("start-workshop")
             const buttonTwo = document.getElementById("step-two-button")
             const buttonThree = document.getElementById("step-three-button")
@@ -1536,6 +1554,16 @@ function saveAndCloseWorkshop(titel){
             const closingTextEightDOM = document.getElementById("closing-text-eight")
             const closingTextNineDOM = document.getElementById("closing-text-nine")
 
+            const stepOneCTATitle = document.getElementById("step-one-CTA-title")
+            const stepTwoCTATitle = document.getElementById("step-two-CTA-title")
+            const stepThreeCTATitle = document.getElementById("step-three-CTA-title")
+            const stepFourCTATitle = document.getElementById("step-four-CTA-title")
+            const stepFiveCTATitle = document.getElementById("step-five-CTA-title")
+            const stepSixCTATitle = document.getElementById("step-six-CTA-title")
+            const stepSevenCTATitle = document.getElementById("step-seven-CTA-title")
+            const stepEightCTATitle = document.getElementById("step-eight-CTA-title")
+            const stepNineCTATitle = document.getElementById("step-nine-CTA-title")
+
             workshopDomainInStartNewRoute.innerText = workshopDomain
             loadSummary(workshopGoals)
             authRoutes(workshopDomain)
@@ -1598,6 +1626,15 @@ function saveAndCloseWorkshop(titel){
             closingText(closingTextSevenDOM, closingSevenText)
             closingText(closingTextEightDOM, closingEightText)
             closingText(closingTextNineDOM, closingNineText)
+            stepCTATitle(stepOneCTATitle, stepOneCTA)
+            stepCTATitle(stepTwoCTATitle, stepTwoCTA)
+            stepCTATitle(stepThreeCTATitle, stepThreeCTA)
+            stepCTATitle(stepFourCTATitle, stepFourCTA)
+            stepCTATitle(stepFiveCTATitle, stepFiveCTA)
+            stepCTATitle(stepSixCTATitle, stepSixCTA)
+            stepCTATitle(stepSevenCTATitle, stepSevenCTA)
+            stepCTATitle(stepEightCTATitle, stepEightCTA)
+            stepCTATitle(stepNineCTATitle, stepNineCTA)
             updateSaveWorkshop(title)
             saveAndCloseWorkshop(title)
 
