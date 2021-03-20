@@ -642,8 +642,6 @@ function unfollowCoach(){
 
     auth.onAuthStateChanged(User =>{
             if(User){
-
-                    console.log(User.uid)
                     db.collection("Vitaminders").doc(User.uid).update({
                             FavCoaches: firebase.firestore.FieldValue.arrayRemove(coach)
                     }).then(() => {
@@ -655,3 +653,310 @@ function unfollowCoach(){
     });
 };
 
+// Add learning
+
+!function fillGoalSelect(){
+
+    const select = document.getElementById("goal-select")
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+            db.collection("Vitaminders")
+            .doc(User.uid)
+            .collection("Coachgoals")
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                    const goalClean = doc.data().GoalClean
+
+                    const option = document.createElement("option")
+
+                    option.innerText = goalClean
+
+                    select.appendChild(option)
+                });
+            });
+        };
+    });
+}();
+
+function articleMeta(DOCID, userName, userNameClean){
+
+    db.collection("Kenniscentrum")
+    .where("Title", "==", titel)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const author = doc.data().Author
+            const authorClean = doc.data().AuthorClean
+
+            saveLesson(DOCID, userName, userNameClean, author, authorClean, id)
+
+        });
+    });
+};
+
+!function displayCreateGoalMessageIfNoGoals(){
+
+    const select = document.getElementById("goal-select")
+    const selectDiv = document.getElementById("select-div")
+    const saveButton = document.getElementById("save-learning")
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+            db.collection("Vitaminders")
+            .doc(User.uid)
+            .get().then(doc => {
+
+                const coachGoals = doc.data().CoachGoals
+                const userName = doc.data().Gebruikersnaam
+                const userNameClean = doc.data().GebruikersnaamClean
+
+                const message = document.createElement("p")
+                    message.setAttribute("id", "no-goal-meassage")
+
+                    articleMeta(User.uid, userName, userNameClean)
+                    hideNoAuthNoticeIfAuth()
+
+                message.innerHTML = `Je hebt nog geen doel om je les aan te koppelen. Klik <u>hier</u> om direct een doel aan te maken.`
+
+                if(coachGoals === undefined){
+
+                    select.style.display = "none"
+                    saveButton.style.display = "none"
+                    selectDiv.appendChild(message)
+
+                    createNexGoalDiv(message)
+                    
+                };
+            });
+        };
+    });
+}();
+
+function hideNoAuthNoticeIfAuth(){
+
+    const notice = document.getElementById("no-auth-notice")
+    const learningDiv = document.getElementById("new-learning-div")
+
+    notice.style.display = "none"
+    learningDiv.style.display = "flex"
+
+};
+
+function saveLesson(DOCID, userName, userNameClean, coach, coachClean, id){
+
+    const saveButton = document.getElementById("save-learning")
+
+    saveButton.addEventListener("click", () => {
+
+        const lesson = document.getElementById("learning-input").value
+        const goalSelect = document.getElementById("goal-select")
+
+        const option = goalSelect.options
+        const selected = option[option.selectedIndex].innerHTML
+
+        saveButton.innerText = "Opgeslagen"
+
+        db.collectionGroup("Coachgoals")
+        .where("GoalClean", "==", selected)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                const idGoal = doc.data().ID
+
+                db.collection("Vitaminders")
+                .doc(DOCID)
+                .collection("CoachLessons")
+                .doc()
+                .set({
+                    Username: userName,
+                    UserNameClean: userNameClean,
+                    Lesson: lesson,
+                    Coachgoal: selected,
+                    ID: idGoal,
+                    Source: titel,
+                    Inspirator: coach,
+                    InspiratorClean: coachClean,
+                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                })
+                .then(() => {
+                    db.collection("Vitaminders")
+                    .doc(DOCID)
+                    .collection("CoachSocialWall")
+                    .doc()
+                    .set({
+                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                        Username: userName,
+                        UserNameClean: userNameClean,
+                        Lesson: lesson,
+                        Coachgoal: selected,
+                        ID: idGoal,
+                        Source: titel,
+                        Inspirator: coach,
+                        InspiratorClean: coachClean,
+                        Type: "ArticleLesson"
+                    });
+                    })
+                    .then(() => {
+                        db.collection("Vitaminders")
+                        .doc(DOCID)
+                        .collection("Coachgoals")
+                        .doc(doc.id)
+                        .update({
+                            LastActive:firebase.firestore.Timestamp.fromDate(new Date()),
+                            Lessons: firebase.firestore.FieldValue.arrayUnion(lesson)
+                        });
+                    });
+            });
+        });
+    });
+};
+
+function createNexGoalDiv(message){
+
+    const createNewGoalModal = document.getElementById("create-goal-modal")
+
+    closeModal(createNewGoalModal)
+
+    message.addEventListener("click", () => {
+
+        createNewGoalModal.style.display = "flex"
+
+    });
+};
+
+function closeModal(modal){
+
+    const closeModal = document.getElementById("close-modal")
+
+    closeModal.addEventListener("click", () => {
+        modal.style.display = "none"
+    });
+};
+
+function coachMeta(coach, profilePhoto, coachName){
+
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", coach)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const userNameClean = doc.data().GebruikersnaamClean
+            const photo = doc.data().Profielfoto
+
+            profilePhoto.src = photo
+            coachName.innerText = userNameClean
+
+        });
+    });
+};
+
+function metaDivLinkToProfile(metaDiv, coachName){
+
+    metaDiv.addEventListener("click", () => {
+        window.open("../Vitaminders/" + coachName + ".html", "_self");
+    });
+};
+
+!function learningsOverview(){
+
+    const overview = document.getElementById("learnings-overiew")
+
+    db.collectionGroup("CoachLessons")
+    .where("Source", "==", titel)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const lesson = doc.data().Lesson
+            const timestamp = doc.data().Timestamp
+            const coach = doc.data().Username
+
+            const title = document.createElement("h3")
+            const lessonDiv = document.createElement("div")
+                lessonDiv.setAttribute("class", "lesson-div")
+            const metaDiv = document.createElement("div")
+                metaDiv.setAttribute("class", "meta-div")
+            const profilePhoto = document.createElement("img")
+                profilePhoto.setAttribute("class", "profile-photo")
+            const coachName = document.createElement("p")
+                coachName.setAttribute("class", "coach-name")
+            const lessonP = document.createElement("p")
+                lessonP.setAttribute("class", "lesson-learning")
+            const dateP = document.createElement("p")
+                dateP.setAttribute("class", "timestamp-learning")
+
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            dateP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
+            title.innerText = "Wat anderen over hun coachpraktijk hebben geleerd"
+            coachMeta(coach, profilePhoto, coachName)
+            lessonP.innerText = lesson
+
+            metaDivLinkToProfile(metaDiv, coach)
+
+            overview.appendChild(title)
+            overview.appendChild(lessonDiv)
+            lessonDiv.appendChild(metaDiv)
+            metaDiv.appendChild(profilePhoto)
+            metaDiv.appendChild(coachName)
+            lessonDiv.appendChild(lessonP)
+            lessonDiv.appendChild(dateP)
+
+        });
+    });
+}();
+
+!function saveNewGoal(){
+
+    const saveButton = document.getElementById("save-new-goal")
+
+    console.log("test")
+
+    if(saveButton != null){
+
+        console.log("test")
+
+        saveButton.addEventListener("click", () => {
+
+            console.log("test")
+
+            const goalTitle = document.getElementById("new-goal-input").value
+            const goalDescription = document.getElementById("new-goal-description").value
+
+            saveButton.innerText = "Opgeslagen"
+
+            auth.onAuthStateChanged(User =>{
+                if(User){
+                    db.collection("Vitaminders").doc(User.uid).get()
+                    .then(doc => {
+
+                        const auth = doc.data().Gebruikersnaam
+
+                        db.collection("Vitaminders")
+                        .doc(doc.id).collection("Coachgoals").doc()
+                        .set({
+                            Eigenaar: "Vitaminds",
+                            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                            Gebruikersnaam: auth,
+                            Lessons: [],
+                            Tips: [],
+                            ID: idClean,
+                            Goal: idClean + goalTitle,
+                            GoalClean: goalTitle,
+                            Omschrijving: goalDescription,
+                            Openbaar: "public",
+                            Type: "Coachgoal"
+                        })
+                        .then(() => {
+                            db.collection("Vitaminders")
+                            .doc(doc.id)
+                            .update({
+                                CoachGoals: firebase.firestore.FieldValue.increment(1)
+                            }) 
+                        })
+                    });
+                };
+            });
+        });
+    };
+}();

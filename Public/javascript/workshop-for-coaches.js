@@ -1444,7 +1444,7 @@ function createGoalAndStartWorkshop(){
                     Goal: idClean + goalTitle,
                     GoalClean: goalTitle,
                     Omschrijving: goalDescription,
-                    Openbaar: "private",
+                    Openbaar: "public",
                     Type: "Coachgoal"
                 })
                 .then(() => {

@@ -965,6 +965,7 @@ table td{
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #a7bdbd26;
 }
 
 /* Theme page overview*/

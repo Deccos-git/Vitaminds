@@ -189,7 +189,10 @@ function loadCoachesOnFilteredDomain(selectedOption){
 
 
 function showAllCoaches(){
-db.collection("Vitaminders").where("Usertype", "==", "Coach").where("Status", "==", "Approved")
+    db.collection("Vitaminders")
+    .where("Usertype", "==", "Coach")
+    .where("Status", "==", "Approved")
+    .where("SubscriptionType", "==", "Premium")
     .get()
     .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
@@ -248,7 +251,7 @@ db.collection("Vitaminders").where("Usertype", "==", "Coach").where("Status", "=
             });
 
             // Exclude from list of coaches
-            if(naam == "115tuwbtujsSelam" || naam == "c4r6fyfkyx6Selam" || naam == "fbKlPnWobJh0ldPROWQRYGCezhv2Gijs van Beusekom" ){
+            if(naam === "115tuwbtujsSelam" || naam === "c4r6fyfkyx6Selam" || naam === "fbKlPnWobJh0ldPROWQRYGCezhv2Gijs van Beusekom" || naam === "an6XxJEMDEbrRa9zFUs7mclx33c2Henk"){
                 nieuweDiv.style.display = "none"
             };
             

@@ -1,0 +1,216 @@
+#community-outer-div{
+    display: flex;
+    justify-content: center;
+    background-color: #a7bdbd26;
+}
+
+#community-card-outer-div{
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: auto;
+    margin: 30px 10px 20px 10px;
+    padding-bottom: 20px;
+    align-items: center;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: #FFF;
+}
+
+#community-card-header img{
+    height: 200px;
+    width: 250px;
+}
+
+#community-card-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+#create-new-coach-goal-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#create-new-coach-goal-inner-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+#create-new-coach-goal{
+    background-color: #122B46;
+    border-radius: 20px;
+    border: 0px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    margin: 50px;
+    width: auto;
+    align-self: center;
+    box-shadow: 0 5px 9px 0 rgb(0 0 0 / 20%), 0 7px 21px 0 rgb(0 0 0 / 19%);
+}
+
+#create-new-coach-goal-inner-div{
+    background-color: #a7bdbd;
+    width: 100%;
+}
+
+#save-coach-goal{
+    margin: 20px;
+}
+
+#goal-overview{
+    display: flex;
+    justify-content: center;
+    background-color: #a7bdbd26;
+}
+
+#create-new-refer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#create-new-refer-inner-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+#create-new-refer{
+    background-color: #122B46;
+    border-radius: 20px;
+    border: 0px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    margin: 50px;
+    width: auto;
+    align-self: center;
+    box-shadow: 0 5px 9px 0 rgb(0 0 0 / 20%), 0 7px 21px 0 rgb(0 0 0 / 19%);
+}
+
+#create-new-refer-inner-div{
+    background-color: #a7bdbd26;
+    width: 100%;
+}
+
+#save-refer{
+    margin: 20px;
+}
+
+#refer-wall{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.goal-card{
+    margin: 30px 10px 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    text-align: left;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px -1px rgb(0 0 0 / 12%);
+    padding: 20px 20px 0px 20px;
+    background-color: white;
+}
+
+.type-support{
+    font-size: 18px;
+    margin-top: 0px;
+}
+
+.timestamp-support{
+    font-size: 14px;
+}
+
+.meta-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.social-wall-coaches-inner-div{
+    margin: 30px 20% 30px 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    text-align: left;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px -1px rgb(0 0 0 / 12%);
+    padding: 20px 20px 0px 20px;
+    background-color: white;
+    width: 650px;
+}
+
+.meta-div img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.meta-div p{
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.info-div p{
+    font-size: 18px;
+    margin: 5px;
+}
+
+.button-support{
+    margin: 20px 10px 20px 10px;
+    width: 200px;
+    align-self: center;
+}
+
+#goal-wall{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#support-CTA-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a7bdbd26;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px;
+}
+
+#support-CTA-div ul{
+    margin-top: 0px;
+    font-size: 18px;
+}
+
+.goal-description{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+#save-support{
+    margin-top: 20px;
+}
+
+#goal-social-wall{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a7bdbd26;
+}

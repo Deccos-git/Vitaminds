@@ -24,12 +24,12 @@
                         sendEmail(nameClean, auth, emailAdress)
                     } else if (subsciptionType === "Basic"){
 
-                        noticeP.innerHTML = '<u>Upgrade</u> naar een Premium account om een casus in te dienen.'
+                        noticeP.innerHTML = '<u>Upgrade</u> naar een Premium account om aan intervisie deel te nemen.'
                         noticeDOM.appendChild(noticeP)
                         upgradeModal(noticeP)
 
                     } else if (subsciptionType === undefined){
-                        noticeP.innerHTML = '<u>Upgrade</u> naar een Premium coach account om een casus in te dienen.'
+                        noticeP.innerHTML = '<u>Upgrade</u> naar een Premium coach account om aan intervisie deel te nemen.'
                         noticeDOM.appendChild(noticeP)
                         upgradeModal(noticeP)
                     };

@@ -186,7 +186,7 @@
 
     function showNumberOfParticipants(numberParticipantsP, numberParticipants){
 
-        numberParticipantsP.innerHTML = `<b>Aantal deelnemers:</b><br> ${numberParticipants}`
+        numberParticipantsP.innerHTML = `<b>Max. aantal deelnemers:</b><br> ${numberParticipants}`
 
         if(numberParticipants === undefined){
             numberParticipantsP.style.display = "none"
@@ -248,7 +248,9 @@
         });
     };
     
-    db.collection("GroupsForCoaches").where("Type", "==", "GroupsForCoaches").get().then(querySnapshot => {
+    db.collection("GroupsForCoaches")
+    .where("Type", "==", "GroupsForCoaches")
+    .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
     
             const title = doc.data().Room
@@ -306,7 +308,6 @@
                 showVisitGroupIfAuthIsMember(members, groupButton, title)
                 showNumberOfParticipants(numberParticipantsP, numberParticipants)
                 organizerInfo(authImg, authName, authDiv, auth)
-                changeFormatOfDate(startdate, startdateP)
                 groupsForCoachesMetaTags(description, titleClean, coverPhoto)
                 showLeaveGroupForMember(members, auth, buttonDiv, leaveGroup)
                 vitamindsLivingRoomExceptions(title, memberCount, costsP, leaveGroup)
@@ -314,7 +315,7 @@
                 leaveGroupForCoaches(leaveGroup, title)
     
                 memberCount.innerHTML = `<b>Aantal aanmeldingen:</b><br> ${members.length}`
-                costsP.innerHTML = `<b>Kosten:</b><br> ${costs} euro`
+                costsP.innerHTML = `<b>Kosten:</b><br> Eenmalig €${costs}`
                 leaveGroup.innerHTML = "Aanmelding annuleren"
     
                 if(DOM != null){
@@ -338,18 +339,7 @@
                 };
         });
     });
-    
-    function changeFormatOfDate(date, startdateP){
 
-        if(date != undefined){
-    
-        const splitDate = date.split("-")
-    
-        const formattedDate = `${splitDate[2]}-${splitDate[1]}-${splitDate[0]}`
-    
-        startdateP.innerHTML = `<b>Startdatum:</b><br> ${formattedDate}`
-        };
-    };
     
     function hideLeaveGroupButtonIfAuthIsNotMember(membersOfGroup, leaveGroupButton){
     

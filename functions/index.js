@@ -170,6 +170,12 @@ app.get('/eventCoaches/:id',function(req,res)
     res.sendFile('eventCoach.html', { root: __dirname });
 });
 
+// Support for coaches
+app.get('/coachSupports/:id',function(req,res)
+{
+    res.sendFile('coachsupport.html', { root: __dirname });
+});
+
 
 // Tool sheduling
 

@@ -17,6 +17,10 @@
     justify-content: center;
 }
 
+.button-intervision{
+    margin-top: 20px;
+}
+
 #intervision-information{
     display: flex;
     flex-direction: column;

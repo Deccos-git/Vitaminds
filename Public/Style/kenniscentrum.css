@@ -123,9 +123,13 @@
     letter-spacing: 1px;
 }
 
+#save-new-goal{
+    margin-top: 20px;
+}
+
 #article-body-div img{
     height: auto;
-    width: 100%;
+    width: auto;
     border-radius: 5px;
 }
 
@@ -444,6 +448,45 @@
     margin-left: 50%;
 }
 
+#learnings-overiew{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timestamp-learning{
+    font-size: 14px;
+}
+
+.meta-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.meta-div img{
+    height: 50px;
+    border-radius: 50%;
+}
+
+.meta-div p{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.lesson-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 10px;
+    width: 70%;
+    background-color: white;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px -1px rgb(0 0 0 / 12%);
+}
+
 .sociale-div-insights{
         background-color: rgb(204, 203, 203);
         display: flex;
@@ -604,7 +647,7 @@
 
 .summary-li {
     font-size: 20px;
-    color: white;
+    color: white !important;
     cursor: pointer;
 }
 
@@ -626,6 +669,51 @@
     font-family: 'Libre Baskerville', serif;
     margin-left: 5px;
     text-decoration: none;
+}
+
+#learning-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a7bdbd;
+    padding: 20px;
+}
+
+#new-learning-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+#save-learning{
+    margin: 10px 10px 20px 10px;
+}
+
+#goal-select{
+    width: auto;
+}
+
+#create-goal-modal{
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    align-items: center;
+    position: fixed; /* Stay in place */
+    z-index: 5; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #a7bdbd; /* Fallback color */
+}
+
+#no-goal-meassage{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#close-modal{
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 938px){
