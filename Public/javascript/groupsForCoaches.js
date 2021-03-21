@@ -298,10 +298,14 @@
                 groupButton.setAttribute("data-room", title)
             const leaveGroup = document.createElement("p")
                 leaveGroup.setAttribute("class", "leave-group-button")
+            const noticePremiumCoaches = document.createElement("p")
+                noticePremiumCoaches.setAttribute("class", "notice-premium-coaches")
     
                 groupCoverPhoto.src = coverPhoto
                 groupTitleH2.innerText = titleClean
+                noticePremiumCoaches.innerHTML = "Gratis voor <u>premium</u> coaches"
     
+                linkNoticePremiumCoaches(noticePremiumCoaches)
                 openGroup(title, groupButton)
                 showDurationOfGroup(duration, groupLenghtP)
                 hideLeaveGroupButtonIfAuthIsNotMember(members, leaveGroup)
@@ -333,12 +337,20 @@
                 metaDiv.appendChild(groupLenghtP)
                 metaDiv.appendChild(startdateP)
                 metaDiv.appendChild(costsP)
+                metaDiv.appendChild(noticePremiumCoaches)
                 groupInnerDiv.appendChild(buttonDiv)
                 buttonDiv.appendChild(groupButton)
     
                 };
         });
     });
+
+    function linkNoticePremiumCoaches(notice){
+
+        notice.addEventListener("click", () => {
+            window.open("aanmelden-coach.html", "_self");
+        });
+    };
 
     
     function hideLeaveGroupButtonIfAuthIsNotMember(membersOfGroup, leaveGroupButton){
@@ -553,7 +565,7 @@
         const hideIcon = document.getElementById("hide-landing-modal")
     
         hideIcon.addEventListener("click", () => {
-            window.open("../groups.html", "_self");
+            window.open("../groups-for-coaches.html", "_self");
         });
     };
     

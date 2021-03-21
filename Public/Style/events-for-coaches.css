@@ -1,0 +1,143 @@
+#new-event-outer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#online-live-select{
+    width: auto;
+}
+
+#create-new-coach-event{
+    display: none;
+}
+
+#events-outer-div{
+    display: flex;
+    justify-content: center;
+}
+
+.event-outer-div {
+    height: auto;
+    width: 250px;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    margin: 30px 10px 30px 10px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.event-outer-div img {
+    height: 200px;
+    width: 250px;
+}
+
+.organizer-event-div img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    border: 3px solid white;
+}
+
+.organizer-event-div p {
+    font-size: 16px;
+    margin-top: 0px;
+}
+
+.date-event {
+    background-color: white;
+    border-radius: 5px;
+    margin: 10px 50px 20px 50px;
+    padding: 10px;
+    font-weight: bold;
+}
+
+#button-event-overview {
+    margin-bottom: 20px;
+}
+
+.organizer-event-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: -40px;
+    cursor: pointer;
+}
+
+#tiny-mce-div {
+    display: none;
+}
+
+#confirmation-message{
+    display: none;
+    margin: 0px 20px 20px 20px;
+    text-align: center;
+}
+
+#event-detail-outer-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#organizer-event-detail-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0px;
+    cursor: pointer;
+}
+
+#organizer-event-detail-div p {
+    font-size: 16px;
+    margin-top: 0px;
+    font-weight: bold;
+}
+
+#organizer-event-detail-div img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+}
+
+.event-banner {
+    width: 90%;
+    border-radius: 15px;
+}
+
+.date-event {
+    background-color: white;
+    border-radius: 5px;
+    margin: 10px 50px 20px 50px;
+    padding: 10px;
+    font-weight: bold;
+}
+
+#event-description {
+    margin: 20px 10% 20px 10%;
+}
+
+#edit-icon-event-description {
+    display: none;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+
+#meta-div-event-detail {
+    margin: 20px;
+}
+
+#meta-div-event-detail p {
+    font-size: 18px;
+    margin-top: 0px;
+}
+
+#register-event-button {
+    margin: 20px 50px 50px 50px;
+}

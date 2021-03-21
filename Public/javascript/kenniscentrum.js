@@ -910,15 +910,9 @@ function metaDivLinkToProfile(metaDiv, coachName){
 
     const saveButton = document.getElementById("save-new-goal")
 
-    console.log("test")
-
     if(saveButton != null){
 
-        console.log("test")
-
         saveButton.addEventListener("click", () => {
-
-            console.log("test")
 
             const goalTitle = document.getElementById("new-goal-input").value
             const goalDescription = document.getElementById("new-goal-description").value
@@ -937,6 +931,7 @@ function metaDivLinkToProfile(metaDiv, coachName){
                         .set({
                             Eigenaar: "Vitaminds",
                             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                            LastActive: firebase.firestore.Timestamp.fromDate(new Date()),
                             Gebruikersnaam: auth,
                             Lessons: [],
                             Tips: [],

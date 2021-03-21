@@ -13,19 +13,12 @@ function openSupport(buttonDOM, link){
                     userRef.get()
                     .then(doc => {
 
-                        const userType = doc.data().Usertype
-                        const naamClean = doc.data().GebruikersnaamClean
-                        const subscriptionType = doc.data().SubscriptionType
+                        const type = doc.data().Usertype
 
-                        if(subscriptionType === "Premium" ){
+                        if(type === "Coach" ){
 
                             window.open(link, "_self");
 
-                        } else if (subscriptionType === "Basic" ) {
-                        
-                            buttonDOM.innerHTML = `${naamClean}, <u>Upgrade</u> naar een Premium account om aan intervisie deel te nemen.`
-                            buttonDOM.style.border = "none"
-                            buttonDOM.style.color = "#008e8e"
                         } else if (subscriptionType === undefined){
                             buttonDOM.innerHTML = `Dit is een community omgeving. Maak een <a href="/aanmelden-coach.html">coachprofiel</a> aan om toegang te krijgen.`
                             buttonDOM.style.border = "none"
@@ -320,6 +313,7 @@ function tipsCTASupport(tips){
             const tip = doc.data().Tip
             const tipperClean = doc.data().TipperClean
             const timestamp = doc.data().Timestamp
+            const tipper = doc.data().Tipper
 
             const innerDiv = document.createElement("div")
                 innerDiv.setAttribute("class", "social-wall-coaches-inner-div")
@@ -329,7 +323,7 @@ function tipsCTASupport(tips){
             const timestampP = document.createElement("p")
                 timestampP.setAttribute("class", "timestamp-support")
 
-            typeSocialWall(type, typeP, tip, lessonP, lesson, source, tipperClean)
+            typeSocialWall(type, typeP, tip, lessonP, lesson, source, tipperClean, tipper)
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
 
@@ -342,15 +336,23 @@ function tipsCTASupport(tips){
     });
 }();
 
-function typeSocialWall(type, typeP, tip, lessonP, lesson, source, tipperClean){
+function typeSocialWall(type, typeP, tip, lessonP, lesson, source, tipperClean, tipper){
 
     if(type === "ArticleLesson"){
         typeP.innerHTML = `Geinspireerd in artikel: <u>${source}</u>`
         lessonP.innerHTML = `<b>${lesson}</b> `
+        linkSupportSource(typeP, "../Kenniscentrum-coaching/" + [source])
     } else if (type === "supportTip"){
         typeP.innerHTML = `Bijdrage van <u>${tipperClean}</u>`
         lessonP.innerHTML = `<b>${tip}</b>`
+        linkSupportSource(typeP, "../Vitaminders/" + [tipper])
     };
+};
+
+function linkSupportSource(typeP, link){
+    typeP.addEventListener("click", () => {
+        window.open(link + ".html", "_self");
+    });
 };
 
 function saveTip(supportButton, supportInput){

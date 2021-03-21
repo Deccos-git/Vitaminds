@@ -16,6 +16,12 @@
     background-color: white; /* Fallback color */
 }
 
+.notice-premium-coaches{
+    font-size: 14px !important;
+    margin-top: 0px;
+    cursor: pointer;
+}
+
 .feautures-div li{
     list-style-image: url('/images/UL-icon.png');
 }
@@ -369,11 +375,16 @@
     flex-wrap: wrap;
 }
 
+#hide-landing-modal{
+    cursor: pointer;
+}
+
 .bottom-div{
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding: 10px;
 }
 
 .bottom-div p{

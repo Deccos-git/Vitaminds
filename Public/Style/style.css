@@ -195,7 +195,7 @@ ul{
 .main-menu{
   margin: 10px 15px 15px 15px;
   float: left;
-  width: 100px;
+  width: auto;
   height: 40px;
   line-height: 40px;
   font-size: 16px;

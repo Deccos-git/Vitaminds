@@ -15,7 +15,7 @@
   <title id="page-title" property="og:title"></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../Style/style.css">
-  <link rel="stylesheet" href="../Style/events.css">
+  <link rel="stylesheet" href="../Style/events-for-coaches.css">
   <link rel="stylesheet" href="../Style/voor-coach.css">
   <link rel="shortcut icon" href="../images/Favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
@@ -66,7 +66,7 @@
           <div class="main-menu-mobile"><a href="../cooperations.html">Community</a></div> 
           <div class="main-menu-mobile"><a href="../kenniscentrum.html">Kenniscentrum</a></div>
           <div class="main-menu-mobile"><a href="../groups-for-coaches.html">Groepen</a></div>
-          <div class="main-menu-mobile"><a href="../workshops-for-coaches.html">Workshops</a></div>
+          <!-- <div class="main-menu-mobile"><a href="../workshops-for-coaches.html">Workshops</a></div> -->
           <div class="main-menu-mobile"><a href="../events-coaches.html">Events</a></div>
       <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
     </div>
@@ -101,7 +101,7 @@
       <div class="main-menu"><a href="../cooperations.html">Community</a></div> 
       <div class="main-menu"><a href="../kenniscentrum.html">Kenniscentrum</a></div>
       <div class="main-menu "><a href="../groups-for-coaches.html">Groepen</a></div>
-      <div class="main-menu "><a href="../workshops-for-coaches.html">Workshops</a></div>
+      <!-- <div class="main-menu "><a href="../workshops-for-coaches.html">Workshops</a></div> -->
       <div class="main-menu "><a href="../events-coaches.html">Events</a></div>
     </div>
     <a href="../aanmelden-coach.html" class="coach-menu-main-p">Lid worden</a>
@@ -116,7 +116,20 @@
 
 <!-- Event -->
 
-<div id="event-overview"></div>
+<div id="event-detail-outer-div">
+  <div id="organizer-event-detail-div"></div>
+  <div id="event-description-div"></div>
+  <div id="tiny-mce-div">
+    <div id="tiny-mce"></div>
+    <button id="button-edit-event-description" class="button-algemeen button-article">Opslaan</button>
+  </div>
+  <div id="meta-div-event-detail"></div>
+</div>
+
+<div id="confirmation-message">
+  <img src="../images/send-icon.png" alt="">
+  <p>Bedankt voor je aanmelding! Er is een bevestigingsmail naar je onderweg. <br> Geen mail ontvangen? Kijk even in je spamfolder of stuur een maitje naar info@vitaminds.nu.</p>
+</div>
 
 
 
@@ -172,7 +185,7 @@
       <script type="text/javascript" src="../javascript/firebase.js"></script>
       <script type="text/javascript" src="../javascript/auth.js"></script>
       <script type="text/javascript" src="../javascript/index.js"></script>
-      <script type="text/javascript" src="../javascript/events.js"></script>
+      <script type="text/javascript" src="../javascript/events-for-coaches.js"></script>
     </body>
   </html>
   

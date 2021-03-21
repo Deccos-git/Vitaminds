@@ -129,6 +129,7 @@
 .type-support{
     font-size: 18px;
     margin-top: 0px;
+    cursor: pointer;
 }
 
 .timestamp-support{

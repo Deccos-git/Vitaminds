@@ -384,6 +384,8 @@ const eventOverview = document.getElementById("event-overview")
 
 function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateOfEvent, locationOfEvent, priceOfEvent, emailCoach){
 
+    const confirmationNotice = document.getElementById("confirmation-message")
+
     registerEventButton.addEventListener("click", () => {
 
         registerEventButton.innerText = "Aangemeld"
@@ -457,6 +459,9 @@ function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateO
                                   }
                                     });
                                 };
+                            })
+                            .then(() => {
+                                confirmationNotice.style.display = "block"
                             });
                         });
                     };

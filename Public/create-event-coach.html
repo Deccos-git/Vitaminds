@@ -14,13 +14,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="keywords" content="Samenwerken voor coaching">
-    <meta name="description" content="Op Vitaminds werken coaches samen om het platform zo goed mogelijk te laten werekn voor onze coaching">
-    <Title> Vitaminds - samenwerken voor coaches</title>
+    <meta name="keywords" content="Kenniscentrum coaching">
+    <meta name="description" content="Alles over coaching">
+    <Title> Vitaminds - Kenniscentrum coaching</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Style/style.css">
-    <link rel="stylesheet" href="Style/cooperations.css">
-    <link rel="stylesheet" href="Style/voor-coach.css">
+    <link rel="stylesheet" href="Style/events-for-coaches.css">
     <link rel="shortcut icon" href="images/Favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -51,7 +50,7 @@
                 <div class="main-menu-mobile"><a href="cooperations.html">Communty</a></div> 
                 <div class="main-menu-mobile"><a href="kenniscentrum.html">Kenniscentrum</a></div>
                 <div class="main-menu-mobile"><a href="groups-for-coaches.html">Groepen</a></div>
-                <!-- <div class="main-menu-mobile"><a href="workshops-for-coaches.html">Workshops</a></div> -->
+                <div class="main-menu-mobile"><a href="workshops-for-coaches.html">Workshops</a></div>
                 <div class="main-menu-mobile"><a href="events-coaches.html">Events</a></div>
                 <a href="../index.html" id="link-vitaminds">Vitaminds</a>
             <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
@@ -98,22 +97,47 @@
           <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
         </div>
       </nav>
+
+      <h1>Nieuw event maken</h1>
+
+      <div id="new-event-outer-div">
   
-<h1>Doorverwijzen</h1>
-
-<div id="create-new-refer-div">
-    <button id="create-new-refer">Plaats een bericht</button>
-    <div id="create-new-refer-inner-div">
-        <p>Titel</p>
-        <input id="refer-title" type="text">
-        <p>Geef een korte omschrijving</p>
-        <textarea name="" id="refer-description" cols="30" rows="10"></textarea>
-        <button class="button-algemeen" id="save-refer">Opslaan</button>
-    </div>
-</div>
-
-<div id="refer-wall"></div>
-
+          <h2>Geef je event een titel</h2>
+          <input id="title-input" type="text" placeholder="Titel event">
+  
+          <h3>Selecteer een banner plaatje</h3>
+            <div>
+              <img id="selected-header-img" src="/images/no-image-event-placeholder.png">
+            </div>
+            <input id="foto-upload-new-event" type="file">
+            <button id="upload-banner">Upload</button>
+  
+          <h2>Waar vindt je event plaats?</h2>
+          <p>Selecteer je keuze</p>
+          <select name="" id="online-live-select" onchange="getLocation(this)">
+              <option value="online">Online</option>
+              <option value="fysiek">Fysieke locatie</option>
+          </select>
+          <input id="location-event" type="text" placeholder="Locatie event">
+  
+          <h2>Omschrijf je event</h2>
+          <textarea name="" id="textarea-description" cols="40" rows="10" placeholder="Omschrijving event"></textarea>
+  
+          <h2>Wanneer vindt het event plaats?</h2>
+          <div id=price-input>
+            <input id="date-day" type="number" placeholder="Dag">
+            <input id="date-month" type="number" placeholder="Maand">
+            <input id="date-year" type="number" placeholder="Jaar">
+          </div>
+  
+          <h2>Wat is het maximaal aan deelnemers?</h2>
+          <input id="max-participants" type="text" placeholder="Maximale deelnemersaantal">
+  
+          <h2>Wat kost je event?</h2>
+          <div id="price-input"><p>Euro</p><input id="price-event" type="number"></div>
+          
+          <button class="button-algemeen" id="button-save-new-event">Opslaan</button>
+      </div>  
 
 <!-- Toolbar mobile -->
 <div class="toolbar-mobile">
@@ -167,6 +191,7 @@
       <script type="text/javascript" src="javascript/firebase.js"></script>
       <script type="text/javascript" src="javascript/auth.js"></script>
       <script type="text/javascript" src="javascript/index.js"></script>
-      <script type="text/javascript" src="javascript/cooperations.js"></script>
+      <script type="text/javascript" src="javascript/events-for-coaches.js"></script>
     </body>
   </html>
+  
