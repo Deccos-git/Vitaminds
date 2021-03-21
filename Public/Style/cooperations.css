@@ -1,6 +1,7 @@
 #community-outer-div{
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     background-color: #a7bdbd26;
 }
 
@@ -203,6 +204,7 @@
 .goal-description{
     font-weight: bold;
     font-size: 20px;
+    margin: 20px 100px;
 }
 
 #save-support{
@@ -214,4 +216,21 @@
     flex-direction: column;
     align-items: center;
     background-color: #a7bdbd26;
+}
+
+@media only screen and (max-width: 938px){
+
+    h1{
+        font-size: 30px;
+    }
+
+    .goal-description {
+        margin: 20px 30px;
+    }
+
+    .social-wall-coaches-inner-div {
+        margin: 30px 10px 10px 10px;
+        width: 80%;
+    }
+
 }

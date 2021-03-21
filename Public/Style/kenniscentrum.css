@@ -128,8 +128,6 @@
 }
 
 #article-body-div img{
-    height: auto;
-    width: auto;
     border-radius: 5px;
 }
 
@@ -716,6 +714,12 @@
     cursor: pointer;
 }
 
+#select-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 @media only screen and (max-width: 938px){
 
     .kenniscentrum-artikel-section {
@@ -764,6 +768,15 @@
 
     #article-body-div {
         margin: 40px 20px 50px 20px;
-        width: auto;
+        width: 90%;
+    }
+
+    #article-body-div img {
+        border-radius: 5px;
+        max-width: 100%;
+    }
+
+    #goal-select {
+        max-width: 80%;
     }
 }

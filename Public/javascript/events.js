@@ -591,7 +591,6 @@ db.collection("Events").where("Title", "==", titel)
         titleEvent.innerText = title
         bannerImg.src = eventBanner
         buttonEvent.innerText = "Aanmelden"
-        organiserEventMessage.innerText = "Als je een vraag hebt over dit event kun je die altijd aan mij stellen."
         organiserEventDiv.addEventListener("click", () => {
             window.open("../Vitaminders/" + organizer, "_self");
         });

@@ -75,6 +75,7 @@ function openSupport(buttonDOM, link){
 
             const goalTitle = document.getElementById("coach-goal-title").value
             const goalDescription = document.getElementById("coach-goal-description").value
+            saveButton.innerText = "Opgeslagen"
 
             auth.onAuthStateChanged(User =>{
                 if(User){
@@ -92,6 +93,7 @@ function openSupport(buttonDOM, link){
                             Lessons: [],
                             Tips: [],
                             ID: idClean,
+                            LastActive: firebase.firestore.Timestamp.fromDate(new Date()),
                             Goal: idClean + goalTitle,
                             GoalClean: goalTitle,
                             Omschrijving: goalDescription,
@@ -103,8 +105,11 @@ function openSupport(buttonDOM, link){
                             .doc(doc.id)
                             .update({
                                 CoachGoals: firebase.firestore.FieldValue.increment(1)
-                            }) 
+                            });
                         })
+                        .then(() => {
+                            location.reload(); 
+                        });
                     });
                 };
             });
@@ -363,6 +368,7 @@ function saveTip(supportButton, supportInput){
 
         const tip = supportInput.value
         supportButton.innerText = "Verstuurd"
+        supportButton.id = ""
 
             auth.onAuthStateChanged(User =>{
                 db.collection("Vitaminders")
@@ -421,6 +427,9 @@ function saveTip(supportButton, supportInput){
                                 LastActive:firebase.firestore.Timestamp.fromDate(new Date()),
                                 Tips: firebase.firestore.FieldValue.arrayUnion(tip)
                             });
+                        })
+                        .then(() => {
+                            location.reload(); 
                         });
                     });
                 });

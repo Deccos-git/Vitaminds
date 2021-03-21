@@ -14,6 +14,8 @@ const titel11 = titel10.replace('%20',' ')
 const titel12 = titel11.split("?fb")
 const titel = titel12[0]
 
+console.log(titel)
+
 // Open make new event
 !function makeNewEvent(){
     const makeNewEventButton = document.getElementById("create-new-coach-event")
@@ -511,7 +513,6 @@ function organizerMetaDetail(organizer, organiserEventPhoto, organiserEventP, bu
                 titleEvent.innerText = title
                 bannerImg.src = eventBanner
                 buttonEvent.innerText = "Aanmelden"
-                organiserEventMessage.innerText = "Als je een vraag hebt over dit event kun je die altijd aan mij stellen."
                 locationOnlineOffline(online,locationEvent, location)
                 descriptionEvent.innerHTML = description
                 linkToOrganiser(organiserEventDiv, organizer)

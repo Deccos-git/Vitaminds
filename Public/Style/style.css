@@ -1376,7 +1376,7 @@ ul{
 }
 
 #contact-layer{
-  display: flex;
+  display: none;
   align-items: flex-start;
   justify-content: center;
   flex-wrap: wrap;
@@ -1627,6 +1627,8 @@ margin: 0px 0px 30px 0px;
 
   .main-menu-mobile a{
     font-size: 16px;
+    text-decoration: none;
+    font-weight: bold;
     color: #122b46;
   }
 
@@ -1938,5 +1940,8 @@ display: none;
   align-items: center;
 }
 
+.footer p {
+  color: #FFF !important;
+}
 
 } 
