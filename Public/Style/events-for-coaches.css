@@ -141,3 +141,14 @@
 #register-event-button {
     margin: 20px 50px 50px 50px;
 }
+
+.button-registered{
+    margin: 20px 50px 50px 50px;
+    background-color: #122b46;
+    border: 1px #122b46 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+}

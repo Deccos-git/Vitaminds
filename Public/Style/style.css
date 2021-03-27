@@ -58,6 +58,7 @@ a:link{
 
 li{
   color: #122b46 !important;
+  white-space: normal !important;
 }
 
 h4{
@@ -159,6 +160,7 @@ ul{
 #target-group-inner-menu p{
   margin: 10px 10px 10px 10px;
   font-size: 16px;
+  font-weight: bold;
 }
 
 #target-group-inner-menu select{
@@ -454,8 +456,8 @@ ul{
 
 #profile-picture img{
   margin: 0px 0px 0px 20px;
-  width: 40px;
-  height: 40px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
   cursor: pointer;
   align-self: flex-end;
@@ -735,6 +737,8 @@ ul{
   font-size: 18px;
   color: #008e8e;
   cursor: pointer;
+  margin-bottom: 0px;
+  margin-top: auto;
  }
 
  .button-reverse {
@@ -759,6 +763,8 @@ ul{
   font-size: 18px;
   color: #008e8e;
   cursor: pointer; 
+  margin-bottom: 0px;
+  margin-top: auto;
  }
 
  .button-algemeen-card a{
@@ -1189,10 +1195,10 @@ ul{
 .social-div{
   display: flex;
   justify-content: space-evenly;
-  background-color: #a7bdbd26;
   padding: 5px;
-  border-radius: 5px;
   margin-top: 10px;
+  width: fit-content;
+  border-top: 1px solid lightgray;
 }
 
 .social-icon-div{

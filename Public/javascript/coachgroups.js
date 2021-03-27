@@ -1410,6 +1410,7 @@ function sendMailNewSocial(email, gebruikersnaamClean, socialTypeWritten){
                         const authMessage = doc2.data().Message
                         const sender = doc2.data().Auth
                         const members = doc2.data().Members
+                        const timestamp = doc2.data().Timestamp
 
                         const messageDiv = document.createElement("div")
                             messageDiv.setAttribute("class", "message-div")
@@ -1419,6 +1420,12 @@ function sendMailNewSocial(email, gebruikersnaamClean, socialTypeWritten){
     
                         const senderName = document.createElement("p")
                         senderName.setAttribute("class", "sender-name-message")
+
+                        const timestampP = document.createElement("p")
+                            timestampP.setAttribute("class", "message-timestamp")
+
+                        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                        timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
     
                 db.collection("Vitaminders").where("Gebruikersnaam", "==", sender).get().then(querySnapshot => {
                     querySnapshot.forEach(doc1 => {
@@ -1434,6 +1441,7 @@ function sendMailNewSocial(email, gebruikersnaamClean, socialTypeWritten){
                             senderName.style.color = colour
                             senderName.style.fontWeight = "bold"
                             senderName.style.alignSelf = "flex-end"
+                            timestampP.style.alignSelf = "flex-start"
 
                             if(admin.includes(sender)){
                             messageOptions(senderName, authMessage, roomName, messageNameClean)
@@ -1448,9 +1456,11 @@ function sendMailNewSocial(email, gebruikersnaamClean, socialTypeWritten){
                             senderName.style.fontWeight = "bold"
                             senderName.style.alignSelf = "flex-start"
                             senderName.style.color = colour
+                            timestampP.style.alignSelf = "flex-end"
                             
                             };
                             messageDiv.appendChild(senderName)
+                            messageDiv.appendChild(timestampP)
                             messageDiv.appendChild(messageP)
                             addSocialIconsToMessage(messageDiv, sender, authMessage, auth)
 

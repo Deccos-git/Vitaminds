@@ -248,7 +248,7 @@ function registerNoticeWhenNoAccount(registerEventButton, DOM){
                 const registerNotice = document.createElement("p")
                     registerNotice.setAttribute("class", "event-notice")
 
-                registerNotice.innerHTML = `Maak een gratis <a href="../Register.html">account</a> aan om je aanmelden voor dit event`
+                registerNotice.innerHTML = `Maak een gratis <a href="../aanmelden-coach.html">account</a> aan om je aanmelden voor dit event`
 
                 DOM.appendChild(registerNotice)
             });
@@ -265,6 +265,7 @@ function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateO
     registerEventButton.addEventListener("click", () => {
 
         registerEventButton.innerText = "Aangemeld"
+        registerEventButton.setAttribute("class", "button-registered")
 
         db.collection("EventsCoaches").where("Title", "==", titel).get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
@@ -462,6 +463,37 @@ function organizerMetaDetail(organizer, organiserEventPhoto, organiserEventP, bu
     });
 };
 
+// Meta tags
+function setMetaAttributesArticle(description){
+    const titleMeta = document.getElementById("page-title")
+    const summaryMeta = document.getElementById("meta-description")
+    const metaKeywords = document.getElementById("meta-keywords")
+    const facebookDescription = document.getElementById("facebook-description")
+    const facebookUrl = document.getElementById("facebook-url")
+    const facebookTitle = document.getElementById("facebook-title")
+    const facebookImg = document.getElementById("facebook-img")
+
+    if(titleMeta != null || summaryMeta != null || metaKeywords != null || facebookDescription != null || facebookUrl != null || facebookTitle != null|| facebookImg != null){
+       
+        titleMeta.innerText = titel
+        summaryMeta.content = description
+        metaKeywords.content = titel
+        facebookDescription.content = titel
+        facebookUrl.content = window.location.href
+        facebookTitle.content = titel
+    
+        db.collection("EventsCoaches").where("Title", "==", titel).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+    
+                const headerImage = doc.data().Banner
+    
+                facebookImg.content = headerImage
+            
+            });
+        });
+    };
+};
+
 !function eventDetailQuery(){
 
     const outerDiv = document.getElementById("event-detail-outer-div")
@@ -519,6 +551,8 @@ function organizerMetaDetail(organizer, organiserEventPhoto, organiserEventP, bu
                 maxParticipantsEvent.innerHTML = `<b>Maximale aantal deelnemers:</b> ${maxParticipants}`
                 currentParticipants.innerHTML = `<b>Huidige aantal deelnemers:</b> ${participants.length}`
                 priceEvent.innerHTML = `<b>Prijs:</b> €${price}`
+
+                setMetaAttributesArticle(description)
 
                 outerDiv.appendChild(titleEvent)
                 outerDiv.appendChild(organiserEventDiv)

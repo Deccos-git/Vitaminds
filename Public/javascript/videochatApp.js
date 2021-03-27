@@ -516,7 +516,7 @@ function joinRoom() {
 
 function saveMessage(roomID){
 
-    const message = `Code om deel te nemen aan de videochat: ${roomID}`
+    const message = `Code om deel te nemen aan de videochat: ${roomID} - Klik op het video icoon links onder in je beeld -Klik vervolgens op het 'deelnemen aan gesprek' icoon - Voer de code in om aan het gesprek deel te nemen. `
 
     auth.onAuthStateChanged(User =>{
         if(User){

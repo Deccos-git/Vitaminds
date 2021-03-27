@@ -1,0 +1,44 @@
+#description{
+    margin: 10px 10% 10px 10%;
+}
+
+#questionairy-outer-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 5% 10px 5%;
+    background-color: #a7bdbd26;
+    padding: 10px;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.question-div p{
+    font-size: 18px;
+}
+
+.row-div{
+    display: flex;
+    width: 100%;
+}
+
+.scoring-div{
+    display: flex;
+    margin-left: 20px;
+}
+
+.scoring-input{
+    margin-top: 12px;
+}
+
+.scoring-div p{
+    margin: 22px 15px 20px 5px;
+}
+
+.scoring-div input{
+    width: auto;
+}
+
+.scoring-item{
+    width: 130px;
+}

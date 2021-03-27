@@ -1,19 +1,17 @@
-!function GroupsForCoachesInit(){
-
-    const titelhtmlCG = window.location.href.replace(/^.*[\\\/]/, '')
-    const titel1CG = titelhtmlCG.replace('.html', '')
-    const titel2CG = titel1CG.replace('%20',' ')
-    const titel3CG = titel2CG.replace('%20',' ')
-    const titel4CG = titel3CG.replace('%20',' ')
-    const titel5CG = titel4CG.replace('%20',' ')
-    const titel6CG = titel4CG.replace('%20',' ')
-    const titel7CG = titel6CG.replace('%20',' ')
-    const titel8CG = titel7CG.replace('%20',' ')
-    const titel9CG = titel8CG.replace('%20',' ')
-    const titel10CG = titel9CG.replace('%20',' ')
-    const titel11CG = titel10CG.replace('%20',' ')
-    const titel12CG = titel11CG.split("?fb")
-    const titelCG = titel12CG[0]
+    const titelhtmlCGC = window.location.href.replace(/^.*[\\\/]/, '')
+    const titel1CGC = titelhtmlCGC.replace('.html', '')
+    const titel2CGC = titel1CGC.replace('%20',' ')
+    const titel3CGC = titel2CGC.replace('%20',' ')
+    const titel4CGC = titel3CGC.replace('%20',' ')
+    const titel5CGC = titel4CGC.replace('%20',' ')
+    const titel6CGC = titel4CGC.replace('%20',' ')
+    const titel7CGC = titel6CGC.replace('%20',' ')
+    const titel8CGC = titel7CGC.replace('%20',' ')
+    const titel9CGC = titel8CGC.replace('%20',' ')
+    const titel10CGC = titel9CGC.replace('%20',' ')
+    const titel11CGC = titel10CGC.replace('%20',' ')
+    const titel12CGC = titel11CGC.split("?fb")
+    const titelCGC = titel12CGC[0]
     
     function groupsForCoachesMetaTags(descriptionGroup, titleGroup, bannerGroup){
         const keywords = document.getElementById("meta-keywords")
@@ -303,7 +301,6 @@
     
                 groupCoverPhoto.src = coverPhoto
                 groupTitleH2.innerText = titleClean
-                noticePremiumCoaches.innerHTML = "Gratis voor <u>premium</u> coaches"
     
                 linkNoticePremiumCoaches(noticePremiumCoaches)
                 openGroup(title, groupButton)
@@ -318,7 +315,7 @@
                 groupIsFull(members.length, groupButton, numberParticipants)
                 leaveGroupForCoaches(leaveGroup, title)
     
-                memberCount.innerHTML = `<b>Aantal aanmeldingen:</b><br> ${members.length}`
+                memberCount.innerHTML = `<b>Aantal leden:</b><br> ${members.length}`
                 costsP.innerHTML = `<b>Kosten:</b><br> Eenmalig €${costs}`
                 leaveGroup.innerHTML = "Aanmelding annuleren"
     
@@ -447,26 +444,25 @@
         });
     };
     
-    function openGroup(roomName, buttonName){
-        buttonName.innerHTML = `<a href="../groups-coaches/${roomName}.html">Meer informatie</a>`
+    function openGroup(roomNameCoach, buttonName){
+        buttonName.innerHTML = `<a href="../groups-coaches/${roomNameCoach}.html">Meer informatie</a>`
     
     };
     
     // Group landing
     
-    const groupLandingPageOuterDiv = document.getElementById("group-landing-page")
-    const groupLandingTitle = document.getElementById("group-landing-title")
-    const buttonGroupLanding = document.getElementById("button-group-landing")
-    const groupDescription = document.getElementById("group-description")
-    const groupFactsUl = document.getElementById("group-facts")
-    const bannerDiv = document.getElementById("banner-div")
-    const agreementModal = document.getElementById("coachgroup-agreement")
+    const groupLandingPageOuterDivCoach = document.getElementById("group-landing-page")
+    const groupLandingTitleCoach = document.getElementById("group-landing-title")
+    const buttonGroupLandingCoach = document.getElementById("button-group-landing")
+    const groupDescriptionCoach = document.getElementById("group-description")
+    const groupFactsUlCoach = document.getElementById("group-facts")
+    const bannerDivCoach = document.getElementById("banner-div")
     
     function groupLandingH1(roomNameClean){
     
-        if(groupLandingTitle != null){
+        if(groupLandingTitleCoach != null){
     
-                groupLandingTitle.innerText = roomNameClean
+                groupLandingTitleCoach.innerText = roomNameClean
         };
     };
     
@@ -499,7 +495,7 @@
         };
     };
     
-    function hideLandingIfAuthIsMember(membersArray, groupLandingPageOuterDiv){
+    function hideLandingIfAuthIsMember(membersArray, groupLandingPageOuterDivCoach){
     
         auth.onAuthStateChanged(User =>{
             if(User){
@@ -510,8 +506,7 @@
     
                     if(membersArray.includes(auth)){
 
-                        console.log(membersArray)
-                        groupLandingPageOuterDiv.style.display = "none"
+                        groupLandingPageOuterDivCoach.style.display = "none"
                     };
                 });
             };
@@ -525,31 +520,52 @@
         const costs = document.createElement("li")
         const duration = document.createElement("li")
         const start = document.createElement("li")
+
+        if(memberCount != undefined){
+            numberOfMembersLi.innerHTML = `<b>Aantal leden:</b> ${memberCount.length}`
+            groupFactsUlCoach.appendChild(numberOfMembersLi)
+        } else {
+            numberOfMembersLi.style.display = "none"
+        };
     
-            numberOfMembersLi.innerHTML = `<b>Aantal aanmeldingen:</b> ${memberCount.length}`
+        if(totalCosts != undefined){
             costs.innerHTML = `<b>Kosten:</b> ${totalCosts} euro`
+            groupFactsUlCoach.appendChild(costs)
+        } else {
+            costs.style.display = "none"
+        };
+
+        if(maximumMembersCount != undefined){
             maximumMembers.innerHTML = `<b>Aantal deelnemers:</b> ${maximumMembersCount}`
-    
+            groupFactsUlCoach.appendChild(maximumMembers)
+        } else {
+            maximumMembers.style.display = "none"
+        };
+          
+        if(durationTime != undefined){
             if(durationTime === "Doorlopend"){
                 duration.innerHTML = `<b>Duur van coachgroep:</b> ${durationTime}` 
+                groupFactsUlCoach.appendChild(duration)
             } else {
                 duration.innerHTML = `<b>Duur van coachgroep:</b> ${durationTime} maanden`
+                groupFactsUlCoach.appendChild(duration)
             }
+        } else {
+            duration.style.display = "none"
+        };
+
+        if(startDate != undefined){
             start.innerHTML = `<b>Start datum:</b> ${startDate}`
-    
-            groupFactsUl.appendChild(maximumMembers)
-            if(groupFactsUl != null){
-                groupFactsUl.appendChild(numberOfMembersLi)
-                };
-            groupFactsUl.appendChild(duration)
-            groupFactsUl.appendChild(costs)
-            groupFactsUl.appendChild(start)
+            groupFactsUlCoach.appendChild(start)
+        } else {
+            start.style.display = "none"
+        };       
     };
     
     function groupDescriptionLanding(descriptionOfGroup){
         
     
-        groupDescription.innerHTML = descriptionOfGroup
+        groupDescriptionCoach.innerHTML = descriptionOfGroup
     }
     
     function groupLandingBanner(imagePhoto){
@@ -558,7 +574,7 @@
     
         bannerImg.src = imagePhoto
     
-        bannerDiv.appendChild(bannerImg)
+        bannerDivCoach.appendChild(bannerImg)
     }
     
     function hideLandingModal(){
@@ -569,7 +585,7 @@
         });
     };
     
-    !function editDescriptionEvent(){
+    !function editDescriptionGroup(){
     
         const editIcon = document.createElement("img")
             editIcon.setAttribute("id", "edit-icon-event-description")
@@ -586,7 +602,7 @@
             tinyMCEDiv.style.display = "flex"
             dom.style.display = "none"
     
-            db.collection("GroupsForCoaches").where("Room", "==", titelCG)
+            db.collection("GroupsForCoaches").where("Room", "==", titelCGC)
             .get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
     
@@ -634,7 +650,7 @@
                 button.innerText = "Opgeslagen"
                 button.id = "Clicked"
     
-                db.collection("GroupsforCoaches").where("Room", "==", titelCG)
+                db.collection("GroupsforCoaches").where("Room", "==", titelCGC)
                 .get().then(querySnapshot => {
                     querySnapshot.forEach(doc => {
     
@@ -659,9 +675,37 @@
         const date = `${dateArray[0]}-${dateArray[1]}-${dateArray[2]}`
         };
     };
+
+    function buyGroupsForCoach(docid){
+
+        buttonGroupLandingCoach.addEventListener("click", () => {
+
+            auth.onAuthStateChanged(User =>{
+                db.collection("Vitaminders").doc(User.uid)
+                .get().then(doc => {
+
+                    const userName = doc.data().Gebruikersnaam
+
+                    db.collection("GroupsForCoaches")
+                    .doc(docid)
+                    .update({
+                        Members: firebase.firestore.FieldValue.arrayUnion(userName)
+                    })
+                    .then(() => {
+                        buttonGroupLandingCoach.innerText = "Aangemeld"
+                        buttonGroupLandingCoach.setAttribute("class", "button-group-for-coaches-purchase")
+                        groupLandingPageOuterDivCoach.style.display = "none"
+                    })
+                });
+            });
+        });
+    };
     
     !function fillLandingWithGroupData(){
-        db.collection("GroupsForCoaches").where("Room", "==", titelCG).get().then(querySnapshot => {
+        db.collection("GroupsForCoaches")
+        .where("Room", "==", titelCGC)
+        .get()
+        .then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
     
                 const members = doc1.data().Members
@@ -671,7 +715,7 @@
                 const bannerImage = doc1.data().CoverPhoto
                 const price = doc1.data().Costs
                 const maxMembers = doc1.data().NumberParticipants
-                const groupDescription = doc1.data().Description
+                const groupDescriptionCoach = doc1.data().Description
                 const duration = doc1.data().GroupLength
                 const start = doc1.data().StartDate
     
@@ -681,15 +725,17 @@
     
                 groupFactsLanding(members, price, maxMembers, duration)
         
-                hideLandingIfAuthIsMember(members, groupLandingPageOuterDiv)
+                hideLandingIfAuthIsMember(members, groupLandingPageOuterDivCoach)
         
-                groupDescriptionLanding(groupDescription)
+                groupDescriptionLanding(groupDescriptionCoach)
     
                 hideLandingModal()
     
                 groupLandingBanner(bannerImage)
 
                 formatDateLanding(start)
+
+                buyGroupsForCoach(doc1.id)
     
             });
         });
@@ -697,48 +743,39 @@
     
     // Coachgroup individual page
     
-    !function scrollToTextInputOnLoad(){
-    
-        const textInput = document.getElementById("chat-input")
-    
-        if(textInput != null){
-    
-        textInput.scrollIntoView();
-    
-        };
-    }();
-    
         // Title
     
-        const DOMtitle = document.getElementById("group-title")
+        const DOMtitleCoach = document.getElementById("group-title")
     
-        if(DOMtitle != null){
+        if(DOMtitleCoach != null){
     
-            db.collection("GroupsForCoaches").where("Room", "==", titelCG).get().then(querySnapshot => {
+            db.collection("GroupsForCoaches")
+            .where("Room", "==", titelCGC)
+            .get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
     
                     const roomClean = doc.data().RoomClean
                     const room = doc.data().Room
     
                     if(roomClean == undefined){
-                        DOMtitle.innerText = room
+                        DOMtitleCoach.innerText = room
                     } else {
-                        DOMtitle.innerText = roomClean
+                        DOMtitleCoach.innerText = roomClean
                     }
         
                 });
             });
         }
     
-        const DOMchatScreen = document.getElementById("chat-screen")
+        const DOMchatScreenCoach = document.getElementById("chat-screen")
     
         // Display members 
     
-        const listOfMembers = document.getElementById("list-of-members-inner-div")
+        const listOfMembersCoach = document.getElementById("list-of-members-inner-div")
     
-        const roomName = titelCG
+        const roomNameCoach = titelCGC
     
-    db.collection("GroupsForCoaches").where("Room", "==", roomName).get().then(querySnapshot => {
+    db.collection("GroupsForCoaches").where("Room", "==", roomNameCoach).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
     
                 const members = doc.data().Members
@@ -767,7 +804,7 @@
     
                     });
     
-                    listOfMembers.appendChild(memberPhoto)
+                    listOfMembersCoach.appendChild(memberPhoto)
     
                         });
                     });
@@ -915,788 +952,779 @@
         }; addLearning()
          
     
-        // Save message to database
+// Save message to database
+
+function randomID(){
+
+    const id = Math.random() 
+    const idAlpha = id.toString(36)
+    const idMessage = idAlpha.replace("0.", "")
+
+    return idMessage
+};
+
+function saveNewMessage(elem){
+
+    auth.onAuthStateChanged(User =>{
+        db.collection("Vitaminders")
+        .doc(User.uid)
+        .get().then(function(doc) {
     
-        const DOMchatScreenGroupChat = document.getElementById("chat-screen")
-    
-        function saveMessage(){
-            const message = document.getElementById("chat-input").value 
-    
-            auth.onAuthStateChanged(User =>{
-                if(User){
-                const userRef = db.collection("Vitaminders").doc(User.uid);
-                userRef.get().then(function(doc) {
-            
-                        const auth = doc.data().Gebruikersnaam
-    
-            const roomName = titelCG
-    
-        db.collection("GroupsForCoaches").where("Room", "==", roomName).get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-    
-                const members = doc.data().Members
-    
-            db.collection("GroupsForCoaches").doc(doc.id).collection("Messages").doc().set({
-                Auth: auth,
-                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                Message: message,
-                Room: roomName,
-                Members: members,
-                ID: idClean,
-                Read: [auth],
-                Status: "New"
-                }).then(() => {
-                    db.collection("GroupsForCoaches").doc(doc.id).update({
-                        Messages: firebase.firestore.FieldValue.increment(1)
-                                    }).then(() => {
-                                        const input = document.getElementById("chat-input")
-    
-                                        input.value = ""
-                                    });
-                                });  
-                            });
-                        });
-                    });
-                };
-            });
-        };
-        const sendGroupChat = document.getElementById("send-icon-group")
-    
-        if(sendGroupChat != null){
-    
-            sendGroupChat.addEventListener("click", saveMessage, false)
-            sendGroupChat.addEventListener("submit", saveMessage, false)
-    
-        };
-    
-        // Get chat from database in realtime
-    
-            // Variables
-    
-            const senderNameArray = []
-    
-            //Functions
-            function emptyScreenByOnsnapshot(){
-                const chatDivsUser = document.getElementsByClassName("message-div")
-            
-                const chatDivsArrayUser = Array.from(chatDivsUser)
-            
-                chatDivsArrayUser.forEach(chatUser => {
-                    DOMchatScreenGroupChat.removeChild(chatUser)
-                });
-            };
-    
-            function chooseRecipientForMail(sendAsMailDiv){
-    
-                const selectMember = document.createElement("select")
-                selectMember.setAttribute("id", "select-member-to-send-mail")
-                const optionAllMembers = document.createElement("option")
-                optionAllMembers.innerText = "Iedereen"
-                selectMember.appendChild(optionAllMembers)
-                
+                const auth = doc.data().Gebruikersnaam
+
+                const input = elem.previousElementSibling.value
+                const id = randomID()
+                const parentID = elem.dataset.parentid
+
                 db.collection("GroupsForCoaches")
-                    .where("Room", "==", roomName)
-                    .get().then(querySnapshot => {
-                        querySnapshot.forEach(doc => {
+                .where("Room", "==", titelCGC)
+                .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
     
-                            const members = doc.data().Members
-    
-                            members.forEach(member => {
-    
-                                db.collection("Vitaminders")
-                            .where("Gebruikersnaam", "==", member)
-                            .get().then(querySnapshot => {
-                                querySnapshot.forEach(doc1 => {
-    
-                                    const usernameClean = doc1.data().GebruikersnaamClean
-                                    const option = document.createElement("option")
-                                    option.innerText = usernameClean
-                                    selectMember.appendChild(option)
-                            });
-                        });
-    
-                            sendAsMailDiv.appendChild(selectMember)
-    
-                        });
-                    });
-                });
-            }; 
-    
-            function sendMessageAsMailButton(sendAsMailDiv){
-    
-                const sendButton = document.createElement("button")
-                sendButton.setAttribute("id", "sendAsMailButton")
-                sendButton.setAttribute("onclick", "sendChatAsMail(this)")
-                sendButton.innerText = "Verstuur bericht als mail"
-    
-                sendAsMailDiv.appendChild(sendButton)
-            }
-    
-            function messageOptions(sender, chatMessage, chatRoom, authChatter){
-                const options = document.createElement("img")
-                   options.setAttribute("class", "message-options")
-                options.src = "../images/design/mail-icon2.jpg"
-    
-                const sendAsMailDiv = document.createElement("div")
-                   sendAsMailDiv.setAttribute("class", "send-chat-as-mail-div")
-                   sendAsMailDiv.setAttribute("data-message", chatMessage)
-                   sendAsMailDiv.setAttribute("data-room", chatRoom)
-                   sendAsMailDiv.setAttribute("data-auth", authChatter)
-    
-                sender.appendChild(options)
-                sender.appendChild(sendAsMailDiv)
-                chooseRecipientForMail(sendAsMailDiv)
-                sendMessageAsMailButton(sendAsMailDiv)
-                toggleSendAsMail(options, sendAsMailDiv)
-           
-           };
-    
-           function toggleSendAsMail(options, sendChatAsMailDiv){
-    
-                options.addEventListener("click", () => {
-                        if(sendChatAsMailDiv.style.display === "flex"){
-                            sendChatAsMailDiv.style.display = "none" 
-                        } else {
-                            sendChatAsMailDiv.style.display = "flex" 
-                        };
-                });
-           };
-           
-           function sendChatAsMail(elem){
-               const message = elem.parentElement.dataset.message
-               const room = elem.parentElement.dataset.room
-               const coach = elem.parentElement.dataset.auth
-           
-               elem.innerText = "Verstuurd"
-    
-               const memberSelect = elem.nextSibling
-    
-               const option = memberSelect.options
-               const selected = option[option.selectedIndex].innerHTML
-    
-               db.collection("Vitaminders").where("GebruikersnaamClean", "==", coach)
-                   .get().then(querySnapshot => {
-                       querySnapshot.forEach(doc2 => {
-           
-                           const SenderNameClean = doc2.data().GebruikersnaamClean
-           
-               db.collection("GroupsForCoaches")
-               .where("Room", "==", room).get()
-               .then(querySnapshot => {
-                   querySnapshot.forEach(doc => {
-           
-                       const members = doc.data().Members
-                       const type = doc.data().Type
-                       const titelClean = doc.data().RoomClean
-                       const titel = doc.data().Room
-           
-                       members.forEach(member => {
-    
-                           db.collection("Vitaminders").where("Gebruikersnaam", "==", member)
-                           .get().then(querySnapshot => {
-                               querySnapshot.forEach(doc2 => {
-           
-                                   const email = doc2.data().Email
-                                   const naam = doc2.data().GebruikersnaamClean
-    
-                                   if(selected === naam){
-                                        console.log(email)
-                                        emailLayout(email, SenderNameClean, titelClean, message, titel, naam)
-                                   
-                                   } else if (selected === "Iedereen") {
-                                        console.log(email)
-                                        emailLayout(email, SenderNameClean, titelClean, message, titel, naam)
-                                   };
-                                });
-                            });
-                       });
-                   });
-               });
-           });
-        });
-    };
-    
-    function emailLayout(emailAdress, SenderNameClean, titelClean, message, titel, naam){
-               db.collection("Mail").doc().set({
-                    to: emailAdress,
-                    cc: "info@vitaminds.nu",
-            message: {
-            subject: `Je hebt een nieuw coachbericht ontvangen van ${SenderNameClean} in je Coachgroep ${titelClean}`,
-            html: `Hallo ${naam}, <br><br>
-                    ${SenderNameClean} heeft je een bericht gestuurd in de Coachgroep ${titelClean} : <br><br>
-    
-                    "${message}"<br><br>
-                    
-                    Ga naar je <a href="www.vitaminds.nu/Group/${titel}.html">Coachgroep</a> om op het bericht te reageren.<br><br>
-                    P.s. Om privacyredenen kun je coachgroep alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
-            
-                    Vriendelijke groet, <br></br>
-                    Het Vitaminds Team <br></br>
-                    <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-            Gebruikersnaam: naam,
-            Emailadres: emailAdress,
-            Type: "New coachmessage in chat"
-            }        
-        });  
-    };
-    
-    function addDataToSocial(supportType, userName, message){
-    
-        supportType.setAttribute("data-username", userName)
-        supportType.setAttribute("data-message", message)
-    
-    };
-    
-    function addSocialIconsToMessage(messageP, userName, message){
-    
-        const socialIconDiv = document.createElement("div")
-        socialIconDiv.setAttribute("class", "social-div") 
-    
-        const IFeelForYouIconDiv = document.createElement("div")
-        const IUnderstandIconDiv = document.createElement("div")
-        const yourGoodTheWayYouAreDiv = document.createElement("div")
-        const keepAtItDiv = document.createElement("div")
-        const yourNotAloneDiv = document.createElement("div")
-    
-        const IFeelForYouIconP = document.createElement("p")
-        const IUnderstandIconP = document.createElement("p")
-        const yourGoodTheWayYouAreP = document.createElement("p")
-        const keepAtItP = document.createElement("p")
-        const yourNotAloneP = document.createElement("p")
-    
-        IFeelForYouIconP.innerHTML = "Ik leef <br> met je mee"
-        IUnderstandIconP.innerHTML = "Ik begrijp wat <br> je voelt"
-        yourGoodTheWayYouAreP.innerHTML = "Je bent goed <br> zoals je bent"
-        keepAtItP.innerHTML = "Ga zo door!"
-        yourNotAloneP.innerHTML = "Je staat er <br> niet alleen voor"
-    
-        IFeelForYouIconDiv.setAttribute("class", "social-icon-div") 
-        IUnderstandIconDiv.setAttribute("class", "social-icon-div")  
-        yourGoodTheWayYouAreDiv.setAttribute("class", "social-icon-div") 
-        keepAtItDiv.setAttribute("class", "social-icon-div") 
-        yourNotAloneDiv.setAttribute("class", "social-icon-div") 
-    
-        addDataToSocial(IFeelForYouIconDiv, userName, message)
-        addDataToSocial(IUnderstandIconDiv, userName, message)
-        addDataToSocial(yourGoodTheWayYouAreDiv, userName, message)
-        addDataToSocial(keepAtItDiv, userName, message)
-        addDataToSocial(yourNotAloneDiv, userName, message)
-    
-        auth.onAuthStateChanged(User =>{
-            if(User){
-            const userRef = db.collection("Vitaminders").doc(User.uid);
-            userRef.get().then(function(doc) {
-    
-                    const auth = doc.data().Gebruikersnaam
-    
-                    savebutton(IFeelForYouIconDiv, "IFeelForYou", auth, IFeelForYouIconP, "Ik leef met je mee")
-                    savebutton(IUnderstandIconDiv, "IUnderstandYou", auth, IUnderstandIconP, "Ik begrijp wat je voelt")
-                    savebutton(yourGoodTheWayYouAreDiv, "YourGoodTheWayYouAre", auth, yourGoodTheWayYouAreP, "Je bent goed zoals je bent")
-                    savebutton(keepAtItDiv, "KeepAtIt", auth, keepAtItP, "Ga zo door!")
-                    savebutton(yourNotAloneDiv, "YourNotAlone", auth, yourNotAloneP, "Je staat er niet alleen voor")
-    
-                });
-            };
-        });
-    
-        const IFeelForYouIcon = document.createElement("img")
-        const IUnderstandIcon = document.createElement("img")
-        const yourGoodTheWayYouAre = document.createElement("img")
-        const keepAtIt = document.createElement("img")
-        const yourNotAlone = document.createElement("img")
-    
-        IFeelForYouIcon.src = "../images/design/person-24px-heart.png"
-        IUnderstandIcon.src = "../images/comparison-icon.png"
-        yourGoodTheWayYouAre.src = "../images/design/person-24px-check.png"
-        keepAtIt.src = "../images/heart-icon.png"
-        yourNotAlone.src = "../images/design/group-24px.png"
-    
-        socialIconDiv.appendChild(IFeelForYouIconDiv)
-        IFeelForYouIconDiv.appendChild(IFeelForYouIcon)
-        IFeelForYouIconDiv.appendChild(IFeelForYouIconP)
-        socialIconDiv.appendChild(IUnderstandIconDiv)
-        IUnderstandIconDiv.appendChild(IUnderstandIcon)
-        IUnderstandIconDiv.appendChild(IUnderstandIconP)
-        socialIconDiv.appendChild(yourGoodTheWayYouAreDiv)
-        yourGoodTheWayYouAreDiv.appendChild(yourGoodTheWayYouAre)
-        yourGoodTheWayYouAreDiv.appendChild(yourGoodTheWayYouAreP)
-        socialIconDiv.appendChild(keepAtItDiv)
-        keepAtItDiv.appendChild(keepAtIt)
-        keepAtItDiv.appendChild(keepAtItP)
-        socialIconDiv.appendChild(yourNotAloneDiv)
-        yourNotAloneDiv.appendChild(yourNotAlone)
-        yourNotAloneDiv.appendChild(yourNotAloneP)
-    
-        messageP.appendChild(socialIconDiv)
-    }
-    
-    function savebutton(supportType, support, auth, notice, socialTypeWritten){
-    
-        supportType.addEventListener("click", () => {
-    
-            const username = supportType.dataset.username
-            const message = supportType.dataset.message
-    
-            saveInMessage(support, username, message)
-            saveInUser(username, auth, message, support, socialTypeWritten)
-    
-            notice.innerText = "Verstuurd"
-            notice.style.color = "#8e0000"
-    
-        });
-    };
-    
-    function saveInMessage(support, username, message){
-    
-        db.collection("GroupsForCoaches")
-        .where("Room", "==", titelCG)
-        .get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
+                    const members = doc.data().Members
     
                 db.collection("GroupsForCoaches")
                 .doc(doc.id)
                 .collection("Messages")
-                .where("Room", "==", titelCG)
-                .where("Auth", "==", username)
-                .where("Message", "==", message)
-                .get().then(querySnapshot => {
-                    querySnapshot.forEach(doc1 => {
-    
+                .doc().set({
+                    Auth: auth,
+                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                    Message: input,
+                    Room: titelCGC,
+                    Members: members,
+                    Type: "Message",
+                    ID: id,
+                    Status: "New",
+                    Read: [auth],
+                    ParentID: parentID,
+                    }).then(() => {
                         db.collection("GroupsForCoaches")
                         .doc(doc.id)
-                        .collection("Messages")
-                        .doc(doc1.id)
                         .update({
-                            Support: firebase.firestore.FieldValue.arrayUnion(support)
-                        });
-                    });
-                });
-            });
-        });
-    };
-    
-    
-    function saveInUser(username, giver, message, support, socialTypeWritten){
-    
-        db.collection("Vitaminders")
-        .where("Gebruikersnaam", "==", username)
-        .get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-    
-                const email = doc.data().Email
-                const usernameClean = doc.data().GebruikersnaamClean
-    
-                sendMailNewSocial(email, usernameClean, socialTypeWritten)
-    
-                db.collection("Vitaminders")
-                .doc(doc.id)
-                .collection("Support")
-                .doc()
-                .set({
-                    Type: support,
-                    Giver: giver,
-                    Reciever: username,
-                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                    Message: message,
-                    SourceType: "OpenUp",
-                    Status: "New"
-                });
-            });
-        });
-    };
-    
-    function sendMailNewSocial(email, gebruikersnaamClean, socialTypeWritten){
-    
-        console.log(email)
-    
-        db.collection("Mail").doc().set({
-            to: email,
-            cc: "info@vitaminds.nu",
-            message: {
-            subject: `Nieuwe steunreactie op Vitaminds`,
-            html: `Hallo ${gebruikersnaamClean},</br></br>
+                            Messages: firebase.firestore.FieldValue.increment(1)
+                        }).then(() => {
+
+                            updateNumberOfReactionsInMessage(parentID, doc.id)
             
-            Je hebt een nieuwe steunreactie: <b>"${socialTypeWritten}"</b>.</br></br>
-    
-            Ga naar <a href="www.vitaminds.nu">Vitaminds</a> en bekijk je nieuwe reactie.</br></br>
-            
-            Vriendelijke groet, </br></br>
-            Het Vitaminds Team </br></br>
-            <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`
-            }
-                    
-            }).catch((err) => {
-            console.log(err)
-            });
-    
-    }
-
-    function appendReactionInputToMessage(messageDiv, message, id, sender){
-
-        const inputDiv = document.createElement("div")
-            inputDiv.setAttribute("id", "input-div-reaction")
-
-        const sendImage = document.createElement("img")
-        const input = document.createElement("textarea")
-            input.placeholder = "Opmerking plaatsen"
-            input.id = "reaction-input-id"
-            input.setAttribute("rows", "1")
-            input.setAttribute("class", "reaction-input")
-            input.setAttribute("data-message", message)
-            input.setAttribute("data-id", id)
-            input.setAttribute("data-sender", sender)
-        
-        sendImage.src = "../images/send-icon.png"
-
-        saveFirstReactionToDatabase(sendImage, input)
-        
-        messageDiv.appendChild(inputDiv)
-        inputDiv.appendChild(input)
-        inputDiv.appendChild(sendImage)
-
-    };
-
-    function showReactions(message, id){
-
-        const showReactionsDiv = document.createElement("div")
-            showReactionsDiv.setAttribute("class", "show-reactions-div")
-
-        const showReactionP = document.createElement("p")
-            showReactionP.setAttribute("data-id", id)
-
-        showReactionP.innerText = "Bekijk opmerkingen"
-
-        message.appendChild(showReactionsDiv)
-        showReactionsDiv.appendChild(showReactionP)
-
-        displayReactionDiv(showReactionP, message)
-    };
-
-    function saveFirstReactionToDatabase(sendImage, input){
-
-        sendImage.addEventListener("click", () => {
-
-            const id = input.dataset.id
-            const message = input.dataset.message
-            const sender = input.dataset.sender
-
-            const reaction = input.value
-
-            input.value = ""
-
-            auth.onAuthStateChanged(User =>{
-                if(User){
-                  db.collection("Vitaminders")
-                  .doc(User.uid)
-                  .get().then(function(doc2) {
-
-                    const auth = doc2.data().Gebruikersnaam
-
-                        db.collection("GroupsForCoaches")
-                        .where("Room", "==", roomName)
-                        .get().then(querySnapshot => {
-                            querySnapshot.forEach(doc => {
-
-                                const messages = doc.data().Messages
-
-                                db.collection("GroupsForCoaches")
-                                .doc(doc.id)
-                                .collection("Reactions")
-                                .doc()
-                                .set({
-                                    Message: reaction,
-                                    ParentID: id,
-                                    Dept: 1,
-                                    ID: idClean,
-                                    ParentMessage: message,
-                                    ParentSender: sender,
-                                    Auth: auth
-                                })
-                                .then(() => {
-                                    db.collection("GroupsForCoaches")
-                                    .where("Room", "==", roomName)
-                                    .get().then(querySnapshot => {
-                                        querySnapshot.forEach(doc => {
-
-                                            db.collectionGroup("Messages")
-                                            .where("ID", "==", id)
-                                            .get().then(querySnapshot => {
-                                                querySnapshot.forEach(doc1 => {
-
-                                                    db.collection("GroupsForCoaches")
-                                                    .doc(doc.id)
-                                                    .collection("Messages")
-                                                    .doc(doc1.id)
-                                                    .update({
-                                                        Reactions: firebase.firestore.FieldValue.increment(1)
-                                                    });
-                                                });
-                                            });
-                                        });
-                                    });
-                                })
-                            });
-                        });
-                    });
-                };
-            });
-        });
-    };
-
-    function displayReactionDiv(showReactionP, message){
-
-        const reactionsDiv = document.createElement("div")
-        reactionsDiv.setAttribute("class", "reactions-div")
-
-        showReactionP.addEventListener("click", () => {
-
-            reactionsDiv.style.display = "flex"
-
-            appendReactionToMessage(showReactionP, message, reactionsDiv)
-
-        });
-    };
-
-    function appendReactionToMessage(showReactionP, message, reactionsDiv){
-       
-        const id = showReactionP.dataset.id
-            
-        displayReactionDiv(showReactionP, reactionsDiv)
-
-        console.log(message, reactionsDiv)
-
-        db.collectionGroup("Reactions")
-        .where("ParentID", "==", id)
-        .get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-
-                const reaction = doc.data().Message
-
-                const reactionInnerDiv = document.createElement("div")
-                const reactionP = document.createElement("p")
-
-                reactionP.innerText = reaction
-
-                message.appendChild(reactionsDiv)
-                reactionsDiv.appendChild(reactionInnerDiv)
-                reactionInnerDiv.appendChild(reactionP)
-            });
-        });
-    };
-    
-    // Load massages in realtime
-    !function loadMessageInRealtime(){
-        auth.onAuthStateChanged(User =>{
-            if(User){
-            const userRef = db.collection("Vitaminders").doc(User.uid);
-            userRef.get().then(function(doc) {
-    
-                    const auth = doc.data().Gebruikersnaam
-    
-                    const roomName = titelCG
-    
-                    db.collection("GroupsForCoaches")
-                    .where("Room", "==", roomName)
-                    .get().then(querySnapshot => {
-                        querySnapshot.forEach(doc3 => {
-    
-                            const admin = doc3.data().Creater
-    
-                    db.collectionGroup("Messages")
-                    .where("Room", "==", roomName)
-                    .orderBy("Timestamp", "asc")
-                    .onSnapshot(querySnapshot => {
-    
-                    emptyScreenByOnsnapshot()
-                        
-                        querySnapshot.forEach(doc2 => {
-    
-                            const authMessage = doc2.data().Message
-                            const sender = doc2.data().Auth
-                            const members = doc2.data().Members
-                            const id = doc2.data().ID
-
-                            const messageDiv = document.createElement("div")
-                                messageDiv.setAttribute("class", "message-div")
-                                messageDiv.setAttribute("data-id", id)
-    
-                            const messageP = document.createElement("p")
-                            messageP.setAttribute("class", "auth-message-p")
-        
-                            const senderName = document.createElement("p")
-                            senderName.setAttribute("class", "sender-name-message")
-        
-                    db.collection("Vitaminders").where("Gebruikersnaam", "==", sender).get().then(querySnapshot => {
-                        querySnapshot.forEach(doc1 => {
-    
-                            const messageNameClean = doc1.data().GebruikersnaamClean
-                            const colour = doc1.data().Color
-                        
-                            if (auth == sender){
-                                senderName.innerText = messageNameClean
-        
-                                // messageDiv.style.alignSelf = "flex-end"
-                                messageP.innerText = authMessage
-                                senderName.style.color = colour
-                                senderName.style.fontWeight = "bold"
-                                senderName.style.alignSelf = "flex-end"
-    
-                                if(admin.includes(sender)){
-                                messageOptions(senderName, authMessage, roomName, messageNameClean)
-                                };
-        
-                            } else {
-    
-                                senderName.innerText = messageNameClean
-        
-                                // messageDiv.style.alignSelf = "flex-start"
-                                messageP.innerText = authMessage
-                                senderName.style.fontWeight = "bold"
-                                senderName.style.alignSelf = "flex-start"
-                                senderName.style.color = colour
-                                
-                                };
-                                messageDiv.appendChild(senderName)
-                                messageDiv.appendChild(messageP)
-                                addSocialIconsToMessage(messageDiv, sender, authMessage, auth)
-                                appendReactionInputToMessage(messageDiv, authMessage, id, sender)
-                                showReactions(messageDiv, id)
-    
-                            });
-                        });
-                        DOMchatScreen.appendChild(messageDiv)
-                    });
-                });
-            });
-        });
-            });
-        };
-    });
-    }();
-    
-    // Groups of auth AND notifications
-    
-    function getProfilePicOfChat(pic, picDOMobject){
-        if(pic == undefined){
-            picDOMobject.src = "images/dummy-profile-photo.jpeg"
-        } else {
-        picDOMobject.src = pic
-        };
-    };
-    
-    function setInnerTextOfDOMobjects(chat, grouptype, user, typeOfGroup){
-        chat.innerText = user
-        grouptype.innerText = typeOfGroup
-      };
-    
-    
-      function updateReadListGroup(docID, authName, messages, user){
-       
-        if(messages != 0){
-            db.collection("GroupsForCoaches")
-            .doc(docID)
-            .collection("Messages")
-            .where("Members", "array-contains", authName)
-            .get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
-    
-                    const read = doc1.data().Read
-    
-                    if(!read.includes(authName)){
-                        db.collection("GroupsForCoaches")
-                        .doc(docID)
-                        .collection("Messages")
-                        .doc(doc1.id)
-                        .update({
-                            Read: firebase.firestore.FieldValue.arrayUnion(authName)
                         })
                         .then(() => {
-                            console.log("Readlist geupdate met auth")
-                            window.open(`../Group/${user}.html`, "_self");
-                        });
-                    } else {
-                        console.log("Auth is already on readlist")
-                            window.open(`../Group/${user}.html`, "_self");
-                    };
-                });
-            });
-        }else{
-            console.log("Geen berichten uberhaubt")
-            window.open(`../Group/${user}.html`, "_self");
-        };
-    }; 
-    
-    function groupsOverviewTitleGroup(title, group, photo, typeDescription){
-    
-        group.innerText = title
-        photo.src = "/images/groups-icon.jpg"
-        typeDescription.innerText = "Coachgroup"
-    };
-    
-    
-            // Database query
-    const DOMGroupChats = document.getElementById("overview-groups")
-    
-    if (DOMGroupChats != null){
-    
-    auth.onAuthStateChanged(User =>{
-        if(User){
-          const userRef = db.collection("Vitaminders").doc(User.uid);
-          userRef.get().then(function(doc) {
-    
-            const auth = doc.data().Gebruikersnaam
-    
-    db.collection("GroupsForCoaches").where("Members", "array-contains", auth).get().then(querySnapshot => {
-        querySnapshot.forEach(doc1 => {
-    
-            const type = doc1.data().Type
-            const title = doc1.data().Room
-            const titleClean = doc1.data().RoomClean
-            const members = doc1.data().Members
-            const creator = doc1.data().Creater
-            const online = doc1.data().Online
-            const messages = doc1.data().Messages
-    
-            const chatsDiv = document.createElement("div")
-                chatsDiv.setAttribute("class", "chats-div")
-            const chatsP = document.createElement("p")
-            const photoDiv = document.createElement("div")
-                photoDiv.setAttribute("class", "photo-div")
-            const photoImg = document.createElement("img")
-            const groupType = document.createElement("p")
-                groupType.setAttribute("class", "grouptype-description")
-                    
-                      if (members.includes(auth)){
-    
-    
-                        groupsOverviewTitleGroup(titleClean, chatsP, photoImg, groupType)
-                                        
-                        // Open group
-                        chatsDiv.addEventListener("click", () => {
-                        
-                            updateReadListGroup(doc1.id, auth, title)
-    
-                        });
+                            const input = document.getElementById("chat-input")
 
-                    DOMGroupChats.appendChild(chatsDiv)
-                    chatsDiv.appendChild(photoDiv)
-                    photoDiv.appendChild(photoImg)
-                    photoDiv.appendChild(groupType)
-                    chatsDiv.appendChild(chatsP)
-    
-                        // New messages
-                        const newMessagesPGroups = document.createElement("p")
-                            newMessagesPGroups.setAttribute("class", "new-message-count-chats")
-                            
-                        newMessageInOverviewGroups(doc1.id, chatsDiv, newMessagesPGroups) 
-                        };                
+                            input.value = ""
+                        });
+                    });  
                 });
             });
-          });
+        });
+    });
+};
+
+function updateNumberOfReactionsInMessage(parentID, docid){
+
+    db.collectionGroup("Messages")
+    .where("ID", "==", parentID)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            db.collection("GroupsForCoaches")
+            .doc(docid)
+            .collection("Messages")
+            .doc(doc.id)
+            .update({
+                Messages: firebase.firestore.FieldValue.increment(1)
+            });
+        });
+    });
+};
+
+function saveNewReaction(elem){
+
+    emptyScreenByOnsnapshotReaction()
+
+    auth.onAuthStateChanged(User =>{
+        db.collection("Vitaminders")
+        .doc(User.uid)
+        .get().then(function(doc) {
+    
+                const auth = doc.data().Gebruikersnaam
+
+                const input = elem.previousElementSibling.value
+                const id = randomID()
+                const parentID = elem.dataset.parentid
+
+                db.collection("GroupsForCoaches")
+                .where("Room", "==", titelCGC)
+                .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+    
+                    const members = doc.data().Members
+    
+                db.collection("GroupsForCoaches")
+                .doc(doc.id)
+                .collection("Messages")
+                .doc().set({
+                    Auth: auth,
+                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                    Message: input,
+                    Room: titelCGC,
+                    Members: members,
+                    Type: "Reaction",
+                    ID: id,
+                    Status: "New",
+                    Read: [auth],
+                    ParentID: parentID,
+                    }).then(() => {
+                        db.collection("GroupsForCoaches")
+                        .doc(doc.id)
+                        .update({
+                            Messages: firebase.firestore.FieldValue.increment(1)
+                        })
+                        .then(() => {
+                            updateNumberOfReactionsInMessage(parentID, doc.id)
+                        })
+                        .then(() => {
+                            const input = document.getElementById("chat-input")
+
+                            input.value = ""
+                        });
+                    });  
+                });
+            });
+        });
+    });
+};
+
+function emptyScreenByOnsnapshotReaction(){
+
+    console.log("empty reactions")
+
+    const DOMchatScreenGroupChat = document.getElementById("chat-screen")
+
+    const chatDivsUser = document.getElementsByClassName("reaction-div")
+
+    const chatDivsArrayUser = Array.from(chatDivsUser)
+
+    chatDivsArrayUser.forEach(divs => {
+
+        console.log("empty reactions")
+        
+        divs.remove();
+    });
+};
+
+function emptyScreenByOnsnapshotMessage(){
+
+    console.log("empty messages")
+
+    const DOMchatScreenGroupChat = document.getElementById("chat-screen")
+
+    const chatDivsUser = document.getElementsByClassName("message-div")
+
+    const chatDivsArrayUser = Array.from(chatDivsUser)
+
+    chatDivsArrayUser.forEach(divs => {
+
+        console.log("empty messages")
+        
+        DOMchatScreenGroupChat.removeChild(divs)
+    });
+};
+
+function messageOptions(sender, chatMessage, chatRoom, authChatter){
+    const options = document.createElement("img")
+       options.setAttribute("class", "message-options")
+    options.src = "../images/design/mail-icon2.jpg"
+
+    const sendAsMailDiv = document.createElement("div")
+       sendAsMailDiv.setAttribute("class", "send-chat-as-mail-div")
+       sendAsMailDiv.setAttribute("data-message", chatMessage)
+       sendAsMailDiv.setAttribute("data-room", chatRoom)
+       sendAsMailDiv.setAttribute("data-auth", authChatter)
+
+       sendChatAsMail(chatMessage, chatRoom, authChatter, sendAsMailDiv)
+
+    sender.appendChild(options)
+    sender.appendChild(sendAsMailDiv)
+    chooseRecipientForMail(sendAsMailDiv)
+    toggleSendAsMail(options, sendAsMailDiv)
+
+};
+
+function chooseRecipientForMail(sendAsMailDiv){
+    
+    const selectMember = document.createElement("select")
+    selectMember.setAttribute("id", "select-member-to-send-mail")
+    const optionAllMembers = document.createElement("option")
+    optionAllMembers.innerText = "Iedereen"
+    selectMember.appendChild(optionAllMembers)
+    
+    db.collection("GroupsForCoaches")
+        .where("Room", "==", roomNameCoach)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+
+                const members = doc.data().Members
+
+                members.forEach(member => {
+
+                    db.collection("Vitaminders")
+                .where("Gebruikersnaam", "==", member)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc1 => {
+
+                        const usernameClean = doc1.data().GebruikersnaamClean
+                        const option = document.createElement("option")
+                        option.innerText = usernameClean
+                        selectMember.appendChild(option)
+                });
+            });
+
+                sendAsMailDiv.appendChild(selectMember)
+
+            });
+        });
+    });
+}; 
+
+function toggleSendAsMail(options, sendChatAsMailDiv){
+
+    options.addEventListener("click", () => {
+            if(sendChatAsMailDiv.style.display === "flex"){
+                sendChatAsMailDiv.style.display = "none" 
+            } else {
+                sendChatAsMailDiv.style.display = "flex" 
+            };
+    });
+};
+
+function sendChatAsMail(message, room, coach, sendAsMailDiv){
+
+const sendButton = document.createElement("button")
+sendButton.setAttribute("id", "sendAsMailButton")
+sendButton.innerText = "Verstuur bericht als mail"
+
+sendAsMailDiv.appendChild(sendButton)
+
+sendButton.addEventListener("click", () => {
+
+    sendButton.innerText = "Verstuurd"
+
+    const memberSelect = sendButton.nextSibling
+
+    const option = memberSelect.options
+    const selected = option[option.selectedIndex].innerHTML
+
+    db.collection("Vitaminders").where("GebruikersnaamClean", "==", coach)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc2 => {
+
+                const SenderNameClean = doc2.data().GebruikersnaamClean
+
+    db.collection("GroupsForCoaches")
+    .where("Room", "==", room).get()
+    .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const members = doc.data().Members
+            const type = doc.data().Type
+            const titelClean = doc.data().RoomClean
+            const titel = doc.data().Room
+
+            members.forEach(member => {
+
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", member)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc2 => {
+
+                        const email = doc2.data().Email
+                        const naam = doc2.data().GebruikersnaamClean
+
+                        if(selected === naam){
+                                console.log(email)
+                                emailLayout(email, SenderNameClean, titelClean, message, titel, naam)
+                        
+                        } else if (selected === "Iedereen") {
+                                console.log(email)
+                                emailLayout(email, SenderNameClean, titelClean, message, titel, naam)
+                        };
+                        });
+                    });
+                });
+            });
+        });
+    });
+});
+});
+};
+
+function emailLayout(emailAdress, SenderNameClean, titelClean, message, titel, naam){
+
+        db.collection("Mail").doc().set({
+                to: emailAdress,
+                cc: "info@vitaminds.nu",
+        message: {
+        subject: `Je hebt een nieuw bericht ontvangen van ${SenderNameClean} in je groep ${titelClean}`,
+        html: `Hallo ${naam}, <br><br>
+                ${SenderNameClean} heeft je een bericht gestuurd in de groep ${titelClean} : <br><br>
+
+                "${message}"<br><br>
+                
+                Ga naar je <a href="www.vitaminds.nu/groups-coaches/${titel}.html">groep</a> om op het bericht te reageren.<br><br>
+                P.s. Om privacyredenen kun je groep alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
+
+                Vriendelijke groet, <br></br>
+                Het Vitaminds Team <br></br>
+                <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+        Gebruikersnaam: naam,
+        Emailadres: emailAdress,
+        Type: "New coachmessage in chat"
+        }        
+    });  
+};
+
+// Load messages in realtime
+function loadMessageInRealtime(){
+
+        db.collectionGroup("Messages")
+        .where("Room", "==", titelCGC)
+        .orderBy("Timestamp", "asc")
+        .where("Type", "==", "Message")
+        .onSnapshot(querySnapshot => {
+
+            emptyScreenByOnsnapshotMessage()
+            
+            querySnapshot.forEach(doc2 => {
+
+                const authMessage = doc2.data().Message
+                const sender = doc2.data().Auth
+                const members = doc2.data().Members
+                const id = doc2.data().ID
+                const timestamp = doc2.data().Timestamp
+                const parentID = doc2.data().ParentID
+                const messages = doc2.data().Messages
+
+                const messageDiv = document.createElement("div")
+                    messageDiv.setAttribute("class", "message-div")
+                    messageDiv.setAttribute("data-id", id)
+                    messageDiv.setAttribute("data-parentid", parentID)
+                    messageDiv.setAttribute("data-timestamp", timestamp)
+
+                    appendMessageToDOM(timestamp, sender, authMessage, id, messageDiv, parentID, messages)
+        });
+    });
+};
+
+function loadReactionsInRealtime(parentID){
+
+    db.collectionGroup("Messages")
+    .where("Room", "==", titelCGC)
+    .orderBy("Timestamp", "asc")
+    .where("Type", "==", "Reaction")
+    .where("ParentID", "==", parentID)
+    .onSnapshot(querySnapshot => {
+        
+        querySnapshot.forEach(doc2 => {
+
+            const authMessage = doc2.data().Message
+            const sender = doc2.data().Auth
+            const members = doc2.data().Members
+            const id = doc2.data().ID
+            const timestamp = doc2.data().Timestamp
+            const parentID = doc2.data().ParentID
+            const messages = doc2.data().Messages
+
+            const messageDiv = document.createElement("div")
+                messageDiv.setAttribute("class", "message-div")
+                messageDiv.setAttribute("data-id", id)
+                messageDiv.setAttribute("data-parentid", parentID)
+                messageDiv.setAttribute("data-timestamp", timestamp)
+
+                appendMessageToDOM(timestamp, sender, authMessage, id, messageDiv, parentID, messages)
+    });
+});
+};
+
+loadMessageInRealtime()
+
+function loadAllReactions(loadReactionsP, id){
+
+    loadReactionsP.addEventListener("click", () => {
+        loadReactionsInRealtime(id)
+    });
+};
+
+messageDivArray = []
+
+function appendMessageToDOM(timestamp, sender, authMessage, id, messageDiv, parentID, messages){
+
+    const messageP = document.createElement("p")
+    messageP.setAttribute("class", "auth-message-p")
+
+    const senderName = document.createElement("p")
+    senderName.setAttribute("class", "sender-name-message")
+
+    const timestampP = document.createElement("p")
+    timestampP.setAttribute("class", "message-timestamp")
+
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
+
+    const loadReactions = document.createElement("p")
+        loadReactions.setAttribute("class", "load-reactions")
+
+    loadReactionsButton(loadReactions, messages)
+
+    loadAllReactions(loadReactions, id)
+
+    senderNameClean(sender, senderName, authMessage)   
+
+    messageP.innerText = authMessage
+    senderName.style.fontWeight = "bold"
+    senderName.style.alignSelf = "flex-end"
+    timestampP.style.alignSelf = "flex-start"
+    senderName.style.color = colour
+
+    messageDiv.appendChild(senderName)
+    messageDiv.appendChild(timestampP)
+    messageDiv.appendChild(messageP)
+    appendReactionInputToMessage(messageDiv, id, sender, authMessage)
+    messageDiv.appendChild(loadReactions)
+
+    appendMessagesToMessageOrReaction(messageDiv, messageP, senderName, parentID)
+
+    // findLinkInText(messageP)
+};
+
+function loadReactionsButton(loadReactions, messages){
+
+    if(messages === undefined){
+        loadReactions.style.display = "none"
+    } else if (messages === 1){
+        loadReactions.innerHTML = `Bekijk ${messages} reactie` 
+    } else {
+        loadReactions.innerHTML = `Bekijk ${messages} reacties`
+    };
+};
+
+// function findLinkInText(messageP){
+
+//     const expression = /(https?:\/\/)?[\w\-~]+(\.[\w\-~]+)+(\/[\w\-~@:%]*)*(#[\w\-]*)?(\?[^\s]*)?/gi;
+
+//     const regex = new RegExp(expression);
+
+//     link = regex.exec(messageP)
+
+//     console.log(link)
+// }
+
+function appendMessagesToMessageOrReaction(messageDiv, messageP, senderName, parentID){
+    messageDivArray.push(messageDiv)
+
+    messageDivArray.forEach(div => {
+
+        const divID = div.dataset.id
+        const timestamp = div.dataset.timestamp
+
+        if(parentID === divID){
+            div.appendChild(messageDiv)
+            messageDiv.setAttribute("class", "reaction-div")
+            messageP.setAttribute("class", "reaction-p")
+            senderName.setAttribute("class", "reaction-sender")
+        } else if (parentID === "none") {
+            DOMchatScreenCoach.appendChild(messageDiv)
         };
     });
-    };
+};
+
+!function scrollToBottomOnLoad(){
+
+    setTimeout(() =>{
+        const bottom = document.getElementById("top-layer")
+
+        bottom.scrollIntoView()
+    }, 2500);
+}();
+
+function senderNameClean(sender, senderName, authMessage){
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", sender)
+    .get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const messageNameClean = doc.data().GebruikersnaamClean
+
+            senderName.innerText = messageNameClean
+
+            messageOptionsForAdmin(sender, senderName, authMessage, roomNameCoach, messageNameClean)
+
+        });
+    });
+};
+
+function messageOptionsForAdmin(sender, senderName, authMessage, roomNameCoach, messageNameClean){
+
+    db.collection("GroupsForCoaches")
+    .where("Room", "==", titelCGC)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const admin = doc.data().Admin
+
+             if(admin.includes(sender)){
+            messageOptions(senderName, authMessage, roomNameCoach, messageNameClean)
+            };
+
+        });
+    });
+};
+
+function appendReactionInputToMessage(messageDiv, id, sender, authMessage){
+
+    const inputDiv = document.createElement("div")
+        inputDiv.setAttribute("id", "input-div-reaction")
+
+    const input = document.createElement("textarea")
+        input.placeholder = "Schrijf hier je reactie"
+        input.id = "reaction-input-id"
+        input.setAttribute("rows", "1")
+        input.setAttribute("class", "reaction-input")
+
+    const sendImage = document.createElement("img")
+        sendImage.setAttribute("onclick", "saveNewReaction(this)")
+        sendImage.setAttribute("data-parentid", id)
     
+    sendImage.src = "../images/send-icon.png"
+    
+    messageDiv.appendChild(inputDiv)
+    inputDiv.appendChild(input)
+    inputDiv.appendChild(sendImage)
+
+    addSocialIconsToMessage(messageDiv, sender, authMessage, inputDiv)
+
+};
+
+function addDataToSocial(supportType, userName, message){
+    
+    supportType.setAttribute("data-username", userName)
+    supportType.setAttribute("data-message", message)
+
+};
+
+function socialStartIcon(inputDiv, socialIconDiv){
+
+    startIcon = document.createElement("img")
+        startIcon.setAttribute("class", "socials-start-icon")
+
+    startIcon.src = "../images/heart-icon.png"
+
+    inputDiv.prepend(startIcon)
+
+    startIcon.addEventListener("mouseover", () => {
+        socialIconDiv.style.display = "flex"
+    });
+
+    socialIconDiv.addEventListener("mouseleave", () => {
+        socialIconDiv.style.display = "none"
+    });
+
+};
+
+function addSocialIconsToMessage(messageP, userName, message, inputDiv){
+
+    const socialIconDiv = document.createElement("div")
+    socialIconDiv.setAttribute("class", "social-div") 
+
+    const IFeelForYouIconDiv = document.createElement("div")
+    const IUnderstandIconDiv = document.createElement("div")
+    const yourGoodTheWayYouAreDiv = document.createElement("div")
+    const keepAtItDiv = document.createElement("div")
+    const yourNotAloneDiv = document.createElement("div")
+
+    const IFeelForYouIconP = document.createElement("p")
+        IFeelForYouIconP.setAttribute("class", "social-icon-p")
+    const IUnderstandIconP = document.createElement("p")
+        IUnderstandIconP.setAttribute("class", "social-icon-p")
+    const yourGoodTheWayYouAreP = document.createElement("p")
+        yourGoodTheWayYouAreP.setAttribute("class", "social-icon-p")
+    const keepAtItP = document.createElement("p")
+        keepAtItP.setAttribute("class", "social-icon-p")
+    const yourNotAloneP = document.createElement("p")
+        yourNotAloneP.setAttribute("class", "social-icon-p")
+
+    IFeelForYouIconP.innerHTML = "Ik leef <br> met je mee"
+    IUnderstandIconP.innerHTML = "Ik begrijp wat <br> je voelt"
+    yourGoodTheWayYouAreP.innerHTML = "Je bent goed <br> zoals je bent"
+    keepAtItP.innerHTML = "Ga zo door!"
+    yourNotAloneP.innerHTML = "Je staat er <br> niet alleen voor"
+
+    IFeelForYouIconDiv.setAttribute("class", "social-icon-div") 
+    IUnderstandIconDiv.setAttribute("class", "social-icon-div")  
+    yourGoodTheWayYouAreDiv.setAttribute("class", "social-icon-div") 
+    keepAtItDiv.setAttribute("class", "social-icon-div") 
+    yourNotAloneDiv.setAttribute("class", "social-icon-div") 
+
+    addDataToSocial(IFeelForYouIconDiv, userName, message)
+    addDataToSocial(IUnderstandIconDiv, userName, message)
+    addDataToSocial(yourGoodTheWayYouAreDiv, userName, message)
+    addDataToSocial(keepAtItDiv, userName, message)
+    addDataToSocial(yourNotAloneDiv, userName, message)
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+
+                const auth = doc.data().Gebruikersnaam
+
+                savebutton(IFeelForYouIconDiv, "IFeelForYou", auth, IFeelForYouIconP, "Ik leef met je mee")
+                savebutton(IUnderstandIconDiv, "IUnderstandYou", auth, IUnderstandIconP, "Ik begrijp wat je voelt")
+                savebutton(yourGoodTheWayYouAreDiv, "YourGoodTheWayYouAre", auth, yourGoodTheWayYouAreP, "Je bent goed zoals je bent")
+                savebutton(keepAtItDiv, "KeepAtIt", auth, keepAtItP, "Ga zo door!")
+                savebutton(yourNotAloneDiv, "YourNotAlone", auth, yourNotAloneP, "Je staat er niet alleen voor")
+
+            });
+        };
+    });
+
+    const IFeelForYouIcon = document.createElement("img")
+    const IUnderstandIcon = document.createElement("img")
+    const yourGoodTheWayYouAre = document.createElement("img")
+    const keepAtIt = document.createElement("img")
+    const yourNotAlone = document.createElement("img")
+
+    IFeelForYouIcon.src = "../images/design/person-24px-heart.png"
+    IUnderstandIcon.src = "../images/comparison-icon.png"
+    yourGoodTheWayYouAre.src = "../images/design/person-24px-check.png"
+    keepAtIt.src = "../images/heart-icon.png"
+    yourNotAlone.src = "../images/design/group-24px.png"
+
+    socialIconDiv.appendChild(IFeelForYouIconDiv)
+    IFeelForYouIconDiv.appendChild(IFeelForYouIcon)
+    IFeelForYouIconDiv.appendChild(IFeelForYouIconP)
+    socialIconDiv.appendChild(IUnderstandIconDiv)
+    IUnderstandIconDiv.appendChild(IUnderstandIcon)
+    IUnderstandIconDiv.appendChild(IUnderstandIconP)
+    socialIconDiv.appendChild(yourGoodTheWayYouAreDiv)
+    yourGoodTheWayYouAreDiv.appendChild(yourGoodTheWayYouAre)
+    yourGoodTheWayYouAreDiv.appendChild(yourGoodTheWayYouAreP)
+    socialIconDiv.appendChild(keepAtItDiv)
+    keepAtItDiv.appendChild(keepAtIt)
+    keepAtItDiv.appendChild(keepAtItP)
+    socialIconDiv.appendChild(yourNotAloneDiv)
+    yourNotAloneDiv.appendChild(yourNotAlone)
+    yourNotAloneDiv.appendChild(yourNotAloneP)
+
+    messageP.appendChild(socialIconDiv)
+    socialStartIcon(inputDiv, socialIconDiv)
+}
+
+function showSocialDescription(iconDiv, iconP){
+    iconDiv.addEventListener("mouseover", () => {
+        iconP.style.display = "block"
+    });
+
+    iconDiv.addEventListener("mouseout", () => {
+        iconP.style.display = "none"
+    });
+};
+
+function savebutton(supportType, support, auth, notice, socialTypeWritten){
+
+    supportType.addEventListener("click", () => {
+
+        const username = supportType.dataset.username
+        const message = supportType.dataset.message
+
+        saveInMessage(support, username, message)
+        saveInUser(username, auth, message, support, socialTypeWritten)
+
+        notice.innerText = "Verstuurd"
+        notice.style.color = "#8e0000"
+
+    });
+};
+
+function saveInMessage(support, username, message){
+
+    db.collection("GroupsForCoaches")
+    .where("Room", "==", titelCGC)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            db.collection("GroupsForCoaches")
+            .doc(doc.id)
+            .collection("Messages")
+            .where("Room", "==", titelCGC)
+            .where("Auth", "==", username)
+            .where("Message", "==", message)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    db.collection("GroupsForCoaches")
+                    .doc(doc.id)
+                    .collection("Messages")
+                    .doc(doc1.id)
+                    .update({
+                        Support: firebase.firestore.FieldValue.arrayUnion(support)
+                    });
+                });
+            });
+        });
+    });
+};
+
+function saveInUser(username, giver, message, support, socialTypeWritten){
+
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", username)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const email = doc.data().Email
+            const usernameClean = doc.data().GebruikersnaamClean
+
+            sendMailNewSocial(email, usernameClean, socialTypeWritten)
+
+            db.collection("Vitaminders")
+            .doc(doc.id)
+            .collection("Support")
+            .doc()
+            .set({
+                Type: support,
+                Giver: giver,
+                Reciever: username,
+                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                Message: message,
+                SourceType: "OpenUp",
+                Status: "New"
+            });
+        });
+    });
+};
+
+function sendMailNewSocial(email, gebruikersnaamClean, socialTypeWritten){
+
+    db.collection("Mail").doc().set({
+        to: email,
+        cc: "info@vitaminds.nu",
+        message: {
+        subject: `Nieuwe steunreactie op Vitaminds`,
+        html: `Hallo ${gebruikersnaamClean},</br></br>
+        
+        Je hebt een nieuwe steunreactie: <b>"${socialTypeWritten}"</b>.</br></br>
+
+        Ga naar <a href="www.vitaminds.nu">Vitaminds</a> en bekijk je nieuwe reactie.</br></br>
+        
+        Vriendelijke groet, </br></br>
+        Het Vitaminds Team </br></br>
+        <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`
+        }
+                
+        }).catch((err) => {
+        console.log(err)
+        });
+};
+ 
     function upgradeModal(notice){
     
         const upgradeModal = document.getElementById("upgrade-account-modal")
@@ -1771,4 +1799,3 @@
             });
         };
     }();
-}();

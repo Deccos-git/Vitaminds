@@ -53,6 +53,29 @@
     margin: 5px 20px 30px 20px;
 }
 
+.coach-pic-div-workshop{
+    cursor: pointer;
+}
+
+#explainer{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 30px 100px;
+    border-radius: 15px;
+    padding: 20px;
+    background-color: #a7bdbd26;
+}
+
+
+#explainer h3{
+    text-align: center;
+}
+
+#explainer p{
+    text-align: left;
+}
+
 .coach-pic-div-workshop img{
     width: 100px;
     height: 100px;
@@ -166,6 +189,11 @@
 
 #workshop-agreement-banner{
     height: 200px;
+}
+
+.button-div{
+    margin-top: auto;
+    margin-bottom: 0px;
 }
 
 #questions-workshop-agreement{

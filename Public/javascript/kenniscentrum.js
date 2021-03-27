@@ -15,7 +15,8 @@
  titel13 = titel12.replace('%20',' ')
  titel14 = titel13.replace('%20',' ')
  titel15 = titel14.replace('%20',' ')
- titel = titel14.replace('%20',' ')
+ titel16 = titel15.split("?fb")
+ titel = titel16[0]
  
  console.log(titel)
 

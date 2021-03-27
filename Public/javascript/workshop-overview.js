@@ -133,68 +133,79 @@ function changeButtonIfAuthIsWorkshopTaker(takers, button){
 
 // Workshops loaded from database
 
-db.collection("Workshops").where("Status", "==", "Public").get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
+!function workshopOverview(){
+    const DOM = document.getElementById("workshops-outer-div")
 
-        const title = doc.data().WorkshopTitle
-        const coach = doc.data().Coach
-        const headerImg = doc.data().BannerImage
-        const workshopPrice = doc.data().Price
-        const takers = doc.data().Takers
+    if(DOM != null){
 
-        db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
-            querySnapshot.forEach(doc1 => {
+        db.collection("Workshops").where("Status", "==", "Public").get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
 
-                const nameClean = doc1.data().GebruikersnaamClean
-                const profilePic = doc1.data().Profielfoto
+                const title = doc.data().WorkshopTitle
+                const coach = doc.data().Coach
+                const headerImg = doc.data().BannerImage
+                const workshopPrice = doc.data().Price
+                const takers = doc.data().Takers
 
-                const DOM = document.getElementById("workshops-outer-div")
+                db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get().then(querySnapshot => {
+                    querySnapshot.forEach(doc1 => {
 
-                const innerDiv = document.createElement("div")
-                    innerDiv.setAttribute("class", "workshop-section")
-                const header = document.createElement("div")
-                    header.setAttribute("class", "workshop-header")
-                const img = document.createElement("img")
-                    img.setAttribute("class", "header-workshop")
-                const nameP = document.createElement("p")
-                const coachPicDiv = document.createElement("div")
-                    coachPicDiv.setAttribute("class", "coach-pic-div-workshop")
-                const coachPic = document.createElement("img")
-                const titleH3 = document.createElement("h3")
-                const priceP = document.createElement("p")
-                    priceP.setAttribute("id", "workshop-price")
-                const buttonDiv = document.createElement("div")
-                const button = document.createElement("button")
-                    button.setAttribute("class", "button-algemeen")
-                    button.setAttribute("onclick", "openWorkshop(this)")
+                        const nameClean = doc1.data().GebruikersnaamClean
+                        const profilePic = doc1.data().Profielfoto
 
-                img.src = headerImg
-                coachPic.src = profilePic
-                nameP.innerText = nameClean
-                titleH3.innerText = title
-                priceP.innerText = `Prijs: ${workshopPrice} euro`
-                button.innerText = "Meer informatie"
+                        const innerDiv = document.createElement("div")
+                            innerDiv.setAttribute("class", "workshop-section")
+                        const header = document.createElement("div")
+                            header.setAttribute("class", "workshop-header")
+                        const img = document.createElement("img")
+                            img.setAttribute("class", "header-workshop")
+                        const nameP = document.createElement("p")
+                        const coachPicDiv = document.createElement("div")
+                            coachPicDiv.setAttribute("class", "coach-pic-div-workshop")
+                        const coachPic = document.createElement("img")
+                        const titleH3 = document.createElement("h3")
+                        const priceP = document.createElement("p")
+                            priceP.setAttribute("id", "workshop-price")
+                        const buttonDiv = document.createElement("div")
+                            buttonDiv.setAttribute("class", "button-div")
+                        const button = document.createElement("button")
+                            button.setAttribute("class", "button-algemeen")
+                            button.setAttribute("onclick", "openWorkshop(this)")
 
-                changeButtonIfAuthIsWorkshopTaker(takers, button)
+                        img.src = headerImg
+                        coachPic.src = profilePic
+                        nameP.innerText = nameClean
+                        titleH3.innerText = title
+                        priceP.innerText = `Prijs: ${workshopPrice} euro`
+                        button.innerText = "Meer informatie"
 
-                if(DOM != null){
+                        changeButtonIfAuthIsWorkshopTaker(takers, button)
+                        linkToCoach(coachPicDiv, coach)
 
-                DOM.appendChild(innerDiv)
-                innerDiv.appendChild(header)
-                header.appendChild(img)
-                innerDiv.appendChild(coachPicDiv)
-                coachPicDiv.appendChild(coachPic)
-                coachPicDiv.appendChild(nameP)
-                innerDiv.appendChild(titleH3)
-                innerDiv.appendChild(priceP)
-                innerDiv.appendChild(buttonDiv)
-                buttonDiv.appendChild(button)
+                        DOM.appendChild(innerDiv)
+                        innerDiv.appendChild(header)
+                        header.appendChild(img)
+                        innerDiv.appendChild(coachPicDiv)
+                        coachPicDiv.appendChild(coachPic)
+                        coachPicDiv.appendChild(nameP)
+                        innerDiv.appendChild(titleH3)
+                        innerDiv.appendChild(priceP)
+                        innerDiv.appendChild(buttonDiv)
+                        buttonDiv.appendChild(button)
 
-                };
+                    })
+                });
             })
         });
-    })
-});
+    };
+}();
+
+function linkToCoach(coachPicDiv, coach){
+
+    coachPicDiv.addEventListener("click", () => {
+        window.open("../Vitaminders/" + [coach] + ".html", "_self");
+    });
+};
 
 // Open workshops after onclick
 

@@ -84,12 +84,22 @@
 }
 
 #link-coach-account p{
-    font-size: 13px;
+    font-size: 18px;
     margin: 5px;
 }
 
 #succes-questions img{
     height: 50px;
+}
+
+#coach-notice{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 80px 100px 0px 100px;
+    padding: 30px;
+    background-color: #eeeeee;
+    border-radius: 15px;
 }
 
 #succes-questions h3{

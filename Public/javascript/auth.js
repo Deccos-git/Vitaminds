@@ -492,7 +492,7 @@ const newMessageArray = [];
               const message = doc.data().Message
 
               if(!read.includes(auth)){
-                console.log(message)
+           
               newMessageArray.push(doc)
               totalNew.push(doc)
               };

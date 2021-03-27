@@ -172,22 +172,103 @@
     margin: 0px;
     width: 100%;
     border-radius: 5px;
+    background-color: white;
+}
+
+.reaction-div{
+    margin: 10px 0px 5px 5%;
+    background-color: #a7bdbd26;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.reaction-meta-div{
+    display: flex;
+    width: 100%;
+}
+
+.social-div{
+    display: none;
+}
+
+.reaction-p{
+    font-size: 16px;
+    margin: 5px;
+}
+
+.reaction-sender{
+    font-size: 16px;
+    font-weight: 400 !important;
+    margin-top: -5px;
+}
+
+.socials-start-icon{
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+}
+
+.reaction-timestamp{
+    font-size: 14px !important;
+    
+}
+
+.reaction-name{
+    margin-left: auto !important;
+    font-size: 14px !important;
+    font-weight: bold;
+    margin-right: 10px;
 }
 
 #input-div-reaction{
     display: flex;
     width: 100%;
     align-items: center;
+    margin-left: 10px;
 }
 
 #input-div-reaction textarea{
     width: 90%;
 }
 
+.reactions-div{
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.reaction-inner-div{
+    border-top: 1px solid lightgray;
+    width: 100%;
+    background-color: #a7bdbd26;
+}
+
+.reaction-inner-div-second-layer{
+    border-top: 1px solid lightgray;
+    width: 90%;
+    background-color: white;
+    margin-left: 5%;
+}
+
+.load-reactions{
+    align-self: center;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.reaction-inner-div p{
+    font-size: 18px;
+    margin-left: 10px;
+}
+
 #input-div-reaction img{
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     margin-left: 5px;
+    cursor: pointer;
 }
 
 .show-reactions-div{
@@ -212,6 +293,11 @@
     height: 30px;
     width: 30px;
     cursor: pointer;
+}
+
+.reaction-input-div{
+    display: flex;
+    align-items: center;
 }
 
 .message-options {
@@ -363,11 +449,39 @@
     cursor: pointer;
 }
 
+#group-button-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #list-of-members{
     display: flex;
     flex-direction: column;
     align-items: center;
     border-top: 1px solid rgba(0,0,0,.2);
+}
+
+.message-timestamp{
+    font-size: 14px;
+    margin-top: -38px;
+}
+
+#banner-div img{
+    width: 90%;
+    border-radius: 15px;
+}
+
+.button-group-for-coaches-purchase{
+    background-color: #122b46;
+    border: 1px #122b46 solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 0px;
+    margin-top: auto;
 }
 
 #list-of-members-inner-div{
@@ -411,6 +525,7 @@
 
 .message-div input{
     width: 95%;
+    border:gray;
 }
 
 .reaction-input{

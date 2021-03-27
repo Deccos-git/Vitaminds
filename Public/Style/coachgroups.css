@@ -212,6 +212,11 @@
     display: none;
 }
 
+.message-timestamp{
+    font-size: 14px;
+    margin-top: -20px;
+}
+
 .coachgroup-builder-input-div{
     display: flex;
 }
@@ -548,14 +553,12 @@
         border-radius: 3px;
         font-size: 16px;
     }
-}
 
-@media only screen and (max-width: 500px){
-
-    .auth-message-p {
-        max-width: 70%;
+    .message-timestamp{
+        margin-top: 5px;
+        align-self: flex-end !important;
     }
-
 }
+
 
 

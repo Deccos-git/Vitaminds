@@ -720,6 +720,10 @@
     align-items: center;
 }
 
+td{
+    padding: 10px;
+}
+
 @media only screen and (max-width: 938px){
 
     .kenniscentrum-artikel-section {
