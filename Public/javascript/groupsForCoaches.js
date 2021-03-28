@@ -51,7 +51,7 @@
         title.innerText = "Groepen voor coaches"
     };
     
-    function newMessageInOverviewGroup(docID, groupsDivDOM, auth){
+    function newMessageInOverviewGroupCoach(docID, groupsDivDOM, auth){
     
         const newMessageCount = []
     
@@ -86,7 +86,7 @@
         });
     };
     
-    function updateReadList(docID, authName, titleURL, messages){
+    function updateReadListGroup(docID, authName, titleURL, messages){
     
         if(messages != 0){
             db.collection("GroupsForCoaches")
@@ -124,7 +124,7 @@
         };
     };
     
-    !function dataBaseQueryGroups(){
+    !function dataBaseQueryGroupsCoaches(){
     const DOMgroups = document.getElementById("overview-groups-for-coaches")
     
     if (DOMgroups != null){
@@ -154,7 +154,7 @@
                         const groupType = document.createElement("p")
                             groupType.setAttribute("class", "grouptype-description")    
     
-                                    newMessageInOverviewGroup(doc.id, groupsDiv, auth)
+                                    newMessageInOverviewGroupCoach(doc.id, groupsDiv, auth)
                                     setNameOfGroup(groupsP, roomClean);
                                     setImageGroup(photoImg)
                                     displayGroupsForCoachesTitleInChatsAndGroups()
@@ -162,7 +162,7 @@
                                     // Open chat
                                     groupsDiv.addEventListener("click", () => {
                                             
-                                            updateReadList(doc.id, auth, room, messages)
+                                            updateReadListGroup(doc.id, auth, room, messages)
                                     });
                         
                                     DOMgroups.appendChild(groupsDiv)

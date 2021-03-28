@@ -229,7 +229,29 @@
     <h2>Maak je coachprofiel aan</h2>
     <h3 id="subscription-type"></h3>
 
-    <div id="register-div">
+    <div id="register-div-basic">
+      <h5>Je naam</h5>
+      <input id="register-gebruikersnaam" type="text" placeholder="Naam">
+      <h5>Je emailadres</h5>
+      <input id="register-email" type="email" placeholder="Emailadres">
+      <h5>Je wachtwoord</h5>
+      <input id="register-wachtwoord" type="password" placeholder="Wachtwoord">
+      <h5>Herhaal je wachtwoord</h5>
+      <input id="register-wachtwoord-repeat" type="password" placeholder="Herhaal je wachtwoord">
+      <form class="check-code" id="minimale-eisen-form">
+        <input type="checkbox" id="minimale-eisen-check">
+        <label for="minimale-eisen-check">Ik voldoe aan de <a href="#minimale-eisen"> minimale voorwaarden</a></label>
+      </form>
+      <form class="check-code" id="gedragscode-form-2">
+        <input type="checkbox" id="gedragscode-check">
+        <label for="gedragscode-check">Ik onderschrijf het <a href="/Kwaliteit.html"> Vitaminds kwaliteitsysteem</a></label>
+      </form>
+      <div id="coach-register-button">
+      <button class="button-standard" id="register-button-coach">Aanmaken</button>
+      </div>
+  </div>
+
+    <div id="register-div-premium">
       <h5>Je naam</h5>
       <input id="register-gebruikersnaam" type="text" placeholder="Naam">
       <h5>Je emailadres</h5>
@@ -271,7 +293,6 @@
       <div id="coach-register-button">
       <button class="button-standard" id="register-button-coach">Aanmaken</button>
       </div>
-      <button id="checkout"></button>
   </div>
 </section>
 
@@ -280,16 +301,19 @@
     <h2>Je Coach account is aangemaakt! </h2>
     <img src="/images/register-notice.png" alt="Vitaminds account is aangemaakt.">
     <h3>Inloggen</h3>
-    <p> Er is een email gestuurd naar je emailadres. 
-      Klik op de link in je verificatie-email om in te loggen. 
-      Heb je geen mail ontvangen? 
-      Kijk in je spam-folder of stuur een mailtje naar info@vitaminds.nu 
-      Geef het wel even de tijd (max. 24 uur), want soms duurt het iets langer.
+    <div id="info-div">
+      <p> Er is een email gestuurd naar je emailadres. 
+        Klik op de link in je verificatie-email om in te loggen. 
+        Heb je geen mail ontvangen? 
+        Kijk in je spam-folder of stuur een mailtje naar info@vitaminds.nu 
+        Geef het wel even de tijd (max. 24 uur), want soms duurt het iets langer.
+      </p>
       <h3>Je abonnement</h3>
       <p>Je kunt je abonnement inzien in je Digimind onder het kopje "Abonnement".</p>
       <h3>Vragen</h3>
       <div id="succes-questions"></div> 
-      <button onclick="successNoticeOK()" class="button-algemeen">OK</button> 
+      <button onclick="successNoticeOK()" class="button-algemeen">OK</button>
+    </div> 
   </div>
 
 </div>

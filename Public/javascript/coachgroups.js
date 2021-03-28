@@ -94,6 +94,8 @@ function newMessageInOverviewGroup(docID, groupsDivDOM, auth){
 
 function updateReadList(docID, authName, titleURL, messages){
 
+    console.log("functie fired")
+
     if(messages != 0){
         db.collection("Coachgroups")
         .doc(docID)
@@ -102,9 +104,14 @@ function updateReadList(docID, authName, titleURL, messages){
         .get().then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
 
+                console.log("auth in members of messages")
+
                 const read = doc1.data().Read
 
                 if(!read.includes(authName)){
+
+                    console.log("auth in readlist")
+
                     db.collection("Coachgroups")
                     .doc(docID)
                     .collection("Messages")
@@ -1491,42 +1498,6 @@ function setInnerTextOfDOMobjects(chat, grouptype, user, typeOfGroup){
     grouptype.innerText = typeOfGroup
   };
 
-
-  function updateReadListGroup(docID, authName, messages, user){
-   
-    if(messages != 0){
-        db.collection("Coachgroups")
-        .doc(docID)
-        .collection("Messages")
-        .where("Members", "array-contains", authName)
-        .get().then(querySnapshot => {
-            querySnapshot.forEach(doc1 => {
-
-                const read = doc1.data().Read
-
-                if(!read.includes(authName)){
-                    db.collection("Coachgroups")
-                    .doc(docID)
-                    .collection("Messages")
-                    .doc(doc1.id)
-                    .update({
-                        Read: firebase.firestore.FieldValue.arrayUnion(authName)
-                    })
-                    .then(() => {
-                        console.log("Readlist geupdate met auth")
-                        window.open(`../Group/${user}.html`, "_self");
-                    });
-                } else {
-                    console.log("Auth is already on readlist")
-                        window.open(`../Group/${user}.html`, "_self");
-                };
-            });
-        });
-    }else{
-        console.log("Geen berichten uberhaubt")
-        window.open(`../Group/${user}.html`, "_self");
-    };
-}; 
 
 function groupsOverviewTitleGroup(title, group, photo, typeDescription){
 

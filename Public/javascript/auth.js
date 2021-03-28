@@ -187,7 +187,12 @@ function profilePictureInMobileMenu(profilePicture, auth){
 
     DOMprofilePictureMobile.appendChild(profileImage)
 
-  profileImage.src = profilePicture
+    if(profilePicture === undefined){
+      profileImage.src = "../images/dummy-profile-photo.jpeg"
+    } else {
+      profileImage.src = profilePicture
+    };
+
   loginButton.style.display = "none"
 
   goToAccountFromProfilePicture(DOMprofilePictureMobile, auth)
@@ -208,7 +213,11 @@ function profilePictureInMenu(profilePicture, naam, userName){
   const profileImage = document.createElement("img")
     profileImage.setAttribute("id", "profile-image")
 
-  profileImage.src = profilePicture
+    if(profilePicture === undefined){
+      profileImage.src = "../images/dummy-profile-photo.jpeg"
+    } else {
+      profileImage.src = profilePicture
+    };
 
   DOMprofilePicture.appendChild(profileImage)
 
@@ -276,7 +285,12 @@ function pictureAndNameInAuthMenu(authDiv, profilePicture, naam, userName){
   const nameP = document.createElement("p")
     nameP.setAttribute("id", "profile-name")
 
-  picture.src = profilePicture
+    if(profilePicture === undefined){
+      picture.src = "../images/dummy-profile-photo.jpeg"
+    } else {
+      picture.src = profilePicture
+    };
+
   nameP.innerText = naam
 
   authDiv.appendChild(picAndNameDiv)
@@ -386,6 +400,8 @@ function logOutAuthMenu(authMenu){
           const naamID = doc.data().Gebruikersnaam;
           const naam = doc.data().GebruikersnaamClean
           const profilePicture = doc.data().Profielfoto
+
+          
 
           profilePictureInMenu(profilePicture, naam, naamID)
           profilePictureInMobileMenu(profilePicture, naamID)

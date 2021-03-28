@@ -645,34 +645,7 @@ function createSession(sessionNumber, buttonProduct){
   };
 };
 
-const checkoutButtonSubscriptionCoach = document.getElementById("checkout")
 
-checkoutButtonSubscriptionCoach
-  .addEventListener("click", function(evt) {
-
-    var createCheckoutSession = function(priceId) {
-      return fetch("/webhook-subscription", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          priceId: priceId
-        })
-      }).then(function(result) {
-        return result.json();
-      });
-    };
-
-    createCheckoutSession('price_1IHFIvFIim4HzRlUzJdZ4QbI').then(function(data) {
-      // Call Stripe.js method to redirect to the new Checkout page
-      stripe
-        .redirectToCheckout({
-          sessionId: data.sessionId
-        })
-        .then(handleResult);
-    });
-  });
 
 
 

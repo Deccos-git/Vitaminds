@@ -6,6 +6,8 @@
     const makeCoachAccoutnButtonPremium = document.getElementById("become-member-button-premium")
     const coachRegisterForm = document.getElementById("coach-register-form")
     const subscriptionType = document.getElementById("subscription-type")
+    const registerDivBasic = document.getElementById("register-div-basic")
+    const registerDivPremium = document.getElementById("register-div-premium")
 
     function showRegisterForm(button, type){
 
@@ -15,6 +17,14 @@
 
     subscriptionType.innerText = type
 
+    if(type === "Basic"){
+      registerDivBasic.style.display = "flex"
+      registerDivPremium.style.display = "none"
+    } else if (type === "Premium"){
+      registerDivPremium.style.display = "flex"
+      registerDivBasic.style.display = "none"
+    };
+
     coachRegisterForm.scrollIntoView()
 
     })
@@ -23,7 +33,7 @@
   showRegisterForm(makeCoachAccoutnButtonBasic, "Basic")
   showRegisterForm(makeCoachAccoutnButtonPremium, "Premium")
   
-function registerCoach(){
+!function registerCoach(){
 
   const button = document.getElementById("register-button-coach")
   const successModal = document.getElementById("success-modal")
@@ -83,57 +93,93 @@ function registerCoach(){
       Approach: approach,
       Costs: costs,
       ID: cred.user.uid,
-      Status: "Draft",
+      Status: "Approved",
       Levensvragen: [],
       SubscriptionType: subscriptionType,
     })
     .then(() => {
-      db.collection('Vitaminders').doc(cred.user.uid).collection("Gelukstegoed").doc().set({
-        Amount: 0,
-        PaymentId: "none",
-        Product: "Account created",
-        Type: "Plus",
-        Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
-      })
- .then(() => {
-    db.collection("Mail").doc().set({
-      to: [email],
-  cc: "info@vitaminds.nu",
-message: {
-subject: `Verifier je account op Vitaminds! `,
-html: `Hallo ${naam}, </br></br>
-      Wat geweldig dat je een coach-account hebt aangemaakt op Vitaminds! Je bent in ieder geval van harte welkom in onze community. 
-      Daarnaast hopen we van harte dat is een mooie stap is in de online vindbaarheid van je praktijk.<br><br>
-      Vergeet niet om je coachgegevens goed in- en aan te vullen in je Digimind (je persoonlijke ontwikkelomgeving en tevens coachprofiel op Vitaminds).
-      Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
-      
-      Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.<br><br>
-      Vriendelijke groet, </br></br>
-      Het Vitaminds Team </br></br>
-      <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-Gebruikersnaam: naam,
-Emailadres: email,
-Type: "Coach"
-}
-          
-});
- });
- })
- .then(() => {
 
-  const checkoutButton = document.getElementById("checkout")
-  checkoutButton.click();
+      createGelukstegoed(cred.user.uid)
+    })
+    .then(() => {
 
-  firebase.auth().signOut()
-    
-  });
+      sendConfirmationMail(subscriptionType, email, naam)
+
+    })
+    .then(() => {
+
+      successModal.style.display = "flex"
+        
+      });
         }).catch((err) => {
           alert(err)
-        })
-      }
-    })
-  }
-}; registerCoach();
+        });
+      };
+    });
+  };
+}();
+
+function createGelukstegoed(credUserUid){
+
+  db.collection('Vitaminders')
+  .doc(credUserUid)
+  .collection("Gelukstegoed")
+  .doc().set({
+    Amount: 0,
+    PaymentId: "none",
+    Product: "Account created",
+    Type: "Plus",
+    Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
+  });
+};
+
+function sendConfirmationMail(subscriptionType, email, naam){
+
+  if(subscriptionType === "Premium"){
+
+      db.collection("Mail").doc().set({
+        to: [email],
+        cc: "info@vitaminds.nu",
+        message: {
+        subject: `Verifier je account op Vitaminds! `,
+        html: `Hallo ${naam}, </br></br>
+            Geweldig dat je je hebt aangesloten bij Vitaminds! Je bent van harte welkom in onze community. 
+            Daarnaast hopen we van harte dat dit een mooie stap is in de online vindbaarheid van je praktijk.<br><br>
+            Vergeet niet om je coachgegevens goed in- en aan te vullen in je account.
+            Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
+            
+            Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.<br><br>
+            Vriendelijke groet, </br></br>
+            Het Vitaminds Team </br></br>
+            <img src="https://vitaminds.nu/images/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
+        Gebruikersnaam: naam,
+        Emailadres: email,
+        Type: "Coach"
+          }     
+      });
+
+  } else if (subscriptionType === "Basic"){
+    
+    db.collection("Mail").doc().set({
+      to: [email],
+      cc: "info@vitaminds.nu",
+      message: {
+      subject: `Verifier je account op Vitaminds! `,
+      html: `Hallo ${naam}, </br></br>
+          Geweldig dat je een coach-account hebt aangemaakt op Vitaminds! Je bent van harte welkom in onze community. 
+          
+          Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.<br><br>
+          Vriendelijke groet, </br></br>
+          Het Vitaminds Team </br></br>
+          <img src="https://vitaminds.nu/images/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
+      Gebruikersnaam: naam,
+      Emailadres: email,
+      Type: "Coach"
+        }     
+    });
+
+  };
+};
 
 // Succes pagina
 !function getAdminUsernameAndProfilePicture(){
@@ -156,29 +202,31 @@ const adminContactMe = document.createElement("p")
 
     const gebruikersnaamClean = doc.data().GebruikersnaamClean
     const profilePicture = doc.data().Profielfoto
-    const admin = doc.data().Gebruikersnaam
+    const auth = doc.data().Gebruikersnaam
 
     photoImg.src = profilePicture
     adminName.innerText = gebruikersnaamClean
     adminContactMe.innerText = `Voor alle vragen over Vitaminds kun je mij altijd even een berichtje sturen.`
 
-    function linkToDigimind(a){
-      a.addEventListener("click", () => {
-        window.open("../Vitaminders/" + admin + ".html", "_self");
-      });
-    } linkToDigimind(photoImg)
-    linkToDigimind(adminName)
-    linkToDigimind(adminContactMe)
+    linkToDigimind(photoImg, auth)
+    linkToDigimind(adminName, auth)
+    linkToDigimind(adminContactMe, auth)
 
-    });
-  });
-
-  succesQuestion.appendChild(photoDiv)
+    succesQuestion.appendChild(photoDiv)
     photoDiv.appendChild(adminContactMe) 
     photoDiv.appendChild(photoImg)
     photoDiv.appendChild(adminName)
+
+      });
+    });
   };
 }();
+
+function linkToDigimind(elem, auth){
+  elem.addEventListener("click", () => {
+    window.open("../Vitaminders/" + auth + ".html", "_self");
+  });
+}; 
 
 function successNoticeOK(){
   firebase.auth().signOut().then(function() {

@@ -13,6 +13,40 @@
     white-space: nowrap;
 }
 
+.question-div{
+    min-width: 350px;
+    width: 100%;
+}
+
+.questioniary-saved{
+    background-color: #008e8e;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 0px;
+    margin-top: auto;
+}
+
+#missed-a-question{
+    display: none;
+    background-color: #a7bdbd;
+    padding: 5px;
+    border-radius: 15px;
+    margin-top: 10px;
+}
+
+#missed-a-question p{
+    margin: 5px;
+    font-size: 18px;
+}
+
+#arrow-div img{
+    height: 15px;
+}
+
 .question-div p{
     font-size: 18px;
 }
