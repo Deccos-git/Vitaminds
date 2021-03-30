@@ -1179,10 +1179,8 @@ function emailLayout(emailAdress, SenderNameClean, titelClean, message, titel, n
         subject: `Je hebt een nieuw coachbericht ontvangen van ${SenderNameClean} in je Coachgroep ${titelClean}`,
         html: `Hallo ${naam}, <br><br>
                 ${SenderNameClean} heeft je een bericht gestuurd in de Coachgroep ${titelClean} : <br><br>
-
-                "${message}"<br><br>
                 
-                Ga naar je <a href="www.vitaminds.nu/Group/${titel}.html">Coachgroep</a> om op het bericht te reageren.<br><br>
+                Ga naar je <a href="www.vitaminds.nu/Group/${titel}.html">Coachgroep</a> om het bericht te lezen en er op te reageren.<br><br>
                 P.s. Om privacyredenen kun je coachgroep alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
         
                 Vriendelijke groet, <br></br>

@@ -167,10 +167,8 @@ function sendChatAsMail(elem){
                         subject: `Je hebt een nieuw chatbericht ontvangen van ${SenderNameClean}`,
                         html: `Hallo ${naamMember}, </br></br>
                                 ${SenderNameClean} heeft je een bericht gestuurd in jullie chat: <br><br>
-
-                                ${message}<br><br>
                                 
-                                Ga naar jullie <a href="www.vitaminds.nu/Chats/${titel}.html">chat</a> om op het bericht te reageren.<br><br>
+                                Ga naar jullie <a href="www.vitaminds.nu/Chats/${titel}.html">chat</a> om het bericht te lezen en er op te reageren.<br><br>
                                 P.s. Om privacyredenen kun je je chat alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
                         
                                 Vriendelijke groet, </br></br>

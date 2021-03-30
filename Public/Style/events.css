@@ -28,6 +28,12 @@
     width: 150px;
 }
 
+#confirmation-message{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
 #upgrade-notice{
     cursor: pointer;
     font-size: 18px;

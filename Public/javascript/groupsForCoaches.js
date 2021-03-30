@@ -12,6 +12,8 @@
     const titel11CGC = titel10CGC.replace('%20',' ')
     const titel12CGC = titel11CGC.split("?fb")
     const titelCGC = titel12CGC[0]
+
+    console.log(titelCGC)
     
     function groupsForCoachesMetaTags(descriptionGroup, titleGroup, bannerGroup){
         const keywords = document.getElementById("meta-keywords")
@@ -1266,10 +1268,8 @@ function emailLayout(emailAdress, SenderNameClean, titelClean, message, titel, n
         subject: `Je hebt een nieuw bericht ontvangen van ${SenderNameClean} in je groep ${titelClean}`,
         html: `Hallo ${naam}, <br><br>
                 ${SenderNameClean} heeft je een bericht gestuurd in de groep ${titelClean} : <br><br>
-
-                "${message}"<br><br>
                 
-                Ga naar je <a href="www.vitaminds.nu/groups-coaches/${titel}.html">groep</a> om op het bericht te reageren.<br><br>
+                Ga naar je <a href="www.vitaminds.nu/groups-coaches/${titel}.html">groep</a> om het bericht te lezen en er op te reageren.<br><br>
                 P.s. Om privacyredenen kun je groep alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
 
                 Vriendelijke groet, <br></br>
