@@ -536,7 +536,9 @@ function saveMessage(roomID){
 
 function shareRoomIDCoachgroup(auth, message){
 
-    db.collection("Coachgroups").where("Room", "==", titelCG).get().then(querySnapshot => {
+    db.collection("Coachgroups")
+    .where("Room", "==", titel)
+    .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
     
             const members = doc.data().Members
@@ -560,7 +562,7 @@ function shareRoomIDCoachgroup(auth, message){
 
 function shareRoomIDGroupForCoaches(auth, message){
 
-    db.collection("GroupsForCoaches").where("Room", "==", titelCG).get().then(querySnapshot => {
+    db.collection("GroupsForCoaches").where("Room", "==", titel).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
     
             const members = doc.data().Members

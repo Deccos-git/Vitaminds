@@ -125,6 +125,15 @@
             window.open(`../groups-coaches/${titleURL}.html`, "_self");
         };
     };
+
+    function openGroupForCoaches(groupsDiv, room){
+
+        groupsDiv.addEventListener("click", () => {
+                                            
+            window.open(`../groups-coaches/${room}.html`, "_self");
+    });
+
+    };
     
     !function dataBaseQueryGroupsCoaches(){
     const DOMgroups = document.getElementById("overview-groups-for-coaches")
@@ -162,10 +171,7 @@
                                     displayGroupsForCoachesTitleInChatsAndGroups()
     
                                     // Open chat
-                                    groupsDiv.addEventListener("click", () => {
-                                            
-                                            updateReadListGroup(doc.id, auth, room, messages)
-                                    });
+                                    
                         
                                     DOMgroups.appendChild(groupsDiv)
                                     groupsDiv.appendChild(photoDiv)
