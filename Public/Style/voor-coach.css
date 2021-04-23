@@ -87,6 +87,7 @@
     margin-top: 30px;
     width: 150px;
     align-self: center;
+    padding: 7px;
 }
 
 #coachtools-text-div{
@@ -100,6 +101,49 @@
     align-items: center;
     background-color: #a7bdbd;
     padding-bottom: 30px;
+}
+
+#reference-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reference-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: 50px;
+    background-color: #a7bdbd26;
+    padding: 100px;
+    border-radius: 8px;
+}
+
+.reference-name{
+    font-weight: bold;
+}
+
+.reference-card img{
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}
+
+#list-of-education{
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 15px;
+}
+
+#list-of-education p{
+    font-size: 18px;
+    margin: 0px 10px 5px 10px;
+}
+
+#list-of-education a{
+    font-size: 14px;
 }
 
 .coachtools-img{
@@ -621,6 +665,11 @@
     text-align: center;
 }
 
+#reference-link{
+    font-size: 16px;
+    font-weight: bold;
+}
+
 #coach-register-form{
     display: none;
     flex-direction: column;
@@ -943,6 +992,10 @@
 
 .coachtool-inner-div {
     margin: 0px 30px;
+}
+
+.reference-card{
+    padding: 30px;
 }
 
 }

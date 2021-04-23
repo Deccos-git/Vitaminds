@@ -12,6 +12,13 @@
     display: none;
 }
 
+.expired-p{
+    display: none;
+    color: red !important;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 #events-outer-div{
     display: flex;
     justify-content: center;
@@ -48,14 +55,6 @@
 .organizer-event-div p {
     font-size: 16px;
     margin-top: 0px;
-}
-
-.date-event {
-    background-color: white;
-    border-radius: 5px;
-    margin: 10px 50px 20px 50px;
-    padding: 10px;
-    font-weight: bold;
 }
 
 #button-event-overview {

@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="Style/style.css">
-    <link rel="stylesheet" href="Style/coaches.css">
+    <link rel="stylesheet" href="Style/one-on-one.css">
     <link rel="shortcut icon" href="images/Favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -133,33 +133,85 @@
     </div>
   </nav>
   
-<h1>Coaches</h1>
-<h2 class="sub-title">Onze coaches staan voor je klaar</h2>
+<h1>Coaching</h1>
+<h2 class="sub-title">Stel je vraag aan onze coaches</h2>
 
-<div id="coaches-filter">
-  <p>Waar ben je in geïntereseerd?</p>
-  <select name="" id="coaches-filter-select" onchange="getDomain(this)">
-    <option value="">Alles</option>
-    <option value="">Gedachten</option>
-    <option value="">Gevoelens en Emoties</option>
-    <option value="">Lichaam en Geest</option>
-    <option value="">Koers bepalen</option>
-    <option value="">Betekenisvol leven</option>
-    <option value="">Opvoeden</option>
-    <option value="">Werk</option>
-    <option value="">Spiritualiteit</option>
-    <option value="">Relaties</option>
-    <option value="">Sociaal</option>
-  </select>
+<div id="explainer-div">
+  <div id="text-div">
+    <p id="top-explainer-text">Ben je opzoek naar een coach die je online kan ondersteunen met je levensvraag en weet je niet waar je moet beginnen?</p>
+    <p>Stel hier je vraag en krijg antwoord van onze coaches. Jij bepaald vervolgens met welke coach je kennis wilt maken.</p> 
+  </div>
+  <div id="image-div">
+    <img src="images/design/one-on-one.png" alt="">
+  </div>
 </div>
 
-<section id="mainCoach">
-  <container id="overview">
-    <!-- <div id="loader">
-      <img src="images/loader.gif" alt="loading" style="width:120px;height:120px;">
-    </div> -->
-  </container> 
-</section>
+<div id="ask-button-div">
+  <button id="ask-button">Stel hier (anoniem) je vraag</button>
+</div>
+
+<div id="steps-walkthru-div">
+  <h3>Hoe het werkt</h3>
+  <ol>
+    <li>
+      Stel anoniem je vraag aan onze coaches
+    </li>
+    <li>
+      Onze coaches geven hun antwoord op jouw vraag
+    </li>
+    <li>
+      Je krijgt een bericht als een van onze coaches op je vraag heeft gereageerd
+    </li>
+    <li>
+      Jij besluit welke coach jou het meeste aanspreekt
+    </li>
+    <li>
+      Start direct een chat met de coach naar keuze om een kennismakingsgesprek te plannen
+    </li>
+  </ol>
+</div>
+
+<div id="coach-counter">
+  <div class="overview-counter" id="overview-of-coaches">
+    <h3 id="amount-of-coaches"></h3>
+    <img src="images/design/coaches-therapists-blue.png" alt="overzicht van vitaminds coaches">
+    <p><a href="coaches.html">Bekijk</a></p>
+  </div>
+</div>
+
+<div id="question-modal">
+  <div id="close-modal-div">
+    <p>X</p>
+  </div>
+  <h2>Stel je vraag</h2>
+
+  <div id="pointers-div">
+    <ul>
+      <li>Wat wil je met de coaching bereiken?</li>
+      <li>Hoe gaat het nu?</li>
+      <li>Wat heb je eventueel al geprobeerd?</li>
+    </ul>
+  </div>
+  
+  <textarea name="" id="question-input" cols="40" rows="10" placeholder="Stel hier je vraag"></textarea>
+  <div id="visitor-notice">
+    <p>Maak eerst een gratis <a href="Register.html"> Vitaminds account</a> aan om een vraag te stellen. Dan weten we naar wie we de antwoorden kunnen sturen :)</p>
+  </div>
+
+  <div id="radio-outer-div">
+    <p>Wil je de vraag anoniem stellen?</p>
+    <div class="route-radio">
+        <input type="radio" id="Yes" name="reminder" value="Anoniem"checked>
+        <label for="Yes">Ja</label>
+    </div>
+    <div class="route-radio">
+        <input type="radio" id="No" name="reminder" value="Openbaar">
+        <label for="No">Nee</label>
+    </div>
+  </div>
+
+  <button id="button-coach-question">Versturen</button>
+</div>
 
 <!-- Toolbar mobile -->
 <div class="toolbar-mobile">
@@ -213,6 +265,6 @@
           <script type="text/javascript" src="javascript/firebase.js"></script>
           <script type="text/javascript" src="javascript/auth.js"></script>
           <script type="text/javascript" src="javascript/index.js"></script>
-          <script type="text/javascript" src="javascript/coaches.js"></script>
+          <script type="text/javascript" src="javascript/one-on-one.js"></script>
 </body>
 </html>

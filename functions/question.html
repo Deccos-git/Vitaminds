@@ -12,12 +12,11 @@
     <meta id="facebook-title" property="og:title"/>
     <meta id="facebook-description" property="og:description"/>
     <meta id="facebook-img" property="og:image">
-    <title id="page-title" property="og:title"></title>
+  <title id="page-title" property="og:title"></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../Style/style.css">
-  <link rel="stylesheet" href="../Style/groups-for-coaches.css">
+  <link rel="stylesheet" href="../Style/coachquestions.css">
   <link rel="stylesheet" href="../Style/voor-coach.css">
-  <link rel="stylesheet" href="../Style/videochat-test.css">
   <link rel="shortcut icon" href="../images/Favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -26,10 +25,6 @@
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
-  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-  <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <script src="https://js.stripe.com/v3/"></script>
   <!-- Tiny MCE -->
   <script src="https://cdn.tiny.cloud/1/az4tq7g8v0tdthloq7dfwn2n3ph3cjf207enr4f3upbubez7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
   <script>
@@ -119,138 +114,32 @@
   </div>
 </nav>
 
-    <div id="group-landing-page">
-      <a id="hide-landing-modal"><img src="../images/close-icon.png" alt="modal afsluiten"></a> 
-      <div id="creator-information-div"></div>
-      <h1 id="group-landing-title"></h1>
-      <div id="banner-div"></div>
-      <p id="group-description"></p>
-      <ul id="group-facts"></ul>
-      <div id="button-div-landing">
-        <button class="button-algemeen" id="button-group-landing">Aanmelden</button>
-      </div>
+<div id="question-outer-div">
+    <div id="question-auth-div">
+        <img id="auth-div-image" alt="">
+        <p id="auth-div-name"></p>
     </div>
-  
-
-  <h1 id="group-title"></h1>
-  <div id="list-of-members">
-    <div id="list-of-members-inner-div"></div>
-  </div>
-  <div id="chat-screen"></div>
-
-  <div id="input-div">
-    <div id="video-div">
-      <img id="video-icon" src="../images/video-icon.png" alt="start een video gesprek">
-      <img id="video-stop-icon" src="../images/stop-video-icon.png" alt="">
-    </div> 
-    <textarea name="" id="chat-input" cols="30" rows="1" placeholder="Nieuw bericht toevoegen"></textarea>
-    <img id="send-icon-group" data-parentid="none" onclick="saveNewMessage(this)" src="../images/send-icon.png" alt="">
-  </div>
-
-  <div id="buttons-room">
-    <div class="button-div">
-      <button class="material-icons btn-circle" id="createBtn">group_add</button>
-      <p>Uitnodiging<br> versturen</p>
+    <div id="question-div">
+        <p id="questionP"></p>
     </div>
-    <div class="button-div">
-      <button class="material-icons btn-circle" id="joinBtn">call</button>
-      <p>Deelnemen<br> aan gesprek</p>
+    <div id="meta-div">
+        <p id="timstampP"></p>
     </div>
-    <div class="button-div">
-      <button class="material-icons hidden btn-circle" id="hangupBtn">call_end</button>
-      <p>Gesprek<br> verlaten</p>
-    </div>
-    <div id="shareButtonDiv" class="button-div">
-      <button class="material-icons hidden btn-circle" id="shareButton">add_ic_call</button>
-      <p>Uitnodiging<br> delen</p>
-    </div>
-  </div>
-  
-  <div>
-      <span id="currentRoom"></span>
-  </div>
-  <div id="videos">
-      <div class="video-box" id="localVideoContainer">
-          <video id="localVideo" muted autoplay playsinline></video>
-      </div>
-  </div>
-  
-  <div id="buttons">
-    <div class="button-div">
-      <button class="material-icons btn-circle" id="muteButton">mic</button>
-      <p>Geluid<br> aan/uit</p>
-    </div>
-    <div class="button-div">
-      <button class="material-icons btn-circle" id="videoButton">videocam</button>
-      <p>Beeld <br> aan/uit</p>
-    </div>
-    <div class="button-div">
-      <button class="material-icons btn-circle hidden" id="screenShareButton">screen_share</button>
-      <p>Scherm<br> delen</p>
-    </div>
-    <div id="localVideoShowDiv" class="button-div">
-      <button class="material-icons btn-circle hidden" id="localVideoShowButton">visibility</button>
-      <p>Eigen video<br> zichtbaar</p>
-    </div>
-    <div id="fullScreenDiv" class="button-div">
-      <button class="material-icons btn-circle" id="appFullscreenButton">fullscreen</button>
-      <p>Volledig<br> scherm</p>
-    </div>
-    <div id="deviceDropdown">
-       <button class="mdc-button" id="cameraOptions"><span class="mdc-button__label">Camera</span</button>
-        <button class="material-icons btn-circle" id="cameraOptions">arrow_drop_up</button>
-        <div class="mdc-menu-surface--anchor">
-            <div class="mdc-menu mdc-menu-surface" tabindex="-1" style="transform-origin: center bottom; left: 0px; bottom: 0px; max-height: 767.781px;">
-                <ul class="mdc-list" role="menu" aria-hidden="true">
-                    <div id="cameras">
-                        <li>Camera</li>
-                        <li class="mdc-list-item mdc-ripple-upgraded" role="menuitem" tabindex="0">Passionfruit</li>
-                    </div>
-                    <li class="mdc-list-divider" role="separator"></li>
-                    <div id="microphones">
-                    <li>Audio</li>
-                    [><li class="mdc-list-item mdc-ripple-upgraded" role="menuitem" tabindex="-1">Pineapple</li><]
-                    </div>
-                </ul>
-            </div>
-        </div>
-    </div> 
-  </div>
-
-
-<div class="mdc-dialog"
-id="room-dialog"
-role="alertdialog"
-aria-modal="true"
-aria-labelledby="my-dialog-title"
-aria-describedby="my-dialog-content">
-<div class="mdc-dialog__container">
-   <div class="mdc-dialog__surface">
-       <h2 class="mdc-dialog__title" id="my-dialog-title">Join room</h2>
-       <div class="mdc-dialog__content" id="my-dialog-content">
-           Voer een code in om deel te nemen:
-           <div class="mdc-text-field">
-               <input type="text" id="room-id" class="mdc-text-field__input">
-               <label class="mdc-floating-label" for="my-text-field"></label>
-               <div class="mdc-line-ripple"></div>
-           </div>
-       </div>
-       <footer class="mdc-dialog__actions">
-           <button type="button" class="mdc-button mdc-dialog__button" data-mdc-dialog-action="no">
-               <span class="mdc-button__label">Annuleren</span>
-           </button>
-           <button id="confirmJoinBtn" type="button" class="mdc-button mdc-dialog__button"
-                                                     data-mdc-dialog-action="yes">
-               <span class="mdc-button__label">Deelnemen</span>
-           </button>
-       </footer>
-   </div>
-</div>
-<div class="mdc-dialog__scrim"></div>
 </div>
 
-<!-- Toolbar mobile -->
-<div class="toolbar-mobile">
+<div id="reaction-button-div">
+    <button id="reaction-button">Schrijf een reactie</button>
+    <div id="reaction-input-div">
+        <p>Hoe zou jij deze persoon ondersteunen?</p>
+        <textarea name="" id="reaction-input" cols="30" rows="10" placeholder="Schrijf hier je reactie"></textarea>
+        <button id="send-reaction">Verzenden</button>
+    </div>
+</div>
+
+<div id="reactions-count"></div>
+
+ <!-- Toolbar mobile -->
+ <div class="toolbar-mobile">
   <div class="toolbar-mobile-inner-div" id="toolbar-community">
     <img src="../images/design/community-icon.png" alt="" id="toolbar-home">
     <p class="description-menu-icons-toolbar-mobile">Community</p>
@@ -265,7 +154,6 @@ aria-describedby="my-dialog-content">
   </div>  
 </div>
 </div>
-
 
 <!-- footer -->
 <footer class="footer">
@@ -300,12 +188,9 @@ aria-describedby="my-dialog-content">
 </footer>
 
       <script type="text/javascript" src="../javascript/firebase.js"></script>
-      <script type="text/javascript" src="../javascript/groupsForCoaches.js"></script>
       <script type="text/javascript" src="../javascript/auth.js"></script>
       <script type="text/javascript" src="../javascript/index.js"></script>
-      <script type="text/javascript" src="../javascript/videochatStyle.js"></script>
-      <script  type="text/javascript"src="../javascript/videochatCodecHandler.js"></script>
-      <script defer type="text/javascript" src="../javascript/videochatApp.js"></script>
+      <script type="text/javascript" src="../javascript/coachquestions.js"></script>
     </body>
   </html>
   

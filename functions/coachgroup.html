@@ -166,13 +166,14 @@
     <div id="list-of-members-inner-div"></div>
   </div>
   <div id="chat-screen"></div>
+  <div id="end-of-screen"></div>
 
   <div id="input-div">
     <div id="video-div">
       <img id="video-icon" src="../images/video-icon.png" alt="start een video gesprek">
     </div> 
     <input id="chat-input" type="text">
-    <img id="send-icon-group" src="../images/send-icon.png" alt="">
+    <img id="send-icon-group" data-parentid="none" onclick="saveNewMessage(this)" src="../images/send-icon.png" alt="">
   </div>
 
   <div id="add-learning-div">

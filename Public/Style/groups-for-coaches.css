@@ -16,6 +16,18 @@
     background-color: white; /* Fallback color */
 }
 
+#more-div {
+    display: flex;
+    justify-content: center;
+    margin-top: -54px;
+    cursor: pointer;
+}
+
+#more-div p {
+    font-size: 14px;
+    color: lightgray !important;
+}
+
 .notice-premium-coaches{
     font-size: 14px !important;
     margin-top: 0px;
@@ -245,6 +257,13 @@
     border-top: 1px solid lightgray;
     width: 100%;
     background-color: #a7bdbd26;
+}
+
+.clicked{
+    align-self: center;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .reaction-inner-div-second-layer{
@@ -489,6 +508,11 @@
 #list-of-members-inner-div{
     display: flex;
     flex-wrap: wrap;
+}
+
+.member-name-p{
+    font-size: 14px;
+    display: none;
 }
 
 #hide-landing-modal{

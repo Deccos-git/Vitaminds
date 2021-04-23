@@ -62,6 +62,52 @@ function getTargetGroupMobile(){
   };
 };
 
+!function requestNewPassword(){
+
+  const requestButton = document.getElementById("new-password")
+  const closeButton = document.getElementById("close-new-password-modal")
+  const passwordModal = document.getElementById("new-password-modal")
+  const buttonNewPasword = document.getElementById("button-new-password")
+
+  openNewPaswordModal(requestButton, passwordModal)
+  closeNewPaswordModal(closeButton, passwordModal)
+
+  if(buttonNewPasword != null){
+
+    buttonNewPasword.addEventListener("click", () => {
+
+      buttonNewPasword.innerText = "Email verstuurd"
+      buttonNewPasword.style.backgroundColor = "#008e8e"
+      buttonNewPasword.style.color = "white"
+
+      const emailInput = document.getElementById("emailNew").value
+
+      firebase.auth().sendPasswordResetEmail(emailInput).then(function() {
+        console.log("email sent")
+      }).catch(function(error) {
+        alert(error)
+      });
+    });  
+  };
+}();
+
+function openNewPaswordModal(requestButton, newPasswordModal){
+  if(requestButton != null){
+    requestButton.addEventListener("click", () => {
+      newPasswordModal.style.display = "flex"
+    });
+  };
+};
+
+function closeNewPaswordModal(closeButton, passwordModal){
+  if(closeButton != null){
+    closeButton.addEventListener("click", () => {
+      passwordModal.style.display = "none"
+    });
+  };
+};
+
+
 function getTargetGroup(){
 
   const selectGroup = document.getElementById("select-targetgroup")
@@ -664,6 +710,9 @@ if(button != null){
       Type: "Plus",
       Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
     })
+    .then(() => {
+      addNewMemberToHuiskamer(cred.user.uid, userName)
+    })
   .then(() => {
     db.collection("Mail").doc().set({
       to: [email],
@@ -698,6 +747,14 @@ Type: "Vitaminders"
 });
   }
 
+function addNewMemberToHuiskamer(cred, userName){
+
+  db.collection("Coachgroups")
+  .doc("4Sxwb5DaZFkM5QqDAu52")
+  .update({
+    Members: firebase.firestore.FieldValue.arrayUnion(cred + userName)
+  });
+};
 
 function registerNoticeOK(){
   firebase.auth().signOut().then(function() {

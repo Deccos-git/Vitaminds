@@ -114,6 +114,7 @@ function digimindMetaTags(coachDescription, coach, profilePic){
                 myProcesOuterDiv[4].style.display = "none"
                 myProcesOuterDiv[5].style.display = "none"
                 myProcesOuterDiv[6].style.display = "none"
+                myProcesOuterDiv[6].style.display = "none"
         });  
 }();
 
@@ -755,6 +756,7 @@ function getSection(){
                 privateOuterDiv[4].style.display = "none"
                 privateOuterDiv[5].style.display = "none"
                 privateOuterDiv[6].style.display = "none"
+                privateOuterDiv[7].style.display = "none"
         } else if (selected === "Favoriete coaches"){
                 privateOuterDiv[0].style.display = "none"
                 privateOuterDiv[1].style.display = "flex"
@@ -763,6 +765,7 @@ function getSection(){
                 privateOuterDiv[4].style.display = "none"
                 privateOuterDiv[5].style.display = "none"
                 privateOuterDiv[6].style.display = "none"
+                privateOuterDiv[7].style.display = "none"
         } else if (selected === "Tools"){
                 privateOuterDiv[0].style.display = "none"
                 privateOuterDiv[1].style.display = "none"
@@ -771,6 +774,7 @@ function getSection(){
                 privateOuterDiv[4].style.display = "none"
                 privateOuterDiv[5].style.display = "none"
                 privateOuterDiv[6].style.display = "none"
+                privateOuterDiv[7].style.display = "none"
         } else if (selected === "Analytics"){
                 privateOuterDiv[0].style.display = "none"
                 privateOuterDiv[1].style.display = "none"
@@ -779,6 +783,7 @@ function getSection(){
                 privateOuterDiv[4].style.display = "none"
                 privateOuterDiv[5].style.display = "none"
                 privateOuterDiv[6].style.display = "none"
+                privateOuterDiv[7].style.display = "none"
         } else if (selected === "Steunreacties"){
                 privateOuterDiv[0].style.display = "none"
                 privateOuterDiv[1].style.display = "none"
@@ -787,6 +792,7 @@ function getSection(){
                 privateOuterDiv[4].style.display = "flex"
                 privateOuterDiv[5].style.display = "none"
                 privateOuterDiv[6].style.display = "none"
+                privateOuterDiv[7].style.display = "none"
         } else if (selected === "Ontwikkeltegoed"){
                 privateOuterDiv[0].style.display = "none"
                 privateOuterDiv[1].style.display = "none"
@@ -795,6 +801,7 @@ function getSection(){
                 privateOuterDiv[4].style.display = "none"
                 privateOuterDiv[5].style.display = "flex"
                 privateOuterDiv[6].style.display = "none"
+                privateOuterDiv[7].style.display = "none"
         } else if (selected === "Mijn profiel"){
                 privateOuterDiv[0].style.display = "none"
                 privateOuterDiv[1].style.display = "none"
@@ -803,6 +810,16 @@ function getSection(){
                 privateOuterDiv[4].style.display = "none"
                 privateOuterDiv[5].style.display = "none"
                 privateOuterDiv[6].style.display = "flex"
+                privateOuterDiv[7].style.display = "none"
+        } else if (selected === "Mijn coachvragen"){
+                privateOuterDiv[0].style.display = "none"
+                privateOuterDiv[1].style.display = "none"
+                privateOuterDiv[2].style.display = "none"
+                privateOuterDiv[3].style.display = "none"
+                privateOuterDiv[4].style.display = "none"
+                privateOuterDiv[5].style.display = "none"
+                privateOuterDiv[6].style.display = "none"
+                privateOuterDiv[7].style.display = "flex"
         }
 };
 
@@ -815,17 +832,18 @@ function getSection(){
 
         const menuItem = menuItemDiv.getElementsByTagName("p")
 
-        menuItemswitch(menuItem, privateSection, 0, 0, 1, 2, 3, 4, 5, 6, 7)
-        menuItemswitch(menuItem, privateSection, 1, 1, 0, 2, 3, 4, 5, 6, 7)
-        menuItemswitch(menuItem, privateSection, 2, 2, 0, 1, 3, 4, 5, 6, 7)
-        menuItemswitch(menuItem, privateSection, 3, 3, 0, 1, 2, 4, 5, 6, 7)
-        menuItemswitch(menuItem, privateSection, 4, 4, 0, 1, 2, 3, 5, 6, 7)
-        menuItemswitch(menuItem, privateSection, 5, 5, 0, 1, 2, 3, 4, 6, 7)
-        menuItemswitch(menuItem, privateSection, 6, 6, 0, 1, 2, 3, 4, 5, 7)
-        menuItemswitch(menuItem, privateSection, 7, 7, 0, 1, 2, 3, 4, 5, 6)
+        menuItemswitch(menuItem, privateSection, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8)
+        menuItemswitch(menuItem, privateSection, 1, 1, 0, 2, 3, 4, 5, 6, 7, 8)
+        menuItemswitch(menuItem, privateSection, 2, 2, 0, 1, 3, 4, 5, 6, 7, 8)
+        menuItemswitch(menuItem, privateSection, 3, 3, 0, 1, 2, 4, 5, 6, 7, 8)
+        menuItemswitch(menuItem, privateSection, 4, 4, 0, 1, 2, 3, 5, 6, 7, 8)
+        menuItemswitch(menuItem, privateSection, 5, 5, 0, 1, 2, 3, 4, 6, 7, 8)
+        menuItemswitch(menuItem, privateSection, 6, 6, 0, 1, 2, 3, 4, 5, 7, 8)
+        menuItemswitch(menuItem, privateSection, 7, 7, 0, 1, 2, 3, 4, 5, 6, 8)
+        menuItemswitch(menuItem, privateSection, 8, 8, 0, 1, 2, 3, 4, 5, 6, 7)
 }();
 
-function menuItemswitch(menuItemCount, privateSectionCount, menu, section, hide1, hide2, hide3, hide4, hide5, hide6, hide7 ){
+function menuItemswitch(menuItemCount, privateSectionCount, menu, section, hide1, hide2, hide3, hide4, hide5, hide6, hide7, hide8 ){
 
         menuItemCount[menu].addEventListener("click", () => {
                 privateSectionCount[section].style.display = "flex"
@@ -836,6 +854,7 @@ function menuItemswitch(menuItemCount, privateSectionCount, menu, section, hide1
                 privateSectionCount[hide5].style.display = "none"
                 privateSectionCount[hide6].style.display = "none"
                 privateSectionCount[hide7].style.display = "none"
+                privateSectionCount[hide8].style.display = "none"
         });
 };
 
@@ -3542,3 +3561,69 @@ function fileName(user, fileNameP){
         });
 };
 
+// Coachquestions
+
+!function newQuestionButton(){
+
+        const button = document.getElementById("new-question-button")
+
+        button.addEventListener("click", () => {
+
+                window.open("../one-on-one.html", "_self");
+
+        });
+}();
+
+!function questionQuery(){
+
+        const questionDOM = document.getElementById("questions-overview")
+
+        db.collection("CoachQuestion")
+        .where("Owner", "==", "Vitaminds")
+        .where("Auth", "==", naam)
+        .get()
+        .then(function(querySnapshot) {
+        querySnapshot.forEach(doc =>  {
+
+                const question = doc.data().Question
+                const timestamp = doc.data().Timestamp
+                const id = doc.data().ID
+
+                createQuestionCard(question, timestamp, questionDOM)
+
+                });
+        });
+}();
+
+function createQuestionCard(question, timestamp, dom){
+
+        const cardDiv = document.createElement("div")
+                cardDiv.setAttribute("class", "question-card-div")
+        const questionP = document.createElement("p")
+        const timestampP = document.createElement("p")
+
+        questionP.innerText = question
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
+
+        dom.appendChild(cardDiv)
+        cardDiv.appendChild(questionP)
+        cardDiv.appendChild(timestampP)
+
+};
+
+function appendAnswers(){
+
+        db.collectionGroup("Reactions")
+        .where("ID", "==", id)
+        .get()
+        .then(function(querySnapshot) {
+        querySnapshot.forEach(doc =>  {
+
+                const reaction = doc.data().Reaction
+                const coach = doc.data().Author
+                const timestamp = doc.data().Timestamp
+
+                });
+        });
+};

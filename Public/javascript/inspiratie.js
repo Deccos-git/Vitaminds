@@ -63,7 +63,9 @@ console.log(titel)
 // Register view count on article load
 window.addEventListener("load", () => {
 
-    db.collection("Articles").where("Title", "==", titel).get().then(querySnapshot => {
+    db.collection("Articles")
+    .where("Title", "==", titel)
+    .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
             db.collection("Articles").doc(doc.id).update({

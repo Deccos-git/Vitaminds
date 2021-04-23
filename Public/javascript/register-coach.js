@@ -102,6 +102,9 @@
       createGelukstegoed(cred.user.uid)
     })
     .then(() => {
+      addNewMemberToHuiskamer(idClean, naam)
+    })
+    .then(() => {
 
       sendConfirmationMail(subscriptionType, email, naam)
 
@@ -133,6 +136,17 @@ function createGelukstegoed(credUserUid){
   });
 };
 
+function addNewMemberToHuiskamer(id, userName){
+
+  console.log(id + userName)
+
+  db.collection("GroupsForCoaches")
+  .doc("SwraRaTYkCAABcdMZrj7")
+  .update({
+    Members: firebase.firestore.FieldValue.arrayUnion(id + userName)
+  });
+};
+
 function sendConfirmationMail(subscriptionType, email, naam){
 
   if(subscriptionType === "Premium"){
@@ -151,7 +165,7 @@ function sendConfirmationMail(subscriptionType, email, naam){
             Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.<br><br>
             Vriendelijke groet, </br></br>
             Het Vitaminds Team </br></br>
-            <img src="https://vitaminds.nu/images/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
+            <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
         Gebruikersnaam: naam,
         Emailadres: email,
         Type: "Coach"
@@ -171,7 +185,7 @@ function sendConfirmationMail(subscriptionType, email, naam){
           Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.<br><br>
           Vriendelijke groet, </br></br>
           Het Vitaminds Team </br></br>
-          <img src="https://vitaminds.nu/images/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
+          <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
       Gebruikersnaam: naam,
       Emailadres: email,
       Type: "Coach"
@@ -230,7 +244,7 @@ function linkToDigimind(elem, auth){
 
 function successNoticeOK(){
   firebase.auth().signOut().then(function() {
-    window.location.href = "/index.html"
+    window.location.href = "/voor-coaches.html"
   }).catch(function(error) {
     console.log(error)
   })

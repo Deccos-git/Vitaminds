@@ -504,7 +504,66 @@ function scrollToSummaryItem(summaryTitle, h2Title){
             setMetaAttributesArticle(keywords, headerImage)
         });
     })
+    .then(() => {
+        // entrepreneurTest()
+    });
 }();
+
+function entrepreneurTest(){
+
+    const testDiv = document.getElementById("entrepreneur-test")
+
+    const rowDiv = document.createElement("div")
+    const rowDivOne = document.createElement("div")
+    const instructionDiv = document.createElement("div")
+    const questionOneDiv = document.createElement("div")
+        questionOneDiv.setAttribute("class", "row-div")
+
+    instructionDiv.innerHTML =  
+    `<div class="row-div">
+        <div class="question-div">
+            <p><b>In hoeverre kun jij:</b></p>
+        </div>
+        <div class="scoring-div">
+        <div class="scoring-item"><p>nee</p></div>
+        <div class="scoring-item"><p>soms</p></div>
+        <div class="scoring-item"><p>regelmatig</p></div>
+        <div class="scoring-item"><p>vaak</p></div>
+        <div class="scoring-item"><p>heel vaak of voortdurend</p></div>
+        </div>
+    </div>`
+
+    questionOneDiv.innerHTML =
+    ` <div class="question-div">
+            <p>1. Kun je goed communiceren?</p>
+        </div>
+        <div class="scoring-div">
+        <div class="scoring-item scoring-input">
+            <input name="4DKL-score-item1" type="radio" id="1-1">
+        </div>
+        <div class="scoring-item scoring-input">
+            <input name="4DKL-score-item1" type="radio" id="1-2">
+        </div>
+        <div class="scoring-item scoring-input">
+            <input name="4DKL-score-item1" type="radio" id="1-3">
+        </div>
+        <div class="scoring-item scoring-input">
+            <input name="4DKL-score-item1" type="radio" id="1-4">
+        </div>
+        <div class="scoring-item scoring-input">
+            <input name="4DKL-score-item1" type="radio" id="1-5">
+        </div>
+      </div>`
+   
+
+    testDiv.appendChild(rowDiv)
+    rowDiv.appendChild(instructionDiv)
+    testDiv.appendChild(questionOneDiv)
+
+
+
+
+};
 
 // Follow coach
 

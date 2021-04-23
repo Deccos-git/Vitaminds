@@ -1,3 +1,23 @@
+function titleOfChatRoom(){
+    const titelhtmlCG = window.location.href.replace(/^.*[\\\/]/, '')
+    const titel1CG = titelhtmlCG.replace('.html', '')
+    const titel2CG = titel1CG.replace('%20',' ')
+    const titel3CG = titel2CG.replace('%20',' ')
+    const titel4CG = titel3CG.replace('%20',' ')
+    const titel5CG = titel4CG.replace('%20',' ')
+    const titel6CG = titel5CG.replace('%20',' ')
+    const titel7CG = titel6CG.replace('%20',' ')
+    const titel8CG = titel7CG.replace('%20',' ')
+    const titel9CG = titel8CG.replace('%20',' ')
+    const titel10CG = titel9CG.replace('%20',' ')
+    const titel11CG = titel10CG.replace('%20',' ')
+    const titel12CG = titel11CG.split("?fb")
+    const title = titel12CG[0]
+    
+    return title
+    
+    };
+
 !function videoConferenceInit(){
 const menu = new mdc.menu.MDCMenu(document.querySelector('.mdc-menu'));
 let db = null;
@@ -534,10 +554,20 @@ function saveMessage(roomID){
     });
 };
 
+function newID(){
+
+    const id = Math.random()
+    const idAlpha = id.toString(36)
+    const idClean = idAlpha.replace("0.", "")
+
+    return idClean
+
+};
+
 function shareRoomIDCoachgroup(auth, message){
 
     db.collection("Coachgroups")
-    .where("Room", "==", titel)
+    .where("Room", "==", titleOfChatRoom())
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
     
@@ -547,10 +577,14 @@ function shareRoomIDCoachgroup(auth, message){
             Auth: auth,
             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
             Message: message,
-            Room: roomName,
+            Room: titleOfChatRoom(),
             Members: members,
             Read: [],
-            Status: "New"
+            ParentID: "none",
+            Status: "New",
+            Type: "Message",
+            ID: newID(),
+            Thread: [newID()]
             }).then(() => {
                 db.collection("Coachgroups").doc(doc.id).update({
                     Messages: firebase.firestore.FieldValue.increment(1)
@@ -562,7 +596,7 @@ function shareRoomIDCoachgroup(auth, message){
 
 function shareRoomIDGroupForCoaches(auth, message){
 
-    db.collection("GroupsForCoaches").where("Room", "==", titel).get().then(querySnapshot => {
+    db.collection("GroupsForCoaches").where("Room", "==", titleOfChatRoom()).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
     
             const members = doc.data().Members
@@ -571,10 +605,14 @@ function shareRoomIDGroupForCoaches(auth, message){
             Auth: auth,
             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
             Message: message,
-            Room: roomName,
+            Room: titleOfChatRoom(),
             Members: members,
             Read: [],
-            Status: "New"
+            ParentID: "none",
+            Status: "New",
+            Type: "Message",
+            ID: newID(),
+            Thread: [newID()]
             }).then(() => {
                 db.collection("GroupsForCoaches").doc(doc.id).update({
                     Messages: firebase.firestore.FieldValue.increment(1)
@@ -586,14 +624,12 @@ function shareRoomIDGroupForCoaches(auth, message){
 
 function shareRoomIDChat(auth, message){
 
-    const roomName = auth<titel ? auth+'_'+titel : titel+'_'+auth;
+    const roomName = auth<titleOfChatRoom() ? auth+'_'+titleOfChatRoom() : titleOfChatRoom()+'_'+auth;
 
     db.collection("Chats").where("Room", "==", roomName).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
     
             const members = doc.data().Members
-
-            console.log(members)
     
         db.collection("Chats").doc(doc.id).collection("Messages").doc().set({
             Auth: auth,

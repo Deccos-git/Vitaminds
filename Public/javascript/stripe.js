@@ -93,7 +93,9 @@ auth.onAuthStateChanged(User =>{
           };
       });
   }).then(() => {
-      db.collection("Workshops").where("WorkshopTitle", "==", titel).get().then(querySnapshot => {
+      db.collection("Workshops")
+      .where("WorkshopTitle", "==", titel)
+      .get().then(querySnapshot => {
           querySnapshot.forEach(doc1 => {
 
               const price = doc1.data().Price
@@ -148,8 +150,6 @@ auth.onAuthStateChanged(User =>{
     buttonWorkshopLandingStripe.style.display = "none"
   };
 });  
-
-
 }; 
 
 function arrayOfWorkshopTakers(){
@@ -182,6 +182,11 @@ function arrayOfWorkshopTakers(){
               db.collection("Vitaminders").where("Gebruikersnaam", "==", coach).get()
               .then(querySnapshot => {
                 querySnapshot.forEach(doc1 => {
+
+                        const email = doc1.data().Email
+                        const nameClean = doc1.data().GebruikersnaamClean
+
+                        sendMailToCoach(coach, email, nameClean)
 
                         const netPrice = price/100*90 
                         const vitamindsPrice = price/100*10
@@ -228,6 +233,28 @@ function arrayOfWorkshopTakers(){
           });
       });
   });
+};
+
+function sendMailToCoach(naam, email, naamClean){
+
+  console.log(email)
+
+  db.collection("Mail").doc().set({
+    to: email,
+    cc: "info@vitaminds.nu",
+    message: {
+    subject: `Je workshop is aangeschaft.`,
+    html: `Hallo ${naamClean}, </br></br>
+        Iemand heeft je workshop '${titel}' aangeschaft op Vitaminds. <br><br>
+
+        Vriendelijke groet, </br></br>
+        Het Vitaminds Team </br></br>
+        <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
+    Gebruikersnaam: naam,
+    Emailadres: email,
+    Type: "New coachgroep member"
+    }        
+}) 
 };
 
 // Button query
@@ -549,9 +576,6 @@ if(buyCoachgroupButton != null){
       reduceGelukstegoedCoachgroup()
   });
 };
-
-
-
 
 // Create an instance of the Stripe object with your publishable API key
 const stripe = Stripe('pk_live_I3InkDUaGFoq17tXjFhE5LdG00PUsoxMPY');

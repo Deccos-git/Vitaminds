@@ -251,6 +251,7 @@ saveNewEventButton.addEventListener("click", () => {
         Price: priceEvent.value,
         Location: locationEvent.value,
         Online: option,
+        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
         Banner: eventBanner,
         Type: "customerEvent",
         Owner: "Vitaminds"
@@ -264,8 +265,9 @@ saveNewEventButton.addEventListener("click", () => {
 
 const eventsOverview = document.getElementById("events-overview")
 
-db.collection("Events").where("Owner", "==", "Vitaminds")
-.orderBy("Date", "desc")
+db.collection("Events")
+.where("Owner", "==", "Vitaminds")
+.orderBy("Timestamp", "asc")
 .get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 

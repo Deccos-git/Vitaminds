@@ -1271,7 +1271,7 @@ function displayNextStap(button, nextStepTitle, nextStepDiv, closing){
     button.addEventListener("click", () => {
 
         console.log(nextStepTitle)
-        if(nextStepTitle != ""){
+        if(nextStepTitle != "" && nextStepTitle != undefined){
             nextStepDiv.style.display = "flex"
         } else {
             closing.style.display = "flex"
@@ -1415,7 +1415,9 @@ function saveAndCloseWorkshop(titel){
 
 function stepCTATitle(stepCTATitleDOM, stepCTATitleDB){
 
-    if(stepCTATitleDB != undefined){
+    if(stepCTATitleDB != undefined || stepCTATitleDB != null){
+
+        console.log(stepCTATitleDOM)
 
     stepCTATitleDOM.innerHTML = stepCTATitleDB
 
@@ -1447,6 +1449,7 @@ function stepCTATitle(stepCTATitleDOM, stepCTATitleDB){
             const stepSevenTitle = doc.data().StepSevenTitle
             const stepEightTitle = doc.data().StepEightTitle
             const stepNineTitle = doc.data().StepNineTitle
+            const stepTenTitle = doc.data().StepTenTitle
             const stepOneExplainer = doc.data().StepOneExplainer
             const stepTwoExplainer = doc.data().StepTwoExplainer
             const stepThreeExplainer = doc.data().StepThreeExplainer
@@ -1493,6 +1496,7 @@ function stepCTATitle(stepCTATitleDOM, stepCTATitleDB){
             const buttonSeven = document.getElementById("step-seven-button")
             const buttonEight = document.getElementById("step-eight-button")
             const buttonNine = document.getElementById("step-nine-button")
+            const buttonTen = document.getElementById("step-ten-button")
 
             const stepOneDiv = document.getElementById("step-one-div")
             const stepTwoDiv = document.getElementById("step-two-div")
@@ -1503,6 +1507,7 @@ function stepCTATitle(stepCTATitleDOM, stepCTATitleDB){
             const stepSevenDiv = document.getElementById("step-seven-div")
             const stepEightDiv = document.getElementById("step-eight-div")
             const stepNineDiv = document.getElementById("step-nine-div")
+            const stepTenDiv = document.getElementById("step-ten-div")
 
             const stepOneTitleDOM = document.getElementById("step-one-title")
             const stepTwoTitleDOM = document.getElementById("step-two-title")
@@ -1561,7 +1566,7 @@ function stepCTATitle(stepCTATitleDOM, stepCTATitleDB){
             const stepFiveCTATitle = document.getElementById("step-five-CTA-title")
             const stepSixCTATitle = document.getElementById("step-six-CTA-title")
             const stepSevenCTATitle = document.getElementById("step-seven-CTA-title")
-            const stepEightCTATitle = document.getElementById("step-eight-CTA-title")
+            const stepEightCTATitle = document.getElementById("step-eigth-CTA-title")
             const stepNineCTATitle = document.getElementById("step-nine-CTA-title")
 
             workshopDomainInStartNewRoute.innerText = workshopDomain
@@ -1591,6 +1596,7 @@ function stepCTATitle(stepCTATitleDOM, stepCTATitleDB){
             displayNextStap(buttonSeven, stepSevenTitle, stepSevenDiv, closingSix)
             displayNextStap(buttonEight, stepEightTitle, stepEightDiv, closingSeven)
             displayNextStap(buttonNine, stepNineTitle, stepNineDiv, closingEight)
+            displayNextStap(buttonTen, stepTenTitle, stepTenDiv, closingNine)
             stepTitle(stepOneTitleDOM, stepOneTitle)
             stepTitle(stepTwoTitleDOM, stepTwoTitle)
             stepTitle(stepThreeTitleDOM, stepThreeTitle)

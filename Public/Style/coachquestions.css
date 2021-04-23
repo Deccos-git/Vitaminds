@@ -1,0 +1,114 @@
+#question-overview{
+    display: flex;
+    justify-content: center;
+    background-color: #a7bdbd26;
+}
+
+.card-div{
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: auto;
+    margin: 30px 10px 20px 10px;
+    padding: 20px;
+    align-items: center;
+    border-radius: 15px;
+    background-color: #FFF;
+}
+
+.card-div img{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.question-timestamp{
+    font-size: 16px;
+}
+
+.card-div button{
+    background-color: white;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #008e8e;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+#question-div{
+    margin: 50px 50px 0px 50px;
+    background-color: #a7bdbd26;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+#question-outer-div{
+    margin: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+#question-auth-div img {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+}
+
+#reaction-button-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#reaction-input-div{
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+#reaction-button{
+    padding: 10px;
+    background-color: #122B46;
+    border-radius: 20px;
+    border: 0px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    margin: 50px;
+    width: auto;
+    align-self: center;
+    box-shadow: 0 5px 9px 0 rgb(0 0 0 / 20%), 0 7px 21px 0 rgb(0 0 0 / 19%);
+}
+
+#send-reaction{
+    background-color: white;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #008e8e;
+    cursor: pointer;
+    margin: 30px;
+}
+
+#button-clicked{
+    background-color: #008e8e;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    margin: 30px;
+}
+
+#reaction-input-div p{
+    font-weight: bold;
+}

@@ -273,11 +273,35 @@
     color: #49beb7;
 }
 
+#input-div-reaction {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-left: 10px;
+}
+
+#input-div-reaction img {
+    width: 20px;
+    height: 20px;
+    margin-left: 5px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.social-div {
+    display: none;
+}
+
+#input-div-reaction textarea {
+    width: 90%;
+}
+
 #chat-screen{
     min-height: 350px;
     border-top: 1px solid rgba(0,0,0,.2);
     display: flex;
     flex-direction: column;
+    align-items: center;
     padding: 20px 0px;
     background-color: #a7bdbd;
 }
@@ -293,12 +317,26 @@
 #list-of-members{
     display: flex;
     flex-direction: column;
-    align-items: center;
     border-top: 1px solid rgba(0,0,0,.2);
 }
 
-#list-of-members-inner-div{
+.clicked{
+    align-self: center;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#more-div{
     display: flex;
+    justify-content: center;
+    margin-top: -54px;
+    cursor: pointer;
+}
+
+#more-div p{
+    font-size: 14px;
+    color: lightgray !important;
 }
 
 .bottom-div{
@@ -344,14 +382,46 @@
     border: 1px solid rgba(0,0,0,.2);
     padding: 10px;
     border-radius: 15px;
-    margin: 5px 6px;
-    max-width: 50%;
+    margin: 15px 6px;
+    width: 90%;
     background-color: white;
     box-shadow: 0 5px 9px 0 rgb(0 0 0 / 20%), 0 7px 21px 0 rgb(0 0 0 / 19%);
 }
 
 .auth-message-p{
+    font-size: 18px;
+}
+
+.reaction-div {
+    margin: 10px 0px 5px 5%;
+    background-color: #a7bdbd26;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.reaction-sender {
     font-size: 16px;
+    font-weight: 400 !important;
+    margin-top: -5px;
+}
+
+.message-timestamp {
+    font-size: 14px;
+}
+
+.reaction-p {
+    font-size: 16px;
+    margin: 5px;
+}
+
+.load-reactions {
+    align-self: center;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 .groups-div{

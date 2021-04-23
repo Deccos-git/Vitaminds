@@ -705,6 +705,36 @@
     background-color: #a7bdbd; /* Fallback color */
 }
 
+#entrepreneur-test{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px 0px 10px 0px;
+    background-color: #a7bdbd26;
+    padding: 10px;
+    overflow: auto;
+    white-space: nowrap;
+    width: 110%;
+}
+
+.question-div {
+    width: 100%;
+}
+
+.scoring-div {
+    display: flex;
+    margin-left: 20px;
+}
+
+.row-div {
+    display: flex;
+    width: 100%;
+}
+
+.scoring-item {
+    width: 130px;
+}
+
 #no-goal-meassage{
     cursor: pointer;
     font-weight: bold;

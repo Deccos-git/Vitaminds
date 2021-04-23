@@ -1,10 +1,11 @@
+    function titleOfRoom(){
     const titelhtmlCGC = window.location.href.replace(/^.*[\\\/]/, '')
     const titel1CGC = titelhtmlCGC.replace('.html', '')
     const titel2CGC = titel1CGC.replace('%20',' ')
     const titel3CGC = titel2CGC.replace('%20',' ')
     const titel4CGC = titel3CGC.replace('%20',' ')
     const titel5CGC = titel4CGC.replace('%20',' ')
-    const titel6CGC = titel4CGC.replace('%20',' ')
+    const titel6CGC = titel5CGC.replace('%20',' ')
     const titel7CGC = titel6CGC.replace('%20',' ')
     const titel8CGC = titel7CGC.replace('%20',' ')
     const titel9CGC = titel8CGC.replace('%20',' ')
@@ -13,7 +14,8 @@
     const titel12CGC = titel11CGC.split("?fb")
     const titelCGC = titel12CGC[0]
 
-    console.log(titelCGC)
+    return titelCGC
+    };
     
     function groupsForCoachesMetaTags(descriptionGroup, titleGroup, bannerGroup){
         const keywords = document.getElementById("meta-keywords")
@@ -35,158 +37,192 @@
         facebookImage.content = bannerGroup
         };
     };
-    
-    // GroupsForCoaches in Chats&Groups
-    
-    function setNameOfGroup(groupsP, roomClean){
-        groupsP.innerText = roomClean
-      };
-    
-    function setImageGroup(photoImg){
-        photoImg.src = "/images/groups-icon.jpg"
-    };
 
-    function displayGroupsForCoachesTitleInChatsAndGroups(){
+  // GroupsForCoaches in Chats&Groups
+    
+  function setNameOfGroup(groupsP, roomClean){
+    groupsP.innerText = roomClean
+  };
 
-        const title = document.getElementById("overview-groups-for-coaches-title")
+function setImageGroup(photoImg){
+    photoImg.src = "/images/groups-icon.jpg"
+};
 
-        title.innerText = "Groepen voor coaches"
-    };
-    
-    function newMessageInOverviewGroupCoach(docID, groupsDivDOM, auth){
-    
-        const newMessageCount = []
-    
-        const newMessagesP = document.createElement("p")
-        newMessagesP.setAttribute("class", "new-message-count-chats")
-    
-        db.collection("GroupsForCoaches").doc(docID) 
-        .collection("Messages")
-        .where("Status", "==", "New")
-        .get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
-    
-                const read = doc.data().Read
-    
-                if(!read.includes(auth)){
+function displayGroupsForCoachesTitleInChatsAndGroups(){
+
+    const title = document.getElementById("overview-groups-for-coaches-title")
+
+    title.innerText = "Groepen voor coaches"
+};
+
+function newMessageInOverviewGroupCoach(docID, groupsDivDOM, auth){
+
+    const newMessageCount = []
+
+    const newMessagesP = document.createElement("p")
+    newMessagesP.setAttribute("class", "new-message-count-chats")
+
+    db.collection("GroupsForCoaches").doc(docID) 
+    .collection("Messages")
+    .where("Status", "==", "New")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const read = doc.data().Read
+
+            if(!read.includes(auth)){
+       
+            newMessageCount.push(doc)
+
+            };
            
-                newMessageCount.push(doc)
-    
-                };
-               
-                newMessagesP.innerText = newMessageCount.length
-    
-            })
-        }).then(() => {
-    
-                groupsDivDOM.appendChild(newMessagesP)
-    
-                if(newMessageCount.length === 0){
-                    newMessagesP.style.display = "none"
-                }
-    
-        });
-    };
-    
-    function updateReadListGroup(docID, authName, titleURL, messages){
-    
-        if(messages != 0){
-            db.collection("GroupsForCoaches")
-            .doc(docID)
-            .collection("Messages")
-            .where("Members", "array-contains", authName)
-            .get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
-    
-                    const read = doc1.data().Read
-    
-                    if(!read.includes(authName)){
-                        db.collection("GroupsForCoaches")
-                        .doc(docID)
-                        .collection("Messages")
-                        .doc(doc1.id)
-                        .update({
-                            Read: firebase.firestore.FieldValue.arrayUnion(authName)
-                        })
-                        .then(() => {
-                            console.log("Readlist geupdate met auth")
-                            window.open(`../groups-coaches/${titleURL}.html`, "_self");
-                        });
-                    } else {
-                        console.log("Auth is already on readlist")
-                        setTimeout(() => {
-                            window.open(`../groups-coaches/${titleURL}.html`, "_self");
-                         }, 1000);
-                    };
-                });
-            });
-        }else{
-            console.log("Geen berichten uberhaubt")
-            window.open(`../groups-coaches/${titleURL}.html`, "_self");
-        };
-    };
+            newMessagesP.innerText = newMessageCount.length
 
-    function openGroupForCoaches(groupsDiv, room){
+        })
+    }).then(() => {
 
-        groupsDiv.addEventListener("click", () => {
-                                            
-            window.open(`../groups-coaches/${room}.html`, "_self");
+            groupsDivDOM.appendChild(newMessagesP)
+
+            if(newMessageCount.length === 0){
+                newMessagesP.style.display = "none"
+            }
+
     });
+};
 
+// !function updateMessagesWithMembers(){
+
+//     db.collection("GroupsForCoaches")
+//     .where("Type", "==", "GroupsForCoaches")
+//     .get().then(querySnapshot => {
+//         querySnapshot.forEach(doc => {
+
+//             const room = doc.data().Room
+//             const members = doc.data().Members
+
+//             db.collectionGroup("Messages")
+//             .where("Room", "==", room)
+//             .get().then(querySnapshot => {
+//                 querySnapshot.forEach(doc1 => {
+
+//                     db.collection("GroupsForCoaches")
+//                     .doc(doc.id)
+//                     .collection("Messages")
+//                     .doc(doc1.id)
+//                     .update({
+//                         Members: members
+//                     });
+//                 });
+//             });
+//         });
+//     });
+// }();
+
+function updateReadListGroup(docID, authName, titleURL, messages){
+
+    const arrayOfID = []
+
+    if(messages != 0){
+        db.collection("GroupsForCoaches")
+        .doc(docID)
+        .collection("Messages")
+        .where("Members", "array-contains", authName)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc1 => {
+
+                const read = doc1.data().Read
+                const id = doc1.data().ID
+
+                console.log(id)
+
+                arrayOfID.push(id)
+
+                if(!read.includes(authName)){
+                    db.collection("GroupsForCoaches")
+                    .doc(docID)
+                    .collection("Messages")
+                    .doc(doc1.id)
+                    .update({
+                        Read: firebase.firestore.FieldValue.arrayUnion(authName)
+                    })
+                    .then(() => {
+                        localStorage.setItem("IDs", arrayOfID)
+                    })
+                    .then(() => {
+                        console.log("Readlist geupdate met auth")
+                        window.open(`../groups-coaches/${titleURL}.html`, "_self");
+                    });
+                } else {
+                    console.log("Auth is already on readlist")
+                    setTimeout(() => {
+                        window.open(`../groups-coaches/${titleURL}.html`, "_self");
+                     }, 1000);
+                };
+            });
+        });
+    }else{
+        console.log("Geen berichten uberhaubt")
+        window.open(`../groups-coaches/${titleURL}.html`, "_self");
     };
-    
-    !function dataBaseQueryGroupsCoaches(){
-    const DOMgroups = document.getElementById("overview-groups-for-coaches")
-    
-    if (DOMgroups != null){
-    
-    auth.onAuthStateChanged(User =>{
-        if(User){
-            const userRef = db.collection("Vitaminders").doc(User.uid);
-            userRef.get().then(function(doc) {
-    
-            const auth = doc.data().Gebruikersnaam
-    
-                db.collection("GroupsForCoaches")
-                .where("Members", "array-contains", auth)
-                .get().then(querySnapshot => {
-                    querySnapshot.forEach(doc => {
-    
-                        const roomClean = doc.data().RoomClean
-                        const room = doc.data().Room
-                        const messages = doc.data().Messages
-    
-                        const groupsDiv = document.createElement("div")
-                            groupsDiv.setAttribute("class", "groups-div")
-                        const groupsP = document.createElement("p")
-                        const photoDiv = document.createElement("div")
-                            photoDiv.setAttribute("class", "photo-div")
-                        const photoImg = document.createElement("img")
-                        const groupType = document.createElement("p")
-                            groupType.setAttribute("class", "grouptype-description")    
-    
-                                    newMessageInOverviewGroupCoach(doc.id, groupsDiv, auth)
-                                    setNameOfGroup(groupsP, roomClean);
-                                    setImageGroup(photoImg)
-                                    displayGroupsForCoachesTitleInChatsAndGroups()
-    
-                                    // Open chat
-                                    
-                        
-                                    DOMgroups.appendChild(groupsDiv)
-                                    groupsDiv.appendChild(photoDiv)
-                                    photoDiv.appendChild(photoImg)
-                                    photoDiv.appendChild(groupType)
-                                    groupsDiv.appendChild(groupsP)
-                
-                            });
+};
+
+function openGroupForCoaches(groupsDiv, docID, authName, titleURL, messages){
+
+    groupsDiv.addEventListener("click", () => {
+                                        
+        updateReadListGroup(docID, authName, titleURL, messages)
+    });
+};
+
+!function dataBaseQueryGroupsCoaches(){
+const DOMgroups = document.getElementById("overview-groups-for-coaches")
+
+if (DOMgroups != null){
+
+auth.onAuthStateChanged(User =>{
+    if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+
+        const auth = doc.data().Gebruikersnaam
+
+            db.collection("GroupsForCoaches")
+            .where("Members", "array-contains", auth)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                    const roomClean = doc.data().RoomClean
+                    const room = doc.data().Room
+                    const messages = doc.data().Messages
+
+                    const groupsDiv = document.createElement("div")
+                        groupsDiv.setAttribute("class", "groups-div")
+                    const groupsP = document.createElement("p")
+                    const photoDiv = document.createElement("div")
+                        photoDiv.setAttribute("class", "photo-div")
+                    const photoImg = document.createElement("img")
+                    const groupType = document.createElement("p")
+                        groupType.setAttribute("class", "grouptype-description")    
+
+                                newMessageInOverviewGroupCoach(doc.id, groupsDiv, auth)
+                                setNameOfGroup(groupsP, roomClean);
+                                setImageGroup(photoImg)
+                                displayGroupsForCoachesTitleInChatsAndGroups()
+                                openGroupForCoaches(groupsDiv, doc.id, auth, room, messages)
+
+                                DOMgroups.appendChild(groupsDiv)
+                                groupsDiv.appendChild(photoDiv)
+                                photoDiv.appendChild(photoImg)
+                                photoDiv.appendChild(groupType)
+                                groupsDiv.appendChild(groupsP)
+            
                         });
                     });
-                };
-            });
-        };
-    }();
-    
+                });
+            };
+        });
+    };
+}();
     
     // Overviewpage
 
@@ -610,7 +646,7 @@
             tinyMCEDiv.style.display = "flex"
             dom.style.display = "none"
     
-            db.collection("GroupsForCoaches").where("Room", "==", titelCGC)
+            db.collection("GroupsForCoaches").where("Room", "==", titleOfRoom())
             .get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
     
@@ -658,7 +694,7 @@
                 button.innerText = "Opgeslagen"
                 button.id = "Clicked"
     
-                db.collection("GroupsforCoaches").where("Room", "==", titelCGC)
+                db.collection("GroupsforCoaches").where("Room", "==", titleOfRoom())
                 .get().then(querySnapshot => {
                     querySnapshot.forEach(doc => {
     
@@ -700,6 +736,27 @@
                         Members: firebase.firestore.FieldValue.arrayUnion(userName)
                     })
                     .then(() => {
+
+                        db.collection("GroupsForCoaches")
+                        .doc(docid)
+                        .collection("Messages")
+                        .where("Room", "==", titleOfRoom())
+                        .get()
+                        .then(querySnapshot => {
+                          querySnapshot.forEach(doc1 => {
+
+                            console.log("test")
+                
+                            db.collection("GroupsForCoaches").doc(docid)
+                            .collection("Messages").doc(doc1.id)
+                            .update({
+                              Members: firebase.firestore.FieldValue.arrayUnion(userName)
+                            });
+                          });
+                        });
+
+                      })
+                    .then(() => {
                         buttonGroupLandingCoach.innerText = "Aangemeld"
                         buttonGroupLandingCoach.setAttribute("class", "button-group-for-coaches-purchase")
                         groupLandingPageOuterDivCoach.style.display = "none"
@@ -711,7 +768,7 @@
     
     !function fillLandingWithGroupData(){
         db.collection("GroupsForCoaches")
-        .where("Room", "==", titelCGC)
+        .where("Room", "==", titleOfRoom())
         .get()
         .then(querySnapshot => {
             querySnapshot.forEach(doc1 => {
@@ -751,74 +808,135 @@
     
     // Coachgroup individual page
     
-        // Title
+    function showMemberNameOnHover(memberPhoto, nameP){
+        
+        memberPhoto.addEventListener("mouseover", () => {
+            nameP.style.display = "block"
+
+        });
+    };
+
+    function showMemberPhoto(photo, memberPhoto){
+
+        if(photo == undefined){
+            memberPhoto.src = "https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/dummy-profile-photo.jpeg?alt=media&token=229cf7eb-b7df-4815-9b33-ebcdc614bd25"
+        } else {
+            memberPhoto.src = photo
+        };    
+
+    };
     
+    function roomTitle(roomClean, room){
         const DOMtitleCoach = document.getElementById("group-title")
     
         if(DOMtitleCoach != null){
-    
-            db.collection("GroupsForCoaches")
-            .where("Room", "==", titelCGC)
-            .get().then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-    
-                    const roomClean = doc.data().RoomClean
-                    const room = doc.data().Room
-    
-                    if(roomClean == undefined){
-                        DOMtitleCoach.innerText = room
-                    } else {
-                        DOMtitleCoach.innerText = roomClean
-                    }
-        
-                });
-            });
-        }
+
+            if(roomClean == undefined){
+                DOMtitleCoach.innerText = room
+            } else {
+                DOMtitleCoach.innerText = roomClean
+            };
+        };
+    };
+
+    function linkToAccountFromMemberPhoto(memberPhoto, member){
+
+        memberPhoto.addEventListener("click", () => {
+
+            window.open("../Vitaminders/" + member, "_self");
+
+        });
+    };
     
         const DOMchatScreenCoach = document.getElementById("chat-screen")
+
     
-        // Display members 
+!function displayMembersOfgroup(){
     
-        const listOfMembersCoach = document.getElementById("list-of-members-inner-div")
-    
-        const roomNameCoach = titelCGC
-    
-    db.collection("GroupsForCoaches").where("Room", "==", roomNameCoach).get().then(querySnapshot => {
+    const listOfMembersCoach = document.getElementById("list-of-members-inner-div")
+    const membersDiv = document.getElementById("list-of-members")
+
+    const roomNameCoach = titleOfRoom()
+
+    db.collection("GroupsForCoaches")
+    .where("Room", "==", roomNameCoach)
+    .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
-    
-                const members = doc.data().Members
-    
-                members.forEach(member => {
-    
-                db.collection("Vitaminders").where("Gebruikersnaam", "==", member).get().then(querySnapshot => {
-            querySnapshot.forEach(doc1 => {
-    
-                    const gebruikersnaamClean = doc1.data().GebruikersnaamClean
-                    const photo = doc1.data().Profielfoto
-    
-                    const memberPhoto = document.createElement("img")
-                        memberPhoto.setAttribute("class", "group-member-photo")
-    
-                    
-                        if(photo == undefined){
-                            memberPhoto.src = "https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/dummy-profile-photo.jpeg?alt=media&token=229cf7eb-b7df-4815-9b33-ebcdc614bd25"
-                        } else {
-                            memberPhoto.src = photo
-                        }    
-    
-                    memberPhoto.addEventListener("click", () => {
-    
-                        window.open("../Vitaminders/" + member, "_self");
-    
-                    });
-    
-                    listOfMembersCoach.appendChild(memberPhoto)
-    
-                        });
+
+            const members = doc.data().Members
+            const roomClean = doc.data().RoomClean
+            const room = doc.data().Room
+
+            members.forEach(member => {
+
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", member)
+        .get().then(querySnapshot => {
+        querySnapshot.forEach(doc1 => {
+
+                const gebruikersnaamClean = doc1.data().GebruikersnaamClean
+                const photo = doc1.data().Profielfoto
+
+                const photoDiv = document.createElement("div")
+                photoDiv.setAttribute("id", "member-photo-div")
+                const memberPhoto = document.createElement("img")
+                    memberPhoto.setAttribute("class", "group-member-photo")
+                const nameP = document.createElement("p")
+                    nameP.setAttribute("class", "member-name-p")
+
+                nameP.innerText = gebruikersnaamClean
+
+                // showMemberNameOnHover(memberPhoto, nameP)
+                showMemberPhoto(photo, memberPhoto)
+                roomTitle(roomClean, room)
+                linkToAccountFromMemberPhoto(memberPhoto, member)
+
+                listOfMembersCoach.appendChild(photoDiv)
+                photoDiv.appendChild(memberPhoto)
+                photoDiv.appendChild(nameP)
+
                     });
                 });
             });
         });
+    })
+    .then(() => {
+        toggleMaxHeightOfMembersListDiv(membersDiv)
+    })
+}();
+
+function toggleMaxHeightOfMembersListDiv(membersDiv){
+
+    setTimeout(() => {
+        console.log(membersDiv.offsetHeight)
+        if(membersDiv.offsetHeight > 70){
+
+            membersDiv.style.maxHeight = "50px"
+        membersDiv.style.paddingBottom = "13px"
+
+        const moreDiv = document.createElement("div")
+        const moreButton = document.createElement("p")
+
+        moreButton.innerText = "Bekijk meer"
+
+        DOMchatScreenCoach.prepend(moreDiv)
+            moreDiv.setAttribute("id", "more-div")
+        moreDiv.appendChild(moreButton)
+
+        moreButton.addEventListener("click", () => {
+
+        if(membersDiv.style.maxHeight === "max-content"){
+            membersDiv.style.maxHeight = "50px"
+            moreButton.innerText = "Bekijk meer"
+        } else {
+            membersDiv.style.maxHeight = "max-content"
+            moreButton.innerText = "Bekijk minder"
+        };
+    });
+
+        };
+    }, 1500);
+};
     
         // Add learning
     
@@ -984,12 +1102,16 @@ function saveNewMessage(elem){
                 const id = randomID()
                 const parentID = elem.dataset.parentid
 
+                console.log("saved message")
+
                 db.collection("GroupsForCoaches")
-                .where("Room", "==", titelCGC)
+                .where("Room", "==", titleOfRoom())
                 .get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
     
                     const members = doc.data().Members
+
+                    console.log(members)
     
                 db.collection("GroupsForCoaches")
                 .doc(doc.id)
@@ -998,9 +1120,10 @@ function saveNewMessage(elem){
                     Auth: auth,
                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                     Message: input,
-                    Room: titelCGC,
+                    Room: titleOfRoom(),
                     Members: members,
                     Type: "Message",
+                    Thread: [id],
                     ID: id,
                     Status: "New",
                     Read: [auth],
@@ -1060,12 +1183,18 @@ function saveNewReaction(elem){
                 const id = randomID()
                 const parentID = elem.dataset.parentid
 
+                const thread = [id]
+
+                addIdToThread(parentID, thread)
+
                 db.collection("GroupsForCoaches")
-                .where("Room", "==", titelCGC)
+                .where("Room", "==", titleOfRoom())
                 .get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
     
                     const members = doc.data().Members
+
+                    console.log(members)
     
                 db.collection("GroupsForCoaches")
                 .doc(doc.id)
@@ -1074,8 +1203,9 @@ function saveNewReaction(elem){
                     Auth: auth,
                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                     Message: input,
-                    Room: titelCGC,
+                    Room: titleOfRoom(),
                     Members: members,
+                    Thread: thread,
                     Type: "Reaction",
                     ID: id,
                     Status: "New",
@@ -1097,6 +1227,23 @@ function saveNewReaction(elem){
                         });
                     });  
                 });
+            });
+        });
+    });
+};
+
+function addIdToThread(parentID, thread){
+
+    db.collectionGroup("Messages")
+    .where("Room", "==", titleOfRoom())
+    .where("ID", "==", parentID)
+    .onSnapshot(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const threadParent = doc.data().Thread
+
+            threadParent.forEach(thr => {
+                thread.push(thr)
             });
         });
     });
@@ -1138,7 +1285,7 @@ function emptyScreenByOnsnapshotMessage(){
     });
 };
 
-function messageOptions(sender, chatMessage, chatRoom, authChatter){
+function messageOptions(sender, chatMessage, authChatter){
     const options = document.createElement("img")
        options.setAttribute("class", "message-options")
     options.src = "../images/design/mail-icon2.jpg"
@@ -1146,10 +1293,10 @@ function messageOptions(sender, chatMessage, chatRoom, authChatter){
     const sendAsMailDiv = document.createElement("div")
        sendAsMailDiv.setAttribute("class", "send-chat-as-mail-div")
        sendAsMailDiv.setAttribute("data-message", chatMessage)
-       sendAsMailDiv.setAttribute("data-room", chatRoom)
+       sendAsMailDiv.setAttribute("data-room", titleOfRoom())
        sendAsMailDiv.setAttribute("data-auth", authChatter)
 
-       sendChatAsMail(chatMessage, chatRoom, authChatter, sendAsMailDiv)
+       sendChatAsMail(chatMessage, authChatter, sendAsMailDiv)
 
     sender.appendChild(options)
     sender.appendChild(sendAsMailDiv)
@@ -1167,7 +1314,7 @@ function chooseRecipientForMail(sendAsMailDiv){
     selectMember.appendChild(optionAllMembers)
     
     db.collection("GroupsForCoaches")
-        .where("Room", "==", roomNameCoach)
+        .where("Room", "==", titleOfRoom())
         .get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
 
@@ -1205,7 +1352,7 @@ function toggleSendAsMail(options, sendChatAsMailDiv){
     });
 };
 
-function sendChatAsMail(message, room, coach, sendAsMailDiv){
+function sendChatAsMail(message, coach, sendAsMailDiv){
 
 const sendButton = document.createElement("button")
 sendButton.setAttribute("id", "sendAsMailButton")
@@ -1229,7 +1376,7 @@ sendButton.addEventListener("click", () => {
                 const SenderNameClean = doc2.data().GebruikersnaamClean
 
     db.collection("GroupsForCoaches")
-    .where("Room", "==", room).get()
+    .where("Room", "==", titleOfRoom()).get()
     .then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
@@ -1292,9 +1439,10 @@ function emailLayout(emailAdress, SenderNameClean, titelClean, message, titel, n
 function loadMessageInRealtime(){
 
         db.collectionGroup("Messages")
-        .where("Room", "==", titelCGC)
-        .orderBy("Timestamp", "asc")
+        .where("Room", "==", titleOfRoom())
+        .orderBy("Timestamp", "desc")
         .where("Type", "==", "Message")
+        .limit(10)
         .onSnapshot(querySnapshot => {
 
             emptyScreenByOnsnapshotMessage()
@@ -1308,13 +1456,16 @@ function loadMessageInRealtime(){
                 const timestamp = doc2.data().Timestamp
                 const parentID = doc2.data().ParentID
                 const messages = doc2.data().Messages
+                const readlist = doc2.data().Read
 
                 const messageDiv = document.createElement("div")
-                    messageDiv.setAttribute("class", "message-div")
+                    messageDiv.setAttribute("class", "message-div message-reaction")
+
                     messageDiv.setAttribute("data-id", id)
                     messageDiv.setAttribute("data-parentid", parentID)
                     messageDiv.setAttribute("data-timestamp", timestamp)
 
+                    showNewMessages(messageDiv, id)
                     appendMessageToDOM(timestamp, sender, authMessage, id, messageDiv, parentID, messages)
         });
     });
@@ -1323,12 +1474,11 @@ function loadMessageInRealtime(){
 function loadReactionsInRealtime(parentID){
 
     db.collectionGroup("Messages")
-    .where("Room", "==", titelCGC)
+    .where("Room", "==", titleOfRoom())
     .orderBy("Timestamp", "asc")
     .where("Type", "==", "Reaction")
     .where("ParentID", "==", parentID)
     .onSnapshot(querySnapshot => {
-        
         querySnapshot.forEach(doc2 => {
 
             const authMessage = doc2.data().Message
@@ -1338,16 +1488,18 @@ function loadReactionsInRealtime(parentID){
             const timestamp = doc2.data().Timestamp
             const parentID = doc2.data().ParentID
             const messages = doc2.data().Messages
+            const readlist = doc2.data().Read
 
             const messageDiv = document.createElement("div")
-                messageDiv.setAttribute("class", "message-div")
+                messageDiv.setAttribute("class", "message-div message-reaction")
                 messageDiv.setAttribute("data-id", id)
                 messageDiv.setAttribute("data-parentid", parentID)
                 messageDiv.setAttribute("data-timestamp", timestamp)
 
+                showNewReactions(messageDiv, id)
                 appendMessageToDOM(timestamp, sender, authMessage, id, messageDiv, parentID, messages)
+        });
     });
-});
 };
 
 loadMessageInRealtime()
@@ -1356,6 +1508,7 @@ function loadAllReactions(loadReactionsP, id){
 
     loadReactionsP.addEventListener("click", () => {
         loadReactionsInRealtime(id)
+        // loadReactionsP.style.display = "none"
     });
 };
 
@@ -1398,13 +1551,13 @@ function appendMessageToDOM(timestamp, sender, authMessage, id, messageDiv, pare
 
     appendMessagesToMessageOrReaction(messageDiv, messageP, senderName, parentID)
 
-    // findLinkInText(messageP)
+    findLinkInText(messageP)
 };
 
 function loadReactionsButton(loadReactions, messages){
 
     if(messages === undefined){
-        loadReactions.style.display = "none"
+        // loadReactions.style.display = "none"
     } else if (messages === 1){
         loadReactions.innerHTML = `Bekijk ${messages} reactie` 
     } else {
@@ -1412,16 +1565,171 @@ function loadReactionsButton(loadReactions, messages){
     };
 };
 
-// function findLinkInText(messageP){
 
-//     const expression = /(https?:\/\/)?[\w\-~]+(\.[\w\-~]+)+(\/[\w\-~@:%]*)*(#[\w\-]*)?(\?[^\s]*)?/gi;
+const messageIDListGC = localStorage.getItem("IDs")
 
-//     const regex = new RegExp(expression);
 
-//     link = regex.exec(messageP)
+function showNewMessages(messageDiv, id){
 
-//     console.log(link)
-// }
+    if(messageIDListGC != null){
+        const messageIDArray = messageIDListGC.split(",")
+
+        if(messageIDArray.includes(id)){
+
+            messageDiv.style.borderColor = "#8e0000" 
+            removeNewMessageBorderColorOnHover(messageDiv, id, messageIDArray)
+
+        };
+    };
+};
+
+function showNewReactions(reactionDiv, id){
+
+    if(messageIDListGC != null){
+        const messageIDArray = messageIDListGC.split(",")
+
+        if(messageIDArray.includes(id)){
+
+            reactionDiv.style.borderColor = "#8e0000" 
+            removeNewMessageBorderColorOnHover(reactionDiv, id)
+
+        }; 
+    };
+};
+
+function removeNewMessageBorderColorOnHover(messageDiv, id){
+
+    if(messageIDListGC != null){
+        const messageIDArray = messageIDListGC.split(",")
+
+        messageDiv.addEventListener("mouseenter", () => {
+
+            messageDiv.style.borderColor = "white"
+
+            const index = messageIDArray.indexOf(id)
+
+            const newArray = messageIDArray.splice(index, 1)
+
+            localStorage.setItem("IDs", newArray)
+
+        });
+    };
+};
+
+!function showNestedReactions(){
+
+    if(messageIDListGC != null){
+        const messageIDArray = messageIDListGC.split(",")
+
+        messageIDArray.forEach(ID => {
+
+            db.collectionGroup("Messages")
+            .where("Room", "==", titleOfRoom())
+            .where("ID", "==", ID)
+            .orderBy("Timestamp", "asc")
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                    const thread = doc.data().Thread
+
+                    const allMessages = document.getElementsByClassName("message-reaction")
+
+                    const allMessagesArray = Array.from(allMessages)
+
+                    allMessagesArray.forEach(messageDiv => {
+
+                        console.log(messageDiv)
+
+                        const divId = messageDiv.dataset.id
+
+                        thread.forEach(thr => {
+
+                            if (divId === thr){
+
+                                const button = messageDiv.getElementsByClassName("load-reactions")
+
+                                const buttonArray = Array.from(button)
+
+                                buttonArray.forEach(btn => {
+                                    
+                                        btn.click()
+                                        btn.setAttribute("class", "clicked")
+
+                                        console.log(btn)
+
+                                        setTimeout(() => {
+                                        
+                                            const nextDiv = btn.nextElementSibling
+
+                                            console.log(nextDiv)
+
+                                            const nextBtn = nextDiv.getElementsByClassName("load-reactions")
+
+                                            nextBtnArray = Array.from(nextBtn)
+
+                                            nextBtnArray.forEach(nxtBtn => {
+                                                nxtBtn.click()
+                                                nxtBtn.setAttribute("class", "clicked")
+
+                                                if(nextBtn != null){
+                                        
+                                                    loopNewMassageClick(nxtBtn)
+                                                };
+                                            });
+                                        }, 1000);
+                                });
+                            };
+                        })
+                    });
+                });
+            });
+        });
+    };
+}();
+
+function loopNewMassageClick(nxtBtn){
+
+        setTimeout(() => {
+                                        
+            const nextDiv = nxtBtn.nextElementSibling
+
+            const nextBtn = nextDiv.getElementsByClassName("load-reactions")
+
+            nextBtnArray = Array.from(nextBtn)
+
+            nextBtnArray.forEach(nxtBtn => {
+                nxtBtn.click()
+                nxtBtn.setAttribute("class", "clicked")
+            });
+
+            loopNewMassageClick(nxtBtn)
+
+        }, 1000);
+
+        setTimeout(() => {
+
+            loopNewMassageClick = (() => {
+
+                console.log("Loop beindigd")
+
+            });
+
+        }, 10000);
+};
+
+function findLinkInText(messageP){
+
+    const text = messageP.innerText
+
+    const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+    const links = text.match(urlRegex)
+
+    text.replace(urlRegex, `<a href="${links}">${links}</a>`)
+
+    console.log(text)
+
+};
 
 function appendMessagesToMessageOrReaction(messageDiv, messageP, senderName, parentID){
     messageDivArray.push(messageDiv)
@@ -1442,14 +1750,14 @@ function appendMessagesToMessageOrReaction(messageDiv, messageP, senderName, par
     });
 };
 
-!function scrollToBottomOnLoad(){
+// !function scrollToBottomOnLoad(){
 
-    setTimeout(() =>{
-        const bottom = document.getElementById("top-layer")
+//     setTimeout(() =>{
+//         const bottom = document.getElementById("top-layer")
 
-        bottom.scrollIntoView()
-    }, 2500);
-}();
+//         bottom.scrollIntoView()
+//     }, 2500);
+// }();
 
 function senderNameClean(sender, senderName, authMessage){
     db.collection("Vitaminders")
@@ -1461,23 +1769,23 @@ function senderNameClean(sender, senderName, authMessage){
 
             senderName.innerText = messageNameClean
 
-            messageOptionsForAdmin(sender, senderName, authMessage, roomNameCoach, messageNameClean)
+            messageOptionsForAdmin(sender, senderName, authMessage, messageNameClean)
 
         });
     });
 };
 
-function messageOptionsForAdmin(sender, senderName, authMessage, roomNameCoach, messageNameClean){
+function messageOptionsForAdmin(sender, senderName, authMessage, messageNameClean){
 
     db.collection("GroupsForCoaches")
-    .where("Room", "==", titelCGC)
+    .where("Room", "==", titleOfRoom())
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
             const admin = doc.data().Admin
 
              if(admin.includes(sender)){
-            messageOptions(senderName, authMessage, roomNameCoach, messageNameClean)
+            messageOptions(senderName, authMessage, messageNameClean)
             };
 
         });
@@ -1641,7 +1949,7 @@ function savebutton(supportType, support, auth, notice, socialTypeWritten){
         const username = supportType.dataset.username
         const message = supportType.dataset.message
 
-        saveInMessage(support, username, message)
+        // saveInMessage(support, username, message)
         saveInUser(username, auth, message, support, socialTypeWritten)
 
         notice.innerText = "Verstuurd"
@@ -1653,14 +1961,14 @@ function savebutton(supportType, support, auth, notice, socialTypeWritten){
 function saveInMessage(support, username, message){
 
     db.collection("GroupsForCoaches")
-    .where("Room", "==", titelCGC)
+    .where("Room", "==", titleOfRoom())
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
             db.collection("GroupsForCoaches")
             .doc(doc.id)
             .collection("Messages")
-            .where("Room", "==", titelCGC)
+            .where("Room", "==", titleOfRoom())
             .where("Auth", "==", username)
             .where("Message", "==", message)
             .get().then(querySnapshot => {

@@ -122,7 +122,17 @@
           <input id="emailVM" type="email" name="email" placeholder="emailadres">
           <input id="passwordVM" type="password" name="password" id="" placeholder="password">
           <button class="button-algemeen" id="button-inlog" onclick= "inlogVM()" >Go!</button>
-          <p class="inlog-notice">Nog geen account? Maak <a href="/Register.html">hier</a> je Digimind aan.</p>
+          <p id="new-password" class="inlog-notice">Wachtwoord vergeten? Kan gebeuren. Gebeurt ons allemaal wel eens :). Klik <u>hier</u> om een nieuwe aan te maken.</p>
+          <p class="inlog-notice">Nog geen account? Maak <a href="/Register.html">hier</a> een account aan.</p>
+      </div>
+
+      <div id="new-password-modal">
+        <p id="close-new-password-modal">X</p>
+        <h2>Nieuw wachtwoord aanvragen</h2>
+        <p>Vul het emailadres in dat bij je account hoort.</p>
+        <input id="emailNew" type="email" name="email" placeholder="emailadres">
+        <button id="button-new-password">Aanvragen</button>
+        <p class="inlog-notice">Emailadres vergeten? Stuur een mailtje naar info@vitaminds.nu. Dan helpen we je verder.</p>
       </div>
 
       <!-- Toolbar mobile -->

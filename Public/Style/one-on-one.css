@@ -1,0 +1,164 @@
+#ask-button{
+    padding: 10px;
+    background-color: #122B46;
+    border-radius: 20px;
+    border: 0px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    margin: 50px;
+    width: auto;
+    align-self: center;
+    box-shadow: 0 5px 9px 0 rgb(0 0 0 / 20%), 0 7px 21px 0 rgb(0 0 0 / 19%);
+}
+
+#ask-button:hover{
+    box-shadow: none;
+}
+
+#question-modal{
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    align-items: center;
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-image: url(../images/one-on-one-background.jpg);
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+#close-modal-div{
+    cursor: pointer;
+    font-size: 24px;
+}
+
+#question-input{
+    display: none;
+}
+
+#visitor-notice{
+    display: none;
+}
+
+.route-radio input{
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px;
+    margin: 5px;
+    border: 1px solid #122b46;
+    color: #122b46;
+    width: auto;
+    font-size: 16px;
+}
+
+.route-radio label{
+    font-size: 18px;
+    color: #122b46;
+}
+
+#button-coach-question{
+    background-color: white;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #008e8e;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+#pointers-div li{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#button-clicked{
+    background-color: #008e8e;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.overview-counter{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.overview-counter img{
+    height: 100px;
+}
+
+.overview-counter h3{
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#explainer-div{
+    display: flex;
+}
+
+#image-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#image-div img{
+    width: 99%;
+}
+
+#top-explainer-text{
+    padding-bottom: 20px;
+    border-bottom: 1px solid lightgray;
+}
+
+#ask-button-div{
+    background-image: url(../images/one-on-one-background.jpg);
+    height: 300px;
+    width: 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#steps-walkthru-div{
+    margin: 30px 50px 30px 50px;
+}
+
+#steps-walkthru-div h3{
+    text-align: center;
+}
+
+.overview-counter p{
+    font-size: 18px;
+}
+
+#coach-counter{
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #a7bdbd26;
+}
+
+#explainer-div{
+    background-color: #a7bdbd26;
+    padding: 0px 100px 0px 100px;
+}

@@ -148,6 +148,7 @@ saveNewEventButton.addEventListener("click", () => {
         MaxParticipants: maxParticipants.value,
         Price: priceEvent.value,
         Location: locationEvent.value,
+        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
         Online: option,
         Banner: eventBanner,
         Type: "coachEvent",
@@ -175,6 +176,15 @@ function organizerMeta(organizer, organiserEventPhoto, organiserEventP){
     });
 };
 
+function showExpired(expired, expiredP, dateEvent){
+
+    if(expired === "Yes"){
+        expiredP.innerText = "Geweest"
+        expiredP.style.display = "block"
+        dateEvent.style.textDecoration = "line-through"
+    };
+};
+
 !function eventsOverview(){
 const eventsOverview = document.getElementById("events-outer-div")
 
@@ -182,7 +192,7 @@ if (eventsOverview != null){
 
     db.collection("EventsCoaches")
     .where("Owner", "==", "Vitaminds")
-    .orderBy("Date", "desc")
+    .orderBy("Timestamp", "asc")
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
@@ -193,6 +203,7 @@ if (eventsOverview != null){
             const eventBanner = doc.data().Banner
             const organizer = doc.data().Organizer
             const titleID = doc.data().TitleID
+            const expired = doc.data().Expired
 
             const outerDiv = document.createElement("div")
                 outerDiv.setAttribute("class", "event-outer-div")
@@ -207,6 +218,8 @@ if (eventsOverview != null){
             const buttonEvent = document.createElement("button")
                 buttonEvent.setAttribute("class", "button-algemeen")
                 buttonEvent.setAttribute("id", "button-event-overview")
+            const expiredP = document.createElement("p")
+                expiredP.setAttribute("class", "expired-p")
 
             dateEvent.innerText = date
             titleEvent.innerText = title
@@ -216,6 +229,7 @@ if (eventsOverview != null){
                 window.open("../Vitaminders/" + organizer, "_self");
             });
 
+            showExpired(expired, expiredP, dateEvent)
             organizerMeta(organizer, organiserEventPhoto, organiserEventP)
 
             eventsOverview.appendChild(outerDiv)
@@ -224,6 +238,7 @@ if (eventsOverview != null){
             organiserEventDiv.appendChild(organiserEventPhoto)
             organiserEventDiv.appendChild(organiserEventP)
             outerDiv.appendChild(titleEvent)
+            outerDiv.appendChild(expiredP)
             outerDiv.appendChild(dateEvent)
             outerDiv.appendChild(buttonEvent)
 
@@ -302,7 +317,7 @@ function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateO
                             
                             Vriendelijke groet, </br></br>
                             ${organiserEvent} </br></br>
-                            <img src="../images/Logo2021-red" width="100px" alt="Logo Vitaminds">`,
+                            <img src="../images/design/Logo2021-red" width="100px" alt="Logo Vitaminds">`,
                       Gebruikersnaam: naamClean,
                       Emailadres: email,
                       Type: "Event"

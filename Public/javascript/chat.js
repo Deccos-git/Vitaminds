@@ -1,4 +1,3 @@
-
 // Naam uit URL halen
 const titelhtml = window.location.href.replace(/^.*[\\\/]/, '')
 const titel1 = titelhtml.replace('.html', '')
@@ -13,7 +12,7 @@ const titel9 = titel8.replace('%20',' ')
 const titel10 = titel9.replace('%20',' ')
 const titel11 = titel10.replace('%20',' ')
 const titel12 = titel11.split("?fb")
-const titel = titel12[0]
+const titel = titel12[0];
 
 // Title 
 db.collection('Vitaminders').where('Gebruikersnaam', '==', titel )

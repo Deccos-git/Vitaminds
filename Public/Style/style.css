@@ -1128,6 +1128,45 @@ ul{
   padding: 15px;
 }
 
+#new-password{
+  cursor: pointer;
+}
+
+#new-password-modal{
+  background-image: url(../images/Hero-III-opacity30.jpg);
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: none; /* Hidden by default */
+  flex-direction: column;
+  align-items: center;
+  position: fixed; /* Stay in place */
+  z-index: 2; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: white; /* Fallback color */
+}
+
+#button-new-password{
+  background-color: white;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #008e8e;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+#close-new-password-modal{
+  font-size: 22px;
+  cursor: pointer;
+}
+
 /* Feedback */
 
 #feedback{
