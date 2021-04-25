@@ -244,7 +244,7 @@ function practicalInformation(coachLocation, coachTargetgroup, coachCosts, coach
         locationP.innerHTML = coachLocation
         targetgroupP.innerHTML = coachTargetgroup
         costsP.innerHTML = coachCosts
-        websiteP.innerHTML = `<a href='https://${coachWebsite}'>${coachWebsite}</a>`
+        websiteP.innerHTML = `<a href='https://${coachWebsite}', target='_blank'>${coachWebsite}</a>`
         telephoneP.innerHTML = coachTelephone
 
         locationDiv.appendChild(locationP)
@@ -261,13 +261,60 @@ function practicalInformation(coachLocation, coachTargetgroup, coachCosts, coach
         hideEmptyProfileElements(coachWebsite, websiteDiv)
         hideEmptyProfileElements(coachTelephone, telephoneDiv)
 
+        registerWebsiteClick(websiteDiv)
+
+};
+
+function registerWebsiteClick(websiteDiv){
+
+        websiteDiv.addEventListener("click", () => {
+
+                db.collection("Vitaminders")
+                .where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+
+                        db.collection("Vitaminders")
+                        .doc(doc.id)
+                        .update({
+                                WebsiteClicks: firebase.firestore.FieldValue.increment(1),
+                        });       
+                        });
+                });
+        });
+};
+
+!function registerPageView(){
+
+        location.onload = savePageView()
+
+}();
+
+function savePageView(){
+
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", naam)
+        .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+                console.log("view")
+
+                db.collection("Vitaminders")
+                .doc(doc.id)
+                .update({
+                        ProfileViews: firebase.firestore.FieldValue.increment(1),
+                });       
+                });
+        });
 };
 
 // Follow coach
 !function hideFollowButtonNonCoach(){
         const followButton = document.getElementById("follow-button")
 
-        db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", naam)
+        .get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
 
                         const usertype = doc.data().Usertype
@@ -2166,8 +2213,8 @@ const adminDiv = document.getElementById("admin-analytics")
  function showAdminAnalyticsForAdmin(adminType){
      if(adminType === "Yes"){
          adminDiv.style.display = "flex"
-     }
- }
+     };
+ };
 
  function numberOfWebsiteClicks(amountOfClicks){
 
@@ -2193,33 +2240,32 @@ const adminDiv = document.getElementById("admin-analytics")
         profileViewsCard.appendChild(numberOfViews)
  };
 
- function numberOfArticleViews(authCreator){
+ async function numberOfArticleViews(authCreator){
 
     const articleViewCard = document.getElementById("article-views")
 
     const numberOfViews = document.createElement("p")
         numberOfViews.setAttribute("class", "numbers-analytics")
 
-    db.collection("Insights").where("Type", "==", "Insight-levensvraag")
-    .where("Auteur", "==", authCreator)
+        const viewArray = []
+
+    await db.collection("Articles")
+    .where("Author", "==", authCreator)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
-            const article = doc.data().LevensvraagArtikel
+            const views = doc.data().Views
 
-            db.collection("Levensvragen").where("Levensvraag", "==", article)
-            .get().then(querySnapshot => {
-                querySnapshot.forEach(doc1 => {
+            viewArray.push(views)
 
-                    const views = doc1.data().Views
-
-                    numberOfViews.innerText = views
-
-                    articleViewCard.appendChild(numberOfViews)
-                });
-            });
         });
     });
+
+    const total = viewArray.reduce((a, b) => a + b, 0)
+
+    numberOfViews.innerText = total
+
+    articleViewCard.appendChild(numberOfViews)
  };
 
  function numberOfWorkshopViews(authCoach){
@@ -2229,17 +2275,20 @@ const adminDiv = document.getElementById("admin-analytics")
     const numberOfWorkshopViews = document.createElement("p")
         numberOfWorkshopViews.setAttribute("class", "numbers-analytics")
 
+        let views = 0
+
     db.collection("Workshops").where("Coach", "==", authCoach)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
-            const views = doc.data().Views
+            views = doc.data().Views
 
-            numberOfWorkshopViews.innerText = views
-
-            workshopViewsCard.appendChild(numberOfWorkshopViews)
         });
     });
+
+    numberOfWorkshopViews.innerText = views
+
+    workshopViewsCard.appendChild(numberOfWorkshopViews)
  };
 
  function earnings(docReference){
@@ -2317,10 +2366,14 @@ const adminDiv = document.getElementById("admin-analytics")
     });
  }
 
- auth.onAuthStateChanged(User =>{
-    if (User){
-        const docRef = db.collection("Vitaminders").doc(User.uid);
-            docRef.get().then(function(doc){
+
+!function authQueryAnalytics(){
+
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", naam)
+        .where("Usertype", "==", "Coach")
+        .get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
 
                 const auth = doc.data().Gebruikersnaam
                 const admin = doc.data().Admin
@@ -2328,21 +2381,23 @@ const adminDiv = document.getElementById("admin-analytics")
                 const profileViews = doc.data().ProfileViews
                 const usertype = doc.data().Usertype
 
-                if(auth === naam){
+                console.log(auth)
 
-                    showAdminAnalyticsForAdmin(admin)
-                    numberOfWebsiteClicks(websiteClicks)
-                    numberOfProfileViews(profileViews)
-                    numberOfArticleViews(auth)
-                    numberOfWorkshopViews(auth)
-                    earnings(docRef)
-                };
+                showAdminAnalyticsForAdmin(admin)
+                numberOfWebsiteClicks(websiteClicks)
+                numberOfProfileViews(profileViews)
+                numberOfArticleViews(auth)
+                numberOfWorkshopViews(auth)
+
+                const docRef = db.collection("Vitaminders").doc(doc.id)
+                earnings(docRef)
 
                 hideAnalyticsIfNoCoach(usertype)
 
-            });
-        };
-    });
+                });
+        });
+}();
+
 
 
 // Admin
@@ -3574,13 +3629,52 @@ function fileName(user, fileNameP){
         });
 }();
 
-!function questionQuery(){
+function selectQuestion(){
+
+        const select = document.getElementById("select-coach-question")
+        const questionDOM = document.getElementById("questions-overview")
+
+        questionDOM.innerHTML = ""
+
+        const options = select.options
+        const selectedOption = options[options.selectedIndex].innerHTML
+
+        questionQuery(selectedOption)
+
+};
+
+!async function queryAuthCoachQuestions(){
+
+        const select = document.getElementById("select-coach-question")
+
+        await db.collection("CoachQuestion")
+        .where("Owner", "==", "Vitaminds")
+        .where("Auth", "==", naam)
+        .get()
+        .then(function(querySnapshot) {
+        querySnapshot.forEach(doc =>  {
+
+                const question = doc.data().Question
+
+                fillSelectWithQuestions(select, question)
+
+                });
+        })
+
+                const options = select.options
+                console.log(options[0].innerHTML)
+
+                appendFirstquestion(options[0].innerHTML)
+}();
+
+function appendFirstquestion(optionZero){
 
         const questionDOM = document.getElementById("questions-overview")
 
         db.collection("CoachQuestion")
         .where("Owner", "==", "Vitaminds")
         .where("Auth", "==", naam)
+        .where("Question", "==", optionZero)
         .get()
         .then(function(querySnapshot) {
         querySnapshot.forEach(doc =>  {
@@ -3590,10 +3684,36 @@ function fileName(user, fileNameP){
                 const id = doc.data().ID
 
                 createQuestionCard(question, timestamp, questionDOM)
+                
+                appendAnswers(id, questionDOM)
 
                 });
         });
-}();
+};
+
+function questionQuery(selectedOption){
+
+        const questionDOM = document.getElementById("questions-overview")
+        const select = document.getElementById("select-coach-question")
+
+        db.collection("CoachQuestion")
+        .where("Owner", "==", "Vitaminds")
+        .where("Auth", "==", naam)
+        .where("Question", "==", selectedOption)
+        .get()
+        .then(function(querySnapshot) {
+        querySnapshot.forEach(doc =>  {
+
+                const question = doc.data().Question
+                const timestamp = doc.data().Timestamp
+                const id = doc.data().ID
+
+                createQuestionCard(question, timestamp, questionDOM)
+                appendAnswers(id, questionDOM)
+
+                });
+        });
+};
 
 function createQuestionCard(question, timestamp, dom){
 
@@ -3601,6 +3721,7 @@ function createQuestionCard(question, timestamp, dom){
                 cardDiv.setAttribute("class", "question-card-div")
         const questionP = document.createElement("p")
         const timestampP = document.createElement("p")
+                timestampP.setAttribute("class", "question-timestamp")
 
         questionP.innerText = question
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -3612,18 +3733,86 @@ function createQuestionCard(question, timestamp, dom){
 
 };
 
-function appendAnswers(){
+function fillSelectWithQuestions(select, question){
+
+        select.style.display = "block"
+
+        const option = document.createElement("option")
+
+        option.innerText = question
+
+        select.appendChild(option)
+
+};
+
+function appendAnswers(id, dom){
 
         db.collectionGroup("Reactions")
-        .where("ID", "==", id)
+        .where("QuestionID", "==", id)
         .get()
         .then(function(querySnapshot) {
         querySnapshot.forEach(doc =>  {
 
                 const reaction = doc.data().Reaction
-                const coach = doc.data().Author
+                const coach = doc.data().Auth
                 const timestamp = doc.data().Timestamp
 
+                console.log(coach)
+
+                answerCard(dom, reaction, timestamp, coach)
+
+
                 });
+        });
+};
+
+function answerCard(dom, answer, timestamp, coach){
+
+        const cardDiv = document.createElement("div")
+                cardDiv.setAttribute("class", "answer-card-div")
+        const answerP = document.createElement("p")
+        const coachDiv = document.createElement("div")
+                coachDiv.setAttribute("class", "answer-coach-div")
+        const coachP = document.createElement("p")
+        const coachImg = document.createElement("img")
+        const timestampP = document.createElement("p")
+                timestampP.setAttribute("class", "answer-timestamp")
+
+        answerP.innerText = answer
+        addCoachClean(coachP, coach, coachImg)
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
+        linkToCoachProfile(coachDiv, coach)
+
+        dom.appendChild(cardDiv)
+        cardDiv.appendChild(answerP)
+        cardDiv.appendChild(coachDiv)
+        coachDiv.appendChild(coachImg)
+        coachDiv.appendChild(coachP)
+        cardDiv.appendChild(timestampP)
+};
+
+function addCoachClean(coachP, coach, coachImg){
+
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", coach)
+        .get()
+        .then(function(querySnapshot) {
+        querySnapshot.forEach(doc =>  {
+
+                const coachClean = doc.data().GebruikersnaamClean
+                const profilePic = doc.data().Profielfoto
+
+                coachP.innerText = coachClean
+                coachImg.src = profilePic
+
+                });
+        });
+};
+
+function linkToCoachProfile(coachDiv, coach){
+
+        coachDiv.addEventListener("click", () => {
+                window.open("../Vitaminders/" + coach + ".html", "_self");
         });
 };

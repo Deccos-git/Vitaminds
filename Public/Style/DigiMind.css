@@ -150,6 +150,58 @@
     box-shadow: 0 5px 9px 0 rgb(0 0 0 / 20%), 0 7px 21px 0 rgb(0 0 0 / 19%);
 }
 
+#select-coach-question{
+    display: none;
+    width: auto;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.question-timestamp{
+    font-size: 16px;
+}
+
+.answer-meta-div{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.answer-timestamp{
+    font-size: 16px !important;
+    text-align: center;
+}
+
+.answer-card-div{
+    border: 1px solid lightgray;
+    padding: 15px;
+    border-radius: 15px;
+    margin: 15px;
+    width: 90%;
+    background-color: white;
+}
+
+.answer-card-div img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.answer-card-div p{
+    font-size: 18px;
+}
+
+.answer-coach-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.answer-coach-div P{
+    font-size: 18px;
+    font-weight: bold;
+}
+
 #questions-overview{
     width: 100%;
     background-color: #a7bdbd26;
@@ -1110,6 +1162,10 @@
     margin: 5px;
 }
 
+#scroll-indicator{
+    display: none;
+}
+
 @media only screen and (max-width: 938px){
 
     #menu-div{
@@ -1225,6 +1281,21 @@
 
     #select-route-div p{
         font-size: 18px;
+    }
+
+    #select-coach-question{
+        width: 90%;
+    }
+
+    #scroll-indicator{
+        display: flex;
+        justify-content: center;
+        height: 15px;
+        margin: 20px 0px -20px 0px;
+    }
+
+    #scroll-indicator img{
+        height: 15px;
     }
 
 }

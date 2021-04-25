@@ -911,4 +911,17 @@ function toolBarLinks(){
 };
 }();
 
+!function hideRegisterButtonCoachIfAuth(){
 
+  const button = document.getElementById("button-register-coach")
+
+  auth.onAuthStateChanged(User =>{
+    if(User){
+
+      console.log(button)
+
+      button.style.display = "none"
+
+    };
+  });
+}();

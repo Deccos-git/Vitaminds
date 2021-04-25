@@ -32,14 +32,15 @@ function titleOfRoom(){
             const timestamp = doc.data().Timestamp
             const question = doc.data().Question
             const id = doc.data().ID
+            const read = doc.data().Read
 
-            createQuestionCard(auth, question, timestamp, overviewDom, anonymous, id)
+            createQuestionCard(auth, question, timestamp, overviewDom, anonymous, id, read)
 
         });
     });
 }();
 
-function createQuestionCard(authname, question, timestamp, overviewDom, anonymous, id){
+function createQuestionCard(authname, question, timestamp, overviewDom, anonymous, id, read){
 
     const cardDiv = document.createElement("div")
         cardDiv.setAttribute("class", "card-div")
@@ -67,6 +68,8 @@ function createQuestionCard(authname, question, timestamp, overviewDom, anonymou
     cardDiv.appendChild(questionP)
     cardDiv.appendChild(timestampP)
     cardDiv.appendChild(button)
+
+    authQueryNotification(read, cardDiv)
     };
 };
 
@@ -80,7 +83,9 @@ function shortenQuestion(question, questionP){
 
     if (lengthArr > 20){
         questionP.innerHTML = shortendSentence
-    };
+    } else {
+        questionP.innerHTML = question
+    }
 };
 
 function addTimestamp(timestampP, timestamp){
@@ -114,14 +119,92 @@ function addAuthMeta(authname, authPhoto, authName, anonymous){
     });
 };
 
+function authQueryNotification(read, cardDiv){
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        db.collection("Vitaminders")
+        .doc(User.uid)
+        .get().then(doc => {
+
+            const coach = doc.data().Gebruikersnaam
+
+            console.log(coach)
+
+            newCoachQuestionNotification(read, cardDiv, coach)
+
+            });
+        };
+    });
+};
+
+function newCoachQuestionNotification(read, cardDiv, premiumCoach){
+
+    console.log(read)
+
+    if(!read.includes(premiumCoach)){
+
+        console.log(premiumCoach)
+
+        const notification = document.createElement("p")
+            notification.setAttribute("class", "new-question-notification")
+
+        notification.innerText = "Nieuw"
+
+        cardDiv.prepend(notification)
+
+    };
+};
+
 function visitCoachQuestion(button, id){
 
     button.addEventListener("click", () => {
 
-        window.open("../Questions/" + [id] + ".html", "_self");
+        authQuery(id)
 
+        setTimeout(() => {
+
+            window.open("../Questions/" + [id] + ".html", "_self");
+
+        }, 1000);
     });
 };
+
+function authQuery(id){
+
+    auth.onAuthStateChanged(User =>{
+    if(User){
+    db.collection("Vitaminders")
+    .doc(User.uid)
+    .get().then(doc => {
+
+        const auth = doc.data().Gebruikersnaam
+
+        addCoachToReadList(id, auth)
+
+            });
+        };
+    });
+};
+
+function addCoachToReadList(id, auth){
+
+    db.collection("CoachQuestion")
+    .where("Owner", "==", "Vitaminds")
+    .where("ID", "==", id)
+    .get()
+    .then(function(querySnapshot) {
+        querySnapshot.forEach(doc =>  {
+
+            db.collection("CoachQuestion")
+            .doc(doc.id)
+            .update({
+                Read: firebase.firestore.FieldValue.arrayUnion(auth)
+            }); 
+        });
+    });
+};
+
 
 !function questionDetailPage(){
 
@@ -140,6 +223,7 @@ function visitCoachQuestion(button, id){
             const anonymous = doc.data().Anonymous
             const question = doc.data().Question
             const id = doc.data().ID
+            const read = doc.data().Read
 
             addAuthMeta(auth, authPhoto, authName, anonymous)
             questionP.innerText = question
@@ -156,12 +240,15 @@ function visitCoachQuestion(button, id){
     const openReaction = document.getElementById("reaction-button")
     const reactionInputDiv = document.getElementById("reaction-input-div")
 
-    openReaction.addEventListener("click", () => {
+    if(openReaction != null){
 
-        reactionInputDiv.style.display = "flex"
-        openReaction.style.display = "none"
+        openReaction.addEventListener("click", () => {
 
-    });
+            reactionInputDiv.style.display = "flex"
+            openReaction.style.display = "none"
+
+        });
+    };
 }();
 
 function saveReactionToDB(docid, id){
@@ -196,7 +283,10 @@ function saveReactionToDB(docid, id){
                 })
                 .then(() => {
                     sendReactionAsMail(emailAdress, nameClean, auth)
-                });
+                })
+                .then(() => {
+                    closeQuestionAfterSave()
+                })
             });
         });
     });
@@ -212,19 +302,25 @@ function sendReactionAsMail(emailAdress, nameClean, authName){
         message: {
         subject: `Je hebt een nieuwe reaction ontvangen op je adviesvraag op Vitaminds`,
         html: `Hallo ${nameClean}, <br><br>
-                Een coach of psycholoog heeft gereageert op je adviesvraag op Vitaminds <br><br>
+                Een coach heeft gereageert op je adviesvraag op Vitaminds <br><br>
                 
                 Ga naar je <a href="www.vitaminds.nu/Vitaminders/${authName}.html">account</a> om de reactie te lezen.<br>
-                Je vindt de reactie in het prive gedeelte van je account onder 'Adviesvragen'.<br><br>
+                Je vindt de reactie in het prive gedeelte van je account onder 'Coachvragen'.<br><br>
 
                 P.s. Om privacyredenen kun je reactie alleen bekijken als je bent ingelogd in Vitaminds.<br><br>
 
                 Vriendelijke groet, <br></br>
                 Het Vitaminds Team <br></br>
-                <img src="https://vitaminds.nu/images/logo.png" width="100px" alt="Logo Vitaminds">`,
-        Gebruikersnaam: name,
+                <img src="https://vitaminds.nu/images/desing/logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
+        Gebruikersnaam: authName,
         Emailadres: emailAdress,
         Type: "New coachmessage in chat"
         }        
     });
+};
+
+function closeQuestionAfterSave(){
+
+    window.open("../coachquestions.html", "_self");
+
 };

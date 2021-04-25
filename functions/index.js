@@ -91,8 +91,19 @@ createSession("/create-session-hundred", 10000)
 createSession("/create-session-hundredfifty", 15000)
 createSession("/create-session-twohundred", 20000)
 
-
 // Group aanmaken op basis van URL
+app.get('/Group/:id',function(req,res)
+{
+    res.sendFile('coachgroup.html', { root: __dirname });
+});
+
+// Groups for coaches aanmaken op basis van URL
+app.get('/groups-coaches/:id',function(req,res)
+{
+    res.sendFile('group-coaches.html', { root: __dirname });
+});
+
+// Coachquestion aanmaken op basis van URL
 app.get('/Questions/:id',function(req,res)
 {
     res.sendFile('question.html', { root: __dirname });

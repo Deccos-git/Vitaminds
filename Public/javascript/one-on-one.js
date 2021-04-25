@@ -3,8 +3,6 @@
     const button = document.getElementById("ask-button")
     const modal = document.getElementById("question-modal")
 
-    closeModal(modal)
-
     button.addEventListener("click", () => {
 
         modal.style.display = "flex"
@@ -12,23 +10,24 @@
     });
 }();
 
-function closeModal(modal){
+function closeModal(){
 
     const closeButton = document.getElementById("close-modal-div")
+    const modal = document.getElementById("question-modal")
 
     closeButton.addEventListener("click", () => {
         modal.style.display = "none"
     });
 };
 
-async function fillInAmountOfCoachesAndTherapists(dom, usertype, stringType){
+!async function fillInAmountOfCoachesAndTherapists(dom, usertype, stringType){
 
-    const coachesTherapists = document.getElementById(dom)
+    const coachesTherapists = document.getElementById("amount-of-coaches")
 
     const amountArray = []
 
     await db.collection("Vitaminders")
-    .where("Usertype", "==", usertype)
+    .where("Usertype", "==", "Coach")
     .where("SubscriptionType", "==", "Premium")
     .where("Status", "==", "Approved")
     .get().then(querySnapshot => {
@@ -41,11 +40,8 @@ async function fillInAmountOfCoachesAndTherapists(dom, usertype, stringType){
         });
     })
 
-    coachesTherapists.innerHTML = `${amountArray.length} ${stringType}`
-};
-
-fillInAmountOfCoachesAndTherapists("amount-of-coaches", "Coach", "Coaches")
-fillInAmountOfCoachesAndTherapists("amount-of-therapists","Psycholoog", "(Toegepast) psychologen")
+    coachesTherapists.innerHTML = `${amountArray.length} ${"Coaches"}`
+}();
 
 !function showNoticeIfVisitor(){
 
@@ -100,8 +96,19 @@ function saveQuestionToDatabase(auth){
             Anonymous: anonymous,
             Auth: auth,
             ID: idClean,
+            Read: [],
             Owner: "Vitaminds",
             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+        }).then(() => {
+            closeModalAfterSaving()
         });
     });
+};
+
+function closeModalAfterSaving(){
+
+    const modal = document.getElementById("question-modal")
+
+    modal.style.display = "none"
+
 };
