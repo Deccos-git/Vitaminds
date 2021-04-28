@@ -36,6 +36,26 @@
     background-size: cover;
 }
 
+#register-modal-coaching{
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    align-items: center;
+    position: fixed; /* Stay in place */
+    z-index: 3; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    height: 100%;
+    width: 100%;
+    background-color: white;
+}
+
+#register-modal-coaching{
+    cursor: pointer;
+}
+
 #close-modal-div{
     cursor: pointer;
     font-size: 24px;
@@ -47,6 +67,13 @@
 
 #visitor-notice{
     display: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a7bdbd;
+    margin: 50px 0px;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 .route-radio input{
@@ -110,6 +137,8 @@
 
 #explainer-div{
     display: flex;
+    background-color: #a7bdbd26;
+    padding: 0px 100px 0px 100px;
 }
 
 #image-div{
@@ -158,7 +187,31 @@
     background-color: #a7bdbd26;
 }
 
-#explainer-div{
-    background-color: #a7bdbd26;
-    padding: 0px 100px 0px 100px;
+#visitor-notice P{
+    margin: 20px 50px;
+    font-size: 20px;
+}
+
+@media only screen and (max-width: 938px){
+
+    #explainer-div{
+        display: flex;
+        flex-direction: column-reverse;
+        background-color: #a7bdbd26;
+        padding: 0px 20px 0px 20px;
+    }
+
+    #ask-button-div {
+        background-image: url(../images/one-on-one-background.jpg);
+        height: 300px;
+        width: 100%;
+        background-attachment: scroll;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
 }

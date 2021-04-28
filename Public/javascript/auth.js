@@ -664,10 +664,120 @@ if(button != null){
   const repeatPasswordVMInput = document.getElementById("register-wachtwoord-repeat")
   const firstName = document.getElementById('register-firstname').value;
   const lastName = document.getElementById('register-lastname').value;
-  const contributionQuestion = document.getElementById("contribution-question").value
 
   const colour = getRandomColor()
 
+  let userName = ""
+  
+  if (lastName != ""){
+    userName = firstName +" "+ lastName
+  } else {
+    userName = firstName
+  };
+
+  if (passwordVM != repeatPasswordVM){
+    passwordInput.style.borderColor = "red"
+    repeatPasswordVMInput.style.borderColor = "red"
+    alert("De wachtwoorden zijn niet gelijk")
+  } else {
+
+    if (firstName === ""){
+      alert("Vergeet niet je voornaam in te vullen")
+
+    } else {
+  
+  firebase.auth().createUserWithEmailAndPassword(email, passwordVM)
+  .then(cred =>{
+    db.collection('Vitaminders').doc(cred.user.uid).set({
+      Gebruikersnaam: cred.user.uid + userName,
+      GebruikersnaamClean: userName,
+      Firstname: firstName,
+      Lastname: lastName,
+      Usertype: "Vitaminder",
+      Inspiratiepunten: 1,
+      Email: email, 
+      ID: cred.user.uid,
+      Color: colour,
+      Levensvragen: [],
+      Profielfoto: "https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/dummy-profile-photo.jpeg?alt=media&token=229cf7eb-b7df-4815-9b33-ebcdc614bd25"
+  })
+  .then(() => {
+    createFirstGelukstegoed(cred.user.uid)
+  })
+  .then(() => {
+    addNewMemberToHuiskamer(cred.user.uid, userName)
+  })
+  .then(() => {
+    sendConfirmationEmail(email, userName) 
+  })
+  .then(() => {
+            notice.style.display = "flex"
+  })
+  }).catch((err) => {
+    alert(err)
+  });
+    };
+  };
+});
+};
+
+function createFirstGelukstegoed(usercred){
+
+  db.collection('Vitaminders')
+  .doc(usercred)
+  .collection("Gelukstegoed")
+  .doc().set({
+    Amount: 0,
+    PaymentId: "none",
+    Product: "Account created",
+    Type: "Plus",
+    Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
+  });
+};
+
+function sendConfirmationEmail(email, userName){
+
+  db.collection("Mail").doc().set({
+    to: [email],
+    cc: "info@vitaminds.nu",
+    message: {
+    subject: `Verifier je account op Vitaminds! `,
+    html: `Hallo ${userName}, </br></br>
+    Welkom bij de Vitaminds community. Het sociale netwerk voor imperfecte mensen.<br>
+    Een community van mensen die het lef hebben om kwetsbaar te zijn en verantwoordelijkheid durven te nemen voor hun eigen leven en persoonlijke ontwikkeling.
+    <br><br>
+    Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br>
+    Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.</br></br> 
+
+    Vriendelijke groet, </br></br>
+    Het Vitaminds Team </br></br>
+    <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
+    Gebruikersnaam: userName,
+    Emailadres: email,
+    Type: "Vitaminders"
+    }        
+});
+
+};
+
+!function registerVitaminderCoachQuestion(){
+
+  const button = document.getElementById("register-button-question")
+  const modal = document.getElementById("register-modal-coaching")
+
+  if(button != null){
+
+  button.addEventListener("click", () => {
+
+    const email = document.getElementById('register-email-question').value;
+    const passwordVM = document.getElementById('register-wachtwoord-question').value;
+    const passwordInput = document.getElementById('register-wachtwoord-question')
+    const repeatPasswordVM = document.getElementById("register-wachtwoord-repeat-question").value
+    const repeatPasswordVMInput = document.getElementById("register-wachtwoord-repeat-question")
+    const firstName = document.getElementById('register-firstname-question').value;
+    const lastName = document.getElementById('register-lastname-question').value;
+    const colour = getRandomColor()
+ 
   let userName = ""
 
   if (lastName != ""){
@@ -697,55 +807,39 @@ if(button != null){
       Usertype: "Vitaminder",
       Inspiratiepunten: 1,
       Email: email, 
-      MainGoal: contributionQuestion,
+      MainGoal: "",
       ID: cred.user.uid,
       Color: colour,
       Levensvragen: [],
       Profielfoto: "https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/dummy-profile-photo.jpeg?alt=media&token=229cf7eb-b7df-4815-9b33-ebcdc614bd25"
-  }).then(() => {
-    db.collection('Vitaminders').doc(cred.user.uid).collection("Gelukstegoed").doc().set({
-      Amount: 0,
-      PaymentId: "none",
-      Product: "Account created",
-      Type: "Plus",
-      Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
-    })
-    .then(() => {
-      addNewMemberToHuiskamer(cred.user.uid, userName)
-    })
-  .then(() => {
-    db.collection("Mail").doc().set({
-      to: [email],
-      cc: "info@vitaminds.nu",
-message: {
-subject: `Verifier je account op Vitaminds! `,
-html: `Hallo ${userName}, </br></br>
-      Welkom bij de Vitaminds community. Het sociale netwerk voor imperfecte mensen.<br>
-      Een community van mensen die het lef hebben om kwetsbaar te zijn en verantwoordelijkheid durven te nemen voor hun eigen leven en persoonlijke ontwikkeling.
-      <br><br>
-      Je kunt je vanaf nu inloggen met je emailadres en wachtwoord.<br><br> 
-      
-      Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.</br></br>
-      Vriendelijke groet, </br></br>
-      Het Vitaminds Team </br></br>
-      <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
-Gebruikersnaam: userName,
-Emailadres: email,
-Type: "Vitaminders"
-}        
-});
   })
-})
-.then(() => {
-            notice.style.display = "flex"
-        })
-    }).catch((err) => {
-      alert(err)
-    });
+  .then(() => {
+    createFirstGelukstegoed(cred.user.uid)
+    modal.style.display = "none"
+    showInputAfterRegister()
+  });
+  }).catch((err) => {
+    alert(err)
+  });
     };
   };
-});
-  }
+
+  });
+};
+}();
+
+
+function showInputAfterRegister(){
+  const input = document.getElementById("question-input")
+  const notice = document.getElementById("visitor-notice")
+  const anonymous = document.getElementById("radio-outer-div")
+  const button = document.getElementById("button-coach-question")
+
+  input.style.display = "block"
+  notice.style.display = "none"
+  anonymous.style.display = "block"
+  button.style.display = "block"
+}
 
 function addNewMemberToHuiskamer(cred, userName){
 

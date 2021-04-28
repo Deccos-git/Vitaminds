@@ -10,15 +10,27 @@
     });
 }();
 
-function closeModal(){
+!function closeModal(){
 
     const closeButton = document.getElementById("close-modal-div")
     const modal = document.getElementById("question-modal")
 
     closeButton.addEventListener("click", () => {
+
         modal.style.display = "none"
     });
-};
+}();
+
+!function closeRegisterModal(){
+
+    const closeButton = document.getElementById("close-register-modal-div")
+    const modal = document.getElementById("register-modal-coaching")
+
+    closeButton.addEventListener("click", () => {
+
+        modal.style.display = "none"
+    });
+}();
 
 !async function fillInAmountOfCoachesAndTherapists(dom, usertype, stringType){
 
@@ -55,7 +67,7 @@ function closeModal(){
 
             input.style.display = "block"
         } else {
-            notice.style.display = "block"
+            notice.style.display = "flex"
             anonymous.style.display = "none"
             button.style.display = "none"
         }
@@ -101,6 +113,7 @@ function saveQuestionToDatabase(auth){
             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
         }).then(() => {
             closeModalAfterSaving()
+            sendMailToAdmin()
         });
     });
 };
@@ -112,3 +125,36 @@ function closeModalAfterSaving(){
     modal.style.display = "none"
 
 };
+
+function sendMailToAdmin(){
+
+    db.collection("Mail").doc().set({
+        to: "info@vitaminds.nu",
+        cc: "info@vitaminds.nu",
+        message: {
+        subject: `Nieuwe coachvraag`,
+        html: `Hallo Gijs,</br></br>
+        
+        Iemand heeft een nieuwe coachvraag gesteld op Vitaminds.</br></br>
+        
+        Vriendelijke groet, </br></br>
+        Het Vitaminds Team </br></br>
+        <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
+        Gebruikersnaam: "Gijs"
+        }
+                
+        })
+
+};
+
+!function startRegistrationProces(){
+
+    const button = document.getElementById("button-start-register-proces")
+    const registrationModal = document.getElementById("register-modal-coaching")
+
+    button.addEventListener("click", () => {
+
+        registrationModal.style.display = "flex"
+
+    });
+}();

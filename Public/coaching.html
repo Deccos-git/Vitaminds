@@ -10,12 +10,20 @@
 
   gtag('config', 'UA-159826016-1');
 </script>
-
+    <meta id="meta-keywords" name="keywords" content="coaching">
+    <meta id="meta-description" property="og:description" name="description" content="Stel een coachvraag aan onze coaches">
+    <!-- Facebook crawl tags -->
+    <meta id="facebook-url" property="og:url" content="https://vitaminds.nu/coaching.html"/>
+    <meta property="og:type"  content="website"/>
+    <meta id="facebook-title" property="og:title" content="Coaching"/>
+    <meta id="facebook-description" property="og:description" content="Stel een vraag aan onze coaches"/>
+    <meta id="facebook-img" property="og:image" content="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/Hero-III.jpg?alt=media&token=907c7f4b-00b6-4783-8614-8bdf5908c069">
+    <Title>Coaching</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="Style/style.css">
-    <link rel="stylesheet" href="Style/one-on-one.css">
+    <link rel="stylesheet" href="Style/coaching.css">
     <link rel="shortcut icon" href="images/Favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -25,7 +33,6 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
     <meta name="keywords" content="Holistische coach, zijnscoach, ontwikkelcoach, lifestyle coach, gezinscoach, loopbaan coach, stress coach">
     <meta name="description" content="Coaches ondersteunen voor een gelukkig leven">
-    <title>Coaches die je ondersteunen bij een leven waar je blij van wordt</title>
 </head>
 <body>
 
@@ -78,7 +85,7 @@
           <div class="main-menu-mobile"><a href="tools.html">Tools</a></div>
         </li>
         <li>
-          <div class="main-menu-mobile"><a href="coaches.html">Coaches</a></div>
+          <div class="main-menu-mobile"><a href="coaching.html">Coaching</a></div>
         </li>
         <li>
           <div class="main-menu-mobile"><a href="events.html">Events</a></div>
@@ -119,7 +126,7 @@
       <div class="main-menu"><a href="groups.html">Groepen</a></div> 
       <div class="main-menu"><a href="workshops.html">Workshops</a></div>
       <div class="main-menu"><a href="tools.html">Tools</a></div>
-      <div class="main-menu"><a href="coaches.html">Coaches</a></div>
+      <div class="main-menu"><a href="coaching.html">Coaching</a></div>
       <div class="main-menu"><a href="events.html">Events</a></div>
     </div>
     <div id="auth-menu">
@@ -138,8 +145,8 @@
 
 <div id="explainer-div">
   <div id="text-div">
-    <p id="top-explainer-text">Ben je opzoek naar een coach die je online kan ondersteunen met je levensvraag en weet je niet waar je moet beginnen?</p>
-    <p>Stel hier je vraag en krijg antwoord van onze coaches. Jij bepaald vervolgens met welke coach je kennis wilt maken.</p> 
+    <p id="top-explainer-text">Ben je op zoek naar een coach die je online kan ondersteunen met je levensvraag en weet je niet waar je moet beginnen?</p>
+    <p>Stel hier je vraag en krijg antwoord van onze coaches. Jij bepaalt vervolgens met welke coach je kennis wilt maken.</p> 
   </div>
   <div id="image-div">
     <img src="images/design/one-on-one.png" alt="">
@@ -166,7 +173,7 @@
       Jij besluit welke coach jou het meeste aanspreekt
     </li>
     <li>
-      Start direct een chat met de coach naar keuze om een kennismakingsgesprek te plannen
+      Start direct een chat met je coach naar keuze om een kennismakingsgesprek te plannen
     </li>
   </ol>
 </div>
@@ -195,7 +202,8 @@
   
   <textarea name="" id="question-input" cols="40" rows="10" placeholder="Stel hier je vraag"></textarea>
   <div id="visitor-notice">
-    <p>Maak eerst een gratis <a href="Register.html"> Vitaminds account</a> aan om een vraag te stellen. Dan weten we naar wie we de antwoorden kunnen sturen :)</p>
+    <p>Maak eerst een gratis Vitaminds account aan om een vraag te stellen. Dan weten we naar wie we de antwoorden kunnen sturen :)</p>
+    <button id="button-start-register-proces" class="button-algemeen">Aanmaken</button>
   </div>
 
   <div id="radio-outer-div">
@@ -211,6 +219,26 @@
   </div>
 
   <button id="button-coach-question">Versturen</button>
+</div>
+
+<div id="register-modal-coaching">
+  <div id="close-register-modal-div">
+    <p>X</p>
+  </div>
+  <h2>Maak je gratis account aan</h2>
+  <h5>Je voornaam*</h5>
+  <input id="register-firstname-question" type="text" placeholder="Je voornaam">
+  <h5>Je achternaam</h5>
+  <input id="register-lastname-question" type="text" placeholder="Je achternaam">
+  <h5>Je emailadres*</h5>
+  <input id="register-email-question" type="email" placeholder="Emailadres">
+  <h5>Je wachtwoord*</h5>
+  <input id="register-wachtwoord-question" type="password" placeholder="Wachtwoord">
+  <h5>Herhaal je wachtwoord*</h5>
+  <input id="register-wachtwoord-repeat-question" type="password" placeholder="Herhaal je wachtwoord">
+  <button id="register-button-question">Aanmaken</button>
+  <div id="link-coach-account"><p>* verplicht invullen</p></div>
+  <div id="link-coach-account"><p>Bekijk ons <a href="privacy.html"> privacy beleid</a></p></div>
 </div>
 
 <!-- Toolbar mobile -->
@@ -265,6 +293,6 @@
           <script type="text/javascript" src="javascript/firebase.js"></script>
           <script type="text/javascript" src="javascript/auth.js"></script>
           <script type="text/javascript" src="javascript/index.js"></script>
-          <script type="text/javascript" src="javascript/one-on-one.js"></script>
+          <script type="text/javascript" src="javascript/coaching.js"></script>
 </body>
 </html>

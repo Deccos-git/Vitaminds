@@ -344,7 +344,7 @@ function registerForEvent(registerEventButton, titleEvent, organiserEvent, dateO
 
                                         Vriendelijke groet, </br></br>
                                         ${organiserEvent} </br></br>
-                                        <img src="../images/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
+                                        <img src="../images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
                                   Gebruikersnaam: naamClean,
                                   Emailadres: email,
                                   Type: "Event"
