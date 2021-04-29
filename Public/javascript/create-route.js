@@ -87,6 +87,7 @@ function saveInputAuth(){
             .set({
                 Eigenaar: "Vitaminds",
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                LastActive: firebase.firestore.Timestamp.fromDate(new Date()),
                 Gebruikersnaam: auth,
                 Goal: selected,
                 Levenslessen: [],

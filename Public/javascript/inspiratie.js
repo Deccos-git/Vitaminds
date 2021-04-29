@@ -667,6 +667,9 @@ function inspirerend(elem){
                                         Status: "Approved",
                                         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                                         Type: "Coach-inzicht"
+                                    })
+                                    .then(() => {
+                                        updateLastActive(levensvraagID, User.uid)
                                     });
                                 });
                             });
@@ -680,6 +683,25 @@ function inspirerend(elem){
         });
     });
 }();
+
+function updateLastActive(levensvraagID, useruid){
+
+    db.collectionGroup("Levensvragen")
+    .where("Levensvraag", "==", levensvraagID)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            db.collection("Vitaminders").doc(useruid)
+            .collection("Levensvragen")
+            .doc(doc.id)
+            .update({
+                LastActive: firebase.firestore.Timestamp.fromDate(new Date()),
+                Lessons: firebase.firestore.FieldValue.increment(1)
+            });
+        });
+    });
+
+};
 
 // Load lifelessons
 

@@ -287,7 +287,7 @@ function supportCTATitle(userName, supportCTA){
 
             const userNameClean = doc.data().GebruikersnaamClean
 
-            supportCTA.innerHTML = `Help ${userNameClean} om zijn doel te bereiken`
+            supportCTA.innerHTML = `Help ${userNameClean} om zijn/haar doel te bereiken`
 
         });
     });

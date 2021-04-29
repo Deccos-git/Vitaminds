@@ -1,3 +1,8 @@
+const IDurl0 = window.location.href.replace(/^.*[\\\/]/, '')
+const IDurl = IDurl0.replace('.html', '')
+
+// Community overview
+
 !function hideNoticeMakeAccountIfAuth(){
 
     const authButton = document.getElementsByClassName("open-community-element")
@@ -45,6 +50,7 @@ showVisitorNotice("visitor-button-questions", "notice-questions")
 showVisitorNotice("visitor-button-promotions", "notice-promotions")
 
 
+// Gratitude
 
 !function participate(){
 
@@ -260,237 +266,330 @@ function showAuthorNameOfResource(author, authorP){
 };
 
 
-// Community question
+// Goals
 
-!function personalizedTitle(){
+!function goalQuery(){
 
-    const title = document.getElementById("personalized-question-title")
+    const domOverview = document.getElementById("goal-overview")
 
-    if(title != null){
-
-        auth.onAuthStateChanged(User =>{
-            db.collection("Vitaminders")
-            .doc(User.uid).get().then(doc =>{
-
-                const userName = doc.data().GebruikersnaamClean
-
-                title.innerHTML = `Stel een vraag, ${userName}`
-
-            });
-        });
-    };
-}();
-
-!function saveNewQuestion(){
-
-    const button = document.getElementById("save-question-button")
-
-    if(button != null){
-
-        button.addEventListener("click", () => {
-
-            const input = document.getElementById("input-question").value
-
-            button.innerText = "Ingediend"
-            button.id = "Clicked"
-
-            auth.onAuthStateChanged(User =>{
-                db.collection("Vitaminders")
-                .doc(User.uid).get().then(doc =>{
-
-                    const userName = doc.data().Gebruikersnaam
-                    const userNameClean = doc.data().GebruikersnaamClean
-                    const userPhoto = doc.data().Profielfoto
-
-                    db.collection("Tools").doc().set({
-                        Type: "Question",
-                        Question: input,
-                        User: userName,
-                        Id: idClean,
-                        UserPhoto: userPhoto,
-                        UserClean: userNameClean,
-                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                        Owner: "Vitaminds"
-                    });
-                });
-            });
-        });
-    };
-}();
-
-function linkToUser(userDiv, userName){
-
-    userDiv.addEventListener("click", () => {
-
-        window.open("../Vitaminders/" + userName + ".html", "_self");
-
-    })
-
-}
-
-!function displayQuestionsInOverview(){
-
-    const DOM = document.getElementById("question-overview")
-
-    db.collection("Tools").where("Type", "==", "Question")
+    db.collectionGroup("Levensvragen")
+    .where("Openbaar", "==", "Ja")
+    .orderBy("LastActive", "desc")
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
-            const question = doc.data().Question
-            const timestamp = doc.data().Timestamp
-            const userClean = doc.data().UserClean
-            const userName = doc.data().User
-            const userPhoto = doc.data().UserPhoto
-            const identifier = doc.data().Id
+            const goalClean = doc.data().LevensvraagClean
+            const user = doc.data().Gebruikersnaam
+            const id = doc.data().ID
+            const lessons = doc.data().Lessons
 
-            const questionInnerDiv = document.createElement("div")
-                questionInnerDiv.setAttribute("class", "question-inner-div")
-            const userDiv = document.createElement("div")
-                userDiv.setAttribute("class", "question-user-div")
-            const userPhotoImg = document.createElement("img")
-            const userNameP = document.createElement("p")
-            const questionP = document.createElement("p")
-                questionP.setAttribute("class", "question-p")
-            const dateP = document.createElement("p")
-                dateP.setAttribute("class", "timestamp-question")
-            const socialDiv = document.createElement("div")
-                socialDiv.setAttribute("class", "question-social-div")
-            const answerIconDiv = document.createElement("div")
-                answerIconDiv.setAttribute("class", "answer-icon-div")
-            const answerIcon = document.createElement("img")
-            const answerIconText = document.createElement("p")
-
-            questionP.innerText = question
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            dateP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
-            userPhotoImg.src = userPhoto
-            userNameP.innerText = userClean
-            answerIcon.src = "../images/design/talk-icon.png"
-            answerIconText.innerText = "Geef een antwoord"
-
-            DOM.appendChild(questionInnerDiv)
-            questionInnerDiv.appendChild(userDiv)
-            userDiv.appendChild(userPhotoImg)
-            userDiv.appendChild(userNameP)
-            questionInnerDiv.appendChild(questionP)
-            questionInnerDiv.appendChild(dateP)
-            questionInnerDiv.appendChild(socialDiv)
-            socialDiv.appendChild(answerIconDiv)
-            answerIconDiv.appendChild(answerIcon)
-            answerIconDiv.appendChild(answerIconText)
-
-            linkToUser(userDiv, userName)
-            addAnswerToQuestionTextarea(answerIconDiv, questionInnerDiv, question, identifier)
-            appendAnswersToQuestion(doc.id, identifier, questionInnerDiv)
+            goalCard(goalClean, domOverview, user, id, lessons)
 
         });
     });
 }();
 
-function addAnswerToQuestionTextarea(answerIcon, questionInnerDiv, question, identifier){
+function goalCard(goalClean, domOverview, user, id, lessons){
 
-    const replyDiv = document.createElement("div")
-            replyDiv.setAttribute("class", "reply-div")
-    const textarea = document.createElement("textarea")
-        textarea.setAttribute("placeholder", "Jouw antwoord")
-    const answerButton = document.createElement("button")
-        answerButton.setAttribute("class", "button-algemeen")
-        answerButton.setAttribute("data-question", question)
-        answerButton.setAttribute("data-idcode", identifier)
+    const goalCard = document.createElement("div")
+        goalCard.setAttribute("class", "goal-card")
+    const goalTitle = document.createElement("h2")
+    const metaDiv = document.createElement("div")
+        metaDiv.setAttribute("class", "meta-div")
+    const profilePhoto = document.createElement("img")
+        profilePhoto.setAttribute("class", "profile-photo")
+    const nameP = document.createElement("p")
+        nameP.setAttribute("class", "coach-name")
+    const button = document.createElement("button")
+        button.setAttribute("class", "button-algemeen button-support")
+    const infoDiv = document.createElement("div")
+        infoDiv.setAttribute("class", "info-div")
+    const numberOfLessons = document.createElement("p")
+    const numberOfSupport = document.createElement("p")
+    const dateP = document.createElement("p")
+    const lessonP = document.createElement("p")
+        lessonP.setAttribute("class", "number-of-lessons-card")
 
-        answerButton.innerText = "Verzenden"
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-    saveAnswer(answerButton, textarea)
+    goalTitle.innerText = goalClean
+    button.innerText = "Bekijk"
+    lessonP.innerText = `Aantal lessen: ${lessons}`
 
-    answerIcon.addEventListener("click", () => {
-    
-        questionInnerDiv.appendChild(replyDiv)
-        replyDiv.appendChild(textarea)
-        replyDiv.appendChild(answerButton)
+    userMeta(user, profilePhoto, nameP,  metaDiv)
+    openGoal(button, id)
 
+    domOverview.appendChild(goalCard)
+    goalCard.appendChild(metaDiv)
+    metaDiv.appendChild(profilePhoto)
+    metaDiv.appendChild(nameP)
+    goalCard.appendChild(goalTitle)
+    goalCard.appendChild(infoDiv)
+    infoDiv.appendChild(numberOfLessons)
+    infoDiv.appendChild(numberOfSupport)
+    infoDiv.appendChild(lessonP)
+    goalCard.appendChild(dateP)
+    goalCard.appendChild(button)
+};
+
+function userMeta(user, profilePhoto, nameP, metaDiv){
+
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", user)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const userClean = doc.data().GebruikersnaamClean
+            const photo = doc.data().Profielfoto
+
+            profilePhoto.src = photo
+            nameP.innerText = userClean
+
+            if(photo === undefined){
+                profilePhoto.src = "https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/dummy-profile-photo.jpeg?alt=media&token=229cf7eb-b7df-4815-9b33-ebcdc614bd25"
+            };
+
+            metaDiv.addEventListener("click", () => {
+                window.open("../Vitaminders/" + user + ".html", "_self");
+            });
+
+        });
     });
 };
 
-function saveAnswer(button, textarea){
+function openGoal(button, id){
 
     button.addEventListener("click", () => {
 
-        button.innerText = "Verzonden"
-        button.id = "Clicked"
+        window.open("../Goals/" + id, "_self")
+    });
+};
 
-        const question = button.dataset.question
-        const idCode = button.dataset.idcode
+!function goalDetailPage(){
 
-        const answer = textarea.value
+    db.collectionGroup("Levensvragen")
+    .where("ID", "==", IDurl)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const goalClean = doc.data().LevensvraagClean
+            const goal = doc.data().Levensvraag
+            const description = doc.data().Omschrijving
+            const user = doc.data().Gebruikersnaam
+
+            createDomElements(goalClean, description, user, goal)
+            addLessonsToGoal(goal)
+
+        });
+    });
+}();
+
+function createDomElements(goalClean, description, user, goal){
+
+    const outerDiv = document.getElementById("goal-wall")
+
+    const metaDiv = document.createElement("div")
+        metaDiv.setAttribute("class", "meta-div")
+    const profilePhoto = document.createElement("img")
+        profilePhoto.setAttribute("class", "profile-photo")
+    const nameP = document.createElement("p")
+        nameP.setAttribute("class", "coach-name")
+    const h1 = document.createElement("h1")
+    const descriptionP = document.createElement("p")
+        descriptionP.setAttribute("class", "goal-description")
+    const giveAdviseButton = document.createElement("button")
+    const supportCTADiv = document.createElement("div")
+        supportCTADiv.setAttribute("id", "support-CTA-div")
+    const supportCTA = document.createElement("p")
+    const supportInput = document.createElement("textarea")
+        supportInput.placeholder = "Schrijf hier je tip, link of vraag."
+        supportInput.style.width = "90%"
+        supportInput.style.height = "200px"
+        supportInput.style.borderRadius = "5px"
+    const supportTips = document.createElement("div")
+    const supportButton = document.createElement("button")
+        supportButton.setAttribute("class", "button-algemeen")
+        supportButton.setAttribute("id", "save-support")
+
+        h1.innerText = goalClean
+        descriptionP.innerText = description
+        giveAdviseButton.innerText = "Geef advies"
+        supportButton.innerText = "Versturen"
+        userMeta(user, profilePhoto, nameP)
+        metaDivLinkToProfile(metaDiv, nameP)
+        supportCTATitle(user, supportCTA)
+        tipsCTASupport(supportTips)
+        saveTip(supportButton, user, supportInput, goal)
+
+        outerDiv.appendChild(metaDiv)
+        metaDiv.appendChild(profilePhoto)
+        metaDiv.appendChild(nameP)
+        outerDiv.appendChild(h1)
+        outerDiv.appendChild(descriptionP)
+        // outerDiv.appendChild(giveAdviseButton)
+        outerDiv.appendChild(supportCTADiv)
+        supportCTADiv.appendChild(supportCTA)
+        supportCTADiv.appendChild(supportTips)
+        supportCTADiv.appendChild(supportInput)
+        supportCTADiv.appendChild(supportButton)
+
+};
+
+function saveTip(supportButton, user, supportInput, goal){
+
+    supportButton.addEventListener("click", () => {
+
+        supportButton.setAttribute("class", "button-clicked")
+        supportButton.innerText = "Verstuurd"
+
+        const tip = supportInput.value
 
         auth.onAuthStateChanged(User =>{
-            db.collection("Vitaminders")
-            .doc(User.uid).get().then(doc =>{
+        db.collection("Vitaminders")
+        .doc(User.uid).get().then(doc =>{
 
-                const userName = doc.data().Gebruikersnaam
-                const userNameClean = doc.data().GebruikersnaamClean
-                const userPhoto = doc.data().Profielfoto
+            const auth = doc.data().Gebruikersnaam
+            const authClean = doc.data().GebruikersnaamClean
 
-                db.collection("Tools")
-                .where("Question", "==", question)
-                .where("Id", "==", idCode)
-                .get().then(querySnapshot => {
-                    querySnapshot.forEach(doc => {
-
-                        db.collection("Tools")
-                        .doc(doc.id)
-                        .collection("Answer")
-                        .doc()
-                        .set({
-                            Answer: answer,
-                            Question: question,
-                            QuestionID: idCode,
-                            UserName: userName,
-                            UserNameClean: userNameClean,
-                            UserPhoto: userPhoto,
-                            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                            Owner: "Vitaminds",
-                            Type: "Answer"
-                        });
-                    });
+                db.collection("Vitaminders").doc(User.uid)
+                .collection("Levenslessen").doc().set({
+                    Tipper: auth,
+                    TipperClean: authClean,
+                    Gebruikersnaam: user,
+                    Levensles: tip,
+                    Levensvraag: goal,
+                    Status: "Approved",
+                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                    Type: "Community-tip"
+                })
+                .then(() => {
+                    updateGoalLastActive(goal, User.uid)
                 });
             });
         });
     });
 };
 
-function appendAnswersToQuestion(documentID, questionID, questionInnerDiv){
+function updateGoalLastActive(goal, useruid){
 
-    db.collection("Tools").doc(documentID)
-    .collection("Answer")
-    .where("QuestionID", "==", questionID)
-    .orderBy("Timestamp", "desc")
+    db.collectionGroup("Levensvragen")
+    .where("Levensvraag", "==", goal)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
-            const answer = doc.data().Answer
-            const userNameClean = doc.data().UserNameClean
-            const userName = doc.data().UserName
+            db.collection("Vitaminders").doc(useruid)
+            .collection("Levensvragen")
+            .doc(doc.id)
+            .update({
+                LastActive: firebase.firestore.Timestamp.fromDate(new Date()),
+                Lessons: firebase.firestore.FieldValue.increment(1)
+            });
+        });
+    });
+};
 
-            const answerDiv = document.createElement("div")
-                answerDiv.setAttribute("class", "answer-div")
-            const answerP = document.createElement("p")
-                answerP.setAttribute("class", "answer-p")
-            const userNameP = document.createElement("p")
-                userNameP.setAttribute("class", "answer-username")
+function metaDivLinkToProfile(metaDiv, nameP){
 
-            answerP.innerText = answer
-            userNameP.innerText = userNameClean
+    metaDiv.addEventListener("click", () => {
+        window.open("../Vitaminders/" + nameP + ".html", "_self");
+    });
+};
 
-            linkToUser(userNameP, userName)
+function supportCTATitle(userName, supportCTA){
 
-            questionInnerDiv.appendChild(answerDiv)
-            answerDiv.appendChild(userNameP)
-            answerDiv.appendChild(answerP)
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", userName)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const userNameClean = doc.data().GebruikersnaamClean
+
+            supportCTA.innerHTML = `Help ${userNameClean} om zijn/haar doel te bereiken`
 
         });
     });
 };
+
+function tipsCTASupport(tips){
+
+    tips.innerHTML = "<ul><li>Geef een tip</li><li>Link naar een interessante website</li><li>Stel een verdiepende vraag</li></ul>"
+
+};
+
+function addLessonsToGoal(goal){
+
+    const goalWall = document.getElementById("goal-social-wall")
+
+    db.collectionGroup("Levenslessen")
+    .where("Levensvraag", "==", goal)
+    .orderBy("Timestamp", "desc")
+    .onSnapshot(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const lesson = doc.data().Levensles
+            const timestamp = doc.data().Timestamp
+            const type = doc.data().Type
+            const tipper = doc.data().Tipper
+            const tipperClean = doc.data().TipperClean
+            const author = doc.data().Auteur 
+            const source = doc.data().Source
+
+            lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, author, source)
+
+        });
+    });
+};
+
+function lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, author, source){
+
+    const innerDiv = document.createElement("div")
+        innerDiv.setAttribute("class", "social-wall-coaches-inner-div")
+    const typeP = document.createElement("p")
+        typeP.setAttribute("class", "type-support")
+    const lessonP = document.createElement("p")
+    const timestampP = document.createElement("p")
+        timestampP.setAttribute("class", "timestamp-support")
+
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
+        lessonP.innerText = lesson
+        typeDescription(type, typeP, tipper, tipperClean, author, source)
+
+        goalWall.appendChild(innerDiv)
+        innerDiv.appendChild(typeP)
+        innerDiv.appendChild(lessonP)
+        innerDiv.appendChild(timestampP)
+
+};
+
+function typeDescription(type, typeP, tipper, tipperClean, author, source){
+
+    if(type === "Community-tip"){
+        typeP.innerHTML = `Hulp van <a href="../Vitaminders/${tipper}">${tipperClean}</a>`
+    } else if (type === "Check-in"){
+        typeP.innerHTML = "Check in"
+    } else if (type === "Coach-inzicht"){
+        linkAuthorAndArticle(typeP, author, source)
+    } else if (type === "Tool: Check in"){
+        typeP.innerHTML = 'Tool geactiveerd: <a href="../Tools/Check-in.html">Stok achter de deur</a>'
+    };
+};
+
+function linkAuthorAndArticle(typeP, author, source){
+
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", author)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const coach = doc.data().GebruikersnaamClean
+
+            typeP.innerHTML = `Geïnspireerd door <a href="../Vitaminders/${author}">${coach}</a> in artikel <a href="../Artikelen/${source}.html">${source}</a>`
+
+        });
+    });
+};
+
 
 // Promotions
 

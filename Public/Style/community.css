@@ -21,6 +21,143 @@
     background-color: #FFF;
 }
 
+#create-new-goal-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#goal-overview{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background-color: #a7bdbd26;
+}
+
+.meta-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.button-support{
+    margin-bottom: 20px;
+}
+
+#goal-wall {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#save-support {
+    margin-top: 20px;
+}
+
+.goal-description {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 20px 100px;
+}
+
+#support-CTA-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a7bdbd26;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px;
+}
+
+#goal-social-wall {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #a7bdbd26;
+}
+
+.social-wall-coaches-inner-div {
+    margin: 30px 20% 30px 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    text-align: left;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px -1px rgb(0 0 0 / 12%);
+    padding: 20px 20px 0px 20px;
+    background-color: white;
+    width: 650px;
+}
+
+.timestamp-support {
+    font-size: 14px;
+}
+
+.number-of-lessons-card{
+    font-size: 18px;
+    margin-bottom: 0;
+    text-align: center;
+    margin-top: auto;
+}
+
+.button-clicked{
+    background-color: #008e8e;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+
+.type-support {
+    font-size: 18px;
+    margin-top: 0px;
+    cursor: pointer;
+}
+
+.meta-div img {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+}
+
+.meta-div p {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.goal-card {
+    margin: 30px 10px 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    text-align: left;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px -1px rgb(0 0 0 / 12%);
+    padding: 20px 20px 0px 20px;
+    background-color: white;
+    width: 250px;
+}
+
+#create-new-goal-button{
+    background-color: #122B46;
+    border-radius: 20px;
+    border: 0px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    margin: 50px;
+    width: auto;
+    align-self: center;
+    box-shadow: 0 5px 9px 0 rgb(0 0 0 / 20%), 0 7px 21px 0 rgb(0 0 0 / 19%);
+}
+
 #community-happiness-chart-div{
     display: flex;
     flex-direction: column;

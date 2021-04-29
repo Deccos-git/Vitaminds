@@ -38,7 +38,6 @@
     width: 210px;
     height: 210px;
     border-radius: 50%;
-    border: 1px solid #122b46;
 }
 
 /* Private public buttons */
@@ -627,8 +626,10 @@
 }
 
 #follow-button{
-    margin: 5px 0px 0px 0px;
+    margin: 5px 0px 10px 0px;
     display: none;
+    justify-content: center;
+    width: 200px;
 }
 
 #favorite-coaches-div{
@@ -1024,6 +1025,7 @@
 
 #chat-button{
     display: none;
+    justify-content: center;
     background-color: #008e8e;
     border: 1px #008e8e solid;
     border-radius: 10px;
@@ -1031,6 +1033,7 @@
     font-size: 18px;
     color: white;
     cursor: pointer;
+    width: 200px;
 }
 
 .support-card-message{
@@ -1160,6 +1163,7 @@
 #select-button{
     display: none;
     margin: 5px;
+    width: 200px;
 }
 
 #scroll-indicator{
@@ -1190,7 +1194,7 @@
     }
 
     #chat-button {
-        margin-left: 0px;
+        margin: 0px;
     }
 
     #digimind-header-img {

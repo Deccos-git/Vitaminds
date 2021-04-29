@@ -982,11 +982,34 @@ function saveCheckInByProgress(levensvraagID, publicGoal){
                                         Status: "Approved",
                                         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                                         Type: "Check-in"
-                                });    
+                                })
+                                .then(() => {
+
+                                        updateGoalLastActive(levensvraagID, doc.id)
+
+                                });   
                         });
                 });
         });
 };
+
+function updateGoalLastActive(goal, docid){
+
+        db.collectionGroup("Levensvragen")
+        .where("Levensvraag", "==", goal)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+    
+                db.collection("Vitaminders").doc(docid)
+                .collection("Levensvragen")
+                .doc(doc.id)
+                .update({
+                    LastActive: firebase.firestore.Timestamp.fromDate(new Date()),
+                    Lessons: firebase.firestore.FieldValue.increment(1)
+                });
+            });
+        });
+    };
 
 function procesPrivatePublic(openbaarSetting, privateSetting, privateTip){
 
@@ -2016,17 +2039,26 @@ function activateCheckIn(){
                         });
                 });
         }).then(() => {
-                db.collectionGroup("Levensvragen").where("LevensvraagClean", "==", goalOption).get().then(querySnapshot => {
+                db.collectionGroup("Levensvragen")
+                .where("LevensvraagClean", "==", goalOption)
+                .get().then(querySnapshot => {
                         querySnapshot.forEach(doc => {
 
                                 const levensvraag = doc.data().Levensvraag
 
-                db.collection("Vitaminders").where("Gebruikersnaam", "==", naam).get().then(querySnapshot => {
+                db.collection("Vitaminders")
+                .where("Gebruikersnaam", "==", naam)
+                .get().then(querySnapshot => {
                         querySnapshot.forEach(doc1 => {
-                db.collectionGroup("Levensvragen").where("Levensvraag", "==", levensvraag).get().then(querySnapshot => {
+
+                db.collectionGroup("Levensvragen")
+                .where("Levensvraag", "==", levensvraag)
+                .get().then(querySnapshot => {
                         querySnapshot.forEach(doc2 => {
 
-                                db.collection("Vitaminders").doc(doc1.id).collection("Levensvragen").doc(doc2.id).update({
+                                db.collection("Vitaminders").doc(doc1.id)
+                                .collection("Levensvragen").doc(doc2.id)
+                                .update({
                                         Levenslessen: firebase.firestore.FieldValue.arrayUnion("Tool geactiveerd: Check in")
                                                         });
                                                 })

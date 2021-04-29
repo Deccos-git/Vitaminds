@@ -164,6 +164,12 @@ app.get('/Cooperation/:id',function(req,res)
     res.sendFile('cooperate.html', { root: __dirname });
 });
 
+// Goals
+app.get('/Goals/:id',function(req,res)
+{
+    res.sendFile('goal.html', { root: __dirname });
+});
+
 // Events
 app.get('/eventpage/:id',function(req,res)
 {
