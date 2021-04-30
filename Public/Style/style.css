@@ -1240,6 +1240,14 @@ ul{
   border-top: 1px solid lightgray;
 }
 
+.social-div-goals{
+  display: none;
+  justify-content: space-evenly;
+  padding: 5px;
+  margin-top: 10px;
+  width: fit-content;
+}
+
 .social-icon-div{
   display: flex;
   flex-direction: column;
@@ -1257,7 +1265,7 @@ ul{
   font-size: 12px;
   text-align: center;
   font-weight: bold;
-  margin:  2px 0px 0px 0px;
+  margin:  5px 0px 0px 0px;
   color: darkgray;
 }
 

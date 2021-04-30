@@ -301,16 +301,11 @@ function goalCard(goalClean, domOverview, user, id, lessons){
     const nameP = document.createElement("p")
         nameP.setAttribute("class", "coach-name")
     const button = document.createElement("button")
-        button.setAttribute("class", "button-algemeen button-support")
+        button.setAttribute("class", "button-support")
     const infoDiv = document.createElement("div")
         infoDiv.setAttribute("class", "info-div")
-    const numberOfLessons = document.createElement("p")
-    const numberOfSupport = document.createElement("p")
-    const dateP = document.createElement("p")
     const lessonP = document.createElement("p")
         lessonP.setAttribute("class", "number-of-lessons-card")
-
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
     goalTitle.innerText = goalClean
     button.innerText = "Bekijk"
@@ -325,10 +320,7 @@ function goalCard(goalClean, domOverview, user, id, lessons){
     metaDiv.appendChild(nameP)
     goalCard.appendChild(goalTitle)
     goalCard.appendChild(infoDiv)
-    infoDiv.appendChild(numberOfLessons)
-    infoDiv.appendChild(numberOfSupport)
     infoDiv.appendChild(lessonP)
-    goalCard.appendChild(dateP)
     goalCard.appendChild(button)
 };
 
@@ -526,6 +518,7 @@ function addLessonsToGoal(goal){
     .onSnapshot(querySnapshot => {
         querySnapshot.forEach(doc => {
 
+            const user = doc.data().Gebruikersnaam
             const lesson = doc.data().Levensles
             const timestamp = doc.data().Timestamp
             const type = doc.data().Type
@@ -534,13 +527,13 @@ function addLessonsToGoal(goal){
             const author = doc.data().Auteur 
             const source = doc.data().Source
 
-            lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, author, source)
+            lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, author, source, user)
 
         });
     });
 };
 
-function lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, author, source){
+function lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, author, source, user){
 
     const innerDiv = document.createElement("div")
         innerDiv.setAttribute("class", "social-wall-coaches-inner-div")
@@ -549,16 +542,19 @@ function lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, auth
     const lessonP = document.createElement("p")
     const timestampP = document.createElement("p")
         timestampP.setAttribute("class", "timestamp-support")
+    const socialIconOuterDiv = document.createElement("div")
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
         lessonP.innerText = lesson
         typeDescription(type, typeP, tipper, tipperClean, author, source)
+        addSocialIconsToMessage(user, lesson, socialIconOuterDiv, innerDiv)
 
         goalWall.appendChild(innerDiv)
         innerDiv.appendChild(typeP)
         innerDiv.appendChild(lessonP)
         innerDiv.appendChild(timestampP)
+        innerDiv.appendChild(socialIconOuterDiv)
 
 };
 
@@ -588,6 +584,231 @@ function linkAuthorAndArticle(typeP, author, source){
 
         });
     });
+};
+
+function socialStartIcon(socialIconOuterDiv, socialIconDiv){
+    
+    startIcon = document.createElement("img")
+        startIcon.setAttribute("class", "socials-start-icon")
+
+    startIcon.src = "../images/heart-icon.png"
+
+    socialIconOuterDiv.appendChild(startIcon)
+
+    startIcon.addEventListener("mouseover", () => {
+        socialIconDiv.style.display = "flex"
+        startIcon.style.display = "none"
+    });
+
+    socialIconDiv.addEventListener("mouseleave", () => {
+        socialIconDiv.style.display = "none"
+        startIcon.style.display = "flex"
+    });
+
+};
+
+function addDataToSocial(supportType, userName, message){
+        
+    supportType.setAttribute("data-username", userName)
+    supportType.setAttribute("data-message", message)
+
+};
+
+function addSocialIconsToMessage(user, message, socialIconOuterDiv, innerDiv){
+    
+    const socialIconDiv = document.createElement("div")
+    socialIconDiv.setAttribute("class", "social-div-goals") 
+
+    const IFeelForYouIconDiv = document.createElement("div")
+    const InspirationIconDiv = document.createElement("div")
+    const yourGoodTheWayYouAreDiv = document.createElement("div")
+    const keepAtItDiv = document.createElement("div")
+    const yourNotAloneDiv = document.createElement("div")
+
+    const IFeelForYouIconP = document.createElement("p")
+        IFeelForYouIconP.setAttribute("class", "social-icon-p")
+    const InspirationIconP = document.createElement("p")
+    InspirationIconP.setAttribute("class", "social-icon-p")
+    const yourGoodTheWayYouAreP = document.createElement("p")
+        yourGoodTheWayYouAreP.setAttribute("class", "social-icon-p")
+    const keepAtItP = document.createElement("p")
+        keepAtItP.setAttribute("class", "social-icon-p")
+    const yourNotAloneP = document.createElement("p")
+        yourNotAloneP.setAttribute("class", "social-icon-p")
+
+    IFeelForYouIconP.innerHTML = "Ik leef <br> met je mee"
+    InspirationIconP.innerHTML = "Inspirerend"
+    yourGoodTheWayYouAreP.innerHTML = "Je bent goed <br> zoals je bent"
+    keepAtItP.innerHTML = "Ga zo door!"
+    yourNotAloneP.innerHTML = "Je staat er <br> niet alleen voor"
+
+    IFeelForYouIconDiv.setAttribute("class", "social-icon-div") 
+    InspirationIconDiv.setAttribute("class", "social-icon-div")  
+    yourGoodTheWayYouAreDiv.setAttribute("class", "social-icon-div") 
+    keepAtItDiv.setAttribute("class", "social-icon-div") 
+    yourNotAloneDiv.setAttribute("class", "social-icon-div") 
+
+    addDataToSocial(IFeelForYouIconDiv, user, message)
+    addDataToSocial(InspirationIconDiv, user, message)
+    addDataToSocial(yourGoodTheWayYouAreDiv, user, message)
+    addDataToSocial(keepAtItDiv, user, message)
+    addDataToSocial(yourNotAloneDiv, user, message)
+
+    auth.onAuthStateChanged(User =>{
+        if(User){
+        const userRef = db.collection("Vitaminders").doc(User.uid);
+        userRef.get().then(function(doc) {
+
+                const auth = doc.data().Gebruikersnaam
+
+                savebutton(IFeelForYouIconDiv, "IFeelForYou", auth, IFeelForYouIconP, "Ik leef met je mee")
+                savebutton(InspirationIconDiv, "Inspiration", auth, InspirationIconP, "Inspirerend")
+                savebutton(yourGoodTheWayYouAreDiv, "YourGoodTheWayYouAre", auth, yourGoodTheWayYouAreP, "Je bent goed zoals je bent")
+                savebutton(keepAtItDiv, "KeepAtIt", auth, keepAtItP, "Ga zo door!")
+                savebutton(yourNotAloneDiv, "YourNotAlone", auth, yourNotAloneP, "Je staat er niet alleen voor")
+
+            });
+        };
+    });
+
+    const IFeelForYouIcon = document.createElement("img")
+    const InspirationIcon = document.createElement("img")
+    const yourGoodTheWayYouAre = document.createElement("img")
+    const keepAtIt = document.createElement("img")
+    const yourNotAlone = document.createElement("img")
+
+    IFeelForYouIcon.src = "../images/design/person-24px-heart.png"
+    InspirationIcon.src = "../images/comparison-icon.png"
+    yourGoodTheWayYouAre.src = "../images/design/person-24px-check.png"
+    keepAtIt.src = "../images/heart-icon.png"
+    yourNotAlone.src = "../images/design/group-24px.png"
+
+    socialIconDiv.appendChild(IFeelForYouIconDiv)
+    IFeelForYouIconDiv.appendChild(IFeelForYouIcon)
+    IFeelForYouIconDiv.appendChild(IFeelForYouIconP)
+    socialIconDiv.appendChild(InspirationIconDiv)
+    InspirationIconDiv.appendChild(InspirationIcon)
+    InspirationIconDiv.appendChild(InspirationIconP)
+    socialIconDiv.appendChild(yourGoodTheWayYouAreDiv)
+    yourGoodTheWayYouAreDiv.appendChild(yourGoodTheWayYouAre)
+    yourGoodTheWayYouAreDiv.appendChild(yourGoodTheWayYouAreP)
+    socialIconDiv.appendChild(keepAtItDiv)
+    keepAtItDiv.appendChild(keepAtIt)
+    keepAtItDiv.appendChild(keepAtItP)
+    socialIconDiv.appendChild(yourNotAloneDiv)
+    yourNotAloneDiv.appendChild(yourNotAlone)
+    yourNotAloneDiv.appendChild(yourNotAloneP)
+
+    socialStartIcon(socialIconOuterDiv, socialIconDiv)
+    socialIconOuterDiv.appendChild(socialIconDiv)
+}
+
+function showSocialDescription(iconDiv, iconP){
+    iconDiv.addEventListener("mouseover", () => {
+        iconP.style.display = "block"
+    });
+
+    iconDiv.addEventListener("mouseout", () => {
+        iconP.style.display = "none"
+    });
+};
+
+function savebutton(supportType, support, auth, notice, socialTypeWritten){
+    
+    supportType.addEventListener("click", () => {
+
+        const username = supportType.dataset.username
+        const message = supportType.dataset.message
+
+        // saveInMessage(support, username, message)
+        saveInUser(username, auth, message, support, socialTypeWritten)
+
+        notice.innerText = "Verstuurd"
+        notice.style.color = "#8e0000"
+
+    });
+};
+
+function saveInMessage(support, username, message){
+    
+    db.collection("Coachgroups")
+    .where("Room", "==", titleOfRoom())
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            db.collection("Coachgroups")
+            .doc(doc.id)
+            .collection("Messages")
+            .where("Room", "==", titleOfRoom())
+            .where("Auth", "==", username)
+            .where("Message", "==", message)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc1 => {
+
+                    db.collection("Coachgroups")
+                    .doc(doc.id)
+                    .collection("Messages")
+                    .doc(doc1.id)
+                    .update({
+                        Support: firebase.firestore.FieldValue.arrayUnion(support)
+                    });
+                });
+            });
+        });
+    });
+};
+
+function saveInUser(username, giver, message, support, socialTypeWritten){
+
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", username)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const email = doc.data().Email
+            const usernameClean = doc.data().GebruikersnaamClean
+
+            sendMailNewSocial(email, usernameClean, socialTypeWritten)
+
+            db.collection("Vitaminders")
+            .doc(doc.id)
+            .collection("Support")
+            .doc()
+            .set({
+                Type: support,
+                Giver: giver,
+                Reciever: username,
+                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                Message: message,
+                Source: IDurl,
+                SourceType: "Goals",
+                Status: "New"
+            });
+        });
+    });
+};
+
+function sendMailNewSocial(email, gebruikersnaamClean, socialTypeWritten){
+
+    db.collection("Mail").doc().set({
+        to: email,
+        cc: "info@vitaminds.nu",
+        message: {
+        subject: `Nieuwe steunreactie op Vitaminds`,
+        html: `Hallo ${gebruikersnaamClean},</br></br>
+        
+        Je hebt een nieuwe steunreactie: <b>"${socialTypeWritten}"</b>.</br></br>
+
+        Ga naar <a href="www.vitaminds.nu">Vitaminds</a> en bekijk je nieuwe reactie.</br></br>
+        
+        Vriendelijke groet, </br></br>
+        Het Vitaminds Team </br></br>
+        <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`
+        }
+                
+        }).catch((err) => {
+        console.log(err)
+        });
 };
 
 

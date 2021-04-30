@@ -2009,7 +2009,8 @@ function saveInUser(username, giver, message, support, socialTypeWritten){
                 Reciever: username,
                 Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                 Message: message,
-                SourceType: "OpenUp",
+                SourceType: "GroupsCoaches",
+                Source: titleOfRoom(),
                 Status: "New"
             });
         });

@@ -13,26 +13,6 @@ const naam10 = naam9.replace('%20',' ')
 const naam11 = naam10.replace('%20',' ')
 const naam = naam11.replace('%20',' ')
 
-function getMainGoals(){
-
-        db.collection("Vitaminders")
-        .where("Usertype", "==", "Vitaminder")   
-        .get().then(querySnapshot => {
-                querySnapshot.forEach(doc => {
-
-                        const mainGoal = doc.data().MainGoal
-                        const gebruikersnaamClean = doc.data().Gebruikersnaam
-
-                        if(mainGoal != undefined){
-                                console.log(gebruikersnaamClean, mainGoal)
-                        }
-
-                });
-        });
-};
-
-getMainGoals()
-
 // UPDATE META TAGS
 function digimindMetaTags(coachDescription, coach, profilePic){
         const keywords = document.getElementById("meta-keywords")
@@ -2669,8 +2649,10 @@ function typeOfSupportOnCard(type, typeP){
                 typeP.innerText = "Je bent goed zoals je bent"
         } else if(type === "IFeelForYou"){
                 typeP.innerText = "Ik voel met je mee"
+        } else if(type === "Inspiration"){
+                typeP.innerText = "Inspirerend"
         } else if(type === "IUnderstandYou"){
-                typeP.innerText = "Ik weet wat je voelt"
+                typeP.innerText = "Ik begrijp wat je voelt"
         };
 };
 
@@ -2698,8 +2680,12 @@ function giverOnCard(giver, giverP){
 function metaBSupportCard(sourceType, source, sourceLink){
 
         if(sourceType === "Coachgroup"){
-        sourceLink.innerHTML = `<a href="../Group/${source}.html">Bekijk bericht in groep</a>`
-        }
+                sourceLink.innerHTML = `<a href="../Group/${source}.html">Bekijk bericht in groep</a>`
+        } else if (sourceType === "Goals"){
+                sourceLink.innerHTML = `<a href="../Goals/${source}.html">Bekijk bericht in ontwikkeldoel</a>`    
+        } else if (sourceType === "GroupsCoaches"){
+                sourceLink.innerHTML = `<a href="../Goals/${source}.html">Bekijk bericht in groep</a>`    
+        };
 };
 
 function supportCard(timestamp, type, message, sourceType, source, giver){
@@ -2738,7 +2724,7 @@ function supportCard(timestamp, type, message, sourceType, source, giver){
         supportCard.appendChild(metaBDiv)
         metaBDiv.appendChild(sourceLink)
         
-}
+};
 
 function supportCount(supportType, typeCounter){
 
@@ -2754,7 +2740,6 @@ function supportCount(supportType, typeCounter){
 
                         docArray.push(doc)
 
-
                 });
         })
         .then(() => {
@@ -2769,7 +2754,7 @@ function supportCount(supportType, typeCounter){
 supportCount("YourNotAlone", "yourNotAloneCount")
 supportCount("KeepAtIt", "keepAtItCount")
 supportCount("YourGoodTheWayYouAre", "yourGoodTheWayYouAreCount")
-supportCount("IUnderstandYou", "IUnderstandCount")
+supportCount("Inspiration", "InspirationCount")
 supportCount("IFeelForYou", "IFeelForYouCount")
 
 function supportNotificationInDigimind(newArray, status){

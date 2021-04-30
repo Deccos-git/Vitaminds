@@ -1802,15 +1802,6 @@ auth.onAuthStateChanged(User =>{
         });
     };
     
-    // !function scrollToBottomOnLoad(){
-    
-    //     setTimeout(() =>{
-    //         const bottom = document.getElementById("top-layer")
-    
-    //         bottom.scrollIntoView()
-    //     }, 2500);
-    // }();
-    
     function senderNameClean(sender, senderName, authMessage){
         db.collection("Vitaminders")
         .where("Gebruikersnaam", "==", sender)
@@ -2061,7 +2052,8 @@ auth.onAuthStateChanged(User =>{
                     Reciever: username,
                     Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                     Message: message,
-                    SourceType: "OpenUp",
+                    Source:  titleOfRoom(),
+                    SourceType: "Coachgroup",
                     Status: "New"
                 });
             });
