@@ -1552,6 +1552,7 @@ function appendMessageToDOM(timestamp, sender, authMessage, id, messageDiv, pare
     appendMessagesToMessageOrReaction(messageDiv, messageP, senderName, parentID)
 
     findLinkInText(messageP)
+
 };
 
 function loadReactionsButton(loadReactions, messages){
@@ -1725,9 +1726,15 @@ function findLinkInText(messageP){
     const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
     const links = text.match(urlRegex)
 
-    text.replace(urlRegex, `<a href="${links}">${links}</a>`)
+    if(links != null){
 
-    console.log(text)
+    const newText = text.replace(links[0], `<a href="${links}", target="_blank">${links}</a>`)
+
+    console.log(newText)
+
+    messageP.innerHTML = newText
+
+    };
 
 };
 
@@ -2114,3 +2121,89 @@ function sendMailNewSocial(email, gebruikersnaamClean, socialTypeWritten){
             });
         };
     }();
+
+
+// Message Options
+
+!function showMessageOptions(){
+
+    const button = document.getElementById("options-icon")
+    const optionsDiv = document.getElementById("options-div")
+
+    button.addEventListener("click", () => {
+
+        if(optionsDiv.style.display === "flex"){
+            optionsDiv.style.display = "none"
+        } else {
+            optionsDiv.style.display = "flex"
+            optionsDiv.scrollIntoView()
+        };
+
+    });
+
+}();
+
+!function showUploadInput(){
+
+    const button = document.getElementById("upload-div")
+    const inputDiv = document.getElementById("upload-input-div")
+
+    button.addEventListener("click", () => {
+
+        if(inputDiv.style.display === "flex"){
+            inputDiv.style.display = "none"
+        } else {
+            inputDiv.style.display = "flex"
+        };
+
+    });
+
+}();
+
+!function uploadFile(){
+
+    const button = document.getElementById("file-upload-button")
+    const input = document.getElementById("chat-input")
+
+    button.addEventListener("click", () => {
+
+        button.innerText = "Uploaden.."
+
+        const selectedFile = document.getElementById('upload-file-input').files[0];
+        const storageRef = firebase.storage().ref("/GroupFiles/" + selectedFile.name);
+
+        const uploadTask = storageRef.put(selectedFile)
+        uploadTask.then(() => {
+        // Register three observers:
+        // 1. 'state_changed' observer, called any time the state changes
+        // 2. Error observer, called on failure
+        // 3. Completion observer, called on successful completion
+        uploadTask.on('state_changed', function(snapshot){
+        // Observe state change events such as progress, pause, and resume
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        progressBar.innerHTML = ` ${progress} %`;
+        switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED: // or 'paused'
+            console.log('Upload is paused');
+            break;
+        case firebase.storage.TaskState.RUNNING: // or 'running'
+            console.log('Upload is running');
+            break;
+        }
+        }, function(error) {
+        // Handle unsuccessful uploads
+        }, function() {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+            bannerImage = downloadURL
+            button.innerText = "Geupload"
+            input.value = downloadURL
+            input.style.borderColor = "green"
+            console.log(downloadURL)
+                });                                                
+            });
+        });
+    });
+}();

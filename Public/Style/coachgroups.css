@@ -13,6 +13,60 @@
     font-size: 16px;
 }
 
+#options-icon {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#options-div {
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#upload-icon {
+    width: 30px;
+    cursor: pointer;
+}
+
+#upload-input-div {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#upload-input-div input {
+    width: 60%;
+}
+
+#upload-input-div button {
+    background-color: white;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #008e8e;
+    cursor: pointer;
+    min-height: 30px;
+    margin: 10px 20px 20px 20px;
+}
+
+.options-button-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px 10px 5px 10px;
+    cursor: pointer;
+}
+
+.options-button-div p {
+    font-size: 14px;
+    font-weight: bold;
+}
+
 #themegroup-tab{
     background-color: #122b46;
     color: white;
@@ -625,8 +679,13 @@
     }
 
     .message-timestamp{
-        margin-top: 5px;
+        margin: 5px 30px 5px 5px;
+        font-size: 12px;
         align-self: flex-end !important;
+    }
+
+    #upload-input-div input {
+        width: 90%;
     }
 }
 

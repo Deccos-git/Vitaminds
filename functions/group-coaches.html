@@ -139,12 +139,23 @@
   <div id="chat-screen"></div>
 
   <div id="input-div">
-    <div id="video-div">
-      <img id="video-icon" src="../images/video-icon.png" alt="start een video gesprek">
-      <img id="video-stop-icon" src="../images/stop-video-icon.png" alt="">
-    </div> 
+    <img id="options-icon" src="../images/design/plus-icon.png" alt="">
     <textarea name="" id="chat-input" cols="30" rows="1" placeholder="Nieuw bericht toevoegen"></textarea>
     <img id="send-icon-group" data-parentid="none" onclick="saveNewMessage(this)" src="../images/send-icon.png" alt="">
+  </div>
+  <div id="options-div">
+    <div id="video-icon-div" class="options-button-div">
+      <img id="video-icon" src="../images/video-icon.png" alt="start een video gesprek">
+      <p>Videochat</p>
+    </div>
+    <div id="upload-div" class="options-button-div">
+      <img id="upload-icon" src="../images/design/upload-icon.png" alt="">
+      <p id="upload-text">Upload file</p>
+    </div>
+  </div> 
+  <div id="upload-input-div">
+    <input type="file" id="upload-file-input">
+    <button id="file-upload-button">Upload</button>
   </div>
 
   <div id="buttons-room">

@@ -739,6 +739,7 @@ ul{
   cursor: pointer;
   margin-bottom: 0px;
   margin-top: auto;
+  min-height: 30px;
  }
 
  .button-reverse {

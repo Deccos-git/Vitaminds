@@ -104,11 +104,6 @@
     object-fit: contain;
 }
 
-#video-icon{
-    margin: 5px;
-    cursor: pointer;
-}
-
 .inverseVid {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);

@@ -16,6 +16,10 @@
     background-color: white; /* Fallback color */
 }
 
+#upload-icon{
+    width: 30px;
+}
+
 #more-div {
     display: flex;
     justify-content: center;
@@ -305,9 +309,69 @@
     cursor: pointer;
 }
 
+#options-div{
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#options-icon{
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+#upload-icon{
+    cursor: pointer;
+}
+
+.options-button-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px 10px 5px 10px;
+    cursor: pointer;
+}
+
+#upload-input-div{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#upload-input-div input{
+    width: 60%;
+}
+
+#upload-input-div button{
+    background-color: white;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #008e8e;
+    cursor: pointer;
+    min-height: 30px;
+    margin: 10px 20px 20px 20px;
+}
+
+#file-upload-button{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.options-button-div p{
+    font-size: 14px;
+    font-weight: bold;
+}
+
 #chat-input{
     width: 100%;
     border: 1px solid rgba(0,0,0,.2);
+    margin: 10px;
+    min-height: 50px;
 }
 
 #send-icon-group{
@@ -587,4 +651,17 @@
 
 #button-add-learning{
     margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 938px){
+
+    .message-timestamp{
+        margin: 5px 30px 5px 5px;
+        font-size: 12px;
+        align-self: flex-end !important;
+    }
+
+    #upload-input-div input {
+        width: 90%;
+    }
 }

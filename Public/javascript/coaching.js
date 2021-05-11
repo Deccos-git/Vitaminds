@@ -66,6 +66,7 @@
         if(User){
 
             input.style.display = "block"
+            notice.style.display = "none"
         } else {
             notice.style.display = "flex"
             anonymous.style.display = "none"

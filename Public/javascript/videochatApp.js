@@ -777,7 +777,7 @@ function init() {
     params = new URLSearchParams(location.search);
     roomDialog = new mdc.dialog.MDCDialog(document.querySelector('#room-dialog'));
 
-    const openVideoChat = document.getElementById("video-icon")
+    const openVideoChat = document.getElementById("video-icon-div")
     const videosScreen = document.getElementById("videos")
     const buttons = document.getElementById("buttons")
     const buttonsRoom = document.getElementById("buttons-room")

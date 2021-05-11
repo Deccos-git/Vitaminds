@@ -53,7 +53,7 @@
 }
 
 #register-modal-coaching{
-    cursor: pointer;
+    padding: 0px 10px;
 }
 
 #close-modal-div{
@@ -63,6 +63,24 @@
 
 #question-input{
     display: none;
+    min-height: 150px;
+    border-radius: 15px
+}
+
+#link-coach-account p{
+    font-size: 16px;
+}
+
+#register-button-question{
+    background-color: white;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: #008e8e;
+    cursor: pointer;
+    margin-top: 20px;
+    min-height: 30px;
 }
 
 #visitor-notice{
@@ -99,7 +117,7 @@
     font-size: 18px;
     color: #008e8e;
     cursor: pointer;
-    margin-top: 30px;
+    margin: 30px 20px 80px 20px;
 }
 
 #pointers-div li{
@@ -212,6 +230,10 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    #steps-walkthru-div {
+        margin: 30px 15px 30px 15px;
     }
 
 }

@@ -169,12 +169,26 @@
   <div id="end-of-screen"></div>
 
   <div id="input-div">
-    <div id="video-div">
-      <img id="video-icon" src="../images/video-icon.png" alt="start een video gesprek">
-    </div> 
+    <img id="options-icon" src="../images/design/plus-icon.png" alt="">
     <input id="chat-input" type="text">
     <img id="send-icon-group" data-parentid="none" onclick="saveNewMessage(this)" src="../images/send-icon.png" alt="">
   </div>
+
+  <div id="options-div">
+    <div id="video-icon-div" class="options-button-div">
+      <img id="video-icon" src="../images/video-icon.png" alt="start een video gesprek">
+      <p>Videochat</p>
+    </div>
+    <div id="upload-div" class="options-button-div">
+      <img id="upload-icon" src="../images/design/upload-icon.png" alt="">
+      <p id="upload-text">Upload file</p>
+    </div>
+  </div> 
+  <div id="upload-input-div">
+    <input type="file" id="upload-file-input">
+    <button id="file-upload-button">Upload</button>
+  </div>
+
 
   <div id="add-learning-div">
     <div id="learnings-title-div">
