@@ -11,8 +11,13 @@ const titel8 = titel7.replace('%20',' ')
 const titel9 = titel8.replace('%20',' ')
 const titel10 = titel9.replace('%20',' ')
 const titel11 = titel10.replace('%20',' ')
-const titel12 = titel11.split("?fb")
-const titel = titel12[0]
+const titel12 = titel11.replace('%20',' ')
+const titel13 = titel12.replace('%20',' ')
+const titel14 = titel13.replace('%20',' ')
+const titel15 = titel14.replace('%20',' ')
+const titel16 = titel15.replace('%20',' ')
+const titel17 = titel16.split("?fb")
+const titel = titel17[0]
 
 console.log(titel)
 
@@ -192,11 +197,9 @@ if (eventsOverview != null){
 
     db.collection("EventsCoaches")
     .where("Owner", "==", "Vitaminds")
-    .orderBy("Timestamp", "asc")
+    .orderBy("DateMonth", "desc")
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
-
-            console.log("test")
 
             const title = doc.data().Title
             const date = doc.data().Date
@@ -204,6 +207,8 @@ if (eventsOverview != null){
             const organizer = doc.data().Organizer
             const titleID = doc.data().TitleID
             const expired = doc.data().Expired
+            const price = doc.data().Price
+            const dateMonth = doc.data().DateMonth
 
             const outerDiv = document.createElement("div")
                 outerDiv.setAttribute("class", "event-outer-div")
@@ -212,6 +217,8 @@ if (eventsOverview != null){
                 organiserEventDiv.setAttribute("class", "organizer-event-div")
             const organiserEventPhoto = document.createElement("img")
             const organiserEventP = document.createElement("p")
+            const priceP = document.createElement("p")
+                priceP.setAttribute("class", "price-p")
             const dateEvent = document.createElement("p")
                 dateEvent.setAttribute("class", "date-event")
             const titleEvent = document.createElement("h2")
@@ -221,6 +228,7 @@ if (eventsOverview != null){
             const expiredP = document.createElement("p")
                 expiredP.setAttribute("class", "expired-p")
 
+            priceP.innerHTML = `<b>Prijs</b>: €${price}`
             dateEvent.innerText = date
             titleEvent.innerText = title
             bannerImg.src = eventBanner
@@ -240,6 +248,7 @@ if (eventsOverview != null){
             outerDiv.appendChild(titleEvent)
             outerDiv.appendChild(expiredP)
             outerDiv.appendChild(dateEvent)
+            outerDiv.appendChild(priceP)
             outerDiv.appendChild(buttonEvent)
 
         });

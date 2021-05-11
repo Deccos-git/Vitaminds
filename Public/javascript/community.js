@@ -333,6 +333,7 @@ function userMeta(user, profilePhoto, nameP, metaDiv){
 
             const userClean = doc.data().GebruikersnaamClean
             const photo = doc.data().Profielfoto
+            const userName = doc.data().Gebruikersnaam
 
             profilePhoto.src = photo
             nameP.innerText = userClean
@@ -342,7 +343,7 @@ function userMeta(user, profilePhoto, nameP, metaDiv){
             };
 
             metaDiv.addEventListener("click", () => {
-                window.open("../Vitaminders/" + user + ".html", "_self");
+                window.open("../Vitaminders/" + userName + ".html", "_self");
             });
 
         });
@@ -402,6 +403,7 @@ function createDomElements(goalClean, description, user, goal){
     const supportButton = document.createElement("button")
         supportButton.setAttribute("class", "button-algemeen")
         supportButton.setAttribute("id", "save-support")
+        supportButton.setAttribute("data-user", user)
 
         h1.innerText = goalClean
         descriptionP.innerText = description
@@ -434,16 +436,19 @@ function saveTip(supportButton, user, supportInput, goal){
         supportButton.setAttribute("class", "button-clicked")
         supportButton.innerText = "Verstuurd"
 
+        const userName = supportButton.dataset.user
+
         const tip = supportInput.value
 
-        auth.onAuthStateChanged(User =>{
         db.collection("Vitaminders")
-        .doc(User.uid).get().then(doc =>{
+        .where("Gebruikersnaam", "==", userName)
+        .get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
 
             const auth = doc.data().Gebruikersnaam
             const authClean = doc.data().GebruikersnaamClean
 
-                db.collection("Vitaminders").doc(User.uid)
+                db.collection("Vitaminders").doc(doc.id)
                 .collection("Levenslessen").doc().set({
                     Tipper: auth,
                     TipperClean: authClean,
@@ -455,21 +460,21 @@ function saveTip(supportButton, user, supportInput, goal){
                     Type: "Community-tip"
                 })
                 .then(() => {
-                    updateGoalLastActive(goal, User.uid)
+                    updateGoalLastActive(goal, doc.id)
                 });
             });
         });
     });
 };
 
-function updateGoalLastActive(goal, useruid){
+function updateGoalLastActive(goal, docid){
 
     db.collectionGroup("Levensvragen")
     .where("Levensvraag", "==", goal)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
-            db.collection("Vitaminders").doc(useruid)
+            db.collection("Vitaminders").doc(docid)
             .collection("Levensvragen")
             .doc(doc.id)
             .update({
@@ -504,7 +509,7 @@ function supportCTATitle(userName, supportCTA){
 
 function tipsCTASupport(tips){
 
-    tips.innerHTML = "<ul><li>Geef een tip</li><li>Link naar een interessante website</li><li>Stel een verdiepende vraag</li></ul>"
+    tips.innerHTML = "<ul><li>Geef een tip</li><li>Link naar een interessante website/artikel</li><li>Stel een verdiepende vraag</li></ul>"
 
 };
 

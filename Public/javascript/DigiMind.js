@@ -11,7 +11,8 @@ const naam8 = naam7.replace('%20',' ')
 const naam9 = naam8.replace('%20',' ')
 const naam10 = naam9.replace('%20',' ')
 const naam11 = naam10.replace('%20',' ')
-const naam = naam11.replace('%20',' ')
+const naam12 = naam11.replace('%C3%BC', 'ü')
+const naam = naam12.replace('%20',' ')
 
 // UPDATE META TAGS
 function digimindMetaTags(coachDescription, coach, profilePic){
@@ -288,22 +289,144 @@ function savePageView(){
         });
 };
 
-// Follow coach
-!function hideFollowButtonNonCoach(){
-        const followButton = document.getElementById("follow-button")
+// Visitor contact options
+
+!function closeButton(){
+
+        const button = document.getElementById("close-button")
+        const questionModal = document.getElementById("question-modal")
+
+        button.addEventListener("click", () => {
+
+                questionModal.style.display = "none"
+
+        });
+}();
+
+!function openQuestionModal(){
+
+        const button = document.getElementById("button-question")
+        const questionModal = document.getElementById("question-modal")
+
+        button.addEventListener("click", () => {
+
+                questionModal.style.display = "flex"
+
+        });
+}();
+
+function questionTitle(coach){
+
+        const title = document.getElementById("question-title")
+
+        title.innerHTML = `Stel ${coach} een vraag`
+
+};
+
+!function coachQuery(){
 
         db.collection("Vitaminders")
         .where("Gebruikersnaam", "==", naam)
         .get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
 
-                        const usertype = doc.data().Usertype
+                        const nameClean = doc.data().GebruikersnaamClean
+                        const emailAdress = doc.data().Email
 
-                        if(usertype === "Coach"){
-                                followButton.style.display = "flex"
-                        }
+                        questionTitle(nameClean)
+                        sendQuestion(emailAdress, nameClean)
 
-                })
+                });
+        });
+}();
+
+function sendQuestion(emailAdress, naamClean){
+
+        const button = document.getElementById("button-question-modal")
+
+        button.addEventListener("click", () => {
+
+                button.id = "send-question-button"
+                button.innerText = "Verstuurd"
+
+                const emailOfClient = document.getElementById("email-input").value
+                const question = document.getElementById("question-input").value
+                const client = document.getElementById("name-input").value
+
+                questionMail(emailAdress, naamClean, question, client, emailOfClient)
+                closeModalAfterTwoSecs()
+
+        });
+};
+
+function closeModalAfterTwoSecs(){
+
+        setTimeout( () => {
+
+                const questionModal = document.getElementById("question-modal")
+
+                questionModal.style.display = "none"
+
+        }, 2500)
+};
+
+function questionMail(emailAdress, naamClean, question, client, emailOfClient){
+
+        db.collection("Mail").doc().set({
+                to: emailAdress,
+                cc: "info@vitaminds.nu",
+        message: {
+        subject: `Je hebt een nieuwe vraag ontvangen via je Vitaminds coachprofiel`,
+        html: `Hallo ${naamClean}, <br><br>
+                Je hebt een nieuwe vraag ontvangen via je Vitaminds coachprofiel: <br><br>
+                
+                <b>Vraag</b><br>
+                ${question}<br><br>
+
+                <b>Naam</b><br>
+                ${client}<br><br>
+
+                <b>Email</b><br>
+                ${emailOfClient}<br><br>
+
+                Je kunt op ${client} reageren door een antwoord te sturen naar ${emailOfClient}.<br><br>
+
+                Vriendelijke groet, <br></br>
+                Het Vitaminds Team <br></br>
+                <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
+        Gebruikersnaam: naam,
+        Emailadres: emailAdress,
+        Type: "Question on profile"
+        }        
+    }); 
+
+};
+
+// Follow coach
+!function hideFollowButtonNonCoach(){
+        const followButton = document.getElementById("follow-button")
+
+        auth.onAuthStateChanged(User =>{
+                if(User){
+                        db.collection("Vitaminders")
+                        .doc(User.uid).get().then(doc =>{
+
+                                db.collection("Vitaminders")
+                                .where("Gebruikersnaam", "==", naam)
+                                .get().then(querySnapshot => {
+                                        querySnapshot.forEach(doc => {
+
+                                                const usertype = doc.data().Usertype
+
+                                                if(usertype === "Coach"){
+                                                        followButton.style.display = "flex"
+                                                }
+
+                                        })
+                                });
+
+                        });
+                };
         });
 }();
 
@@ -313,7 +436,8 @@ function savePageView(){
 
         auth.onAuthStateChanged(User =>{
                 if(User){
-        db.collection("Vitaminders").doc(User.uid).get().then(doc =>{
+        db.collection("Vitaminders")
+        .doc(User.uid).get().then(doc =>{
 
                         const followers = doc.data().FavCoaches
 
@@ -610,8 +734,18 @@ function hideSelectAsCoachIfAuthIsCoach(button){
                     };
 
                     });
+                } else {
+                        hideSelectAsCoachIfVisitor()
                 };
         });
+};
+
+function hideSelectAsCoachIfVisitor(){
+
+        const selectAsCoachButton = document.getElementById("select-button")
+
+        selectAsCoachButton.style.display = "none"
+
 };
 
 
@@ -3679,9 +3813,10 @@ function selectQuestion(){
         })
 
                 const options = select.options
-                console.log(options[0].innerHTML)
 
+                if(options[0] != undefined){
                 appendFirstquestion(options[0].innerHTML)
+                };
 }();
 
 function appendFirstquestion(optionZero){

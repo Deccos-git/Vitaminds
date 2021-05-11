@@ -213,21 +213,12 @@ function openWorkshop(elem){
 
     divTitle = elem.parentElement.previousElementSibling.previousElementSibling.innerText
 
-    console.log(divTitle)
-
     db.collection("Workshops")
     .where("WorkshopTitle", "==", divTitle)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
-            console.log(divTitle)
-
-            db.collection("Workshops").doc(doc.id).update({
-                Views: firebase.firestore.FieldValue.increment(1)
-            })
-            .then(() => {
-                window.open("../Workshops/" + divTitle + ".html", "_self")
-            });
+            window.open("../Workshops/" + divTitle + ".html", "_self")
         });
     });
 };

@@ -155,16 +155,33 @@
   
   <!-- Header -->
 
-  <div id="digimind-header-img"></div>
+  <div id="digimind-header-img">
+  </div>
 
-  <div id="profile-outer-div">
-    <div id="profile-picture-div"></div>
-    <p id="name"></p>
-    <div id="chat-follow-div">
-      <button id="select-button" class="button-algemeen" >Selecteer als coach</button>
-      <button id="chat-button" class="button-algemeen" >Chatten</button>
-      <button id="follow-button" class="button-algemeen" >Volgen</button>
+  <div id="interaction-div">
+
+    <div id="profile-outer-div">
+      <div id="profile-picture-div"></div>
+      <p id="name"></p>
+      <div id="chat-follow-div">
+        <button id="button-question" class="coach-contact-button">Stel een vraag</button>
+        <button id="select-button" class="button-algemeen" >Selecteer als coach</button>
+        <button id="chat-button" class="button-algemeen" >Chatten</button>
+        <button id="follow-button" class="button-algemeen" >Volgen</button>
+      </div>
     </div>
+  </div>
+
+  <div id="question-modal">
+    <div id="close-button"><p>X</p></div>
+    <h1 id="question-title"></h1>
+    <h3>Jouw vraag</h3>
+    <textarea name="" id="question-input" cols="30" rows="10" placeholder="Stel hier je vraag"></textarea>
+    <h3>Naam</h3>
+    <input id="name-input" type="text" placeholder="Jouw naam">
+    <h3>Email</h3>
+    <input id="email-input" type="text" placeholder="Jouw email">
+    <button id="button-question-modal" class="button-algemeen">Versturen</button>
   </div>
   
   <div id="private-public-div">
@@ -182,12 +199,18 @@
 
     <div class="section-outer-div">
       <div id="welcome-div" class="section-inner-div">
-        <h2>Welkom</h2>
+        <div class="title-div">
+          <img src="../images/design/account-welcome.png" alt="">
+          <h2>Welkom</h2>
+        </div>
         <div id="welcome-message"></div>
       </div>
 
       <div id="coaching-div" class="section-inner-div">
-        <h2>Mijn coaching</h2>
+        <div class="title-div">
+          <img src="../images/design/account-coaching.png" alt="">
+          <h2>Mijn coaching</h2>
+        </div>
         <div id="coaching-inner-div">
           <div id="coachingstyle">
             <h3>Coachstijl</h3>
@@ -202,7 +225,10 @@
       </div>
 
       <div id="experience-div" class="section-inner-div">
-        <h2>Mijn ervaringen</h2>
+        <div class="title-div">
+          <img src="../images/design/account-experience.png" alt="">
+          <h2>Mijn ervaringen</h2>
+        </div>
         <div id="experience-inner-div">
           <div id="years">
             <h3>Aantal jaren ervaring</h3>
@@ -217,7 +243,10 @@
       </div>
 
       <div id="practical-div" class="section-inner-div">
-        <h2>Praktische informatie</h2>
+        <div class="title-div">
+          <img src="../images/design/account practical.png" alt="">
+          <h2>Praktische informatie</h2>
+        </div>
         <div id="practical-inner-div">
           <div id="location">
             <h3>Praktijklocatie</h3>

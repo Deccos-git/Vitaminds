@@ -12,6 +12,27 @@
     display: none;
 }
 
+td{
+    padding: 5px;
+}
+
+.price-p{
+    text-align: center;
+    font-size: 16px;
+    margin: auto 20px 0px 20px;
+
+}
+
+.event-outer-div h2{
+    font-size: 24px;
+    margin: 10px;
+    height: 180px;
+}
+
+#event-detail-outer-div h2{
+    margin: 40px 60px;
+}
+
 .expired-p{
     display: none;
     color: red !important;
@@ -26,7 +47,7 @@
 }
 
 .event-outer-div {
-    height: auto;
+    height: 640px;
     width: 250px;
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
     margin: 30px 10px 30px 10px;
@@ -58,7 +79,7 @@
 }
 
 #button-event-overview {
-    margin-bottom: 20px;
+    margin: 20px;
 }
 
 .organizer-event-div {
@@ -113,7 +134,7 @@
 .date-event {
     background-color: white;
     border-radius: 5px;
-    margin: 10px 50px 20px 50px;
+    margin: auto 50px 0px 50px;
     padding: 10px;
     font-weight: bold;
 }

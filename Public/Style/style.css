@@ -752,7 +752,8 @@ ul{
  }
 
  .button-algemeen a{
-   color: #008e8e;
+  color: #008e8e !important;
+  text-decoration: none !important;
  }
 
  .button-algemeen-card {
