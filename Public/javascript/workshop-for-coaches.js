@@ -227,6 +227,7 @@ db.collection("WorkshopsForCoaches")
                 const button = document.createElement("button")
                     button.setAttribute("class", "button-algemeen")
                     button.setAttribute("onclick", "openWorkshopCoaches(this)")
+                    button.setAttribute("data-title", title)
                 const freeNotice = document.createElement("p")
                     freeNotice.setAttribute("class", "free-notice-workshops")
 
@@ -264,22 +265,20 @@ db.collection("WorkshopsForCoaches")
 
 function openWorkshopCoaches(elem){
 
-    divTitle = elem.parentElement.previousElementSibling.previousElementSibling.innerText
-
-    console.log(divTitle)
+    const title = elem.dataset.title
 
     db.collection("WorkshopsForCoaches")
-    .where("WorkshopTitle", "==", divTitle)
+    .where("WorkshopTitle", "==", title)
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
-            console.log(divTitle)
+            console.log(title)
 
             db.collection("WorkshopsForCoaches").doc(doc.id).update({
                 Views: firebase.firestore.FieldValue.increment(1)
             })
             .then(() => {
-                window.open("../Workshops-coaches/" + divTitle + ".html", "_self")
+                window.open("../Workshops-coaches/" + title + ".html", "_self")
             });
         });
     });

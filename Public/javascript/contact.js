@@ -1,82 +1,49 @@
-function verzendenCH(){
+!function sendQuestion(){
 
-const input = document.getElementById("inputtextCH").value;
-const DOM = document.getElementById("chat");
+        const button = document.getElementById("button-message")
+        const notice = document.getElementById("contact-form-notice")
 
-const textCH = document.createElement("p")
-    textCH.setAttribute("class", "opmerkingCH")
+        button.addEventListener("click", () => {
 
-    textCH.innerHTML = input
+                button.id = "send-question-button"
+                button.innerText = "Verstuurd"
+                notice.style.display = "block"
 
-    DOM.appendChild(textCH);
+                const email = document.getElementById("email-input").value
+                const question = document.getElementById("question-input").value
+                const client = document.getElementById("name-input").value
+                const phone = document.getElementById("phone-input").value
 
-}
+                questionMail(question, client, email, phone)
 
-function verzendenVM(){
+        });
+}();
 
-    const input = document.getElementById("inputtextVM").value;
-    const DOM = document.getElementById("chat");
-    
-    const textCH = document.createElement("p")
-        textCH.setAttribute("class", "opmerkingVM")
-    
-        textCH.innerHTML = input
-    
-        DOM.appendChild(textCH);
-    
-    }   
+function questionMail(question, client, email, phone){
 
-//Naam auth inladen
+        db.collection("Mail").doc().set({
+                to: "info@vitaminds.nu",
+        message: {
+        subject: `Nieuw bericht via contactformulier`,
+        html: `Hallo, <br><br>
+                Er is een nieuw bericht via het contactformulier: <br><br>
+                
+                <b>Vraag</b><br>
+                ${question}<br><br>
 
-auth.onAuthStateChanged(User =>{
+                <b>Naam</b><br>
+                ${client}<br><br>
 
-    // Karaktertochten van auth inladen
-   const userRef = db.collection("Vitaminders").doc(User.uid)
-     userRef.get().then(function(doc2) {
-           naam = doc2.data().Gebruikersnaam;
+                <b>Email</b><br>
+                ${email}<br><br>
 
-                   // Plek in DOM waar wordt ingeladen
-   const DOMnaamVM = document.getElementById("naamVM");
+                <b>Telefoonnummer</b><br>
+                ${phone}<br><br>
 
-   const naamInsert = DOMnaamVM.innerHTML =naam
-
-
-                   //Nieuwe node vastzetten aan de Dom
-           DOMnaamVM.appendChild(naamInsert);
-
-   })
-   })
-
-// Karaktertochten keuze inladen
-
-auth.onAuthStateChanged(User =>{
-
-    // Karaktertochten van auth inladen
-   const userRef = db.collection("Vitaminders").doc(User.uid)
-     userRef.get().then(function(doc2) {
-           naam = doc2.data().Gebruikersnaam;
-
-
-   userRef.collection("Ontwikkeling").where("Gebruikersnaam", "==", naam)
-        .get().then(function (querySnapshot) {
-           querySnapshot.forEach(function (doc) {
-
-                   // Plek in DOM waar wordt ingeladen
-   const CTDOM = document.getElementById("CTkaraktertocht");
-
-
-                   // Nieuwe node creeren
-   const nieuwTocht = document.createElement("option");
-    nieuwTocht.setAttribute("id", "karakterTochtenAuth")
-
-                   //Nieuwe node inhoud geven
-           nieuwTocht.innerHTML = doc.data().Doel
-
-                   //Nieuwe node vastzetten aan de Dom
-           CTDOM.appendChild(nieuwTocht);
-
-   })
-   })
-})  
-      
-})
+                Vriendelijke groet, <br></br>
+                Het Vitaminds Team <br></br>
+                <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
+        Type: "Contactform"
+        }        
+    }); 
+};

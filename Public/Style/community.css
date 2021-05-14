@@ -99,6 +99,11 @@
     width: 650px;
 }
 
+.social-wall-coaches-inner-div p{
+    word-break: break-word;
+}
+
+
 .timestamp-support {
     font-size: 14px;
 }

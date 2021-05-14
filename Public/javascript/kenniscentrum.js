@@ -480,7 +480,8 @@ function scrollToSummaryItem(summaryTitle, h2Title){
     const headerDiv = document.getElementById("levensvraag-artikel-main-image")
     const headerImg = document.createElement("img")
 
-    db.collection("Kenniscentrum").where("Title", "==", titel).get().then(querySnapshot => {
+    db.collection("Kenniscentrum")
+    .where("Title", "==", titel).get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 
             const titleArticle = doc.data().Title
@@ -1015,3 +1016,161 @@ function metaDivLinkToProfile(metaDiv, coachName){
         });
     };
 }();
+
+// More from coach section
+
+!function coachQuery(){
+
+    const overview = document.getElementById("more-coach-overview")
+
+    db.collection("Kenniscentrum")
+    .where("Title", "==", titel)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const author = doc.data().Author
+
+            console.log(author)
+
+            db.collection("Vitaminders")
+            .where("Gebruikersnaam", "==", author)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc2 => {
+
+                    const nameClean = doc2.data().GebruikersnaamClean
+                    const profilePic = doc2.data().Profielfoto
+
+                    moreFromCoachTitle(nameClean)
+                    workshopsFromCoach(overview, author, nameClean, profilePic)
+                    eventsFromCoach(overview, author)
+
+                });
+            });
+        });
+    });
+}();
+
+function moreFromCoachTitle(nameClean){
+
+    const title = document.getElementById("more-coach-title")
+
+    title.innerHTML = `Meer van ${nameClean}`
+
+};
+
+function workshopsFromCoach(overview, author, nameClean, profilePic){
+
+    db.collection("WorkshopsForCoaches")
+    .where("Coach", "==", author)
+    .where("Status", "==", "Public")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc2 => {
+
+            const title = doc2.data().WorkshopTitle
+            const coach = doc2.data().Coach
+            const headerImg = doc2.data().BannerImage
+            const workshopPrice = doc2.data().Price
+            const takers = doc2.data().Takers
+
+            const innerDiv = document.createElement("div")
+            innerDiv.setAttribute("class", "workshop-section")
+        const header = document.createElement("div")
+            header.setAttribute("class", "workshop-header")
+        const img = document.createElement("img")
+            img.setAttribute("class", "header-workshop")
+        const nameP = document.createElement("p")
+        const coachPicDiv = document.createElement("div")
+            coachPicDiv.setAttribute("class", "coach-pic-div-workshop")
+        const coachPic = document.createElement("img")
+        const typeP = document.createElement("p")
+            typeP.setAttribute("class", "offer-type-card")
+        const titleH3 = document.createElement("h3")
+        const priceP = document.createElement("p")
+            priceP.setAttribute("id", "workshop-price")
+        const buttonDiv = document.createElement("div")
+            buttonDiv.setAttribute("class", "button-div")
+        const button = document.createElement("button")
+            button.setAttribute("class", "button-algemeen")
+            button.setAttribute("onclick", "openWorkshop(this)")
+
+        img.src = headerImg
+        coachPic.src = profilePic
+        nameP.innerText = nameClean
+        titleH3.innerText = title
+        priceP.innerText = `Prijs: ${workshopPrice} euro`
+        button.innerText = "Meer informatie"
+        typeP.innerText = "Workshop"
+
+        overview.appendChild(innerDiv)
+        innerDiv.appendChild(header)
+        header.appendChild(img)
+        innerDiv.appendChild(coachPicDiv)
+        coachPicDiv.appendChild(coachPic)
+        coachPicDiv.appendChild(nameP)
+        innerDiv.appendChild(typeP)
+        innerDiv.appendChild(titleH3)
+        innerDiv.appendChild(priceP)
+        innerDiv.appendChild(buttonDiv)
+        buttonDiv.appendChild(button)
+
+        });
+    });
+};
+
+function eventsFromCoach(overview, author){
+
+    db.collection("EventsCoaches")
+    .where("Organizer", "==", author)
+    .orderBy("DateMonth", "desc")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const title = doc.data().Title
+            const date = doc.data().Date
+            const eventBanner = doc.data().Banner
+            const organizer = doc.data().Organizer
+            const titleID = doc.data().TitleID
+            const price = doc.data().Price
+            const dateMonth = doc.data().DateMonth
+
+            const outerDiv = document.createElement("div")
+                outerDiv.setAttribute("class", "event-outer-div")
+            const bannerImg = document.createElement("img")
+            const organiserEventDiv = document.createElement("div")
+                organiserEventDiv.setAttribute("class", "organizer-event-div")
+            const organiserEventPhoto = document.createElement("img")
+            const organiserEventP = document.createElement("p")
+            const priceP = document.createElement("p")
+                priceP.setAttribute("class", "price-p")
+            const dateEvent = document.createElement("p")
+                dateEvent.setAttribute("class", "date-event")
+            const titleEvent = document.createElement("h2")
+            const buttonEvent = document.createElement("button")
+                buttonEvent.setAttribute("class", "button-algemeen")
+                buttonEvent.setAttribute("id", "button-event-overview")
+
+            priceP.innerHTML = `<b>Prijs</b>: €${price}`
+            dateEvent.innerText = date
+            titleEvent.innerText = title
+            bannerImg.src = eventBanner
+            buttonEvent.innerHTML = `<a href="../eventCoaches/${title}.html">Meer informatie</a>`
+            organiserEventDiv.addEventListener("click", () => {
+                window.open("../Vitaminders/" + organizer, "_self");
+            });
+
+            overview.appendChild(outerDiv)
+            outerDiv.appendChild(bannerImg)
+            outerDiv.appendChild(organiserEventDiv)
+            organiserEventDiv.appendChild(organiserEventPhoto)
+            organiserEventDiv.appendChild(organiserEventP)
+            outerDiv.appendChild(titleEvent)
+            outerDiv.appendChild(dateEvent)
+            outerDiv.appendChild(priceP)
+            outerDiv.appendChild(buttonEvent)
+
+        });
+    });
+};
+
+
+

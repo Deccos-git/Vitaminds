@@ -14,6 +14,8 @@ const naam11 = naam10.replace('%20',' ')
 const naam12 = naam11.replace('%C3%BC', 'ü')
 const naam = naam12.replace('%20',' ')
 
+console.log(naam)
+
 // UPDATE META TAGS
 function digimindMetaTags(coachDescription, coach, profilePic){
         const keywords = document.getElementById("meta-keywords")
@@ -291,6 +293,16 @@ function savePageView(){
 
 // Visitor contact options
 
+function showQuestionButtonIfCoach(usertype){
+
+        const button = document.getElementById("button-question")
+
+        if(usertype === "Coach"){
+
+                button.style.display = "block"
+        };
+};
+
 !function closeButton(){
 
         const button = document.getElementById("close-button")
@@ -332,9 +344,11 @@ function questionTitle(coach){
 
                         const nameClean = doc.data().GebruikersnaamClean
                         const emailAdress = doc.data().Email
+                        const usertype = doc.data().Usertype
 
                         questionTitle(nameClean)
                         sendQuestion(emailAdress, nameClean)
+                        showQuestionButtonIfCoach(usertype)
 
                 });
         });
@@ -399,7 +413,6 @@ function questionMail(emailAdress, naamClean, question, client, emailOfClient){
         Type: "Question on profile"
         }        
     }); 
-
 };
 
 // Follow coach
@@ -849,7 +862,8 @@ function updateSelectAsCoachButton(auth){
 
 // Database Query
 !function databaseQueryPublic(){
-        db.collection("Vitaminders").where("Gebruikersnaam", "==", naam)
+        db.collection("Vitaminders")
+        .where("Gebruikersnaam", "==", naam)
         .get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
 
@@ -867,6 +881,8 @@ function updateSelectAsCoachButton(auth){
                         const telephone = doc.data().PhoneNumber
                         const targetgroup = doc.data().Targetgroup
                         const website = doc.data().Website
+
+                        console.log("test")
 
                         digimindMetaTags(coachingStyle, username, profileImage)
                         insertProfileImage(profileImage)
@@ -1488,9 +1504,28 @@ function addLessonsToProces(selectedProces){
                         metaDiv.appendChild(metaType)
                         metaDiv.appendChild(metaTimestamp)
 
+                        findLinkInText(levenslesH3)
+
                 });
         });
 };
+
+function findLinkInText(lesson){
+
+        const text = lesson.innerText
+    
+        const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+        const links = text.match(urlRegex)
+    
+        if(links != null){
+    
+        const newText = text.replace(links[0], `<a href="${links}", target="_blank">${links}</a>`)
+    
+        lesson.innerHTML = newText
+    
+        };
+    };
+    
 
 // function showInspirationDiv(div){
 //         div.style.display = "flex"

@@ -133,13 +133,14 @@ function setGelukstegoed(user){
 
 function setLevensvraag(user, selected, goalTitle, goalDescription, private){
     db.collection("Vitaminders")
-    .doc(user).collection("Levenvragen").doc()
+    .doc(user).collection("Levensvragen").doc()
     .set({
         Eigenaar: "Vitaminds",
         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
         Gebruikersnaam: user,
         Goal: selected,
         Levenslessen: [],
+        Lessons: 0,
         ID: idClean,
         Levensvraag: idClean + goalTitle,
         LevensvraagClean: goalTitle,
@@ -286,7 +287,7 @@ function saveInputVisitor(){
           Profielfoto: "https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/dummy-profile-photo.jpeg?alt=media&token=229cf7eb-b7df-4815-9b33-ebcdc614bd25"
       }).then(() => {
         setGelukstegoed(cred.user.uid)
-        setLevensvraag(cred.user.uid, selectedOption, newGoalTitle, newGoalDescription, privateOption)
+        setLevensvraag(cred.user.uid + userName, selectedOption, newGoalTitle, newGoalDescription, privateOption)
         setReminder(cred.user.uid)
         setEmail(email, userName)
     })

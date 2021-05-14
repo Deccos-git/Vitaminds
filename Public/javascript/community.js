@@ -440,31 +440,67 @@ function saveTip(supportButton, user, supportInput, goal){
 
         const tip = supportInput.value
 
-        db.collection("Vitaminders")
-        .where("Gebruikersnaam", "==", userName)
-        .get().then(querySnapshot => {
-            querySnapshot.forEach(doc => {
+        auth.onAuthStateChanged(User =>{
+            if(User){
+                db.collection("Vitaminders")
+                .doc(User.uid)
+                .get().then(function(doc) {
 
-            const auth = doc.data().Gebruikersnaam
-            const authClean = doc.data().GebruikersnaamClean
+                const auth = doc.data().Gebruikersnaam
+                const authClean = doc.data().GebruikersnaamClean
 
-                db.collection("Vitaminders").doc(doc.id)
-                .collection("Levenslessen").doc().set({
-                    Tipper: auth,
-                    TipperClean: authClean,
-                    Gebruikersnaam: user,
-                    Levensles: tip,
-                    Levensvraag: goal,
-                    Status: "Approved",
-                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                    Type: "Community-tip"
-                })
-                .then(() => {
-                    updateGoalLastActive(goal, doc.id)
+                        db.collection("Vitaminders")
+                        .where("Gebruikersnaam", "==", user)
+                        .get().then(querySnapshot => {
+                            querySnapshot.forEach(doc => {
+
+                                const email = doc.data().Email
+                                const nameClean = doc.data().GebruikersnaamClean
+
+                            db.collection("Vitaminders").doc(doc.id)
+                            .collection("Levenslessen").doc().set({
+                                Tipper: auth,
+                                TipperClean: authClean,
+                                Gebruikersnaam: user,
+                                New: true,
+                                Levensles: tip,
+                                Levensvraag: goal,
+                                Status: "Approved",
+                                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                Type: "Community-tip"
+                            })
+                            .then(() => {
+                                updateGoalLastActive(goal, doc.id)
+                                sendNewInspirationMail(email, nameClean, user)
+                            });
+                        });
+                    });
                 });
-            });
+            };
         });
     });
+};
+
+function sendNewInspirationMail(emailAdress, naamClean, name){
+
+    db.collection("Mail").doc().set({
+        to: emailAdress,
+        cc: "info@vitaminds.nu",
+        message: {
+        subject: `Je hebt nieuwe inspiratie ontvangen op je ontwikkeldoel`,
+        html: `Hallo ${naamClean}, <br><br>
+                Je hebt een nieuwe inspiratie ontvangen op je ontwikkeldoel. <br><br>
+                
+                Bekijk je nieuwe inspiratie <a href="https://vitaminds.nu/Goals/${IDurl}">hier</a>.<br></br>
+
+                Vriendelijke groet, <br></br>
+                Het Vitaminds Team <br></br>
+                <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
+        Gebruikersnaam: name,
+        Emailadres: emailAdress,
+        Type: "Inspiration on goal"
+        }        
+    }); 
 };
 
 function updateGoalLastActive(goal, docid){
@@ -521,6 +557,9 @@ function addLessonsToGoal(goal){
     .where("Levensvraag", "==", goal)
     .orderBy("Timestamp", "desc")
     .onSnapshot(querySnapshot => {
+
+        goalWall.innerHTML = ""
+
         querySnapshot.forEach(doc => {
 
             const user = doc.data().Gebruikersnaam
@@ -533,7 +572,6 @@ function addLessonsToGoal(goal){
             const source = doc.data().Source
 
             lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, author, source, user)
-
         });
     });
 };
@@ -551,7 +589,7 @@ function lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, auth
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
-        lessonP.innerText = lesson
+        lessonP.innerHTML = lesson
         typeDescription(type, typeP, tipper, tipperClean, author, source)
         addSocialIconsToMessage(user, lesson, socialIconOuterDiv, innerDiv)
 
@@ -561,12 +599,30 @@ function lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, auth
         innerDiv.appendChild(timestampP)
         innerDiv.appendChild(socialIconOuterDiv)
 
+        findLinkInText(lessonP)
+
+};
+
+function findLinkInText(lesson){
+
+    const text = lesson.innerText
+
+    const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+    const links = text.match(urlRegex)
+
+    if(links != null){
+
+    const newText = text.replace(links[0], `<a href="${links}", target="_blank">${links}</a>`)
+
+    lesson.innerHTML = newText
+
+    };
 };
 
 function typeDescription(type, typeP, tipper, tipperClean, author, source){
 
     if(type === "Community-tip"){
-        typeP.innerHTML = `Hulp van <a href="../Vitaminders/${tipper}">${tipperClean}</a>`
+        typeP.innerHTML = `Inspiratie van <a href="../Vitaminders/${tipper}">${tipperClean}</a>`
     } else if (type === "Check-in"){
         typeP.innerHTML = "Check in"
     } else if (type === "Coach-inzicht"){

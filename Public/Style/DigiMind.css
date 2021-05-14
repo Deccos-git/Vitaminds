@@ -80,6 +80,7 @@
 }
 
 #button-question{
+    display: none;
     background-color: #008e8e;
     border: 1px #008e8e solid;
     border-radius: 10px;

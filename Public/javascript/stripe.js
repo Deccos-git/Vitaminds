@@ -451,7 +451,7 @@ auth.onAuthStateChanged(User =>{
           const authUser = doc.data().Gebruikersnaam
 
       db.collection("Coachgroups")
-      .where("Room", "==", titelCG)
+      .where("Room", "==", titleOfRoom())
       .get().then(querySnapshot => {
           querySnapshot.forEach(doc1 => {
 
@@ -473,7 +473,7 @@ auth.onAuthStateChanged(User =>{
                   .collection("Gelukstegoed").doc().set({
                       Type: "Minus",
                       Amount: Number(price),
-                      Product: `Coachgroep: ${titelCG}`,
+                      Product: `Coachgroep: ${titleOfRoom()}`,
                       SessionID: idClean,
                       Timestamp: firebase.firestore.Timestamp.fromDate(new Date())
                   })
@@ -515,7 +515,7 @@ buyCoachgroupButton.appendChild(notice)
 
 function arrayOfCoachgroupSignUps(){
 
-  db.collection("Coachgroups").where("Room", "==", titelCG)
+  db.collection("Coachgroups").where("Room", "==", titleOfRoom())
   .get().then(querySnapshot => {
   querySnapshot.forEach(doc1 => {
 
@@ -542,7 +542,7 @@ function arrayOfCoachgroupSignUps(){
                         db.collection("Vitaminders").doc(doc1.id).collection("Earnings").doc().set({
                           Earning: netPrice,
                           Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                          Source: `Coachgroep <br> ${titelCG}`,
+                          Source: `Coachgroep <br> ${titleOfRoom()}`,
                           Buyer: auth,
                           Billed: "No"
                         })
@@ -552,7 +552,7 @@ function arrayOfCoachgroupSignUps(){
                           db.collection("Revenue").doc().set({
                             Earning: vitamindsPrice,
                             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                            Source: `Coachgroep <br> ${titelCG}`,
+                            Source: `Coachgroep <br> ${titleOfRoom()}`,
                             Buyer: auth,
                             Billed: "No",
                             Coach: coach

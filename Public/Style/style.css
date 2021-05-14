@@ -148,13 +148,41 @@ ul{
   background-color: #a7bdbd26;
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+}
+
+.contact{
+  font-size: 14px;
+  margin-left: 20px;
+}
+
+#contact-div{
+  background-color: #a7bdbd26;
+}
+
+#contact-form-notice{
+  display: none;
+}
+
+#send-question-button{
+    background-color: #008e8e;
+    border: 1px #008e8e solid;
+    border-radius: 10px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    min-height: 30px;
+    margin: 20px;
+}
+
+.contact a{
+  text-decoration: none;
 }
 
 #target-group-inner-menu{
   display: flex;
   align-items: center;
-  margin: 0px 10px;
+  margin: 0px 0px 0px auto;
 }
 
 #target-group-inner-menu p{
@@ -680,6 +708,49 @@ ul{
 #chats-groups-div-auth-menu{
   cursor: pointer;
   display: flex;
+}
+
+#adress-div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+#contact-form-section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #a7bdbd26;
+  margin-top: 20px;
+  padding-bottom: 30px;
+}
+
+#button-message{
+  margin: 20px;
+}
+
+#logo-contact{
+  width: 100px !important;
+  margin: 40px 0px 0px 0px;
+}
+
+#items-inner-div{
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.contact-item-div{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.contact-item-div img{
+  width: 30px;
+  margin-right: 20px;
 }
 
 #chats-groups-div-auth-menu img{
