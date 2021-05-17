@@ -470,6 +470,14 @@ function scrollToSummaryItem(summaryTitle, h2Title){
     });
 };
 
+function moreAboutDomainTitle(domain){
+
+    const title = document.getElementById("more-domain-title")
+
+    title.innerHTML = `Meer over ${domain}` 
+
+};
+
 !function articleQuery(){
 
     const bodyDiv = document.getElementById("article-body-div")
@@ -499,6 +507,7 @@ function scrollToSummaryItem(summaryTitle, h2Title){
             bodyDiv.innerHTML = body
 
             // loadArticlesWithSameDomain(domain)
+            moreAboutDomainTitle(domain)
             showAuthorOnPreview(author, metaUserPhoto, metaUserName, authorDiv)
             setH2HeadersInSummary(bodyDiv)
             sanityTinyMCE()
@@ -1042,7 +1051,7 @@ function metaDivLinkToProfile(metaDiv, coachName){
 
                     moreFromCoachTitle(nameClean)
                     workshopsFromCoach(overview, author, nameClean, profilePic)
-                    eventsFromCoach(overview, author)
+                    eventsFromCoach(overview, author, nameClean, profilePic)
 
                 });
             });
@@ -1098,7 +1107,7 @@ function workshopsFromCoach(overview, author, nameClean, profilePic){
         nameP.innerText = nameClean
         titleH3.innerText = title
         priceP.innerText = `Prijs: ${workshopPrice} euro`
-        button.innerText = "Meer informatie"
+        button.innerHTML = `<a href="../Workshops-coaches/${title}.html">Meer informatie</a>`
         typeP.innerText = "Workshop"
 
         overview.appendChild(innerDiv)
@@ -1117,7 +1126,7 @@ function workshopsFromCoach(overview, author, nameClean, profilePic){
     });
 };
 
-function eventsFromCoach(overview, author){
+function eventsFromCoach(overview, author, nameClean, profilePic){
 
     db.collection("EventsCoaches")
     .where("Organizer", "==", author)
@@ -1136,12 +1145,16 @@ function eventsFromCoach(overview, author){
             const outerDiv = document.createElement("div")
                 outerDiv.setAttribute("class", "event-outer-div")
             const bannerImg = document.createElement("img")
+                bannerImg.setAttribute("class", "event-banner")
             const organiserEventDiv = document.createElement("div")
                 organiserEventDiv.setAttribute("class", "organizer-event-div")
             const organiserEventPhoto = document.createElement("img")
+                organiserEventPhoto.setAttribute("class", "event-photo-img")
             const organiserEventP = document.createElement("p")
             const priceP = document.createElement("p")
                 priceP.setAttribute("class", "price-p")
+            const typeP = document.createElement("p")
+                typeP.setAttribute("class", "offer-type-card")
             const dateEvent = document.createElement("p")
                 dateEvent.setAttribute("class", "date-event")
             const titleEvent = document.createElement("h2")
@@ -1153,7 +1166,10 @@ function eventsFromCoach(overview, author){
             dateEvent.innerText = date
             titleEvent.innerText = title
             bannerImg.src = eventBanner
+            typeP.innerText = "Event"
             buttonEvent.innerHTML = `<a href="../eventCoaches/${title}.html">Meer informatie</a>`
+            organiserEventP.innerText = nameClean
+            organiserEventPhoto.src = profilePic
             organiserEventDiv.addEventListener("click", () => {
                 window.open("../Vitaminders/" + organizer, "_self");
             });
@@ -1163,6 +1179,7 @@ function eventsFromCoach(overview, author){
             outerDiv.appendChild(organiserEventDiv)
             organiserEventDiv.appendChild(organiserEventPhoto)
             organiserEventDiv.appendChild(organiserEventP)
+            outerDiv.appendChild(typeP)
             outerDiv.appendChild(titleEvent)
             outerDiv.appendChild(dateEvent)
             outerDiv.appendChild(priceP)

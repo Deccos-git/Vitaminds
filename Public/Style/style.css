@@ -177,6 +177,7 @@ ul{
 
 .contact a{
   text-decoration: none;
+  font-weight: bold;
 }
 
 #target-group-inner-menu{
@@ -842,6 +843,7 @@ ul{
 
  .button-algemeen-card a{
    color: #008e8e !important;
+   text-decoration: none !important;
  }
 
  .button-header{

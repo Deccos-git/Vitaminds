@@ -86,6 +86,9 @@
           <div class="main-menu-mobile"><a href="../events.html">Events</a></div>
         </li>
         <li>
+          <div class="main-menu-mobile"><a href="../contact.html">Contact</a></div>
+        </li>
+        <li>
           <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
         </li> 
       </ul>
@@ -104,6 +107,7 @@
 
    <!-- menu --> 
    <div id="target-group-menu">
+    <p class="contact"> <a href="../contact.html">Contact</a></p>
     <div id="target-group-inner-menu">
       <p>Vitaminds voor</p>
       <select id="select-targetgroup" onchange="getTargetGroup(this)">
@@ -165,14 +169,6 @@
       <button id="button-edited-article" class="button-algemeen button-article">Opslaan</button>
     </div>
   </section>
-
-
-  <div id="lifelessons-div">
-    <h3>Wat mensen over zichzelf geleerd hebben van dit artikel</h3>
-    <div id="register-notice-article">
-      <p>Maak een <a href="/Register.html">account</a> aan om te zien wat anderen over zichzelf geleerd hebben.</p>
-    </div>
-  </div>
   
   <div id="lifelessons-outer-div">
     <h3>Heb je iets over jezelf geleerd? Sla het op in je account.</h3>
@@ -183,11 +179,24 @@
     </div>
     <button id="button-lifelesson" class="button-algemeen button-article">Opslaan</button>
     <p id="notice">Maak eerst een <a href="../create-route.html">account aan</a> zodat je je les op kan slaan</p>
-
   </div>
 
+  <div id="lifelessons-div">
+    <h3>Wat mensen over zichzelf geleerd hebben van dit artikel</h3>
+    <div id="register-notice-article">
+      <p>Maak een <a href="/Register.html">account</a> aan om te zien wat anderen over zichzelf geleerd hebben.</p>
+    </div>
+  </div>
+
+  <!-- More from coach -->
+
+  <section id="more-from-coach-section">
+    <h3 id="more-coach-title"></h3>
+    <main id="more-coach-overview"></main>
+  </section>
+
   <div class="meer-inspiratie">
-    <h3>Verder lezen</h3>
+    <h3 id="more-thema-title">Meer over dit thema</h3>
     <div id="more-inspiration">
     </div> 
   </div>

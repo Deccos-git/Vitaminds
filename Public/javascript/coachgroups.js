@@ -273,7 +273,8 @@ auth.onAuthStateChanged(User =>{
 
 // Overviewpage
 
-db.collection("Coachgroups").where("Type", "==", "Coachgroup").get().then(querySnapshot => {
+db.collection("Coachgroups")
+.where("Type", "==", "Coachgroup").get().then(querySnapshot => {
     querySnapshot.forEach(doc => {
 
         const title = doc.data().Room

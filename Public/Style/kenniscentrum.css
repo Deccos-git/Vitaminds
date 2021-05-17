@@ -29,6 +29,59 @@
     color: white !important;
 }
 
+.event-outer-div{
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    height: auto;
+    margin: 30px 10px 20px 10px;
+    padding-bottom: 20px;
+    align-items: center;
+    text-align: center;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: #FFF;
+}
+
+.organizer-event-div{
+    cursor: pointer;
+}
+
+.event-photo-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-top: -20px;
+    border: 3px solid white;
+    background-color: white;
+    z-index: 2;
+}
+
+.organizer-event-div p {
+    font-size: 16px;
+}
+
+.event-banner{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 200px;
+    width: 100%;
+    margin: 0px 0px -30px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.price-p{
+    font-size: 16px;
+    font-weight: bold;
+    width: 100% !important;
+}
+
 .workshop-section {
     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
     display: flex;

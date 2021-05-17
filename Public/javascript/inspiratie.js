@@ -803,6 +803,14 @@ function loadLifeLessonsOfArticle(){
 
 // More inspiration
 
+function moreDomainTitle(domain){
+
+    const title = document.getElementById("more-thema-title")
+
+    title.innerHTML = `Meer over ${domain}`
+
+};
+
 function loadArticlesWithSameDomain(articleDomain){
 
     const loadMoreOuterDiv = document.getElementById("more-inspiration")
@@ -840,6 +848,7 @@ function loadArticlesWithSameDomain(articleDomain){
                 buttonDiv.setAttribute("onclick", "seeArticle(this)")
     
             showAuthorOnPreview(author, metaUserPhoto, metaUserName, metaUserDiv)
+            moreDomainTitle(domain)
     
             titleH2.innerHTML = title
             headerImg.src = headerImageSmall
@@ -1011,6 +1020,291 @@ function unfollowCoach(){
 
                     });
             };
+    });
+};
+
+// More from coach section
+
+!function coachQuery(){
+
+    const overview = document.getElementById("more-coach-overview")
+
+    db.collection("Articles")
+    .where("Title", "==", titel)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const author = doc.data().Author
+
+            console.log(author)
+
+            db.collection("Vitaminders")
+            .where("Gebruikersnaam", "==", author)
+            .get().then(querySnapshot => {
+                querySnapshot.forEach(doc2 => {
+
+                    const nameClean = doc2.data().GebruikersnaamClean
+                    const profilePic = doc2.data().Profielfoto
+
+                    moreFromCoachTitle(nameClean)
+                    workshopsFromCoach(overview, author, nameClean, profilePic)
+                    eventsFromCoach(overview, author)
+                    articlesFromCoach(overview, author)
+                    coachgroupsFromCoach(author, overview, profilePic, nameClean)
+
+                });
+            });
+        });
+    });
+}();
+
+function moreFromCoachTitle(nameClean){
+
+    const title = document.getElementById("more-coach-title")
+
+    title.innerHTML = `Meer van ${nameClean}`
+
+};
+
+function coachgroupsFromCoach(author, overview, profilePic, nameClean){
+
+    db.collection("Coachgroups")
+    .where("Creater", "==", author)
+    .get().then(querySnapshot => {
+    querySnapshot.forEach(doc => {
+
+        const title = doc.data().Room
+        const titleClean = doc.data().RoomClean
+        const auth = doc.data().Creater
+        const coverPhoto = doc.data().CoverPhoto
+
+        const groupInnerDiv = document.createElement("div")
+            groupInnerDiv.setAttribute("class", "theme-groups-section")
+        const groupHeader = document.createElement("div")
+            groupHeader.setAttribute("class", "theme-groups-header")
+        const groupCoverPhoto = document.createElement("img")
+            groupCoverPhoto.setAttribute("class", "header-image-groups")
+        const authDiv = document.createElement("div")
+            authDiv.setAttribute("class", "group-auth-div")
+        const authImg = document.createElement("img")
+            authImg.setAttribute("class", "group-auth-img")
+        const authName = document.createElement("p")
+        const metaDiv = document.createElement("div")
+            metaDiv.setAttribute("class", "group-meta-div")
+        const typeP = document.createElement("p")
+            typeP.setAttribute("class", "offer-type-card")
+        const bottomDiv = document.createElement("div")
+            bottomDiv.setAttribute("class", "bottom-div")
+        const groupTitleH2 = document.createElement("h2")
+            groupTitleH2.setAttribute("class", "titelTekst")
+        const descriptionP = document.createElement("p")
+        const groupButton = document.createElement("button")
+            groupButton.setAttribute("class", "button-algemeen-card")
+            groupButton.setAttribute("id", "group-button")
+
+            groupCoverPhoto.src = coverPhoto
+            groupTitleH2.innerText = titleClean
+            typeP.innerText = "Coachgroep"
+            authImg.src = profilePic
+            authName.innerText = nameClean
+            groupButton.innerHTML = `<a href="../Group/${title}.html">Meer informatie</a>`
+
+            authDiv.addEventListener("click", () => {
+                window.open("../Vitaminders/" + auth + ".html", "_self");
+            })
+
+            overview.appendChild(groupInnerDiv)
+            groupInnerDiv.appendChild(groupHeader)
+            groupHeader.appendChild(groupCoverPhoto)
+            groupInnerDiv.appendChild(authDiv)
+            authDiv.appendChild(authImg)
+            authDiv.appendChild(authName)
+            groupInnerDiv.appendChild(typeP)
+            groupInnerDiv.appendChild(bottomDiv)
+            bottomDiv.appendChild(groupTitleH2)
+            bottomDiv.appendChild(descriptionP)
+            groupInnerDiv.appendChild(metaDiv)
+            groupInnerDiv.appendChild(groupButton)
+
+        });
+    });
+};
+
+function workshopsFromCoach(overview, author, nameClean, profilePic){
+
+    db.collection("Workshops")
+    .where("Coach", "==", author)
+    .where("Status", "==", "Public")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc2 => {
+
+            const title = doc2.data().WorkshopTitle
+            const coach = doc2.data().Coach
+            const headerImg = doc2.data().BannerImage
+            const workshopPrice = doc2.data().Price
+            const takers = doc2.data().Takers
+
+            const innerDiv = document.createElement("div")
+            innerDiv.setAttribute("class", "workshop-section")
+        const header = document.createElement("div")
+            header.setAttribute("class", "workshop-header")
+        const img = document.createElement("img")
+            img.setAttribute("class", "header-workshop")
+        const nameP = document.createElement("p")
+        const coachPicDiv = document.createElement("div")
+            coachPicDiv.setAttribute("class", "coach-pic-div-workshop")
+        const coachPic = document.createElement("img")
+        const typeP = document.createElement("p")
+            typeP.setAttribute("class", "offer-type-card")
+        const titleH3 = document.createElement("h3")
+        const priceP = document.createElement("p")
+            priceP.setAttribute("id", "workshop-price")
+        const buttonDiv = document.createElement("div")
+            buttonDiv.setAttribute("class", "button-div")
+        const button = document.createElement("button")
+            button.setAttribute("class", "button-algemeen")
+            button.setAttribute("onclick", "openWorkshop(this)")
+
+        img.src = headerImg
+        coachPic.src = profilePic
+        nameP.innerText = nameClean
+        titleH3.innerText = title
+        priceP.innerText = `Prijs: ${workshopPrice} euro`
+        button.innerHTML = `<a href="../Workshops/${title}.html">Meer informatie</a>`
+        typeP.innerText = "Workshop"
+
+        overview.appendChild(innerDiv)
+        innerDiv.appendChild(header)
+        header.appendChild(img)
+        innerDiv.appendChild(coachPicDiv)
+        coachPicDiv.appendChild(coachPic)
+        coachPicDiv.appendChild(nameP)
+        innerDiv.appendChild(typeP)
+        innerDiv.appendChild(titleH3)
+        innerDiv.appendChild(priceP)
+        innerDiv.appendChild(buttonDiv)
+        buttonDiv.appendChild(button)
+
+        });
+    });
+};
+
+function eventsFromCoach(overview, author){
+
+    db.collection("Events")
+    .where("Organizer", "==", author)
+    .orderBy("DateMonth", "desc")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const title = doc.data().Title
+            const date = doc.data().Date
+            const eventBanner = doc.data().Banner
+            const organizer = doc.data().Organizer
+            const titleID = doc.data().TitleID
+            const price = doc.data().Price
+            const dateMonth = doc.data().DateMonth
+
+            const outerDiv = document.createElement("div")
+                outerDiv.setAttribute("class", "event-outer-div")
+            const bannerImg = document.createElement("img")
+                bannerImg.setAttribute("class", "event-banner")
+            const organiserEventDiv = document.createElement("div")
+                organiserEventDiv.setAttribute("class", "organizer-event-div")
+            const organiserEventPhoto = document.createElement("img")
+            const organiserEventP = document.createElement("p")
+            const typeP = document.createElement("p")
+                typeP.setAttribute("class", "offer-type-card")
+            const priceP = document.createElement("p")
+                priceP.setAttribute("class", "price-p")
+            const dateEvent = document.createElement("p")
+                dateEvent.setAttribute("class", "date-event")
+            const titleEvent = document.createElement("h2")
+            const buttonEvent = document.createElement("button")
+                buttonEvent.setAttribute("class", "button-algemeen")
+                buttonEvent.setAttribute("id", "button-event-overview")
+
+            priceP.innerHTML = `<b>Prijs</b>: €${price}`
+            dateEvent.innerText = date
+            titleEvent.innerText = title
+            bannerImg.src = eventBanner
+            typeP.innerText = "Event"
+            buttonEvent.innerHTML = `<a href="../eventpage/${title}.html">Meer informatie</a>`
+            organiserEventDiv.addEventListener("click", () => {
+                window.open("../Vitaminders/" + organizer, "_self");
+            });
+
+            overview.appendChild(outerDiv)
+            outerDiv.appendChild(bannerImg)
+            outerDiv.appendChild(organiserEventDiv)
+            organiserEventDiv.appendChild(organiserEventPhoto)
+            organiserEventDiv.appendChild(organiserEventP)
+            outerDiv.appendChild(typeP)
+            outerDiv.appendChild(titleEvent)
+            outerDiv.appendChild(dateEvent)
+            outerDiv.appendChild(priceP)
+            outerDiv.appendChild(buttonEvent)
+
+        });
+    });
+};
+
+function articlesFromCoach(overview, author){
+
+    db.collection("Articles")
+    .where("Author", "==", author)
+    .where("Status", "==", "Approved")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+    
+             const title = doc.data().Title
+            const headerImage = doc.data().HeaderImage
+            const headerImageSmall = doc.data().HeaderImageSmall
+            const domain = doc.data().Domain
+            const author = doc.data().Author
+         
+            const outerSection = document.createElement("section")
+                outerSection.setAttribute("class", "levensvraag-artikel-section")
+                outerSection.setAttribute("data-title", title)
+            const headerDiv = document.createElement("div")
+                headerDiv.setAttribute("class", "levensvraag-artikel-header")
+            const headerImg = document.createElement("img")
+                headerImg.setAttribute("class", "header-image-article")
+            const metaUserDiv = document.createElement("div")
+                metaUserDiv.setAttribute("class", "meta-user-div")
+            const metaUserPhoto = document.createElement("img")
+            const metaUserName = document.createElement("p")
+                metaUserName.setAttribute("id", "meta-user-name")
+            const typeP = document.createElement("p")
+                typeP.setAttribute("class", "offer-type-card")
+            const titleDiv = document.createElement("div")
+            const titleSub = document.createElement("h5")
+                titleSub.setAttribute("class", "titleSub")
+            const titleH2 = document.createElement("h2")
+                titleH2.setAttribute("class", "titelTekst")
+            const buttonDiv = document.createElement("button")
+                buttonDiv.setAttribute("class", "button-algemeen-card")
+                buttonDiv.setAttribute("onclick", "seeArticle(this)")
+    
+            showAuthorOnPreview(author, metaUserPhoto, metaUserName, metaUserDiv)
+    
+            titleH2.innerHTML = title
+            headerImg.src = headerImageSmall
+            typeP.innerText = "Artikel"
+            buttonDiv.innerHTML = `<a href="../Artikelen/${title}.html">Bekijk</a>`
+    
+            overview.appendChild(outerSection)
+            outerSection.appendChild(headerDiv)
+            outerSection.appendChild(metaUserDiv)
+            metaUserDiv.appendChild(metaUserPhoto)
+            metaUserDiv.appendChild(metaUserName)
+            headerDiv.appendChild(headerImg)
+            outerSection.appendChild(typeP)
+            outerSection.appendChild(titleDiv)
+            titleDiv.appendChild(titleSub)
+            titleDiv.appendChild(titleH2)
+            outerSection.appendChild(buttonDiv)
+        });
     });
 };
 

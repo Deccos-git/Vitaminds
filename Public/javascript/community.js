@@ -409,7 +409,7 @@ function createDomElements(goalClean, description, user, goal){
         descriptionP.innerText = description
         giveAdviseButton.innerText = "Geef advies"
         supportButton.innerText = "Versturen"
-        userMeta(user, profilePhoto, nameP)
+        userMeta(user, profilePhoto, nameP, metaDiv)
         metaDivLinkToProfile(metaDiv, nameP)
         supportCTATitle(user, supportCTA)
         tipsCTASupport(supportTips)
@@ -437,6 +437,7 @@ function saveTip(supportButton, user, supportInput, goal){
         supportButton.innerText = "Verstuurd"
 
         const userName = supportButton.dataset.user
+        supportInput.innerText = ""
 
         const tip = supportInput.value
 
