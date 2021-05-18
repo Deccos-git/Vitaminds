@@ -587,10 +587,17 @@ function lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, auth
     const timestampP = document.createElement("p")
         timestampP.setAttribute("class", "timestamp-support")
     const socialIconOuterDiv = document.createElement("div")
+    const reactionInputDiv = document.createElement("div")
+        reactionInputDiv.setAttribute("class", "reaction-input-div")
+    const reactionInput = document.createElement("input")
+        reactionInput.setAttribute("type", "text")
+        reactionInput.setAttribute("placeholder", "Schrijf hier je reactie")
+    const reactionButton = document.createElement("img")
 
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
         lessonP.innerHTML = lesson
+        reactionButton.src = "../images/send-icon.png"
         typeDescription(type, typeP, tipper, tipperClean, author, source)
         addSocialIconsToMessage(user, lesson, socialIconOuterDiv, innerDiv)
 
@@ -598,6 +605,10 @@ function lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, auth
         innerDiv.appendChild(typeP)
         innerDiv.appendChild(lessonP)
         innerDiv.appendChild(timestampP)
+        innerDiv.appendChild(reactionInputDiv)
+        innerDiv.appendChild(reactionInputDiv)
+        reactionInputDiv.appendChild(reactionInput)
+        reactionInputDiv.appendChild(reactionButton)
         innerDiv.appendChild(socialIconOuterDiv)
 
         findLinkInText(lessonP)

@@ -858,6 +858,75 @@ function registerNoticeOK(){
   })
 };
 
+!function registerVitaminderCoachgroup(){
+
+  const button = document.getElementById("register-button-coachgroup")
+  const modal = document.getElementById("register-modal-coachgroup")
+  const groupLanding = document.getElementById("group-landing-page")
+
+  if(button != null){
+
+  button.addEventListener("click", () => {
+
+    const email = document.getElementById('register-email-coachgroup').value;
+    const passwordVM = document.getElementById('register-wachtwoord-coachgroup').value;
+    const passwordInput = document.getElementById('register-wachtwoord-coachgroup')
+    const repeatPasswordVM = document.getElementById("register-wachtwoord-repeat-coachgroup").value
+    const repeatPasswordVMInput = document.getElementById("register-wachtwoord-repeat-coachgroup")
+    const firstName = document.getElementById('register-firstname-coachgroup').value;
+    const lastName = document.getElementById('register-lastname-coachgroup').value;
+    const colour = getRandomColor()
+ 
+  let userName = ""
+
+  if (lastName != ""){
+    userName = firstName +" "+ lastName
+  } else {
+    userName = firstName
+  };
+
+  if (passwordVM != repeatPasswordVM){
+    passwordInput.style.borderColor = "red"
+    repeatPasswordVMInput.style.borderColor = "red"
+    alert("De wachtwoorden zijn niet gelijk")
+  } else {
+
+    if (firstName === ""){
+      alert("Vergeet niet je voornaam in te vullen")
+
+    } else {
+  
+  firebase.auth().createUserWithEmailAndPassword(email, passwordVM)
+  .then(cred =>{
+    db.collection('Vitaminders').doc(cred.user.uid).set({
+      Gebruikersnaam: cred.user.uid + userName,
+      GebruikersnaamClean: userName,
+      Firstname: firstName,
+      Lastname: lastName,
+      Usertype: "Vitaminder",
+      Inspiratiepunten: 1,
+      Email: email, 
+      MainGoal: "",
+      ID: cred.user.uid,
+      Color: colour,
+      Levensvragen: [],
+      Profielfoto: "https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/dummy-profile-photo.jpeg?alt=media&token=229cf7eb-b7df-4815-9b33-ebcdc614bd25"
+  })
+  .then(() => {
+    createFirstGelukstegoed(cred.user.uid)
+    modal.style.display = "none"
+    groupLanding.style.display = "none"
+  });
+  }).catch((err) => {
+    alert(err)
+  });
+    };
+  };
+
+  });
+};
+}();
+
 
 // Tickets
 

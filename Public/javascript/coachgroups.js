@@ -47,34 +47,34 @@ return title
 //     });
 // }();
 
-function updateMessages(){
+// function updateMessages(){
 
-    db.collection("Coachgroups")
-    .where("Room", "==", "io3rw9o6ixDe KOPP groep")
-    .get()
-    .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
+//     db.collection("Coachgroups")
+//     .where("Room", "==", "io3rw9o6ixDe KOPP groep")
+//     .get()
+//     .then(querySnapshot => {
+//         querySnapshot.forEach(doc => {
 
-     db.collectionGroup("Messages")
-     .where("Room", "==", "io3rw9o6ixDe KOPP groep")
-     .get()
-    .then(querySnapshot => {
-        querySnapshot.forEach(doc2 => {
+//      db.collectionGroup("Messages")
+//      .where("Room", "==", "io3rw9o6ixDe KOPP groep")
+//      .get()
+//     .then(querySnapshot => {
+//         querySnapshot.forEach(doc2 => {
 
-    db.collection("Coachgroups")
-     .doc(doc.id).collection("Messages")
-     .doc(doc2.id)
-     .update({
-        ParentID: "none",
-        Type: "Message",
-        ID: "",
-        Thread: []
-     })
-        });
-    });
-});
-});
-};
+//     db.collection("Coachgroups")
+//      .doc(doc.id).collection("Messages")
+//      .doc(doc2.id)
+//      .update({
+//         ParentID: "none",
+//         Type: "Message",
+//         ID: "",
+//         Thread: []
+//      })
+//         });
+//     });
+// });
+// });
+// };
 
 
 function groupMetaTags(descriptionGroup, titleGroup, bannerGroup){
@@ -827,6 +827,19 @@ function displayEditIconIfAuthIsAdmin(editIcon){
             groupLandingBanner(bannerImage)
 
         });
+    });
+}();
+
+//Register modal
+
+!function closeRegisterModal(){
+
+    const closeButton = document.getElementById("close-register-modal-div")
+    const modal = document.getElementById("register-modal-coachgroup")
+
+    closeButton.addEventListener("click", () => {
+
+        modal.style.display = "none"
     });
 }();
 

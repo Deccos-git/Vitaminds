@@ -144,7 +144,8 @@ auth.onAuthStateChanged(User =>{
   } else {
     notice.innerHTML = "Maak een gratis <u>account</u> aan om deze workshop te doen.<br><br> Heb je al een Vitaminds account? Klik dan <a href='../inlog.html' >hier </a> om in te loggen."
     notice.addEventListener("click", () => {
-        window.open("../Register.html", "_self")
+      const registerNotice = document.getElementById("register-modal-coachgroup")
+      registerNotice.style.display = "flex"
     });
     buttonDivLanding.appendChild(notice)
     buttonWorkshopLandingStripe.style.display = "none"
@@ -399,7 +400,8 @@ db.collection("Coachgroups").where("Room", "==", titelCG).get().then(querySnapsh
 
     notice.innerHTML = "Maak een gratis <u>account</u> aan om je aan te melden voor deze groep. <br><br> Heb je al een Vitaminds account? Klik dan <a href='../inlog.html' >hier </a> om in te loggen."
     notice.addEventListener("click", () => {
-        window.open("../Register.html", "_self")
+        const registerNotice = document.getElementById("register-modal-coachgroup")
+        registerNotice.style.display = "flex"
     });
 
     buttonDiv.appendChild(notice)
@@ -440,7 +442,6 @@ auth.onAuthStateChanged(User =>{
       });
   }).then(() => {
 
-    const agreementModal = document.getElementById("coachgroup-agreement")
     const landingModal = document.getElementById("group-landing-page")
 
     auth.onAuthStateChanged(User =>{
@@ -502,12 +503,14 @@ auth.onAuthStateChanged(User =>{
   });
   });
   } else {
+    notice.scrollIntoView()
     notice.innerHTML = "Maak een gratis <u>account</u> aan om aan deze coachgroep mee te doen.<br><br> Heb je al een Vitaminds account? Klik dan <a href='../inlog.html' >hier </a> om in te loggen."
     notice.addEventListener("click", () => {
-        window.open("../Register.html", "_self")
+      const registerNotice = document.getElementById("register-modal-coachgroup")
+
+      console.log(registerNotice)
+      registerNotice.style.display = "flex"
     });
-    buttonDivLanding.appendChild(notice)
-    buttonWorkshopLandingStripe.style.display = "none"
   }
 }); 
 buyCoachgroupButton.appendChild(notice)

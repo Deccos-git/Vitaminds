@@ -484,6 +484,21 @@
     margin-bottom: 0px;
 }
 
+.reaction-input-div{
+    display: flex;
+    align-items: center;
+}
+
+.reaction-input-div input:hover{
+    width: 80%;
+}
+
+.reaction-input-div img{
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 938px){
 
     #gratitudes-overview-div {
