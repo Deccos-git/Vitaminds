@@ -115,8 +115,6 @@ function getTargetGroup(){
   const option = selectGroup.options
   const selected = option[option.selectedIndex].innerHTML
 
-  console.log(selected)
-
   if(selected === "Coaches"){
     window.open("../voor-coaches.html", "_self");
   } else if (selected === "Psychologen"){

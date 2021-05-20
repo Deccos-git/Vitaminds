@@ -1108,6 +1108,8 @@ function saveCheckInByProgress(levensvraagID, publicGoal){
                                         Gebruikersnaam: naam,
                                         Levensles: input,
                                         Levensvraag: levensvraagID,
+                                        ID: idClean,
+                                        ParentID: "None",
                                         Public: publicGoal,
                                         Status: "Approved",
                                         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),

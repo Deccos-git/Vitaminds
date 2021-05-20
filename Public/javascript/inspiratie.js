@@ -661,6 +661,8 @@ function inspirerend(elem){
                                         Gebruikersnaam: auth,
                                         Inspirerend: 0,
                                         Levensles: lesson,
+                                        ID: idClean,
+                                        ParentID: "None",
                                         Levensvraag: levensvraagID,
                                         Public: publicGoal,
                                         Source: titel,

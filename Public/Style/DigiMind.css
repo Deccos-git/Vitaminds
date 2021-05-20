@@ -1199,7 +1199,8 @@
 
 #show-chat{
     text-decoration: none;
-    color: white;
+    color: white !important;
+    width: 185px;
 }
 
 #show-chat-button{

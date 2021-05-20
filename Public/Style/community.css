@@ -126,10 +126,23 @@
     margin-bottom: 0px;
 }
 
+.load-reactions {
+    align-self: center;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.reaction-p {
+    font-size: 16px;
+    margin: 5px;
+}
+
 .type-support {
     font-size: 18px;
     margin-top: 0px;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .meta-div img {
@@ -484,12 +497,22 @@
     margin-bottom: 0px;
 }
 
+.reaction-div {
+    margin: 10px 0px 5px 5%;
+    background-color: #a7bdbd26;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
 .reaction-input-div{
     display: flex;
     align-items: center;
 }
 
-.reaction-input-div input:hover{
+.reaction-input-div input{
     width: 80%;
 }
 

@@ -19,6 +19,7 @@ return title
 
 };
 
+
 // !function updateMessagesWithMembers(){
 
 //     db.collection("Coachgroups")
@@ -1128,8 +1129,6 @@ auth.onAuthStateChanged(User =>{
                     querySnapshot.forEach(doc => {
         
                         const members = doc.data().Members
-    
-                        console.log(members)
         
                     db.collection("Coachgroups")
                     .doc(doc.id)
@@ -1211,8 +1210,6 @@ auth.onAuthStateChanged(User =>{
                     querySnapshot.forEach(doc => {
         
                         const members = doc.data().Members
-    
-                        console.log(members)
         
                     db.collection("Coachgroups")
                     .doc(doc.id)
@@ -1592,17 +1589,13 @@ auth.onAuthStateChanged(User =>{
     function appendMessageToDOM(timestamp, sender, authMessage, id, messageDiv, parentID, messages){
     
         const messageP = document.createElement("p")
-        messageP.setAttribute("class", "auth-message-p")
-    
+            messageP.setAttribute("class", "auth-message-p")
         const senderName = document.createElement("p")
-        senderName.setAttribute("class", "sender-name-message")
-    
+            senderName.setAttribute("class", "sender-name-message")
         const timestampP = document.createElement("p")
-        timestampP.setAttribute("class", "message-timestamp")
-    
+            timestampP.setAttribute("class", "message-timestamp")
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
-    
+            timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
         const loadReactions = document.createElement("p")
             loadReactions.setAttribute("class", "load-reactions")
     
@@ -1811,7 +1804,6 @@ auth.onAuthStateChanged(User =>{
         messageDivArray.forEach(div => {
     
             const divID = div.dataset.id
-            const timestamp = div.dataset.timestamp
     
             if(parentID === divID){
                 div.appendChild(messageDiv)

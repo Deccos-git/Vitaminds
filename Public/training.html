@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-159826016-1');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="Klanten krijgen coach, ondernemen coach, marketing, online marketing">
+    <meta name="description" content="Training voor klanten krijgen voor coaches">
+    <Title> Vitaminds - Training voor klanten krijgen voor coaches</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Style/style.css">
+    <link rel="stylesheet" href="Style/kenniscentrum.css">
+    <link rel="shortcut icon" href="images/Favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Feedback -->
+   <div id="feedback">
+    <a href="tickets.html"> <p>Feedback</p></a>
+  </div>
+  
+      <!-- Mobile-menu -->
+      <nav id="mobile-menu"> 
+        <div id="menu-mobile-visible-layer">
+          <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+          <div class="main-menu-mobile"><a href="/voor-coaches.html"><img id="logo-menu-for-coaches" src="images/logo-coaches.png" alt="Vitaminds voor coaches logo" width="150px"></a></div>
+        </div>
+        <div id="mobile-menu-outer-div">
+          <div id="mobile-menu-inner-div">
+                <div id="profile-picture-mobile"></div>
+                <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
+                <div class="main-menu-mobile"><a href="intervisie.html">Intervisie</a></div>
+                <div class="main-menu-mobile"><a href="cooperations.html">Communty</a></div> 
+                <div class="main-menu-mobile"><a href="kenniscentrum.html">Kenniscentrum</a></div>
+                <div class="main-menu-mobile"><a href="groups-for-coaches.html">Groepen</a></div>
+                <!-- <div class="main-menu-mobile"><a href="workshops-for-coaches.html">Workshops</a></div> -->
+                <div class="main-menu-mobile"><a href="events-coaches.html">Events</a></div>
+                <div class="main-menu-mobile"><a href="contact.html">Contact</a></div>
+            <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+          </div>
+          <div id="target-group-menu-mobile">
+            <div id="target-group-inner-menu">
+              <p>Vitaminds voor</p>
+              <select id="select-targetgroup-mobile" onchange="getTargetGroupMobile(this)">
+                <option value="coaches">Coaches</option>
+                <option value="private">Particulieren</option>
+                <option value="therapist">Psychologen</option>
+              </select>
+            </div>
+          </div>
+        </nav>
+    
+       <!-- menu --> 
+       <div id="target-group-menu">
+        <p class="contact"> <a href="contact.html">Contact</a></p>
+        <div id="target-group-inner-menu">
+          <p>Vitaminds voor</p>
+          <select id="select-targetgroup" onchange="getTargetGroup(this)">
+            <option value="coaches">Coaches</option>
+            <option value="private">Particulieren</option>
+            <option value="therapist">Psychologen</option>
+          </select>
+        </div>
+       </div>
+       <nav id="menu">
+        <div id="navigation-menu">
+          <div class="main-menu"><a href="/voor-coaches.html"><img id="logo-menu-for-coaches" src="images/logo-coaches.png" alt="Vitaminds voor coaches logo" width="150px"></a></div>
+          <div id="menu-items">
+            <div class="main-menu"><a href="intervisie.html">Intervisie</a></div>
+            <div class="main-menu"><a href="cooperations.html">Community</a></div> 
+            <div class="main-menu"><a href="kenniscentrum.html">Kenniscentrum</a></div>
+            <div class="main-menu "><a href="groups-for-coaches.html">Groepen</a></div>
+            <div class="main-menu "><a href="events-coaches.html">Events</a></div>
+          </div>
+          <a href="aanmelden-coach.html" id="button-register-coach" class="coach-menu-main-p">Lid worden</a>
+        </div>
+        <div id="auth-menu">
+          <div id="auth-DOM"></div>
+          <div id="profile-picture">
+          </div>
+          <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
+        </div>
+      </nav>
+
+<h1>Training voor klanten krijgen voor coaches</h1>
+
+<img src="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/Event-banners%2Ftraining%20vaardigheden.jpg?alt=media&token=1500b9ae-d12f-4292-b570-90288d79e0d4" alt="coaches die samen een training volgen">
+
+<h3>Als coaches spelen we een belangrijke rol in de maatschappij. Samen zorgen we ervoor dat mensen zo kort mogelijk met psychische klachten rondlopen. Daar mogen we best trots op zijn.</h3>
+
+<p></p>
+
+<!-- Toolbar mobile -->
+<div class="toolbar-mobile">
+  <div class="toolbar-mobile-inner-div" id="toolbar-community">
+    <img src="images/design/community-icon.png" alt="" id="toolbar-home">
+    <p class="description-menu-icons-toolbar-mobile">Community</p>
+  </div>
+  <div class="toolbar-mobile-inner-div" id="toolbar-inner-div-chats-groups">
+    <img src="images/send-icon.png" alt="" id="toolbar-chats-groups">
+    <p class="description-menu-icons-toolbar-mobile">Chats & groepen</p>
+  </div>
+  <div class="toolbar-mobile-inner-div" id="toolbar-digimind-div">
+    <img src="images/menu-dashboard.png" alt="" id="toolbar-digimind">
+    <p class="description-menu-icons-toolbar-mobile">Mijn account</p>
+  </div>  
+</div>
+</div>
+
+<!-- footer -->
+<footer class="footer">
+  <div id="top-layer">
+    <div>
+    <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+    </div>
+    <div>
+      <h3 id="slogan-footer">Het sociale netwerk voor imperfecte mensen</h3>
+    </div>
+    <div>
+    <a href="https://www.facebook.com/Vitaminds.nu"><img src="images/Logo-facebook.png" alt="" width="25px"></a>
+    <a href="https://www.instagram.com/vitaminds.nu"><img src="images/logo-insta.png" alt="" width="50px"></a>
+    </div>
+  </div>
+  <div id="contact-layer">
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="/images/adres-icon.png" alt="Vitaminds adres">
+      <p>Beijumerweg 24</p>
+      <p>9737AD</p> 
+      <p>Groningen</p>
+    </div>
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="/images/email-icon.png" alt="Vitaminds emailadres">
+      <p> info@vitaminds.nu</p>
+    </div>
+    <div class="adress-div">
+      <img class="icon-contact-layer" src="/images/telephone-icon.png" alt="Vitaminds phonenumber">
+      <p>+316 244 098 43</p>
+    </div>
+  </div>
+</footer>
+
+      <script type="text/javascript" src="javascript/firebase.js"></script>
+      <script type="text/javascript" src="javascript/auth.js"></script>
+      <script type="text/javascript" src="javascript/index.js"></script>
+      <script type="text/javascript" src="javascript/kenniscentrum.js"></script>
+    </body>
+  </html>
+  

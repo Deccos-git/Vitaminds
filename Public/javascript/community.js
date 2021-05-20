@@ -1,6 +1,36 @@
 const IDurl0 = window.location.href.replace(/^.*[\\\/]/, '')
 const IDurl = IDurl0.replace('.html', '')
 
+// !function ghdsjghd(){
+
+//     db.collectionGroup("Levenslessen")
+//     .where("Status", "==", "Approved")
+//     .get().then(querySnapshot => {
+//         querySnapshot.forEach(doc => {
+
+//             const user = doc.data().Gebruikersnaam
+
+//             db.collection("Vitaminders")
+//             .where("Gebruikersnaam", "==", user)
+//             .get().then(querySnapshot => {
+//                 querySnapshot.forEach(doc1 => {
+
+//                     console.log(user)
+
+//                     db.collection("Vitaminders")
+//                     .doc(doc1.id)
+//                     .collection("Levenslessen")
+//                     .doc(doc.id)
+//                     .update({
+//                         ParentID: "None"
+//                     })
+
+//                 });
+//             });
+//         });
+//     });
+// }();
+
 // Community overview
 
 !function hideNoticeMakeAccountIfAuth(){
@@ -464,6 +494,8 @@ function saveTip(supportButton, user, supportInput, goal){
                                 TipperClean: authClean,
                                 Gebruikersnaam: user,
                                 New: true,
+                                ID: idClean,
+                                ParentID: "None",
                                 Levensles: tip,
                                 Levensvraag: goal,
                                 Status: "Approved",
@@ -550,37 +582,159 @@ function tipsCTASupport(tips){
 
 };
 
+// Lessons
+
+const DOMlessons = document.getElementById("goal-social-wall")
+
+function randomID(){
+
+    const id = Math.random() 
+    const idAlpha = id.toString(36)
+    const idMessage = idAlpha.replace("0.", "")
+
+    return idMessage
+};
+
+function emptyScreenByOnsnapshotReaction(){
+    
+    console.log("empty reactions")
+
+    const DOMchatScreenGroupChat = document.getElementById("chat-screen")
+
+    const chatDivsUser = document.getElementsByClassName("reaction-div")
+
+    const chatDivsArrayUser = Array.from(chatDivsUser)
+
+    chatDivsArrayUser.forEach(divs => {
+
+        console.log("empty reactions")
+        
+        divs.remove();
+    });
+};
+
+function emptyScreenByOnsnapshotMessage(){
+
+    console.log("empty messages")
+
+    const DOMchatScreenGroupChat = document.getElementById("chat-screen")
+
+    const chatDivsUser = document.getElementsByClassName("message-div")
+
+    const chatDivsArrayUser = Array.from(chatDivsUser)
+
+    chatDivsArrayUser.forEach(divs => {
+
+        console.log("empty messages")
+        
+        DOMchatScreenGroupChat.removeChild(divs)
+    });
+};
+
 function addLessonsToGoal(goal){
-
-    const goalWall = document.getElementById("goal-social-wall")
-
+    
     db.collectionGroup("Levenslessen")
     .where("Levensvraag", "==", goal)
+    .where("ParentID", "==", "None")
     .orderBy("Timestamp", "desc")
     .onSnapshot(querySnapshot => {
 
-        goalWall.innerHTML = ""
-
+        emptyScreenByOnsnapshotMessage()
+        
         querySnapshot.forEach(doc => {
 
             const user = doc.data().Gebruikersnaam
             const lesson = doc.data().Levensles
             const timestamp = doc.data().Timestamp
+            const parentID = doc.data().ParentID
+            const type = doc.data().Type
+            const tipper = doc.data().Tipper
+            const tipperClean = doc.data().TipperClean
+            const author = doc.data().Auteur 
+            const source = doc.data().Source
+            const id = doc.data().ID
+            const messages = doc.data().Messages
+
+            const messageDiv = document.createElement("div")
+                messageDiv.setAttribute("class", "message-div message-reaction")
+
+                messageDiv.setAttribute("data-id", id)
+                messageDiv.setAttribute("data-parentid", parentID)
+                messageDiv.setAttribute("data-timestamp", timestamp)
+
+                showNewMessages(messageDiv, id)
+                appendMessageToDOM(timestamp, user, lesson, id, messageDiv, parentID, messages, type, tipper, tipperClean, author, source, user, goal)
+        });
+    });
+};
+
+const messageIDList = localStorage.getItem("IDs")
+
+function showNewMessages(messageDiv, id){
+    
+    if(messageIDList != null){
+        const messageIDArray = messageIDList.split(",")
+
+        if(messageIDArray.includes(id)){
+
+            messageDiv.style.borderColor = "#8e0000" 
+            removeNewMessageBorderColorOnHover(messageDiv, id, messageIDArray)
+
+        };
+    };
+};
+
+function loadReactionsInRealtime(parentID, goal){
+    
+    db.collectionGroup("Levenslessen")
+    .where("Type", "==", "Reaction")
+    .orderBy("Timestamp", "desc")
+    .where("ParentID", "==", parentID)
+    .onSnapshot(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const user = doc.data().Gebruikersnaam
+            const sender = doc.data().Auth
+            const lesson = doc.data().Levensles
+            const timestamp = doc.data().Timestamp
+            const parentID = doc.data().ParentID
+            const id = doc.data().ID
+            const messages = doc.data().Messages
             const type = doc.data().Type
             const tipper = doc.data().Tipper
             const tipperClean = doc.data().TipperClean
             const author = doc.data().Auteur 
             const source = doc.data().Source
 
-            lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, author, source, user)
+            console.log(user)
+
+            const messageDiv = document.createElement("div")
+                messageDiv.setAttribute("class", "message-div message-reaction")
+                messageDiv.setAttribute("data-id", id)
+                messageDiv.setAttribute("data-parentid", parentID)
+                messageDiv.setAttribute("data-timestamp", timestamp)
+
+                // showNewReactions(messageDiv, id)
+                appendMessageToDOM(timestamp, sender, lesson, id, messageDiv, parentID, messages, type, tipper, tipperClean, author, source, user, goal)
         });
     });
 };
 
-function lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, author, source, user){
+function loadAllReactions(loadReactionsP, id, goal){
+    
+    loadReactionsP.addEventListener("click", () => {
+        loadReactionsInRealtime(id, goal)
+        // loadReactionsP.style.display = "none"
+    });
+};
+
+messageDivArray = []
+    
+function appendMessageToDOM(timestamp, sender, lesson, id, messageDiv, parentID, messages, type, tipper, tipperClean, author, source, user, goal){
 
     const innerDiv = document.createElement("div")
         innerDiv.setAttribute("class", "social-wall-coaches-inner-div")
+        innerDiv.setAttribute("data-id", id)
     const typeP = document.createElement("p")
         typeP.setAttribute("class", "type-support")
     const lessonP = document.createElement("p")
@@ -593,31 +747,161 @@ function lessonCard(goalWall, timestamp, lesson, type, tipper, tipperClean, auth
         reactionInput.setAttribute("type", "text")
         reactionInput.setAttribute("placeholder", "Schrijf hier je reactie")
     const reactionButton = document.createElement("img")
+    const loadReactions = document.createElement("p")
+        loadReactions.setAttribute("class", "load-reactions")
 
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
-        lessonP.innerHTML = lesson
-        reactionButton.src = "../images/send-icon.png"
-        typeDescription(type, typeP, tipper, tipperClean, author, source)
-        addSocialIconsToMessage(user, lesson, socialIconOuterDiv, innerDiv)
+    loadReactionsButton(loadReactions, messages)
 
-        goalWall.appendChild(innerDiv)
-        innerDiv.appendChild(typeP)
-        innerDiv.appendChild(lessonP)
-        innerDiv.appendChild(timestampP)
-        innerDiv.appendChild(reactionInputDiv)
-        innerDiv.appendChild(reactionInputDiv)
-        reactionInputDiv.appendChild(reactionInput)
-        reactionInputDiv.appendChild(reactionButton)
-        innerDiv.appendChild(socialIconOuterDiv)
+    loadAllReactions(loadReactions, id, goal) 
+    
+    console.log(user)
 
-        findLinkInText(lessonP)
+    saveReaction(reactionButton, reactionInput, user, id, goal)
 
+    typeDescription(type, typeP, tipper, tipperClean, author, source)
+
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    timestampP.innerHTML = timestamp.toDate().toLocaleDateString("nl-NL", options);
+    lessonP.innerHTML = lesson
+    reactionButton.src = "../images/send-icon.png"
+
+    innerDiv.appendChild(typeP)
+    innerDiv.appendChild(lessonP)
+    innerDiv.appendChild(timestampP)
+    innerDiv.appendChild(reactionInputDiv)
+    innerDiv.appendChild(reactionInputDiv)
+    reactionInputDiv.appendChild(reactionInput)
+    reactionInputDiv.appendChild(reactionButton)
+    innerDiv.appendChild(socialIconOuterDiv)
+    innerDiv.appendChild(loadReactions)
+
+    appendMessagesToMessageOrReaction(innerDiv, parentID)
+
+    findLinkInText(lessonP.innerHTML)
 };
+
+
+function loadReactionsButton(loadReactions, messages){
+    
+    if(messages === undefined){
+        // loadReactions.style.display = "none"
+    } else if (messages === 1){
+        loadReactions.innerHTML = `Bekijk ${messages} reactie` 
+    } else {
+        loadReactions.innerHTML = `Bekijk ${messages} reacties`
+    };
+};
+
+function appendMessagesToMessageOrReaction(messageDiv, parentID){
+    messageDivArray.push(messageDiv)
+
+    messageDivArray.forEach(div => {
+
+        const divID = div.dataset.id
+
+        console.log(parentID)
+
+        if(parentID === divID){
+            console.log(messageDiv)
+            div.appendChild(messageDiv)
+            messageDiv.setAttribute("class", "reaction-div")
+        } else if (parentID === "None") {
+            DOMlessons.appendChild(messageDiv)
+            console.log(messageDiv, DOMlessons)
+        };
+    });
+};
+
+function saveReaction(reactionButton, reactionInput, user, ID, goal){
+
+    reactionButton.addEventListener("click", () => {
+
+        const input = reactionInput.value
+        reactionInput.value = ""
+        const thread = [idClean]
+        const parentID = ID
+
+            auth.onAuthStateChanged(User =>{
+              db.collection("Vitaminders")
+              .doc(User.uid)
+              .get()
+              .then(function(doc2) {
+
+                const auth = doc2.data().Gebruikersnaam
+
+                db.collection("Vitaminders")
+                .where("Gebruikersnaam", "==", user)
+                .get().then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+
+                        db.collection("Vitaminders")
+                        .doc(doc.id)
+                        .collection("Levenslessen")
+                        .doc()
+                        .set({
+                            Levensles: input,
+                            Levensvraag: goal,
+                            ID: randomID(),
+                            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                            Gebruikersnaam: auth,
+                            Gebruikersnaam: user,
+                            ParentID: ID,
+                            Tread: [],
+                            New: true,
+                            Type: "Reaction"
+                        })
+                        .then(() => {
+                            addIdToThread(parentID, thread)
+                            // updateNumberOfReactionsInMessage(parentID, doc.id)
+                        });
+                    });
+                });
+            });
+        });
+    });
+};
+
+function addIdToThread(parentID, thread){
+    
+    db.collectionGroup("Levenslessen")
+    .where("ID", "==", parentID)
+    .onSnapshot(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const threadParent = doc.data().Tread
+
+            threadParent.forEach(thr => {
+                thread.push(thr)
+            });
+        });
+    });
+};
+
+// function updateNumberOfReactionsInMessage(parentID, docid){
+
+//     db.collectionGroup("Levenslessen")
+//     .where("ID", "==", parentID)
+//     .onSnapshot(querySnapshot => {
+//         querySnapshot.forEach(doc1 => {
+
+//             console.log("update")
+
+//             db.collection("Vitaminders")
+//             .doc(docid)
+//             .collection("Levenslessen")
+//             .doc(doc1.id)
+//             .update({
+//                 Messages: firebase.firestore.FieldValue.increment(1)
+//             });
+//         });
+//     });
+// };
+
+
 
 function findLinkInText(lesson){
 
-    const text = lesson.innerText
+    const text = lesson
 
     const urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
     const links = text.match(urlRegex)
@@ -634,9 +918,9 @@ function findLinkInText(lesson){
 function typeDescription(type, typeP, tipper, tipperClean, author, source){
 
     if(type === "Community-tip"){
-        typeP.innerHTML = `Inspiratie van <a href="../Vitaminders/${tipper}">${tipperClean}</a>`
+        typeP.innerHTML = `Bericht van <a href="../Vitaminders/${tipper}">${tipperClean}</a>`
     } else if (type === "Check-in"){
-        typeP.innerHTML = "Check in"
+        typeP.innerHTML = "Update"
     } else if (type === "Coach-inzicht"){
         linkAuthorAndArticle(typeP, author, source)
     } else if (type === "Tool: Check in"){
