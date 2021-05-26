@@ -16,6 +16,35 @@
     background-color: white; /* Fallback color */
 }
 
+.member-photo-div{
+    border-bottom: 1px solid lightgray;
+    display: flex;
+    cursor: pointer;
+}
+
+#close-div-group{
+    cursor: pointer;
+    align-self: center;
+}
+
+#members-list{
+    margin-bottom: 50px;
+}
+
+#members-modal{
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    position: fixed; /* Stay in place */
+    z-index: 4; /* Sit on top */
+    left: 0;
+    top: 0;
+    padding: 20px;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: white; /* Fallback color */
+}
+
 #upload-icon{
     width: 30px;
 }
@@ -184,7 +213,7 @@
     align-items: center;
     position: sticky;
     bottom: 0;
-    z-index: 2;
+    z-index: 3;
     margin: 0px;
     width: 100%;
     border-radius: 5px;
@@ -542,9 +571,20 @@
 
 #list-of-members{
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
     border-top: 1px solid rgba(0,0,0,.2);
+    cursor: pointer;
+}
+
+#list-of-members img{
+    height: 30px;
+    margin: 10px;
+}
+
+#list-of-members p{
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .message-timestamp{
@@ -575,8 +615,8 @@
 }
 
 .member-name-p{
-    font-size: 14px;
-    display: none;
+    font-size: 18px;
+    margin-left: 10px;
 }
 
 #hide-landing-modal{

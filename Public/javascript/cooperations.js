@@ -125,7 +125,7 @@ function openSupport(buttonDOM, link){
 
         db.collectionGroup("Coachgoals")
         .where("Eigenaar", "==", "Vitaminds")
-        .orderBy("Timestamp", "desc")
+        .orderBy("LastActive", "desc")
         .get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
 
@@ -158,13 +158,11 @@ function openSupport(buttonDOM, link){
 
             goalTitle.innerText = goalClean
             button.innerText = "Bekijk"
-            numberOfLessons.innerHTML = `<b>Aantal lessen</b>: ${lessons.length}`
-            numberOfSupport.innerHTML = `<b>Aantal tips</b>: ${tips.length}`
-            dateP.innerHTML = `<b>Laatst actief</b>: ${lastActiveFormatted}`
 
             coachMeta(coach, profilePhoto, coachName)
             openCoachSupport(button, id)
             metaDivLinkToProfile(metaDiv, coach)
+            numberOfLessonsCard(numberOfLessons, lessons)
 
             goalOverview.appendChild(goalCard)
             goalCard.appendChild(metaDiv)
@@ -173,14 +171,18 @@ function openSupport(buttonDOM, link){
             goalCard.appendChild(goalTitle)
             goalCard.appendChild(infoDiv)
             infoDiv.appendChild(numberOfLessons)
-            infoDiv.appendChild(numberOfSupport)
-            infoDiv.appendChild(dateP)
             goalCard.appendChild(button)
 
             });
         });
     };
 }();
+
+function numberOfLessonsCard(numberOfLessons, lessons){
+
+    numberOfLessons.innerHTML = `Aantal lessen: ${lessons.length}`
+
+};
 
 function coachMeta(coach, profilePhoto, coachName){
 
@@ -214,6 +216,8 @@ function saveTip(supportButton, supportInput){
 
     supportButton.addEventListener("click", () => {
 
+        emptyScreenByOnsnapshotMessage()
+
         const tip = supportInput.value
         supportButton.innerText = "Verstuurd"
         supportButton.id = ""
@@ -233,7 +237,9 @@ function saveTip(supportButton, supportInput){
         
                         const idGoal = doc1.data().ID
                         const coachGoal = doc1.data().Goal
+                        const coachGoalClean = doc1.data().GoalClean
                         const userName = doc1.data().Gebruikersnaam
+                        const email = doc.data().Email
 
                         db.collection("Vitaminders")
                         .doc(User.uid)
@@ -241,14 +247,16 @@ function saveTip(supportButton, supportInput){
                     .doc()
                     .set({
                         Username: userName,
-                        Tip: tip,
+                        Lesson: tip,
                         Coachgoal: coachGoal,
                         GoalID: idGoal,
                         ID: randomID(),
                         ParentID: "None",
                         Tread: [],
+                        New: true,
                         Tipper: auth,
                         TipperClean: authClean,
+                        Type: "supportTip",
                         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
                     })
                     .then(() => {
@@ -256,11 +264,12 @@ function saveTip(supportButton, supportInput){
                         .doc()
                         .set({
                             Username: userName,
-                            Tip: tip,
+                            Lesson: tip,
                             Coachgoal: coachGoal,
-                            ID: idGoal,
+                            GoalID: idGoal,
                             ID: randomID(),
                             ParentID: "None",
+                            New: true,
                             Tread: [],
                             Tipper: auth,
                             TipperClean: authClean,
@@ -275,11 +284,11 @@ function saveTip(supportButton, supportInput){
                             .doc(doc1.id)
                             .update({
                                 LastActive:firebase.firestore.Timestamp.fromDate(new Date()),
-                                Tips: firebase.firestore.FieldValue.arrayUnion(tip)
+                                Lessons: firebase.firestore.FieldValue.arrayUnion(tip)
                             });
                         })
                         .then(() => {
-                            location.reload(); 
+                            sendMailNewTip(email, coachGoalClean, authClean, idGoal)
                         });
                     });
                 });
@@ -288,12 +297,36 @@ function saveTip(supportButton, supportInput){
     });
 };
 
-function saveReaction(supportButton, supportInput, ID){
+function sendMailNewTip(email, goal, nameClean, id){
+
+    db.collection("Mail").doc().set({
+        to: [email],
+        cc: "info@vitaminds.nu",
+        message: {
+        subject: `Nieuwe reactie op je doel "${goal}"`,
+        html: `Hallo ${nameClean}, </br></br>
+            Je hebt een nieuwe reactie ontvangen op je doel "${goal}".<br><br>
+            
+            Klik <a href="https://vitaminds.nu/coachSupports/${id}"> hier </a> om de reactie te bekijken.<br><br>
+  
+            Vriendelijke groet, </br></br>
+            Het Vitaminds Team </br></br>
+            <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,
+        Gebruikersnaam: nameClean,
+        Emailadres: email,
+        Type: "Goal tip"
+          }     
+      });
+
+};
+
+function saveReaction(supportButton, supportInput, parentID){
 
     supportButton.addEventListener("click", () => {
 
+        emptyScreenByOnsnapshotReaction()
+
         const reaction = supportInput.value
-        supportButton.innerText = "Verstuurd"
         supportButton.id = ""
 
             auth.onAuthStateChanged(User =>{
@@ -304,14 +337,14 @@ function saveReaction(supportButton, supportInput, ID){
                     const auth = doc.data().Gebruikersnaam
                     const authClean = doc.data().GebruikersnaamClean
 
-                db.collectionGroup("Coachgoals")
-                .where("ID", "==", IDurl)
+                db.collectionGroup("CoachLessons")
+                .where("ID", "==", parentID)
                 .get().then(querySnapshot => {
                     querySnapshot.forEach(doc1 => {
         
                         const idGoal = doc1.data().ID
-                        const coachGoal = doc1.data().Goal
-                        const userName = doc1.data().Gebruikersnaam
+                        const coachGoal = doc1.data().Coachgoal
+                        const userName = doc1.data().Username
 
                         db.collection("Vitaminders")
                         .doc(User.uid)
@@ -322,12 +355,14 @@ function saveReaction(supportButton, supportInput, ID){
                         Lesson: reaction,
                         Coachgoal: coachGoal,
                         GoalID: idGoal,
+                        New: true,
                         ID: randomID(),
-                        ParentID: ID,
+                        ParentID: parentID,
                         Tread: [],
                         Tipper: auth,
                         TipperClean: authClean,
                         Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                        Type: "Reaction"
                     })
                     .then(() => {
                         db.collection("CoachSocialWall")
@@ -336,28 +371,26 @@ function saveReaction(supportButton, supportInput, ID){
                             Username: userName,
                             Lesson: reaction,
                             Coachgoal: coachGoal,
-                            ID: idGoal,
+                            GoalID: idGoal,
+                            New: true,
                             ID: randomID(),
-                            ParentID: ID,
+                            ParentID: parentID,
                             Tread: [],
                             Tipper: auth,
                             TipperClean: authClean,
                             Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                            Type: "supportTip"
+                            Type: "Reaction"
                         });
                         })
                         .then(() => {
                             db.collection("Vitaminders")
                             .doc(User.uid)
-                            .collection("Coachgoals")
+                            .collection("CoachLessons")
                             .doc(doc1.id)
                             .update({
                                 LastActive:firebase.firestore.Timestamp.fromDate(new Date()),
                                 Messages: firebase.firestore.FieldValue.arrayUnion(reaction)
                             });
-                        })
-                        .then(() => {
-                            location.reload(); 
                         });
                     });
                 });
@@ -392,7 +425,6 @@ function saveReaction(supportButton, supportInput, ID){
                 supportCTADiv.setAttribute("id", "support-CTA-div")
             const supportCTA = document.createElement("p")
             const supportInput = document.createElement("textarea")
-                supportInput.placeholder = "Schrijf hier je tip, link of vraag."
                 supportInput.style.width = "90%"
                 supportInput.style.height = "200px"
                 supportInput.style.borderRadius = "5px"
@@ -403,8 +435,7 @@ function saveReaction(supportButton, supportInput, ID){
 
             h1.innerText = goalClean
             descriptionP.innerText = description
-            supportCTATitle(userName, supportCTA)
-            tipsCTASupport(supportTips)
+            supportCTAText(userName, supportCTA, supportTips, supportInput)
             coachMeta(userName, profilePhoto, coachName)
             metaDivLinkToProfile(metaDiv, userName)
             supportButton.innerText = "Versturen"
@@ -433,7 +464,7 @@ function metaDivLinkToProfile(metaDiv, coachName){
     });
 };
 
-function supportCTATitle(userName, supportCTA){
+function supportCTAText(userName, supportCTA, tips, supportInput){
 
     db.collection("Vitaminders")
     .where("Gebruikersnaam", "==", userName)
@@ -442,17 +473,29 @@ function supportCTATitle(userName, supportCTA){
 
             const userNameClean = doc.data().GebruikersnaamClean
 
-            supportCTA.innerHTML = `Help ${userNameClean} om zijn/haar doel te bereiken`
+            auth.onAuthStateChanged(User =>{
+                    db.collection("Vitaminders")
+                    .doc(User.uid)
+                    .get().then(function(doc) {
 
+                    const auth = doc.data().Gebruikersnaam
+                    const authClean = doc.data().GebruikersnaamClean
+
+                    if(userName === auth){
+                        supportCTA.innerHTML = `Hoe gaat het nu, ${authClean}?`
+                        tips.innerHTML = "<ul><li>Heb je iets geleerd?</li><li>Is er iets veranderd?</li><li>Welke stappen heb je gezet?</li></ul>"
+                        supportInput.placeholder = "Schrijf hier wat je wilt delen."
+                    } else {
+                        supportCTA.innerHTML = `Help ${userNameClean} om zijn/haar doel te bereiken`
+                        tips.innerHTML = "<ul><li>Geef een tip</li><li>Link naar een interessante website</li><li>Stel een verdiepende vraag</li></ul>"
+                        supportInput.placeholder = "Schrijf hier je tip, link of vraag."
+                    }
+                });
+            });
         });
     });
 };
 
-function tipsCTASupport(tips){
-
-    tips.innerHTML = "<ul><li>Geef een tip</li><li>Link naar een interessante website</li><li>Stel een verdiepende vraag</li></ul>"
-
-};
 
 function randomID(){
 
@@ -476,7 +519,7 @@ function randomID(){
         querySnapshot.forEach(doc => {
 
             const user = doc.data().Gebruikersnaam
-            const lesson = doc.data().Levensles
+            const lesson = doc.data().Lesson
             const timestamp = doc.data().Timestamp
             const parentID = doc.data().ParentID
             const type = doc.data().Type
@@ -503,9 +546,9 @@ function emptyScreenByOnsnapshotMessage(){
 
     console.log("empty messages")
 
-    const DOMchatScreenGroupChat = document.getElementById("chat-screen")
+    const DOMchatScreenGroupChat = document.getElementById("goal-social-wall")
 
-    const chatDivsUser = document.getElementsByClassName("message-div")
+    const chatDivsUser = document.getElementsByClassName("social-wall-coaches-inner-div")
 
     const chatDivsArrayUser = Array.from(chatDivsUser)
 
@@ -514,6 +557,22 @@ function emptyScreenByOnsnapshotMessage(){
         console.log("empty messages")
         
         DOMchatScreenGroupChat.removeChild(divs)
+    });
+};
+
+function emptyScreenByOnsnapshotReaction(){
+    
+    console.log("empty reactions")
+
+    const chatDivsUser = document.getElementsByClassName("reaction-div")
+
+    const chatDivsArrayUser = Array.from(chatDivsUser)
+
+    chatDivsArrayUser.forEach(divs => {
+
+        console.log("empty reactions")
+        
+        divs.remove();
     });
 };
 
@@ -583,7 +642,7 @@ function findLinkInText(lesson){
 
 function typeDescription(type, typeP, tipper, tipperClean, author, source){
 
-    if(type === "Community-tip"){
+    if(type === "supportTip"){
         typeP.innerHTML = `Bericht van <a href="../Vitaminders/${tipper}">${tipperClean}</a>`
     } else if (type === "Check-in"){
         typeP.innerHTML = "Update"
@@ -624,9 +683,9 @@ function loadReactionsButton(loadReactions, messages){
     if(messages === undefined){
         // loadReactions.style.display = "none"
     } else if (messages === 1){
-        loadReactions.innerHTML = `Bekijk ${messages} reactie` 
+        loadReactions.innerHTML = `Bekijk ${messages.length} reactie` 
     } else {
-        loadReactions.innerHTML = `Bekijk ${messages} reacties`
+        loadReactions.innerHTML = `Bekijk ${messages.length} reacties`
     };
 };
 
@@ -635,5 +694,39 @@ function loadAllReactions(loadReactionsP, id, goal){
     loadReactionsP.addEventListener("click", () => {
         loadReactionsInRealtime(id, goal)
         // loadReactionsP.style.display = "none"
+    });
+};
+
+function loadReactionsInRealtime(parentID, goal){
+    
+    db.collectionGroup("CoachLessons")
+    .where("Type", "==", "Reaction")
+    .orderBy("Timestamp", "desc")
+    .where("ParentID", "==", parentID)
+    .onSnapshot(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const user = doc.data().Gebruikersnaam
+            const sender = doc.data().Auth
+            const lesson = doc.data().Lesson
+            const timestamp = doc.data().Timestamp
+            const parentID = doc.data().ParentID
+            const id = doc.data().ID
+            const messages = doc.data().Messages
+            const type = doc.data().Type
+            const tipper = doc.data().Tipper
+            const tipperClean = doc.data().TipperClean
+            const author = doc.data().Auteur 
+            const source = doc.data().Sources
+
+            const messageDiv = document.createElement("div")
+                messageDiv.setAttribute("class", "message-div message-reaction")
+                messageDiv.setAttribute("data-id", id)
+                messageDiv.setAttribute("data-parentid", parentID)
+                messageDiv.setAttribute("data-timestamp", timestamp)
+
+                // showNewReactions(messageDiv, id)
+                appendMessageToDOM(timestamp, sender, lesson, id, messageDiv, parentID, messages, type, tipper, tipperClean, author, source, user, goal)
+        });
     });
 };

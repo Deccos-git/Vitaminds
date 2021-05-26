@@ -1,23 +1,5 @@
 
 
-function getType(){
-
-        const selectDomain = document.getElementById("feaures-select")
-
-        const option = selectDomain.options
-        const selected = option[option.selectedIndex].innerHTML
-
-        if(selected === "Artikelen"){
-                window.open("/artikelen.html", '_self');
-        } else if (selected === "Workshops"){
-                window.open("/workshops.html", '_self');
-        } else if (selected === "Coachgroepen"){
-                window.open("/groups.html", '_self');
-        } else if (selected === "Events"){
-                window.open("/events.html", '_self');
-        };
-};
-
 
 // Main header CTA
 

@@ -753,8 +753,6 @@ function appendMessageToDOM(timestamp, sender, lesson, id, messageDiv, parentID,
     loadReactionsButton(loadReactions, messages)
 
     loadAllReactions(loadReactions, id, goal) 
-    
-    console.log(user)
 
     saveReaction(reactionButton, reactionInput, user, id, goal)
 
@@ -819,7 +817,6 @@ function saveReaction(reactionButton, reactionInput, user, ID, goal){
         const input = reactionInput.value
         reactionInput.value = ""
         const thread = [idClean]
-        const parentID = ID
 
             auth.onAuthStateChanged(User =>{
               db.collection("Vitaminders")

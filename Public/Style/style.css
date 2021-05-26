@@ -150,6 +150,11 @@ ul{
   display: flex;
 }
 
+#logo-menu-for-coaches{
+  height: 70px;
+  width: auto;
+}
+
 .contact{
   font-size: 14px;
   margin-left: 20px;
@@ -403,7 +408,7 @@ ul{
   font-size: 16px;
   border: 1px solid #008e8e;
   border-radius: 5px;
-  margin-top: 10px;
+  margin: 10px;
 }
 
 #chats-groups-mobile a{
@@ -1477,7 +1482,7 @@ ul{
 }
 
 .footer div{
-  margin: 0px 40px 0px 40px;
+  margin: 0px 20px 0px 20px;
   margin-top: 0px;
   margin-bottom: 0px;
   display: flex;
@@ -1494,6 +1499,7 @@ ul{
 
 #slogan-footer{
   color: #FFF;
+  text-align: center;
 }
 
 #top-layer{
@@ -2074,6 +2080,10 @@ display: none;
 
 h1 {
   font-size: 32px;
+}
+
+.footer div {
+  margin: 0px 10px 0px 10px;
 }
 
 } 

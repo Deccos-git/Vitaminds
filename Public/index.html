@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
   <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
@@ -11,345 +10,252 @@
 
   gtag('config', 'UA-159826016-1');
 </script>
-<!-- Facebook Pixel Code -->
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '1265097717162783');
-  fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=1265097717162783&ev=PageView&noscript=1"
-  /></noscript>
-  <!-- End Facebook Pixel Code -->
-<meta id="meta-keywords" name="keywords" content="gelukkig zijn, sociaal netwerk, imperfecte mensen, persoonlijke groei, zelfontwikkeling, mentale fitheid, online coaching community, online coaching, online coach, online coach platform">
-<meta id="meta-description" property="og:description" name="description" content="Vitaminds is het sociale netwerk voor imperfecte mensen.
-Een community van mensen die het lef hebben om kwetsbaar te zijn 
-en verantwoordelijk durven nemen voor hun persoonlijke ontwikkeling.">
-<!-- Facebook crawl tags -->
-<meta id="facebook-url" property="og:url" content="https://vitaminds.nu/index.html"/>
-<meta property="og:type"  content="website"/>
-<meta id="facebook-title" property="og:title" content="Het sociale netwerk voor imperfecte mensen"/>
-<meta id="facebook-description" property="og:description" content="Vitaminds is het sociale netwerk voor imperfecte mensen.
-Een community van mensen die het lef hebben om kwetsbaar te zijn 
-en verantwoordelijk durven nemen voor hun persoonlijke ontwikkeling."/>
-<meta id="facebook-img" property="og:image" content="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/Hero-III.jpg?alt=media&token=907c7f4b-00b6-4783-8614-8bdf5908c069">
-  <Title>Het sociale netwerk voor imperfecte mensen</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#122b46">
-  <link rel="apple-touch-icon" href="images/Vitaminds-icon.png">
-  <link rel="stylesheet" href="Style/style.css">
-  <link rel="shortcut icon" href="images/Favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
-   <!-- PWA manifest -->
-   <link rel="manifest" href="manifest.json">
-   <!-- Service worker  -->
-   <!-- <script>
-     if('serviceWorker' in navigator) {
-       navigator.serviceWorker.register('sw.js')
-         .then(function() {
-               console.log('Service Worker Registered');
-         });
-     }
-   </script> -->
-  <!-- EmailJS -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.3.2/dist/email.min.js"></script>
-<script type="text/javascript">
-   (function(){
-      emailjs.init("user_Iw72D3GtRTn0KlqxereC3");
-   })();
-</script>
-</head>
 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta id="meta-keywords" name="keywords" content="online coaching, e-coaching, online coaching platform, online coach site, online coaching beginnen, online ondernemen coach"/>
+    <meta id="meta-description" property="og:description" name="description" content="Vitaminds is de community voor coaches die samen willen groeien als coach en als ondernemer.">
+    <meta id="facebook-url" property="og:url" content="Vitaminds is de community voor coaches die samen willen groeien als coach en als ondernemer."/>
+    <meta property="og:type"  content="website"/>
+    <meta id="facebook-title" property="og:title" content="Vitaminds is de community voor coaches die samen willen groeien als coach en als ondernemer."/>
+    <meta id="facebook-description" property="og:description" content="Vitaminds is de community voor coaches die samen willen groeien als coach en als ondernemer."/>
+    <meta id="facebook-img" property="og:image" content="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/Hero-III.jpg?alt=media&token=907c7f4b-00b6-4783-8614-8bdf5908c069"/>
+    <title id="page-title" property="og:title">Vitaminds is de community voor coaches die samen willen groeien als coach en als ondernemer.</title>
+    <link rel="stylesheet" href="Style/style.css">
+    <link rel="stylesheet" href="Style/register.css">
+    <link rel="stylesheet" href="Style/voor-coach.css">
+    <link rel="shortcut icon" href="images/Favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+</head>
 <body>
 
-<!-- Feedback -->
-<div id="feedback">
-  <a href="tickets.html"> <p>Feedback</p></a>
-</div>
-
-<!-- Cookie notice -->
-<div id="cookie-notice">
-  <h2>Vitaminds gebruikt cookies</h2>
-  <p>Als je verder gaat met scrollen, op een link klikt of dit bericht wegklikt ga je akkoord met ons 
-    <a href="privacy.html"> cookie en privacy beleid</a></p>
-  <div>
-    <button id="button-cookies" onclick="cookiesOK()">Ok</button>
+  <!-- Feedback -->
+  <div id="feedback">
+    <a href="tickets.html"> <p>Feedback</p></a>
   </div>
-</div>
-
-<!-- Mobile-menu -->
-<nav id="mobile-menu"> 
-  <div id="menu-mobile-visible-layer">
-    <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
-    <div class="main-menu-mobile"><a href="index.html"><img id="logo-menu" src="images/design/Logo2021-red.png" alt="Vitaminds logo" width="100px"></a></div>
-  </div>
-  <div id="mobile-menu-outer-div">
-    <div id="mobile-menu-inner-div">
-      <ul id="list-mobile-menu">
-        <li>
-          <div id="profile-picture-mobile"></div>
-        </li>
-        <li>
-          <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
-        </li>
-        <li>
-          <div class="main-menu-mobile"><a href="community.html">Community</a></div>
-        </li>
-        <li>
-          <div class="main-menu-mobile"><a href="artikelen.html">Artikelen</a></div>
-        </li>
-        <li>
-          <div class="main-menu-mobile"><a href="groups.html">Groepen</a></div> 
-        </li>
-        <li>
-          <div class="main-menu-mobile"><a href="workshops.html">Workshops</a></div>
-        </li>
-        <li>
-          <div class="main-menu-mobile"><a href="tools.html">Tools</a></div>
-        </li>
-        <li>
-          <div class="main-menu-mobile"><a href="coaching.html">Coaching</a></div>
-        </li>
-        <li>
-          <div class="main-menu-mobile"><a href="events.html">Events</a></div>
-        </li>
-        <li>
-          <div class="main-menu-mobile"><a href="contact.html">Contact</a></div>
-        </li>
-        <li>
-          <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
-        </li> 
-      </ul>
+  
+  <!-- Mobile-menu -->
+  <nav id="mobile-menu"> 
+    <div id="menu-mobile-visible-layer">
+      <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+      <div class="main-menu-mobile"><a href="/index.html"><img id="logo-menu-for-coaches" src="images/design/Logo2021-red.png" alt="Vitaminds voor coaches logo" width="150px"></a></div>
     </div>
-    <div id="target-group-menu-mobile">
-      <div id="target-group-inner-menu">
-        <p>Vitaminds voor</p>
-        <select id="select-targetgroup-mobile" onchange="getTargetGroupMobile(this)">
-          <option value="private">Particulieren</option>
-          <option value="coaches">Coaches</option>
-          <option value="therapist">Psychologen</option>
-        </select>
+    <div id="mobile-menu-outer-div">
+      <div id="mobile-menu-inner-div">
+            <div id="profile-picture-mobile"></div>
+            <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
+            <div class="main-menu-mobile"><a href="intervisie.html">Intervisie</a></div>
+            <div class="main-menu-mobile"><a href="cooperations.html">Community</a></div> 
+            <div class="main-menu-mobile"><a href="kenniscentrum.html">Kenniscentrum</a></div>
+            <div class="main-menu-mobile"><a href="groups-for-coaches.html">Groepen</a></div>
+            <div class="main-menu-mobile"><a href="workshops-for-coaches.html">Workshops</a></div>
+            <div class="main-menu-mobile"><a href="events-coaches.html">Events</a></div>
+        <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-   <!-- menu --> 
-   <div id="target-group-menu">
-     <p class="contact"> <a href="contact.html">Contact</a></p>
-    <div id="target-group-inner-menu">
-      <p>Vitaminds voor</p>
-      <select id="select-targetgroup" onchange="getTargetGroup(this)">
-        <option value="private">Particulieren</option>
-        <option value="coaches">Coaches</option>
-        <option value="therapist">Psychologen</option>
-      </select>
+    <!-- menu --> 
+    <div id="target-group-menu">
+      <p class="contact"> <a href="contact.html">Contact</a></p>
     </div>
-  </div>
-   <nav id="menu">
-    <div id="main-menu-logo"><a href="index.html"><img id="logo-menu" src="images/design/Logo2021-red.png" alt="Vitaminds logo" width="100px"></a></div>
+    <nav id="menu">
     <div id="navigation-menu">
-      <div class="main-menu"><a href="community.html">Community</a></div>
-      <div class="main-menu"><a href="artikelen.html">Artikelen</a></div>
-      <div class="main-menu"><a href="groups.html">Groepen</a></div> 
-      <div class="main-menu"><a href="workshops.html">Workshops</a></div>
-      <div class="main-menu"><a href="tools.html">Tools</a></div>
-      <div class="main-menu"><a href="coaching.html">Coaching</a></div>
-      <div class="main-menu"><a href="events.html">Events</a></div>
+      <div class="main-menu"><a href="/index.html"><img id="logo-menu-for-coaches" src="images/design/Logo2021-red.png" alt="Vitaminds voor coaches logo"></a></div>
+      <div id="menu-items">
+        <div class="main-menu"><a href="intervisie.html">Intervisie</a></div>
+        <div class="main-menu"><a href="cooperations.html">Community</a></div> 
+        <div class="main-menu"><a href="kenniscentrum.html">Kenniscentrum</a></div>
+        <div class="main-menu "><a href="groups-for-coaches.html">Groepen</a></div>
+        <div class="main-menu "><a href="workshops-for-coaches.html">Workshops</a></div>
+        <div class="main-menu "><a href="events-coaches.html">Events</a></div>
+      </div>
+      <a href="aanmelden-coach.html" id="button-register-coach" class="coach-menu-main-p">Lid worden</a>
     </div>
     <div id="auth-menu">
       <div id="auth-DOM"></div>
       <div id="profile-picture">
       </div>
-      <div id="login-register-div">
-        <div id="button-register" class = "login-logout"><button><a href="Register.html">Aanmelden</a></button></div>
-        <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
-      </div>
+      <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
     </div>
   </nav>
   
-<div id="no-auth-div">
-<!-- header -->
-<section class="header-image">
-  <div id="background">
-    <h2>Het sociale netwerk voor imperfecte mensen</h2>
+<section id="for-coach-banner">
+  <h1 id="for-coach-banner-title">Vitaminds is de community voor coaches die samen willen groeien naar een stabiele en gevulde praktijk.</h1>
+</section>
+
+<div id="subtitle">
+  <h2>Wij zijn een community van coaches, therapeuten, counselors en psychologen die 
+    van elkaar willen leren en elkaar willen inspireren op weg naar een succesvolle praktijk.</h2>
+  <a href="/aanmelden-coach.html"><button class="voor-coaches-button">Lid worden</button></a>
+  <p id="reference-link"> <a href="#reference-section">Bekijk wat leden vinden</a></p>
+</div>
+
+<div id="matchcall">
+  <img src="/images/ProfilePictures/foto-gijs350.jpg" alt="">
+  <p>Wil jij ook groeien naar een gevulde en stabiele praktijk? <br> Vraag een gratis en vrijblijvend <a href="/matchcall.html">kennismakingsgesprek</a> aan met oprichter Gijs.</p>
+</div>
+
+<section class="outer-section" id="community-section">
+  <div class="image-div">
+    <img id="community-img-coaches" src="/images/design/Iphone-vertical-for-coaches.png" alt="plaatje van telefoon met intervisie">
+  </div>
+  <div class="text-div">
+    <h3>Een ondersteunende community</h3>
+    <ul>
+      <li>Neem deel aan <a href="intervisie.html"> intervisie.</a></li>
+      <li>Doe mee aan de <a href="events-coaches.html">inspiratiesessies.</a></li>
+      <li>Leer elkaar beter kennen tijdens de <a href="events-coaches.html">coachmeetings.</a></li>
+      <li>Ontwikkel jezelf in de <a href="groups-for-coaches.html">coachgroepen voor coaches.</a></li>
+      <li>Ondersteun elkaar bij het bereiken van (professionele) doelen in de <a href="cooperations.html">community</a></li>
+      <li>Verdiep je kennis en vaardigheden in de online <a href="workshops-for-coaches.html">workshops</a></li>
+    </ul>
   </div>
 </section>
 
-<!-- welkom -->
-<div id="welcome-section" class="section-div">
-  <h2 id="description">Welkom bij het sociale netwerk voor imperfecte mensen.<br>
-  Een community van mensen die het lef hebben om kwetsbaar te zijn, verantwoordelijkheid durven nemen voor hun eigen leven en elkaar ondersteunen bij het bereiken van de doelen die belangrijk voor ons zijn.</h2> 
-  <a href="/Register.html"><button id="button-free-account">Word lid van Vitaminds</button></a>
-</div>
-
-<div id="community-section" class="section-div">
-  <h3>Een community van imperfecte mensen</h3>
-  <div id="feautures-inner-div">
-      <img id="community-img" src="images/design/ipad-image.png" alt="mobiele telefoon met vitaminds feautures">
-    <div id="coaches-text-div">
-      <p>
-        Iedereen wil gelukkig zijn. Het leven zit daarbij niet altijd mee. Dat is heel normaal. 
-        Iedereen heeft ups en downs. Bij Vitaminds kun je de ups en downs delen met andere imperfecte mensen 
-        die het lef hebben om kwetsbaar te zijn, verantwoordelijkheid durven nemen voor hun eigen leven en elkaar ondersteunen bij het bereiken van de doelen die belangrijk voor ons zijn.
+<section class="outer-section" id="platform-section">
+  <div class="text-div">
+    <h3>Ondernemersvaardigheden</h3>
+    <p>Een stabiele en gevulde praktijk komt voor een groot deel neer op je ondernemersvaardigheden. 
+      Als lid van Vitaminds heb je alles binnen handbereik om een rasondernemer te worden.
       </p>
-      <a href="/community.html"><button id="button-free-account">Bekijk de community</button></a>
+    <a href="/aanmelden-coach.html"><button class="voor-coaches-button">Lid worden</button></a>
+  </div>
+  <div class="image-div">
+    <img id="platform-img-coaches" src="/images/design/Ipad-vertical-for-coaches.png" alt="plaatje van tablet met Vitaminds landing pagina">
+  </div>
+</section>
+
+<section id="coachtools-section">
+  <div id="coachtools-text-div">
+    <h3>Aan de slag met Vitaminds</h3>
+    <p>Groei als coach en ondernemer</p>
+  </div>
+  <div class="coachtool-inner-div">
+    <div class="coachtool-detail-div">
+      <img class="coachtools-img" src="/images/design/articles.png" alt="Schrijf mee aan de artikelen">
+      <h4>Laat je inspireren door de artikelen</h4>
+      <p>Leer van een groeiend aantal artikelen over allerlei relevante onderwerpen voor jouw coachpraktijk</p>
+      <a class="coachtool-link" href="/kenniscentrum.html">Bekijk artikelen</a>
+    </div>
+    <div class="coachtool-detail-div" >
+      <img class="coachtools-img" src="/images/design/workshop.png" alt="Schrijf mee aan de artikelen">
+      <h4>Doe mee aan de events</h4>
+      <p>Ontmoet elkaar en inspirerende trainers tijdens de Vitaminds events</p>
+      <a class="coachtool-link" href="/events-coaches.html">Bekijk events</a>
     </div>
   </div>
-</div>
-
-<div id="features-section" class="section-div">
-  <h3>Persoonlijke ontwikkeling</h3>
-  <div id="feautures-inner-div">
-    <img src="" alt="" id="image-mobile">
-    <div id="coaches-text-div">
-      <p>
-        Door aandacht te besteden aan je persoonlijke ontwikkeling kun je verantwoordelijkheid nemen voor je eigen leven.
-        Op Vitaminds kun je onbeperkt en gratis ontwikkeldoelen voor jezelf stellen. 
-        Hoe je invulling geeft aan je ontwikkeling bepaal je zelf. Maak gebruik van de gratis tools, doe mee aan betaalbare coachgroepen, start met een workshop of investeer in verdiepende (online) één op één coaching.  
-      </p>
-      <a href="/create-route.html"><button id="button-free-account">Start je eerste ontwikkeldoel</button></a>
+  <div class="coachtool-inner-div">
+    <div class="coachtool-detail-div" >
+      <img class="coachtools-img" src="/images/design/coachgroup.png" alt="Organiseer coachgroepen">
+      <h4>Ondersteun elkaar bij het bereiken van professionele doelen</h4>
+      <p>Geef of ontvang tips om doelen te bereiken die belangrijk zijn voor jouw praktijk</p>
+      <a class="coachtool-link" href="/groups-for-coaches.html">Bekijk coachgroepen</a>
     </div>
-    <div>
-      <img id="feautures-img" src="images/design/iphone-icon.png" alt="mobiele telefoon met vitaminds feautures">
+    <div id="coachtool-bottom-button" class="coachtool-detail-div" >
+      <a href="/aanmelden-coach.html"><button class="voor-coaches-button">Lid worden</button></a>
     </div>
   </div>
-</div>
 
-<div id="coaches-section" class="section-div">
-  <h3>Bepaal zelf hoe je je ontwikkelt</h3>
-  <div id="coaches-inner-div">
-    <div id="image-coaches-div">
-      <img id="coaches-image" src="images/design/Group 3.png" alt="groep coaches">
-    </div>
-    <div id="coaches-text-div">
-      <p>Ontdek wat tientallen coaches kunnen bijdragen aan jouw persoonlijke ontwikkeling.  
-        Houd het luchtig met artikelen die je aanspreken of ga de diepte in met een coach die bij je past. En alles daar tussenin.</p>
-      <p id="cta-inspiration">Bekijk de inspiratiebronnen</p>
-      <select name="" id="feaures-select" onchange="getType(this)">
-        <option value="">-- Selecteer --</option>
-        <option value="">Artikelen</option>
-        <option value="">Workshops</option>
-        <option value="">Coachgroepen</option>
-        <option value="">Events</option>
-      </select>
-    </div>
-  </div>
-</div>
+</section>
 
-<div id="digimind-section" class="section-div">
-  <h3>Bepaal zelf wanneer je er behoefte aan hebt</h3>
-  <div id="digimind-inner-div">
-    <div id="digimind-image-div">
-      <img src="images/design/Group 1.png" alt="laptop met voorbeeld van Digimind">
-    </div>
-    <div id="digimind-text-div">
-      <p>Je gratis persoonlijke ontwikkelomgeving is altijd beschikbaar. Alles wat je toevoegt aan je ontwikkeldoelen blijft daar beschikbaar om inspiratie uit te halen. Je kan weer verder gaan waar je gebleven was wanneer jij dat wilt.</p>
-      <a href="/Register.html"><button id="button-free-account">Word lid van Vitaminds</button></a>
-    </div>
-  </div>
-</div>
+<h3 id="section-title-reference">Wat de leden vinden</h3>
+<section id="reference-section">
+  <div class="reference-card">
+    <img src="images/ProfilePictures/marion-210.jpg" alt="Vitaminds coach Annelies">
+    <h3>Samen staan we sterker.</h3>
+    <p>Gijs en daarmee Vitaminds is een klein half jaar geleden op mijn pad gekomen. 
+      Hij benaderde mij in een facebookgroep voor coaches en therapeuten. 
+      Of ik lid wilde worden van de community. Na een leuk en goed telefoongesprek, 
+      waarin Gijs zijn missie verteld heeft, heb ik de stap gezet om lid te worden.<br><br>
 
-<div id="coaches-section" class="section-div">
-  <h3>Kwaliteit en veiligheid</h3>
-  <img id="quality-safety-image" src="images/quality-safety-image.png" alt="">
-  <div id="coaches-inner-div">
-    <div id="coaches-text-div">
-      <p>Bij Vitaminds sta je zelf aan het roer van je persoonlijke ontwikkeling. 
-        Tijdens deze waardevolle reis willen we jou op een kwalitatief hoogstaande manier
-        en in een veilige (online) omgeving bieden waar je behoefte aan hebt.</p>
+      En nog geen dag spijt gehad! Gijs als persoon inspireert, is behulpzaam, denkt mee, 
+      geeft bemoedigende woorden als je dit even nodig hebt.<br><br>
       
-        <h3>Kwaliteit</h3>
-        <img class="qualitySafetyImage" src="/images/design/quality.png" alt="Kwaliteit op Vitaminds">
-        <p>Alle coaches die op Vitaminds actief zijn werken met ons <a href="/Kwaliteit.html">kwaliteitssysteem</a>. 
-          Dat wil zeggen dat ze:</p>
-          <ul>
-            <li>
-              Een coachopleidingen hebben afgerond die wordt erkend door een beroepsvereniging.
-            </li>
-            <li>
-              Minimaal één keer per maand intervisie hebben met collega's;
-            </li>
-            <li>
-              Werken met een doorverwijs- en nazorgprotocol
-            </li>
-          </ul>
-
-          <h3>Veiligheid</h3>
-          <img class="qualitySafetyImage" src="/images/design/safety.jpg" alt="Veiligheid op Vitaminds">
-          <p>Vitaminds is een advertentievrij platform en verkoopt je gegevens daarom nooit door aan derden.<br><br>
-            Vitaminds biedt je de mogelijkheid om alles wat je over jezelf leert 
-            tijdens je persoonlijke ontwikkeling op te slaan in je persoonlijke profiel.<br><br>
-            Jouw persoonlijke profiel is alleen voor jouw zichtbaar. Je kan zelf kiezen of je aspecten van je ontwikkeling met anderen deelt of dat je alles voor jezelf houdt.
-            Mocht je iets kopen op Vitaminds verlopen je betalingen via de beveiligde betaalomgeving van <a href="https://stripe.com">Stripe</a>.</p>
-          <p>Lees ons <a href="privacy.html"> privacybeleid </a>voor alle aspecten omtrent jouw privacy (in gewone mensentaal geschreven).</p>
-    </div>
+      De community Vitaminds is inspirerend voor mij. Vitaminds biedt collega's om te sparren in 
+      inspiratiesessies en intervisie. De community wordt langzaam groter waardoor mensen meer keus 
+      krijgen.<br><br>
+      
+      Samen staan we sterker.<br><br>
+      
+      Gijs heeft duidelijk de missie om een (nog) mooiere en waardevollere community te creeëren, 
+      met zijn enthousiasme weet hij me te raken.<br><br>
+      
+      Vitaminds is een verrijking voor mij en mijn eigen praktijk. 
+    </p>
+    <p class="reference-name"> - Coach <a href="/Vitaminders/n75vdbntehbMarion%20Schornagel.html">Marion Schornagel</a></p>
   </div>
+</section>
+
+<section id="reference-section">
+  <div class="reference-card">
+    <img src="images/ProfilePictures/Foto Annelies.jpg" alt="Vitaminds coach Annelies">
+    <h3>Ik ben dankbaar één van de coaches te mogen zijn op dit mooie platform!</h3>
+    <p>Ik mag leren van collega coaches, maar ook leer ik hoe mijzelf te profileren op social media.
+    </p>
+    <p class="reference-name"> - Coach <a href="/Vitaminders/01xyd4jtmig7Annelies%20Bonke.html">Annelies Bonke</a></p>
+  </div>
+</section>
+
+<section id="reference-section">
+  <div class="reference-card">
+    <img src="https://firebasestorage.googleapis.com/v0/b/vitaminds-78cfa.appspot.com/o/Profielfotos%2FSchermafbeelding%202020-10-27%20om%2021.26.53.png?alt=media&token=10466a76-469a-4471-912a-c1310a7d2485" alt="Vitaminds coach Annelies">
+    <h3>Vitaminds is een veelzijdig platform</h3>
+    <p>Vitaminds is niet enkel een platform waarbij je je bedrijf in de etalage zet. 
+      Het is tevens een platform dat gericht is op jouw persoonlijke ontwikkeling 
+      en de mens achter jouw bedrijf zichtbaar laat worden. 
+      Gijs weet de behoeftes van jouw, als ondernemer, goed te koppelen aan de behoeftes 
+      van de klant. Daarbij heeft Gijs een sterke visie waardoor het platform hoge kwaliteit 
+      krijgt en hopelijk kunnen veel mensen zo geholpen worden.  
+    </p>
+    <p class="reference-name"> - Coach <a href="/Vitaminders/wwlqe3fhcNatalie.html">Natalie</a></p>
+  </div>
+</section>
+
+
+
+<!-- Toolbar mobile -->
+<div class="toolbar-mobile">
+  <div class="toolbar-mobile-inner-div" id="toolbar-community">
+    <img src="images/design/community-icon.png" alt="" id="toolbar-home">
+    <p class="description-menu-icons-toolbar-mobile">Community</p>
+  </div>
+  <div class="toolbar-mobile-inner-div" id="toolbar-inner-div-chats-groups">
+    <img src="images/send-icon.png" alt="" id="toolbar-chats-groups">
+    <p class="description-menu-icons-toolbar-mobile">Chats & groepen</p>
+  </div>
+  <div class="toolbar-mobile-inner-div" id="toolbar-digimind-div">
+    <img src="images/menu-dashboard.png" alt="" id="toolbar-digimind">
+    <p class="description-menu-icons-toolbar-mobile">Mijn account</p>
+  </div>  
 </div>
-
-    <div class="toolbar-mobile">
-      <div class="toolbar-mobile-inner-div" id="toolbar-community">
-        <img src="images/design/community-icon.png" alt="" id="toolbar-home">
-        <p class="description-menu-icons-toolbar-mobile">Community</p>
-      </div>
-      <div class="toolbar-mobile-inner-div" id="toolbar-inner-div-chats-groups">
-        <img src="images/send-icon.png" alt="" id="toolbar-chats-groups">
-        <p class="description-menu-icons-toolbar-mobile">Chats & groepen</p>
-      </div>
-      <div class="toolbar-mobile-inner-div" id="toolbar-digimind-div">
-        <img src="images/menu-dashboard.png" alt="" id="toolbar-digimind">
-        <p class="description-menu-icons-toolbar-mobile">Mijn account</p>
-      </div>  
-    </div>
-  </div>
-
-<footer class="footer">
-  <div id="top-layer">
-    <div>
-    <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
-    </div>
-    <div>
-      <h3 id="slogan-footer">Het sociale netwerk voor imperfecte mensen</h3>
-    </div>
-    <div>
-    <a href="https://www.facebook.com/Vitaminds.nu"><img src="images/Logo-facebook.png" alt="" width="25px"></a>
-    <a href="https://www.instagram.com/vitaminds.nu"><img src="images/logo-insta.png" alt="" width="50px"></a>
-    </div>
-  </div>
-  <div id="contact-layer">
-    <div class="adress-div">
-      <img class="icon-contact-layer" src="/images/adres-icon.png" alt="Vitaminds adres">
-      <p>Beijumerweg 24</p>
-      <p>9737AD</p> 
-      <p>Groningen</p>
-    </div>
-    <div class="adress-div">
-      <img class="icon-contact-layer" src="/images/email-icon.png" alt="Vitaminds emailadres">
-      <p> info@vitaminds.nu</p>
-    </div>
-    <div class="adress-div">
-      <img class="icon-contact-layer" src="/images/telephone-icon.png" alt="Vitaminds phonenumber">
-      <p>+316 244 098 43</p>
-    </div>
-  </div>
-</footer>
-
-    <script type="text/javascript" src="javascript/firebase.js"></script>
-    <script type="text/javascript" src="javascript/index.js"></script>
-    <script type="text/javascript" src="javascript/auth.js"></script>
+</div>
+    
+      <!-- footer -->
+      <footer class="footer">
+        <div id="top-layer">
+          <div>
+          <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+          </div>
+          <div>
+            <h3 id="slogan-footer">De community voor coaches die samen willen groeien</h3>
+          </div>
+          <div>
+          <a href="https://www.facebook.com/Vitaminds.nu"><img src="images/Logo-facebook.png" alt="" width="25px"></a>
+          <a href="https://www.instagram.com/vitaminds.nu"><img src="images/logo-insta.png" alt="" width="50px"></a>
+          </div>
+        </div>
+      </footer>
+      
+          <script type="text/javascript" src="javascript/firebase.js"></script>
+          <script type="text/javascript" src="javascript/index.js"></script>
+          <script type="text/javascript" src="javascript/auth.js"></script>
+          <script type="text/javascript" src="javascript/voor-coach.js"></script>
 </body>
 </html>
 

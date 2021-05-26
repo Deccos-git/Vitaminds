@@ -19,8 +19,6 @@ const titel16 = titel15.replace('%20',' ')
 const titel17 = titel16.split("?fb")
 const titel = titel17[0]
 
-console.log(titel)
-
 // Open make new event
 !function makeNewEvent(){
     const makeNewEventButton = document.getElementById("create-new-coach-event")
@@ -197,7 +195,7 @@ if (eventsOverview != null){
 
     db.collection("EventsCoaches")
     .where("Owner", "==", "Vitaminds")
-    .orderBy("DateMonth", "desc")
+    .orderBy("DateMonth", "asc")
     .get().then(querySnapshot => {
         querySnapshot.forEach(doc => {
 

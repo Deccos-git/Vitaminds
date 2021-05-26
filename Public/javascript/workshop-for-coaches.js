@@ -266,22 +266,7 @@ db.collection("WorkshopsForCoaches")
 function openWorkshopCoaches(elem){
 
     const title = elem.dataset.title
-
-    db.collection("WorkshopsForCoaches")
-    .where("WorkshopTitle", "==", title)
-    .get().then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-
-            console.log(title)
-
-            db.collection("WorkshopsForCoaches").doc(doc.id).update({
-                Views: firebase.firestore.FieldValue.increment(1)
-            })
-            .then(() => {
-                window.open("../Workshops-coaches/" + title + ".html", "_self")
-            });
-        });
-    });
+    window.open("../Workshops-coaches/" + title + ".html", "_self")
 };
 
 // Build workshop
@@ -407,7 +392,6 @@ function upgradeModal(notice){
 const workshopLandingPageOuterDiv = document.getElementById("workshop-landing-page")
 const workshopLandingTitle = document.getElementById("workshop-landing-title")
 const buttonWorkshopLanding = document.getElementById("button-workshop-landing")
-// See stripe.js for workshopButtonLanding
 const workshopDescription = document.getElementById("workshop-description")
 const workshopFactsUl = document.getElementById("workshop-facts")
 const agreementSection = document.getElementById("workshop-agreement")
@@ -494,6 +478,91 @@ function hideLandingIfAuthIsArrayMember(array){
     });
 };
 
+!function startWorkshop(){
+
+    const button = document.getElementById("button-workshop-landing-coaches")
+    const notice = document.getElementById("no-auth-notice")
+    const landing = document.getElementById("workshop-landing-page")
+    const paymentModal = document.getElementById("confirm-payment-modal")
+
+    button.addEventListener("click", () => {
+
+        auth.onAuthStateChanged(User =>{
+            if(User){
+    
+                landing.style.display = "none"
+                paymentModal.style.display = "flex"
+
+            } else {
+                notice.scrollIntoView()
+                notice.style.display = "block"
+                button.style.display = "none"
+            }
+        });
+    });
+}();
+
+async function addCoachToListOfTakers(userName, paymentModal){
+
+    await db.collection("WorkshopsForCoaches")
+      .where("WorkshopTitle", "==", titel)
+      .get().then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+
+            console.log("test")
+
+            db.collection("WorkshopsForCoaches")
+            .doc(doc.id)
+            .update({
+                Takers: firebase.firestore.FieldValue.arrayUnion(userName)
+            });   
+        });
+    });
+
+    paymentModal.style.display = "none"
+};
+
+!function startWorkshop(){
+
+    const button = document.getElementById("confirm-payment-button")
+    const paymentModal = document.getElementById("confirm-payment-modal")
+
+    button.addEventListener("click", () => {
+
+        auth.onAuthStateChanged(User =>{
+        db.collection("Vitaminders").doc(User.uid)
+        .get()
+        .then(doc =>{
+
+            const userName = doc.data().Gebruikersnaam
+
+            addCoachToListOfTakers(userName, paymentModal)
+
+            });
+        });
+    });
+}();
+
+function fillPaymentModalWithData(price, creator){
+
+    const priceP = document.getElementById("price")
+    const coachP = document.getElementById("coach")
+
+    priceP.innerText = `€${price}` 
+
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", creator)
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            const name = doc.data().GebruikersnaamClean
+
+            coachP.innerText = name
+
+        });
+    });
+};
+
 !function workshopQuery(){
 
     db.collection("WorkshopsForCoaches")
@@ -513,6 +582,7 @@ function hideLandingIfAuthIsArrayMember(array){
             workshopFacts(price)
             hideLandingIfAuthIsArrayMember(takersArray)
             workshopHeader(bannerImage)
+            fillPaymentModalWithData(price, creator)
 
             workshopDescription.innerHTML = summary
 

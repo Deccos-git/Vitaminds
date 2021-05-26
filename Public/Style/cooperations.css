@@ -21,6 +21,33 @@
     background-color: #FFF;
 }
 
+.reaction-div {
+    margin: 10px 0px 5px 5%;
+    background-color: #a7bdbd26;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+.load-reactions{
+    align-self: center;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.reaction-input-div{
+    display: flex;
+    align-items: center;
+}
+
+.reaction-input-div input{
+    width: auto;
+}
+
+
 #community-card-header img{
     height: 200px;
     width: 250px;
@@ -220,6 +247,12 @@
     background-color: #a7bdbd26;
 }
 
+.info-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 @media only screen and (max-width: 938px){
 
     h1{
@@ -233,6 +266,10 @@
     .social-wall-coaches-inner-div {
         margin: 30px 10px 10px 10px;
         width: 80%;
+    }
+
+    .reaction-input-div input{
+        width: 100%;
     }
 
 }

@@ -368,8 +368,17 @@
 
 #workshops-for-coaches{
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     background-color: #a7bdbd26;
+}
+
+#no-auth-notice{
+    display: none;
+}
+
+#button-workshop-landing-coaches{
+    margin-bottom: 20px;
 }
 
 .free-notice-workshops{

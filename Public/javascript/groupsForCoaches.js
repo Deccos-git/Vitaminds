@@ -853,8 +853,7 @@ auth.onAuthStateChanged(User =>{
     
 !function displayMembersOfgroup(){
     
-    const listOfMembersCoach = document.getElementById("list-of-members-inner-div")
-    const membersDiv = document.getElementById("list-of-members")
+    const membersDiv = document.getElementById("members-list")
 
     const roomNameCoach = titleOfRoom()
 
@@ -867,76 +866,77 @@ auth.onAuthStateChanged(User =>{
             const roomClean = doc.data().RoomClean
             const room = doc.data().Room
 
+            showMemberCount(members.length)
+
             members.forEach(member => {
 
-        db.collection("Vitaminders")
-        .where("Gebruikersnaam", "==", member)
-        .get().then(querySnapshot => {
-        querySnapshot.forEach(doc1 => {
+                coachMeta(member, roomClean, room, membersDiv)
 
-                const gebruikersnaamClean = doc1.data().GebruikersnaamClean
-                const photo = doc1.data().Profielfoto
-
-                const photoDiv = document.createElement("div")
-                photoDiv.setAttribute("id", "member-photo-div")
-                const memberPhoto = document.createElement("img")
-                    memberPhoto.setAttribute("class", "group-member-photo")
-                const nameP = document.createElement("p")
-                    nameP.setAttribute("class", "member-name-p")
-
-                nameP.innerText = gebruikersnaamClean
-
-                // showMemberNameOnHover(memberPhoto, nameP)
-                showMemberPhoto(photo, memberPhoto)
-                roomTitle(roomClean, room)
-                linkToAccountFromMemberPhoto(memberPhoto, member)
-
-                listOfMembersCoach.appendChild(photoDiv)
-                photoDiv.appendChild(memberPhoto)
-                photoDiv.appendChild(nameP)
-
-                    });
-                });
             });
         });
     })
-    .then(() => {
-        toggleMaxHeightOfMembersListDiv(membersDiv)
-    })
 }();
 
-function toggleMaxHeightOfMembersListDiv(membersDiv){
+function coachMeta(member, roomClean, room, membersDiv){
 
-    setTimeout(() => {
-        console.log(membersDiv.offsetHeight)
-        if(membersDiv.offsetHeight > 70){
+    db.collection("Vitaminders")
+    .where("Gebruikersnaam", "==", member)
+    .get().then(querySnapshot => {
+    querySnapshot.forEach(doc1 => {
 
-            membersDiv.style.maxHeight = "50px"
-        membersDiv.style.paddingBottom = "13px"
+        const gebruikersnaamClean = doc1.data().GebruikersnaamClean
+        const photo = doc1.data().Profielfoto
 
-        const moreDiv = document.createElement("div")
-        const moreButton = document.createElement("p")
+        const photoDiv = document.createElement("div")
+        photoDiv.setAttribute("class", "member-photo-div")
+        const memberPhoto = document.createElement("img")
+            memberPhoto.setAttribute("class", "group-member-photo")
+        const nameP = document.createElement("p")
+            nameP.setAttribute("class", "member-name-p")
 
-        moreButton.innerText = "Bekijk meer"
+        nameP.innerText = gebruikersnaamClean
 
-        DOMchatScreenCoach.prepend(moreDiv)
-            moreDiv.setAttribute("id", "more-div")
-        moreDiv.appendChild(moreButton)
+        showMemberPhoto(photo, memberPhoto)
+        roomTitle(roomClean, room)
+        linkToAccountFromMemberPhoto(photoDiv, member)
 
-        moreButton.addEventListener("click", () => {
+        membersDiv.appendChild(photoDiv)
+        photoDiv.appendChild(memberPhoto)
+        photoDiv.appendChild(nameP)
 
-        if(membersDiv.style.maxHeight === "max-content"){
-            membersDiv.style.maxHeight = "50px"
-            moreButton.innerText = "Bekijk meer"
-        } else {
-            membersDiv.style.maxHeight = "max-content"
-            moreButton.innerText = "Bekijk minder"
-        };
+        });
+    });
+};
+
+function showMemberCount(count){
+
+    const membersP = document.getElementById("member-count")
+
+    membersP.innerHTML = `Bekijk ${count} leden`
+
+};
+
+!function openMembersModal(){
+
+    const button = document.getElementById("list-of-members")
+    const modal = document.getElementById("members-modal")
+
+    button.addEventListener("click", () => {
+        modal.style.display = "flex"
     });
 
-        };
-    }, 1500);
-};
+}();
+
+!function closeModal(){
+
+    const closeButton = document.getElementById("close-div-group")
+    const modal = document.getElementById("members-modal")
+
+    closeButton.addEventListener("click", () => {
+        modal.style.display = "none"
+    });
+}();
+
     
         // Add learning
     

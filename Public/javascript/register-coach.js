@@ -6,28 +6,20 @@
     const makeCoachAccoutnButtonPremium = document.getElementById("become-member-button-premium")
     const coachRegisterForm = document.getElementById("coach-register-form")
     const subscriptionType = document.getElementById("subscription-type")
-    const registerDivBasic = document.getElementById("register-div-basic")
-    const registerDivPremium = document.getElementById("register-div-premium")
+    const registerDiv = document.getElementById("register-div")
 
     function showRegisterForm(button, type){
 
     button.addEventListener("click", () => {
 
     coachRegisterForm.style.display = "flex"
+    registerDiv.style.display = "flex"
 
     subscriptionType.innerText = type
 
-    if(type === "Basic"){
-      registerDivBasic.style.display = "flex"
-      registerDivPremium.style.display = "none"
-    } else if (type === "Premium"){
-      registerDivPremium.style.display = "flex"
-      registerDivBasic.style.display = "none"
-    };
-
     coachRegisterForm.scrollIntoView()
 
-    })
+    });
   };
 
   showRegisterForm(makeCoachAccoutnButtonBasic, "Basic")
@@ -41,6 +33,8 @@
   if(button != null){
   button.addEventListener("click", () => {
 
+    console.log("test")
+
     button.innerText = "Laden.."
 
   const email = document.getElementById("register-email").value;
@@ -49,17 +43,6 @@
   const repeatPassword = document.getElementById("register-wachtwoord-repeat").value
   const repeatPasswordInput = document.getElementById("register-wachtwoord-repeat")
   const naam = document.getElementById("register-gebruikersnaam").value;
-  const method = document.getElementById("register-method").value;
-  const city = document.getElementById("register-city").value;
-  const targetgroup = document.getElementById("register-targetgroup").value;
-  const why = document.getElementById("register-why").value;
-  const phone = document.getElementById("register-phone").value;
-  const website = document.getElementById("register-website").value;
-  const costs = document.getElementById("register-costs").value;
-  const approach = document.getElementById("register-style").value;
-  const experience = document.getElementById("register-experience").value;
-  const experienceType = document.getElementById("register-experience-type").value;
-  const education = document.getElementById("register-education").value;
   const subscriptionType = document.getElementById("subscription-type").innerText
 
   const colour = getRandomColor()
@@ -80,18 +63,18 @@
       Usertype: "Coach",
       Inspiratiepunten: 1,
       Email: email,
-      PhoneNumber: phone,
-      Website: website,                 
-      Coachingstyle: method,
-      City: city,
+      PhoneNumber: "",
+      Website: "",                 
+      Coachingstyle: "",
+      City: "",
       Color: colour,
-      Why: why,
-      Targetgroup: targetgroup,
-      YearsExperience: experience,
-      Experience: experienceType,
-      Education: education,
-      Approach: approach,
-      Costs: costs,
+      Why: "",
+      Targetgroup: "",
+      YearsExperience: "",
+      Experience: "",
+      Education: "",
+      Approach: "",
+      Costs: "",
       ID: cred.user.uid,
       Status: "Approved",
       Levensvragen: [],
@@ -183,6 +166,10 @@ function sendConfirmationMail(subscriptionType, email, naam){
           Geweldig dat je een coach-account hebt aangemaakt op Vitaminds! Je bent van harte welkom in onze community. 
           
           Klik <a href="https://vitaminds.nu/inlog.html"> hier </a> om direct te beginnen.<br><br>
+
+          Ben je benieuwd hoe Vitaminds je kan helpen om je doelen te bereiken?</br>
+          Lees dan <a href="https://vitaminds.nu/Kenniscentrum-coaching/Welkom%20bij%20Vitaminds.html">dit artikel</a>.<br><br>
+
           Vriendelijke groet, </br></br>
           Het Vitaminds Team </br></br>
           <img src="https://vitaminds.nu/images/design/Logo2021-red.png" width="100px" alt="Logo Vitaminds">`,

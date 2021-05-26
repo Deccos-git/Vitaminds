@@ -926,88 +926,6 @@ function registerNoticeOK(){
 }();
 
 
-// Tickets
-
-const welkomAuth = document.getElementById("welkom-auth")
-
-if(welkomAuth != null){
-
-auth.onAuthStateChanged(User =>{
-  if(User){
-  const userRef = db.collection("Vitaminders").doc(User.uid);
-    userRef.get().then(function(doc) {
-      if (doc.exists) {
-        const Gname = doc.data().Gebruikersnaam;
-        const id = doc.data().ID
-        const nameClean = Gname.replace(id, "")
-
-        const welkom = document.createElement("h2")
-
-        welkom.innerHTML = `Houdoe, ${nameClean}`
-
-        welkomAuth.appendChild(welkom)
-  
-
-  //Opmerking opvangen
-  const buttonReact = document.getElementById("button-feedback")
-  buttonReact.addEventListener("click", () => {
-
-  const opmerking = document.getElementById("textarea").value
-    
-  db.collection("Tickets").doc().set({
-    Gebruikersnaam: Gname,
-    GebruikersnaamClean: nameClean,
-    Opmerking: opmerking,
-    Verwerkt: "Nee",
-    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-    Type: "Feedback-general"
-        }).then(() => {
-          location.reload();
-        })
-      })
-    }
-  })
-};
-});
-};
-
-  // Opmerkingen in DOM zetten
-  const DOMreact = document.getElementById("tips-trucs")
-
-  if(DOMreact != null){
-
-  db.collection("Tickets").where("Type", "==", "Feedback-general").get().then(querySnapshot => {
-    querySnapshot.forEach(doc => {
-
-      const naam = doc.data().GebruikersnaamClean
-      const opmerking = doc.data().Opmerking
-      const verwerkt = doc.data().Verwerkt
-
-
-      const reactDiv = document.createElement("div")
-        reactDiv.className = "react-div"
-      const naamP = document.createElement("h5")
-      const opmerkingP = document.createElement("p")
-      const verwerktP = document.createElement("h5")
-
-      naamP.innerHTML = "Door: " + naam
-      opmerkingP.innerHTML = opmerking
-      verwerktP.innerHTML = "Opgelost: " + verwerkt
-
-      if(verwerkt == "Nee"){
-        opmerkingP.style.color = "#8e0000"
-      } else {
-        opmerkingP.style.color = "#0c6665"
-      }
-
-      DOMreact.appendChild(reactDiv)
-      reactDiv.appendChild(opmerkingP)
-      reactDiv.appendChild(naamP)
-      reactDiv.appendChild(verwerktP)
-    })
-  })
-};
-
 // Mobile toolbar
 
 !function toolBarMobileInit(){
@@ -1045,7 +963,7 @@ function showToolbarOnMobile(){
   // Links
 function toolBarLinks(){
   toolbarCommunity.addEventListener("click", (e) => {
-          window.open("../community.html", "_self")
+          window.open("../cooperations.html", "_self")
   });
 
   toolbarChatsGroups.addEventListener("click", (e) => {
