@@ -41,50 +41,141 @@
     <a href="tickets.html"> <p>Feedback</p></a>
   </div>
   
-  <!-- Mobile-menu -->
-  <nav id="mobile-menu"> 
-    <div id="menu-mobile-visible-layer">
-      <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
-      <div class="main-menu-mobile"><a href="/index.html"><img id="logo-menu-for-coaches" src="images/design/Logo2021-red.png" alt="Vitaminds voor coaches logo" width="150px"></a></div>
-    </div>
-    <div id="mobile-menu-outer-div">
-      <div id="mobile-menu-inner-div">
-            <div id="profile-picture-mobile"></div>
-            <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
-            <div class="main-menu-mobile"><a href="intervisie.html">Intervisie</a></div>
-            <div class="main-menu-mobile"><a href="cooperations.html">Community</a></div> 
-            <div class="main-menu-mobile"><a href="kenniscentrum.html">Kenniscentrum</a></div>
-            <div class="main-menu-mobile"><a href="groups-for-coaches.html">Groepen</a></div>
-            <div class="main-menu-mobile"><a href="workshops-for-coaches.html">Workshops</a></div>
-            <div class="main-menu-mobile"><a href="events-coaches.html">Events</a></div>
-        <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+  <!DOCTYPE html>
+  <html lang="nl">
+  
+  <head>
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+  
+      gtag('config', 'UA-159826016-1');
+  </script>
+  
+      <Title> Vitaminds chats & groepen </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="Style/style.css">
+      <link rel="stylesheet" href="Style/chat.css">
+      <link rel="stylesheet" href="Style/coachgroups.css">
+      <link rel="shortcut icon" href="images/Favicon.ico">
+      <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+      <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
+      </head>
+  
+      <body>
+  
+      <!-- Feedback -->
+      <div id="feedback">
+      <a href="tickets.html"> <p>Feedback</p></a>
+      </div>
+  
+    <!-- Mobile-menu -->
+    <nav id="mobile-menu"> 
+      <div id="menu-mobile-visible-layer">
+        <img id="mobile-hamburger-menu" src="images/Hamburger-menu-icon-zwart.png" alt="mobile-menu" height="30px" width="30px">
+        <div class="main-menu-mobile"><a href="/index.html"><img id="logo-menu-for-coaches" src="images/design/Logo2021-red.png" alt="Vitaminds voor coaches logo" width="150px"></a></div>
+      </div>
+      <div id="mobile-menu-outer-div">
+        <div id="mobile-menu-inner-div">
+              <div id="profile-picture-mobile"></div>
+              <div id="button-login-mobile" class="login-logout"><button><a href="inlog.html">Log in</a></button></div>
+              <div class="main-menu-mobile"><a href="cooperations.html">Community</a></div> 
+              <div class="main-menu-mobile"><a href="kenniscentrum.html">Kenniscentrum</a></div>
+              <div class="main-menu-mobile"><a href="workshops-for-coaches.html">Workshops</a></div>
+              <div class="main-menu-mobile"><a href="events-coaches.html">Events</a></div>
+              <div class="main-menu-mobile"><a href="training.html">Training</a></div>
+              <div class="main-menu-mobile"><a href="businesscoaching.html">Businesscoaching</a></div>
+          <div onclick="logOut()" id="log-out-mobile" class="main-menu-mobile">Log uit</div>
+        </div>
+      </nav>
+  
+      <!-- menu --> 
+      <div id="target-group-menu">
+        <p class="contact"> <a href="contact.html">Contact</a></p>
+      </div>
+      <nav id="menu">
+      <div id="navigation-menu">
+        <div class="main-menu"><a href="/index.html"><img id="logo-menu-for-coaches" src="images/design/Logo2021-red.png" alt="Vitaminds voor coaches logo"></a></div>
+        <div id="menu-items">
+          <div class="main-menu"><a href="cooperations.html">Community</a></div> 
+          <div class="main-menu"><a href="kenniscentrum.html">Kenniscentrum</a></div>
+          <div class="main-menu "><a href="workshops-for-coaches.html">Workshops</a></div>
+          <div class="main-menu "><a href="events-coaches.html">Events</a></div>
+          <div class="main-menu "><a href="training.html">Training</a></div>
+          <div class="main-menu "><a href="businesscoaching.html">Businesscoaching</a></div>
+        </div>
+        <a href="aanmelden-coach.html" id="button-register-coach" class="coach-menu-main-p">Lid worden</a>
+      </div>
+      <div id="auth-menu">
+        <div id="auth-DOM"></div>
+        <div id="profile-picture">
+        </div>
+        <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
       </div>
     </nav>
-
-    <!-- menu --> 
-    <div id="target-group-menu">
-      <p class="contact"> <a href="contact.html">Contact</a></p>
+      
+  <!-- Main -->
+  
+  <h1>Chats & Groepen</h1>
+  
+  <div id="overview-chats">
+    <h2>Chats</h2>
+  </div>
+  <div id="overview-groups">
+    <h2>Coachgroepen</h2>
+  </div>
+  <div id="overview-groups-for-coaches">
+    <h2 id="overview-groups-for-coaches-title"></h2>
+  </div>
+  
+  <!-- Toolbar mobile -->
+  <div class="toolbar-mobile">
+    <div class="toolbar-mobile-inner-div" id="toolbar-community">
+      <img src="images/design/community-icon.png" alt="" id="toolbar-home">
+      <p class="description-menu-icons-toolbar-mobile">Community</p>
     </div>
-    <nav id="menu">
-    <div id="navigation-menu">
-      <div class="main-menu"><a href="/index.html"><img id="logo-menu-for-coaches" src="images/design/Logo2021-red.png" alt="Vitaminds voor coaches logo"></a></div>
-      <div id="menu-items">
-        <div class="main-menu"><a href="intervisie.html">Intervisie</a></div>
-        <div class="main-menu"><a href="cooperations.html">Community</a></div> 
-        <div class="main-menu"><a href="kenniscentrum.html">Kenniscentrum</a></div>
-        <div class="main-menu "><a href="groups-for-coaches.html">Groepen</a></div>
-        <div class="main-menu "><a href="workshops-for-coaches.html">Workshops</a></div>
-        <div class="main-menu "><a href="events-coaches.html">Events</a></div>
-      </div>
-      <a href="aanmelden-coach.html" id="button-register-coach" class="coach-menu-main-p">Lid worden</a>
+    <div class="toolbar-mobile-inner-div" id="toolbar-inner-div-chats-groups">
+      <img src="images/send-icon.png" alt="" id="toolbar-chats-groups">
+      <p class="description-menu-icons-toolbar-mobile">Chats & groepen</p>
     </div>
-    <div id="auth-menu">
-      <div id="auth-DOM"></div>
-      <div id="profile-picture">
-      </div>
-      <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
-    </div>
-  </nav>
+    <div class="toolbar-mobile-inner-div" id="toolbar-digimind-div">
+      <img src="images/menu-dashboard.png" alt="" id="toolbar-digimind">
+      <p class="description-menu-icons-toolbar-mobile">Mijn account</p>
+    </div>  
+  </div>
+  </div>
+  
+        <!-- footer -->
+        <footer class="footer">
+          <div id="top-layer">
+            <div>
+            <a href="https://www.vitaminds.nu"><img src="images/logo-footer.png" alt="logo Vitaminds" width="200px"></a> 
+            </div>
+            <div>
+              <h3 id="slogan-footer">De community voor coaches die samen willen groeien</h3>
+            </div>
+            <div>
+            <a href="https://www.facebook.com/Vitaminds.nu"><img src="images/Logo-facebook.png" alt="" width="25px"></a>
+            <a href="https://www.instagram.com/vitaminds.nu"><img src="images/logo-insta.png" alt="" width="50px"></a>
+            </div>
+          </div>
+        </footer>
+  
+          <script type="text/javascript" src="javascript/firebase.js"></script>
+          <script type="text/javascript" src="javascript/index.js"></script>
+          <script type="text/javascript" src="javascript/auth.js"></script>
+          <script type="text/javascript" src="javascript/chat.js"></script>
+          <script type="text/javascript" src="javascript/coachgroups.js"></script>
+          <script type="text/javascript" src="javascript/groupsForCoaches.js"></script>
+      </body>
+      </html>
   
   <h1 id="title-register-coach">Word lid van Vitaminds</h1>
     <div id="banner-register-coach"></div>

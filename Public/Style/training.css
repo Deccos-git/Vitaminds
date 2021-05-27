@@ -1,0 +1,86 @@
+#main-div{
+    padding: 30px;
+}
+
+#sub-title{
+    font-weight: bold;
+}
+
+#header-image{
+    width: 80%;
+    border-radius: 15px;
+    margin: 20px;
+}
+
+#header-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#text-div{
+    margin: 10px 100px;
+}
+
+tbody{
+    background-color: #a7bdbd26;
+    color: #122b46;
+}
+
+td {
+    padding: 5px;
+}
+
+#overview-div h3{
+    border-bottom: 1px solid lightgray;
+}
+
+#contact-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    margin: 10px 100px;
+}
+
+#contact-div p{
+    font-size: 20px;
+}
+
+#register-modal-training{
+    display: none; /* Hidden by default */
+    flex-direction: column;
+    align-items: center;
+    position: fixed; /* Stay in place */
+    z-index: 2; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #a7bdbd; /* Fallback color */
+}
+
+#notice-training{
+    display: none;
+    background-color: #a7bdbd26;
+    padding: 10px;
+    margin: 10px 100px;
+    text-align: center;
+}
+
+#register-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px;
+}
+
+#register-button-coach{
+    margin: 20px;
+}
+
+#close-div{
+    cursor: pointer;
+    display: contents;
+}

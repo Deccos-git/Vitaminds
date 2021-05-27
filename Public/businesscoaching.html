@@ -1,26 +1,21 @@
 <!DOCTYPE html>
 <html lang="nl">
 
-  <head>
+<head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-159826016-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-      gtag('config', 'UA-159826016-1');
-    </script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="keywords" content="Samenwerken voor coaching">
-    <meta name="description" content="Op Vitaminds werken coaches samen om het platform zo goed mogelijk te laten werekn voor onze coaching">
-    <Title> Events voor coaches</title>
+    gtag('config', 'UA-159826016-1');
+</script>
+
+    <Title>Businesscoaching </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="Style/style.css">
-    <link rel="stylesheet" href="Style/voor-coach.css">
-    <link rel="stylesheet" href="Style/events-for-coaches.css">
+    <link rel="stylesheet" href="Style/businesscoaching.css">
     <link rel="shortcut icon" href="images/Favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
@@ -28,15 +23,15 @@
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-storage.js"></script>
-  </head>
+    </head>
 
-  <body>
+    <body>
 
     <!-- Feedback -->
-   <div id="feedback">
+    <div id="feedback">
     <a href="tickets.html"> <p>Feedback</p></a>
-  </div>
-  
+    </div>
+
   <!-- Mobile-menu -->
   <nav id="mobile-menu"> 
     <div id="menu-mobile-visible-layer">
@@ -81,14 +76,98 @@
       <div id="button-login" class = "login-logout"><button><a href="inlog.html">Log in</a></button></div>
     </div>
   </nav>
-  
-<h1>Events voor coaches</h1>
+    
+<!-- Main -->
 
-<div id="events-outer-div">
+<h1>Businesscoaching</h1>
 
-  <a id="create-new-coach-event" href="create-event-coach.html"><button>Event maken</button></a> 
+<div id="header-div">
+<div id="header-text-div">
+<h2>Een op een businesscoaching</h2>
+<p>Wil je de volgende stap maken met je coachpraktijk op weg naar meer klanten 
+  en kom je er in je eentje niet uit?</p>
+<p>Samen kom we waarschijnlijk een stuk verder.</p>
+
+<a href="#contact-section"><button class="button-algemeen">Gratis kennismakingsgesprek</button></a>
+</div>
+<img src="images/ProfilePictures/foto-gijs350.jpg" alt="">
+</div>
+
+<h2>Over mij</h2>
+
+<div id="attribute-inner-section">
+  <div class="attribute-div">
+    <img src="images/design/education.jpg" alt="">
+    <p>Afgestudeerd Toegepast Psycholoog</p>
+  </div>
+
+  <div class="attribute-div">
+    <img src="images/design/entrepreneur.jpg" alt="">
+    <p>9 jaar ondernemer</p>
+  </div>
+
+  <div class="attribute-div">
+    <img src="images/design/company-icon.jpg" alt="">
+    <p>Eigenaar van 2 online bedrijven</p>
+  </div>
+</div>
+
+<div id="show-profile-div">
+  <a href="/Vitaminders/fbKlPnWobJh0ldPROWQRYGCezhv2Gijs%20van%20Beusekom.html" target="_blank"><button class="button-algemeen">Bekijk mijn profiel</button></a>
+</div>
+
+<div id="services-section">
+  <h2>Overige diensten</h2>
+
+  <div id="services-inner-div">
+    <div class="service-div">
+      <img src="images/design/google-icon.png" alt="">
+      <h3>Google Ads pakket</h3>
+      <p>Ik help je om meer bezoekers op je website te krijgen met Google Ads.</p>
+      <ul>
+        <li>Betaal per bezoeker</li>
+        <li>Bepaal je maximale maandelijkse kosten</li>
+        <li>Vanaf €35 per maand</li>
+      </ul>
+      <a href="#contact-section"><button class="button-algemeen">Gratis kennismakingsgesprek</button></a>
+    </div>
+
+    <div class="service-div">
+      <img src="images/design/facebook-icon.png" alt="">
+      <h3>Facebook Ads pakket</h3>
+      <p>Ik help je om meer bezoekers op je website te krijgen met Facebook Ads.</p>
+    <ul>
+      <li>Betaal per bezoeker</li>
+      <li>Bepaal je maximale maandelijkse kosten</li>
+      <li>Vanaf €35 per maand</li>
+    </ul>
+    <a href="#contact-section"><button class="button-algemeen">Gratis kennismakingsgesprek</button></a>
+  </div>
 
 </div>
+
+</div>
+
+<div id="contact-section">
+  <h2>Gratis kennismakingsgesprek</h2>
+  <p>Ben je benieuwd of we samen een stap vooruit kunnen zetten met jouw praktijk?</p>
+  <div id="contact-form">
+    <p class="form-label">Naam</p>
+    <input id="name" type="text" placeholder="Schrijf hier je naam">
+    <p class="form-label">Emailadres</p>
+    <input id="email" type="text" placeholder="Schrijf hier je emailadres">
+    <p class="form-label">Telefoonnummer</p>
+    <input id="phone" type="text" placeholder="Schrijf hier je telefoonnummer">
+  </div>
+  <button class="button-algemeen" id="button-intro">Verstuur</button>
+  <div id="intro-notice">
+    <h2>Verstuurd!</h2>
+    <p>
+      Je aanvraag is verstuurd. Je ontvangt zo snel mogelijk een bericht van mij.
+    </p>
+  </div>
+</div>
+
 
 <!-- Toolbar mobile -->
 <div class="toolbar-mobile">
@@ -123,10 +202,9 @@
         </div>
       </footer>
 
-      <script type="text/javascript" src="javascript/firebase.js"></script>
-      <script type="text/javascript" src="javascript/auth.js"></script>
-      <script type="text/javascript" src="javascript/index.js"></script>
-      <script type="text/javascript" src="javascript/events-for-coaches.js"></script>
+        <script type="text/javascript" src="javascript/firebase.js"></script>
+        <script type="text/javascript" src="javascript/index.js"></script>
+        <script type="text/javascript" src="javascript/auth.js"></script>
+        <script type="text/javascript" src="javascript/businesscoaching.js"></script>
     </body>
-  </html>
-  
+    </html>

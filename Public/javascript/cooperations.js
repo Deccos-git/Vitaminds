@@ -1,6 +1,26 @@
 const IDurl0 = window.location.href.replace(/^.*[\\\/]/, '')
 const IDurl = IDurl0.replace('.html', '')
 
+!async function communitySubTitle(){
+
+    const subTitle = document.getElementById("community-sub-title")
+
+    const coachesArray = []
+
+    await db.collection("Vitaminders")
+    .where("Usertype", "==", "Coach")
+    .get().then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+
+            coachesArray.push(doc)
+
+        });
+    });
+
+    subTitle.innerText = `Samen groeien met ${coachesArray.length} collega coaches`
+
+}();
+
 function openSupport(buttonDOM, link){
 
     if(buttonDOM != null){
@@ -239,56 +259,65 @@ function saveTip(supportButton, supportInput){
                         const coachGoal = doc1.data().Goal
                         const coachGoalClean = doc1.data().GoalClean
                         const userName = doc1.data().Gebruikersnaam
-                        const email = doc.data().Email
+                     
 
                         db.collection("Vitaminders")
-                        .doc(User.uid)
-                    .collection("CoachLessons")
-                    .doc()
-                    .set({
-                        Username: userName,
-                        Lesson: tip,
-                        Coachgoal: coachGoal,
-                        GoalID: idGoal,
-                        ID: randomID(),
-                        ParentID: "None",
-                        Tread: [],
-                        New: true,
-                        Tipper: auth,
-                        TipperClean: authClean,
-                        Type: "supportTip",
-                        Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                    })
-                    .then(() => {
-                        db.collection("CoachSocialWall")
-                        .doc()
-                        .set({
-                            Username: userName,
-                            Lesson: tip,
-                            Coachgoal: coachGoal,
-                            GoalID: idGoal,
-                            ID: randomID(),
-                            ParentID: "None",
-                            New: true,
-                            Tread: [],
-                            Tipper: auth,
-                            TipperClean: authClean,
-                            Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
-                            Type: "supportTip"
-                        });
-                        })
-                        .then(() => {
-                            db.collection("Vitaminders")
-                            .doc(User.uid)
-                            .collection("Coachgoals")
-                            .doc(doc1.id)
-                            .update({
-                                LastActive:firebase.firestore.Timestamp.fromDate(new Date()),
-                                Lessons: firebase.firestore.FieldValue.arrayUnion(tip)
+                    .where("Gebruikersnaam", "==", userName)
+                    .get().then(querySnapshot => {
+                        querySnapshot.forEach(doc2 => {
+
+                            const email = doc2.data().Email
+
+                                db.collection("Vitaminders")
+                                .doc(doc2.id)
+                            .collection("CoachLessons")
+                            .doc()
+                            .set({
+                                Username: userName,
+                                Lesson: tip,
+                                Coachgoal: coachGoal,
+                                GoalID: idGoal,
+                                ID: randomID(),
+                                ParentID: "None",
+                                Tread: [],
+                                New: true,
+                                Tipper: auth,
+                                TipperClean: authClean,
+                                Type: "supportTip",
+                                Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                            })
+                            .then(() => {
+                                db.collection("CoachSocialWall")
+                                .doc()
+                                .set({
+                                    Username: userName,
+                                    Lesson: tip,
+                                    Coachgoal: coachGoal,
+                                    GoalID: idGoal,
+                                    ID: randomID(),
+                                    ParentID: "None",
+                                    New: true,
+                                    Tread: [],
+                                    Tipper: auth,
+                                    TipperClean: authClean,
+                                    Timestamp: firebase.firestore.Timestamp.fromDate(new Date()),
+                                    Type: "supportTip"
+                                });
+                                })
+                                .then(() => {
+                                    db.collection("Vitaminders")
+                                    .doc(doc2.id)
+                                    .collection("Coachgoals")
+                                    .doc(doc1.id)
+                                    .update({
+                                        LastActive:firebase.firestore.Timestamp.fromDate(new Date()),
+                                        Lessons: firebase.firestore.FieldValue.arrayUnion(tip)
+                                    });
+                                })
+                                .then(() => {
+                                    sendMailNewTip(email, coachGoalClean, authClean, idGoal)
+                                });
                             });
-                        })
-                        .then(() => {
-                            sendMailNewTip(email, coachGoalClean, authClean, idGoal)
                         });
                     });
                 });

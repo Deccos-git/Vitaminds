@@ -131,6 +131,12 @@
     box-shadow: 0 5px 9px 0 rgb(0 0 0 / 20%), 0 7px 21px 0 rgb(0 0 0 / 19%);
 }
 
+.reference-card h3{
+    border-bottom: 1px solid lightgray;
+    width: 100%;
+    text-align: center;
+}
+
 #list-of-education{
     border: 1px solid lightgray;
     border-radius: 5px;

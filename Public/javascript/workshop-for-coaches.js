@@ -485,21 +485,24 @@ function hideLandingIfAuthIsArrayMember(array){
     const landing = document.getElementById("workshop-landing-page")
     const paymentModal = document.getElementById("confirm-payment-modal")
 
-    button.addEventListener("click", () => {
+    if(button != null){
 
-        auth.onAuthStateChanged(User =>{
-            if(User){
-    
-                landing.style.display = "none"
-                paymentModal.style.display = "flex"
+        button.addEventListener("click", () => {
 
-            } else {
-                notice.scrollIntoView()
-                notice.style.display = "block"
-                button.style.display = "none"
-            }
+            auth.onAuthStateChanged(User =>{
+                if(User){
+        
+                    landing.style.display = "none"
+                    paymentModal.style.display = "flex"
+
+                } else {
+                    notice.scrollIntoView()
+                    notice.style.display = "block"
+                    button.style.display = "none"
+                }
+            });
         });
-    });
+    };
 }();
 
 async function addCoachToListOfTakers(userName, paymentModal){
@@ -527,20 +530,23 @@ async function addCoachToListOfTakers(userName, paymentModal){
     const button = document.getElementById("confirm-payment-button")
     const paymentModal = document.getElementById("confirm-payment-modal")
 
-    button.addEventListener("click", () => {
+    if(button != null){
 
-        auth.onAuthStateChanged(User =>{
-        db.collection("Vitaminders").doc(User.uid)
-        .get()
-        .then(doc =>{
+        button.addEventListener("click", () => {
 
-            const userName = doc.data().Gebruikersnaam
+            auth.onAuthStateChanged(User =>{
+            db.collection("Vitaminders").doc(User.uid)
+            .get()
+            .then(doc =>{
 
-            addCoachToListOfTakers(userName, paymentModal)
+                const userName = doc.data().Gebruikersnaam
 
+                addCoachToListOfTakers(userName, paymentModal)
+
+                });
             });
         });
-    });
+    };
 }();
 
 function fillPaymentModalWithData(price, creator){
@@ -837,8 +843,6 @@ let bannerImage = ""
     if (uploadImageButton != null){
     uploadImageButton.addEventListener("click", () => {
 
-        console.log("test")
-
         loaderModal.style.display = "flex"
 
         uploadImageButton.innerText = "Uploaden.."
@@ -906,8 +910,6 @@ function saveWorkshop(){
 
     const select = workshopGoalSelect.options
     const workshopGoal = select[select.selectedIndex].innerHTML
-
-    console.log(workshopGoal)
 
     // Workshop price
     const workshopPrice = document.getElementById("workshop-price").value

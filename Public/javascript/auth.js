@@ -562,7 +562,6 @@ const newMessageArray = [];
 
               const newMessageCount = newMessageArray.length
 
-              console.log(newMessageCount)
                 appendNewCountToAuthMenu(newMessageCount, "groups-chats-div")
                 appendNewCountToAuthMenu(newMessageCount, "toolbar-inner-div-chats-groups")
 
@@ -952,10 +951,8 @@ function showToolbarOnMobile(){
 
     auth.onAuthStateChanged(User =>{
       if(User){
-
-        console.log("test")
-                showToolbarOnMobile()
-                toolBarLinks()
+        showToolbarOnMobile()
+        toolBarLinks()
       };
     });
   }();
@@ -996,8 +993,6 @@ function toolBarLinks(){
 
   auth.onAuthStateChanged(User =>{
     if(User){
-
-      console.log(button)
 
       button.style.display = "none"
 
