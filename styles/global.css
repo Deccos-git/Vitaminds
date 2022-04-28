@@ -4,7 +4,19 @@ body{
 }
 
 h1{
-    font-size: 30px;
+    font-size: 40px;
+    color: #8e0000;
+    font-family: 'Libre Baskerville', serif;
+}
+
+p{
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+}
+
+button{
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
 }
 
 button{

@@ -1,17 +1,18 @@
 import styles from './topbarLanding.module.css'
 import Image from 'next/image'
+import Logo from '../images/logo.png'
 
 const topbarLanding = () => {
 
   return (
     <div id={styles.topbarLandingContainer}>
       <Image
-      src="/../images/logo.png"
-      height={100} 
-      width={100} 
+      src={Logo}
+      height={50} 
+      width={50} 
       alt="Logo Vitaminds"
       />
-      <button>Inloggen</button>
+      <button id={styles.topbarButton}>Inloggen</button>
     </div>
   )
 }

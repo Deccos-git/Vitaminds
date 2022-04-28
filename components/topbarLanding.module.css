@@ -4,9 +4,14 @@
     width: 100%;
     position: fixed;
     display: -webkit-flex;
-    padding: 20;
+    padding: 5px 30px 5px 30px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 2px 1px -1px rgb(0 0 0 / 12%);
+}
+
+#topbarButton{
+    margin-left: auto;
+    margin-right: 30px;
 }
