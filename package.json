@@ -27,7 +27,7 @@
     "prerender-node": "^3.2.5",
     "pwacompat": "^2.0.16",
     "simple-peer": "^9.8.0",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.5.0",
     "stripe": "^8.92.0"
   },
   "devDependencies": {
